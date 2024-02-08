@@ -92,8 +92,10 @@ struct ControlBarView: View {
         Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
                 HStack {
-                    videoButton
-                    Spacer(minLength: 0)
+                    if viewModel.isCameraDisplayed {
+                        videoButton
+                        Spacer(minLength: 0)
+                    }
                     micButton
                     Spacer(minLength: 0)
                     audioDeviceButton
@@ -111,8 +113,10 @@ struct ControlBarView: View {
                     audioDeviceButton
                     Spacer(minLength: 0)
                     micButton
-                    Spacer(minLength: 0)
-                    videoButton
+                    if viewModel.isCameraDisplayed {
+                        Spacer(minLength: 0)
+                        videoButton
+                    }
                 }
             }
         }
@@ -121,7 +125,6 @@ struct ControlBarView: View {
     var videoButton: some View {
         IconButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.videoAccessibilityID.rawValue)
-            .hidden(!viewModel.isCameraDisplayed)
     }
 
     var micButton: some View {

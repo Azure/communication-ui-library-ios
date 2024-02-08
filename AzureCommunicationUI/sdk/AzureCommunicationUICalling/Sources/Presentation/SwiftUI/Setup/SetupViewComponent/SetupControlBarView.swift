@@ -19,8 +19,10 @@ struct SetupControlBarView: View {
             VStack(alignment: .center) {
                 Spacer()
                 HStack(alignment: .center, spacing: layoutSpacing) {
-                    Spacer()
-                    cameraButton
+                    if viewModel.isCameraDisplayed {
+                        Spacer()
+                        cameraButton
+                    }
                     Spacer()
                     micButton
                     Spacer()
