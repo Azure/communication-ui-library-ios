@@ -13,7 +13,7 @@ class CallingViewModel: ObservableObject {
     @Published var appState: AppStatus = .foreground
     @Published var isInPip: Bool = false
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
-
+    @Published var allowLocalCameraPreview: Bool = false
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -44,13 +44,16 @@ class CallingViewModel: ObservableObject {
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIpadInterface: Bool) {
+         isIpadInterface: Bool,
+         allowLocalCameraPreview: Bool
+    ) {
         self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
+        self.allowLocalCameraPreview = allowLocalCameraPreview
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:

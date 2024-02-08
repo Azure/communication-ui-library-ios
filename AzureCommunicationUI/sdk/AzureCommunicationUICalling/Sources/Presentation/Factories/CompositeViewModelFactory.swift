@@ -79,7 +79,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              store: store,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
-                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad)
+                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
+                                             allowLocalCameraPreview: localOptions?.avMode
+                                             != CallCompositeAvMode.audioOnly)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
