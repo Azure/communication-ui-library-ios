@@ -283,6 +283,7 @@ extension CallingDemoView {
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
         callComposite.events.onPictureInPictureChanged = onPipChangedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName

@@ -251,10 +251,7 @@ class CallingDemoViewController: UIViewController {
                         }
         }
 
-        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [weak callComposite] userIssue in
-            guard let composite = callComposite else {
-                return
-            }
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [] userIssue in
             print("User issue received in callback " + userIssue.userMessage)
         }
 

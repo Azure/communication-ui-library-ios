@@ -237,8 +237,11 @@ extension CompositeViewModelFactory {
         ParticipantGridCellViewModel(localizationProvider: localizationProvider,
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
-                                     lifeCycleState: lifeCycleState)
+                                     lifeCycleState: lifeCycleState,
+                                     isCameraEnabled: localOptions?.avMode != .audioOnly
+        )
     }
+
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
@@ -253,9 +256,11 @@ extension CompositeViewModelFactory {
                                   dispatchAction: dispatchAction,
                                   localizationProvider: localizationProvider)
     }
+
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)
     }
+
     func makeBannerTextViewModel() -> BannerTextViewModel {
         BannerTextViewModel(accessibilityProvider: accessibilityProvider,
                             localizationProvider: localizationProvider)
