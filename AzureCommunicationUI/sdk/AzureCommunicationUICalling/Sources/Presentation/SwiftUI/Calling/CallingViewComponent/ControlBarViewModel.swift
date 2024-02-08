@@ -46,7 +46,9 @@ class ControlBarViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
-         localUserState: LocalUserState) {
+         localUserState: LocalUserState,
+         avMode: CallCompositeAvMode
+    ) {
 
         self.logger = logger
         self.localizationProvider = localizationProvider
@@ -145,6 +147,8 @@ class ControlBarViewModel: ObservableObject {
         )
 
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
+
+        isCameraDisplayed = avMode != .audioOnly
     }
 
     func endCallButtonTapped() {

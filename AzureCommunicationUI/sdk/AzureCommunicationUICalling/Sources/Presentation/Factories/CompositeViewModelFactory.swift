@@ -196,7 +196,8 @@ extension CompositeViewModelFactory {
                             localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
-                            localUserState: localUserState)
+                            localUserState: localUserState,
+                            avMode: localOptions?.avMode ?? .normal)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -307,11 +308,14 @@ extension CompositeViewModelFactory {
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel {
-        SetupControlBarViewModel(compositeViewModelFactory: self,
+        let avMode = localOptions?.avMode ?? CallCompositeAvMode.normal
+
+        return SetupControlBarViewModel(compositeViewModelFactory: self,
                                  logger: logger,
                                  dispatchAction: dispatchAction,
                                  localUserState: localUserState,
-                                 localizationProvider: localizationProvider)
+                                 localizationProvider: localizationProvider,
+                                 avMode: avMode)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
