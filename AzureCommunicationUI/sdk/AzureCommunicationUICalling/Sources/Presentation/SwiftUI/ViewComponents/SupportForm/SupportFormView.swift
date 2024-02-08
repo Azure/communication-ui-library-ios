@@ -18,7 +18,13 @@ struct SupportFormView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(footer: Text("We'll automatically attach logs.")) {
+                Section(footer:
+                            HStack {
+                                Text("We'll automatically attach logs.")
+                                Spacer()
+                            Link("Privacy Policy", destination: URL(string: "https://www.microsoft.com")!)                        
+                                .foregroundColor(.blue)
+                            }) {
                     ZStack(alignment: .topLeading) {
                         if viewModel.messageText.isEmpty {
                             Text("Please describe your issue...")

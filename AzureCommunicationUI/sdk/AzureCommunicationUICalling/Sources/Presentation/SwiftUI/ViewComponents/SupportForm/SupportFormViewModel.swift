@@ -8,7 +8,7 @@ import Foundation
 class SupportFormViewModel: ObservableObject {
     // Published properties that the view can observe
     @Published var messageText: String = ""
-    @Published var includeScreenshot: Bool = true
+    @Published var includeScreenshot: Bool = false
     @Published var submitOnDismiss: Bool = false
     let events: CallComposite.Events
     let getDebugInfo: () -> DebugInfo
