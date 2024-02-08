@@ -226,6 +226,7 @@ struct SettingsView: View {
         Section(header: Text("Mic & Carmera Default Vaule")) {
             Toggle("Mic Default", isOn: $envConfigSubject.microphoneOn)
             Toggle("Camera Default", isOn: $envConfigSubject.cameraOn)
+            Toggle("Audio Only", isOn: $envConfigSubject.audioOnly)
         }
     }
 

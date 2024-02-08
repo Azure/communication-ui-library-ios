@@ -57,6 +57,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var isRightToLeft: Bool = false
     @Published var microphoneOn: Bool = false
     @Published var cameraOn: Bool = false
+    @Published var audioOnly: Bool = false
     @Published var skipSetupScreen: Bool = false
     @Published var useCustomColors: Bool = false
     @Published var useCustomRemoteParticipantViewData: Bool = false

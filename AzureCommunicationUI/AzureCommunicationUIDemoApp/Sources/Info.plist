@@ -53,7 +53,7 @@
 	<key>expiredAcsToken</key>
 	<string>${expiredAcsToken}</string>
 	<key>groupCallId</key>
-	<string>${groupCallId}</string>
+	<string>74fce2c0-520f-11ec-97de-71411a9a8e13</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
 	<key>threadId</key>
