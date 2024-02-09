@@ -51,7 +51,7 @@ struct SupportFormView: View {
                 trailing: Button(viewModel.sendFeedbackText) {
                     showingForm = false
                     viewModel.prepareToSend()
-                }
+                }.disabled(viewModel.isSubmitButtonDisabled)
             )
         }.onDisappear {
             if viewModel.submitOnDismiss {

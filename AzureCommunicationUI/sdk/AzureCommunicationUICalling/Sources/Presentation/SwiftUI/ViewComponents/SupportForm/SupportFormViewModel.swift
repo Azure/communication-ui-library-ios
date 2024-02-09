@@ -10,6 +10,7 @@ class SupportFormViewModel: ObservableObject {
     @Published var messageText: String = ""
     @Published var includeScreenshot: Bool = false
     @Published var submitOnDismiss: Bool = false
+    @Published var blockSubmission: Bool = true
 
     // Strings
     @Published var reportIssueTitle: String
@@ -20,6 +21,10 @@ class SupportFormViewModel: ObservableObject {
     @Published var attachScreenshot: String
     @Published var reportAProblemText: String
     @Published var sendFeedbackText: String
+
+    var isSubmitButtonDisabled: Bool {
+        messageText.isEmpty
+    }
 
     let events: CallComposite.Events
     let getDebugInfo: () -> DebugInfo
@@ -53,8 +58,10 @@ class SupportFormViewModel: ObservableObject {
         callback(CallCompositeUserReportedIssue(userMessage: messageText,
                                                 debugInfo: getDebugInfo(),
                                                 screenshot: screenshotURL))
+        messageText = ""
     }
 
+    // Will submit after being dismissed
     func prepareToSend() {
         submitOnDismiss = true
     }

@@ -27,4 +27,39 @@ class SupportFormViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.reportAProblemText, "AzureCommunicationUICalling.ReportAProblem.Text")
         XCTAssertEqual(viewModel.sendFeedbackText, "AzureCommunicationUICalling.SendFeedback.Text")
     }
+
+    func test_SupportFormViewModel_ValidateSendFormTriggersEvent() {
+        let events = CallComposite.Events()
+        var lastIssue: CallCompositeUserReportedIssue?
+        events.onUserReportedIssue = { issue in
+            lastIssue = issue
+        }
+        let debugInfo = DebugInfo(
+            callHistoryRecords: [], callingUIVersion: "1.0", logFiles: []
+        )
+        // Initialize the viewModel with mocks
+        let viewModel = SupportFormViewModel(events: events,
+                                             localizationProvider: LocalizationProviderMocking(),
+                                             getDebugInfo: { debugInfo })
+        viewModel.messageText = "TEST MESSAGE"
+        viewModel.sendReport()
+        XCTAssertFalse(viewModel.blockSubmission)
+        XCTAssertTrue(lastIssue != nil)
+        XCTAssertEqual(lastIssue?.userMessage, "TEST MESSAGE")
+        XCTAssertEqual(lastIssue?.screenshot, nil)
+    }
+    
+    
+    func test_SupportFormViewModel_ValidateSendFormTriggersEventNoText() {
+        let events = CallComposite.Events()
+        let debugInfo = DebugInfo(
+            callHistoryRecords: [], callingUIVersion: "1.0", logFiles: []
+        )
+        // Initialize the viewModel with mocks
+        let viewModel = SupportFormViewModel(events: events,
+                                             localizationProvider: LocalizationProviderMocking(),
+                                             getDebugInfo: { debugInfo })
+        viewModel.messageText = ""        
+        XCTAssertTrue(viewModel.blockSubmission)
+    }
 }
