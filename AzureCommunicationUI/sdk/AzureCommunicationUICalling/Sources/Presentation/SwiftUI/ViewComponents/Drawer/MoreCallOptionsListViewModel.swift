@@ -32,8 +32,8 @@ class MoreCallOptionsListViewModel: ObservableObject {
         if isSupportFormAvailable {
             let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
                 icon: .personFeedback,
-                title: "Report an error",
-                accessibilityIdentifier: "Report an error",
+                title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
+                accessibilityIdentifier: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 action: showSupportFormAction)
 
             items.append(reportErrorInfoModel)
