@@ -149,12 +149,12 @@
 
 /* Feedback Form */
 
-"AzureCommunicationUICalling.Report.Issue"="";
-"AzureCommunicationUICalling.ReportIssue.Title"="";
-"AzureCommunicationUICalling.LogsAttach.Notice"="";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
-"AzureCommunicationUICalling.CancelButton.Text"="";
-"AzureCommunicationUICalling.Attach.Screenshot"="";
-"AzureCommunicationUICalling.ReportAProblem.Text"="";
-"AzureCommunicationUICalling.SendFeedback.Text"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="Probleem melden";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Logboeken worden automatisch bijgevoegd.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacybeleid";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beschrijf uw probleem...";
+"AzureCommunicationUICalling.CancelButton.Text"="Annuleren";
+"AzureCommunicationUICalling.Attach.Screenshot"="Schermopname bijvoegen";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Een probleem melden";
+"AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";
+

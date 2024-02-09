@@ -149,12 +149,11 @@
 
 /* Feedback Form */
 
-"AzureCommunicationUICalling.Report.Issue"="";
-"AzureCommunicationUICalling.ReportIssue.Title"="";
-"AzureCommunicationUICalling.LogsAttach.Notice"="";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
-"AzureCommunicationUICalling.CancelButton.Text"="";
-"AzureCommunicationUICalling.Attach.Screenshot"="";
-"AzureCommunicationUICalling.ReportAProblem.Text"="";
-"AzureCommunicationUICalling.SendFeedback.Text"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="דווח על בעיה";
+"AzureCommunicationUICalling.LogsAttach.Notice"="אנו נצרף יומני רישום באופן אוטומטי.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="מדיניות פרטיות";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="תאר את הבעיה שלך...";
+"AzureCommunicationUICalling.CancelButton.Text"="ביטול";
+"AzureCommunicationUICalling.Attach.Screenshot"="צרף צילום מסך";
+"AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
+"AzureCommunicationUICalling.SendFeedback.Text"="שלח";

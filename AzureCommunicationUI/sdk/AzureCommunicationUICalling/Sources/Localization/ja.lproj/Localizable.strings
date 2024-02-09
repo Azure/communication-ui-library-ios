@@ -149,12 +149,11 @@
 
 /* Feedback Form */
 
-"AzureCommunicationUICalling.Report.Issue"="";
-"AzureCommunicationUICalling.ReportIssue.Title"="";
-"AzureCommunicationUICalling.LogsAttach.Notice"="";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
-"AzureCommunicationUICalling.CancelButton.Text"="";
-"AzureCommunicationUICalling.Attach.Screenshot"="";
-"AzureCommunicationUICalling.ReportAProblem.Text"="";
-"AzureCommunicationUICalling.SendFeedback.Text"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="問題の報告";
+"AzureCommunicationUICalling.LogsAttach.Notice"="ログは自動的に添付されます。";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="プライバシー ポリシー";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="問題を説明してください...";
+"AzureCommunicationUICalling.CancelButton.Text"="取り消す";
+"AzureCommunicationUICalling.Attach.Screenshot"="スクリーンショットを添付する";
+"AzureCommunicationUICalling.ReportAProblem.Text"="問題を報告する";
+"AzureCommunicationUICalling.SendFeedback.Text"="送信する";
