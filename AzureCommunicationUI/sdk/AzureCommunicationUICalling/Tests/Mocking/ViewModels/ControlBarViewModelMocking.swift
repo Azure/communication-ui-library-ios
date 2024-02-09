@@ -22,7 +22,8 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    localizationProvider: localizationProvider,
                    dispatchAction: dispatchAction,
                    endCallConfirm: endCallConfirm,
-                   localUserState: localUserState)
+                   localUserState: localUserState,
+                   avMode: .normal)
     }
 
     override func update(localUserState: LocalUserState,

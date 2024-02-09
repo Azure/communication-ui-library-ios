@@ -15,7 +15,8 @@ class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
         super.init(localizationProvider: LocalizationProviderMocking(),
                    accessibilityProvider: AccessibilityProviderMocking(),
                    participantModel: participantModel,
-                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground),
+                   isCameraEnabled: true)
     }
 
     override func update(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) {

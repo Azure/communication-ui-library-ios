@@ -647,7 +647,8 @@ extension ControlBarViewModelTests {
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
-                                   localUserState: storeFactory.store.state.localUserState)
+                                   localUserState: storeFactory.store.state.localUserState,
+                                   avMode: .normal)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {

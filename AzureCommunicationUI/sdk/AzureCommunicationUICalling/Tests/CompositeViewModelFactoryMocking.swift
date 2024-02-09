@@ -77,7 +77,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     store: store,
                                                     localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
-                                                    isIpadInterface: false)
+                                                    isIpadInterface: false,
+                                                    allowLocalCameraPreview: true)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -194,11 +195,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           localizationProvider: localizationProvider,
                                                           dispatchAction: dispatchAction,
                                                           endCallConfirm: endCallConfirm,
-                                                          localUserState: localUserState)
+                                                          localUserState: localUserState,
+                                                          avMode: .normal)
     }
 
-    func makeInfoHeaderViewModel(localUserState: LocalUserState,
-                                 dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
+                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
@@ -214,7 +216,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             localizationProvider: localizationProvider,
             accessibilityProvider: accessibilityProvider,
             participantModel: participantModel,
-            lifeCycleState: lifeCycleState)
+            lifeCycleState: lifeCycleState,
+            isCameraEnabled: true)
     }
 
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
@@ -276,8 +279,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeSupportFormViewModel() -> AzureCommunicationUICalling.SupportFormViewModel {
-        return supportFormViewModel ?? SupportFormViewModel(events: CallComposite.Events(),
-                                                            getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
+        return supportFormViewModel ?? SupportFormViewModel(
+            events: CallComposite.Events(),
+            localizationProvider: localizationProvider,
+            getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
     }
 
     // MARK: SetupViewModels
@@ -293,7 +298,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                     logger: logger,
                                                                     dispatchAction: dispatchAction,
                                                                     localUserState: localUserState,
-                                                                    localizationProvider: localizationProvider)
+                                                                    localizationProvider: localizationProvider,
+                                                                    avMode: .normal)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
