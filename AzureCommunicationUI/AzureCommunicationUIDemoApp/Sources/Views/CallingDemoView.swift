@@ -12,12 +12,12 @@ import AVFoundation
 import AzureCommunicationUICalling
 #endif
 struct CallingDemoView: View {
-    @State var isAlertDisplayed: Bool = true
+    @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
     @State var exitCompositeExecuted: Bool = false
-    @State var alertTitle: String = "asd"
-    @State var alertMessage: String = "asd"
+    @State var alertTitle: String = ""
+    @State var alertMessage: String = ""
     @State var callState: String = ""
     @State var issue: CallCompositeUserReportedIssue?
 
