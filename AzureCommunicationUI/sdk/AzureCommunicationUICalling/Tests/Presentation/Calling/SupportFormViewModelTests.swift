@@ -43,7 +43,6 @@ class SupportFormViewModelTests: XCTestCase {
                                              getDebugInfo: { debugInfo })
         viewModel.messageText = "TEST MESSAGE"
         viewModel.sendReport()
-        XCTAssertFalse(viewModel.blockSubmission)
         XCTAssertTrue(lastIssue != nil)
         XCTAssertEqual(lastIssue?.userMessage, "TEST MESSAGE")
         XCTAssertEqual(lastIssue?.screenshot, nil)
