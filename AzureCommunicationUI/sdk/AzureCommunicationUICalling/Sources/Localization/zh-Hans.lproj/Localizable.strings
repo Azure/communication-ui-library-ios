@@ -146,3 +146,15 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="消除呼叫诊断";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="关闭此通话诊断横幅";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.Report.Issue"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="";
+"AzureCommunicationUICalling.LogsAttach.Notice"="";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
+"AzureCommunicationUICalling.CancelButton.Text"="";
+"AzureCommunicationUICalling.Attach.Screenshot"="";
+"AzureCommunicationUICalling.ReportAProblem.Text"="";
+"AzureCommunicationUICalling.SendFeedback.Text"="";

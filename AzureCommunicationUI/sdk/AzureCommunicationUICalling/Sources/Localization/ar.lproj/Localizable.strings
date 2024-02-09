@@ -146,3 +146,15 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="تجاهل تشخيص المكالمات";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="تجاهل لافتة تشخيص المكالمة هذه";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.Report.Issue"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="";
+"AzureCommunicationUICalling.LogsAttach.Notice"="";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
+"AzureCommunicationUICalling.CancelButton.Text"="";
+"AzureCommunicationUICalling.Attach.Screenshot"="";
+"AzureCommunicationUICalling.ReportAProblem.Text"="";
+"AzureCommunicationUICalling.SendFeedback.Text"="";

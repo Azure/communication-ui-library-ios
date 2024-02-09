@@ -22,7 +22,8 @@ struct SupportFormView: View {
                             HStack {
                                 Text("We'll automatically attach logs.")
                                 Spacer()
-                            Link("Privacy Policy", destination: URL(string: "https://www.microsoft.com")!)                        
+                            Link("Privacy Policy", destination: URL(string: "https://www.microsoft.com")!)
+                        
                                 .foregroundColor(.blue)
                             }) {
                     ZStack(alignment: .topLeading) {

@@ -146,3 +146,15 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.Report.Issue"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="";
+"AzureCommunicationUICalling.LogsAttach.Notice"="";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
+"AzureCommunicationUICalling.CancelButton.Text"="";
+"AzureCommunicationUICalling.Attach.Screenshot"="";
+"AzureCommunicationUICalling.ReportAProblem.Text"="";
+"AzureCommunicationUICalling.SendFeedback.Text"="";

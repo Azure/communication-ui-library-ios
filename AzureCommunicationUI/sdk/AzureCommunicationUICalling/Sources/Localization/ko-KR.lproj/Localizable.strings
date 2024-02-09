@@ -146,3 +146,15 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="통화 진단 해제";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="이 통화 진단 배너 해제";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.Report.Issue"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="";
+"AzureCommunicationUICalling.LogsAttach.Notice"="";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
+"AzureCommunicationUICalling.CancelButton.Text"="";
+"AzureCommunicationUICalling.Attach.Screenshot"="";
+"AzureCommunicationUICalling.ReportAProblem.Text"="";
+"AzureCommunicationUICalling.SendFeedback.Text"="";
