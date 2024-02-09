@@ -55,8 +55,9 @@ class SupportFormViewModel: ObservableObject {
                 screenshotURL = saveScreenshot(screenshot)
             }
         }
-        callback(CallCompositeUserReportedIssue(userMessage: messageText,
-                                                debugInfo: getDebugInfo(),
+
+        callback(CallCompositeUserReportedIssue(userMessage: self.messageText,
+                                                debugInfo: self.getDebugInfo(),
                                                 screenshot: screenshotURL))
         messageText = ""
     }

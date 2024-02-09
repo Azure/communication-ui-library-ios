@@ -252,7 +252,18 @@ class CallingDemoViewController: UIViewController {
         }
 
         let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [] userIssue in
-            print("User issue received in callback " + userIssue.userMessage)
+            DispatchQueue.main.async {
+                // Create the alert controller
+                let alert = UIAlertController(title: "Issue Reported",
+                                              message: userIssue.userMessage,
+                                              preferredStyle: .alert)
+
+                // Add an "OK" action
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+                // Present the alert
+                self.present(alert, animated: true, completion: nil)
+            }
         }
 
         exitCompositeExecuted = false

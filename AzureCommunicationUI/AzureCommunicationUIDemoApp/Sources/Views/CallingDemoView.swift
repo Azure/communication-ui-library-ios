@@ -12,13 +12,15 @@ import AVFoundation
 import AzureCommunicationUICalling
 #endif
 struct CallingDemoView: View {
-    @State var isAlertDisplayed: Bool = false
+    @State var isAlertDisplayed: Bool = true
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
     @State var exitCompositeExecuted: Bool = false
-    @State var alertTitle: String = ""
-    @State var alertMessage: String = ""
+    @State var alertTitle: String = "asd"
+    @State var alertMessage: String = "asd"
     @State var callState: String = ""
+    @State var issue: CallCompositeUserReportedIssue?
+
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -40,6 +42,19 @@ struct CallingDemoView: View {
                 startExperienceButton
                 showExperienceButton
                 Text(callState)
+                if issue != nil {
+                    Text(issue?.userMessage ?? "")
+                    if let imageUrl = issue?.screenshot,
+                        let uiImage = UIImage(contentsOfFile: imageUrl.path) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                    } else {
+                        Text("No Screenshot Available")
+                    }
+                    Text(issue?.debugInfo.callingUIVersion ?? "Version Unknown")
+                }
             }
             Spacer()
         }
@@ -253,7 +268,9 @@ extension CallingDemoView {
         }
 
         let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
-            print("received in app: " + issue.userMessage)
+            DispatchQueue.main.schedule {
+                self.issue = issue
+            }
         }
 
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
