@@ -571,6 +571,16 @@ class ControlBarViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_controlBarViewModel_avModeAudioOnlyHidesCameraButton() {
+        let sut = makeSUT(avMode: .audioOnly)
+        XCTAssertFalse(sut.isCameraDisplayed)
+    }
+
+    func test_controlBarViewModel_avModeNormalShowsCameraButton() {
+        let sut = makeSUT(avMode: .normal)
+        XCTAssertTrue(sut.isCameraDisplayed)
+    }
+
     func test_controlBarViewModel_update_when_statesUpdated_then_micButtonViewModelDisabledStateUpdated() {
         let expectation = XCTestExpectation(description: "Mic button disabled state should be updated")
         expectation.assertForOverFulfill = true
@@ -641,14 +651,15 @@ class ControlBarViewModelTests: XCTestCase {
 }
 
 extension ControlBarViewModelTests {
-    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> ControlBarViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil,
+                 avMode: CallCompositeAvMode = .normal) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState,
-                                   avMode: .normal)
+                                   avMode: avMode)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {

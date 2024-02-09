@@ -48,8 +48,7 @@ class SupportFormViewModelTests: XCTestCase {
         XCTAssertEqual(lastIssue?.userMessage, "TEST MESSAGE")
         XCTAssertEqual(lastIssue?.screenshot, nil)
     }
-    
-    
+
     func test_SupportFormViewModel_ValidateSendFormTriggersEventNoText() {
         let events = CallComposite.Events()
         let debugInfo = DebugInfo(
@@ -59,7 +58,7 @@ class SupportFormViewModelTests: XCTestCase {
         let viewModel = SupportFormViewModel(events: events,
                                              localizationProvider: LocalizationProviderMocking(),
                                              getDebugInfo: { debugInfo })
-        viewModel.messageText = ""        
+        viewModel.messageText = ""
         XCTAssertTrue(viewModel.blockSubmission)
     }
 }
