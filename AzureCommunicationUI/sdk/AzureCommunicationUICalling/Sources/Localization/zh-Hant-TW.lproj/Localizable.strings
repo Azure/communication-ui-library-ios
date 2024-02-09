@@ -149,12 +149,11 @@
 
 /* Feedback Form */
 
-"AzureCommunicationUICalling.Report.Issue"="";
-"AzureCommunicationUICalling.ReportIssue.Title"="";
-"AzureCommunicationUICalling.LogsAttach.Notice"="";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
-"AzureCommunicationUICalling.CancelButton.Text"="";
-"AzureCommunicationUICalling.Attach.Screenshot"="";
-"AzureCommunicationUICalling.ReportAProblem.Text"="";
-"AzureCommunicationUICalling.SendFeedback.Text"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="回報問題";
+"AzureCommunicationUICalling.LogsAttach.Notice"="我們將會自動附加記錄。";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="隱私權原則";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="請描述您的問題...";
+"AzureCommunicationUICalling.CancelButton.Text"="取消";
+"AzureCommunicationUICalling.Attach.Screenshot"="附加螢幕擷取畫面";
+"AzureCommunicationUICalling.ReportAProblem.Text"="回報問題";
+"AzureCommunicationUICalling.SendFeedback.Text"="傳送";

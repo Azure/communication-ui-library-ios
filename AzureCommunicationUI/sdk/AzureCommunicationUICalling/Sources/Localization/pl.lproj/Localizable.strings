@@ -149,12 +149,11 @@
 
 /* Feedback Form */
 
-"AzureCommunicationUICalling.Report.Issue"="";
-"AzureCommunicationUICalling.ReportIssue.Title"="";
-"AzureCommunicationUICalling.LogsAttach.Notice"="";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
-"AzureCommunicationUICalling.CancelButton.Text"="";
-"AzureCommunicationUICalling.Attach.Screenshot"="";
-"AzureCommunicationUICalling.ReportAProblem.Text"="";
-"AzureCommunicationUICalling.SendFeedback.Text"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="Zgłoś problem";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Automatycznie dołączymy dzienniki.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Zasady ochrony prywatności";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Opisz swój problem...";
+"AzureCommunicationUICalling.CancelButton.Text"="Anuluj";
+"AzureCommunicationUICalling.Attach.Screenshot"="Załącz wycinek ekranu";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Zgłoś problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Wyślij";

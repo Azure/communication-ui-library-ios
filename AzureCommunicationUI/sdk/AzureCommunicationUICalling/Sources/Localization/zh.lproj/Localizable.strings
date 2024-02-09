@@ -147,14 +147,14 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="消除呼叫诊断";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="关闭此通话诊断横幅";
 
+
 /* Feedback Form */
 
-"AzureCommunicationUICalling.Report.Issue"="";
-"AzureCommunicationUICalling.ReportIssue.Title"="";
-"AzureCommunicationUICalling.LogsAttach.Notice"="";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
-"AzureCommunicationUICalling.CancelButton.Text"="";
-"AzureCommunicationUICalling.Attach.Screenshot"="";
-"AzureCommunicationUICalling.ReportAProblem.Text"="";
-"AzureCommunicationUICalling.SendFeedback.Text"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="报告问题";
+"AzureCommunicationUICalling.LogsAttach.Notice"="我们将自动附加日志。";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="隐私策略";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="请描述你的问题...";
+"AzureCommunicationUICalling.CancelButton.Text"="取消";
+"AzureCommunicationUICalling.Attach.Screenshot"="附加屏幕截图";
+"AzureCommunicationUICalling.ReportAProblem.Text"="报告问题";
+"AzureCommunicationUICalling.SendFeedback.Text"="发送";

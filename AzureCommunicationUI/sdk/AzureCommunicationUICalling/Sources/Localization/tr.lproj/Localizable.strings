@@ -149,12 +149,11 @@
 
 /* Feedback Form */
 
-"AzureCommunicationUICalling.Report.Issue"="";
-"AzureCommunicationUICalling.ReportIssue.Title"="";
-"AzureCommunicationUICalling.LogsAttach.Notice"="";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="";
-"AzureCommunicationUICalling.CancelButton.Text"="";
-"AzureCommunicationUICalling.Attach.Screenshot"="";
-"AzureCommunicationUICalling.ReportAProblem.Text"="";
-"AzureCommunicationUICalling.SendFeedback.Text"="";
+"AzureCommunicationUICalling.ReportIssue.Title"="Sorun Bildir";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Günlükler otomatik olarak eklenir.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Gizlilik İlkesi";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Lütfen sorununuzu açıklayın...";
+"AzureCommunicationUICalling.CancelButton.Text"="İptal";
+"AzureCommunicationUICalling.Attach.Screenshot"="Ekran görüntüsü ekle";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
+"AzureCommunicationUICalling.SendFeedback.Text"="Gönder";
