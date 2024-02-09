@@ -176,4 +176,14 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"
     case callDiagnosticsDismissAccessibilityHint =
             "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"
+
+    /* Support Form */
+    case supportFormReportIssueTitle = "AzureCommunicationUICalling.ReportIssue.Title"
+    case supportFormLogsAttachNotice = "AzureCommunicationUICalling.LogsAttach.Notice"
+    case supportFormPrivacyPolicyText = "AzureCommunicationUICalling.PrivacyPolicy.Text"
+    case supportFormDescribeYourIssueHintText = "AzureCommunicationUICalling.DescribeYourIssueHint.Text"
+    case supportFormCancelButtonText = "AzureCommunicationUICalling.CancelButton.Text"
+    case supportFormAttachScreenshot = "AzureCommunicationUICalling.Attach.Screenshot"
+    case supportFormReportAProblemText = "AzureCommunicationUICalling.ReportAProblem.Text"
+    case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
 }

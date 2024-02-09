@@ -20,15 +20,14 @@ struct SupportFormView: View {
             Form {
                 Section(footer:
                             HStack {
-                                Text("We'll automatically attach logs.")
+                    Text(viewModel.logsAttachNotice)
                                 Spacer()
-                            Link("Privacy Policy", destination: URL(string: "https://www.microsoft.com")!)
-                        
+                    Link(viewModel.privacyPolicyText, destination: URL(string: StringConstants.privacyPolicyLink)!)
                                 .foregroundColor(.blue)
                             }) {
                     ZStack(alignment: .topLeading) {
                         if viewModel.messageText.isEmpty {
-                            Text("Please describe your issue...")
+                            Text(viewModel.describeYourIssueHintText)
                                 .foregroundColor(.gray)
                                 .padding(.top, 8)
                                 .padding(.leading, 4)
@@ -40,16 +39,16 @@ struct SupportFormView: View {
                 }
                 Section {
                     Toggle(isOn: $viewModel.includeScreenshot) {
-                        Text("Attach screenshot")
+                        Text(viewModel.attachScreenshot)
                     }
                 }
             }
-            .navigationBarTitle("Report a Problem", displayMode: .inline)
+            .navigationBarTitle(viewModel.reportIssueTitle, displayMode: .inline)
             .navigationBarItems(
-                leading: Button("Cancel") {
+                leading: Button(viewModel.cancelButtonText) {
                     showingForm = false
                 },
-                trailing: Button("Send") {
+                trailing: Button(viewModel.sendFeedbackText) {
                     showingForm = false
                     viewModel.prepareToSend()
                 }

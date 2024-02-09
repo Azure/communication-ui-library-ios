@@ -10,12 +10,33 @@ class SupportFormViewModel: ObservableObject {
     @Published var messageText: String = ""
     @Published var includeScreenshot: Bool = false
     @Published var submitOnDismiss: Bool = false
+
+    // Strings
+    @Published var reportIssueTitle: String
+    @Published var logsAttachNotice: String
+    @Published var privacyPolicyText: String
+    @Published var describeYourIssueHintText: String
+    @Published var cancelButtonText: String
+    @Published var attachScreenshot: String
+    @Published var reportAProblemText: String
+    @Published var sendFeedbackText: String
+
     let events: CallComposite.Events
     let getDebugInfo: () -> DebugInfo
 
-    init(events: CallComposite.Events, getDebugInfo: @escaping () -> DebugInfo) {
+    init(events: CallComposite.Events,
+         localizationProvider: LocalizationProviderProtocol,
+         getDebugInfo: @escaping () -> DebugInfo) {
         self.events = events
         self.getDebugInfo = getDebugInfo
+        reportIssueTitle = localizationProvider.getLocalizedString(.supportFormReportIssueTitle)
+        logsAttachNotice = localizationProvider.getLocalizedString(.supportFormLogsAttachNotice)
+        privacyPolicyText = localizationProvider.getLocalizedString(.supportFormPrivacyPolicyText)
+        describeYourIssueHintText = localizationProvider.getLocalizedString(.supportFormDescribeYourIssueHintText)
+        cancelButtonText = localizationProvider.getLocalizedString(.supportFormCancelButtonText)
+        attachScreenshot = localizationProvider.getLocalizedString(.supportFormAttachScreenshot)
+        reportAProblemText = localizationProvider.getLocalizedString(.supportFormReportAProblemText)
+        sendFeedbackText = localizationProvider.getLocalizedString(.supportFormSendFeedbackText)
     }
 
     // Function to handle the send action
