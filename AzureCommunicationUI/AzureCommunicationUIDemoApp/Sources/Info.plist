@@ -41,7 +41,7 @@
 	<key>aadToken</key>
 	<string>${aadToken}</string>
 	<key>acsToken</key>
-	<string>eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwNUVCMzFEMzBBMjBEQkRBNTMxODU2MkM4QTM2RDFCMzIyMkE2MTkiLCJ4NXQiOiJZRjZ6SFRDaURiMmxNWVZpeUtOdEd6SWlwaGsiLCJ0eXAiOiJKV1QifQ.eyJza3lwZWlkIjoiYWNzOmI2YWFkYTFmLTBiMWQtNDdhYy04NjZmLTkxYWFlMDBhMWQwMV8wMDAwMDAxZS0yNTBiLTg5MWMtZTNjNy01OTNhMGQwMGVhNjkiLCJzY3AiOjE3OTIsImNzaSI6IjE3MDczMzYxMzIiLCJleHAiOjE3MDc0MjI1MzIsInJnbiI6ImFtZXIiLCJhY3NTY29wZSI6InZvaXAiLCJyZXNvdXJjZUlkIjoiYjZhYWRhMWYtMGIxZC00N2FjLTg2NmYtOTFhYWUwMGExZDAxIiwicmVzb3VyY2VMb2NhdGlvbiI6InVuaXRlZHN0YXRlcyIsImlhdCI6MTcwNzMzNjEzMn0.iOCnl1pOk1XDw3GpRoqH684LX4Fa1-ldQc1_NwkKBbU4dlkZcbssXicrKtzuDCxbxRaL_shocLBrkXAY7MPPn7P8agyrGWeysRTWIpBIXqiZ4wCkjWLU-f9AvXixbrz8giPNIXagchpRCpgrte1CQ9ijpWCsNrPF4571qpBeoFqOaoSz91ZFV1BVlwwz-7z5dxx4aQjZb_vHxOxRS-y-mS5py3Cb9CyAVt04IfEbEcozMYSlVuHYouSY8CBO73zHY9csH7H2uR5-exwKn1xHrh244cCQZ5WdQHo7Gc3MZp6Ha0-pZn6-PvhlkcOrxSRGjEJwabVwfhaiCRFt5N4C4g</string>
+	<string>${acsToken}</string>
 	<key>acsTokenUrl</key>
 	<string>${acsTokenUrl}</string>
 	<key>appCenterSecret</key>
@@ -53,7 +53,7 @@
 	<key>expiredAcsToken</key>
 	<string>${expiredAcsToken}</string>
 	<key>groupCallId</key>
-	<string>74fce2c0-520f-11ec-97de-71411a9a8e13</string>
+	<string>${groupCallId}</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
 	<key>threadId</key>
