@@ -44,8 +44,7 @@ struct CallingDemoView: View {
                 Text(callState)
                 if issue != nil {
                     Text(issue?.userMessage ?? "")
-                    if let imageUrl = issue?.screenshot,
-                        let uiImage = UIImage(contentsOfFile: imageUrl.path) {
+                    if let uiImage = issue?.screenshot {
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Encapsulates debug information for an ACS Call Composite, including call history, SDK version, and log files.
 public struct DebugInfo {
@@ -20,13 +21,10 @@ public struct DebugInfo {
 
     /// Attempts to capture a screenshot of the current call composite interface.
     ///
-    /// - Returns: A `URL` pointing to the saved screenshot image in the temporary/cache directory,
+    /// - Returns: A `UIImage` of the screenshot
     ///            or `nil` if it was not possible to take a screenshot.
-    func takeScreenshot() -> URL? {
-        guard let screenshotImage = captureScreenshot() else {
-            return nil
-        }
-        return saveScreenshot(screenshotImage)
+    func takeScreenshot() -> UIImage? {
+        return captureScreenshot()
     }
 
     /// Initializes a new `DebugInfo` with the specified call history records, calling UI SDK version, and log files.

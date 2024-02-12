@@ -49,16 +49,11 @@ class SupportFormViewModel: ObservableObject {
         guard let callback = events.onUserReportedIssue else {
             return
         }
-        var screenshotURL: URL?
-        if includeScreenshot {
-            if let screenshot = captureScreenshot() {
-                screenshotURL = saveScreenshot(screenshot)
-            }
-        }
+        let screenshot = captureScreenshot()
 
         callback(CallCompositeUserReportedIssue(userMessage: self.messageText,
                                                 debugInfo: self.getDebugInfo(),
-                                                screenshot: screenshotURL))
+                                                screenshot: screenshot))
         messageText = ""
     }
 

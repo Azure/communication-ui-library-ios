@@ -8,7 +8,8 @@ import UIKit
 /// Represents an event where a user reports an issue within the call composite.
 public struct CallCompositeUserReportedIssue {
 
-    public let screenshot: URL?
+    /// A Screenshot of the user's issue, if they opt'd to include
+    public let screenshot: UIImage?
     /// The user's message describing the issue.
     public let userMessage: String
     /// An array of call identifiers associated with the user's session.
@@ -17,11 +18,11 @@ public struct CallCompositeUserReportedIssue {
     /// Initializes a new `CallCompositeUserReportedIssueEvent`.
     /// - Parameters:
     ///   - userMessage: A message describing the issue from the user's perspective.
-    ///   - logFiles: URLs pointing to logs relevant to the issue.
-    ///   - callIds: Identifiers of the calls involved in the issue.
+    ///   - screenshot: (Optional) UIImage that shows the user's display
+    ///   - debugInfo: Access to the DebugInfo
     public init(userMessage: String,
                 debugInfo: DebugInfo,
-                screenshot: URL?) {
+                screenshot: UIImage?) {
         self.userMessage = userMessage
         self.screenshot = screenshot
         self.debugInfo = debugInfo
