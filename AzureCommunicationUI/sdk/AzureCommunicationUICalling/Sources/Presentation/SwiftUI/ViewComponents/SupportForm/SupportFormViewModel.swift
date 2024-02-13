@@ -6,8 +6,6 @@
 import Foundation
 
 class SupportFormViewModel: ObservableObject {
-    // Published properties that the view can observe
-    @Published var messageText: String = ""
     @Published var submitOnDismiss: Bool = false
     @Published var blockSubmission: Bool = true
 
@@ -21,11 +19,6 @@ class SupportFormViewModel: ObservableObject {
     @Published var sendFeedbackText: String
 
     let dispatchAction: ActionDispatch
-
-    var isSubmitButtonDisabled: Bool {
-        messageText.isEmpty
-    }
-
     let events: CallComposite.Events
     let getDebugInfo: () -> DebugInfo
 
@@ -43,6 +36,26 @@ class SupportFormViewModel: ObservableObject {
         cancelButtonText = localizationProvider.getLocalizedString(.supportFormCancelButtonText)
         reportAProblemText = localizationProvider.getLocalizedString(.supportFormReportAProblemText)
         sendFeedbackText = localizationProvider.getLocalizedString(.supportFormSendFeedbackText)
+    }
+
+    // Published properties that the view can observe
+    private var _messageText: String = "" {
+        willSet {
+            objectWillChange.send()
+        }
+        didSet {
+            blockSubmission = _messageText.isEmpty
+        }
+    }
+
+    // Public facing property to get and set the message text
+    var messageText: String {
+        get { _messageText }
+        set { _messageText = newValue }
+    }
+
+    var isSubmitButtonDisabled: Bool {
+        messageText.isEmpty
     }
 
     // Function to handle the send action

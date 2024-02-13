@@ -35,8 +35,8 @@ struct SupportFormView: View {
                 if viewModel.messageText.isEmpty {
                     Text(viewModel.describeYourIssueHintText)
                         .foregroundColor(.gray)
-                        .padding(.top, 4)
-                        .padding(.leading, 4)
+                        .padding(.top, 8)
+                        .padding(.leading, 16)
                 }
                 TextEditor(text: $viewModel.messageText)
                     .frame(height: 150)
