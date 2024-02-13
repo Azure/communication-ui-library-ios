@@ -19,14 +19,6 @@ public struct DebugInfo {
     /// These files are intended for use in debugging and providing support.
     public let logFiles: [URL]
 
-    /// Attempts to capture a screenshot of the current call composite interface.
-    ///
-    /// - Returns: A `UIImage` of the screenshot
-    ///            or `nil` if it was not possible to take a screenshot.
-    func takeScreenshot() -> UIImage? {
-        return captureScreenshot()
-    }
-
     /// Initializes a new `DebugInfo` with the specified call history records, calling UI SDK version, and log files.
     ///
     /// - Parameters:

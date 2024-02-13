@@ -62,12 +62,13 @@ struct SupportFormView: View {
             }
             .padding(.leading, 16)
             .padding(.trailing, 16)
-            .padding(.bottom, 64)
+            .padding(.bottom, 128)
         }
         .background(Color(StyleProvider.color.backgroundColor))
-        .cornerRadius(16.0)
+        .cornerRadius( 16.0)
         .shadow(radius: 4.0)
-        .padding(16)
+        .padding(.leading, 8)
+        .padding(.trailing, 8)
         .onDisappear {
             if viewModel.submitOnDismiss {
                 DispatchQueue.main.async {
