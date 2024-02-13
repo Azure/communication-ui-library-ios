@@ -52,6 +52,8 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .remoteParticipantsAction(_),
                  .compositeExitAction,
                  .callingViewLaunched,
+                 .showSupportForm,
+                 .hideSupportForm,
                  .visibilityAction(_):
                 break
             }
