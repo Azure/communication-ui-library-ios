@@ -21,7 +21,7 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
-        /// Closure to execure when CallComposite is displayed in Picture-In-Picture.
+        /// Closure to execute when CallComposite is displayed in Picture-In-Picture.
         public var onPictureInPictureChanged: ((_ isInPictureInPicture: Bool) -> Void)?
         /// Closure to execute when call state changes.
         public var onCallStateChanged: ((CallState) -> Void)?
@@ -29,6 +29,10 @@ public class CallComposite {
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
         /// Closure to execute when the User reports an issue from within the call composite
         public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
+        /// Closure to incoming call received.
+        public var onIncomingCall: ((CallCompositeIncomingCallInfo) -> Void)?
+        /// Closure to incoming call cancelled.
+        public var onIncomingCallCancelled: ((CallCompositeIncomingCallCancelledInfo) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -81,7 +85,24 @@ public class CallComposite {
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
+    @available(*, deprecated, message: "Use init with call agent options instead.")
     public init(withOptions options: CallCompositeOptions? = nil) {
+        events = Events()
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
+        localizationProvider = LocalizationProvider(logger: logger)
+        enableMultitasking = options?.enableMultitasking ?? false
+        enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
+        setupViewOrientationOptions = options?.setupScreenOrientation
+        callingViewOrientationOptions = options?.callingScreenOrientation
+        orientationProvider = OrientationProvider()
+    }
+
+    /// Create an instance of CallComposite with options.
+    /// - Parameter for: The CallCompositeCallAgentOptions used to initialize call agent.
+    /// - Parameter withOptions: The CallCompositeOptions used to configure the experience.
+    public init(for: CallCompositeCallAgentOptions,
+                withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
@@ -96,6 +117,61 @@ public class CallComposite {
     /// Dismiss call composite. If call is in progress, user will leave a call.
     public func dismiss() {
         exitManager?.dismiss()
+    }
+
+    /// Handle push notification to receive incoming call notification.
+    public func handlePushNotification(for: CallCompositePushNotificationInfo,
+                                       completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Report incoming call to notify CallKit.
+    /// On success you can wake up application.
+    public static func reportIncomingCall(for: CallCompositePushNotificationInfo,
+                                          callKitOptions: CallCompositeCallKitOptions,
+                                          completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Register device token to receive Azure Notification Hubs push notifications.
+    public func registerPushNotifications(deviceRegistrationToken: Data,
+                                          completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Unregister Azure Notification Hubs push notifications
+    public func unregisterPushNotifications(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Accept incoming call
+    public func acceptIncomingCall(callId: String,
+                                   localOptions: LocalOptions? = nil) {
+    }
+
+    /// Reject incoming call
+    public func rejectIncomingCall(callId: String,
+                                   completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Hold  call
+    public func hold(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Resume  call
+    public func resume(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Mute outgoing  audio
+    public func muteOutgoingAudio(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Unmute outgoing  audio
+    public func unmuteOutgoingAudio(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Mute incoming  audio
+    public func muteIncomingAudio(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    }
+
+    /// Unmute incoming  audio
+    public func unmuteIncomingAudio(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -148,10 +224,30 @@ public class CallComposite {
         store.dispatch(action: .callingAction(.setupCall))
     }
 
+    /// Start Call Composite experience with dialing participants.
+    /// - Parameter participants: participants to dial.
+    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
+    ///                            This is data is not sent up to ACS.
+    public func launch(participants: [CommunicationIdentifier],
+                       localOptions: LocalOptions? = nil) {
+    }
+
+    /// Start Call Composite experience with joining a existing call.
+    /// - Parameter locator: Join existing call.
+    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
+    ///                            This is data is not sent up to ACS.
+    public func launch(locator: JoinLocator,
+                       localOptions: LocalOptions? = nil) {
+    }
+
     /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
+    @available(*, deprecated, message: """
+Use CallComposite init with call agent options
+and launch(locator: JoinLocator,localOptions: LocalOptions? = nil) instead.
+""")
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
