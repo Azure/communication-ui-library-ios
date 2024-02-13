@@ -28,6 +28,7 @@ struct SupportFormView: View {
                     viewModel.sendReport()
                 }
                 .disabled(viewModel.blockSubmission)
+                .opacity(viewModel.blockSubmission ? 0.5 : 1.0)
                 .font(Fonts.button2.font)
                 .foregroundColor(Color(StyleProvider.color.onBackground))
             }.padding(.all, 16)
@@ -36,7 +37,7 @@ struct SupportFormView: View {
                     Text(viewModel.describeYourIssueHintText)
                         .foregroundColor(.gray)
                         .padding(.top, 8)
-                        .padding(.leading, 16)
+                        .padding(.leading, 8)
                 }
                 TextEditor(text: $viewModel.messageText)
                     .frame(height: 150)
@@ -49,16 +50,17 @@ struct SupportFormView: View {
             HStack {
                 Text(viewModel.logsAttachNotice)
                 Link(viewModel.privacyPolicyText, destination: URL(string: StringConstants.privacyPolicyLink)!)
-                    .foregroundColor(.blue)
+                .foregroundColor(Color(StyleProvider.color.primaryColor))
                 Spacer()
             }
             .padding(.leading, 16)
-            .padding(.bottom, 64)
+            .padding(.bottom, 72)
         }
         .background(Color(StyleProvider.color.backgroundColor))
         .cornerRadius( 16.0)
         .shadow(radius: 4.0)
         .padding(.leading, 8)
         .padding(.trailing, 8)
+        .transition(.slide)
     }
 }
