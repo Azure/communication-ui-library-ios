@@ -44,14 +44,6 @@ struct CallingDemoView: View {
                 Text(callState)
                 if issue != nil {
                     Text(issue?.userMessage ?? "")
-                    if let uiImage = issue?.screenshot {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                    } else {
-                        Text("No Screenshot Available")
-                    }
                     Text(issue?.debugInfo.callingUIVersion ?? "Version Unknown")
                 }
             }

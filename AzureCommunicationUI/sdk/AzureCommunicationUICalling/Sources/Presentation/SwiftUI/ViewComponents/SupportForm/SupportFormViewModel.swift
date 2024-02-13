@@ -20,6 +20,8 @@ class SupportFormViewModel: ObservableObject {
     @Published var reportAProblemText: String
     @Published var sendFeedbackText: String
 
+    let dispatchAction: ActionDispatch
+
     var isSubmitButtonDisabled: Bool {
         messageText.isEmpty
     }
@@ -27,11 +29,13 @@ class SupportFormViewModel: ObservableObject {
     let events: CallComposite.Events
     let getDebugInfo: () -> DebugInfo
 
-    init(events: CallComposite.Events,
+    init(dispatchAction: @escaping ActionDispatch,
+         events: CallComposite.Events,
          localizationProvider: LocalizationProviderProtocol,
          getDebugInfo: @escaping () -> DebugInfo) {
         self.events = events
         self.getDebugInfo = getDebugInfo
+        self.dispatchAction = dispatchAction
         reportIssueTitle = localizationProvider.getLocalizedString(.supportFormReportIssueTitle)
         logsAttachNotice = localizationProvider.getLocalizedString(.supportFormLogsAttachNotice)
         privacyPolicyText = localizationProvider.getLocalizedString(.supportFormPrivacyPolicyText)
@@ -49,10 +53,10 @@ class SupportFormViewModel: ObservableObject {
         callback(CallCompositeUserReportedIssue(userMessage: self.messageText,
                                                 debugInfo: self.getDebugInfo()))
         messageText = ""
+        dispatchAction(.hideSupportForm)
     }
 
-    // Will submit after being dismissed
-    func prepareToSend() {
-        submitOnDismiss = true
+    func hideForm() {
+        dispatchAction(.hideSupportForm)
     }
 }

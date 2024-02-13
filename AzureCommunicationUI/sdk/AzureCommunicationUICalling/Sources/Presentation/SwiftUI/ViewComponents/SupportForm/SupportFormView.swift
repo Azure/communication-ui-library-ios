@@ -8,18 +8,15 @@ import SwiftUI
 import FluentUI
 
 struct SupportFormView: View {
-    @Binding var showingForm: Bool
     @ObservedObject var viewModel: SupportFormViewModel
-
-    init(isPresented: Binding<Bool>, viewModel: SupportFormViewModel) {
-        self._showingForm = isPresented
+    init(viewModel: SupportFormViewModel) {
         self.viewModel = viewModel
     }
     var body: some View {
         VStack {
             HStack {
                 Button(viewModel.cancelButtonText) {
-                    showingForm = false
+                    viewModel.hideForm()
                 }
                 .font(Fonts.button2.font)
                 .foregroundColor(Color(StyleProvider.color.onBackground))
@@ -28,9 +25,9 @@ struct SupportFormView: View {
                     .font(Fonts.subhead.font)
                 Spacer()
                 Button(viewModel.sendFeedbackText) {
-                    showingForm = false
-                    viewModel.prepareToSend()
+                    viewModel.sendReport()
                 }
+                .disabled(viewModel.blockSubmission)
                 .font(Fonts.button2.font)
                 .foregroundColor(Color(StyleProvider.color.onBackground))
             }.padding(.all, 16)
@@ -56,19 +53,12 @@ struct SupportFormView: View {
                 Spacer()
             }
             .padding(.leading, 16)
-            .padding(.bottom, 16)
+            .padding(.bottom, 64)
         }
         .background(Color(StyleProvider.color.backgroundColor))
         .cornerRadius( 16.0)
         .shadow(radius: 4.0)
         .padding(.leading, 8)
         .padding(.trailing, 8)
-        .onDisappear {
-            if viewModel.submitOnDismiss {
-                DispatchQueue.main.async {
-                    viewModel.sendReport()
-                }
-            }
-        }
     }
 }

@@ -19,13 +19,11 @@ class ControlBarViewModel: ObservableObject {
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isMoreCallOptionsListDisplayed: Bool = false
     @Published var isShareActivityDisplayed: Bool = false
-    @Published var isSupportFormDisplayed: Bool = false
     @Published var isSupportFormOptionDisplayed: Bool = false
     @Published var isDisplayed: Bool = false
     @Published var isCameraDisplayed: Bool = true
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
-    var supportFormViewModel: SupportFormViewModel!
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
@@ -54,8 +52,6 @@ class ControlBarViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
-
-        supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
@@ -142,7 +138,7 @@ class ControlBarViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.isSupportFormDisplayed = true
+                dispatch(.showSupportForm)
             }
         )
 

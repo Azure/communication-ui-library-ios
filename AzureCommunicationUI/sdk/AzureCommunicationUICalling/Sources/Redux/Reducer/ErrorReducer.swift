@@ -51,6 +51,8 @@ extension Reducer where State == ErrorState,
                 .callDiagnosticAction(_),
                 .compositeExitAction,
                 .callingViewLaunched,
+                .hideSupportForm,
+                .showSupportForm,
                 .visibilityAction(_):
             return state
         }

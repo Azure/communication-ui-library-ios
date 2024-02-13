@@ -39,6 +39,8 @@ extension Reducer where State == CallDiagnosticsState,
              .errorAction(_),
              .compositeExitAction,
              .callingViewLaunched,
+             .showSupportForm,
+             .hideSupportForm,
              .visibilityAction(_):
             return state
         }

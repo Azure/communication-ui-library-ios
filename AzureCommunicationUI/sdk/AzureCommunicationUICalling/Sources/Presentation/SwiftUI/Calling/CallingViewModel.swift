@@ -14,6 +14,8 @@ class CallingViewModel: ObservableObject {
     @Published var isInPip: Bool = false
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var allowLocalCameraPreview: Bool = false
+    @Published var showingSupportForm: Bool = false
+
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -38,6 +40,7 @@ class CallingViewModel: ObservableObject {
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
+    var supportFormViewModel: SupportFormViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -55,6 +58,10 @@ class CallingViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
         let actionDispatch: ActionDispatch = store.dispatch
+
+        supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
+        showingSupportForm = store.state.navigationState.supportFormVisible
+
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
                                                                                                 isIpadInterface)
@@ -130,7 +137,7 @@ class CallingViewModel: ObservableObject {
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
-
+        showingSupportForm = store.state.navigationState.supportFormVisible
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
