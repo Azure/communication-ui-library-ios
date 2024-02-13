@@ -33,35 +33,41 @@ struct SupportFormView: View {
                 }
                 .font(Fonts.button2.font)
                 .foregroundColor(Color(StyleProvider.color.onBackground))
-            }.padding(16.0)
+            }.padding(.all, 16)
             ZStack(alignment: .topLeading) {
                 if viewModel.messageText.isEmpty {
                     Text(viewModel.describeYourIssueHintText)
                         .foregroundColor(.gray)
-                        .padding(.top, 8)
+                        .padding(.top, 4)
                         .padding(.leading, 4)
                 }
                 TextEditor(text: $viewModel.messageText)
                     .frame(height: 150)
                     .opacity(viewModel.messageText.isEmpty ? 0.25 : 1)
+                    .cornerRadius(16.0)
+                    .border(Color(StyleProvider.color.onSurface).opacity(0.25))
             }
-            .padding()
-            .cornerRadius(16.0)
-            .border(Color(StyleProvider.color.onSurface).opacity(0.25))
+            .padding(.leading, 16)
+            .padding(.trailing, 16)
             HStack {
                 Text(viewModel.logsAttachNotice)
                 Link(viewModel.privacyPolicyText, destination: URL(string: StringConstants.privacyPolicyLink)!)
                     .foregroundColor(.blue)
                 Spacer()
             }
+            .padding(.leading, 16)
+            .padding(.bottom, 16)
             Toggle(isOn: $viewModel.includeScreenshot) {
                 Text(viewModel.attachScreenshot)
             }
+            .padding(.leading, 16)
+            .padding(.trailing, 16)
+            .padding(.bottom, 64)
         }
         .background(Color(StyleProvider.color.backgroundColor))
         .cornerRadius(16.0)
         .shadow(radius: 4.0)
-        .padding()
+        .padding(16)
         .onDisappear {
             if viewModel.submitOnDismiss {
                 DispatchQueue.main.async {

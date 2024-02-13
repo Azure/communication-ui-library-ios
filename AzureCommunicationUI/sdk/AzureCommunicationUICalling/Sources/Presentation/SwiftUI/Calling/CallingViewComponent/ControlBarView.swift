@@ -189,7 +189,7 @@ struct ControlBarView: View {
         return Group {
             SupportFormView(isPresented: $viewModel.isSupportFormDisplayed,
                             viewModel: viewModel.supportFormViewModel)
-                .frame(height: 400)
+                .frame(height: 300)
                 .edgesIgnoringSafeArea(.all)
                 .modifier(LockPhoneOrientation())
         }
