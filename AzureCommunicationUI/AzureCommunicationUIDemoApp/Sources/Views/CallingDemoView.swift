@@ -164,7 +164,7 @@ struct CallingDemoView: View {
             showCallComposite()
         }
         .buttonStyle(DemoButtonStyle())
-        .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+        .accessibility(identifier: AccessibilityId.showExperienceAccessibilityID.rawValue)
     }
 
     var showCallHistoryButton: some View {

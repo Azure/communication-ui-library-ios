@@ -57,12 +57,6 @@ struct SupportFormView: View {
             }
             .padding(.leading, 16)
             .padding(.bottom, 16)
-            Toggle(isOn: $viewModel.includeScreenshot) {
-                Text(viewModel.attachScreenshot)
-            }
-            .padding(.leading, 16)
-            .padding(.trailing, 16)
-            .padding(.bottom, 128)
         }
         .background(Color(StyleProvider.color.backgroundColor))
         .cornerRadius( 16.0)
