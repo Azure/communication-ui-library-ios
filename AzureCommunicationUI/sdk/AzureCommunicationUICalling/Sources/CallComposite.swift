@@ -85,7 +85,7 @@ public class CallComposite {
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
-    @available(*, deprecated, message: "Use init with remote options instead.")
+    @available(*, deprecated, message: "Use init with CommunicationTokenCredential instead.")
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
@@ -99,9 +99,9 @@ public class CallComposite {
     }
 
     /// Create an instance of CallComposite with options.
-    /// - Parameter for: The CallCompositeRemoteOptions used to setup call.
-    /// - Parameter withOptions: The CallCompositeOptions used to configure the experience.
-    public init(for: CallCompositeRemoteOptions,
+    /// - Parameter for: The CommunicationTokenCredential used for call.
+    /// - Parameter options: The CallCompositeOptions used to configure the experience.
+    public init(for: CommunicationTokenCredential,
                 withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
@@ -245,7 +245,7 @@ public class CallComposite {
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
     @available(*, deprecated, message: """
-Use CallComposite init with remote options
+Use CallComposite init with CommunicationTokenCredential
 and launch(locator: JoinLocator,localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,

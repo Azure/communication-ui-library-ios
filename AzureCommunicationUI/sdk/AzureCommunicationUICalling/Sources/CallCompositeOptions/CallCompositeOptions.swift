@@ -15,6 +15,7 @@ public struct CallCompositeOptions {
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
     private(set) var callKitOptions: CallCompositeCallKitOptions?
+    private(set) var displayName: String?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -31,13 +32,15 @@ public struct CallCompositeOptions {
     ///  enableMultitasking is on and user navigates away from call view. Default value is `false`.
     /// - Parameter callKitOptions: CallCompositeCallKitOptions for specifying
     ///  callKitOptions customization. Default value is `nil`.
+    /// - Parameter displayName: The display name of the local participant for the call.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
                 callingScreenOrientation: OrientationOptions? = nil,
                 enableMultitasking: Bool = false,
                 enableSystemPipWhenMultitasking: Bool = false,
-                callKitOptions: CallCompositeCallKitOptions? = nil) {
+                callKitOptions: CallCompositeCallKitOptions? = nil,
+                displayName: String? = nil) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
@@ -45,5 +48,6 @@ public struct CallCompositeOptions {
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.callKitOptions = callKitOptions
+        self.displayName = displayName
     }
 }
