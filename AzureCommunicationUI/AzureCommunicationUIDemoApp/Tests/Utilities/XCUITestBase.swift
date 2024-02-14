@@ -170,9 +170,6 @@ extension XCUITestBase {
         add(attachment)
     }
 
-}
-
-extension XCUITestBase {
     /// Enables CallingSDK mock and taps Start experience button
     /// - Parameter useCallingSDKMock: Option to enable callingSDK mock. Default value is `true`
     func startExperience(useCallingSDKMock: Bool = true) {
@@ -223,4 +220,19 @@ extension XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
     }
+
+    /// Enters text into a field identified by an accessibility identifier
+    /// - Parameters:
+    ///   - accessibilityIdentifier: The accessibility identifier of the text field.
+    ///   - text: The text to enter into the field.
+    func enterText(accessibilityIdentifier: String, text: String) {
+        let textField = app.textFields[accessibilityIdentifier]
+        wait(for: textField)
+        textField.tap() // Make sure the text field is focused
+        if #unavailable(iOS 16) {
+            sleep(1) // Sleep to ensure the keyboard has time to appear
+        }
+        textField.typeText(text)
+    }
+
 }

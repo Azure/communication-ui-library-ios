@@ -7,6 +7,9 @@ import XCTest
 
 extension XCTestCase {
     func wait(for element: XCUIElement, timeout: TimeInterval = 20.0) {
+        if element.exists {
+            return
+        }
         let predicate = NSPredicate(format: "exists == true")
         let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
         wait(for: [expectation], timeout: timeout)

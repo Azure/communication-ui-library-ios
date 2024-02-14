@@ -27,6 +27,7 @@ struct SupportFormView: View {
                 Button(viewModel.sendFeedbackText) {
                     viewModel.sendReport()
                 }
+                .accessibilityIdentifier(AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
                 .disabled(viewModel.blockSubmission)
                 .opacity(viewModel.blockSubmission ? 0.5 : 1.0)
                 .font(Fonts.button2.font)
@@ -40,6 +41,7 @@ struct SupportFormView: View {
                         .padding(.leading, 8)
                 }
                 TextEditor(text: $viewModel.messageText)
+                    .accessibilityIdentifier(AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue)
                     .frame(height: 150)
                     .opacity(viewModel.messageText.isEmpty ? 0.25 : 1)
                     .cornerRadius(16.0)

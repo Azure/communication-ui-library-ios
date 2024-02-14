@@ -33,7 +33,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
                 icon: .personFeedback,
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
-                accessibilityIdentifier: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
+                accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
                 action: showSupportFormAction)
 
             items.append(reportErrorInfoModel)

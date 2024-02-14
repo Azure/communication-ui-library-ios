@@ -26,6 +26,13 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
         checkActivityViewControllerDismissed()
     }
+
+    func testCallCompositeSupportForm() {
+        startCall()
+        openSupportFormDiagnosticsInfoMenu()
+        enterText(accessibilityIdentifier: AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue, text: "Test Message")
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
+    }
 }
 
 extension AzureCommunicationUIDemoAppDebugInfoTests {
@@ -42,6 +49,13 @@ extension AzureCommunicationUIDemoAppDebugInfoTests {
                   shouldWait: true)
         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue)
         wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
+    }
+
+    func openSupportFormDiagnosticsInfoMenu() {
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+                  shouldWait: true)
+        tapCell(accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue)
+        // wait(for: app.textFields[AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue])
     }
 
     func checkActivityViewControllerDismissed() {
