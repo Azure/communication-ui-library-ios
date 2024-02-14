@@ -138,7 +138,7 @@ class ControlBarViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                dispatch(.showSupportForm)
+                self.dispatch(.showSupportForm)
             }
         )
 
