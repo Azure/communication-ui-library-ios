@@ -14,6 +14,7 @@ public struct CallCompositeOptions {
     private(set) var enableSystemPipWhenMultitasking: Bool = false
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
+    private(set) var callKitOptions: CallCompositeCallKitOptions?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -28,17 +29,21 @@ public struct CallCompositeOptions {
     ///  while on the call. Default value is `false`.
     /// - Parameter enableSystemPipWhenMultitasking: enables syspem PiP while
     ///  enableMultitasking is on and user navigates away from call view. Default value is `false`.
+    /// - Parameter callKitOptions: CallCompositeCallKitOptions for specifying
+    ///  callKitOptions customization. Default value is `nil`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
                 callingScreenOrientation: OrientationOptions? = nil,
                 enableMultitasking: Bool = false,
-                enableSystemPipWhenMultitasking: Bool = false) {
+                enableSystemPipWhenMultitasking: Bool = false,
+                callKitOptions: CallCompositeCallKitOptions? = nil) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
         self.callingScreenOrientation = callingScreenOrientation
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
+        self.callKitOptions = callKitOptions
     }
 }

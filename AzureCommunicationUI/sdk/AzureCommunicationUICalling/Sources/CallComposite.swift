@@ -101,7 +101,7 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter for: The CallCompositeCallAgentOptions used to initialize call agent.
     /// - Parameter withOptions: The CallCompositeOptions used to configure the experience.
-    public init(for: CallCompositeCallAgentOptions,
+    public init(for: CallCompositeRemoteOptions,
                 withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
