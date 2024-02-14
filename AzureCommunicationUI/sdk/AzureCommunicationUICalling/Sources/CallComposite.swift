@@ -124,7 +124,7 @@ public class CallComposite {
                                        completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }
 
-    /// Report incoming call to notify CallKit.
+    /// Report incoming call to notify CallKit when in background mode.
     /// On success you can wake up application.
     public static func reportIncomingCall(for: CallCompositePushNotificationInfo,
                                           callKitOptions: CallCompositeCallKitOptions,

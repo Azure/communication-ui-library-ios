@@ -13,7 +13,7 @@ public struct CallCompositeCallAgentOptions {
     /// The limit for string length is 256.
     public let displayName: String?
     /// CallKit options
-    private(set) var callKitOptions: CallCompositeCallKitOptions?
+    public let callKitOptions: CallCompositeCallKitOptions?
 
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
