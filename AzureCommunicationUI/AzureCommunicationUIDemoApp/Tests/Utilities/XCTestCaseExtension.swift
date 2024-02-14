@@ -13,6 +13,9 @@ extension XCTestCase {
     }
 
     func waitEnabled(for element: XCUIElement, timeout: TimeInterval = 20.0) {
+        if element.isEnabled {
+            return
+        }
         let predicate = NSPredicate(format: "enabled == true")
         let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
         wait(for: [expectation], timeout: timeout)
