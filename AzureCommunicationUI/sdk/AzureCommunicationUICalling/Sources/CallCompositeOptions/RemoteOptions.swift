@@ -16,7 +16,7 @@ public enum JoinLocator {
 
 /// Object for remote options for Call Composite
 @available(*, deprecated, message: """
-Use CallComposite init with call agent options
+Use CallComposite init with remote options
 and launch(locator: JoinLocator,localOptions: LocalOptions? = nil) instead.
 """)
 public struct RemoteOptions {
