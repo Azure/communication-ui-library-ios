@@ -84,30 +84,9 @@ struct SettingsView: View {
 
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
-            toggleWrapper {
-                expiredTokenToggle
-            } onTapGesture: {
-                envConfigSubject.useExpiredToken = !envConfigSubject.useExpiredToken
-            }
+            expiredTokenToggle
         }
         .accessibilityElement(children: .contain)
-    }
-
-    // for iOS 14, taps are intercepted by Form for UI tests
-    // fix: add a tag gesture recognizer for a toggle
-    @ViewBuilder
-    func toggleWrapper(_ content: () -> some View,
-                       onTapGesture: @escaping () -> Void) -> some View {
-        if #unavailable(iOS 15) {
-            #if DEBUG
-            content()
-                .onTapGesture(perform: onTapGesture)
-            #else
-            content()
-            #endif
-        } else {
-            content()
-        }
     }
 
     var expiredTokenToggle: some View {
@@ -118,11 +97,7 @@ struct SettingsView: View {
     var useMockCallingSDKHandler: some View {
         #if DEBUG
         Section(header: Text("Calling SDK Wrapper Handler Mocking")) {
-            toggleWrapper {
-                mockCallingSDKToggle
-            } onTapGesture: {
-                envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
-            }
+            mockCallingSDKToggle
         }
         .accessibilityElement(children: .contain)
         #else
@@ -133,19 +108,12 @@ struct SettingsView: View {
     var mockCallingSDKToggle: some View {
         Toggle("Use mock Calling SDK Wrapper Handler",
                isOn: $envConfigSubject.useMockCallingSDKHandler)
-        .onTapGesture {
-            envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
-        }
     }
 
     /* <AVMODE> */
     var audioModeSettings: some View {
         Section(header: Text("AV Mode")) {
-            toggleWrapper {
-                audioOnlyModeToggle
-            } onTapGesture: {
-                envConfigSubject.audioOnly = !envConfigSubject.audioOnly
-            }
+            audioOnlyModeToggle
         }
         .accessibilityElement(children: .contain)
     }
@@ -153,9 +121,6 @@ struct SettingsView: View {
     var audioOnlyModeToggle: some View {
         Toggle("Audio only",
                isOn: $envConfigSubject.audioOnly)
-        .onTapGesture {
-            envConfigSubject.audioOnly = !envConfigSubject.audioOnly
-        }
     }
     /* </AVMODE> */
 
