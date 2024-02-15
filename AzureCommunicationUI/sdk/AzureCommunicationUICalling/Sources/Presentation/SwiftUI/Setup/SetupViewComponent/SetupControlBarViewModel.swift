@@ -33,7 +33,7 @@ class SetupControlBarViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
-         avMode: CallCompositeAvMode
+         avMode: CallCompositeAudioVideoMode
     ) {
         self.logger = logger
         self.dispatch = dispatchAction

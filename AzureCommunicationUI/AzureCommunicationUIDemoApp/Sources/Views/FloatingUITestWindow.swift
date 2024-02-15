@@ -106,7 +106,7 @@ class FloatingUITestWindow: UIWindow {
                               selector: Selector) {
         // size will be updated when view is added to the stack view
         let button = UIButton(frame: .zero)
-        button.setTitle(title, for: .normal)
+        button.setTitle(title, for: .audioAndVideo)
         button.titleLabel?.font = .systemFont(ofSize: 12)
         button.accessibilityIdentifier = accessibilityID
         button.addTarget(self, action: selector, for: .touchUpInside)
