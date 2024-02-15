@@ -33,37 +33,53 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Group {
-                    callingViewOrientationSettings
-                    setupViewOrientationSettings
-                }
-                Group {
-                    localizationSettings
-                    skipSetupScreenSettings
-                    micSettings
-                    localParticipantSettings
-                    avatarSettings
-                    audioModeSettings
-                    useMockCallingSDKHandler
-                    navigationSettings
-                    remoteParticipantsAvatarsSettings
-                    themeSettings
-                    multitaskingSettings
-                }
-                exitCompositeSettings
-            }
+            settingsForm
             .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
             .toolbar {
-                Button(
-                    action: { self.presentationMode.wrappedValue.dismiss() },
-                    label: { Image(systemName: "xmark") }
-                )
-                .accessibilityIdentifier(AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
+                dismissButton
             }
         }
         .accessibilityElement(children: .contain)
+    }
+
+    var dismissButton: some View {
+        Button(
+            action: { self.presentationMode.wrappedValue.dismiss() },
+            label: { Image(systemName: "xmark") }
+        )
+        .accessibilityIdentifier(AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
+    }
+
+    var settingsForm: some View {
+        Form {
+            orientationOptions
+            listItems
+            exitCompositeSettings
+        }
+    }
+
+    var orientationOptions: some View {
+        Group {
+            callingViewOrientationSettings
+            setupViewOrientationSettings
+        }
+    }
+
+    var listItems: some View {
+        Group {
+            localizationSettings
+            skipSetupScreenSettings
+            micSettings
+            localParticipantSettings
+            avatarSettings
+            audioModeSettings
+            useMockCallingSDKHandler
+            navigationSettings
+            remoteParticipantsAvatarsSettings
+            themeSettings
+            multitaskingSettings
+        }
     }
 
     var localParticipantSettings: some View {
