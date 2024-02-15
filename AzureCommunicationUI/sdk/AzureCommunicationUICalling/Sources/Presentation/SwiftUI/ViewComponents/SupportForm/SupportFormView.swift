@@ -42,7 +42,6 @@ struct SupportFormView: View {
                         .accessibilityHidden(true)
                 }
                 TextEditor(text: $viewModel.messageText)
-                    .accessibilityIdentifier(AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue)
                     .frame(height: 150)
                     .opacity(viewModel.messageText.isEmpty ? 0.25 : 1)
                     .cornerRadius(16.0)
@@ -56,6 +55,13 @@ struct SupportFormView: View {
                 Link(viewModel.privacyPolicyText, destination: URL(string: StringConstants.privacyPolicyLink)!)
                 .foregroundColor(Color(StyleProvider.color.primaryColor))
                 Spacer()
+#if DEBUG
+                // Hidden button for injecting text
+                Button(" ") {
+                    viewModel.messageText = "Sample Message"
+                }
+                .accessibilityIdentifier(AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue)
+#endif
             }
             .padding(.leading, 16)
             .padding(.bottom, 72)

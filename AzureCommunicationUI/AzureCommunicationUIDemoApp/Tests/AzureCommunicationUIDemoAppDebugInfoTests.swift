@@ -27,13 +27,18 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
         checkActivityViewControllerDismissed()
     }
 
-// Disabled until able to fix TextField
-//    func testCallCompositeSupportForm() {
-//        startCall()
-//        openSupportFormDiagnosticsInfoMenu()
-//        enterText(accessibilityIdentifier: AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue, text: "Test Message")
-//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
-//    }
+    func testCallCompositeSupportForm() {
+        startCall()
+        openSupportFormDiagnosticsInfoMenu()
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
+        hangupCall()
+
+        let userReportedOutput = app.staticTexts[AccessibilityId.userReportedIssueAccessibilityID.rawValue]
+        wait(for: userReportedOutput)
+        XCTAssertTrue(userReportedOutput.exists)
+        XCTAssertEqual(userReportedOutput.label, "Sample Message", "The user reported output does not match the expected text.")
+    }
 }
 
 extension AzureCommunicationUIDemoAppDebugInfoTests {
@@ -56,7 +61,7 @@ extension AzureCommunicationUIDemoAppDebugInfoTests {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
                   shouldWait: true)
         tapCell(accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue)
-        // wait(for: app.textFields[AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue])
+        wait(for: app.buttons[AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue])
     }
 
     func checkActivityViewControllerDismissed() {

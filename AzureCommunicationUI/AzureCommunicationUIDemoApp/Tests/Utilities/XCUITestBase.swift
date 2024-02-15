@@ -113,6 +113,15 @@ extension XCUITestBase {
         }
     }
 
+    func tapDismissButton() {
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
+    }
+
+    func hangupCall() {
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue)
+        tapCell(accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue)
+    }
+
     /// Taps the enabled button that matches with the given accessibility label
     /// - Parameters:
     ///   - accessibilityIdentifier: accessibility label of the button
@@ -299,6 +308,7 @@ extension XCUITestBase {
     ///   - accessibilityIdentifier: The accessibility identifier of the button.
     private func tapButton(accessibilityIdentifier: String) {
         let button = app.buttons[accessibilityIdentifier]
+        wait(for: button)
         button.tap()
         // Add any necessary wait or delay here if needed
     }

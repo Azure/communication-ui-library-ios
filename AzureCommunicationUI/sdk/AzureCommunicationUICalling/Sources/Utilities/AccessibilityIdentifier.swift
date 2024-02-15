@@ -53,5 +53,4 @@ enum AccessibilityIdentifier: String {
             "AzureCommunicationUICalling.CallingView.SupportForm.Submit.AccessibilityID"
     case supportFormTextFieldAccessibilityId =
             "AzureCommunicationUICalling.CallingView.SupportForm.TextField.AccessibilityID"
-
 }

@@ -62,10 +62,8 @@ struct CallingDemoView: View {
                 startExperienceButton
                 showExperienceButton
                 Text(callState)
-                if issue != nil {
-                    Text(issue?.userMessage ?? "")
-                    Text(issue?.debugInfo.callingUIVersion ?? "Version Unknown")
-                }
+                Text(issue?.userMessage ?? "--")
+                .accessibilityIdentifier(AccessibilityId.userReportedIssueAccessibilityID.rawValue)
             }
             Spacer()
         }
