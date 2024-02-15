@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Stäng samtalsdiagnostik";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Stänger den här banderollen för samtalsdiagnostik";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Rapportera problem";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Loggar bifogas automatiskt.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Sekretesspolicy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beskriv problemet ...";
+"AzureCommunicationUICalling.CancelButton.Text"="Avbryt";
+"AzureCommunicationUICalling.Attach.Screenshot"="Bifoga skärmbild";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Rapportera ett problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Skicka";

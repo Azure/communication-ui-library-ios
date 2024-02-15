@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Anrufdiagnose schließen";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Schließt dieses Anrufdiagnosebanner.";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Problem melden";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Protokolle werden automatisch angefügt.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Datenschutzrichtlinie";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beschreiben Sie Ihr Problem...";
+"AzureCommunicationUICalling.CancelButton.Text"="Abbrechen";
+"AzureCommunicationUICalling.Attach.Screenshot"="Screenshot anfügen";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Ein Problem melden";
+"AzureCommunicationUICalling.SendFeedback.Text"="Senden";

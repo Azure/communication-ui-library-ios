@@ -20,4 +20,6 @@ enum Action: Equatable {
     case callDiagnosticAction(DiagnosticsAction)
     case compositeExitAction
     case callingViewLaunched
+    case showSupportForm
+    case hideSupportForm
 }

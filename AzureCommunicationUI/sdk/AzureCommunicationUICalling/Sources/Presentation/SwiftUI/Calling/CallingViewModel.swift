@@ -13,6 +13,8 @@ class CallingViewModel: ObservableObject {
     @Published var appState: AppStatus = .foreground
     @Published var isInPip: Bool = false
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
+    @Published var allowLocalCameraPreview: Bool = false
+    @Published var showingSupportForm: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -38,20 +40,28 @@ class CallingViewModel: ObservableObject {
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
+    var supportFormViewModel: SupportFormViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIpadInterface: Bool) {
+         isIpadInterface: Bool,
+         allowLocalCameraPreview: Bool
+    ) {
         self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
+        self.allowLocalCameraPreview = allowLocalCameraPreview
         let actionDispatch: ActionDispatch = store.dispatch
+
+        supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
+        showingSupportForm = store.state.navigationState.supportFormVisible
+
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
                                                                                                 isIpadInterface)
@@ -61,8 +71,8 @@ class CallingViewModel: ObservableObject {
 
         infoHeaderViewModel = compositeViewModelFactory
 
-            .makeInfoHeaderViewModel(localUserState: store.state.localUserState,
-                                     dispatchAction: actionDispatch)
+            .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
+                                     localUserState: store.state.localUserState)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
@@ -127,7 +137,7 @@ class CallingViewModel: ObservableObject {
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
-
+        showingSupportForm = store.state.navigationState.supportFormVisible
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,

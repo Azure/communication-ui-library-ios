@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Odrzuć diagnostykę wywołań";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Odrzuca ten baner diagnostyki wywołań";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Zgłoś problem";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Automatycznie dołączymy dzienniki.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Zasady ochrony prywatności";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Opisz swój problem...";
+"AzureCommunicationUICalling.CancelButton.Text"="Anuluj";
+"AzureCommunicationUICalling.Attach.Screenshot"="Załącz wycinek ekranu";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Zgłoś problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Wyślij";

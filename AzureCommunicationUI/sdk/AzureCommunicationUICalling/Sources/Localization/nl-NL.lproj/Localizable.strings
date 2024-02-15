@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Oproepdiagnose sluiten";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Hiermee wordt deze banner voor gespreksdiagnose gesloten";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Probleem melden";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Logboeken worden automatisch bijgevoegd.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacybeleid";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beschrijf uw probleem...";
+"AzureCommunicationUICalling.CancelButton.Text"="Annuleren";
+"AzureCommunicationUICalling.Attach.Screenshot"="Schermopname bijvoegen";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Een probleem melden";
+"AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";

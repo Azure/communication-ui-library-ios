@@ -146,3 +146,15 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Сообщить о проблеме";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Журналы будут вложены автоматически.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Политика конфиденциальности";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Опишите свою проблему...";
+"AzureCommunicationUICalling.CancelButton.Text"="Отмена";
+"AzureCommunicationUICalling.Attach.Screenshot"="Вложить снимок экрана";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
+"AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
+

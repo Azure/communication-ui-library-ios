@@ -25,6 +25,7 @@ struct ControlBarView: View {
                     nonCenteredStack
                 }
             }
+
             .padding()
             .background(Color(StyleProvider.color.backgroundColor))
             .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
@@ -45,7 +46,7 @@ struct ControlBarView: View {
             })
             .modifier(PopupModalView(
                 isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-                    activityView
+                    shareActivityView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
@@ -84,8 +85,10 @@ struct ControlBarView: View {
         Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
                 HStack {
-                    videoButton
-                    Spacer(minLength: 0)
+                    if viewModel.isCameraDisplayed {
+                        videoButton
+                        Spacer(minLength: 0)
+                    }
                     micButton
                     Spacer(minLength: 0)
                     audioDeviceButton
@@ -103,8 +106,10 @@ struct ControlBarView: View {
                     audioDeviceButton
                     Spacer(minLength: 0)
                     micButton
-                    Spacer(minLength: 0)
-                    videoButton
+                    if viewModel.isCameraDisplayed {
+                        Spacer(minLength: 0)
+                        videoButton
+                    }
                 }
             }
         }
@@ -163,8 +168,7 @@ struct ControlBarView: View {
             .modifier(LockPhoneOrientation())
         }
     }
-
-    var activityView: some View {
+    var shareActivityView: some View {
         return Group {
             SharingActivityView(viewModel: viewModel.debugInfoSharingActivityViewModel,
                                 applicationActivities: nil,

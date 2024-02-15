@@ -19,6 +19,8 @@ struct CallingDemoView: View {
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
     @State var callState: String = ""
+    @State var issue: CallCompositeUserReportedIssue?
+
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -29,6 +31,26 @@ struct CallingDemoView: View {
 #endif
     var body: some View {
         VStack {
+#if DEBUG
+            // This HSTACK if for testing toggles
+            // Loading the settings, scrolling, waiting, flaky
+            // This is easier for automation
+            HStack {
+                Button("AudioOnly") {
+                    envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+                }
+                .background(envConfigSubject.audioOnly ? Color.green : Color.red)
+                .frame(width: 1, height: 1)
+                .accessibilityIdentifier(AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue)
+
+                Button("MockSdk") {
+                    envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
+                }
+                .background(envConfigSubject.useMockCallingSDKHandler ? Color.green : Color.red)
+                .frame(width: 1, height: 1)
+                .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+            }
+#endif
             Text("UI Library - SwiftUI Sample")
             Spacer()
             acsTokenSelector
@@ -40,6 +62,8 @@ struct CallingDemoView: View {
                 startExperienceButton
                 showExperienceButton
                 Text(callState)
+                Text(issue?.userMessage ?? "--")
+                .accessibilityIdentifier(AccessibilityId.userReportedIssueAccessibilityID.rawValue)
             }
             Spacer()
         }
@@ -150,7 +174,7 @@ struct CallingDemoView: View {
             showCallComposite()
         }
         .buttonStyle(DemoButtonStyle())
-        .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+        .accessibility(identifier: AccessibilityId.showExperienceAccessibilityID.rawValue)
     }
 
     var showCallHistoryButton: some View {
@@ -252,6 +276,12 @@ extension CallingDemoView {
             print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
         }
 
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
+            DispatchQueue.main.schedule {
+                self.issue = issue
+            }
+        }
+
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -264,6 +294,7 @@ extension CallingDemoView {
                 relaunchComposite()
             }
         }
+
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
@@ -278,6 +309,7 @@ extension CallingDemoView {
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
         callComposite.events.onPictureInPictureChanged = onPipChangedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -289,7 +321,9 @@ extension CallingDemoView {
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        avMode: envConfigSubject.audioOnly ? .audioOnly : .normal
+        )
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

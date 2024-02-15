@@ -59,6 +59,6 @@
 	<key>threadId</key>
 	<string>$(threadId)</string>
 	<key>userId</key>
-	<string>$(userId)</string>
+	<string>${userId}</string>
 </dict>
 </plist>

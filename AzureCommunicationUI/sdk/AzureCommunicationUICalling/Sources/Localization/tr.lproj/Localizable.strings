@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Çağrı Tanılamayı Kapat";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Bu Çağrı Tanılamayı Kapatma Başlığı";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Sorun Bildir";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Günlükler otomatik olarak eklenir.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Gizlilik İlkesi";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Lütfen sorununuzu açıklayın...";
+"AzureCommunicationUICalling.CancelButton.Text"="İptal";
+"AzureCommunicationUICalling.Attach.Screenshot"="Ekran görüntüsü ekle";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
+"AzureCommunicationUICalling.SendFeedback.Text"="Gönder";

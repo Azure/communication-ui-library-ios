@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="בטל אבחון שיחה";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="מבטל כרזת אבחון שיחה זו";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="דווח על בעיה";
+"AzureCommunicationUICalling.LogsAttach.Notice"="אנו נצרף יומני רישום באופן אוטומטי.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="מדיניות פרטיות";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="תאר את הבעיה שלך...";
+"AzureCommunicationUICalling.CancelButton.Text"="ביטול";
+"AzureCommunicationUICalling.Attach.Screenshot"="צרף צילום מסך";
+"AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
+"AzureCommunicationUICalling.SendFeedback.Text"="שלח";

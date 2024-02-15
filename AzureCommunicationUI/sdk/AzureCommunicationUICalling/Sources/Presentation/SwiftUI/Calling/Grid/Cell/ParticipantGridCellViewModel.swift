@@ -25,14 +25,17 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isHold: Bool
     @Published var participantIdentifier: String
     @Published var isInBackground: Bool
+
     private var isScreenSharing: Bool = false
     private var participantName: String
     private var renderDisplayName: String?
+    private var isCameraEnabled: Bool
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel,
-         lifeCycleState: LifeCycleState) {
+         lifeCycleState: LifeCycleState,
+         isCameraEnabled: Bool) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.participantName = participantModel.displayName
@@ -42,6 +45,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
         self.isInBackground = lifeCycleState.currentStatus == .background
+        self.isCameraEnabled = isCameraEnabled
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
         self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
     }
@@ -125,10 +129,12 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel)
     -> ParticipantVideoViewInfoModel {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
-        let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
+        let cameraVideoStreamIdentifier = isCameraEnabled ?
+        participantModel.cameraVideoStreamModel?.videoStreamIdentifier :
+        nil
+
         let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
         let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
-
         return screenShareVideoStreamIdentifier != nil ?
         ParticipantVideoViewInfoModel(videoStreamType: screenShareVideoStreamType,
                                       videoStreamId: screenShareVideoStreamIdentifier) :

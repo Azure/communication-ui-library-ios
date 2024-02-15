@@ -146,3 +146,12 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
+"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
+"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";

@@ -286,7 +286,8 @@ extension ParticipantCellViewModelTests {
         return ParticipantGridCellViewModel(localizationProvider: LocalizationProviderMocking(),
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel,
-                                            lifeCycleState: LifeCycleState())
+                                            lifeCycleState: LifeCycleState(),
+                                            isCameraEnabled: true)
     }
 
 }

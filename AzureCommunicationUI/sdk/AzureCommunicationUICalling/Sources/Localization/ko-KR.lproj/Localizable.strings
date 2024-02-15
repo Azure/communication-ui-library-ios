@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="통화 진단 해제";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="이 통화 진단 배너 해제";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="문제 신고";
+"AzureCommunicationUICalling.LogsAttach.Notice"="로그를 자동으로 첨부합니다.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="개인정보처리방침";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="문제를 설명해 주세요...";
+"AzureCommunicationUICalling.CancelButton.Text"="취소";
+"AzureCommunicationUICalling.Attach.Screenshot"="스크린샷 첨부";
+"AzureCommunicationUICalling.ReportAProblem.Text"="문제 보고";
+"AzureCommunicationUICalling.SendFeedback.Text"="보내기";

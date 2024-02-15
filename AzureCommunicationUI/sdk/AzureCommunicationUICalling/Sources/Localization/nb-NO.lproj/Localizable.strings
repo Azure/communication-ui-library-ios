@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Lukk anropsdiagnose";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Lukker dette diagnosebanneret for anrop";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Rapporter problem";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Vi legger ved logger automatisk.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Personvern";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beskriv problemet ditt...";
+"AzureCommunicationUICalling.CancelButton.Text"="Avbryt";
+"AzureCommunicationUICalling.Attach.Screenshot"="Legg ved skjermbilde";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Rapporter et problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";

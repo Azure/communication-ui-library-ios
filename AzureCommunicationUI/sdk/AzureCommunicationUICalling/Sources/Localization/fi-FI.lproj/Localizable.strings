@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Hylkää puheludiagnostiikka";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Hylkää tämän puhelun diagnostiikkapalkin";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Ilmoita ongelmasta";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Lokit liitetään automaattisesti.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Tietosuojakäytäntö";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Kuvaile ongelmaa...";
+"AzureCommunicationUICalling.CancelButton.Text"="Peruuta";
+"AzureCommunicationUICalling.Attach.Screenshot"="Liitä näyttökuva";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Ilmoita ongelmasta";
+"AzureCommunicationUICalling.SendFeedback.Text"="Lähetä";

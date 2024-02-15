@@ -146,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="通話診断を閉じる";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="この通話診断バナーを閉じます";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="問題の報告";
+"AzureCommunicationUICalling.LogsAttach.Notice"="ログは自動的に添付されます。";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="プライバシー ポリシー";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="問題を説明してください...";
+"AzureCommunicationUICalling.CancelButton.Text"="取り消す";
+"AzureCommunicationUICalling.Attach.Screenshot"="スクリーンショットを添付する";
+"AzureCommunicationUICalling.ReportAProblem.Text"="問題を報告する";
+"AzureCommunicationUICalling.SendFeedback.Text"="送信する";

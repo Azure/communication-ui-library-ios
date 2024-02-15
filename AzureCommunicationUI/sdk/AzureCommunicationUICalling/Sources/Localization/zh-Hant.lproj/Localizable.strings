@@ -146,3 +146,15 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="關閉通話診斷";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="關閉此通話診斷橫幅";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="回報問題";
+"AzureCommunicationUICalling.LogsAttach.Notice"="我們將會自動附加記錄。";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="隱私權原則";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="請描述您的問題...";
+"AzureCommunicationUICalling.CancelButton.Text"="取消";
+"AzureCommunicationUICalling.Attach.Screenshot"="附加螢幕擷取畫面";
+"AzureCommunicationUICalling.ReportAProblem.Text"="回報問題";
+"AzureCommunicationUICalling.SendFeedback.Text"="傳送";
+

@@ -250,6 +250,11 @@ class CallingDemoViewController: UIViewController {
                             }
                         }
         }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [] userIssue in
+            print("::::UIKitDemoView::getEventsHandler::onUserReportedIssue \(userIssue)")
+        }
+
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
@@ -259,10 +264,12 @@ class CallingDemoViewController: UIViewController {
                 callComposite?.dismiss()
             }
         }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
@@ -274,8 +281,8 @@ class CallingDemoViewController: UIViewController {
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
-
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        avMode: envConfigSubject.audioOnly ? .audioOnly : .normal)
         self.callComposite = callComposite
 
         if let credential = try? await getTokenCredential() {
@@ -493,7 +500,36 @@ class CallingDemoViewController: UIViewController {
     private func setupUI() {
         updateUIBasedOnUserInterfaceStyle()
         let safeArea = view.safeAreaLayoutGuide
+#if DEBUG
+        // Debug Buttons for Instrumentation to press
+        // They shouldn't be visible
+        let audioOnlyButton = UIButton(type: .system)
+        audioOnlyButton.backgroundColor = UIColor.clear // Making the button transparent
+        audioOnlyButton.addTarget(self, action: #selector(toggleAudioOnly), for: .touchUpInside)
+        audioOnlyButton.accessibilityIdentifier = AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue
+        audioOnlyButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
 
+        let mockSdkButton = UIButton(type: .system)
+        mockSdkButton.backgroundColor = UIColor.clear // Making the button transparent
+        mockSdkButton.addTarget(self, action: #selector(toggleMockSdk), for: .touchUpInside)
+        mockSdkButton.accessibilityIdentifier = AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue
+        mockSdkButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
+
+        let debugButtonsStackView = UIStackView(arrangedSubviews: [audioOnlyButton, mockSdkButton])
+        debugButtonsStackView.axis = .horizontal
+        debugButtonsStackView.distribution = .fillEqually
+        debugButtonsStackView.spacing = 4 // Reduced spacing
+        debugButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(debugButtonsStackView)
+
+        NSLayoutConstraint.activate([
+            debugButtonsStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
+            debugButtonsStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 8),
+            debugButtonsStackView.widthAnchor.constraint(equalToConstant: 24), // Container width
+            audioOnlyButton.heightAnchor.constraint(equalToConstant: 10), // Button height
+            mockSdkButton.heightAnchor.constraint(equalToConstant: 10) // Button height
+        ])
+#endif
         titleLabel = UILabel()
         titleLabel.text = "UI Library - UIKit Sample"
         titleLabel.sizeToFit()
@@ -617,7 +653,7 @@ class CallingDemoViewController: UIViewController {
         showExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         showExperienceButton.addTarget(self, action: #selector(onShowExperienceBtnPressed), for: .touchUpInside)
 
-        showExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
+        showExperienceButton.accessibilityLabel = AccessibilityId.showExperienceAccessibilityID.rawValue
 
         callStateLabel = UILabel()
         callStateLabel.text = "State"
@@ -763,6 +799,14 @@ class CallingDemoViewController: UIViewController {
                 scrollView.scrollIndicatorInsets = .zero
             }
         }
+    }
+
+    @objc func toggleAudioOnly() {
+        envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+    }
+
+    @objc func toggleMockSdk() {
+        envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
     }
 }
 
