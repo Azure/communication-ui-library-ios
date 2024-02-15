@@ -21,7 +21,7 @@ public struct LocalOptions {
     let skipSetupScreen: Bool?
 
     /// Specifies the audio/video mode for the call, affecting available functionalities.
-    let avMode: CallCompositeAudioVideoMode
+    let audioVideoMode: CallCompositeAudioVideoMode
 
     /// Internal storage for the camera state, not directly exposed to the initializer.
     private let cameraOnInternal: Bool?
@@ -46,12 +46,12 @@ public struct LocalOptions {
         self.cameraOnInternal = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
-        self.avMode = avMode
+        self.audioVideoMode = avMode
     }
 
     /// Determines the actual state of the camera, considering both the `cameraOnInternal` flag and the `avMode`.
     var cameraOn: Bool {
-        guard avMode != .audioOnly else {
+        guard audioVideoMode != .audioOnly else {
             return false
         }
         return cameraOnInternal ?? false
