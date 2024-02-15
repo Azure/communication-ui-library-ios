@@ -54,7 +54,19 @@ struct SettingsView: View {
     var settingsForm: some View {
         Form {
             orientationOptions
-            listItems
+            Group {
+                localizationSettings
+                skipSetupScreenSettings
+                micSettings
+                localParticipantSettings
+                avatarSettings
+                audioModeSettings
+                useMockCallingSDKHandler
+                navigationSettings
+                remoteParticipantsAvatarsSettings
+                themeSettings
+                multitaskingSettings
+            }
             exitCompositeSettings
         }
     }
@@ -63,22 +75,6 @@ struct SettingsView: View {
         Group {
             callingViewOrientationSettings
             setupViewOrientationSettings
-        }
-    }
-
-    var listItems: some View {
-        Group {
-            localizationSettings
-            skipSetupScreenSettings
-            micSettings
-            localParticipantSettings
-            avatarSettings
-            audioModeSettings
-            useMockCallingSDKHandler
-            navigationSettings
-            remoteParticipantsAvatarsSettings
-            themeSettings
-            multitaskingSettings
         }
     }
 
