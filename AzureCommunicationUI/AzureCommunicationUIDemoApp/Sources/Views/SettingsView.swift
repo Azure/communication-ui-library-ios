@@ -60,7 +60,6 @@ struct SettingsView: View {
                 micSettings
                 localParticipantSettings
                 avatarSettings
-//                audioModeSettings
                 useMockCallingSDKHandler
                 navigationSettings
                 remoteParticipantsAvatarsSettings
@@ -81,6 +80,7 @@ struct SettingsView: View {
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
             expiredTokenToggle
+            audioOnlyModeToggle
         }
         .accessibilityElement(children: .contain)
     }
@@ -107,13 +107,6 @@ struct SettingsView: View {
     }
 
     /* <AVMODE> */
-    var audioModeSettings: some View {
-        Section(header: Text("AV Mode")) {
-            audioOnlyModeToggle
-        }
-        .accessibilityElement(children: .contain)
-    }
-
     var audioOnlyModeToggle: some View {
         Toggle("Audio only",
                isOn: $envConfigSubject.audioOnly)
