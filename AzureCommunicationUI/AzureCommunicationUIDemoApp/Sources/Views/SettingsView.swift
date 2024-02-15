@@ -44,6 +44,7 @@ struct SettingsView: View {
                     micSettings
                     localParticipantSettings
                     avatarSettings
+                    audioModeSettings
                     useMockCallingSDKHandler
                     navigationSettings
                     remoteParticipantsAvatarsSettings
@@ -119,8 +120,28 @@ struct SettingsView: View {
         .onTapGesture {
             envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
         }
-        .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
     }
+
+    /* <AVMODE> */
+    var audioModeSettings: some View {
+        Section(header: Text("AV Mode")) {
+            toggleWrapper {
+                audioOnlyModeToggle
+            } onTapGesture: {
+                envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+            }
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    var audioOnlyModeToggle: some View {
+        Toggle("Audio only",
+               isOn: $envConfigSubject.audioOnly)
+        .onTapGesture {
+            envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+        }
+    }
+    /* </AVMODE> */
 
     var relaunchCompositeOnDismissedToggle: some View {
         Toggle("Relaunch composite after dismiss api call",
@@ -225,8 +246,8 @@ struct SettingsView: View {
     var micSettings: some View {
         Section(header: Text("Mic & Carmera Default Vaule")) {
             Toggle("Mic Default", isOn: $envConfigSubject.microphoneOn)
+
             Toggle("Camera Default", isOn: $envConfigSubject.cameraOn)
-            Toggle("Audio Only", isOn: $envConfigSubject.audioOnly)
         }
     }
 

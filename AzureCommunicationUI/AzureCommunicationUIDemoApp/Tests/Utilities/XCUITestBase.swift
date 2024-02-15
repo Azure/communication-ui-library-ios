@@ -128,6 +128,24 @@ extension XCUITestBase {
         }
     }
 
+    /// Verifies a button is on the screen
+    /// - Parameters:
+    ///   - accessibilityIdentifier: accessibility label of the button
+    func verifyButtonExistsAndEnabled(accessibilityIdentifier: String) {
+        let button = app.buttons[accessibilityIdentifier]
+        wait(for: button)
+        XCTAssertTrue(button.exists, "Button does not exist.")
+        XCTAssertTrue(button.isEnabled, "Button is not enabled.")
+    }
+
+    /// Verifies a button is on the screen
+    /// - Parameters:
+    ///   - accessibilityIdentifier: accessibility label of the button
+    func verifyButtonDoesNotExist(accessibilityIdentifier: String) {
+        let button = app.buttons[accessibilityIdentifier]
+        XCTAssertTrue(!button.exists, "Button Exists, should be hidden.")
+    }
+
     /// Selects the interface before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {
@@ -180,26 +198,6 @@ extension XCUITestBase {
                          shouldWait: true)
     }
 
-    func enableMockCallingSDKWrapper() {
-        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-        // scrolling is needed for devices with smaller screens as the switch may not be tappable
-        // because cells weren't loaded to memory
-        if #unavailable(iOS 16) {
-            // for <iOS 16, the table is shown
-            app.tables.firstMatch.swipeUp()
-        } else {
-            // for iOS 16, the collection is shown
-            app.collectionViews.firstMatch.swipeUp()
-        }
-
-        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        wait(for: toggle)
-        toggle.tap()
-        XCTAssertEqual(toggle.isOn, true)
-
-        closeDemoAppSettingsPage()
-    }
-
     func closeDemoAppSettingsPage() {
         if #unavailable(iOS 15) {
             // Close button in toolbar is unavailable for iOS 14 because of how Forms handles events
@@ -216,6 +214,11 @@ extension XCUITestBase {
         }
     }
 
+    /// Enables the Mock Calling SDK Wrapper by toggling the relevant switch in the settings.
+    func enableMockCallingSDKWrapper() {
+        tapButton(accessibilityIdentifier: AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+    }
+
     func joinCall() {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
@@ -227,12 +230,91 @@ extension XCUITestBase {
     ///   - text: The text to enter into the field.
     func enterText(accessibilityIdentifier: String, text: String) {
         let textField = app.textFields[accessibilityIdentifier]
+        // let textFieldOther = app.otherElements[accessibilityIdentifier]
         wait(for: textField)
         textField.tap() // Make sure the text field is focused
         if #unavailable(iOS 16) {
             sleep(1) // Sleep to ensure the keyboard has time to appear
         }
         textField.typeText(text)
+    }
+
+    /// Taps a settings toggle based on its accessibility identifier.
+    /// - Parameter accessibilityId: The accessibility identifier of the toggle.
+    func enableSettingsToggle(accessibilityId: String) {
+        navigateToSettings()
+        let toggle = findAndPrepareToggle(accessibilityId: accessibilityId)
+        toggleSwitch(accessibilityIdentifier: accessibilityId, expectedState: true)
+        verifyToggleState(toggle, expectedState: true)
+        closeSettings()
+    }
+
+    /// Generic method to navigate to the settings page.
+    private func navigateToSettings() {
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+    }
+
+    /// Finds a toggle switch and scrolls to it if necessary.
+    /// - Parameter accessibilityId: The accessibility identifier of the toggle.
+    /// - Returns: The toggle switch as an XCUIElement.
+    private func findAndPrepareToggle(accessibilityId: String) -> XCUIElement {
+        let toggle = app.switches[accessibilityId]
+        scrollAndWaitForElement(element: toggle)
+        return toggle
+    }
+
+    /// Verifies the state of a toggle switch.
+    /// - Parameters:
+    ///   - toggle: The toggle switch as an XCUIElement.
+    ///   - expectedState: The expected state of the toggle (true for on, false for off).
+    private func verifyToggleState(_ toggle: XCUIElement, expectedState: Bool) {
+        XCTAssertEqual(toggle.isOn, expectedState, "Toggle state did not match expected state.")
+    }
+
+    /// Scrolls until a specific element is visible or a timeout is reached.
+    /// - Parameters:
+    ///   - element: The element to scroll to.
+    ///   - timeout: Maximum time to attempt scrolling.
+    private func scrollAndWaitForElement(element: XCUIElement, timeout: TimeInterval = 25.0) {
+        let startTime = Date()
+        while Date().timeIntervalSince(startTime) < timeout {
+            guard !element.exists || !element.isHittable else {
+                return
+            }
+            app.swipeUp() // Simplified as swipeUp() should work for both tables and collection views generically
+        }
+
+        wait(for: element)
+    }
+
+    /// Closes the settings page, adapting to different iOS versions as necessary.
+    private func closeSettings() {
+        let element = app.buttons[AccessibilityId.settingsCloseButtonAccessibilityID.rawValue]
+        wait(for: element)
+        element.tap()
+    }
+
+    /// Taps a button based on its accessibility identifier.
+    /// - Parameters:
+    ///   - accessibilityIdentifier: The accessibility identifier of the button.
+    private func tapButton(accessibilityIdentifier: String) {
+        let button = app.buttons[accessibilityIdentifier]
+        button.tap()
+        // Add any necessary wait or delay here if needed
+    }
+
+    func toggleSwitch(accessibilityIdentifier: String, expectedState: Bool, maxAttempts: Int = 2) {
+        let toggle = app.switches[accessibilityIdentifier]
+        for _ in 1...maxAttempts {
+            if toggle.isOn != expectedState {
+                toggle.tap()
+                sleep(1) // Wait a moment for the state to potentially change.
+            } else {
+                return // Exit if the toggle reaches the expected state.
+            }
+        }
+        // Optionally, verify the toggle state after all attempts.
+        verifyToggleState(toggle, expectedState: expectedState)
     }
 
 }

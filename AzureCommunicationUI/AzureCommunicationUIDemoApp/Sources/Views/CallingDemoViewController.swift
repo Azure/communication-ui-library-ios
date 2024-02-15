@@ -624,7 +624,7 @@ class CallingDemoViewController: UIViewController {
         showExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         showExperienceButton.addTarget(self, action: #selector(onShowExperienceBtnPressed), for: .touchUpInside)
 
-        showExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
+        showExperienceButton.accessibilityLabel = AccessibilityId.showExperienceAccessibilityID.rawValue
 
         callStateLabel = UILabel()
         callStateLabel.text = "State"

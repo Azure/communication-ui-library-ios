@@ -39,6 +39,7 @@ struct SupportFormView: View {
                         .foregroundColor(.gray)
                         .padding(.top, 8)
                         .padding(.leading, 8)
+                        .accessibilityHidden(true)
                 }
                 TextEditor(text: $viewModel.messageText)
                     .accessibilityIdentifier(AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue)
@@ -46,6 +47,7 @@ struct SupportFormView: View {
                     .opacity(viewModel.messageText.isEmpty ? 0.25 : 1)
                     .cornerRadius(16.0)
                     .border(Color(StyleProvider.color.onSurface).opacity(0.25))
+                    .accessibilityHint(viewModel.describeYourIssueHintText)
             }
             .padding(.leading, 16)
             .padding(.trailing, 16)

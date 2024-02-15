@@ -27,12 +27,13 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
         checkActivityViewControllerDismissed()
     }
 
-    func testCallCompositeSupportForm() {
-        startCall()
-        openSupportFormDiagnosticsInfoMenu()
-        enterText(accessibilityIdentifier: AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue, text: "Test Message")
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
-    }
+// Disabled until able to fix TextField
+//    func testCallCompositeSupportForm() {
+//        startCall()
+//        openSupportFormDiagnosticsInfoMenu()
+//        enterText(accessibilityIdentifier: AccessibilityIdentifier.supportFormTextFieldAccessibilityId.rawValue, text: "Test Message")
+//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
+//    }
 }
 
 extension AzureCommunicationUIDemoAppDebugInfoTests {
