@@ -212,7 +212,7 @@ class CallingDemoViewController: UIViewController {
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
-            enableSystemPipWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,

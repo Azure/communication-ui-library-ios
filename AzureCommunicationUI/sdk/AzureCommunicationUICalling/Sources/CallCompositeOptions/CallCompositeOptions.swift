@@ -26,19 +26,19 @@ public struct CallCompositeOptions {
     ///  callingScreenOrientation customization. Default value is `nil`.
     /// - Parameter enableMultitasking: enables user to navigate in the application
     ///  while on the call. Default value is `false`.
-    /// - Parameter enableSystemPipWhenMultitasking: enables syspem PiP while
+    /// - Parameter enableSystemPictureInPictureWhenMultitasking: enables syspem Picture-in-Picture while
     ///  enableMultitasking is on and user navigates away from call view. Default value is `false`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
                 callingScreenOrientation: OrientationOptions? = nil,
                 enableMultitasking: Bool = false,
-                enableSystemPipWhenMultitasking: Bool = false) {
+                enableSystemPictureInPictureWhenMultitasking: Bool = false) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
         self.callingScreenOrientation = callingScreenOrientation
         self.enableMultitasking = enableMultitasking
-        self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
+        self.enableSystemPipWhenMultitasking = enableSystemPictureInPictureWhenMultitasking
     }
 }
