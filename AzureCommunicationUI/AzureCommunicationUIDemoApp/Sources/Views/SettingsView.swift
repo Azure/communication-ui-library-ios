@@ -56,16 +56,16 @@ struct SettingsView: View {
             orientationOptions
             Group {
                 localizationSettings
-                skipSetupScreenSettings
-                micSettings
-                localParticipantSettings
-                avatarSettings
-                audioModeSettings
-                useMockCallingSDKHandler
-                navigationSettings
-                remoteParticipantsAvatarsSettings
-                themeSettings
-                multitaskingSettings
+//                skipSetupScreenSettings
+//                micSettings
+//                localParticipantSettings
+//                avatarSettings
+//                audioModeSettings
+//                useMockCallingSDKHandler
+//                navigationSettings
+//                remoteParticipantsAvatarsSettings
+//                themeSettings
+//                multitaskingSettings
             }
             exitCompositeSettings
         }
