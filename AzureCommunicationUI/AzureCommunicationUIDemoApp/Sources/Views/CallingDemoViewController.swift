@@ -500,7 +500,36 @@ class CallingDemoViewController: UIViewController {
     private func setupUI() {
         updateUIBasedOnUserInterfaceStyle()
         let safeArea = view.safeAreaLayoutGuide
+#if DEBUG
+        // Debug Buttons for Instrumentation to press
+        // They shouldn't be visible
+        let audioOnlyButton = UIButton(type: .system)
+        audioOnlyButton.backgroundColor = UIColor.clear // Making the button transparent
+        audioOnlyButton.addTarget(self, action: #selector(toggleAudioOnly), for: .touchUpInside)
+        audioOnlyButton.accessibilityIdentifier = AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue
+        audioOnlyButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
 
+        let mockSdkButton = UIButton(type: .system)
+        mockSdkButton.backgroundColor = UIColor.clear // Making the button transparent
+        mockSdkButton.addTarget(self, action: #selector(toggleMockSdk), for: .touchUpInside)
+        mockSdkButton.accessibilityIdentifier = AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue
+        mockSdkButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
+
+        let debugButtonsStackView = UIStackView(arrangedSubviews: [audioOnlyButton, mockSdkButton])
+        debugButtonsStackView.axis = .horizontal
+        debugButtonsStackView.distribution = .fillEqually
+        debugButtonsStackView.spacing = 4 // Reduced spacing
+        debugButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(debugButtonsStackView)
+
+        NSLayoutConstraint.activate([
+            debugButtonsStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
+            debugButtonsStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 8),
+            debugButtonsStackView.widthAnchor.constraint(equalToConstant: 24), // Container width
+            audioOnlyButton.heightAnchor.constraint(equalToConstant: 10), // Button height
+            mockSdkButton.heightAnchor.constraint(equalToConstant: 10) // Button height
+        ])
+#endif
         titleLabel = UILabel()
         titleLabel.text = "UI Library - UIKit Sample"
         titleLabel.sizeToFit()
@@ -770,6 +799,14 @@ class CallingDemoViewController: UIViewController {
                 scrollView.scrollIndicatorInsets = .zero
             }
         }
+    }
+
+    @objc func toggleAudioOnly() {
+        envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+    }
+
+    @objc func toggleMockSdk() {
+        envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
     }
 }
 
