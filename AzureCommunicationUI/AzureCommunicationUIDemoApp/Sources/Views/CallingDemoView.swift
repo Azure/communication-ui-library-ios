@@ -272,8 +272,8 @@ extension CallingDemoView {
                     callComposite: composite)
         }
 
-        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
-            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
+        let onPipChangedHandler: (Bool) -> Void = { isPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isPictureInPicture)
         }
 
         let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in

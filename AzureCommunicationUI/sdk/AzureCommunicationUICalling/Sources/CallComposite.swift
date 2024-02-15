@@ -22,7 +22,7 @@ public class CallComposite {
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execure when CallComposite is displayed in Picture-In-Picture.
-        public var onPictureInPictureChanged: ((_ isInPictureInPicture: Bool) -> Void)?
+        public var onPictureInPictureChanged: ((_ isPictureInPicture: Bool) -> Void)?
         /// Closure to execute when call state changes.
         public var onCallStateChanged: ((CallState) -> Void)?
         /// Closure to Call Composite dismissed.
