@@ -32,22 +32,18 @@ struct CallingDemoView: View {
     var body: some View {
         VStack {
 #if DEBUG
-            // This HSTACK if for testing toggles
-            // Loading the settings, scrolling, waiting, flaky
-            // This is easier for automation
+            // This HStack is for testing toggles.
+            // Adjusted to make buttons invisible but still accessible for automation.
             HStack {
                 Button("AudioOnly") {
                     envConfigSubject.audioOnly = !envConfigSubject.audioOnly
                 }
-                .background(envConfigSubject.audioOnly ? Color.green : Color.red)
-                .frame(width: 1, height: 1)
+                .frame(width: 0, height: 0)
                 .accessibilityIdentifier(AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue)
-
                 Button("MockSdk") {
                     envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
                 }
-                .background(envConfigSubject.useMockCallingSDKHandler ? Color.green : Color.red)
-                .frame(width: 1, height: 1)
+                .frame(width: 0, height: 0)
                 .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
             }
 #endif
@@ -272,8 +268,8 @@ extension CallingDemoView {
                     callComposite: composite)
         }
 
-        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
-            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
+        let onPipChangedHandler: (Bool) -> Void = { isPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isPictureInPicture)
         }
 
         let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
@@ -322,7 +318,7 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        avMode: envConfigSubject.audioOnly ? .audioOnly : .normal
+                                        avMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
         )
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {

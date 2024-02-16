@@ -33,65 +33,56 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Group {
-                    callingViewOrientationSettings
-                    setupViewOrientationSettings
-                }
-                Group {
-                    localizationSettings
-                    skipSetupScreenSettings
-                    micSettings
-                    localParticipantSettings
-                    avatarSettings
-                    audioModeSettings
-                    useMockCallingSDKHandler
-                    navigationSettings
-                    remoteParticipantsAvatarsSettings
-                    themeSettings
-                    multitaskingSettings
-                }
-                exitCompositeSettings
-            }
+            settingsForm
             .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
             .toolbar {
-                Button(
-                    action: { self.presentationMode.wrappedValue.dismiss() },
-                    label: { Image(systemName: "xmark") }
-                )
-                .accessibilityIdentifier(AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
+                dismissButton
             }
         }
         .accessibilityElement(children: .contain)
+    }
+
+    var dismissButton: some View {
+        Button(
+            action: { self.presentationMode.wrappedValue.dismiss() },
+            label: { Image(systemName: "xmark") }
+        )
+        .accessibilityIdentifier(AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
+    }
+
+    var settingsForm: some View {
+        Form {
+            orientationOptions
+            Group {
+                localizationSettings
+                skipSetupScreenSettings
+                micSettings
+                localParticipantSettings
+                avatarSettings
+                useMockCallingSDKHandler
+                navigationSettings
+                remoteParticipantsAvatarsSettings
+                themeSettings
+                multitaskingSettings
+            }
+            exitCompositeSettings
+        }
+    }
+
+    var orientationOptions: some View {
+        Group {
+            callingViewOrientationSettings
+            setupViewOrientationSettings
+        }
     }
 
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
-            toggleWrapper {
-                expiredTokenToggle
-            } onTapGesture: {
-                envConfigSubject.useExpiredToken = !envConfigSubject.useExpiredToken
-            }
+            expiredTokenToggle
+            audioOnlyModeToggle
         }
         .accessibilityElement(children: .contain)
-    }
-
-    // for iOS 14, taps are intercepted by Form for UI tests
-    // fix: add a tag gesture recognizer for a toggle
-    @ViewBuilder
-    func toggleWrapper(_ content: () -> some View,
-                       onTapGesture: @escaping () -> Void) -> some View {
-        if #unavailable(iOS 15) {
-            #if DEBUG
-            content()
-                .onTapGesture(perform: onTapGesture)
-            #else
-            content()
-            #endif
-        } else {
-            content()
-        }
     }
 
     var expiredTokenToggle: some View {
@@ -102,11 +93,7 @@ struct SettingsView: View {
     var useMockCallingSDKHandler: some View {
         #if DEBUG
         Section(header: Text("Calling SDK Wrapper Handler Mocking")) {
-            toggleWrapper {
-                mockCallingSDKToggle
-            } onTapGesture: {
-                envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
-            }
+            mockCallingSDKToggle
         }
         .accessibilityElement(children: .contain)
         #else
@@ -117,29 +104,12 @@ struct SettingsView: View {
     var mockCallingSDKToggle: some View {
         Toggle("Use mock Calling SDK Wrapper Handler",
                isOn: $envConfigSubject.useMockCallingSDKHandler)
-        .onTapGesture {
-            envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
-        }
     }
 
     /* <AVMODE> */
-    var audioModeSettings: some View {
-        Section(header: Text("AV Mode")) {
-            toggleWrapper {
-                audioOnlyModeToggle
-            } onTapGesture: {
-                envConfigSubject.audioOnly = !envConfigSubject.audioOnly
-            }
-        }
-        .accessibilityElement(children: .contain)
-    }
-
     var audioOnlyModeToggle: some View {
         Toggle("Audio only",
                isOn: $envConfigSubject.audioOnly)
-        .onTapGesture {
-            envConfigSubject.audioOnly = !envConfigSubject.audioOnly
-        }
     }
     /* </AVMODE> */
 

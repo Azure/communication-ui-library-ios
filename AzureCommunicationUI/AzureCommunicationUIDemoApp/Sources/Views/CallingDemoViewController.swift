@@ -282,7 +282,7 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        avMode: envConfigSubject.audioOnly ? .audioOnly : .normal)
+                                        avMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo)
         self.callComposite = callComposite
 
         if let credential = try? await getTokenCredential() {

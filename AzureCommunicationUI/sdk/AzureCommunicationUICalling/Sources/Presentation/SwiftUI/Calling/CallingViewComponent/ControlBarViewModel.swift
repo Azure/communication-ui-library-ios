@@ -45,7 +45,7 @@ class ControlBarViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
-         avMode: CallCompositeAvMode
+         avMode: CallCompositeAudioVideoMode
     ) {
 
         self.logger = logger

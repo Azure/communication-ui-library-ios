@@ -82,8 +82,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
                                              isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
-                                             allowLocalCameraPreview: localOptions?.avMode
-                                             != CallCompositeAvMode.audioOnly)
+                                             allowLocalCameraPreview: localOptions?.audioVideoMode
+                                             != CallCompositeAudioVideoMode.audioOnly)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -201,7 +201,7 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState,
-                            avMode: localOptions?.avMode ?? .normal)
+                            avMode: localOptions?.audioVideoMode ?? .audioAndVideo)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -242,7 +242,7 @@ extension CompositeViewModelFactory {
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
                                      lifeCycleState: lifeCycleState,
-                                     isCameraEnabled: localOptions?.avMode != .audioOnly
+                                     isCameraEnabled: localOptions?.audioVideoMode != .audioOnly
         )
     }
 
@@ -317,7 +317,7 @@ extension CompositeViewModelFactory {
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel {
-        let avMode = localOptions?.avMode ?? CallCompositeAvMode.normal
+        let avMode = localOptions?.audioVideoMode ?? CallCompositeAudioVideoMode.audioAndVideo
 
         return SetupControlBarViewModel(compositeViewModelFactory: self,
                                  logger: logger,

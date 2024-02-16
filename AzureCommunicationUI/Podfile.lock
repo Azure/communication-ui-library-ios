@@ -62,7 +62,7 @@ DEPENDENCIES:
   - SwiftLint (= 0.42.0)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - AppCenter
     - AzureCommunicationCalling
     - AzureCommunicationChat
@@ -84,4 +84,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 78ea59a451b84782ef840c80dc01e9afa5adf125
 
-COCOAPODS: 1.15.0
+COCOAPODS: 1.15.2

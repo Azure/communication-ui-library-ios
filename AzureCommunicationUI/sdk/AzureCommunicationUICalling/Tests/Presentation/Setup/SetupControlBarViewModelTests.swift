@@ -361,7 +361,7 @@ class SetupControlBarViewModelTests: XCTestCase {
     }
 
     func test_SetupControlBarViewModel_avModeNormalShowsCameraButton() {
-        let sut = makeSUT(avMode: .normal)
+        let sut = makeSUT(avMode: .audioAndVideo)
         XCTAssertTrue(sut.isCameraDisplayed)
     }
 
@@ -416,7 +416,7 @@ class SetupControlBarViewModelTests: XCTestCase {
 
 extension SetupControlBarViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderMocking? = nil,
-                 avMode: CallCompositeAvMode = .normal) -> SetupControlBarViewModel {
+                 avMode: CallCompositeAudioVideoMode = .audioAndVideo) -> SetupControlBarViewModel {
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,
