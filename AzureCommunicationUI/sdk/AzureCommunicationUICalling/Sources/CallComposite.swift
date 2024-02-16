@@ -189,6 +189,7 @@ public class CallComposite {
             self.events.onPictureInPictureChanged?(false)
         }
         self.pipViewController?.dismissSelf()
+        self.pipViewController = nil
         self.viewController?.dismissSelf()
 
         let viewController = makeToolkitHostingController(
