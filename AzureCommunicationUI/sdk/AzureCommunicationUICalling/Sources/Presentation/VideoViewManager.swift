@@ -160,7 +160,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     // MARK: Helper functions
 
-    private func disposeViews() {
+    func disposeViews() {
         displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { key in
             self.disposeRemoteParticipantVideoRendererView(key)
         }

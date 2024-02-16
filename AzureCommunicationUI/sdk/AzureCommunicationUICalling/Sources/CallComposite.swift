@@ -58,7 +58,6 @@ public class CallComposite {
     private var orientationProvider: OrientationProvider
 
     private var store: Store<AppState, Action>?
-    private var navigationRouter: NavigationRouter?
     private var errorManager: ErrorManagerProtocol?
     private var exitManager: ExitManagerProtocol?
     private var callStateManager: CallStateManagerProtocol?
@@ -73,6 +72,7 @@ public class CallComposite {
     private var callHistoryService: CallHistoryService?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
+    private var videoViewManager: VideoViewManager?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private let diagnosticConfig = DiagnosticConfig()
@@ -93,6 +93,11 @@ public class CallComposite {
     /// Get call state for the Call Composite.
     public var callState: CallState {
         return store?.state.callingState.status.toCallCompositeCallState() ?? CallState.none
+    }
+
+    /// Get CXProvider
+    public static func getCXProvider() -> CXProvider? {
+        return CallClient.getCXProviderInstance()
     }
 
     /// Create an instance of CallComposite with options.
@@ -249,7 +254,6 @@ public class CallComposite {
                     }.store(in: &cancellables)
 
         let navigationRouter = NavigationRouter(store: store, logger: logger)
-        self.navigationRouter = navigationRouter
         let viewController = makeToolkitHostingController(router: navigationRouter,
                                                                   viewFactory: viewFactory)
 
@@ -336,8 +340,10 @@ public class CallComposite {
             self.events.onPictureInPictureChanged?(false)
         }
         self.pipViewController?.dismissSelf()
+        self.pipViewController = nil
         self.viewController?.dismissSelf()
-        let navigationRouter = self.navigationRouter ?? NavigationRouter(store: store, logger: logger)
+        self.viewController = nil
+        let navigationRouter = NavigationRouter(store: store, logger: logger)
         let viewController = makeToolkitHostingController(
             router: navigationRouter,
             viewFactory: viewFactory)
@@ -401,6 +407,7 @@ public class CallComposite {
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: self.callingSDKWrapper!, logger: logger)
+        self.videoViewManager = videoViewManager
         if enableSystemPiPWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
@@ -429,15 +436,19 @@ public class CallComposite {
             )
         )
     }
+
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
         return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
     }
+
+    private func disposeSDKWrappers() {
+        self.callingSDKEventsHandler?.cleanup()
+        self.callingSDKEventsHandler = nil
+        self.callingSDKWrapper?.cleanup()
+        self.callingSDKWrapper = nil
+    }
+
     private func cleanUpManagers() {
-        callingSDKEventsHandler?.cleanup()
-        callingSDKEventsHandler = nil
-        callingSDKWrapper?.cleanup()
-        callingSDKWrapper = nil
-        self.navigationRouter = nil
         self.errorManager = nil
         self.callStateManager = nil
         self.lifeCycleManager = nil
@@ -473,18 +484,18 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             var incomingCallId = self?.incomingCallWrapper.getLastIncomingCallId()
-            self?.logger.debug("CallComposite: incoming call id in setDismissComposite \(incomingCallId)")
-            self?.pipViewController?.dismiss(animated: false)
-            self?.viewController?.dismiss(animated: false)
+            self?.logger.debug("CallComposite: setDismissComposite \(incomingCallId)")
+            self?.videoViewManager?.disposeViews()
             containerUIHostingController?.dismissSelf()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
-            self?.cleanUpManagers()
+            self?.disposeSDKWrappers()
             /// if not empty mean UI for incoming call accepted is not launched yet
             if incomingCallId == "" {
                 self?.exitManager?.onDismissed()
             }
+            self?.cleanUpManagers()
             self?.compositeUILaunched = false
             UIApplication.shared.isIdleTimerDisabled = false
             /// if not empty mean UI for incoming call accepted is not launched yet
@@ -556,7 +567,7 @@ extension CallComposite {
             guard let store = self.store, let viewFactory = self.viewFactory else {
                 return nil
             }
-            let navigationRouter = self.navigationRouter ?? NavigationRouter(store: store, logger: self.logger)
+            let navigationRouter = NavigationRouter(store: store, logger: self.logger)
             let viewController = self.makeToolkitHostingController(
             router: navigationRouter,
             viewFactory: viewFactory)
@@ -573,6 +584,7 @@ extension CallComposite {
         },
                                      onPipStoped: {
             self.pipViewController?.dismissSelf()
+            self.pipViewController = nil
             self.displayCallCompositeIfWasHidden()
         },
                                      onPipStartFailed: {

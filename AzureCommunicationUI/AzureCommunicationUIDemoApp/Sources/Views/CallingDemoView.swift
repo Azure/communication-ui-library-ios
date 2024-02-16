@@ -373,7 +373,7 @@ extension CallingDemoView {
             print("::::CallingDemoView CallComposite ::::onCallAdded \(callId)")
         }
 
-        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [weak callComposite] _ in
             // Known issue: every time on exit register for push to receive again
 //            Task {
 //                await self.registerForNotification()
@@ -382,6 +382,9 @@ extension CallingDemoView {
                 relaunchComposite()
             }
             print("::::CallingDemoView CallComposite ::::onDismissedHandler")
+            callComposite?.dispose()
+            callComposite = nil
+            GlobalCompositeManager.callComposite = nil
         }
         let onInomingCall: (CallCompositeIncomingCallInfo) -> Void = { [] _ in
             print("::::CallingDemoView::CallComposite getEventsHandler Incoming Call ::::CallInfo")
