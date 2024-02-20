@@ -106,12 +106,12 @@ struct SettingsView: View {
                isOn: $envConfigSubject.useMockCallingSDKHandler)
     }
 
-    /* <AVMODE> */
+    /* <audioVideoMode> */
     var audioOnlyModeToggle: some View {
         Toggle("Audio only",
                isOn: $envConfigSubject.audioOnly)
     }
-    /* </AVMODE> */
+    /* </audioVideoMode> */
 
     var relaunchCompositeOnDismissedToggle: some View {
         Toggle("Relaunch composite after dismiss api call",

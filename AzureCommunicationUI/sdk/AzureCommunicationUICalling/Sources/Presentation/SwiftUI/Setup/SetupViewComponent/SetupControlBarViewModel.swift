@@ -33,7 +33,7 @@ class SetupControlBarViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
-         avMode: CallCompositeAudioVideoMode
+         audioVideoMode: CallCompositeAudioVideoMode
     ) {
         self.logger = logger
         self.dispatch = dispatchAction
@@ -84,7 +84,7 @@ class SetupControlBarViewModel: ObservableObject {
         }
         audioDeviceButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .deviceAccesibiiltyLabel)
-        isCameraDisplayed = avMode != .audioOnly
+        isCameraDisplayed = audioVideoMode != .audioOnly
     }
 
     func videoButtonTapped() {

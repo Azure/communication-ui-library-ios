@@ -196,7 +196,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           dispatchAction: dispatchAction,
                                                           endCallConfirm: endCallConfirm,
                                                           localUserState: localUserState,
-                                                          avMode: .audioAndVideo)
+                                                          audioVideoMode: .audioAndVideo)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
@@ -300,7 +300,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                     dispatchAction: dispatchAction,
                                                                     localUserState: localUserState,
                                                                     localizationProvider: localizationProvider,
-                                                                    avMode: .audioAndVideo)
+                                                                    audioVideoMode: .audioAndVideo)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
