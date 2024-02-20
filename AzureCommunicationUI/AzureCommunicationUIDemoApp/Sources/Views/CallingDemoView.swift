@@ -318,7 +318,7 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        avMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
         )
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {

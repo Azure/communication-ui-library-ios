@@ -34,22 +34,23 @@ public struct LocalOptions {
     ///   - cameraOn: Determines if the camera is enabled by default.
     ///   - microphoneOn: Determines if the microphone is enabled by default.
     ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
-    ///   - avMode: The desired audio/video mode for the call.
+    ///   - audioVideoMode: The desired audio/video mode for the call.
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
-                avMode: CallCompositeAudioVideoMode = .audioAndVideo) {
+                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
-        self.audioVideoMode = avMode
+        self.audioVideoMode = audioVideoMode
     }
 
-    /// Determines the actual state of the camera, considering both the `cameraOnInternal` flag and the `avMode`.
+    /// Determines the actual state of the camera
+    /// considering both the `cameraOnInternal` flag and the `audioVideoMode`.
     var cameraOn: Bool {
         guard audioVideoMode != .audioOnly else {
             return false

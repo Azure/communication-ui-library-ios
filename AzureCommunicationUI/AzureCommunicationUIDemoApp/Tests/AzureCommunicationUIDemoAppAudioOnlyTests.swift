@@ -16,7 +16,7 @@ class AzureCommunicationUIDemoAppAudioOnlyTests: XCUITestBase {
         verifyButtonDoesNotExist(accessibilityIdentifier: AccessibilityIdentifier.videoAccessibilityID.rawValue)
     }
 
-    func testCallCompositeNormalAvMode() {
+    func testCallCompositeNormalAudioVideoMode() {
         enterMenu()
         startExperience()
         verifyButtonExistsAndEnabled(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)

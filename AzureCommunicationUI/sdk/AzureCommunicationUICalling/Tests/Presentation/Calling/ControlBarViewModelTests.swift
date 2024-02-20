@@ -571,13 +571,13 @@ class ControlBarViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_controlBarViewModel_avModeAudioOnlyHidesCameraButton() {
-        let sut = makeSUT(avMode: .audioOnly)
+    func test_controlBarViewModel_audioVideoModeAudioOnlyHidesCameraButton() {
+        let sut = makeSUT(audioVideoMode: .audioOnly)
         XCTAssertFalse(sut.isCameraDisplayed)
     }
 
-    func test_controlBarViewModel_avModeNormalShowsCameraButton() {
-        let sut = makeSUT(avMode: .audioAndVideo)
+    func test_controlBarViewModel_audioVideoModeNormalShowsCameraButton() {
+        let sut = makeSUT(audioVideoMode: .audioAndVideo)
         XCTAssertTrue(sut.isCameraDisplayed)
     }
 
@@ -652,14 +652,14 @@ class ControlBarViewModelTests: XCTestCase {
 
 extension ControlBarViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderMocking? = nil,
-                 avMode: CallCompositeAudioVideoMode = .audioAndVideo) -> ControlBarViewModel {
+                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState,
-                                   avMode: avMode)
+                                   audioVideoMode: audioVideoMode)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {

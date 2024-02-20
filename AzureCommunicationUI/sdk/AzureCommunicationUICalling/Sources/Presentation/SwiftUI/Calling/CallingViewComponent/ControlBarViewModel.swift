@@ -45,7 +45,7 @@ class ControlBarViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
-         avMode: CallCompositeAudioVideoMode
+         audioVideoMode: CallCompositeAudioVideoMode
     ) {
 
         self.logger = logger
@@ -144,7 +144,7 @@ class ControlBarViewModel: ObservableObject {
 
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
 
-        isCameraDisplayed = avMode != .audioOnly
+        isCameraDisplayed = audioVideoMode != .audioOnly
     }
 
     func endCallButtonTapped() {

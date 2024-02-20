@@ -201,7 +201,7 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState,
-                            avMode: localOptions?.audioVideoMode ?? .audioAndVideo)
+                            audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -317,14 +317,14 @@ extension CompositeViewModelFactory {
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel {
-        let avMode = localOptions?.audioVideoMode ?? CallCompositeAudioVideoMode.audioAndVideo
+        let audioVideoMode = localOptions?.audioVideoMode ?? CallCompositeAudioVideoMode.audioAndVideo
 
         return SetupControlBarViewModel(compositeViewModelFactory: self,
                                  logger: logger,
                                  dispatchAction: dispatchAction,
                                  localUserState: localUserState,
                                  localizationProvider: localizationProvider,
-                                 avMode: avMode)
+                                 audioVideoMode: audioVideoMode)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {

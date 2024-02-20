@@ -23,7 +23,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    dispatchAction: dispatchAction,
                    endCallConfirm: endCallConfirm,
                    localUserState: localUserState,
-                   avMode: .audioAndVideo)
+                   audioVideoMode: .audioAndVideo)
     }
 
     override func update(localUserState: LocalUserState,
