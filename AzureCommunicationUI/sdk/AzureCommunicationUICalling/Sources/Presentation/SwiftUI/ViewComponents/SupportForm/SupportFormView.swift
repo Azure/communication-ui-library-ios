@@ -7,7 +7,7 @@ import Foundation
 import SwiftUI
 import FluentUI
 
-struct SupportFormView: View {
+internal struct SupportFormView: View {
     @ObservedObject var viewModel: SupportFormViewModel
     init(viewModel: SupportFormViewModel) {
         self.viewModel = viewModel
@@ -72,5 +72,46 @@ struct SupportFormView: View {
         .padding(.leading, 8)
         .padding(.trailing, 8)
         .transition(.slide)
+    }
+}
+
+class SupportFormViewController: UIViewController {
+    private var hostingController: UIHostingController<SupportFormView>?
+    private var viewModel: SupportFormViewModel
+
+    init(viewModel: SupportFormViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        setupHostingController()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupHostingController() {
+        // Initialize your SwiftUI view with the ViewModel
+        let supportFormView = SupportFormView(viewModel: viewModel)
+
+        // Create a UIHostingController with your SwiftUI view
+        let hostingController = UIHostingController(rootView: supportFormView)
+
+        // Add as a child of the current UIViewController
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+
+        // Setup constraints to match the parent view
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+
+        // Complete the addition of the child view controller
+        hostingController.didMove(toParent: self)
+
+        self.hostingController = hostingController
     }
 }
