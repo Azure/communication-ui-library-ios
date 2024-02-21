@@ -13,8 +13,7 @@ extension Reducer where State == NavigationState,
         switch action {
         case .callingViewLaunched:
             navigationStatus = .inCall
-        case .callingAction(.dismissSetup),
-             .errorAction(.fatalErrorUpdated),
+        case .errorAction(.fatalErrorUpdated),
              .compositeExitAction:
             navigationStatus = .exit
         case .errorAction(.statusErrorAndCallReset):
