@@ -292,8 +292,6 @@ struct CallingView: View {
     var reportErrorView: some View {
         return Group {
             SupportFormView(viewModel: viewModel.supportFormViewModel)
-            .frame(height: 300)
-            .padding(.bottom, -64)
             .edgesIgnoringSafeArea(.all)
             .modifier(LockPhoneOrientation())
         }
