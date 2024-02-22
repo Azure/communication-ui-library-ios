@@ -105,12 +105,6 @@ class SetupViewModel: ObservableObject {
         networkManager.stopMonitor()
     }
 
-    func dismissSetupScreen() {
-        if store.state.callingState.operationStatus == .skipSetupRequested {
-            store.dispatch(action: .callingAction(.dismissSetup))
-        }
-    }
-
     func joinCallButtonTapped() {
         guard networkManager.isConnected else {
             handleOffline()

@@ -51,7 +51,8 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
         wait(for: [expectation], timeout: 1)
@@ -75,7 +76,8 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
         wait(for: [expectation], timeout: 1)
@@ -99,7 +101,8 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertTrue(sut.isDisplayed)
         wait(for: [expectation], timeout: 1)
@@ -111,7 +114,8 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: updatedRemoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
     }
@@ -131,20 +135,23 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: LocalUserState(participantRole: .presenter),
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertTrue(sut.isDisplayed)
         wait(for: [expectation], timeout: 1)
 
         sut.update(localUserState: LocalUserState(participantRole: .organizer),
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertTrue(sut.isDisplayed)
 
         sut.update(localUserState: LocalUserState(participantRole: .coOrganizer),
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertTrue(sut.isDisplayed)
 
@@ -167,20 +174,23 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
         let localUserState = LocalUserState(participantRole: .consumer)
         sut.update(localUserState: localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
         wait(for: [expectation], timeout: 1)
 
         sut.update(localUserState: LocalUserState(participantRole: .consumer),
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
 
         sut.update(localUserState: LocalUserState(participantRole: .uninitialized),
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
     }
@@ -202,20 +212,23 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
 
         sut.update(localUserState: LocalUserState(participantRole: .presenter),
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertTrue(sut.isDisplayed)
         wait(for: [expectation], timeout: 1)
 
         sut.update(localUserState: LocalUserState(participantRole: .uninitialized),
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState())
 
         XCTAssertFalse(sut.isDisplayed)
     }

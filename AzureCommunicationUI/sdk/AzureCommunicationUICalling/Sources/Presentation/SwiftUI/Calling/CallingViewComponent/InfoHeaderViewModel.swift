@@ -192,7 +192,7 @@ class InfoHeaderViewModel: ObservableObject {
     private func dismissButtonTapped() {
         if self.enableSystemPipWhenMultitasking {
             dispatch(.visibilityAction(.pipModeRequested))
-        } else {
+        } else if self.enableMultitasking {
             dispatch(.visibilityAction(.hideRequested))
         }
     }

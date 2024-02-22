@@ -150,7 +150,8 @@ class CallingViewModel: ObservableObject {
                                    visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
                                            remoteParticipantsState: state.remoteParticipantsState,
-                                           callingState: state.callingState)
+                                           callingState: state.callingState,
+                                           visibilityState: state.visibilityState)
         lobbyActionErrorViewModel.update(localUserState: state.localUserState,
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          callingState: state.callingState)
