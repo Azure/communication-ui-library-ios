@@ -279,7 +279,7 @@ extension CallingDemoView {
             DispatchQueue.main.schedule {
                 self.issue = issue
             }
-            sendSupportEventToServer(server: "http://192.168.1.65:3000", event: issue) { success, result in
+            sendSupportEventToServer(server: self.issueUrl, event: issue) { success, result in
                 if success {
                     self.issueUrl = result
                 } else {
