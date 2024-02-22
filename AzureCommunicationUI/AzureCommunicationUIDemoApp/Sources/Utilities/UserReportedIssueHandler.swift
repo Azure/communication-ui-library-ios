@@ -11,29 +11,33 @@ import Alamofire
 
 func sendSupportEventToServer(server: String,
                               event: CallCompositeUserReportedIssue,
-                              callback: @escaping (String) -> Void) {
+                              callback: @escaping (Bool, String) -> Void) {
     let url = "\(server)/receiveEvent" // Replace with your server URL
+    let debugInfo = event.debugInfo
+
     // Prepare the data to be sent
     let parameters: [String: String] = [
-        "userMessage": event.userMessage,
-        "uiVersion": event.debugInfo.versions.callingUIVersion
+        "user_message": event.userMessage,
+        "ui_version": debugInfo.versions.callingUIVersion,
+        "call_history": debugInfo.callHistoryRecords
+            .map { p in "" + p.callIds.joined(separator: ",")}
+            .joined(separator: "\n")
     ]
     let headers: HTTPHeaders = [
         .contentType("multipart/form-data")
     ]
     AF.upload(multipartFormData: { multipartFormData in
-        // Append text parameters
         for (key, value) in parameters {
             if let data = value.data(using: .utf8) {
                 multipartFormData.append(data, withName: key)
             }
         }
         // Append files
-        event.debugInfo.logFiles.forEach { fileURL in
+        debugInfo.logFiles.forEach { fileURL in
             do {
                 let fileData = try Data(contentsOf: fileURL)
                 multipartFormData.append(fileData,
-                                         withName: "logFiles[]",
+                                         withName: "log_files",
                                          fileName: fileURL.lastPathComponent,
                                          mimeType: "application/octet-stream")
             } catch {
@@ -44,12 +48,13 @@ func sendSupportEventToServer(server: String,
         switch response.result {
         case .success(let responseData):
             if let data = responseData, let responseString = String(data: data, encoding: .utf8) {
-                callback(responseString)
+                callback(true, responseString)
             } else {
-                callback("")
+                callback(false, "")
             }
         case .failure(let error):
-            callback("")
+            print("Error sending support event: \(error)")
+            callback(false, "Error sending support event: \(error.localizedDescription)")
         }
     }
 }
