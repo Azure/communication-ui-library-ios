@@ -276,6 +276,7 @@ extension CallingDemoView {
             DispatchQueue.main.schedule {
                 self.issue = issue
             }
+            sendSupportEventToServer(server: "http://192.168.1.65:3000", event: issue)
         }
 
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
