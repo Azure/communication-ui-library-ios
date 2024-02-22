@@ -20,7 +20,7 @@ struct CallingDemoView: View {
     @State var alertMessage: String = ""
     @State var callState: String = ""
     @State var issue: CallCompositeUserReportedIssue?
-
+    @State var issueUrl: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -60,6 +60,9 @@ struct CallingDemoView: View {
                 Text(callState)
                 Text(issue?.userMessage ?? "--")
                 .accessibilityIdentifier(AccessibilityId.userReportedIssueAccessibilityID.rawValue)
+                if !issueUrl.isEmpty {
+                    Link("Ticket Link", destination: URL(string: issueUrl)!)
+                }
             }
             Spacer()
         }
@@ -276,7 +279,9 @@ extension CallingDemoView {
             DispatchQueue.main.schedule {
                 self.issue = issue
             }
-            sendSupportEventToServer(server: "http://192.168.1.65:3000", event: issue)
+            sendSupportEventToServer(server: "http://192.168.1.65:3000", event: issue) { result in
+                self.issueUrl = result ?? ""
+            }
         }
 
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in

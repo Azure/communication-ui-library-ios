@@ -9,7 +9,9 @@ import Combine
 import AzureCommunicationUICalling
 import Alamofire
 
-func sendSupportEventToServer(server: String, event: CallCompositeUserReportedIssue) {
+func sendSupportEventToServer(server: String,
+                              event: CallCompositeUserReportedIssue,
+                              callback: @escaping (String) -> Void) {
     let url = "\(server)/receiveEvent" // Replace with your server URL
     // Prepare the data to be sent
     let parameters: [String: String] = [
@@ -42,12 +44,12 @@ func sendSupportEventToServer(server: String, event: CallCompositeUserReportedIs
         switch response.result {
         case .success(let responseData):
             if let data = responseData, let responseString = String(data: data, encoding: .utf8) {
-                print("Success with response: \(responseString)")
+                callback(responseString)
             } else {
-                print("Success, but couldn't decode response")
+                callback("")
             }
         case .failure(let error):
-            print("Failure: \(error.localizedDescription)")
+            callback("")
         }
     }
 }
