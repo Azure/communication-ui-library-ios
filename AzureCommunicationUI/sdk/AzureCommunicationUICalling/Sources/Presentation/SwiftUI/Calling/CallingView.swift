@@ -49,15 +49,17 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
+                // Your FluentDrawer
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
             .modifier(PopupModalView(
-                isPresented: viewModel.showingSupportForm,
-                alignment: .bottom) {
-                    reportErrorView
-                        .accessibilityElement(children: .contain)
-                        .accessibilityAddTraits(.isModal)
+                isPresented: viewModel.showingSupportForm) {
+                    SwiftUIFluentBottomDrawer(isVisible: $viewModel.showingSupportForm) {
+                        reportErrorView
+                            .accessibilityElement(children: .contain)
+                            .accessibilityAddTraits(.isModal)
+                    }
             })
         }
         .environment(\.screenSizeClass, getSizeClass())
