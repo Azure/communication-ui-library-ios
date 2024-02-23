@@ -493,6 +493,7 @@ extension CallComposite {
             self?.disposeSDKWrappers()
             /// if not empty mean UI for incoming call accepted is not launched yet
             if incomingCallId == "" {
+                self?.callStateManager?.onCompositeExit()
                 self?.exitManager?.onDismissed()
             }
             self?.cleanUpManagers()

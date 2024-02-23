@@ -7,6 +7,7 @@ import Foundation
 import Combine
 
 protocol CallStateManagerProtocol {
+    func onCompositeExit()
 }
 
 class CallStateManager: CallStateManagerProtocol {
@@ -25,6 +26,14 @@ class CallStateManager: CallStateManagerProtocol {
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+    }
+
+    // to handle race condition where disconnected is notified after exit
+    // fixing race condition requires call state manager to not depend on store state change
+    // the easiest way to handle is to notify state before exit
+    // does not seems to have any side effect as state is compared
+    func onCompositeExit() {
+        receive(self.store.state)
     }
 
     private func receive(_ state: AppState) {
