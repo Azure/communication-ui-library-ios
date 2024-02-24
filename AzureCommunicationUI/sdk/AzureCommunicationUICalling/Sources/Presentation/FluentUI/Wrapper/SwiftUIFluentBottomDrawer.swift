@@ -39,12 +39,25 @@ internal struct SwiftUIFluentBottomDrawer<Content: View>: UIViewControllerRepres
             drawerController = DrawerController(sourceView: parent.view,
                                                 sourceRect: parent.view.bounds,
                                                 presentationDirection: .up)
-            drawerController?.contentController = hostingController
-            parent.addChild(drawerController!)
-            parent.view.addSubview(drawerController!.view)
-            drawerController!.view.frame = parent.view.bounds
-            drawerController?.didMove(toParent: parent)
-            // want to have views frame always equal to the parent frame
+
+            guard let drawerController = drawerController else {
+                return
+            }
+
+            drawerController.contentController = hostingController
+            parent.addChild(drawerController)
+            parent.view.addSubview(drawerController.view)
+
+            // Use Auto Layout to ensure the drawer presents from the bottom.
+            drawerController.view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                drawerController.view.leadingAnchor.constraint(equalTo: parent.view.leadingAnchor),
+                drawerController.view.trailingAnchor.constraint(equalTo: parent.view.trailingAnchor),
+                drawerController.view.bottomAnchor.constraint(equalTo: parent.view.bottomAnchor),
+                hostingController.view.heightAnchor.constraint(equalToConstant: 300)
+            ])
+
+            drawerController.didMove(toParent: parent)
         }
 
         func dismissDrawer() {
