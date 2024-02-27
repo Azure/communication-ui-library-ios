@@ -20,7 +20,7 @@ struct CallingDemoView: View {
     @State var alertMessage: String = ""
     @State var callState: String = ""
     @State var issue: CallCompositeUserReportedIssue?
-
+    @State var issueUrl: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -60,6 +60,9 @@ struct CallingDemoView: View {
                 Text(callState)
                 Text(issue?.userMessage ?? "--")
                 .accessibilityIdentifier(AccessibilityId.userReportedIssueAccessibilityID.rawValue)
+                if !issueUrl.isEmpty {
+                    Link("Ticket Link", destination: URL(string: issueUrl)!)
+                }
             }
             Spacer()
         }
@@ -275,6 +278,13 @@ extension CallingDemoView {
         let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
             DispatchQueue.main.schedule {
                 self.issue = issue
+            }
+            sendSupportEventToServer(event: issue) { success, result in
+                if success {
+                    self.issueUrl = result
+                } else {
+                    self.issueUrl = ""
+                }
             }
         }
 
