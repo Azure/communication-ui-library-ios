@@ -157,7 +157,6 @@
 		533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */; };
 		534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */; };
 		536742832B8DA594001CAF9D /* CompositeSupportForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742802B8DA593001CAF9D /* CompositeSupportForm.swift */; };
-		536742842B8DA594001CAF9D /* CompositeSupportFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */; };
 		536742852B8DA594001CAF9D /* CompositeSupportFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */; };
 		538016492B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538016482B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift */; };
 		53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */; };
@@ -515,7 +514,6 @@
 		533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormViewModel.swift; sourceTree = "<group>"; };
 		534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAudioVideoMode.swift; sourceTree = "<group>"; };
 		536742802B8DA593001CAF9D /* CompositeSupportForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportForm.swift; sourceTree = "<group>"; };
-		536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportFormCell.swift; sourceTree = "<group>"; };
 		536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportFormViewController.swift; sourceTree = "<group>"; };
 		538016482B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleViewDrawerContainerViewController.swift; sourceTree = "<group>"; };
 		53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryProtocols.swift; sourceTree = "<group>"; };
@@ -1167,7 +1165,6 @@
 			isa = PBXGroup;
 			children = (
 				536742802B8DA593001CAF9D /* CompositeSupportForm.swift */,
-				536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */,
 				536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */,
 			);
 			path = SupportForm;
@@ -2058,7 +2055,6 @@
 				9823AB4926A13F220006266D /* PreviewAreaView.swift in Sources */,
 				50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */,
 				11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */,
-				536742842B8DA594001CAF9D /* CompositeSupportFormCell.swift in Sources */,
 				50E2D69926F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift in Sources */,
 				FAACEE3A28FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift in Sources */,
 				75C1EE0F28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift in Sources */,

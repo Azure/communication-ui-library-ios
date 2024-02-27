@@ -17,20 +17,20 @@ struct CompositeSupportForm: UIViewControllerRepresentable {
         Coordinator(isPresented: $isPresented)
     }
 
-    func makeUIViewController(context: Context) -> DrawerContainerViewController<SupportFormViewModel> {
-        let controller = CompositeSupportFormViewController(sourceView: sourceView)
+    func makeUIViewController(context: Context) -> SingleViewDrawerContainerViewController {
+        let controller = SingleViewDrawerContainerViewController(sourceView: sourceView)
         controller.delegate = context.coordinator
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: DrawerContainerViewController<SupportFormViewModel>,
+    func updateUIViewController(_ uiViewController: SingleViewDrawerContainerViewController,
                                 context: Context) {
-        uiViewController.updateDrawerList(items: [viewModel])
     }
 
-    static func dismantleUIViewController(_
-                                          controller: DrawerContainerViewController<SelectableDrawerListItemViewModel>,
-                                          coordinator: Coordinator) {
+    static func dismantleUIViewController(
+        _
+        controller: SingleViewDrawerContainerViewController,
+        coordinator: Coordinator) {
         controller.dismissDrawer()
     }
 

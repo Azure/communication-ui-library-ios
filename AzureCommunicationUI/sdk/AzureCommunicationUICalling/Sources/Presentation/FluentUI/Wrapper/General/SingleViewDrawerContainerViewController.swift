@@ -6,15 +6,31 @@
 import FluentUI
 import UIKit
 
-class SingleViewDrawerContainerViewController<T: Equatable>: UIViewController,
+class SingleViewDrawerContainerViewController: UIViewController,
                                                    DrawerControllerDelegate,
                                                    DrawerViewControllerProtocol {
     weak var delegate: DrawerControllerDelegate?
-    lazy var uiView: UIView? = nil
+    var uiView: UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        view.backgroundColor = .red
+
+        let label = UILabel()
+        label.text = "Centered Text"
+        label.textColor = .white
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
+        return view
+    }
     let backgroundColor: UIColor = UIDevice.current.userInterfaceIdiom == .pad
     ? StyleProvider.color.popoverColor
     : StyleProvider.color.drawerColor
-    var items: [T] = []
     let headerName: String?
     private let sourceView: UIView
     private let showHeader: Bool
@@ -72,17 +88,6 @@ class SingleViewDrawerContainerViewController<T: Equatable>: UIViewController,
 
     func dismissDrawer(animated: Bool = false) {
         self.controller?.dismiss(animated: animated)
-    }
-
-    func updateDrawerList(items updatedItems: [T]) {
-        // should update layout if items count increases/decreases
-        let withLayoutUpdate = shouldUpdateLayout(items: updatedItems)
-        self.items = updatedItems
-        resizeDrawer(withLayoutUpdate: withLayoutUpdate)
-    }
-
-    func shouldUpdateLayout(items updatedItems: [T]) -> Bool {
-        return self.items.count != updatedItems.count
     }
 
     private func showDrawerView() {
@@ -152,7 +157,7 @@ class SingleViewDrawerContainerViewController<T: Equatable>: UIViewController,
                                  isiPhoneLayout: Bool) -> CGFloat {
         let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
 
-        var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
+        var drawerHeight: CGFloat = 300.0
         drawerHeight += showHeader ? headerHeight : Constants.resizeBarHeight
 
         return drawerHeight
@@ -161,21 +166,6 @@ class SingleViewDrawerContainerViewController<T: Equatable>: UIViewController,
     private func getHeaderHeight(tableView: UITableView,
                                  isiPhoneLayout: Bool) -> CGFloat {
         return 0
-    }
-
-    private func getTotalCellsHeight(tableView: UITableView,
-                                     numberOfItems: Int) -> CGFloat {
-        let sectionHeadersHight = (0..<tableView.numberOfSections).map { section in
-            tableView.rectForHeader(inSection: section).height + sectionHeightOffset
-        }.reduce(0, +)
-
-        let rowsHight = (0..<tableView.numberOfSections).flatMap { section in
-            return (0..<tableView.numberOfRows(inSection: section)).map { row in
-                return IndexPath(row: row, section: section)
-            }
-        }.map { index in return tableView.rectForRow(at: index).height + rowHeightOffset }.reduce(0, +)
-
-        return sectionHeadersHight + rowsHight
     }
 
     private func setInitialTableViewFrame(_ isiPhoneLayout: Bool) {
