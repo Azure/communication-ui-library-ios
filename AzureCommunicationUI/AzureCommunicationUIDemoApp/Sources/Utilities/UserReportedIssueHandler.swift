@@ -15,7 +15,7 @@ import AzureCommunicationUICalling
 //    # pod 'Alamofire', '5.8
 //
 // 3. Configure <TICKET_SERVER_URL>
-// 4. Change the following like to `$if true`
+// 4. Change the following to `$if true`
 #if false
 import Alamofire
 
