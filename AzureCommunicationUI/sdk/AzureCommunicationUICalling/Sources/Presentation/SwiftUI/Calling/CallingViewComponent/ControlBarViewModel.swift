@@ -5,7 +5,7 @@
 
 import Combine
 import Foundation
-
+// swiftlint:disable type_body_length
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
@@ -30,6 +30,7 @@ class ControlBarViewModel: ObservableObject {
     var moreButtonViewModel: IconButtonViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
+    var supportFormVideoModel: SupportFormViewModel!
     var callingStatus: CallingStatus = .none
     var operationStatus: OperationStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
@@ -44,6 +45,7 @@ class ControlBarViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
+         navigationState: NavigationState,
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode
     ) {
@@ -53,6 +55,7 @@ class ControlBarViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
 
+        self.isSupportFormOptionDisplayed = navigationState.supportFormVisible
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
@@ -112,6 +115,8 @@ class ControlBarViewModel: ObservableObject {
 
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .leaveCall)
+
+        supportFormVideoModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .more,
@@ -240,10 +245,13 @@ class ControlBarViewModel: ObservableObject {
                                                   listItemViewModel: leaveCallConfirmationVm)
     }
 
-    func update(localUserState: LocalUserState,
+    func update(
+                navigationState: NavigationState,
+                localUserState: LocalUserState,
                 permissionState: PermissionState,
                 callingState: CallingState,
                 visibilityState: VisibilityState) {
+        self.isSupportFormOptionDisplayed = navigationState.supportFormVisible
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
         if cameraPermission != permissionState.cameraPermission {

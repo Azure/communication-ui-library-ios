@@ -90,7 +90,9 @@ class CallingViewModel: ObservableObject {
                     return
                 }
                 self.endCall()
-            }, localUserState: store.state.localUserState)
+            },
+                                     navigationState: store.state.navigationState,
+                                     localUserState: store.state.localUserState)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {
@@ -138,7 +140,9 @@ class CallingViewModel: ObservableObject {
             return
         }
         showingSupportForm = store.state.navigationState.supportFormVisible
-        controlBarViewModel.update(localUserState: state.localUserState,
+        controlBarViewModel.update(
+                                   navigationState: state.navigationState,
+                                   localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
                                    visibilityState: state.visibilityState)

@@ -13,6 +13,7 @@ struct ControlBarView: View {
     @State var leaveCallConfirmationListSourceView = UIView()
     @State var moreListSourceView = UIView()
     @State var debugInfoSourceView = UIView()
+    @State var supportFormSourceView = UIView()
 
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
@@ -47,6 +48,12 @@ struct ControlBarView: View {
             .modifier(PopupModalView(
                 isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
                     shareActivityView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+            })
+            .modifier(PopupModalView(
+                isPresented: viewModel.isSupportFormOptionDisplayed) {
+                   reportErrorView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
@@ -157,6 +164,7 @@ struct ControlBarView: View {
         IconButton(viewModel: viewModel.moreButtonViewModel)
             .background(SourceViewSpace(sourceView: moreListSourceView))
             .background(SourceViewSpace(sourceView: debugInfoSourceView))
+            .background(SourceViewSpace(sourceView: supportFormSourceView))
             .accessibilityIdentifier(AccessibilityIdentifier.moreAccessibilityID.rawValue)
     }
 
@@ -178,6 +186,20 @@ struct ControlBarView: View {
             .modifier(LockPhoneOrientation())
         }
     }
+
+    var reportErrorView: some View {
+        SupportFormDrawerView(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+                                  viewModel: viewModel.supportFormVideoModel,
+                                  sourceView: supportFormSourceView)
+        .modifier(LockPhoneOrientation())
+    }
+//    var reportErrorView: some View {
+//        return Group {
+//            SupportFormView(viewModel: viewModel.supportFormVideoModel)
+//                .edgesIgnoringSafeArea(.all)
+//                .modifier(LockPhoneOrientation())
+//        }
+//    }
 }
 
 struct LeaveCallConfirmationListViewModel {

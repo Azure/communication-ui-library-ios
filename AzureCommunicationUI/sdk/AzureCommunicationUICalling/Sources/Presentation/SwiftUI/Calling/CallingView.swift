@@ -5,7 +5,6 @@
 
 import SwiftUI
 
-// swiftlint:disable type_body_length
 struct CallingView: View {
     enum InfoHeaderViewConstants {
         static let horizontalPadding: CGFloat = 8.0
@@ -53,14 +52,6 @@ struct CallingView: View {
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
-            .modifier(PopupModalView(
-                isPresented: viewModel.showingSupportForm) {
-                    SwiftUIFluentBottomDrawer(isVisible: $viewModel.showingSupportForm) {
-                        reportErrorView
-                            .accessibilityElement(children: .contain)
-                            .accessibilityAddTraits(.isModal)
-                    }
-            })
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -291,14 +282,6 @@ struct CallingView: View {
             Spacer()
         }
     }
-    var reportErrorView: some View {
-        return Group {
-            SupportFormView(viewModel: viewModel.supportFormViewModel)
-            .edgesIgnoringSafeArea(.all)
-            .modifier(LockPhoneOrientation())
-        }
-    }
-
 }
 
 extension CallingView {
