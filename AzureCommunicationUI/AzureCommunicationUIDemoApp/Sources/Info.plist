@@ -58,14 +58,7 @@
 	<string>${teamsMeetingLink}</string>
 	<key>threadId</key>
 	<string>$(threadId)</string>
-	<key>CFBundleIdentifier</key>
-	<string></string>
 	<key>userId</key>
 	<string>${userId}</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>
