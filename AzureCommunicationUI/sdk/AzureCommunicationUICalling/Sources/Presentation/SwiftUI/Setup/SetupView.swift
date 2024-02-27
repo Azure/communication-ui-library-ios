@@ -55,9 +55,6 @@ struct SetupView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.dismissSetupScreen()
-        }
     }
 
     var joinCallView: some View {
