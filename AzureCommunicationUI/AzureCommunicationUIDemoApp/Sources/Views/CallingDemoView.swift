@@ -279,7 +279,7 @@ extension CallingDemoView {
             DispatchQueue.main.schedule {
                 self.issue = issue
             }
-            sendSupportEventToServer(server: self.issueUrl, event: issue) { success, result in
+            sendSupportEventToServer(event: issue) { success, result in
                 if success {
                     self.issueUrl = result
                 } else {

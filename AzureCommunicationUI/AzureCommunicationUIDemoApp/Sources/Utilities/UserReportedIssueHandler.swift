@@ -6,6 +6,17 @@ import Foundation
 import UIKit
 import Combine
 import AzureCommunicationUICalling
+
+// NOTE: to Enable Server Support Form Submission
+// 1. Deploy the Node.js Server (Located in the Support Form quickstart)
+// 2. Add AlamoFire to the `Podfile` of the demo app.
+//
+//    # Include AlamoFire for use with the User Reported Issue handler
+//    # pod 'Alamofire', '5.8
+//
+// 3. Configure <TICKET_SERVER_URL>
+// 4. Change the following like to `$if true`
+#if false
 import Alamofire
 
 /// Sends a support event to a server with details from a `CallCompositeUserReportedIssue`.
@@ -15,9 +26,9 @@ import Alamofire
 ///   - callback: A closure that is called when the operation is complete.
 ///               It provides a `Bool` indicating success or failure, and a `String`
 ///               containing the server's response or an error message.
-func sendSupportEventToServer(server: String,
-                              event: CallCompositeUserReportedIssue,
+func sendSupportEventToServer(event: CallCompositeUserReportedIssue,
                               callback: @escaping (Bool, String) -> Void) {
+    let server = "<TICKET_SERVER_URL>"
     // Construct the URL for the endpoint.
     let url = "\(server)/receiveEvent" // Ensure this is replaced with the actual server URL.
 
@@ -76,3 +87,12 @@ func sendSupportEventToServer(server: String,
         }
     }
 }
+#else
+
+/// Stub Method for `CallCompositeUserReportedIssue`.
+/// Instantly returns a failed submission to server.
+func sendSupportEventToServer(event: CallCompositeUserReportedIssue,
+                              callback: @escaping (Bool, String) -> Void) {
+    callback(false, "")
+}
+#endif

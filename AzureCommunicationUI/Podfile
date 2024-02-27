@@ -58,7 +58,10 @@ target 'AzureCommunicationUIDemoApp' do
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
   pod 'SwiftLint', '0.42.0'
   pod 'AppCenter/Crashes', '4.4.1'
-  pod 'Alamofire', '5.8'
+
+  # Include AlamoFire for use with the User Reported Issue handler
+  # pod 'Alamofire', '5.8'
+
   target 'AzureCommunicationUIDemoAppUITests' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
