@@ -159,6 +159,7 @@
 		536742832B8DA594001CAF9D /* CompositeSupportForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742802B8DA593001CAF9D /* CompositeSupportForm.swift */; };
 		536742842B8DA594001CAF9D /* CompositeSupportFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */; };
 		536742852B8DA594001CAF9D /* CompositeSupportFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */; };
+		538016492B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538016482B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift */; };
 		53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */; };
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
@@ -516,6 +517,7 @@
 		536742802B8DA593001CAF9D /* CompositeSupportForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportForm.swift; sourceTree = "<group>"; };
 		536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportFormCell.swift; sourceTree = "<group>"; };
 		536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportFormViewController.swift; sourceTree = "<group>"; };
+		538016482B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleViewDrawerContainerViewController.swift; sourceTree = "<group>"; };
 		53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryProtocols.swift; sourceTree = "<group>"; };
 		5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelTests.swift; sourceTree = "<group>"; };
 		5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModel.swift; sourceTree = "<group>"; };
@@ -1187,6 +1189,7 @@
 				1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */,
 				982C2834267D15AF00427246 /* CompositeAvatar.swift */,
 				982C2832267D0C4500427246 /* CompositeButton.swift */,
+				538016482B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1926,6 +1929,7 @@
 				FAD20A8E292834500063D8A9 /* MappedSequence.swift in Sources */,
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
 				1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */,
+				538016492B8DBDF20093AC4D /* SingleViewDrawerContainerViewController.swift in Sources */,
 				1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */,
 				1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */,
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,

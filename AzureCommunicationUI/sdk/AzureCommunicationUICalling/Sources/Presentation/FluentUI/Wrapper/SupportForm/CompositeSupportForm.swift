@@ -18,15 +18,14 @@ struct CompositeSupportForm: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<SupportFormViewModel> {
-        let controller = CompositeSupportFormViewController(sourceView: sourceView,
-                                                        isRightToLeft: layoutDirection == .rightToLeft)
+        let controller = CompositeSupportFormViewController(sourceView: sourceView)
         controller.delegate = context.coordinator
         return controller
     }
 
     func updateUIViewController(_ uiViewController: DrawerContainerViewController<SupportFormViewModel>,
                                 context: Context) {
-        // uiViewController.updateDrawerList(items: getAudioDevicesList())
+        uiViewController.updateDrawerList(items: [viewModel])
     }
 
     static func dismantleUIViewController(_

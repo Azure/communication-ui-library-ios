@@ -6,7 +6,7 @@
 import UIKit
 
 class CompositeSupportFormViewController: DrawerContainerViewController<SupportFormViewModel> {
-    private lazy var audioDevicesListTableView: UITableView? = {
+    private lazy var supportFormTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
         tableView.sectionHeaderHeight = 0
@@ -15,14 +15,14 @@ class CompositeSupportFormViewController: DrawerContainerViewController<SupportF
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(CompositeAudioDevicesListCell.self,
-                           forCellReuseIdentifier: CompositeAudioDevicesListCell.identifier)
+        tableView.register(CompositeSupportFormCell.self,
+                           forCellReuseIdentifier: CompositeSupportFormCell.identifier)
         return tableView
     }()
 
     override var drawerTableView: UITableView? {
-        get { return audioDevicesListTableView }
-        set { audioDevicesListTableView = newValue }
+        get { return supportFormTableView }
+        set { supportFormTableView = newValue }
     }
 }
 
@@ -36,14 +36,8 @@ extension CompositeSupportFormViewController: UITableViewDataSource, UITableView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard indexPath.row < self.items.count,
-              let cell = tableView.dequeueReusableCell(
-                  withIdentifier: CompositeSupportFormCell.identifier,
-                  for: indexPath) as? CompositeSupportFormCell else {
-            return UITableViewCell()
-        }
+        let cell = CompositeSupportFormCell()
         let supportFormViewModel = self.items[indexPath.row]
-
         cell.setup(viewModel: supportFormViewModel)
         cell.accessibilityValue = "\(indexPath.row + 1) of \(indexPath.count)"
         cell.bottomSeparatorType = .none

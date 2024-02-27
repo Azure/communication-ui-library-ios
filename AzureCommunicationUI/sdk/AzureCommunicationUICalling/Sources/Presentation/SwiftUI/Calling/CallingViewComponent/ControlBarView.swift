@@ -52,7 +52,7 @@ struct ControlBarView: View {
                         .accessibilityAddTraits(.isModal)
             })
             .modifier(PopupModalView(
-                isPresented: viewModel.isSupportFormOptionDisplayed) {
+                isPresented: viewModel.isSupportFormDisplayed) {
                    reportErrorView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
@@ -188,21 +188,15 @@ struct ControlBarView: View {
     }
 
     var reportErrorView: some View {
-        /*
-        SupportFormDrawerView(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                                  viewModel: viewModel.supportFormVideoModel,
-                                  sourceView: supportFormSourceView)
-        .modifier(LockPhoneOrientation())
-         */
-        Text("Hello")
+        return Group {
+            CompositeSupportForm(
+                isPresented: $viewModel.isSupportFormDisplayed,
+                viewModel: viewModel.supportFormVideoModel,
+                sourceView: supportFormSourceView)
+                .edgesIgnoringSafeArea(.all)
+                .modifier(LockPhoneOrientation())
+        }
     }
-//    var reportErrorView: some View {
-//        return Group {
-//            SupportFormView(viewModel: viewModel.supportFormVideoModel)
-//                .edgesIgnoringSafeArea(.all)
-//                .modifier(LockPhoneOrientation())
-//        }
-//    }
 }
 
 struct LeaveCallConfirmationListViewModel {

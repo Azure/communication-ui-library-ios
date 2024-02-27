@@ -20,6 +20,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var isMoreCallOptionsListDisplayed: Bool = false
     @Published var isShareActivityDisplayed: Bool = false
     @Published var isSupportFormOptionDisplayed: Bool = false
+    @Published var isSupportFormDisplayed: Bool = false
     @Published var isDisplayed: Bool = false
     @Published var isCameraDisplayed: Bool = true
 
@@ -55,7 +56,7 @@ class ControlBarViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
 
-        self.isSupportFormOptionDisplayed = navigationState.supportFormVisible
+        self.isSupportFormDisplayed = navigationState.supportFormVisible
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
@@ -251,7 +252,7 @@ class ControlBarViewModel: ObservableObject {
                 permissionState: PermissionState,
                 callingState: CallingState,
                 visibilityState: VisibilityState) {
-        self.isSupportFormOptionDisplayed = navigationState.supportFormVisible
+        self.isSupportFormDisplayed = navigationState.supportFormVisible
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
         if cameraPermission != permissionState.cameraPermission {
