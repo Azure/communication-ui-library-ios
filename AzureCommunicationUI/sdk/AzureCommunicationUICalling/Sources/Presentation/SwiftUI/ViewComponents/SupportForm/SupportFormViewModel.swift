@@ -73,3 +73,19 @@ class SupportFormViewModel: ObservableObject {
         dispatchAction(.hideSupportForm)
     }
 }
+
+extension SupportFormViewModel: Equatable {
+    static func == (lhs: SupportFormViewModel, rhs: SupportFormViewModel) -> Bool {
+        // Compare value types only, excluding closures and events
+        return lhs.submitOnDismiss == rhs.submitOnDismiss &&
+        lhs.blockSubmission == rhs.blockSubmission &&
+        lhs.reportIssueTitle == rhs.reportIssueTitle &&
+        lhs.logsAttachNotice == rhs.logsAttachNotice &&
+        lhs.privacyPolicyText == rhs.privacyPolicyText &&
+        lhs.describeYourIssueHintText == rhs.describeYourIssueHintText &&
+        lhs.cancelButtonText == rhs.cancelButtonText &&
+        lhs.reportAProblemText == rhs.reportAProblemText &&
+        lhs.sendFeedbackText == rhs.sendFeedbackText &&
+        lhs.messageText == rhs.messageText
+    }
+}
