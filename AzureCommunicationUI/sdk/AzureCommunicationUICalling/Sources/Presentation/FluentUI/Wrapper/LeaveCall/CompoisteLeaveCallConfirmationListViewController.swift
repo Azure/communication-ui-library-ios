@@ -5,7 +5,7 @@
 
 import UIKit
 
-class LeaveCallConfirmationListViewController: DrawerContainerViewController<DrawerListItemViewModel> {
+class CompositeLeaveCallConfirmationListViewController: DrawerContainerViewController<DrawerListItemViewModel> {
     private enum SectionConstants {
         static let headerHeight: CGFloat = 36.0
     }
@@ -28,7 +28,7 @@ class LeaveCallConfirmationListViewController: DrawerContainerViewController<Dra
     }
 }
 
-extension LeaveCallConfirmationListViewController: UITableViewDataSource, UITableViewDelegate {
+extension CompositeLeaveCallConfirmationListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

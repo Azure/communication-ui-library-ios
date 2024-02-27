@@ -19,7 +19,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<ParticipantsListCellViewModel> {
-        let controller = ParticipantsListViewController(sourceView: sourceView,
+        let controller = CompositeParticipantsListViewController(sourceView: sourceView,
                                                         avatarViewManager: avatarViewManager,
                                                         isRightToLeft: layoutDirection == .rightToLeft,
                                                         admintAll: viewModel.admitAll,

@@ -7,7 +7,7 @@ import SwiftUI
 import FluentUI
 import UIKit
 
-struct SupportFormDrawerView: UIViewControllerRepresentable {
+struct CompositeSupportForm: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
     @Environment(\.layoutDirection) var layoutDirection: LayoutDirection
     @ObservedObject var viewModel: SupportFormViewModel
@@ -17,14 +17,14 @@ struct SupportFormDrawerView: UIViewControllerRepresentable {
         Coordinator(isPresented: $isPresented)
     }
 
-    func makeUIViewController(context: Context) -> DrawerContainerViewController<SelectableDrawerListItemViewModel> {
-        let controller = SupportFormDrawerViewController(sourceView: sourceView,
+    func makeUIViewController(context: Context) -> DrawerContainerViewController<SupportFormViewModel> {
+        let controller = CompositeSupportFormViewController(sourceView: sourceView,
                                                         isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: DrawerContainerViewController<SelectableDrawerListItemViewModel>,
+    func updateUIViewController(_ uiViewController: DrawerContainerViewController<SupportFormViewModel>,
                                 context: Context) {
         // uiViewController.updateDrawerList(items: getAudioDevicesList())
     }

@@ -188,10 +188,13 @@ struct ControlBarView: View {
     }
 
     var reportErrorView: some View {
+        /*
         SupportFormDrawerView(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
                                   viewModel: viewModel.supportFormVideoModel,
                                   sourceView: supportFormSourceView)
         .modifier(LockPhoneOrientation())
+         */
+        Text("Hello")
     }
 //    var reportErrorView: some View {
 //        return Group {

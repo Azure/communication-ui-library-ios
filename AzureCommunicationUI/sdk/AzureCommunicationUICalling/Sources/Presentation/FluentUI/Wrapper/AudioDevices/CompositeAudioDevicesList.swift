@@ -18,7 +18,7 @@ struct CompositeAudioDevicesList: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<SelectableDrawerListItemViewModel> {
-        let controller = AudioDevicesListViewController(sourceView: sourceView,
+        let controller = CompositeAudioDevicesDrawerViewController(sourceView: sourceView,
                                                         isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller

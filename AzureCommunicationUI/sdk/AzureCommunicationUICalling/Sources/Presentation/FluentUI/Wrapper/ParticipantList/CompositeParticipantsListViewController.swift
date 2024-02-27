@@ -6,7 +6,7 @@
 import UIKit
 import FluentUI
 
-class ParticipantsListViewController: DrawerContainerViewController<ParticipantsListCellViewModel> {
+class CompositeParticipantsListViewController: DrawerContainerViewController<ParticipantsListCellViewModel> {
     private let avatarViewManager: AvatarViewManager
     private lazy var participantsListTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -104,7 +104,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     }
 }
 
-extension ParticipantsListViewController: UITableViewDataSource, UITableViewDelegate {
+extension CompositeParticipantsListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return lobbyParticipants.count == 0 ? 1 : 2
     }

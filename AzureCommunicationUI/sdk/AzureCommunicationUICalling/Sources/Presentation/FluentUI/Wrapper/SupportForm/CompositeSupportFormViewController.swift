@@ -5,7 +5,7 @@
 
 import UIKit
 
-class AudioDevicesListViewController: DrawerContainerViewController<SelectableDrawerListItemViewModel> {
+class CompositeSupportFormViewController: DrawerContainerViewController<SupportFormViewModel> {
     private lazy var audioDevicesListTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
@@ -26,7 +26,7 @@ class AudioDevicesListViewController: DrawerContainerViewController<SelectableDr
     }
 }
 
-extension AudioDevicesListViewController: UITableViewDataSource, UITableViewDelegate {
+extension CompositeSupportFormViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -38,24 +38,19 @@ extension AudioDevicesListViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard indexPath.row < self.items.count,
               let cell = tableView.dequeueReusableCell(
-                  withIdentifier: CompositeAudioDevicesListCell.identifier,
-                  for: indexPath) as? CompositeAudioDevicesListCell else {
+                  withIdentifier: CompositeSupportFormCell.identifier,
+                  for: indexPath) as? CompositeSupportFormCell else {
             return UITableViewCell()
         }
-        let audioDeviceViewModel = self.items[indexPath.row]
+        let supportFormViewModel = self.items[indexPath.row]
 
-        cell.setup(viewModel: audioDeviceViewModel)
+        cell.setup(viewModel: supportFormViewModel)
         cell.accessibilityValue = "\(indexPath.row + 1) of \(indexPath.count)"
         cell.bottomSeparatorType = .none
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switchAudioDeviceAction(at: indexPath.row)
         dismissDrawer(animated: true)
-    }
-
-    private func switchAudioDeviceAction(at row: Int) {
-        self.items[row].action()
     }
 }

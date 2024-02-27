@@ -34,7 +34,7 @@
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
 		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
-		1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */; };
+		1B5F169F27FBB70700C35126 /* CompoisteLeaveCallConfirmationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169E27FBB70700C35126 /* CompoisteLeaveCallConfirmationListViewController.swift */; };
 		1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */; };
 		1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */; };
 		1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */; };
@@ -156,8 +156,9 @@
 		533D7AFC2B1965BC0021767F /* SupportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFB2B1965BC0021767F /* SupportFormView.swift */; };
 		533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */; };
 		534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */; };
-		536742772B8D781E001CAF9D /* SupportFormDrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742762B8D781E001CAF9D /* SupportFormDrawerViewController.swift */; };
-		536742792B8D7CF1001CAF9D /* SupportFormDrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742782B8D7CF1001CAF9D /* SupportFormDrawerView.swift */; };
+		536742832B8DA594001CAF9D /* CompositeSupportForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742802B8DA593001CAF9D /* CompositeSupportForm.swift */; };
+		536742842B8DA594001CAF9D /* CompositeSupportFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */; };
+		536742852B8DA594001CAF9D /* CompositeSupportFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */; };
 		53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */; };
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
@@ -206,7 +207,7 @@
 		982C282E267C0C7500427246 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C282D267C0C7500427246 /* Icon.swift */; };
 		982C2833267D0C4500427246 /* CompositeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C2832267D0C4500427246 /* CompositeButton.swift */; };
 		982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C2834267D15AF00427246 /* CompositeAvatar.swift */; };
-		9852C2D526EFD19300435252 /* ParticipantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9852C2D426EFD19300435252 /* ParticipantsListViewController.swift */; };
+		9852C2D526EFD19300435252 /* CompositeParticipantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9852C2D426EFD19300435252 /* CompositeParticipantsListViewController.swift */; };
 		98546EB626D9B9990069B246 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98546EB526D9B9990069B246 /* AudioSessionManager.swift */; };
 		98546EBA26DEF24D0069B246 /* AudioDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98546EB926DEF24D0069B246 /* AudioDeviceType.swift */; };
 		985DF36C269650C900CFDA55 /* PreviewAreaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DF36B269650C900CFDA55 /* PreviewAreaViewModelTests.swift */; };
@@ -219,7 +220,7 @@
 		98966FE326A5E58D00069857 /* SetupControlBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */; };
 		98B1869B27C858B400B837E6 /* CompositeAudioDevicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B1869A27C858B400B837E6 /* CompositeAudioDevicesList.swift */; };
 		98B1869D27C858D500B837E6 /* CompositeAudioDevicesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B1869C27C858D500B837E6 /* CompositeAudioDevicesListCell.swift */; };
-		98B1869F27C858F500B837E6 /* AudioDevicesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B1869E27C858F500B837E6 /* AudioDevicesListViewController.swift */; };
+		98B1869F27C858F500B837E6 /* CompositeAudioDevicesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B1869E27C858F500B837E6 /* CompositeAudioDevicesListViewController.swift */; };
 		98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */; };
 		98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */; };
 		98FFD82826CC5FD900655398 /* PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FFD82726CC5FD900655398 /* PreferenceKey.swift */; };
@@ -350,7 +351,7 @@
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
-		1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationListViewController.swift; sourceTree = "<group>"; };
+		1B5F169E27FBB70700C35126 /* CompoisteLeaveCallConfirmationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoisteLeaveCallConfirmationListViewController.swift; sourceTree = "<group>"; };
 		1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationListCell.swift; sourceTree = "<group>"; };
 		1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableVideoRenderView.swift; sourceTree = "<group>"; };
@@ -512,8 +513,9 @@
 		533D7AFB2B1965BC0021767F /* SupportFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormView.swift; sourceTree = "<group>"; };
 		533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormViewModel.swift; sourceTree = "<group>"; };
 		534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAudioVideoMode.swift; sourceTree = "<group>"; };
-		536742762B8D781E001CAF9D /* SupportFormDrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormDrawerViewController.swift; sourceTree = "<group>"; };
-		536742782B8D7CF1001CAF9D /* SupportFormDrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormDrawerView.swift; sourceTree = "<group>"; };
+		536742802B8DA593001CAF9D /* CompositeSupportForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportForm.swift; sourceTree = "<group>"; };
+		536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportFormCell.swift; sourceTree = "<group>"; };
+		536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSupportFormViewController.swift; sourceTree = "<group>"; };
 		53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryProtocols.swift; sourceTree = "<group>"; };
 		5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelTests.swift; sourceTree = "<group>"; };
 		5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModel.swift; sourceTree = "<group>"; };
@@ -562,7 +564,7 @@
 		982C282D267C0C7500427246 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		982C2832267D0C4500427246 /* CompositeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeButton.swift; sourceTree = "<group>"; };
 		982C2834267D15AF00427246 /* CompositeAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeAvatar.swift; sourceTree = "<group>"; };
-		9852C2D426EFD19300435252 /* ParticipantsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewController.swift; sourceTree = "<group>"; };
+		9852C2D426EFD19300435252 /* CompositeParticipantsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeParticipantsListViewController.swift; sourceTree = "<group>"; };
 		98546EB526D9B9990069B246 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 		98546EB926DEF24D0069B246 /* AudioDeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceType.swift; sourceTree = "<group>"; };
 		985DF36B269650C900CFDA55 /* PreviewAreaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAreaViewModelTests.swift; sourceTree = "<group>"; };
@@ -575,7 +577,7 @@
 		98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupControlBarViewModelTests.swift; sourceTree = "<group>"; };
 		98B1869A27C858B400B837E6 /* CompositeAudioDevicesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeAudioDevicesList.swift; sourceTree = "<group>"; };
 		98B1869C27C858D500B837E6 /* CompositeAudioDevicesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeAudioDevicesListCell.swift; sourceTree = "<group>"; };
-		98B1869E27C858F500B837E6 /* AudioDevicesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewController.swift; sourceTree = "<group>"; };
+		98B1869E27C858F500B837E6 /* CompositeAudioDevicesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeAudioDevicesListViewController.swift; sourceTree = "<group>"; };
 		98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModel.swift; sourceTree = "<group>"; };
 		98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModelTests.swift; sourceTree = "<group>"; };
 		98FFD82726CC5FD900655398 /* PreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKey.swift; sourceTree = "<group>"; };
@@ -1139,6 +1141,66 @@
 			path = SupportForm;
 			sourceTree = "<group>";
 		};
+		5367427A2B8D8329001CAF9D /* AudioDevices */ = {
+			isa = PBXGroup;
+			children = (
+				98B1869E27C858F500B837E6 /* CompositeAudioDevicesListViewController.swift */,
+				98B1869A27C858B400B837E6 /* CompositeAudioDevicesList.swift */,
+				98B1869C27C858D500B837E6 /* CompositeAudioDevicesListCell.swift */,
+			);
+			path = AudioDevices;
+			sourceTree = "<group>";
+		};
+		5367427B2B8D833E001CAF9D /* MoreCallOptions */ = {
+			isa = PBXGroup;
+			children = (
+				FAACEE3728FA0E4C003F7D7C /* MoreCallOptionsList.swift */,
+				FAACEE3F28FA241A003F7D7C /* MoreCallOptionsListCell.swift */,
+				FAACEE3928FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift */,
+			);
+			path = MoreCallOptions;
+			sourceTree = "<group>";
+		};
+		5367427C2B8D8357001CAF9D /* SupportForm */ = {
+			isa = PBXGroup;
+			children = (
+				536742802B8DA593001CAF9D /* CompositeSupportForm.swift */,
+				536742812B8DA593001CAF9D /* CompositeSupportFormCell.swift */,
+				536742822B8DA593001CAF9D /* CompositeSupportFormViewController.swift */,
+			);
+			path = SupportForm;
+			sourceTree = "<group>";
+		};
+		5367427D2B8D83A3001CAF9D /* LeaveCall */ = {
+			isa = PBXGroup;
+			children = (
+				1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */,
+				1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */,
+				1B5F169E27FBB70700C35126 /* CompoisteLeaveCallConfirmationListViewController.swift */,
+			);
+			path = LeaveCall;
+			sourceTree = "<group>";
+		};
+		5367427E2B8D83E0001CAF9D /* General */ = {
+			isa = PBXGroup;
+			children = (
+				1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */,
+				982C2834267D15AF00427246 /* CompositeAvatar.swift */,
+				982C2832267D0C4500427246 /* CompositeButton.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		5367427F2B8D83EE001CAF9D /* ParticipantList */ = {
+			isa = PBXGroup;
+			children = (
+				9852C2D426EFD19300435252 /* CompositeParticipantsListViewController.swift */,
+				50E2D69026EAAB33006B0EF4 /* CompositeParticipantsList.swift */,
+				50E2D69626EBCD15006B0EF4 /* CompositeParticipantsListCell.swift */,
+			);
+			path = ParticipantList;
+			sourceTree = "<group>";
+		};
 		5A314192C1EC6B1FB3D9A707 /* CallCompositeOptions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1221,23 +1283,12 @@
 		982C2831267D0C3400427246 /* Wrapper */ = {
 			isa = PBXGroup;
 			children = (
-				98B1869E27C858F500B837E6 /* AudioDevicesListViewController.swift */,
-				98B1869A27C858B400B837E6 /* CompositeAudioDevicesList.swift */,
-				98B1869C27C858D500B837E6 /* CompositeAudioDevicesListCell.swift */,
-				982C2834267D15AF00427246 /* CompositeAvatar.swift */,
-				982C2832267D0C4500427246 /* CompositeButton.swift */,
-				1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */,
-				1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */,
-				50E2D69026EAAB33006B0EF4 /* CompositeParticipantsList.swift */,
-				50E2D69626EBCD15006B0EF4 /* CompositeParticipantsListCell.swift */,
-				1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */,
-				1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */,
-				FAACEE3728FA0E4C003F7D7C /* MoreCallOptionsList.swift */,
-				FAACEE3F28FA241A003F7D7C /* MoreCallOptionsListCell.swift */,
-				FAACEE3928FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift */,
-				9852C2D426EFD19300435252 /* ParticipantsListViewController.swift */,
-				536742762B8D781E001CAF9D /* SupportFormDrawerViewController.swift */,
-				536742782B8D7CF1001CAF9D /* SupportFormDrawerView.swift */,
+				5367427F2B8D83EE001CAF9D /* ParticipantList */,
+				5367427E2B8D83E0001CAF9D /* General */,
+				5367427D2B8D83A3001CAF9D /* LeaveCall */,
+				5367427C2B8D8357001CAF9D /* SupportForm */,
+				5367427B2B8D833E001CAF9D /* MoreCallOptions */,
+				5367427A2B8D8329001CAF9D /* AudioDevices */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -1882,11 +1933,11 @@
 				FAD20A8D292834500063D8A9 /* CancelBag.swift in Sources */,
 				50FA460C26829162001844AC /* IconWithLabelButton.swift in Sources */,
 				756F596E2965F8EA00BAFBF7 /* Store.swift in Sources */,
+				536742832B8DA594001CAF9D /* CompositeSupportForm.swift in Sources */,
 				B2B1DB3F2ABE35DA003B00DB /* MessageBarDiagnosticViewModel.swift in Sources */,
 				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
 				05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
-				536742772B8D781E001CAF9D /* SupportFormDrawerViewController.swift in Sources */,
 				75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */,
 				7589CE1A297765E30092AE38 /* ViewExtension.swift in Sources */,
 				1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */,
@@ -1914,6 +1965,7 @@
 				50B390D327D834FE0010A2ED /* LocalizationKey.swift in Sources */,
 				B238378B2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift in Sources */,
 				FAD20A89292834500063D8A9 /* ArrayExtension.swift in Sources */,
+				536742852B8DA594001CAF9D /* CompositeSupportFormViewController.swift in Sources */,
 				1F2BED68262F86F400D98266 /* SetupViewModel.swift in Sources */,
 				98B1869D27C858D500B837E6 /* CompositeAudioDevicesListCell.swift in Sources */,
 				9885BA0726A2116200CC514B /* SetupControlBarViewModel.swift in Sources */,
@@ -1933,7 +1985,7 @@
 				885F3F9A291DCDF500B86C9B /* DrawerListItemViewModel.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */,
-				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
+				1B5F169F27FBB70700C35126 /* CompoisteLeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
@@ -1947,7 +1999,7 @@
 				88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */,
 				A464810A29F34A06001B80A3 /* CompositeExitManager.swift in Sources */,
 				A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */,
-				98B1869F27C858F500B837E6 /* AudioDevicesListViewController.swift in Sources */,
+				98B1869F27C858F500B837E6 /* CompositeAudioDevicesListViewController.swift in Sources */,
 				A88CDFB9274FF9C10004E2F5 /* ErrorInfoView.swift in Sources */,
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
@@ -1969,7 +2021,7 @@
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,
 				FAACEE4028FA241A003F7D7C /* MoreCallOptionsListCell.swift in Sources */,
 				B2E5B17E2AA1453B00D54A3A /* DiagnosticsAction.swift in Sources */,
-				9852C2D526EFD19300435252 /* ParticipantsListViewController.swift in Sources */,
+				9852C2D526EFD19300435252 /* CompositeParticipantsListViewController.swift in Sources */,
 				759BDEF728FF0839002B6853 /* ColorThemeProvider.swift in Sources */,
 				B2C2FFDD2AB8E566002F0763 /* BottomToastDiagnosticView.swift in Sources */,
 				503F4B672704EDC800C17DA6 /* BannerView.swift in Sources */,
@@ -2002,9 +2054,9 @@
 				9823AB4926A13F220006266D /* PreviewAreaView.swift in Sources */,
 				50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */,
 				11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */,
+				536742842B8DA594001CAF9D /* CompositeSupportFormCell.swift in Sources */,
 				50E2D69926F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift in Sources */,
 				FAACEE3A28FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift in Sources */,
-				536742792B8D7CF1001CAF9D /* SupportFormDrawerView.swift in Sources */,
 				75C1EE0F28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift in Sources */,
 				98B1869B27C858B400B837E6 /* CompositeAudioDevicesList.swift in Sources */,
 				A874EDC4266152AA003C7D92 /* AppLifeCycleManager.swift in Sources */,
