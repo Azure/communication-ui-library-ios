@@ -75,14 +75,14 @@ internal struct SupportFormView: View {
 #endif
                     }
                     .padding(.leading, 16)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, 64)
                 }
                 .background(Color(StyleProvider.color.backgroundColor))
                 .cornerRadius( 16.0)
                 .shadow(radius: 4.0)
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
-                .transition(.slide)
+                .padding(.bottom, -32)
             }
         }
     }
