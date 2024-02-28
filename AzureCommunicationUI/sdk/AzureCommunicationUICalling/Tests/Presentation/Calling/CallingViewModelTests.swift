@@ -286,6 +286,7 @@ extension CallingViewModelTests {
                                 localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false,
-                                allowLocalCameraPreview: true)
+                                allowLocalCameraPreview: true,
+                                desiredOrientation: nil)
     }
 }

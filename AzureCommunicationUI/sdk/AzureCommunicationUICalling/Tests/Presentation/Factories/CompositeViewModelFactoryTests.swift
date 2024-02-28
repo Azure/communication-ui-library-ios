@@ -46,7 +46,10 @@ extension CompositeViewModelFactoryTests {
                                          debugInfoManager: DebugInfoManagerMocking(),
                                          enableMultitasking: true,
                                          enableSystemPipWhenMultitasking: true,
-                                         eventsHandler: CallComposite.Events()) { [] }
+                                         eventsHandler: CallComposite.Events(),
+                                         retrieveLogFiles: { [ ] },
+                                         callingDesiredOrientation: nil,
+                                         setupDesiredOrientation: nil)
     }
 }
 

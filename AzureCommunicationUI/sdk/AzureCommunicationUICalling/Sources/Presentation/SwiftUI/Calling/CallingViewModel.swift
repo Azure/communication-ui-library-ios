@@ -51,7 +51,7 @@ class CallingViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
-         desiredOrientation: OrientationOptions?
+         desiredOrientation: OrientationOptions? = nil
     ) {
         self.logger = logger
         self.store = store

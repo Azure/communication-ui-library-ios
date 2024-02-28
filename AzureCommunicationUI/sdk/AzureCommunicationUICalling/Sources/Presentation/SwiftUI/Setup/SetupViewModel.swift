@@ -37,7 +37,7 @@ class SetupViewModel: ObservableObject {
          audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil,
-         desiredOrientation: OrientationOptions?) {
+         desiredOrientation: OrientationOptions? = nil) {
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
