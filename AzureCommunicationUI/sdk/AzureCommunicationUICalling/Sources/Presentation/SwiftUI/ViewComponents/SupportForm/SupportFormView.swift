@@ -75,7 +75,7 @@ internal struct SupportFormView: View {
 #endif
                     }
                     .padding(.leading, 16)
-                    .padding(.bottom, 72)
+                    .padding(.bottom, 24)
                 }
                 .background(Color(StyleProvider.color.backgroundColor))
                 .cornerRadius( 16.0)
