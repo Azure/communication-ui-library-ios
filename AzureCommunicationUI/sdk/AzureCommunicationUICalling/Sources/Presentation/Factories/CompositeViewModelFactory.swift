@@ -72,7 +72,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                            networkManager: networkManager,
                                            audioSessionManager: audioSessionManager,
                                            localizationProvider: localizationProvider,
-                                           setupScreenViewData: localOptions?.setupScreenViewData)
+                                           setupScreenViewData: localOptions?.setupScreenViewData,
+                                           desiredOrientation: self.setupDesiredOrientation)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel

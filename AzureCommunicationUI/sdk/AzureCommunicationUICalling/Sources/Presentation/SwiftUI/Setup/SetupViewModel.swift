@@ -15,6 +15,7 @@ class SetupViewModel: ObservableObject {
 
     let isRightToLeft: Bool
     let previewAreaViewModel: PreviewAreaViewModel
+    let desiredOrientation: OrientationOptions?
     var title: String
     var subTitle: String?
 
@@ -35,13 +36,15 @@ class SetupViewModel: ObservableObject {
          networkManager: NetworkManager,
          audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
-         setupScreenViewData: SetupScreenViewData? = nil) {
+         setupScreenViewData: SetupScreenViewData? = nil,
+         desiredOrientation: OrientationOptions?) {
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
         self.audioSessionManager = audioSessionManager
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
+        self.desiredOrientation = desiredOrientation
         self.logger = logger
 
         if let title = setupScreenViewData?.title, !title.isEmpty {

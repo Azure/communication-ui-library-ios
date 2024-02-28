@@ -14,6 +14,7 @@ struct SetupView: View {
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
     @Orientation var orientation: UIDeviceOrientation
     let avatarManager: AvatarViewManagerProtocol
+    let orientationProvider = OrientationProvider()
 
     enum LayoutConstant {
         static let spacing: CGFloat = 24
@@ -54,7 +55,8 @@ struct SetupView: View {
                     .padding(.horizontal, setupViewHorizontalPadding(parentSize: geometry.size))
                 }
             }
-        }
+        }.supportedOrientations(orientationProvider.orientationMask(for: viewModel.desiredOrientation) ??
+                                SupportedOrientationsPreferenceKey.defaultValue)
     }
 
     var joinCallView: some View {
