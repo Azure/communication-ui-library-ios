@@ -68,7 +68,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                 store: store,
                                                 networkManager: NetworkManager(),
                                                 audioSessionManager: AudioSessionManager(store: store, logger: logger),
-                                                localizationProvider: localizationProvider)
+                                                localizationProvider: localizationProvider,
+                                                desiredOrientation: nil)
     }
 
     func getCallingViewModel() -> CallingViewModel {
@@ -78,7 +79,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
                                                     isIpadInterface: false,
-                                                    allowLocalCameraPreview: true)
+                                                    allowLocalCameraPreview: true,
+                                                    desiredOrientation: nil)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
