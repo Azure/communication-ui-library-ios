@@ -31,6 +31,8 @@ struct CallingView: View {
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
 
+    private let orientationProvider = OrientationProvider()
+
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
@@ -67,7 +69,8 @@ struct CallingView: View {
             updateChildViewIfNeededWith(newOrientation: newOrientation)
         }.onAppear {
             resetOrientation()
-        }
+        }.supportedOrientations(orientationProvider.orientationMask(for: viewModel.currentOrientation) ??
+                                SupportedOrientationsPreferenceKey.defaultValue)
     }
 
     var portraitCallingView: some View {

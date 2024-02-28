@@ -15,12 +15,14 @@ class CallingViewModel: ObservableObject {
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var allowLocalCameraPreview: Bool = false
     @Published var showingSupportForm: Bool = false
+    @Published var currentOrientation: OrientationOptions?
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let desiredOrientation: OrientationOptions?
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
@@ -48,7 +50,8 @@ class CallingViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
-         allowLocalCameraPreview: Bool
+         allowLocalCameraPreview: Bool,
+         desiredOrientation: OrientationOptions?
     ) {
         self.logger = logger
         self.store = store
@@ -57,10 +60,13 @@ class CallingViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
+        self.desiredOrientation = desiredOrientation
         let actionDispatch: ActionDispatch = store.dispatch
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
         showingSupportForm = store.state.navigationState.supportFormVisible
+        currentOrientation = store.state.navigationState.supportFormVisible
+            ? OrientationOptions.portrait : desiredOrientation
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
@@ -70,9 +76,9 @@ class CallingViewModel: ObservableObject {
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory
-
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
                                      localUserState: store.state.localUserState)
+
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
@@ -137,6 +143,10 @@ class CallingViewModel: ObservableObject {
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
+
+        currentOrientation = store.state.navigationState.supportFormVisible
+        ? OrientationOptions.portrait : desiredOrientation
+
         showingSupportForm = store.state.navigationState.supportFormVisible
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,

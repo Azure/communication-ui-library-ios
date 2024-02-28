@@ -18,6 +18,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
+    private let callingDesiredOrientation: OrientationOptions?
+    private let setupDesiredOrientation: OrientationOptions?
 
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
@@ -34,7 +36,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
-         retrieveLogFiles: @escaping () -> [URL]
+         retrieveLogFiles: @escaping () -> [URL],
+         callingDesiredOrientation: OrientationOptions?,
+         setupDesiredOrientation: OrientationOptions?
          ) {
         self.logger = logger
         self.store = store
@@ -48,6 +52,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.retrieveLogFiles = retrieveLogFiles
+        self.callingDesiredOrientation = callingDesiredOrientation
+        self.setupDesiredOrientation = setupDesiredOrientation
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
@@ -83,7 +89,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              accessibilityProvider: accessibilityProvider,
                                              isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
-                                             != CallCompositeAudioVideoMode.audioOnly)
+                                             != CallCompositeAudioVideoMode.audioOnly,
+                                             desiredOrientation: self.callingDesiredOrientation)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel

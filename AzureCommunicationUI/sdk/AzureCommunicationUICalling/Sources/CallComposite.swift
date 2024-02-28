@@ -292,7 +292,9 @@ public class CallComposite {
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles
+                retrieveLogFiles: callingSdkWrapper.getLogFiles,
+                callingDesiredOrientation: callingViewOrientationOptions,
+                setupDesiredOrientation: setupViewOrientationOptions
             )
         )
     }
@@ -385,8 +387,6 @@ extension CallComposite {
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
-                                     setupViewOrientationMask: setupViewOrientationMask,
-                                     callingViewOrientationMask: callingViewOrientationMask,
                                      isRightToLeft: isRightToLeft)
         let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
                                                                         callComposite: self,

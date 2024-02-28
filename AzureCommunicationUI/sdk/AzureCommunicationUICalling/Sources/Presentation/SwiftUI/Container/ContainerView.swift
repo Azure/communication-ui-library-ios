@@ -13,12 +13,7 @@ struct ContainerView: View {
     let viewFactory: CompositeViewFactoryProtocol
     let setupViewDefaultOrientation: UIInterfaceOrientationMask =
     UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .allButUpsideDown
-    let setupViewOrientationMask: UIInterfaceOrientationMask?
-    let callingViewOrientationMask: UIInterfaceOrientationMask?
     let isRightToLeft: Bool
-    var isCallingScreenLocked: Bool {
-        return !(callingViewOrientationMask  == .allButUpsideDown || callingViewOrientationMask == nil)
-    }
 
     var body: some View {
         Group {
@@ -33,14 +28,9 @@ struct ContainerView: View {
     private var contentView: some View {
         switch router.currentView {
         case .setupView:
-            setupView.supportedOrientations(setupViewOrientationMask ?? setupViewDefaultOrientation)
+            setupView
         case .callingView:
-            if isCallingScreenLocked {
-                callingView.proximitySensorEnabled(true)
-                    .supportedOrientations(callingViewOrientationMask ?? .portrait)
-            } else {
             callingView.proximitySensorEnabled(true)
-            }
         }
     }
 
