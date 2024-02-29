@@ -6,7 +6,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-class LandscapeAwareKeyboardWatcher: ObservableObject {
+internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     static let shared = LandscapeAwareKeyboardWatcher()
     @Published var activeHeight: CGFloat = 0
 
