@@ -6,6 +6,9 @@ import Foundation
 import SwiftUI
 import UIKit
 
+/*
+ Prepares offsets for views impacted by the keyboard, specifically in Landscape mode
+ */
 class LandscapeAwareKeyboardWatcher: ObservableObject {
     @Published var activeHeight: CGFloat = 0
 
