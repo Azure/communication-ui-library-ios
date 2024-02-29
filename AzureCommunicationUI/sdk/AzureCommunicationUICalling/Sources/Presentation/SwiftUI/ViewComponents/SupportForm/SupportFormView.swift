@@ -9,7 +9,8 @@ import FluentUI
 
 internal struct SupportFormView: View {
     @ObservedObject var viewModel: SupportFormViewModel
-    @ObservedObject var landscapeKeyboardWatcher = LandscapeAwareKeyboardWatcher()
+    @ObservedObject var landscapeKeyboardWatcher: LandscapeAwareKeyboardWatcher
+        = LandscapeAwareKeyboardWatcher.shared
 
     let screenHeight: CGFloat = UIScreen.main.bounds.height
     let otherControlsHeightEstimate: CGFloat = 104
