@@ -9,9 +9,15 @@ import FluentUI
 
 internal struct SupportFormView: View {
     @ObservedObject var viewModel: SupportFormViewModel
+    @ObservedObject var landscapeKeyboardWatcher = LandscapeAwareKeyboardWatcher()
+
+    let screenHeight: CGFloat = UIScreen.main.bounds.height
+    let otherControlsHeightEstimate: CGFloat = 104
+
     init(viewModel: SupportFormViewModel) {
         self.viewModel = viewModel
     }
+
     var body: some View {
         ZStack {
             Color(StyleProvider.color.overlay)
@@ -51,7 +57,7 @@ internal struct SupportFormView: View {
                                 .accessibilityHidden(true)
                         }
                         TextEditor(text: $viewModel.messageText)
-                            .frame(height: 150)
+                            .frame(height: calculatedTextEditorHeight())
                             .opacity(viewModel.messageText.isEmpty ? 0.25 : 1)
                             .cornerRadius(16.0)
                             .border(Color(StyleProvider.color.onSurface).opacity(0.25))
@@ -75,15 +81,21 @@ internal struct SupportFormView: View {
 #endif
                     }
                     .padding(.leading, 16)
-                    .padding(.bottom, 72)
+                    .padding(.bottom, 32)
                 }
                 .background(Color(StyleProvider.color.backgroundColor))
                 .cornerRadius( 16.0)
                 .shadow(radius: 4.0)
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
-                .transition(.slide)
+                .padding(.bottom, -16)
+                .offset(y: -landscapeKeyboardWatcher.keyboardHeight)
             }
         }
+    }
+
+    func calculatedTextEditorHeight() -> CGFloat {
+        let availableHeight = screenHeight - landscapeKeyboardWatcher.keyboardHeight - otherControlsHeightEstimate
+        return min(150, availableHeight)
     }
 }
