@@ -9,6 +9,7 @@ import FluentUI
 
 internal struct SupportFormView: View {
     @ObservedObject var viewModel: SupportFormViewModel
+    @ObservedObject var landscapeKeyboardWatcher = LandscapeAwareKeyboardWatcher()
     init(viewModel: SupportFormViewModel) {
         self.viewModel = viewModel
     }
@@ -83,6 +84,7 @@ internal struct SupportFormView: View {
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
                 .padding(.bottom, -32)
+                .offset(y: -landscapeKeyboardWatcher.keyboardHeight)
             }
         }
     }
