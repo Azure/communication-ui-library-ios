@@ -6,10 +6,12 @@ import Foundation
 import SwiftUI
 import UIKit
 
-/*
- Prepares offsets for views impacted by the keyboard, specifically in Landscape mode
- */
 class LandscapeAwareKeyboardWatcher: ObservableObject {
+<<<<<<< Updated upstream
+=======
+    static let shared = LandscapeAwareKeyboardWatcher()
+
+>>>>>>> Stashed changes
     @Published var activeHeight: CGFloat = 0
 
     private var keyboardHeight: CGFloat = 0
@@ -76,6 +78,10 @@ class LandscapeAwareKeyboardWatcher: ObservableObject {
     private func updateOrientationStatus() {
         let currentOrientation = UIDevice.current.orientation
         isLandscape = currentOrientation == .landscapeLeft || currentOrientation == .landscapeRight
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     }
 
     private func updateActiveHeight() {
