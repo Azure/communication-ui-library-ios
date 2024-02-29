@@ -89,13 +89,13 @@ internal struct SupportFormView: View {
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
                 .padding(.bottom, -16)
-                .offset(y: -landscapeKeyboardWatcher.keyboardHeight)
+                .offset(y: -landscapeKeyboardWatcher.activeHeight)
             }
         }
     }
 
     func calculatedTextEditorHeight() -> CGFloat {
-        let availableHeight = screenHeight - landscapeKeyboardWatcher.keyboardHeight - otherControlsHeightEstimate
+        let availableHeight = screenHeight - landscapeKeyboardWatcher.activeHeight - otherControlsHeightEstimate
         return min(150, availableHeight)
     }
 }
