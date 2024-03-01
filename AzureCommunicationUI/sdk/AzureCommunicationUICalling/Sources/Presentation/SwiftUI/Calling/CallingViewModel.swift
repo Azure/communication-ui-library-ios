@@ -138,6 +138,8 @@ class CallingViewModel: ObservableObject {
             return
         }
         showingSupportForm = store.state.navigationState.supportFormVisible
+            && store.state.visibilityState.currentStatus == .visible
+
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
