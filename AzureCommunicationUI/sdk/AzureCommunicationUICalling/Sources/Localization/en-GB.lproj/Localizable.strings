@@ -69,7 +69,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Waiting in lobby (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="In the call (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Admit all";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Admit all partidipants?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Admit all participants?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Admit %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Admit";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Decline";
