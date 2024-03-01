@@ -37,6 +37,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     private let waitingInLobby: String
     private let inTheCall: String
     private let confirmTitleAdmitParticipant: String
+    private let admitAllButtonText: String
     private let confirmTitleAdmitAll: String
     private let confirmAdmit: String
     private let confirmDecline: String
@@ -69,6 +70,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
          declineParticipant: @escaping (_ participantId: String) -> Void,
          waitingInLobby: String,
          inTheCall: String,
+         admitAllButtonText: String,
          confirmTitleAdmitParticipant: String,
          confirmTitleAdmitAll: String,
          confirmAdmit: String,
@@ -81,6 +83,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
         self.declineParticipant = declineParticipant
         self.waitingInLobby = waitingInLobby
         self.inTheCall = inTheCall
+        self.admitAllButtonText = admitAllButtonText
         self.confirmTitleAdmitParticipant = confirmTitleAdmitParticipant
         self.confirmTitleAdmitAll = confirmTitleAdmitAll
         self.confirmAdmit = confirmAdmit
@@ -152,7 +155,7 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
 
         if isLobbySection {
             let admitAllButton = Button(style: .borderless)
-            admitAllButton.setTitle("Admit all", for: .normal)
+            admitAllButton.setTitle(admitAllButtonText, for: .normal)
             admitAllButton.titleLabel?.font = .systemFont(ofSize: 14)
             admitAllButton.sizeToFit()
             admitAllButton.translatesAutoresizingMaskIntoConstraints = false
