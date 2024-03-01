@@ -88,6 +88,10 @@ class ParticipantsListViewModel: ObservableObject {
         self.localizationProvider.getLocalizedString(.participantListInTheCall)
     }
 
+    func getAdmitAllButtonText() -> String {
+        self.localizationProvider.getLocalizedString(.participantListAdmitAll)
+    }
+
     func getConfirmTitleAdmitParticipant() -> String {
         self.localizationProvider.getLocalizedString(.participantListConfirmTitleAdmitParticipant)
     }

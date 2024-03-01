@@ -28,6 +28,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
                                                         declineParticipant: viewModel.declineParticipant,
                                                         waitingInLobby: viewModel.getWaitingInLobby(),
                                                         inTheCall: viewModel.getInTheCall(),
+                                                        admitAllButtonText: viewModel.getAdmitAllButtonText(),
                                                         confirmTitleAdmitParticipant:
                                                             viewModel.getConfirmTitleAdmitParticipant(),
                                                         confirmTitleAdmitAll: viewModel.getConfirmTitleAdmitAll(),
