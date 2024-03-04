@@ -76,7 +76,7 @@ extends:
                   environment: 'PRODEXT'
                   teamId: '44988'
                   authType: 'OAuth'
-                  authId: $(authId)
+                  authId: '$(authId)'
                   authKey: '$(AUTH_KEY)'
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
@@ -87,7 +87,7 @@ extends:
                 condition: eq(variables['commit'], 'true')
                 inputs:
                   teamId: "44988"
-                  authId: $(authId)
+                  authId: '$(authId)'
                   authKey: '$(AUTH_KEY)'
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
