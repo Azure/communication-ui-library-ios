@@ -12,6 +12,7 @@ class ControlBarViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private var isCameraStateUpdating: Bool = false
     private var isDefaultUserStateMapped: Bool = false
+    private var displayLeaveCallConfirmation: Bool = true
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
     @Published var cameraPermission: AppPermission.Status = .unknown
@@ -41,12 +42,13 @@ class ControlBarViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
-         localUserState: LocalUserState) {
+         localUserState: LocalUserState,
+         displayLeaveCallConfirmation: Bool) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
-
+        self.displayLeaveCallConfirmation = displayLeaveCallConfirmation
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
@@ -125,7 +127,11 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func endCallButtonTapped() {
-        self.isConfirmLeaveListDisplayed = true
+        if self.displayLeaveCallConfirmation {
+            self.isConfirmLeaveListDisplayed = true
+        } else {
+            self.displayEndCallConfirm()
+        }
     }
 
     func cameraButtonTapped() {

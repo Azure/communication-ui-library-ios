@@ -84,6 +84,12 @@ class ControlBarViewModelTests: XCTestCase {
         sut.endCallButtonTapped()
         XCTAssertTrue(sut.isConfirmLeaveListDisplayed)
     }
+    func test_controlBarViewModel_endCall_when_No_confirmLeaveListIsDisplayed_ShouldRemainFalse() {
+        let sut = makeSUTWhenDisplayLeaveFalse()
+        sut.isConfirmLeaveListDisplayed = false
+        sut.endCallButtonTapped()
+        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+    }
 
     // MARK: Microphone tests
     func test_controlBarViewModel_microphoneButtonTapped_when_micStatusOff_then_shouldMicrophoneOnRequested() {
@@ -628,7 +634,17 @@ extension ControlBarViewModelTests {
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
-                                   localUserState: storeFactory.store.state.localUserState)
+                                   localUserState: storeFactory.store.state.localUserState,
+                                   displayLeaveCallConfirmation: true)
+    }
+    func makeSUTWhenDisplayLeaveFalse(localizationProvider: LocalizationProviderMocking? = nil) -> ControlBarViewModel {
+        return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
+                                   logger: logger,
+                                   localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
+                                   dispatchAction: storeFactory.store.dispatch,
+                                   endCallConfirm: {},
+                                   localUserState: storeFactory.store.state.localUserState,
+                                   displayLeaveCallConfirmation: false)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {

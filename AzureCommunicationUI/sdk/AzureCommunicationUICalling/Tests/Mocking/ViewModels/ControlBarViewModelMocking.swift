@@ -15,6 +15,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
+         displayLeaveCallConfirmation: Bool = true,
          updateState: ((LocalUserState, PermissionState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
@@ -22,7 +23,8 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    localizationProvider: localizationProvider,
                    dispatchAction: dispatchAction,
                    endCallConfirm: endCallConfirm,
-                   localUserState: localUserState)
+                   localUserState: localUserState,
+                   displayLeaveCallConfirmation: displayLeaveCallConfirmation)
     }
 
     override func update(localUserState: LocalUserState,

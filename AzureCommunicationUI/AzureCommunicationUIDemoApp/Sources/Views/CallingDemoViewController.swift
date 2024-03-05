@@ -269,7 +269,8 @@ class CallingDemoViewController: UIViewController {
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        displayLeaveCallConfirmation: envConfigSubject.displayLeaveCallConfirmation)
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {

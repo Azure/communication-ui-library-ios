@@ -18,6 +18,8 @@ public struct LocalOptions {
     let microphoneOn: Bool?
     /// The SkipSetupScreen is used when we skip the setup screen
     let skipSetupScreen: Bool?
+    /// The DisplayLeaveCallConfirmation is used when we ask for confirmation before leaving the call
+    let displayLeaveCallConfirmation: Bool?
 
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
@@ -27,13 +29,15 @@ public struct LocalOptions {
                 setupScreenViewData: SetupScreenViewData? = nil,
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
-                skipSetupScreen: Bool? = false
+                skipSetupScreen: Bool? = false,
+                displayLeaveCallConfirmation: Bool? = true
     ) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOn = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
+        self.displayLeaveCallConfirmation = displayLeaveCallConfirmation
     }
 }
 /// Object to represent participants data
