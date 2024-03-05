@@ -6,6 +6,7 @@
 import Combine
 import Foundation
 
+// swiftlint:disable file_length
 protocol CallingMiddlewareHandling {
     @discardableResult
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -39,6 +40,18 @@ protocol CallingMiddlewareHandling {
     func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func admitAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func declineAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func admitLobbyParticipant(state: AppState,
+                               dispatch: @escaping ActionDispatch,
+                               participantId: String) -> Task<Void, Never>
+    @discardableResult
+    func declineLobbyParticipant(state: AppState,
+                                 dispatch: @escaping ActionDispatch,
+                                 participantId: String) -> Task<Void, Never>
 }
 
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
@@ -274,6 +287,77 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             dispatch(.callingAction(.holdRequested))
         }
     }
+
+    func admitAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+
+            do {
+                try await callingService.admitAllLobbyParticipants()
+            } catch {
+                let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
+            }
+        }
+    }
+
+    func declineAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+            let participantIds = state.remoteParticipantsState.participantInfoList.filter { participant in
+                participant.status == .inLobby
+            }.map { participant in
+                participant.userIdentifier
+            }
+
+            for participantId in participantIds {
+                do {
+                    try await callingService.declineLobbyParticipant(participantId)
+                } catch {
+                    let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                    dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
+                }
+            }
+        }
+    }
+
+    func admitLobbyParticipant(state: AppState,
+                               dispatch: @escaping ActionDispatch,
+                               participantId: String) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+
+            do {
+                try await callingService.admitLobbyParticipant(participantId)
+            } catch {
+                let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
+            }
+        }
+    }
+
+    func declineLobbyParticipant(state: AppState,
+                                 dispatch: @escaping ActionDispatch,
+                                 participantId: String) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+
+            do {
+                try await callingService.declineLobbyParticipant(participantId)
+            } catch {
+                let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
+            }
+        }
+    }
 }
 
 extension CallingMiddlewareHandler {
@@ -342,17 +426,26 @@ extension CallingMiddlewareHandler {
                 dispatch(.remoteParticipantsAction(.dominantSpeakersUpdated(speakers: speakers)))
             }.store(in: subscription)
 
+        callingService.participantRoleSubject
+            .removeDuplicates()
+            .sink { participantRole in
+                dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
+            }.store(in: subscription)
+
         callingService.networkDiagnosticsSubject
+            .removeDuplicates()
             .sink { networkDiagnostic in
                 dispatch(.callDiagnosticAction(.network(diagnostic: networkDiagnostic)))
             }.store(in: subscription)
 
         callingService.networkQualityDiagnosticsSubject
+            .removeDuplicates()
             .sink { networkQualityDiagnostic in
                 dispatch(.callDiagnosticAction(.networkQuality(diagnostic: networkQualityDiagnostic)))
             }.store(in: subscription)
 
         callingService.mediaDiagnosticsSubject
+            .removeDuplicates()
             .sink { mediaDiagnostic in
                 dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)

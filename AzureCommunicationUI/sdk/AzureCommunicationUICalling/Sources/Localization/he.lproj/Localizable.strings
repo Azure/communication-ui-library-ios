@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="שיחה עם %d אנשים"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="משתתפים";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="אנשים ממתינים להצטרף.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="צפה בחדר הכניסה";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="צפה בחדר הכניסה";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="בטל הודעת חדר כניסה";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="פעולות חדר הכניסה אינן נתמכות.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="חדר הכניסה הפך ללא זמין.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="התפקיד שלך אינו יכול לפעול בחדר הכניסה.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="המשתתף אינו בחדר הכניסה.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="שגיאה של פעולת חדר הכניסה.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "בטל הודעת שגיאה של חדר הכניסה";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="משתתף ללא שם";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (אני)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="מושתק";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="לא מושתק";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="מדבר";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="בהמתנה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="הקש כדי להכניס או לדחות";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ממתין בחדר הכניסה (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="בשיחה (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="הכנס את כולם";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="להכניס את כל המשתתפים?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="להכניס את %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="הכנס";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="דחה";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="עבור למצלמה אחורית";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="עבור למצלמה קדמית";
@@ -124,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="בטל אבחון שיחה";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="מבטל כרזת אבחון שיחה זו";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="דווח על בעיה";
+"AzureCommunicationUICalling.LogsAttach.Notice"="אנו נצרף יומני רישום באופן אוטומטי.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="מדיניות פרטיות";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="תאר את הבעיה שלך...";
+"AzureCommunicationUICalling.CancelButton.Text"="ביטול";
+"AzureCommunicationUICalling.Attach.Screenshot"="צרף צילום מסך";
+"AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
+"AzureCommunicationUICalling.SendFeedback.Text"="שלח";

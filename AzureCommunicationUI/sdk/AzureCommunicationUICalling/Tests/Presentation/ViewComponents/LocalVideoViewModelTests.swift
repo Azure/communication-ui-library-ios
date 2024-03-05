@@ -34,7 +34,8 @@ class LocalVideoViewModelTests: XCTestCase {
                                             localVideoStreamIdentifier: "videoSteamId")
         let appState = AppState(permissionState: permissionState,
                                 localUserState: localUserState)
-        sut.update(localUserState: appState.localUserState)
+        let visibilityState = VisibilityState(currentStatus: .visible)
+        sut.update(localUserState: appState.localUserState, visibilityState: visibilityState)
 
         let expectedVideoStreamId = "videoSteamId"
 

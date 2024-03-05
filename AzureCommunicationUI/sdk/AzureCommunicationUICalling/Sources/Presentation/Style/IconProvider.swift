@@ -23,6 +23,8 @@ enum CompositeIcon: String {
     case endCall = "ic_fluent_call_end_24_filled"
     case endCallRegular = "ic_fluent_call_end_24_regular"
     case showParticipant = "ic_fluent_people_24_regular"
+    case addParticipant = "ic_fluent_guest_add_20_filled"
+    case lobbyError = "ic_fluent_person_prohibited_24_regular"
     case leftArrow = "ic_ios_arrow_left_24"
     case dismiss = "ic_fluent_dismiss_16_regular"
     case clock = "ic_fluent_clock_24_filled"
@@ -32,6 +34,7 @@ enum CompositeIcon: String {
     case wifiWarning = "ic_fluent_wifi_warning_24_filled"
     case speakerMute = "ic_fluent_speaker_mute_24_regular"
     case micProhibited = "ic_fluent_mic_prohibited_24_regular"
+    case personFeedback = "ic_fluent_person_feedback_24_regular"
 }
 
 struct IconProvider {

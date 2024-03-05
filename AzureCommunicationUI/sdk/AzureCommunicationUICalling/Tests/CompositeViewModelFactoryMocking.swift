@@ -17,6 +17,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
     var infoHeaderViewModel: InfoHeaderViewModel?
+    var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel?
+    var lobbyErrorHeaderViewModel: LobbyErrorHeaderViewModel?
     var localVideoViewModel: LocalVideoViewModel?
     var participantGridViewModel: ParticipantGridViewModel?
     var participantsListViewModel: ParticipantsListViewModel?
@@ -37,6 +39,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var audioDevicesListCellViewModel: SelectableDrawerListItemViewModel?
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel?
+    var supportFormViewModel: SupportFormViewModel?
     var moreCallOptionsListCellViewModel: DrawerListItemViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
@@ -74,7 +77,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     store: store,
                                                     localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
-                                                    isIpadInterface: false)
+                                                    isIpadInterface: false,
+                                                    allowLocalCameraPreview: true)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -127,6 +131,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
+                                    paddings: CompositeButton.Paddings?,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         return primaryButtonViewModel ?? PrimaryButtonViewModel(buttonStyle: buttonStyle,
                                                                 buttonLabel: buttonLabel,
@@ -190,22 +195,29 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           localizationProvider: localizationProvider,
                                                           dispatchAction: dispatchAction,
                                                           endCallConfirm: endCallConfirm,
-                                                          localUserState: localUserState)
+                                                          localUserState: localUserState,
+                                                          audioVideoMode: .audioAndVideo)
     }
 
-    func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
+                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
                                                           localizationProvider: localizationProvider,
-                                                          accessibilityProvider: accessibilityProvider)
+                                                          accessibilityProvider: accessibilityProvider,
+                                                          dispatchAction: dispatchAction,
+                                                          enableMultitasking: true,
+                                                          enableSystemPipWhenMultitasking: true)
     }
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
         return createMockParticipantGridCellViewModel?(participantModel) ?? ParticipantGridCellViewModel(
             localizationProvider: localizationProvider,
             accessibilityProvider: accessibilityProvider,
-            participantModel: participantModel)
+            participantModel: participantModel,
+            lifeCycleState: lifeCycleState,
+            isCameraEnabled: true)
     }
 
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
@@ -215,9 +227,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                     isIpadInterface: isIpadInterface)
     }
 
-    func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
+    func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> ParticipantsListViewModel {
         return participantsListViewModel ?? ParticipantsListViewModel(compositeViewModelFactory: self,
-                                                                      localUserState: localUserState)
+                                                                      localUserState: localUserState,
+                                                                      dispatchAction: dispatchAction,
+                                                                      localizationProvider: localizationProvider)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -239,10 +254,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                                                     localizationProvider: localizationProvider)
     }
 
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void, showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
         moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                                                      localizationProvider: localizationProvider,
-                                                                     showSharingViewAction: showSharingViewAction)
+                                                                     showSharingViewAction: showSharingViewAction,
+                                                                     showSupportFormAction: showSupportFormAction,
+                                                                     isSupportFormAvailable: false)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
@@ -261,6 +278,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                           debugInfoManager: debugInfoManager)
     }
 
+    func makeSupportFormViewModel() -> AzureCommunicationUICalling.SupportFormViewModel {
+        return supportFormViewModel ?? SupportFormViewModel(
+            dispatchAction: store.dispatch,
+            events: CallComposite.Events(),
+            localizationProvider: localizationProvider,
+            getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
+    }
+
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
         return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self,
@@ -274,7 +299,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                     logger: logger,
                                                                     dispatchAction: dispatchAction,
                                                                     localUserState: localUserState,
-                                                                    localizationProvider: localizationProvider)
+                                                                    localizationProvider: localizationProvider,
+                                                                    audioVideoMode: .audioAndVideo)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
@@ -289,4 +315,26 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                       audioSessionManager: AudioSessionManager(store: store, logger: logger),
                                       resumeAction: {})
     }
+
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
+                                         dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel {
+        return lobbyWaitingHeaderViewModel ?? LobbyWaitingHeaderViewModel(compositeViewModelFactory: self,
+                                                                          logger: logger,
+                                                                          localUserState: localUserState,
+                                                                          localizationProvider: localizationProvider,
+                                                                          accessibilityProvider: accessibilityProvider,
+                                                                          dispatchAction: dispatchAction)
+    }
+
+    func makeLobbyActionErrorViewModel(localUserState: AzureCommunicationUICalling.LocalUserState,
+                                       dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
+    -> LobbyErrorHeaderViewModel {
+        return lobbyErrorHeaderViewModel ?? LobbyErrorHeaderViewModel(compositeViewModelFactory: self,
+                                                                          logger: logger,
+                                                                          localUserState: localUserState,
+                                                                          localizationProvider: localizationProvider,
+                                                                          accessibilityProvider: accessibilityProvider,
+                                                                          dispatchAction: dispatchAction)
+    }
+
 }

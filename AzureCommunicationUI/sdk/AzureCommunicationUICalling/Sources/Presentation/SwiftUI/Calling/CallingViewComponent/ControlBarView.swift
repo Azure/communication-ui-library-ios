@@ -17,37 +17,40 @@ struct ControlBarView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
-        Group {
-            if screenSizeClass == .ipadScreenSize {
-                centeredStack
-            } else {
-                nonCenteredStack
+        if viewModel.isDisplayed {
+            Group {
+                if screenSizeClass == .ipadScreenSize {
+                    centeredStack
+                } else {
+                    nonCenteredStack
+                }
             }
-        }
-        .padding()
-        .background(Color(StyleProvider.color.backgroundColor))
-        .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
-            audioDeviceSelectionListView
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
-        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
-            exitConfirmationDrawer
-                .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
-                .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
-        })
-        .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
-            moreCallOptionsList
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
-        .modifier(PopupModalView(
-            isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-                activityView
+
+            .padding()
+            .background(Color(StyleProvider.color.backgroundColor))
+            .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
+                audioDeviceSelectionListView
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
-        })
+            })
+            .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
+                exitConfirmationDrawer
+                    .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
+                    .accessibilityElement(children: .contain)
+                    .accessibility(addTraits: .isModal)
+            })
+            .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
+                moreCallOptionsList
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
+            })
+            .modifier(PopupModalView(
+                isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
+                    shareActivityView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+            })
+        }
     }
 
     /// A stack view that has items centered aligned horizontally in its stack view
@@ -82,8 +85,10 @@ struct ControlBarView: View {
         Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
                 HStack {
-                    videoButton
-                    Spacer(minLength: 0)
+                    if viewModel.isCameraDisplayed {
+                        videoButton
+                        Spacer(minLength: 0)
+                    }
                     micButton
                     Spacer(minLength: 0)
                     audioDeviceButton
@@ -101,8 +106,10 @@ struct ControlBarView: View {
                     audioDeviceButton
                     Spacer(minLength: 0)
                     micButton
-                    Spacer(minLength: 0)
-                    videoButton
+                    if viewModel.isCameraDisplayed {
+                        Spacer(minLength: 0)
+                        videoButton
+                    }
                 }
             }
         }
@@ -161,8 +168,7 @@ struct ControlBarView: View {
             .modifier(LockPhoneOrientation())
         }
     }
-
-    var activityView: some View {
+    var shareActivityView: some View {
         return Group {
             SharingActivityView(viewModel: viewModel.debugInfoSharingActivityViewModel,
                                 applicationActivities: nil,
@@ -175,6 +181,6 @@ struct ControlBarView: View {
 }
 
 struct LeaveCallConfirmationListViewModel {
-    let headerName: String?
+    let headerName: String
     let listItemViewModel: [DrawerListItemViewModel]
 }
