@@ -40,7 +40,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
-                                 localUserState: LocalUserState) -> ControlBarViewModel
+                                 localUserState: LocalUserState,
+                                 displayLeaveCallConfirmation: Bool) -> ControlBarViewModel
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
@@ -226,13 +227,15 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
-                                 localUserState: LocalUserState) -> ControlBarViewModel {
+                                 localUserState: LocalUserState,
+                                 displayLeaveCallConfirmation: Bool = true) -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
-                            localUserState: localUserState)
+                            localUserState: localUserState,
+                            displayLeaveCallConfirmation: self.localOptions?.displayLeaveCallConfirmation ?? true)
     }
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,

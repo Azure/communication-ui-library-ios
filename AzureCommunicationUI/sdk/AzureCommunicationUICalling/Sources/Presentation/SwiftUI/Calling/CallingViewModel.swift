@@ -22,6 +22,7 @@ class CallingViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
     private var callClientRequested: Bool = false
+    private var displayLeaveCallConfirmation: Bool = true
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -67,7 +68,8 @@ class CallingViewModel: ObservableObject {
                     return
                 }
                 self.endCall()
-            }, localUserState: store.state.localUserState)
+            }, localUserState: store.state.localUserState,
+            displayLeaveCallConfirmation: displayLeaveCallConfirmation)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {

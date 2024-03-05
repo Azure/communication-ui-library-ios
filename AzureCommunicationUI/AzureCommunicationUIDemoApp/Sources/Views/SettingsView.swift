@@ -41,6 +41,7 @@ struct SettingsView: View {
                 Group {
                     localizationSettings
                     skipSetupScreenSettings
+                    displayLeaveCallConfirmationSettings
                     micSettings
                     localParticipantSettings
                     avatarSettings
@@ -231,6 +232,16 @@ struct SettingsView: View {
     var skipSetupScreenSettings: some View {
         Section(header: Text("Skip Setup Screen Default Value")) {
             Toggle("Skip Setup Screen", isOn: $envConfigSubject.skipSetupScreen)
+        }
+    }
+
+    var displayLeaveCallConfirmationSettings: some View {
+        Section(header: Text("Display leave call confirmation")) {
+            Toggle("Display leave call confirmation", isOn: $envConfigSubject.displayLeaveCallConfirmation)
+                .onTapGesture {
+                    envConfigSubject.displayLeaveCallConfirmation = !envConfigSubject.displayLeaveCallConfirmation
+                }
+                .accessibilityIdentifier(AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue)
         }
     }
 

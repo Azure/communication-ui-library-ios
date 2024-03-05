@@ -58,6 +58,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var microphoneOn: Bool = false
     @Published var cameraOn: Bool = false
     @Published var skipSetupScreen: Bool = false
+    @Published var displayLeaveCallConfirmation: Bool = true
     @Published var useCustomColors: Bool = false
     @Published var useCustomRemoteParticipantViewData: Bool = false
     @Published var useMockCallingSDKHandler: Bool = false
