@@ -24,9 +24,9 @@ jobs:
 
       # Need .Net for the report generator (combiner) step
       - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 3.1.x"
+        displayName: "Use .NET Core sdk 8.0.2"
         inputs:
-          version: 3.1.x
+          version: 8.0.2
 
       - task: reportgenerator@5
         displayName: "Combine Cobertura Reports"
