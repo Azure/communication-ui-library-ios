@@ -43,7 +43,10 @@ extension CompositeViewModelFactoryTests {
                                          audioSessionManager: AudioSessionManager(store: mockStoreFactory.store, logger: logger),
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
-                                         debugInfoManager: DebugInfoManagerMocking())
+                                         debugInfoManager: DebugInfoManagerMocking(),
+                                         enableMultitasking: true,
+                                         enableSystemPipWhenMultitasking: true,
+                                         eventsHandler: CallComposite.Events()) { [] }
     }
 }
 

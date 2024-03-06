@@ -1,5 +1,13 @@
 # Azure Communication UI Calling Release History
 
+## 1.6.0 (2024-03-04)
+
+### Features
+- Audio Only Mode
+- Enhanced Supportability
+- Multitasking with Picture-in-Picture support
+- Admit lobby users
+
 ## 1.5.0 (2023-12-04)
 
 ### Features

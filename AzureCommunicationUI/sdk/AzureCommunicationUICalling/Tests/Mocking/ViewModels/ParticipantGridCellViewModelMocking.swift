@@ -7,17 +7,19 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
-    private let updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?
+    private let updateParticipantModelCompletion: ((ParticipantInfoModel, LifeCycleState) -> Void)?
 
     init(participantModel: ParticipantInfoModel,
-         updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?) {
+         updateParticipantModelCompletion: ((ParticipantInfoModel, LifeCycleState) -> Void)?) {
         self.updateParticipantModelCompletion = updateParticipantModelCompletion
         super.init(localizationProvider: LocalizationProviderMocking(),
                    accessibilityProvider: AccessibilityProviderMocking(),
-                   participantModel: participantModel)
+                   participantModel: participantModel,
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground),
+                   isCameraEnabled: true)
     }
 
-    override func update(participantModel: ParticipantInfoModel) {
-        updateParticipantModelCompletion?(participantModel)
+    override func update(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) {
+        updateParticipantModelCompletion?(participantModel, lifeCycleState)
     }
 }

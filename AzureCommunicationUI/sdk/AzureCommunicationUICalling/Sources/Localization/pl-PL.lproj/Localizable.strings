@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Rozmowa z %d osobami"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Uczestnicy";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Osoby oczekują na dołączenie.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Wyświetl poczekalnię";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Wyświetl poczekalnię";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Odrzuć powiadomienie poczekalni";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Działania poczekalni nie są obsługiwane.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Poczekalnia została wyłączona.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Twoja rola nie działa w poczekalni.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Uczestnik nie znajduje się w poczekalni.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Błąd działania poczekalni.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Odrzuć powiadomienie o błędzie poczekalni";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Uczestnik bez nazwy";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ja)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Wyciszono";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Wyłączono wyciszenie";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Mówi";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Zawieszony";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Naciśnij, aby wpuścić lub odrzucić";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Oczekujący w poczekalni (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="W trakcie rozmowy (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Wpuść wszystkich";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Wpuścić wszystkich uczestników?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Wpuścić %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Wpuść";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Odrzuć";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Przełącz na kamerę tylną";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Przełącz na kamerę przednią";
@@ -124,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Odrzuć diagnostykę wywołań";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Odrzuca ten baner diagnostyki wywołań";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Relatar Problema";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Nós anexaremos automaticamente os registros.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Política de Privacidade";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Descreva seu problema...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancelar";
+"AzureCommunicationUICalling.Attach.Screenshot"="Anexar captura de tela";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Informar um problema";
+"AzureCommunicationUICalling.SendFeedback.Text"="Enviar";

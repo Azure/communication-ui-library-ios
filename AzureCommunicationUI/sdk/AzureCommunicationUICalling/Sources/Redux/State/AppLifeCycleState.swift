@@ -9,6 +9,17 @@ enum AppStatus {
     case foreground
     case background
     case willTerminate
+
+    var description: String {
+        switch self {
+        case .foreground:
+            return "foreground"
+        case .background:
+            return "background"
+        case .willTerminate:
+            return "willTerminate"
+        }
+    }
 }
 
 struct LifeCycleState {

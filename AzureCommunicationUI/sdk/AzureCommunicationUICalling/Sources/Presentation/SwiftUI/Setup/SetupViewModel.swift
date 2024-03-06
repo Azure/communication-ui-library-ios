@@ -105,12 +105,6 @@ class SetupViewModel: ObservableObject {
         networkManager.stopMonitor()
     }
 
-    func dismissSetupScreen() {
-        if store.state.callingState.operationStatus == .skipSetupRequested {
-            store.dispatch(action: .callingAction(.dismissSetup))
-        }
-    }
-
     func joinCallButtonTapped() {
         guard networkManager.isConnected else {
             handleOffline()
@@ -142,7 +136,8 @@ class SetupViewModel: ObservableObject {
         let permissionState = state.permissionState
         let callingState = state.callingState
         previewAreaViewModel.update(localUserState: localUserState,
-                                    permissionState: permissionState)
+                                    permissionState: permissionState,
+                                    visibilityState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
                                         callingState: callingState)

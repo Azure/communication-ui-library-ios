@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Ring med %d personer"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Deltagare";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Personer väntar på att gå med.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Visa lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Visa lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Stäng avisering för lobby";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobbyåtgärder stöds inte.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobbyn har inaktiverats.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Din roll kan inte agera i lobbyn.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Deltagaren är inte i lobbyn.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobbyåtgärdsfel.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Stäng lobbyfelmeddelande";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Namnlös deltagare";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (jag)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Ljudet är avstängt";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Ljudet är påslaget";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Talar";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Parkerat";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tryck för att godkänna eller avböja";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Väntar i lobbyn (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="I samtalet (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Tillåt alla";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Vill du tillåta alla deltagare?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Vill du släppa in %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Släpp in";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avböj";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Byt till kameran på baksidan";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Byt till kameran på framsidan";
@@ -124,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Stäng samtalsdiagnostik";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Stänger den här banderollen för samtalsdiagnostik";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Rapportera problem";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Loggar bifogas automatiskt.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Sekretesspolicy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beskriv problemet ...";
+"AzureCommunicationUICalling.CancelButton.Text"="Avbryt";
+"AzureCommunicationUICalling.Attach.Screenshot"="Bifoga skärmbild";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Rapportera ett problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Skicka";

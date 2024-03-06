@@ -13,6 +13,8 @@ extension Reducer where State == RemoteParticipantsState,
         var dominantSpeakers = remoteParticipantsState.dominantSpeakers
         var dominantSpeakersModifiedTimestamp
             = remoteParticipantsState.dominantSpeakersModifiedTimestamp
+        var lobbyError = remoteParticipantsState.lobbyError
+
         switch action {
         case .remoteParticipantsAction(.dominantSpeakersUpdated(speakers: let newSpeakers)):
             dominantSpeakers = newSpeakers
@@ -23,12 +25,20 @@ extension Reducer where State == RemoteParticipantsState,
         case .errorAction(.statusErrorAndCallReset):
             participantInfoList = []
             lastUpdateTimeStamp = Date()
+        case .remoteParticipantsAction(.lobbyError(errorCode: let lobbyErrorCode)):
+            if let lobbyErrorCode {
+                lobbyError = LobbyError(lobbyErrorCode: lobbyErrorCode, errorTimeStamp: Date())
+            } else {
+                lobbyError = nil
+            }
+
         default:
             break
         }
         return RemoteParticipantsState(participantInfoList: participantInfoList,
                                        lastUpdateTimeStamp: lastUpdateTimeStamp,
                                        dominantSpeakers: dominantSpeakers,
-                                       dominantSpeakersModifiedTimestamp: dominantSpeakersModifiedTimestamp)
+                                       dominantSpeakersModifiedTimestamp: dominantSpeakersModifiedTimestamp,
+                                       lobbyError: lobbyError)
     }
 }

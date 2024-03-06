@@ -20,6 +20,8 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
     private let showHeader: Bool
     private let isRightToLeft: Bool
     private weak var controller: DrawerController?
+    private let sectionHeightOffset: CGFloat = 20
+    private let rowHeightOffset: CGFloat = 4
 
     // MARK: Constants
     private enum Constants {
@@ -73,14 +75,14 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
     }
 
     func updateDrawerList(items updatedItems: [T]) {
-        // if contents are identical, do nothing
-        guard self.items != updatedItems else {
-            return
-        }
         // should update layout if items count increases/decreases
-        let shouldUpdateLayout = self.items.count != updatedItems.count
+        let withLayoutUpdate = shouldUpdateLayout(items: updatedItems)
         self.items = updatedItems
-        resizeDrawer(withLayoutUpdate: shouldUpdateLayout)
+        resizeDrawer(withLayoutUpdate: withLayoutUpdate)
+    }
+
+    func shouldUpdateLayout(items updatedItems: [T]) -> Bool {
+        return self.items.count != updatedItems.count
     }
 
     private func showDrawerView() {
@@ -159,27 +161,31 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
                                  showHeader: Bool,
                                  isiPhoneLayout: Bool) -> CGFloat {
         let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
-        let dividerOffsetHeight = CGFloat(numberOfItems * 3)
 
         var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
         drawerHeight += showHeader ? headerHeight : Constants.resizeBarHeight
-        drawerHeight += dividerOffsetHeight
 
         return drawerHeight
     }
 
     private func getHeaderHeight(tableView: UITableView,
                                  isiPhoneLayout: Bool) -> CGFloat {
-        return tableView.sectionHeaderHeight + Constants.drawerHeaderMargin
+        return 0
     }
 
     private func getTotalCellsHeight(tableView: UITableView,
                                      numberOfItems: Int) -> CGFloat {
-        return (0..<tableView.numberOfSections).flatMap { section in
+        let sectionHeadersHight = (0..<tableView.numberOfSections).map { section in
+            tableView.rectForHeader(inSection: section).height + sectionHeightOffset
+        }.reduce(0, +)
+
+        let rowsHight = (0..<tableView.numberOfSections).flatMap { section in
             return (0..<tableView.numberOfRows(inSection: section)).map { row in
                 return IndexPath(row: row, section: section)
             }
-        }.map { index in return tableView.rectForRow(at: index).height }.reduce(0, +)
+        }.map { index in return tableView.rectForRow(at: index).height + rowHeightOffset }.reduce(0, +)
+
+        return sectionHeadersHight + rowsHight
     }
 
     private func setInitialTableViewFrame(_ isiPhoneLayout: Bool) {

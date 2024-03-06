@@ -6,68 +6,92 @@
 import Foundation
 import UIKit
 
-/// Object for local options for Call Composite
+/// Encapsulates local configuration options for a Call Composite.
 public struct LocalOptions {
-    /// The ParticipantViewData of the local participant when joining the call.
+    /// Configuration data for the local participant's view, such as avatar image and display name.
     let participantViewData: ParticipantViewData?
-    /// The SetupScreenViewData is used for call setup screen
+
+    /// Configuration for the call setup screen, including titles and subtitles.
     let setupScreenViewData: SetupScreenViewData?
-    /// The CameraOn is used when we skip the setup screen
-    let cameraOn: Bool?
-    /// The MicrophoneOn is used when we skip the setup screen
+
+    /// Determines if the microphone is enabled upon joining the call, bypassing the setup screen.
     let microphoneOn: Bool?
-    /// The SkipSetupScreen is used when we skip the setup screen
+
+    /// Indicates whether to skip the setup screen and use default or specified settings.
     let skipSetupScreen: Bool?
 
-    /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
+    /// Specifies the audio/video mode for the call, affecting available functionalities.
+    let audioVideoMode: CallCompositeAudioVideoMode
+
+    /// Internal storage for the camera state, not directly exposed to the initializer.
+    private let cameraOnInternal: Bool?
+
+    /// Initializes a `LocalOptions` instance with specified configurations for call setup.
+    ///
     /// - Parameters:
-    ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
-    ///    - setupScreenViewData: The SetupScreenViewData to be used to set up views on setup screen
+    ///   - participantViewData: Configuration for the local participant's view.
+    ///   - setupScreenViewData: Configuration for the setup screen appearance.
+    ///   - cameraOn: Determines if the camera is enabled by default.
+    ///   - microphoneOn: Determines if the microphone is enabled by default.
+    ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
+    ///   - audioVideoMode: The desired audio/video mode for the call.
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
-                skipSetupScreen: Bool? = false
-    ) {
+                skipSetupScreen: Bool? = false,
+                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
-        self.cameraOn = cameraOn
+        self.cameraOnInternal = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
+        self.audioVideoMode = audioVideoMode
+    }
+
+    /// Determines the actual state of the camera
+    /// considering both the `cameraOnInternal` flag and the `audioVideoMode`.
+    var cameraOn: Bool {
+        guard audioVideoMode != .audioOnly else {
+            return false
+        }
+        return cameraOnInternal ?? false
     }
 }
-/// Object to represent participants data
+
+/// Represents configuration data for displaying a participant in the call composite.
 public struct ParticipantViewData {
-    /// The image that will be drawn on the avatar view
+    /// The participant's avatar image. If nil, a default avatar is used.
     let avatarImage: UIImage?
-    /// The display name that will be locally rendered for this participant
+
+    /// The display name for the participant. If nil, a display name from the call options is used.
     let displayName: String?
-    /// Create an instance of a ParticipantViewData.
-    /// All information in this object is only stored locally in the composite.
+
+    /// Initializes a `ParticipantViewData` instance.
+    ///
     /// - Parameters:
-    ///    - avatar: The UIImage that will be displayed in the avatar view.
-    ///              If this is `nil` the default avatar with user's initials will be used instead.
-    ///    - displayName: The display name  to be rendered.
-    ///                   If this is `nil` the display name provided in the Call Options will be used instead.
+    ///   - avatar: Custom image for the participant's avatar.
+    ///   - displayName: Custom display name for the participant.
     public init(avatar: UIImage? = nil,
                 displayName: String? = nil) {
         self.avatarImage = avatar
         self.displayName = displayName
     }
 }
-/// Object to represent the data needed to customize the call setup screen's view data
+
+/// Contains configuration for customizing the call setup screen's appearance.
 public struct SetupScreenViewData {
-    /// The title that would be used for the navigation bar on setup screen
+    /// The title for the setup screen's navigation bar.
     let title: String
-    /// The subtitle that would be used for the navigation bar on setup screen
+
+    /// An optional subtitle for additional context or instructions.
     let subtitle: String?
-    /// Create an instance of a SetupScreenViewData.
-    /// All information in this object is only stored locally in the composite.
+
+    /// Initializes a `SetupScreenViewData` instance.
+    ///
     /// - Parameters:
-    ///    - title: The String that would be displayed as the title on setup screen
-    ///              If title is empty the default title "Setup" would be used
-    ///    - subtitle: The String that would be displayed as the subtitle on setup screen
-    ///                   If this is `nil` the subtitle would be hidden
+    ///   - title: Title for the setup screen.
+    ///   - subtitle: Optional subtitle for additional details.
     public init(title: String,
                 subtitle: String? = nil) {
         self.title = title
