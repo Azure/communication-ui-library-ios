@@ -107,10 +107,10 @@ public struct CallState: Equatable, RequestStringConvertible {
         self.callIdInternal = ""
     }
 
-    public init(rawValue: String,
-                callId: String,
-                callEndReasonCode: Int? = nil,
-                callEndReasonSubCode: Int? = nil) {
+    init(rawValue: String,
+         callId: String,
+         callEndReasonCode: Int? = nil,
+         callEndReasonSubCode: Int? = nil) {
         self.value = CallStateKV(rawValue: rawValue)
         self.callEndReasonCodeInt = callEndReasonCode
         self.callEndReasonSubCodeInt = callEndReasonSubCode

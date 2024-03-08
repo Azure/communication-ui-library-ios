@@ -18,8 +18,8 @@ public struct CallCompositeCallerInfo {
     /// - Parameters:
     ///   - displayName: Caller display name.
     ///   - identifier: Caller CommunicationIdentifier.
-    public init(displayName: String,
-                identifier: CommunicationIdentifier) {
+    init(displayName: String,
+         identifier: CommunicationIdentifier) {
         self.displayName = displayName
         self.identifier = identifier
     }

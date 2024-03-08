@@ -20,9 +20,9 @@ public struct CallCompositeIncomingCallInfo {
     ///   - callId: call id.
     ///   - callerDisplayName: Caller display name.
     ///   - callerIdentifier: Caller CommunicationIdentifier.
-    public init(callId: String,
-                callerDisplayName: String,
-                callerIdentifier: CommunicationIdentifier) {
+    init(callId: String,
+         callerDisplayName: String,
+         callerIdentifier: CommunicationIdentifier) {
         self.callId = callId
         self.callerDisplayName = callerDisplayName
         self.callerIdentifier = callerIdentifier

@@ -19,9 +19,9 @@ public struct CallCompositeIncomingCallCancelledInfo {
     ///   - callId: call id.
     ///   - code: Call cancelled code.
     ///   - subCode: Call end sub code.
-    public init(callId: String,
-                code: Int,
-                subCode: Int) {
+    init(callId: String,
+         code: Int,
+         subCode: Int) {
         self.callId = callId
         self.code = code
         self.subCode = subCode

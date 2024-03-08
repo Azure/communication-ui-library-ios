@@ -10,17 +10,17 @@ import AzureCommunicationCalling
 /// Call composite push notification info.
 public struct CallCompositePushNotificationInfo {
     /// call id
-    public var callId: String
+    public let callId: String
     /// event type
-    public var eventType: CallCompositePushNotificationEventType
+    public let eventType: CallCompositePushNotificationEventType
     /// from
-    public var from: CommunicationIdentifier
+    public let from: CommunicationIdentifier
     /// to
-    public var to: CommunicationIdentifier
+    public let to: CommunicationIdentifier
     /// from display name
-    public var fromDisplayName: String
+    public let fromDisplayName: String
     /// incoming with video
-    public var incomingWithVideo: Bool
+    public let incomingWithVideo: Bool
 
     /// Create an instance of a CallCompositePushNotificationInfo with push notification payload.
     /// - Parameters:
