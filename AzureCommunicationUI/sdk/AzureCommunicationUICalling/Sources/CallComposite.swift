@@ -174,6 +174,7 @@ public class CallComposite {
     public func unmuteIncomingAudio(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }
 
+    @available(*, deprecated, message: "Use init with CommunicationTokenCredential instead.")
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
