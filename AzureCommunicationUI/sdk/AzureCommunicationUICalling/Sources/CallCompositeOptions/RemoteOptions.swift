@@ -15,6 +15,10 @@ public enum JoinLocator {
 }
 
 /// Object for remote options for Call Composite
+@available(*, deprecated, message: """
+Use CallComposite init with CommunicationTokenCredential
+and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
+""")
 public struct RemoteOptions {
     /// The unique identifier for the group conversation.
     public let locator: JoinLocator
