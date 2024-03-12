@@ -18,6 +18,10 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         return nil
     }
 
+    func getLogFiles() -> [URL] {
+        []
+    }
+
     func startCallLocalVideoStream() async throws -> String {
         return try await Task<String, Error> {
             ""
@@ -145,6 +149,15 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
 
     func switchCameraWasCalled() -> Bool {
         return switchCameraCallCount > 0
+    }
+
+    func admitAllLobbyParticipants() async throws {
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
     }
 
 }

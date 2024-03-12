@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+// swiftlint:disable type_body_length
 struct CallingView: View {
     enum InfoHeaderViewConstants {
         static let horizontalPadding: CGFloat = 8.0
@@ -15,6 +16,10 @@ struct CallingView: View {
     enum ErrorInfoConstants {
         static let controlBarHeight: CGFloat = 92
         static let horizontalPadding: CGFloat = 8
+    }
+
+    enum Constants {
+        static let topAlertAreaViewTopPaddin: CGFloat = 10.0
     }
 
     enum DiagnosticToastInfoConstants {
@@ -47,6 +52,13 @@ struct CallingView: View {
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
+            .modifier(PopupModalView(
+                isPresented: viewModel.showingSupportForm,
+                alignment: .bottom) {
+                    reportErrorView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+            })
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -78,7 +90,7 @@ struct CallingView: View {
                 ZStack(alignment: .bottomTrailing) {
                     videoGridView
                         .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
-                    if viewModel.isParticipantGridDisplayed {
+                    if viewModel.isParticipantGridDisplayed && !viewModel.isInPip && viewModel.allowLocalCameraPreview {
                         Group {
                             DraggableLocalVideoView(containerBounds:
                                                         geometry.frame(in: .local),
@@ -134,7 +146,7 @@ struct CallingView: View {
             let widthWithoutHorizontalPadding = geoWidth - 2 * InfoHeaderViewConstants.horizontalPadding
             let infoHeaderViewWidth = isIpad ? min(widthWithoutHorizontalPadding,
                                                    InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
-            VStack {
+            VStack(spacing: 0) {
                 bannerView
                 HStack {
                     if isIpad {
@@ -153,17 +165,50 @@ struct CallingView: View {
                     } else {
                         EmptyView()
                     }
+                    lobbyWaitingHeaderView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    lobbyActionErrorView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
                     topMessageBarDiagnosticsView
                         .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
             }
+            .padding(.top, Constants.topAlertAreaViewTopPaddin)
         }
     }
 
     var infoHeaderView: some View {
         InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyWaitingHeaderView: some View {
+        LobbyWaitingHeaderView(viewModel: viewModel.lobbyWaitingHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyActionErrorView: some View {
+        LobbyErrorHeaderView(viewModel: viewModel.lobbyActionErrorViewModel,
                        avatarViewManager: avatarManager)
     }
 
@@ -244,6 +289,12 @@ struct CallingView: View {
             Spacer()
         }
     }
+    var reportErrorView: some View {
+        return Group {
+            SupportFormView(viewModel: viewModel.supportFormViewModel)
+        }
+    }
+
 }
 
 extension CallingView {

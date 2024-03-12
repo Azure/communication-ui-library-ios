@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Звонок с несколькими (%d) людьми"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Участники";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Люди ожидают присоединения к звонку.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Посмотреть \"зал ожидания\"";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Посмотреть \"зал ожидания\"";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Закрыть уведомление о \"зале ожидания\"";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Действия в \"зале ожидания\" не поддерживаются.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="\"Зал ожидания\" отключен.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Ваша роль не предполагает действий в \"зале ожидания\".";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Участника нет в \"зале ожидания\".";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Ошибка действия в \"зале ожидания\".";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Закрыть уведомление об ошибке \"зала ожидания\"";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Участник без имени";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (Я)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Звук отключен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Звук включен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Говорит";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Коснитесь, чтобы допустить или не допустить участника";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Заждался в \"зале ожидания\" (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="В вызове (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Допустить всех";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Допустить всех участников?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Допустить %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Допустить";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Отклонить";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Переключиться на переднюю камеру";
@@ -124,3 +146,15 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Сообщить о проблеме";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Журналы будут вложены автоматически.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Политика конфиденциальности";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Опишите свою проблему...";
+"AzureCommunicationUICalling.CancelButton.Text"="Отмена";
+"AzureCommunicationUICalling.Attach.Screenshot"="Вложить снимок экрана";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
+"AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
+

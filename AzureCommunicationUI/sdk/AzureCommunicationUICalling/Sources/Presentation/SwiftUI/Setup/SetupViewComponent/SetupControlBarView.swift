@@ -19,8 +19,10 @@ struct SetupControlBarView: View {
             VStack(alignment: .center) {
                 Spacer()
                 HStack(alignment: .center, spacing: layoutSpacing) {
-                    Spacer()
-                    cameraButton
+                    if viewModel.isCameraDisplayed {
+                        Spacer()
+                        cameraButton
+                    }
                     Spacer()
                     micButton
                     Spacer()
@@ -42,6 +44,7 @@ struct SetupControlBarView: View {
     var cameraButton: some View {
         IconWithLabelButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
+            .hidden(!viewModel.isCameraDisplayed)
     }
 
     var micButton: some View {

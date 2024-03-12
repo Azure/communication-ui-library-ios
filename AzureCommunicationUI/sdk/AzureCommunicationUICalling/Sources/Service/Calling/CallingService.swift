@@ -14,6 +14,7 @@ protocol CallingServiceProtocol {
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
+    var participantRoleSubject: PassthroughSubject<ParticipantRole, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
@@ -33,6 +34,10 @@ protocol CallingServiceProtocol {
 
     func holdCall() async throws
     func resumeCall() async throws
+
+    func admitAllLobbyParticipants() async throws
+    func admitLobbyParticipant(_ participantId: String) async throws
+    func declineLobbyParticipant(_ participantId: String) async throws
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -48,7 +53,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never>
     var callIdSubject: PassthroughSubject<String, Never>
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never>
-
+    var participantRoleSubject: PassthroughSubject<ParticipantRole, Never>
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
@@ -64,6 +69,7 @@ class CallingService: NSObject, CallingServiceProtocol {
         callInfoSubject = callingSDKWrapper.callingEventsHandler.callInfoSubject
         callIdSubject = callingSDKWrapper.callingEventsHandler.callIdSubject
         dominantSpeakersSubject = callingSDKWrapper.callingEventsHandler.dominantSpeakersSubject
+        participantRoleSubject = callingSDKWrapper.callingEventsHandler.participantRoleSubject
         networkQualityDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkQualityDiagnosticsSubject
         networkDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkDiagnosticsSubject
         mediaDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.mediaDiagnosticsSubject
@@ -114,5 +120,17 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func resumeCall() async throws {
         try await callingSDKWrapper.resumeCall()
+    }
+
+    func admitAllLobbyParticipants() async throws {
+        try await callingSDKWrapper.admitAllLobbyParticipants()
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        try await callingSDKWrapper.admitLobbyParticipant(participantId)
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        try await callingSDKWrapper.declineLobbyParticipant(participantId)
     }
 }

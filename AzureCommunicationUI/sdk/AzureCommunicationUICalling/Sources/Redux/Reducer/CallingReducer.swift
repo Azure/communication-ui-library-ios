@@ -42,7 +42,6 @@ extension Reducer where State == CallingState,
         // Exhaustive un-implemented actions
         case .audioSessionAction,
                 .callingAction(.setupCall),
-                .callingAction(.dismissSetup),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
                 .errorAction(.fatalErrorUpdated(internalError: _, error: _)),
@@ -52,7 +51,10 @@ extension Reducer where State == CallingState,
                 .remoteParticipantsAction(_),
                 .callDiagnosticAction(_),
                 .compositeExitAction,
-                .callingViewLaunched:
+                .callingViewLaunched,
+                .hideSupportForm,
+                .showSupportForm,
+                .visibilityAction(_):
             return callingState
         }
         return CallingState(status: callingStatus,
