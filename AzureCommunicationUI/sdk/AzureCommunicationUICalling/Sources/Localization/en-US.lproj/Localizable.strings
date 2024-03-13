@@ -38,6 +38,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="You're on hold";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Resume";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Waiting for others to join";

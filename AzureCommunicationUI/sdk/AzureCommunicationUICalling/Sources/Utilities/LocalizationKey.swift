@@ -43,6 +43,7 @@ enum LocalizationKey: String {
     /* OnHoldView */
     case onHoldMessage = "AzureCommunicationUICalling.OnHoldView.Text.OnHold"
     case resume = "AzureCommunicationUICalling.OnHoldView.Button.Resume"
+    case resumeAccessibilityLabel = "AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel"
 
     /* CallingView */
     case callWith0Person = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
