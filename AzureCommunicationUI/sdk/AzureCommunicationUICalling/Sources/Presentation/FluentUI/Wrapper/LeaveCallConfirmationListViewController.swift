@@ -46,7 +46,6 @@ extension LeaveCallConfirmationListViewController: UITableViewDataSource, UITabl
         label.frame = headerView.frame
         label.text = headerName
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.font = .preferredFont(forTextStyle: .headline)
         label.textColor = StyleProvider.color.onSurface
         label.translatesAutoresizingMaskIntoConstraints = false
