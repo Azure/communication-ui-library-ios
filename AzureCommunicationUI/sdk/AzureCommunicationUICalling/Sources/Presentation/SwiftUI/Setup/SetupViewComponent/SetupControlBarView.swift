@@ -62,6 +62,11 @@ struct SetupControlBarView: View {
         CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
                                   viewModel: viewModel.audioDevicesListViewModel,
                                   sourceView: audioDeviceButtonSourceView)
+        .onDisappear {
+            DispatchQueue.main.async {
+                UIAccessibility.post(notification: .layoutChanged, argument: audioDeviceButton)
+            }
+        }
     }
 
     private func getWidth(from geometry: GeometryProxy) -> CGFloat {
