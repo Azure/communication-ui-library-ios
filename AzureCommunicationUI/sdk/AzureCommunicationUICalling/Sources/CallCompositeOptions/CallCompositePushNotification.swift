@@ -22,7 +22,7 @@ public struct CallCompositePushNotification {
     /// incoming with video
     public let hasIncomingVideo: Bool
 
-    /// Create an instance of a CallCompositePushNotificationInfo with push notification payload.
+    /// Create an instance of a CallCompositePushNotification with push notification payload.
     /// - Parameters:
     ///   - data: Push notification payload.
     public init(data: [AnyHashable: Any]) {
