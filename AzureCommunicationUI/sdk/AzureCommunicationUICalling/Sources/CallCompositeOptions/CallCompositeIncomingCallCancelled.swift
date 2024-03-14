@@ -5,8 +5,8 @@
 
 import Foundation
 
-/// Incoming call cancelled info.
-public struct CallCompositeIncomingCallCancelledInfo {
+/// Incoming call cancelled..
+public struct CallCompositeIncomingCallCancelled {
     /// Call id.
     public let callId: String
     /// call cancelled code
