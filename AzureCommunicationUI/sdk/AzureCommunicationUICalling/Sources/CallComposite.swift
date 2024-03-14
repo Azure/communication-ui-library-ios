@@ -30,9 +30,9 @@ public class CallComposite {
         /// Closure to execute when the User reports an issue from within the call composite
         public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
         /// Closure to incoming call received.
-        public var onIncomingCall: ((CallCompositeIncomingCallInfo) -> Void)?
+        public var onIncomingCall: ((CallCompositeIncomingCall) -> Void)?
         /// Closure to incoming call cancelled.
-        public var onIncomingCallCancelled: ((CallCompositeIncomingCallCancelledInfo) -> Void)?
+        public var onIncomingCallCancelled: ((CallCompositeIncomingCallCancelled) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -120,13 +120,13 @@ public class CallComposite {
     }
 
     /// Handle push notification to receive incoming call notification.
-    public func handlePushNotification(for: CallCompositePushNotificationInfo,
+    public func handlePushNotification(for: CallCompositePushNotification,
                                        completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }
 
     /// Report incoming call to notify CallKit when in background mode.
     /// On success you can wake up application.
-    public static func reportIncomingCall(for: CallCompositePushNotificationInfo,
+    public static func reportIncomingCall(for: CallCompositePushNotification,
                                           callKitOptions: CallCompositeCallKitOptions,
                                           completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }

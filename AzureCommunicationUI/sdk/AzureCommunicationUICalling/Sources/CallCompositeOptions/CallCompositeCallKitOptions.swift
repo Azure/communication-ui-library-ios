@@ -8,41 +8,41 @@ import CallKit
 /// CallKit options for the call.
 public struct CallCompositeCallKitOptions {
     /// CXProviderConfiguration for the call.
-    public let cxProviderConfig: CXProviderConfiguration
+    public let providerConfig: CXProviderConfiguration
 
     /// Whether the call supports hold. Default is true.
     public let isCallHoldSupported: Bool
 
-    /// CallKit remote participant info
-    public let remoteInfo: CallCompositeCallKitRemoteInfo?
+    /// CallKit remote participant.
+    public let remoteParticipant: CallCompositeCallKitRemoteParticipant?
 
     /// Configure audio session will be called before placing or accepting
     /// incoming call and before resuming the call after it has been put on hold
     public let configureAudioSession: (() -> Error?)?
 
-    /// CallKit remote participant info callback for incoming call
-    public let configureIncomingCallRemoteInfo: ((CallCompositeCallerInfo)
-                                          -> CallCompositeCallKitRemoteInfo)?
+    /// CallKit remote participant callback for incoming call
+    public let configureIncomingCallCaller: ((CallCompositeCaller)
+                                          -> CallCompositeCallKitRemoteParticipant)?
 
     /// Create an instance of a CallCompositeCallKitOptions with options.
     /// - Parameters:
-    ///   - cxProviderConfig: CXProviderConfiguration for the call.
+    ///   - providerConfig: CXProviderConfiguration for the call.
     ///   - isCallHoldSupported: Whether the call supports hold. Default is true.
-    ///   - remoteInfo: CallKit remote participant info
-    ///   - configureIncomingCallRemoteInfo: CallKit remote participant info callback for incoming call
+    ///   - remoteParticipant: CallKit remote participant
+    ///   - configureIncomingCallRemote: CallKit remote participant callback for incoming call
     ///   - configureAudioSession: Configure audio session will be called before placing or accepting
     ///     incoming call and before resuming the call after it has been put on hold
-    public init(cxProviderConfig: CXProviderConfiguration,
+    public init(providerConfig: CXProviderConfiguration,
                 isCallHoldSupported: Bool = true,
-                remoteInfo: CallCompositeCallKitRemoteInfo? = nil,
-                configureIncomingCallRemoteInfo: ((CallCompositeCallerInfo)
-                                                  -> CallCompositeCallKitRemoteInfo)? = nil,
+                remoteParticipant: CallCompositeCallKitRemoteParticipant? = nil,
+                configureIncomingCallCaller: ((CallCompositeCaller)
+                                                  -> CallCompositeCallKitRemoteParticipant)? = nil,
                 configureAudioSession: (() -> Error?)? = nil) {
-        self.cxProviderConfig = cxProviderConfig
+        self.providerConfig = providerConfig
         self.isCallHoldSupported = isCallHoldSupported
-        self.remoteInfo = remoteInfo
+        self.remoteParticipant = remoteParticipant
         self.configureAudioSession = configureAudioSession
-        self.configureIncomingCallRemoteInfo = configureIncomingCallRemoteInfo
+        self.configureIncomingCallCaller = configureIncomingCallCaller
     }
 
     /// Create an instance of a CallCompositeCallKitOptions with default options.
@@ -53,10 +53,10 @@ public struct CallCompositeCallKitOptions {
         providerConfig.maximumCallsPerCallGroup = 1
         providerConfig.includesCallsInRecents = true
         providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
-        self.cxProviderConfig = providerConfig
+        self.providerConfig = providerConfig
         self.isCallHoldSupported = true
-        self.remoteInfo = nil
+        self.remoteParticipant = nil
         self.configureAudioSession = nil
-        self.configureIncomingCallRemoteInfo = nil
+        self.configureIncomingCallCaller = nil
     }
 }

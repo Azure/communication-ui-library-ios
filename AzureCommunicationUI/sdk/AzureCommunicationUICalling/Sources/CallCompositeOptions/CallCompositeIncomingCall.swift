@@ -6,8 +6,8 @@
 import Foundation
 import AzureCommunicationCommon
 
-/// Incoming call info.
-public struct CallCompositeIncomingCallInfo {
+/// Incoming call..
+public struct CallCompositeIncomingCall {
     /// Call id.
     public let callId: String
     /// Caller display name.
