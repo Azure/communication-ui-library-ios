@@ -62,7 +62,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         // by default on iOS 15 calling SDK incoming type is raw video
         // because of this on iOS 15 remote video start event is not received
         let incomingVideoOptions = IncomingVideoOptions()
-        incomingVideoOptions.streamType = .remoteIncoming
+        incomingVideoOptions.streamType = .rawIncoming
 
         if isCameraPreferred,
            let localVideoStream = localVideoStream {

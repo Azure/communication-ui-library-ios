@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum ParticipantStatus: Int {
     case idle
@@ -28,4 +29,5 @@ struct ParticipantInfoModel: Hashable, Equatable {
     let screenShareVideoStreamModel: VideoStreamInfoModel?
     let cameraVideoStreamModel: VideoStreamInfoModel?
 
+    let rawVideoBuffer: CVPixelBuffer?
 }

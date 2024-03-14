@@ -14,6 +14,7 @@ struct ParticipantGridCellVideoView: View {
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
     @Binding var isMuted: Bool
+    @Binding var rawVideoBuffer: CVPixelBuffer?
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
@@ -23,7 +24,10 @@ struct ParticipantGridCellVideoView: View {
                     zoomableVideoRenderView
                         .prefersHomeIndicatorAutoHidden(UIDevice.current.hasHomeBar)
                 } else {
-                    videoRenderView
+                    GeometryReader { geometry in
+                        RawVideoView(cvPixelBuffer: $rawVideoBuffer)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                    }
                 }
             }
 
@@ -57,5 +61,32 @@ struct ParticipantGridCellVideoView: View {
         // prevent the single-tap gesture (in CallingView) from being recognized
         // until after the double-tap gesture  recognizer (in ZoomableVideoRenderView) explicitly
         // reaches the failed state, which happens when the touch sequence contains only one tap.
+    }
+}
+
+struct RawVideoView: UIViewRepresentable {
+    @Binding var cvPixelBuffer: CVPixelBuffer?
+
+    func makeUIView(context: Context) -> UIImageView {
+        let imageView = UIImageView()
+        return imageView
+    }
+
+    func updateUIView(_ uiView: UIImageView, context: Context) {
+        // Get the pixel buffer from your video stream
+        guard let pixelBuffer = cvPixelBuffer else {
+            return
+        }
+
+        // Create a CIImage from the pixel buffer
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+
+        // Create a UIImage from the CIImage
+        let uiImage = UIImage(ciImage: ciImage)
+
+        // Update the UIImageView with the new UIImage
+        uiView.image = uiImage
+        uiView.contentMode = .scaleAspectFill
+        uiView.animationDuration = TimeInterval()
     }
 }

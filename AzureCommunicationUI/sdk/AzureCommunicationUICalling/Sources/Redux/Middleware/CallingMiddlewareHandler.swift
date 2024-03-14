@@ -364,7 +364,7 @@ extension CallingMiddlewareHandler {
     private func subscription(dispatch: @escaping ActionDispatch) {
         logger.debug("Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
-            .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
+//            .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
             .sink { list in
                 dispatch(.remoteParticipantsAction(.participantListUpdated(participants: list)))
             }.store(in: subscription)

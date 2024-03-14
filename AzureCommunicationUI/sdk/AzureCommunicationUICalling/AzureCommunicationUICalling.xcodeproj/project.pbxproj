@@ -18,6 +18,8 @@
 		0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */; };
 		0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */; };
 		054F2B532A2679160017985B /* CallPipVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054F2B522A2679160017985B /* CallPipVideoViewController.swift */; };
+		055E9F0C2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E9F0B2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift */; };
+		055E9F0D2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E9F0B2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift */; };
 		058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */; };
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
@@ -333,6 +335,7 @@
 		0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderView.swift; sourceTree = "<group>"; };
 		0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderViewModel.swift; sourceTree = "<group>"; };
 		054F2B522A2679160017985B /* CallPipVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPipVideoViewController.swift; sourceTree = "<group>"; };
+		055E9F0B2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantVideoFrameModel.swift; sourceTree = "<group>"; };
 		058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModelTest.swift; sourceTree = "<group>"; };
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
@@ -1042,6 +1045,7 @@
 				88B87C562755911B00290DD1 /* CallInfoModel.swift */,
 				05E28FF52AD60E5900FF7020 /* ParticipantRole.swift */,
 				B2120A5B2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift */,
+				055E9F0B2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1844,6 +1848,7 @@
 				A869A63B26546A2E003CC4F2 /* PermissionsManagerMocking.swift in Sources */,
 				1F09A10A26BA47EC00BACED7 /* SetupViewModelTests.swift in Sources */,
 				A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */,
+				055E9F0D2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift in Sources */,
 				A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */,
 				8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */,
 				1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */,
@@ -1964,6 +1969,7 @@
 				1FBCB6D92655825200F57EEA /* LocalUserReducer.swift in Sources */,
 				A874EDC826616792003C7D92 /* LifecycleAction.swift in Sources */,
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,
+				055E9F0C2BA2645D00BDE188 /* ParticipantVideoFrameModel.swift in Sources */,
 				FAACEE4028FA241A003F7D7C /* MoreCallOptionsListCell.swift in Sources */,
 				B2E5B17E2AA1453B00D54A3A /* DiagnosticsAction.swift in Sources */,
 				9852C2D526EFD19300435252 /* ParticipantsListViewController.swift in Sources */,

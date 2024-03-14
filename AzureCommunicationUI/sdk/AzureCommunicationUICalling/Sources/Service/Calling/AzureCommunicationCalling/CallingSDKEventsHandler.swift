@@ -10,6 +10,7 @@ import Combine
 
 class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])
+    var participantsVideoFeameSubject = PassthroughSubject<ParticipantVideoFrameModel, Never>()
     var callInfoSubject = PassthroughSubject<CallInfoModel, Never>()
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
@@ -81,10 +82,20 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             self.updateRemoteParticipant(userIdentifier: userIdentifier)
         }
 
+        let participantVideoFrameRecieved: (((AzureCommunicationCalling.RemoteParticipant), CVPixelBuffer)
+                                            -> Void) = { [weak self] remoteParticipant, rawVideoBuffer in
+            guard let self = self else {
+                return
+            }
+            let userIdentifier = remoteParticipant.identifier.rawId
+            self.updateRemoteParticipant(userIdentifier: userIdentifier, rawVideoBuffer: rawVideoBuffer)
+        }
+
         remoteParticipantEventAdapter.onIsMutedChanged = participantUpdate
         remoteParticipantEventAdapter.onVideoStreamsUpdated = participantUpdate
         remoteParticipantEventAdapter.onStateChanged = participantUpdate
         remoteParticipantEventAdapter.onDominantSpeakersChanged = participantUpdate
+        remoteParticipantEventAdapter.onVideoFrameRecieved = participantVideoFrameRecieved
         remoteParticipantEventAdapter.onIsSpeakingChanged = { [weak self] remoteParticipant in
             guard let self = self else {
                 return
@@ -146,13 +157,13 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
-    private func updateRemoteParticipant(userIdentifier: String) {
+    private func updateRemoteParticipant(userIdentifier: String, rawVideoBuffer: CVPixelBuffer? = nil) {
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         if let remoteParticipant = remoteParticipants.value(forKey: userIdentifier),
            let index = remoteParticipantsInfoList.firstIndex(where: {
                $0.userIdentifier == userIdentifier
            }) {
-            let newInfoModel = remoteParticipant.toParticipantInfoModel()
+            let newInfoModel = remoteParticipant.toParticipantInfoModel(rawVideoBuffer: rawVideoBuffer)
             remoteParticipantsInfoList[index] = newInfoModel
 
             participantsInfoListSubject.send(remoteParticipantsInfoList)

@@ -103,7 +103,8 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                       userIdentifier: participantNameIdentifier,
                                                       status: status,
                                                       screenShareVideoStreamModel: nil,
-                                                      cameraVideoStreamModel: nil)
+                                                      cameraVideoStreamModel: nil,
+                                                      rawVideoBuffer: nil)
             self.remoteParticipantsMocking.append(newParticipant)
             self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
@@ -134,7 +135,8 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    userIdentifier: last.userIdentifier,
                                                    status: last.status,
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
-                                                   cameraVideoStreamModel: last.cameraVideoStreamModel)
+                                                   cameraVideoStreamModel: last.cameraVideoStreamModel,
+                                                   rawVideoBuffer: nil)
             self.remoteParticipantsMocking.append(lastUnmuted)
             self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
@@ -154,7 +156,8 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    userIdentifier: last.userIdentifier,
                                                    status: .hold,
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
-                                                   cameraVideoStreamModel: last.cameraVideoStreamModel)
+                                                   cameraVideoStreamModel: last.cameraVideoStreamModel,
+                                                   rawVideoBuffer: nil)
             self.remoteParticipantsMocking.append(lastUnmuted)
             self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
@@ -183,7 +186,8 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                      userIdentifier: participantInfoModel.userIdentifier,
                                      status: .connected,
                                      screenShareVideoStreamModel: participantInfoModel.screenShareVideoStreamModel,
-                                     cameraVideoStreamModel: participantInfoModel.cameraVideoStreamModel)
+                                     cameraVideoStreamModel: participantInfoModel.cameraVideoStreamModel,
+                                     rawVideoBuffer: nil)
             }
 
             self.remoteParticipantsMocking.append(contentsOf: connectedParticipants)
@@ -218,7 +222,8 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                      userIdentifier: participantInfoModel.userIdentifier,
                                      status: .connected,
                                      screenShareVideoStreamModel: participantInfoModel.screenShareVideoStreamModel,
-                                     cameraVideoStreamModel: participantInfoModel.cameraVideoStreamModel)
+                                     cameraVideoStreamModel: participantInfoModel.cameraVideoStreamModel,
+                                     rawVideoBuffer: nil)
 
             self.remoteParticipantsMocking.append(connectedParticipant)
             self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
