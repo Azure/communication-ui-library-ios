@@ -7,7 +7,7 @@ import Foundation
 
 /// User-configurable options for creating CallScreenControlBar.
 public struct CallScreenControlBarOptions {
-    /// disable the leave call confirmation.
+    /// Disable the leave call confirmation.
     public let disableLeaveCallConfirmation: Bool
 
     /// Creates an instance of CallScreenControlBarOptions.
