@@ -24,10 +24,7 @@ struct ParticipantGridCellVideoView: View {
                     zoomableVideoRenderView
                         .prefersHomeIndicatorAutoHidden(UIDevice.current.hasHomeBar)
                 } else {
-                    GeometryReader { geometry in
-                        RawVideoView(cvPixelBuffer: $rawVideoBuffer)
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                    }
+                    rawVideo
                 }
             }
 
@@ -61,6 +58,33 @@ struct ParticipantGridCellVideoView: View {
         // prevent the single-tap gesture (in CallingView) from being recognized
         // until after the double-tap gesture  recognizer (in ZoomableVideoRenderView) explicitly
         // reaches the failed state, which happens when the touch sequence contains only one tap.
+    }
+
+    var rawVideo: some View {
+        GeometryReader { geometry in
+            var image: CGImage? = createCGImage(from: $rawVideoBuffer.wrappedValue)
+
+            if let image = image {
+                Image(image, scale: 1.0, orientation: .upMirrored, label: Text(""))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(
+                        width: geometry.size.width,
+                        height: geometry.size.height,
+                        alignment: .center)
+                    .clipped()
+                    .animation(.none)
+            }
+        }
+    }
+
+    func createCGImage(from pixelBuffer: CVPixelBuffer?) -> CGImage? {
+        guard let pixelBuffer = pixelBuffer else {
+            return nil
+        }
+        let ciContext = CIContext()
+        let ciImage = CIImage(cvImageBuffer: pixelBuffer)
+        return ciContext.createCGImage(ciImage, from: ciImage.extent)
     }
 }
 
