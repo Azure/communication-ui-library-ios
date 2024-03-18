@@ -63,11 +63,12 @@ class RemoteParticipantsEventsAdapter: NSObject, RemoteParticipantDelegate {
                 break
             case .stopped, .stopping:
                 /* Will stop receiving video frames */
-                break
+                onStateChanged(remoteParticipant)
             case .notAvailable:
                 /* The IncomingVideoStream should not be used anymore */
                 rawIncomingVideoStream.delegate = nil
                 rawVideoStreams.removeValue(forKey: rawIncomingVideoStream.id)
+                onStateChanged(remoteParticipant)
             default:
                 break
             }
