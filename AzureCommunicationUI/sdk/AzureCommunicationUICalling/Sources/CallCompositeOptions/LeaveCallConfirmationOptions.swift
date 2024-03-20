@@ -6,7 +6,7 @@
 import Foundation
 
 /// Enum defining options for leaving a call confirmation.
-public enum CallCompositeLeaveCallConfirmation {
+public enum LeaveCallConfirmationOptions {
     /// Enables the leave call confirmation.
     case enable
     /// Disables the leave call confirmation.

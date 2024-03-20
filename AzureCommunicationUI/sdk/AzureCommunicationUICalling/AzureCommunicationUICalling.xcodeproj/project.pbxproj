@@ -222,7 +222,7 @@
 		98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */; };
 		98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */; };
 		98FFD82826CC5FD900655398 /* PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FFD82726CC5FD900655398 /* PreferenceKey.swift */; };
-		A43625F62BAB90EC001AB5FA /* CallCompositeLeaveCallConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43625F52BAB90EC001AB5FA /* CallCompositeLeaveCallConfirmation.swift */; };
+		A43625F62BAB90EC001AB5FA /* LeaveCallConfirmationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43625F52BAB90EC001AB5FA /* LeaveCallConfirmationOptions.swift */; };
 		A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810329F3353B001B80A3 /* CallCompositeCallState.swift */; };
 		A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810529F33A43001B80A3 /* CallStateManager.swift */; };
 		A464810829F345E8001B80A3 /* CallCompositeDismissed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */; };
@@ -587,7 +587,7 @@
 		98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModel.swift; sourceTree = "<group>"; };
 		98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModelTests.swift; sourceTree = "<group>"; };
 		98FFD82726CC5FD900655398 /* PreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKey.swift; sourceTree = "<group>"; };
-		A43625F52BAB90EC001AB5FA /* CallCompositeLeaveCallConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeLeaveCallConfirmation.swift; sourceTree = "<group>"; };
+		A43625F52BAB90EC001AB5FA /* LeaveCallConfirmationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationOptions.swift; sourceTree = "<group>"; };
 		A464810329F3353B001B80A3 /* CallCompositeCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallState.swift; sourceTree = "<group>"; };
 		A464810529F33A43001B80A3 /* CallStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManager.swift; sourceTree = "<group>"; };
 		A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeDismissed.swift; sourceTree = "<group>"; };
@@ -1361,7 +1361,7 @@
 				A4DECF542B9A88A6006FD879 /* CallCompositePushNotification.swift */,
 				A4DECF562B9A8A84006FD879 /* CallScreenOptions.swift */,
 				A4DECF582B9A8A98006FD879 /* CallScreenControlBarOptions.swift */,
-				A43625F52BAB90EC001AB5FA /* CallCompositeLeaveCallConfirmation.swift */,
+				A43625F52BAB90EC001AB5FA /* LeaveCallConfirmationOptions.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1910,7 +1910,7 @@
 				FAD20A8D292834500063D8A9 /* CancelBag.swift in Sources */,
 				50FA460C26829162001844AC /* IconWithLabelButton.swift in Sources */,
 				A4DECF532B9A889A006FD879 /* CallCompositePushNotificationEventType.swift in Sources */,
-				A43625F62BAB90EC001AB5FA /* CallCompositeLeaveCallConfirmation.swift in Sources */,
+				A43625F62BAB90EC001AB5FA /* LeaveCallConfirmationOptions.swift in Sources */,
 				756F596E2965F8EA00BAFBF7 /* Store.swift in Sources */,
 				B2B1DB3F2ABE35DA003B00DB /* MessageBarDiagnosticViewModel.swift in Sources */,
 				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
