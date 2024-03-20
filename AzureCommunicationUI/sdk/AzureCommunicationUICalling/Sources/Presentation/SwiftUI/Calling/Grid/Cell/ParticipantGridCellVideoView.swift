@@ -65,7 +65,7 @@ struct ParticipantGridCellVideoView: View {
             var image: CGImage? = createCGImage(from: $rawVideoBuffer.wrappedValue)
 
             if let image = image {
-                Image(image, scale: 1.0, orientation: .upMirrored, label: Text(""))
+                Image(image, scale: 1.0, orientation: .up, label: Text(""))
                     .resizable()
                     .scaledToFill()
                     .frame(
