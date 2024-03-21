@@ -5,14 +5,15 @@
 
 import Foundation
 
-/// User-configurable options for creating CallScreenControlBar.
+/// Configuration options for customizing the call screen control bar.
 public struct CallScreenControlBarOptions {
-    /// Hide the leave call confirm dialog.
-    public let hideLeaveCallConfirmDialog: Bool
+    /// Determines whether to display leave call confirmation. Default is enabled.
+    public let leaveCallConfirmationOptions: LeaveCallConfirmationOptions
 
-    /// Creates an instance of CallScreenControlBarOptions.
-    /// - Parameter hideLeaveCallConfirmDialog: Hide the leave call confirm dialog.
-    init(hideLeaveCallConfirmDialog: Bool = false) {
-        self.hideLeaveCallConfirmDialog = hideLeaveCallConfirmDialog
+    /// Initializes an instance of CallScreenControlBarOptions.
+    /// - Parameter leaveCallConfirmationOptions: Whether to enable or disable the leave call confirmation.
+    ///                                           Default is enabled.
+    init(leaveCallConfirmationOptions: LeaveCallConfirmationOptions = .enable) {
+        self.leaveCallConfirmationOptions = leaveCallConfirmationOptions
     }
 }
