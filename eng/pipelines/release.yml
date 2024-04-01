@@ -37,9 +37,10 @@ schedules:
 name: $(date:yyyyMMdd)$(rev:.r) $(Build.BuildId)
 resources:
   repositories:
-  - repository: self
+  - repository: 1esPipelines
     type: git
-    ref: refs/heads/develop
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
 parameters:
 - name: pools
   type: object
