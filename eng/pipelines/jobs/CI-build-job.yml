@@ -1,7 +1,7 @@
 # Xcode build and unit test CI job
   
 jobs:
-  - job: BuildAndUnitTest
+- job: BuildAndUnitTest
     displayName: "Build UI Library (Debug) for CI"
     pool:
       name: vsts-mac-131-xcode-142
