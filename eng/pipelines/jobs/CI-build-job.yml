@@ -3,6 +3,9 @@
 jobs:
 - job: BuildAndUnitTest
   displayName: "Build UI Library (Debug) for CI"
+  pool:
+    name: vsts-mac-131-xcode-142
+    demands: xcode
   steps:
     - task: servicetree-link-build-task@1
       displayName: "ServiceTree: [$(BuildOutputUsage)] "
