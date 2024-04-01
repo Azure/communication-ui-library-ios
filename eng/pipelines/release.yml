@@ -350,4 +350,3 @@ extends:
 
               Build commit: $(Build.Repository.Uri)/commit/$(Build.SourceVersion)
             isSilent: true
-      ...
