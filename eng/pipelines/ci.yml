@@ -32,4 +32,4 @@ extends:
     - stage: Stage
       jobs:
       - job: Job
-        - template: jobs/CI-build-job.yml
+        - template: jobs/CI-build-job.yml@self
