@@ -10,5 +10,26 @@ pr:
   - release/*
   - feature/*
 
-jobs:
-  - template: jobs/CI-build-job.yml
+resources:
+  repositories:
+  - repository: 1esPipelines
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+extends:
+
+  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
+  parameters:
+    pool:
+      os: mac
+      image: mac-2022
+      name: Azure-Pipelines-1ESPT-ExDShared
+    sdl:
+      suppression:
+        suppressionFile: $(Build.SourcesDirectory)\guardian\SDL\.gdnsuppress
+    stages:
+    - stage: Stage
+      jobs:
+      - job: Job
+        - template: jobs/CI-build-job.yml
