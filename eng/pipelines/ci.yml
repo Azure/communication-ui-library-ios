@@ -22,61 +22,14 @@ extends:
   template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
-      os: macOS
-      image: vsts-mac-131-xcode-142
-      demands: xcode
+      os: mac
+      image: mac-2022
+      name: Azure-Pipelines-1ESPT-ExDShared
     sdl:
       suppression:
         suppressionFile: $(Build.SourcesDirectory)\guardian\SDL\.gdnsuppress
     stages:
     - stage: Stage
       jobs:
-      - job: BuildAndUnitTest
-        displayName: "Build UI Library (Debug) for CI"
-        pool:
-          name: vsts-mac-131-xcode-142
-          demands: xcode
-        steps:
-          - task: servicetree-link-build-task@1
-            displayName: "ServiceTree: [$(BuildOutputUsage)] "
-            inputs:
-              ServiceTreeGateway: "ServiceTree Gateway"
-              Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
-            condition: always()
-
-          - template: templates/build-and-coverage.yml
-            parameters:
-              buildScheme: 'AzureCommunicationUICalling'
-
-          - template: templates/build-and-coverage.yml
-            parameters:
-              buildScheme: 'AzureCommunicationUIChat'
-
-          # Need .Net for the report generator (combiner) step
-          - task: UseDotNet@2
-            displayName: "Use .NET Core sdk 8.0.x"
-            inputs:
-              version: 8.0.x
-
-          - task: reportgenerator@5
-            displayName: "Combine Cobertura Reports"
-            inputs:
-              reports: "$(System.ArtifactsDirectory)/*cobertura.xml"
-              reporttypes: "Cobertura"
-              targetdir: $(Pipeline.Workspace)/coveragereport
-
-          - task: PublishCodeCoverageResults@1
-            inputs:
-              codeCoverageTool: "Cobertura"
-              summaryFileLocation: $(Pipeline.Workspace)/coveragereport/Cobertura.xml
-
-          - task: BuildQualityChecks@8
-            displayName: "Check build quality"
-            inputs:
-              checkCoverage: true
-              coverageThreshold: 51
-              coverageFailOption: fixed
-              coverageType: lines
-                
-          - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-            displayName: 'Component Detection'
+      - job: Job
+        - template: jobs/CI-build-job.yml@self
