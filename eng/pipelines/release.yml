@@ -1,25 +1,3 @@
-# Variable 'appCenterSecret' was defined in the Variables tab
-# Variable 'archivePath' was defined in the Variables tab
-# Variable 'CFBundleShortVersionString' was defined in the Variables tab
-# Variable 'Configuration' was defined in the Variables tab
-# Variable 'exportPath' was defined in the Variables tab
-# Variable 'groupCallId' was defined in the Variables tab
-# Variable 'Ic3PipelineUsage' was defined in the Variables tab
-# Variable 'nativeCallingSDKPrivateRepoToken' was defined in the Variables tab
-# Variable 'nativeCallingSDKPrivateRepoUsername' was defined in the Variables tab
-# Variable 'P12password' was defined in the Variables tab
-# Variable 'rootPath' was defined in the Variables tab
-# Variable 'SDK' was defined in the Variables tab
-# Variable 'signedExtractedPath' was defined in the Variables tab
-# Variable 'signedZip' was defined in the Variables tab
-# Variable 'teamsMeetingLink' was defined in the Variables tab
-# Variable 'TestConfiguration' was defined in the Variables tab
-# Variable 'TestSDK' was defined in the Variables tab
-# Variable 'zipToSign' was defined in the Variables tab
-# Variable Group 'ServiceTreeLinkGroup' was defined in the Variables tab
-# Variable Group 'InfoSec-SecurityResults' was defined in the Variables tab
-# Variable Group 'SPOOL-Communication-mobileUI' was defined in the Variables tab
-# Cron Schedules have been converted using UTC Time Zone and may need to be updated for your location
 variables:
 - name: BuildParameters.xcodeVersion
   value: default
