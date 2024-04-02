@@ -45,6 +45,7 @@ extends:
           - output: pipelineArtifact
             targetPath: $(build.artifactstagingdirectory)
         pool:
+          os: macos
           name: vsts-mac-131-xcode-142
         steps:
         - checkout: self
