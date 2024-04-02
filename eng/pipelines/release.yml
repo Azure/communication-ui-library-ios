@@ -147,7 +147,7 @@ extends:
         - task: InstallAppleCertificate@2
           displayName: Install an Apple certificate
           inputs:
-            certSecureFile: f8e56ec0-d39b-4ff7-9a3f-0c605db17d09
+            certSecureFile: 0886d993-75dc-43c4-a847-f98b3291b908
             certPwd: $(P12password)
             deleteCert: false
             deleteCustomKeychain: false
