@@ -128,7 +128,8 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         let videoStatus = (videoViewModel?.videoStreamId?.isEmpty ?? true) ?
         localizationProvider.getLocalizedString(.videoOff):
         localizationProvider.getLocalizedString(.videoOn)
-        return "\(participantModel.displayName) \(status) \(videoStatus)"
+        return localizationProvider.getLocalizedString(.participantInformationAccessibilityLable,
+                                                       participantModel.displayName, status, videoStatus)
     }
 
     private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel)
