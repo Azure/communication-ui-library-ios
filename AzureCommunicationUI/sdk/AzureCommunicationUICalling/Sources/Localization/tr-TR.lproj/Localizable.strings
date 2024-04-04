@@ -16,6 +16,7 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Kamerayı Aç";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Aramanız beklemeye alındı";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Sürdür";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Diğerlerinin katılması bekleniyor";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d katılımcı toplantıya katıldı";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ toplantıdan ayrıldı";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d katılımcı toplantıdan ayrıldı";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Aramaya katıldınız";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="İçerik paylaşılıyor";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="İçerik paylaşımı sona erdi";
@@ -147,13 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Çağrı Tanılamayı Kapat";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Bu Çağrı Tanılamayı Kapatma Başlığı";
 
-/* Feedback Form */
-
-"AzureCommunicationUICalling.ReportIssue.Title"="Sorun Bildir";
-"AzureCommunicationUICalling.LogsAttach.Notice"="Günlükler otomatik olarak eklenir.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Gizlilik İlkesi";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Lütfen sorununuzu açıklayın...";
-"AzureCommunicationUICalling.CancelButton.Text"="İptal";
-"AzureCommunicationUICalling.Attach.Screenshot"="Ekran görüntüsü ekle";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
-"AzureCommunicationUICalling.SendFeedback.Text"="Gönder";
+"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
+"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
+"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";

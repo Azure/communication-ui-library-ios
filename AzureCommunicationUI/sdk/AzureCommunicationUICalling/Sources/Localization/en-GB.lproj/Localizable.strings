@@ -16,14 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Back";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Join call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Joining call…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video off";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video On";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Turn Camera On";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video on";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video Off";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Turn Camera Off";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mic off";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mic On";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Unmute";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mic on";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mic off";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mute";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Device";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Select audio device";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Go to Settings";
@@ -70,7 +71,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Waiting in lobby (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="In the call (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Admit all";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Admit all participants?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Admit all partidipants?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Admit %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Admit";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Decline";
@@ -82,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d participants joined the meeting";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ left the meeting";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d participants left the meeting";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="You have joined the call";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Content is being shared";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Content sharing has ended";
@@ -148,9 +150,6 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
 
-/* Feedback Form */
-
-"AzureCommunicationUICalling.Report.Issue"="Report Issue";
 "AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
 "AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
 "AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";

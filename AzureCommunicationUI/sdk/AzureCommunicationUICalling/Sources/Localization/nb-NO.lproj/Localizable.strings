@@ -16,6 +16,7 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tilbake";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Bli med i samtale";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Blir med i samtalen …";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Slå på kamera";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Du er satt på vent";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Fortsett";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Venter på at andre skal bli med";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d deltakere ble med i møtet";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ forlot møtet";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d deltakere forlot møtet";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Du har blitt med i samtalen";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Innhold blir delt";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Innholdsdeling er avsluttet";
@@ -147,13 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Lukk anropsdiagnose";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Lukker dette diagnosebanneret for anrop";
 
-/* Feedback Form */
-
-"AzureCommunicationUICalling.ReportIssue.Title"="Rapporter problem";
-"AzureCommunicationUICalling.LogsAttach.Notice"="Vi legger ved logger automatisk.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Personvern";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beskriv problemet ditt...";
-"AzureCommunicationUICalling.CancelButton.Text"="Avbryt";
-"AzureCommunicationUICalling.Attach.Screenshot"="Legg ved skjermbilde";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Rapporter et problem";
+"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
+"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
+"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Send";

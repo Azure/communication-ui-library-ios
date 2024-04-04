@@ -16,6 +16,7 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="戻る";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="通話に参加";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="通話に参加しています...";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="ビデオ オフ";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="カメラを有効にします";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="ビデオ オン";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="保留中です";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="再開";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="他のユーザーの参加を待っています";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d 人の参加者が会議に参加しました";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ さんが会議から退出しました";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d 人の参加者が会議から退出しました";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="通話に参加しました";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="コンテンツは共有されています";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="コンテンツの共有が終了しました";
@@ -147,13 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="通話診断を閉じる";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="この通話診断バナーを閉じます";
 
-/* Feedback Form */
-
-"AzureCommunicationUICalling.ReportIssue.Title"="問題の報告";
-"AzureCommunicationUICalling.LogsAttach.Notice"="ログは自動的に添付されます。";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="プライバシー ポリシー";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="問題を説明してください...";
-"AzureCommunicationUICalling.CancelButton.Text"="取り消す";
-"AzureCommunicationUICalling.Attach.Screenshot"="スクリーンショットを添付する";
-"AzureCommunicationUICalling.ReportAProblem.Text"="問題を報告する";
-"AzureCommunicationUICalling.SendFeedback.Text"="送信する";
+"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
+"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
+"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";

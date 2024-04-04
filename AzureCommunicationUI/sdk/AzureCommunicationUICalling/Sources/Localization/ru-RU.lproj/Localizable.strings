@@ -16,6 +16,7 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Назад";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Присоединиться к звонку";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Включить камеру";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Ваш звонок на удержании";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Возобновить";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Ожидание присоединения других участников";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="Количество участников, присоединившихся к собранию: %d";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="Пользователь %@ покинул собрание";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="Количество участников, покинувших собрание: %d";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Вы присоединились к звонку";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Идет демонстрация контента";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Общий доступ к контенту закончился";
@@ -147,13 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";
 
-/* Feedback Form */
-
-"AzureCommunicationUICalling.ReportIssue.Title"="Сообщить о проблеме";
-"AzureCommunicationUICalling.LogsAttach.Notice"="Журналы будут вложены автоматически.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Политика конфиденциальности";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Опишите свою проблему...";
-"AzureCommunicationUICalling.CancelButton.Text"="Отмена";
-"AzureCommunicationUICalling.Attach.Screenshot"="Вложить снимок экрана";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
-"AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
+"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
+"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
+"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";

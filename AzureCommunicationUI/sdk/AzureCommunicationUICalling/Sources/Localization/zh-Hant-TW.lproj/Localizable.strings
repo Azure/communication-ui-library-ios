@@ -16,6 +16,7 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="上一步";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通話";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="視訊關閉";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="開啟相機";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="視訊開啟";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="您的通話已保留";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="繼續";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="正在等待其他人加入";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d 個參與者已加入會議";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ 已離開會議";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d 個參與者已離開會議";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="您已加入通話";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="正在分享內容";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="已結束內容分享";
@@ -147,13 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="關閉通話診斷";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="關閉此通話診斷橫幅";
 
-/* Feedback Form */
-
-"AzureCommunicationUICalling.ReportIssue.Title"="回報問題";
-"AzureCommunicationUICalling.LogsAttach.Notice"="我們將會自動附加記錄。";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="隱私權原則";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="請描述您的問題...";
-"AzureCommunicationUICalling.CancelButton.Text"="取消";
-"AzureCommunicationUICalling.Attach.Screenshot"="附加螢幕擷取畫面";
-"AzureCommunicationUICalling.ReportAProblem.Text"="回報問題";
-"AzureCommunicationUICalling.SendFeedback.Text"="傳送";
+"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
+"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
+"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";

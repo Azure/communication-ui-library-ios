@@ -16,6 +16,7 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Wstecz";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Dołącz do rozmowy";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Trwa dołączanie do rozmowy…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Wideo wyłączone";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Włącz kamerę";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Wideo włączone";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Połączenie zostało zawieszone.";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Wznów";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Oczekiwanie na dołączenie innych osób";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d uczestników dołączyło do spotkania";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="Użytkownik %@ opuścił spotkanie";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d uczestników opuściło spotkanie";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Dołączono do rozmowy";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Zawartość jest udostępniana";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Zakończono udostępnianie zawartości";
@@ -147,13 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Odrzuć diagnostykę wywołań";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Odrzuca ten baner diagnostyki wywołań";
 
-/* Feedback Form */
-
-"AzureCommunicationUICalling.ReportIssue.Title"="Relatar Problema";
-"AzureCommunicationUICalling.LogsAttach.Notice"="Nós anexaremos automaticamente os registros.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Política de Privacidade";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Descreva seu problema...";
-"AzureCommunicationUICalling.CancelButton.Text"="Cancelar";
-"AzureCommunicationUICalling.Attach.Screenshot"="Anexar captura de tela";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Informar um problema";
-"AzureCommunicationUICalling.SendFeedback.Text"="Enviar";
+"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
+"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
+"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";
