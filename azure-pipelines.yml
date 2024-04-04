@@ -21,6 +21,12 @@ resources:
       name: 1ESPipelineTemplates/1ESPipelineTemplates
       ref: refs/tags/release
 trigger: none
+parameters:
+- name: pools
+  type: object
+  default:
+  - name: vsts-mac-131-xcode-142 
+    os: macos
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
@@ -35,6 +41,9 @@ extends:
         jobs:
           - job: Job_1
             displayName: Agent job 1
+            pool:
+              os: macos
+              name: vsts-mac-131-xcode-142
             steps:
               - checkout: self
                 clean: true
@@ -80,7 +89,7 @@ extends:
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
                   cultureMappingType: FilePath
-                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)\tdbuildCultureMapping.json
+                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json
               - task: Bash@3
                 displayName: Copy additional language mapping
                 condition: eq(variables['commit'], 'true')
@@ -99,14 +108,14 @@ extends:
                     for mapping in "${ARRAY[@]}" ; do
                         KEY=${mapping%%:*}
                         VALUE=${mapping#*:}
-                        cp -R $LOCALIZATION_PATH/$VALUE.lproj/ $LOCALIZATION_PATH/$KEY.lproj/
+                        cp -R $LOCALIZATION_PATH/$VALUE.lproj/$LOCALIZATION_PATH/$KEY.lproj/
                     done
 
                     echo "git status"
                     git status
 
                     echo "git add"
-                    git add $(system.defaultWorkingDirectory)\$LOCALIZATION_PATH\*
+                    git add $(system.defaultWorkingDirectory)/$LOCALIZATION_PATH/*
 
                     echo "git status"
                     git status
