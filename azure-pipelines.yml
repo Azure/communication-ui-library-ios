@@ -1,11 +1,3 @@
-# This pipeline was generated from the classic pipeline "SCC-SPOOL-communication-ui-library-iOS-localization" on 2023-10-30 with https://aka.ms/1ESPTMigration (v1.0.0): https://dev.azure.com/skype/SCC/_build?definitionId=12523
-#
-# 'Allow scripts to access the OAuth token' was selected in pipeline.  Add the following YAML to any steps requiring access:
-#       env:
-#           MY_ACCESS_TOKEN: $(System.AccessToken)
-# No trigger found, defaulting to 'none'. Update the trigger as needed.
-# The pipeline uses service connection "ServiceTree Gateway", you will need to grant the new pipeline access: https://dev.azure.com/skype/SCC/_settings/adminservices?resourceId=c29e963a-8ea3-4e6a-b28f-a035eaff83ab
-
 name: $(date:yyyyMMdd)$(rev:.r)
 variables:
 
@@ -13,14 +5,10 @@ variables:
     value: Release
   - name: Ic3PipelineUsage
     value: production
-  - name: SDK
-    value: iphoneos
   - name: system.debug
     value: false
   - name: TestConfiguration
     value: Debug
-  - name: TestSDK
-    value: iphonesimulator
   - group: ServiceTreeLinkGroup
   - group: InfoSec-SecurityResults
 resources:
@@ -92,7 +80,7 @@ extends:
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
                   cultureMappingType: FilePath
-                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json
+                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)\tdbuildCultureMapping.json
               - task: Bash@3
                 displayName: Copy additional language mapping
                 condition: eq(variables['commit'], 'true')
@@ -118,7 +106,7 @@ extends:
                     git status
 
                     echo "git add"
-                    git add $(system.defaultWorkingDirectory)/$LOCALIZATION_PATH/*
+                    git add $(system.defaultWorkingDirectory)\$LOCALIZATION_PATH\*
 
                     echo "git status"
                     git status
