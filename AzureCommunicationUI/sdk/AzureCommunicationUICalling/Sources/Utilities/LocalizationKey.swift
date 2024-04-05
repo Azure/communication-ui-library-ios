@@ -101,6 +101,8 @@ enum LocalizationKey: String {
     case multiplePeopleJoined = "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"
     case onePersonLeft = "AzureCommunicationUICalling.CallingView.OnePersonLeft"
     case multiplePeopleLeft = "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"
+    case participantInformationAccessibilityLable =
+            "AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel"
     case joinedCallAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"
     case screenshareStartAccessibilityLabel =
