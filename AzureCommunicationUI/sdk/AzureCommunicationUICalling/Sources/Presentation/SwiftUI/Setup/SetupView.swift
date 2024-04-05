@@ -44,6 +44,7 @@ struct SetupView: View {
                             }
                             .background(Color(StyleProvider.color.surface))
                             .cornerRadius(4)
+                            .accessibilityElement(children: .contain)
                             joinCallView
                                 .padding(.bottom)
                         }
@@ -52,6 +53,7 @@ struct SetupView: View {
                             .padding(.bottom, setupViewVerticalPadding(parentSize: geometry.size))
                     }
                     .padding(.horizontal, setupViewHorizontalPadding(parentSize: geometry.size))
+                    .accessibilityElement(children: .contain)
                 }
             }
         }
