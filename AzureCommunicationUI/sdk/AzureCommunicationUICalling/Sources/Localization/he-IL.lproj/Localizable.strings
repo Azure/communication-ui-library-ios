@@ -16,15 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="הקודם";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="הצטרף לשיחה";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
-"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "הצטרפות לשיחה מושבתת";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="הפעל מצלמה";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו מופעל";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="בטל מצלמה";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="מיקרופון כבוי";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="בטל השתקה";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="מיקרופון מופעל";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="מיקרופון מופעל";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="השתק";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="מיקרופון כבוי";
 "AzureCommunicationUICalling.SetupView.Button.Device"="התקן";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="בחר התקן שמע";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="עבור אל ‘הגדרות‘";
@@ -39,7 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="אתה בהמתנה";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="המשך";
-"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "חדש הפעלה";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="מחכה שאחרים יצטרפו";
@@ -150,11 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="בטל אבחון שיחה";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="מבטל כרזת אבחון שיחה זו";
 
-"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
-"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
-"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
-"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
-"AzureCommunicationUICalling.SendFeedback.Text"="Send";
+"AzureCommunicationUICalling.ReportIssue.Title"="דווח על בעיה";
+"AzureCommunicationUICalling.LogsAttach.Notice"="אנו נצרף יומני רישום באופן אוטומטי.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="מדיניות פרטיות";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="תאר את הבעיה שלך...";
+"AzureCommunicationUICalling.CancelButton.Text"="ביטול";
+"AzureCommunicationUICalling.Attach.Screenshot"="צרף צילום מסך";
+"AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
+"AzureCommunicationUICalling.SendFeedback.Text"="שלח";

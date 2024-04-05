@@ -16,15 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="رجوع";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="انضمام إلى مكالمة";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="جاري الانضمام إلى المكالمة…";
-"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "تم تعطيل الانضمام إلى المكالمة";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="الفيديو قيد الإيقاف";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="تشغيل الكاميرا";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="الفيديو قيد التشغيل";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="الفيديو قيد التشغيل";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="إيقاف تشغيل الكاميرا";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="الفيديو قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="الميكروفون قيد الإيقاف";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="إلغاء كتم الصوت";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="الميكروفون قيد التشغيل";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="الميكروفون قيد التشغيل";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="كتم الصوت";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="الميكروفون قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.Device"="جهاز";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="تحديد جهاز صوتي";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="الانتقال إلى الإعدادات";
@@ -39,7 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="أنت قيد التعليق";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="استئناف";
-"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "استئناف";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="في انتظار انضمام الآخرين";
@@ -71,7 +71,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="الانتظار في ساحة الانتظار (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="في المكالمة (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="السماح للكل";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="السماح لجميع المشاركين؟";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="هل تريد السماح لجميع المشاركين؟";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="السماح لـ %@؟";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="سماح";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="رفض";
@@ -150,11 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="تجاهل تشخيص المكالمات";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="تجاهل لافتة تشخيص المكالمة هذه";
 
-"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
-"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
-"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
-"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
-"AzureCommunicationUICalling.SendFeedback.Text"="Send";
+"AzureCommunicationUICalling.ReportIssue.Title"="الإبلاغ عن مشكلة";
+"AzureCommunicationUICalling.LogsAttach.Notice"="سنقوم بإرفاق السجلات تلقائيا.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="نهج الخصوصية";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="يُرجى وصف مشكلتك...";
+"AzureCommunicationUICalling.CancelButton.Text"="إلغاء";
+"AzureCommunicationUICalling.Attach.Screenshot"="إرفاق لقطة الشاشة";
+"AzureCommunicationUICalling.ReportAProblem.Text"="الإبلاغ عن مشكلة";
+"AzureCommunicationUICalling.SendFeedback.Text"="إرسال";

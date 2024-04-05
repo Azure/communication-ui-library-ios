@@ -16,15 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Назад";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Присоединиться к звонку";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
-"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Присоединение к звонку отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Включить камеру";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Видео включено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Выключить камеру";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Микрофон выключен";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Включить микрофон";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Микрофон включен";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Микрофон включен";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Отключить микрофон";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Микрофон отключен";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Устройство";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Выберите звуковое устройство";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Перейти к параметрам";
@@ -39,7 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Ваш звонок на удержании";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Возобновить";
-"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Возобновить";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Ожидание присоединения других участников";
@@ -150,11 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";
 
-"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
-"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
-"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
-"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
-"AzureCommunicationUICalling.SendFeedback.Text"="Send";
+"AzureCommunicationUICalling.ReportIssue.Title"="Сообщить о проблеме";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Журналы будут вложены автоматически.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Политика конфиденциальности";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Опишите свою проблему...";
+"AzureCommunicationUICalling.CancelButton.Text"="Отмена";
+"AzureCommunicationUICalling.Attach.Screenshot"="Вложить снимок экрана";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
+"AzureCommunicationUICalling.SendFeedback.Text"="Отправить";

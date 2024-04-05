@@ -16,15 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="뒤로";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="통화 참여";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="통화에 참가하는 중…";
-"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "통화 참가 사용 안 함";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="비디오 끄기";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="카메라 켜기";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="비디오 켜기";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="비디오 켜짐";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="카메라 끄기";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="비디오 끄기";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="마이크 끄기";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="음소거 해제";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="마이크 켜기";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="마이크 켜기";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="음소거";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="마이크 끄기";
 "AzureCommunicationUICalling.SetupView.Button.Device"="장치";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="오디오 장치 선택";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="설정으로 이동";
@@ -39,7 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="대기 중입니다.";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="다시 시작";
-"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Resume";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "재개";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="다른 사용자의 참여를 기다리는 중";
@@ -71,7 +71,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="대기실에서 대기 중(%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="통화 중(%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="모두 허용";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="모든 참가자를 허용하시겠어요?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="모든 참가자를 허용할까요?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@을(를) 허용하시겠어요?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="허용";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="거절";
@@ -150,11 +150,11 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="통화 진단 해제";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="이 통화 진단 배너 해제";
 
-"AzureCommunicationUICalling.ReportIssue.Title"="Report Issue";
-"AzureCommunicationUICalling.LogsAttach.Notice"="We'll automatically attach logs.";
-"AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacy Policy";
-"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Please describe your issue...";
-"AzureCommunicationUICalling.CancelButton.Text"="Cancel";
-"AzureCommunicationUICalling.Attach.Screenshot"="Attach screenshot";
-"AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
-"AzureCommunicationUICalling.SendFeedback.Text"="Send";
+"AzureCommunicationUICalling.ReportIssue.Title"="문제 신고";
+"AzureCommunicationUICalling.LogsAttach.Notice"="로그를 자동으로 첨부합니다.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="개인정보처리방침";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="문제를 설명해 주세요...";
+"AzureCommunicationUICalling.CancelButton.Text"="취소";
+"AzureCommunicationUICalling.Attach.Screenshot"="스크린샷 첨부";
+"AzureCommunicationUICalling.ReportAProblem.Text"="문제 보고";
+"AzureCommunicationUICalling.SendFeedback.Text"="보내기";
