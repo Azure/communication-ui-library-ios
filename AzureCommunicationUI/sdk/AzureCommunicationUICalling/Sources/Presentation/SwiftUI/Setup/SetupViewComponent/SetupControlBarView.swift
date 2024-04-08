@@ -21,12 +21,12 @@ struct SetupControlBarView: View {
                 HStack(alignment: .center, spacing: layoutSpacing) {
                     if viewModel.isCameraDisplayed {
                         Spacer()
-                        cameraButton.accessibility(sortPriority: 1)
+                        cameraButton
                     }
                     Spacer()
-                    micButton.accessibility(sortPriority: 0)
+                    micButton
                     Spacer()
-                    audioDeviceButton.accessibility(sortPriority: 2)
+                    audioDeviceButton
                     Spacer()
                 }
                 .frame(width: getWidth(from: geometry),
@@ -34,7 +34,6 @@ struct SetupControlBarView: View {
                 .padding(.horizontal, getHorizontalPadding(from: geometry))
                 .padding(.vertical, verticalPadding)
                 .hidden(viewModel.isControlBarHidden())
-                .accessibilityElement(children: .contain)
             }
         }
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
