@@ -16,10 +16,11 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tillbaka";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Anslut till samtal";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anslut till samtal inaktiverat";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Starta kameran";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video på";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Stäng av kameran";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon av";
 "AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon på";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon på";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Du är parkerad";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Återuppta";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Återuppta";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Väntar på att andra ska ansluta";
@@ -69,7 +71,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Väntar i lobbyn (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="I samtalet (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Tillåt alla";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Vill du tillåta alla deltagare?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Ta emot alla deltagare?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Vill du släppa in %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Släpp in";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avböj";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d deltagare har anslutit till mötet";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ har lämnat mötet";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d deltagare lämnade mötet";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Du har anslutit till mötet";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Innehåll delas";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Innehållsdelning har avslutats";
@@ -146,8 +149,6 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Stäng samtalsdiagnostik";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Stänger den här banderollen för samtalsdiagnostik";
-
-/* Feedback Form */
 
 "AzureCommunicationUICalling.ReportIssue.Title"="Rapportera problem";
 "AzureCommunicationUICalling.LogsAttach.Notice"="Loggar bifogas automatiskt.";
