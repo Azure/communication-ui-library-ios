@@ -8,6 +8,7 @@ import SwiftUI
 struct SetupControlBarView: View {
     @ObservedObject var viewModel: SetupControlBarViewModel
     @State var audioDeviceButtonSourceView = UIView()
+    @AccessibilityFocusState var focusedOnAudioButton: Bool
     let layoutSpacing: CGFloat = 0
     let controlWidth: CGFloat = 315
     let controlHeight: CGFloat = 50
@@ -21,27 +22,25 @@ struct SetupControlBarView: View {
                 HStack(alignment: .center, spacing: layoutSpacing) {
                     if viewModel.isCameraDisplayed {
                         Spacer()
-                        cameraButton.accessibility(sortPriority: 1)
+                        cameraButton
                     }
                     Spacer()
-                    micButton.accessibility(sortPriority: 0)
+                    micButton
                     Spacer()
-                    audioDeviceButton.accessibility(sortPriority: 2)
+                    audioDeviceButton
                     Spacer()
                 }
-                .frame(width: getWidth(from: geometry),
-                       height: controlHeight)
+                .frame(width: getWidth(from: geometry), height: controlHeight)
                 .padding(.horizontal, getHorizontalPadding(from: geometry))
                 .padding(.vertical, verticalPadding)
                 .hidden(viewModel.isControlBarHidden())
                 .accessibilityElement(children: .contain)
-            }
+            }.accessibilityElement(children: .contain)
         }
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
             audioDeviceSelectionListView
         })
     }
-
     var cameraButton: some View {
         IconWithLabelButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
@@ -57,6 +56,7 @@ struct SetupControlBarView: View {
         IconWithLabelButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
             .accessibility(identifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue)
+            .accessibilityFocused($focusedOnAudioButton, equals: true)
     }
 
     var audioDeviceSelectionListView: some View {
@@ -64,8 +64,8 @@ struct SetupControlBarView: View {
                                   viewModel: viewModel.audioDevicesListViewModel,
                                   sourceView: audioDeviceButtonSourceView)
         .onDisappear {
-            DispatchQueue.main.async {
-                UIAccessibility.post(notification: .layoutChanged, argument: audioDeviceButton)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                focusedOnAudioButton = true
             }
         }
     }
