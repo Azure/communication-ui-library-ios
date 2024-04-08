@@ -10,6 +10,7 @@ struct AppPhaseKey: EnvironmentKey {
     static let defaultValue: AppStatus = .foreground
 }
 
+// swiftlint:disable implicit_getter
 extension EnvironmentValues {
     var appPhase: AppStatus {
         get { self[AppPhaseKey.self] }
