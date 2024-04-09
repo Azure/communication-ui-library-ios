@@ -10,6 +10,7 @@ struct InfoHeaderView: View {
     @ObservedObject var viewModel: InfoHeaderViewModel
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
+    @AccessibilityFocusState var focusedOnParticipantList: Bool
     let avatarViewManager: AvatarViewManagerProtocol
 
     private enum Constants {
@@ -46,6 +47,7 @@ struct InfoHeaderView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
         })
+        .accessibilityElement(children: .contain)
     }
 
     var infoHeader: some View {
@@ -81,11 +83,13 @@ struct InfoHeaderView: View {
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .clipShape(RoundedRectangle(cornerRadius: Constants.shapeCornerRadius))
         .padding(.bottom, Constants.hStackBottomPadding)
+        .accessibilityElement(children: .contain)
     }
 
     var participantListButton: some View {
         IconButton(viewModel: viewModel.participantListButtonViewModel)
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
+            .accessibilityFocused($focusedOnParticipantList, equals: true)
     }
 
     var participantsListView: some View {
@@ -96,6 +100,11 @@ struct InfoHeaderView: View {
                                           avatarViewManager: avatarManager,
                                           sourceView: participantsListButtonSourceView)
                 .modifier(LockPhoneOrientation())
+                .onDisappear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        focusedOnParticipantList = true
+                    }
+                }
             } else {
                 EmptyView()
             }
