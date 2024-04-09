@@ -13,7 +13,7 @@ struct ControlBarView: View {
     @State var leaveCallConfirmationListSourceView = UIView()
     @State var moreListSourceView = UIView()
     @State var debugInfoSourceView = UIView()
-
+    @AccessibilityFocusState var focusedOnAudioButton: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
@@ -130,6 +130,7 @@ struct ControlBarView: View {
         IconButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
             .accessibility(identifier: AccessibilityIdentifier.audioDeviceAccessibilityID.rawValue)
+            .accessibilityFocused($focusedOnAudioButton, equals: true)
 
     }
 
@@ -144,6 +145,11 @@ struct ControlBarView: View {
                                   viewModel: viewModel.audioDevicesListViewModel,
                                   sourceView: audioDeviceButtonSourceView)
         .modifier(LockPhoneOrientation())
+        .onDisappear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                focusedOnAudioButton = true
+            }
+        }
     }
 
     var exitConfirmationDrawer: some View {
