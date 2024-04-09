@@ -2,9 +2,9 @@ PODS:
   - AppCenter/Core (4.4.1)
   - AppCenter/Crashes (4.4.1):
     - AppCenter/Core
-  - AzureCommunicationCalling (2.3.0-beta.1):
+  - AzureCommunicationCalling (2.8.0):
     - AzureCommunicationCommon (~> 1.0)
-  - AzureCommunicationChat (1.3.1):
+  - AzureCommunicationChat (1.3.3):
     - AzureCommunicationCommon (~> 1.0)
     - AzureCore (= 1.0.0-beta.15)
     - Trouter (= 0.2.0)
@@ -50,8 +50,8 @@ PODS:
 
 DEPENDENCIES:
   - AppCenter/Crashes (= 4.4.1)
-  - AzureCommunicationCalling (= 2.3.0-beta.1)
-  - AzureCommunicationChat (= 1.3.1)
+  - AzureCommunicationCalling (= 2.8.0)
+  - AzureCommunicationChat (= 1.3.3)
   - AzureCore (= 1.0.0-beta.15)
   - MicrosoftFluentUI/ActivityIndicator_ios (= 0.10.0)
   - MicrosoftFluentUI/Avatar_ios (= 0.10.0)
@@ -62,7 +62,7 @@ DEPENDENCIES:
   - SwiftLint (= 0.42.0)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - AppCenter
     - AzureCommunicationCalling
     - AzureCommunicationChat
@@ -74,14 +74,14 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
-  AzureCommunicationCalling: 24d3664f2cb9728f6984b8d4b1abcaf87e757ff8
-  AzureCommunicationChat: 9be8209d32c2fc6259095ff9838ad30dcfc44f80
+  AzureCommunicationCalling: 4c15cc33497ad858aee28561fdd4937cef3049f6
+  AzureCommunicationChat: 79fb67f0d6160754817d77d307565a015a5eb9b2
   AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
   MicrosoftFluentUI: f6db695718efb93f4ca9bdc366c00b80a1f91dba
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   Trouter: 7eab36954ad740e32db3ff9f6025b0dff92193d7
 
-PODFILE CHECKSUM: 1ff305af525c1895ae27d267c25e47a4c44abee7
+PODFILE CHECKSUM: eb2a002292106e7d1fbc6c842387f5ed3082f441
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.15.2

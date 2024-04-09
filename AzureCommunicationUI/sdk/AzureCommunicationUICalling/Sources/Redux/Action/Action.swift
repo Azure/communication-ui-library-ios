@@ -13,8 +13,13 @@ enum Action: Equatable {
     case callingAction(CallingAction)
     case errorAction(ErrorAction)
     case lifecycleAction(LifecycleAction)
+    case visibilityAction(VisibilityAction)
     case localUserAction(LocalUserAction)
     case permissionAction(PermissionAction)
+    case remoteParticipantsAction(RemoteParticipantsAction)
+    case callDiagnosticAction(DiagnosticsAction)
     case compositeExitAction
     case callingViewLaunched
+    case showSupportForm
+    case hideSupportForm
 }

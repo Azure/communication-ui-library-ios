@@ -31,41 +31,6 @@ class SetupViewModelTests: XCTestCase {
         factoryMocking = nil
     }
 
-    func test_setupViewModel_when_setupViewLoaded_then_shouldAskAudioPermission() {
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Verify Last Action is Request Audio")
-        storeFactory.store.$state
-            .dropFirst(2)
-            .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last == Action.permissionAction(.audioPermissionRequested))
-
-                expectation.fulfill()
-            }.store(in: cancellable)
-        storeFactory.store.state = AppState(permissionState: PermissionState(audioPermission: .notAsked))
-        sut.receive(storeFactory.store.state)
-        sut.setupAudioPermissions()
-
-        wait(for: [expectation], timeout: timeout)
-    }
-
-    func test_setupViewModel_when_setupViewLoaded_then_shouldSetupCall() {
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Verify Last Action is SetupCall")
-
-        storeFactory.store.$state
-            .dropFirst()
-            .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last == Action.callingAction(.setupCall))
-
-                expectation.fulfill()
-            }.store(in: cancellable)
-        sut.setupCall()
-
-        wait(for: [expectation], timeout: timeout)
-    }
-
     func test_setupViewModel_when_joinCallButtonTapped_then_shouldCallStartRequest_isJoinRequestedTrue() {
         let expectation = XCTestExpectation(description: "Verify Last Action is Calling View Launched")
         let sut = makeSUT()
@@ -73,7 +38,7 @@ class SetupViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst()
             .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertEqual(self?.storeFactory.actions.count, 2)
                 XCTAssertTrue(self?.storeFactory.actions.last == Action.callingAction(.callStartRequested))
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -131,7 +96,7 @@ class SetupViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
         let expectation = XCTestExpectation(description: "PreviewAreaViewModel is updated")
-        let updatePreviewAreaViewModel: ((LocalUserState, PermissionState) -> Void) = { userState, permissionsState in
+        let updatePreviewAreaViewModel: ((LocalUserState, PermissionState, VisibilityState) -> Void) = { userState, permissionsState, _ in
             XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
             XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
             expectation.fulfill()
@@ -224,6 +189,7 @@ extension SetupViewModelTests {
                               logger: logger,
                               store: storeFactory.store,
                               networkManager: NetworkManager(),
+                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
                               localizationProvider: LocalizationProviderMocking())
     }
 }

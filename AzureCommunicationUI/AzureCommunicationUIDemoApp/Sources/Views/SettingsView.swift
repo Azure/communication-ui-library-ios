@@ -8,6 +8,8 @@ import AzureCommunicationUICalling
 import AzureCommunicationCommon
 
 struct SettingsView: View {
+    @State private var setupSelectedOrientation: String = OrientationOptions.portrait.requestString
+    @State private var callingSelectedOrientation: String = OrientationOptions.portrait.requestString
     private enum ThemeMode: String, CaseIterable, Identifiable {
         case osApp = "OS / App"
         case light = "Light Mode"
@@ -31,7 +33,28 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            Form {
+            settingsForm
+            .accessibilityElement(children: .contain)
+            .navigationTitle("UI Library - Settings")
+            .toolbar {
+                dismissButton
+            }
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    var dismissButton: some View {
+        Button(
+            action: { self.presentationMode.wrappedValue.dismiss() },
+            label: { Image(systemName: "xmark") }
+        )
+        .accessibilityIdentifier(AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
+    }
+
+    var settingsForm: some View {
+        Form {
+            orientationOptions
+            Group {
                 localizationSettings
                 skipSetupScreenSettings
                 micSettings
@@ -41,46 +64,25 @@ struct SettingsView: View {
                 navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
+                multitaskingSettings
             }
-            .accessibilityElement(children: .contain)
-            .navigationTitle("UI Library - Settings")
-            .toolbar {
-                Button(
-                    action: { self.presentationMode.wrappedValue.dismiss() },
-                    label: { Image(systemName: "xmark") }
-                )
-                .accessibilityIdentifier(AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
-            }
+            exitCompositeSettings
         }
-        .accessibilityElement(children: .contain)
+    }
+
+    var orientationOptions: some View {
+        Group {
+            callingViewOrientationSettings
+            setupViewOrientationSettings
+        }
     }
 
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
-            toggleWrapper {
-                expiredTokenToggle
-            } onTapGesture: {
-                envConfigSubject.useExpiredToken = !envConfigSubject.useExpiredToken
-            }
+            expiredTokenToggle
+            audioOnlyModeToggle
         }
         .accessibilityElement(children: .contain)
-    }
-
-    // for iOS 14, taps are intercepted by Form for UI tests
-    // fix: add a tag gesture recognizer for a toggle
-    @ViewBuilder
-    func toggleWrapper(_ content: () -> some View,
-                       onTapGesture: @escaping () -> Void) -> some View {
-        if #unavailable(iOS 15) {
-            #if DEBUG
-            content()
-                .onTapGesture(perform: onTapGesture)
-            #else
-            content()
-            #endif
-        } else {
-            content()
-        }
     }
 
     var expiredTokenToggle: some View {
@@ -91,11 +93,7 @@ struct SettingsView: View {
     var useMockCallingSDKHandler: some View {
         #if DEBUG
         Section(header: Text("Calling SDK Wrapper Handler Mocking")) {
-            toggleWrapper {
-                mockCallingSDKToggle
-            } onTapGesture: {
-                envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
-            }
+            mockCallingSDKToggle
         }
         .accessibilityElement(children: .contain)
         #else
@@ -106,7 +104,33 @@ struct SettingsView: View {
     var mockCallingSDKToggle: some View {
         Toggle("Use mock Calling SDK Wrapper Handler",
                isOn: $envConfigSubject.useMockCallingSDKHandler)
-        .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+    }
+
+    /* <audioVideoMode> */
+    var audioOnlyModeToggle: some View {
+        Toggle("Audio only",
+               isOn: $envConfigSubject.audioOnly)
+    }
+    /* </audioVideoMode> */
+
+    var relaunchCompositeOnDismissedToggle: some View {
+        Toggle("Relaunch composite after dismiss api call",
+               isOn: $envConfigSubject.useRelaunchOnDismissedToggle)
+        .accessibilityIdentifier(AccessibilityId.useRelaunchOnDismissedToggleToggleAccessibilityID.rawValue)
+    }
+
+    var exitCompositeSettings: some View {
+        Section(header: Text("Exit API Testing")) {
+            relaunchCompositeOnDismissedToggle
+            TextField(
+                "Exit composite after seconds",
+                text: $envConfigSubject.exitCompositeAfterDuration
+            )
+            .keyboardType(.numberPad)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
     }
 
     var localizationSettings: some View {
@@ -124,9 +148,75 @@ struct SettingsView: View {
         }
     }
 
+    var callingViewOrientationSettings: some View {
+        Section(header: Text("Calling View Orientation")) {
+            Picker("Orientation", selection: $callingSelectedOrientation) {
+                ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                         OrientationOptions.landscapeLeft.requestString,
+                         OrientationOptions.landscapeRight.requestString,
+                         OrientationOptions.allButUpsideDown.requestString], id: \.requestString) { orientationOption in
+                    Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                callingSelectedOrientation =
+                envConfigSubject.callingViewOrientation.requestString
+            }
+            .onChange(of: callingSelectedOrientation) { newValue in
+                switch newValue {
+                case OrientationOptions.portrait.requestString:
+                    envConfigSubject.callingViewOrientation = .portrait
+                case OrientationOptions.landscape.requestString:
+                    envConfigSubject.callingViewOrientation = .landscape
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeRight
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeLeft
+                default:
+                    envConfigSubject.callingViewOrientation = .allButUpsideDown
+                }
+            }
+        }
+    }
+
+    var setupViewOrientationSettings: some View {
+        Section(header: Text("Setup View Orientation")) {
+            Picker("Orientation", selection: $setupSelectedOrientation) {
+                ForEach([OrientationOptions.allButUpsideDown.requestString,
+                         OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                         OrientationOptions.landscapeLeft.requestString,
+                         OrientationOptions.landscapeRight.requestString], id: \.requestString) { orientationOption in
+                    Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                setupSelectedOrientation = envConfigSubject.setupViewOrientation.requestString
+            }
+            .onChange(of: setupSelectedOrientation) { newValue in
+                switch newValue {
+                case OrientationOptions.portrait.requestString:
+                    envConfigSubject.setupViewOrientation = .portrait
+                case OrientationOptions.landscape.requestString:
+                    envConfigSubject.setupViewOrientation = .landscape
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeLeft
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeRight
+                case OrientationOptions.allButUpsideDown.requestString:
+                    envConfigSubject.setupViewOrientation = .allButUpsideDown
+                default:
+                    envConfigSubject.setupViewOrientation = .portrait
+                }
+            }
+        }
+    }
+
     var micSettings: some View {
         Section(header: Text("Mic & Carmera Default Vaule")) {
             Toggle("Mic Default", isOn: $envConfigSubject.microphoneOn)
+
             Toggle("Camera Default", isOn: $envConfigSubject.cameraOn)
         }
     }
@@ -182,6 +272,13 @@ struct SettingsView: View {
                     Text(themeMode.rawValue)
                 }
             }.pickerStyle(.segmented)
+        }
+    }
+
+    var multitaskingSettings: some View {
+        Section(header: Text("Multitasking")) {
+            Toggle("Enable multitasking", isOn: $envConfigSubject.enableMultitasking)
+            Toggle("Enable Pip", isOn: $envConfigSubject.enablePipWhenMultitasking)
         }
     }
 }

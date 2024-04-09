@@ -24,13 +24,18 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
     @Published var isHold: Bool
     @Published var participantIdentifier: String
+    @Published var isInBackground: Bool
+
     private var isScreenSharing: Bool = false
     private var participantName: String
     private var renderDisplayName: String?
+    private var isCameraEnabled: Bool
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         participantModel: ParticipantInfoModel) {
+         participantModel: ParticipantInfoModel,
+         lifeCycleState: LifeCycleState,
+         isCameraEnabled: Bool) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.participantName = participantModel.displayName
@@ -39,11 +44,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isHold = participantModel.status == .hold
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
+        self.isInBackground = lifeCycleState.currentStatus == .background
+        self.isCameraEnabled = isCameraEnabled
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
         self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
     }
 
-    func update(participantModel: ParticipantInfoModel) {
+    func update(participantModel: ParticipantInfoModel,
+                lifeCycleState: LifeCycleState) {
         self.participantIdentifier = participantModel.userIdentifier
         let videoViewModel = getDisplayingVideoStreamModel(participantModel)
 
@@ -65,6 +73,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if self.participantName != participantModel.displayName ||
             self.isMuted != participantModel.isMuted ||
             self.isSpeaking != participantModel.isSpeaking ||
+            self.isCameraEnabled != participantModel.cameraVideoStreamModel?.videoStreamIdentifier.isEmpty ||
             self.isHold != (participantModel.status == .hold) {
             self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
         }
@@ -87,6 +96,8 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if self.isHold != isOnHold {
             self.isHold = isOnHold
         }
+
+        self.isInBackground = lifeCycleState.currentStatus == .background
     }
 
     func updateParticipantNameIfNeeded(with renderDisplayName: String?) {
@@ -113,16 +124,23 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         let status = participantModel.status == .hold ? getOnHoldString() :
         localizationProvider.getLocalizedString(participantModel.isSpeaking ? .speaking :
                                                     participantModel.isMuted ? .muted : .unmuted)
-        return "\(participantModel.displayName) \(status)"
+
+        let videoStatus = (videoViewModel?.videoStreamId?.isEmpty ?? true) ?
+        localizationProvider.getLocalizedString(.videoOff):
+        localizationProvider.getLocalizedString(.videoOn)
+        return localizationProvider.getLocalizedString(.participantInformationAccessibilityLable,
+                                                       participantModel.displayName, status, videoStatus)
     }
 
     private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel)
     -> ParticipantVideoViewInfoModel {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
-        let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
+        let cameraVideoStreamIdentifier = isCameraEnabled ?
+        participantModel.cameraVideoStreamModel?.videoStreamIdentifier :
+        nil
+
         let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
         let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
-
         return screenShareVideoStreamIdentifier != nil ?
         ParticipantVideoViewInfoModel(videoStreamType: screenShareVideoStreamType,
                                       videoStreamId: screenShareVideoStreamIdentifier) :

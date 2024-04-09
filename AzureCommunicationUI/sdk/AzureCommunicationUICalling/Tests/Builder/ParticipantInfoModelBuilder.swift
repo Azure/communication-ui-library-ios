@@ -13,7 +13,7 @@ struct ParticipantInfoModelBuilder {
                     displayName: String = "displayName",
                     isSpeaking: Bool = false,
                     isMuted: Bool = true,
-                    recentSpeakingStamp: Date = Date()) -> ParticipantInfoModel {
+                    status: ParticipantStatus = .idle) -> ParticipantInfoModel {
         var videoStreamInfoModel: VideoStreamInfoModel?
         var screenShareIdInfoModel: VideoStreamInfoModel?
         if let screenShareId = screenShareStreamId {
@@ -31,8 +31,7 @@ struct ParticipantInfoModelBuilder {
                                     isMuted: isMuted,
                                     isRemoteUser: true,
                                     userIdentifier: participantIdentifier,
-                                    status: .idle,
-                                    recentSpeakingStamp: recentSpeakingStamp,
+                                    status: status,
                                     screenShareVideoStreamModel: screenShareIdInfoModel,
                                     cameraVideoStreamModel: videoStreamInfoModel)
     }

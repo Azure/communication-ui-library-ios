@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="与 %d 人通话"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="参与者";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="人员正在等待加入。";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="查看大厅";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="查看大厅";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="关闭大厅通知";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="不支持大厅操作。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="大厅已禁用。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="你的角色无法在大厅中操作。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="参与者不在大厅中。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="大厅操作错误。";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "关闭大厅错误通知";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="未命名的参与者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="已静音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="已取消静音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="正在讲话";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="点击以允许或拒绝";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="正在大厅中等待(%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="在呼叫中(%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="全部允许";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="允许所有分区?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="允许 %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="允许";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒绝";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切换到后置摄像头";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切换到前置摄像头";
@@ -105,3 +127,33 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="你被拒绝接听电话。";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="切换视频时出错";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="无法加入呼叫。请检查网络连接。";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="你已静音";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="网络质量低";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="网络已丢失";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="正在重新连接…";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="无法启动摄像头";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="找不到扬声器。";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="找不到麦克风。";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="麦克风未按预期工作。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="扬声器未按预期工作。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="扬声器已静音。";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ 需要权限";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="不允许 %@ 使用相机。稍后可在设置中更改此设置。如果你现在进行更改，你的通话将会被放弃。";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="消除呼叫诊断";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="关闭此通话诊断横幅";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="报告问题";
+"AzureCommunicationUICalling.LogsAttach.Notice"="我们将自动附加日志。";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="隐私策略";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="请描述你的问题...";
+"AzureCommunicationUICalling.CancelButton.Text"="取消";
+"AzureCommunicationUICalling.Attach.Screenshot"="附加屏幕截图";
+"AzureCommunicationUICalling.ReportAProblem.Text"="报告问题";
+"AzureCommunicationUICalling.SendFeedback.Text"="发送";

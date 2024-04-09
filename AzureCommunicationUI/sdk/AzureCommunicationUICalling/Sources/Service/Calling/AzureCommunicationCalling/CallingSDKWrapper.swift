@@ -8,6 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
+// swiftlint:disable file_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -57,15 +58,24 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug( "Joining call")
         let joinCallOptions = JoinCallOptions()
 
+        // to fix iOS 15 issue
+        // by default on iOS 15 calling SDK incoming type is raw video
+        // because of this on iOS 15 remote video start event is not received
+        let incomingVideoOptions = IncomingVideoOptions()
+        incomingVideoOptions.streamType = .remoteIncoming
+
         if isCameraPreferred,
            let localVideoStream = localVideoStream {
             let localVideoStreamArray = [localVideoStream]
-            let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
-            joinCallOptions.videoOptions = videoOptions
+
+            let videoOptions = OutgoingVideoOptions()
+            videoOptions.streams = localVideoStreamArray
+            joinCallOptions.outgoingVideoOptions = videoOptions
         }
 
-        joinCallOptions.audioOptions = AudioOptions()
-        joinCallOptions.audioOptions?.muted = !isAudioPreferred
+        joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
+        joinCallOptions.incomingVideoOptions = incomingVideoOptions
 
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
@@ -73,10 +83,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinLocator = GroupCallLocator(groupId: groupId)
         } else if callConfiguration.compositeCallType == .teamsMeeting,
                   let meetingLink = callConfiguration.meetingLink {
-            joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
+            joinLocator = TeamsMeetingLinkLocator(
+                meetingLink: meetingLink.trimmingCharacters(in: .whitespacesAndNewlines))
         } else if callConfiguration.compositeCallType == .roomsCall,
                   let roomId = callConfiguration.roomId {
-            joinLocator = RoomCallLocator(roomId: roomId)
+            joinLocator = RoomCallLocator(roomId: roomId.trimmingCharacters(in: .whitespacesAndNewlines))
         } else {
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
@@ -93,7 +104,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinedCall.delegate = callingEventsHandler
         }
         call = joinedCall
-        setupCallRecordingAndTranscriptionFeature()
+        setupFeatures()
     }
 
     func endCall() async throws {
@@ -141,7 +152,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             return nil
         }
         return CompositeLocalVideoStream(
-            mediaStreamType: videoStream.mediaStreamType.asCompositeMediaStreamType,
+            mediaStreamType: videoStream.sourceType.asCompositeMediaStreamType,
             wrappedObject: castVideoStream
         )
     }
@@ -189,9 +200,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
+        guard !call.isOutgoingAudioMuted else {
+            logger.warning("muteOutgoingAudio is skipped as outgoing audio already muted")
+            return
+        }
 
         do {
-            try await call.mute()
+            try await call.muteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to mute. \(error)")
             throw error
@@ -203,9 +218,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
+        guard call.isOutgoingAudioMuted else {
+            logger.warning("unmuteOutgoingAudio is skipped as outgoing audio already muted")
+            return
+        }
 
         do {
-            try await call.unmute()
+            try await call.unmuteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to unmute. \(error)")
             throw error
@@ -236,6 +255,58 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Resume Call successful")
         } catch {
             logger.error( "ERROR: It was not possible to resume call. \(error)")
+            throw error
+        }
+    }
+    func getLogFiles() -> [URL] {
+        guard let callClient = callClient else {
+            return []
+        }
+        return callClient.debugInfo.supportFiles
+    }
+
+    func admitAllLobbyParticipants() async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+            try await call.callLobby.admitAll()
+            logger.debug("Admit All participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit all lobby participants. \(error)")
+            throw error
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            try await call.callLobby.admit(identifiers: [identifier])
+            logger.debug("Admit participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
+            throw error
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            try await call.callLobby.reject(identifier: identifier)
+            logger.debug("Reject lobby participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to reject lobby participants. \(error)")
             throw error
         }
     }
@@ -317,15 +388,19 @@ extension CallingSDKWrapper {
         }
     }
 
-    private func setupCallRecordingAndTranscriptionFeature() {
+    private func setupFeatures() {
         guard let call = call else {
             return
         }
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
+        let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
+        let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
+            callingEventsHandler.assign(dominantSpeakersFeature)
+            callingEventsHandler.assign(localUserDiagnosticsFeature)
         }
     }
 

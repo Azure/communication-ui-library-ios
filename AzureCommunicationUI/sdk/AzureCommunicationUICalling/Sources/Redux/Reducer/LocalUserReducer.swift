@@ -13,10 +13,15 @@ extension Reducer where State == LocalUserState,
         var cameraStatus = localUserState.cameraState.operation
         var cameraDeviceStatus = localUserState.cameraState.device
         var cameraTransmissionStatus = localUserState.cameraState.transmission
-        var microphoneStatus = localUserState.audioState.operation
+        var cameraError = localUserState.cameraState.error
+
+        var audioOperationStatus = localUserState.audioState.operation
         var audioDeviceStatus = localUserState.audioState.device
+        var audioError = localUserState.audioState.error
+
         let displayName = localUserState.displayName
         var localVideoStreamIdentifier = localUserState.localVideoStreamIdentifier
+        var participantRole = localUserState.participantRole
 
         switch action {
         case .cameraPreviewOnTriggered:
@@ -31,52 +36,62 @@ extension Reducer where State == LocalUserState,
             localVideoStreamIdentifier = videoStreamId
             cameraStatus = .on
         case .cameraOnFailed(let error):
-            cameraStatus = .error(error)
+            cameraStatus = .off
+            cameraError = error
         case .cameraOffSucceeded:
             localVideoStreamIdentifier = nil
             cameraStatus = .off
         case .cameraOffFailed(let error):
-            cameraStatus = .error(error)
+            cameraStatus = .on
+            cameraError = error
         case .cameraPausedSucceeded:
             cameraStatus = .paused
         case .cameraPausedFailed(let error):
-            cameraStatus = .error(error)
+            cameraError = error
         case .cameraSwitchTriggered:
             cameraDeviceStatus = .switching
         case .cameraSwitchSucceeded(let cameraDevice):
             cameraDeviceStatus = cameraDevice == .front ? .front : .back
-        case .cameraSwitchFailed(let error):
-            cameraDeviceStatus = .error(error)
+        case .cameraSwitchFailed(let previousCamera, let error):
+            cameraDeviceStatus = previousCamera
+            cameraError = error
         case .microphoneOnTriggered,
                 .microphoneOffTriggered:
-            microphoneStatus = .pending
+            audioOperationStatus = .pending
         case .microphonePreviewOn:
-            microphoneStatus = .on
+            audioOperationStatus = .on
         case .microphoneOnFailed(let error):
-            microphoneStatus = .error(error)
+            audioOperationStatus = .off
+            audioError = error
         case .microphonePreviewOff:
-            microphoneStatus = .off
+            audioOperationStatus = .off
         case .microphoneMuteStateUpdated(let isMuted):
-            microphoneStatus = isMuted ? .off : .on
+            audioOperationStatus = isMuted ? .off : .on
         case .microphoneOffFailed(let error):
-            microphoneStatus = .error(error)
+            audioOperationStatus = .on
+            audioError = error
         case .audioDeviceChangeRequested(let device):
             audioDeviceStatus = getRequestedDeviceStatus(for: device)
         case .audioDeviceChangeSucceeded(let device):
             audioDeviceStatus = getSelectedDeviceStatus(for: device)
         case .audioDeviceChangeFailed(let error):
-            audioDeviceStatus = .error(error)
+            audioError = error
+        case .participantRoleChanged(let newParticipantRole):
+            participantRole = newParticipantRole
         }
 
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
-                                                     transmission: cameraTransmissionStatus)
-        let audioState = LocalUserState.AudioState(operation: microphoneStatus,
-                                                   device: audioDeviceStatus)
+                                                     transmission: cameraTransmissionStatus,
+                                                     error: cameraError)
+        let audioState = LocalUserState.AudioState(operation: audioOperationStatus,
+                                                   device: audioDeviceStatus,
+                                                   error: audioError)
         return LocalUserState(cameraState: cameraState,
                               audioState: audioState,
                               displayName: displayName,
-                              localVideoStreamIdentifier: localVideoStreamIdentifier)
+                              localVideoStreamIdentifier: localVideoStreamIdentifier,
+                              participantRole: participantRole)
     }
 }
 

@@ -16,14 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tilbake";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Bli med i samtale";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Blir med i samtalen …";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Bli med i samtalen er deaktivert";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Slå på kamera";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video på";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Deaktiver kameraet";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon av";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Opphev demping";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon på";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon på";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Deaktiver varsler";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon av";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Enhet";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Velg lydenhet";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Gå til Innstillinger";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Du er satt på vent";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Fortsett";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Fortsett";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Venter på at andre skal bli med";
@@ -45,12 +47,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Ring med %d personer"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Deltakere";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Personer venter på å bli med.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Vis lobbyen";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Vis lobbyen";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Lukk lobbyvarsling";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobbyhandlinger støttes ikke.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobbyen er deaktivert.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Rollen din kan ikke utføre handlinger på lobbyen.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Deltakeren er ikke i lobbyen.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Feil ved lobbyhandling.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Lukk varsel om lobbyfeil";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Deltaker uten navn";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Dempet";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Demping opphevet";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Snakker";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="På vent";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Trykk for å slippe inn eller avslå";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Venter i lobbyen (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="I samtalen (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Gi alle tilgang";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Vil du slippe inn alle deltakere?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Gi tilgang til %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Gi tilgang";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avslå";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Bytt til kamera bak";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Bytt til kamera foran";
@@ -59,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d deltakere ble med i møtet";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ forlot møtet";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d deltakere forlot møtet";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Du har blitt med i samtalen";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Innhold blir delt";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Innholdsdeling er avsluttet";
@@ -105,3 +130,31 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Du ble nektet tilgang til samtalen.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Feil under veksle av video";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Kan ikke bli med i samtalen. Kontroller nettverkstilkoblingen.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Du er dempet";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Nettverkskvaliteten er lav";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Nettverket ble brutt";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Kobler til på nytt …";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Kan ikke starte kamera";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Finner ikke høyttaler.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Finner ikke mikrofonen.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofonen fungerer ikke som forventet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Høyttaleren fungerer ikke som forventet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Høyttaleren er dempet.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ trenger tillatelse";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ har ikke tillatelse til å bruke kameraet. Du kan endre dette i innstillingene senere. Hvis du endrer den nå, vil samtalen bli avbrutt.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Lukk anropsdiagnose";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Lukker dette diagnosebanneret for anrop";
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Rapporter problem";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Vi legger ved logger automatisk.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Personvernerklæring";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Beskriv problemet ditt...";
+"AzureCommunicationUICalling.CancelButton.Text"="Avbryt";
+"AzureCommunicationUICalling.Attach.Screenshot"="Legg ved skjermbilde";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Rapporter et problem";
+"AzureCommunicationUICalling.SendFeedback.Text"="Send";

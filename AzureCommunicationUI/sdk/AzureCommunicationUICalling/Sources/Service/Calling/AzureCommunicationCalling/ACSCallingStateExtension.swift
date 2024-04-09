@@ -5,7 +5,7 @@
 
 import AzureCommunicationCalling
 
-extension CallState {
+extension AzureCommunicationCalling.CallState {
     func toCallingStatus() -> CallingStatus {
         switch self {
         case .none:
@@ -30,6 +30,33 @@ extension CallState {
             return .remoteHold
         default:
             return .none
+        }
+    }
+}
+
+extension CallingStatus {
+    func toCallCompositeCallState() -> CallState {
+        switch self {
+        case .none:
+            return CallState.none
+        case .earlyMedia:
+            return CallState.earlyMedia
+        case .connecting:
+            return CallState.connecting
+        case .ringing:
+            return CallState.ringing
+        case .connected:
+            return CallState.connected
+        case .localHold:
+            return CallState.localHold
+        case .disconnecting:
+            return CallState.disconnecting
+        case .disconnected:
+            return CallState.disconnected
+        case .inLobby:
+            return CallState.inLobby
+        case .remoteHold:
+            return CallState.remoteHold
         }
     }
 }

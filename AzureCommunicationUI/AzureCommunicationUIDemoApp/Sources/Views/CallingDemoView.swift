@@ -15,8 +15,12 @@ struct CallingDemoView: View {
     @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
+    @State var exitCompositeExecuted: Bool = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
+    @State var callState: String = ""
+    @State var issue: CallCompositeUserReportedIssue?
+    @State var issueUrl: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -29,19 +33,45 @@ struct CallingDemoView: View {
 #endif
     var body: some View {
         VStack {
+#if DEBUG
+            // This HStack is for testing toggles.
+            // Adjusted to make buttons invisible but still accessible for automation.
+            HStack {
+                Button("AudioOnly") {
+                    envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+                }
+                .frame(width: 0, height: 0)
+                .accessibilityIdentifier(AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue)
+                Button("MockSdk") {
+                    envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
+                }
+                .frame(width: 0, height: 0)
+                .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+            }
+#endif
             Text("UI Library - SwiftUI Sample")
             Spacer()
             acsTokenSelector
             displayNameTextField
             meetingSelector
-            if envConfigSubject.selectedMeetingType == .roomCall {
-                roomRoleSelector
-            } else {
-                roomRoleSelector.hidden()
+
+            Group {
+                if envConfigSubject.selectedMeetingType == .roomCall {
+                    roomRoleSelector
+                } else {
+                    roomRoleSelector.hidden()
+                }
+                settingButton
+                showCallHistoryButton
+                startExperienceButton
+                showExperienceButton
+                Text(callState)
+                Text(issue?.userMessage ?? "--")
+                .accessibilityIdentifier(AccessibilityId.userReportedIssueAccessibilityID.rawValue)
+                if !issueUrl.isEmpty {
+                    Link("Ticket Link", destination: URL(string: issueUrl)!)
+                }
             }
-            settingButton
-            showCallHistoryButton
-            startExperienceButton
             Spacer()
         }
         .padding()
@@ -163,6 +193,14 @@ struct CallingDemoView: View {
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
+    var showExperienceButton: some View {
+        Button("Show") {
+            showCallComposite()
+        }
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.showExperienceAccessibilityID.rawValue)
+    }
+
     var showCallHistoryButton: some View {
         Button("Show call history") {
             alertTitle = callingViewModel.callHistoryTitle
@@ -189,6 +227,24 @@ struct CallingDemoView: View {
 }
 
 extension CallingDemoView {
+    func showCallComposite() {
+        callingViewModel.callComposite?.isHidden = false
+    }
+
+    fileprivate func relaunchComposite() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Task { @MainActor in
+                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                    isStartExperienceLoading = false
+                    return
+                }
+                await startCallComposite()
+                isStartExperienceLoading = false
+            }
+        }
+    }
+
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -204,11 +260,17 @@ extension CallingDemoView {
                 layoutDirection: layoutDirection)
         }
 
+        let setupViewOrientation = envConfigSubject.setupViewOrientation
+        let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callCompositeOptions = CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
-            localization: localizationConfig)
+            localization: localizationConfig,
+            setupScreenOrientation: setupViewOrientation,
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
@@ -233,8 +295,52 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+
+        let onPipChangedHandler: (Bool) -> Void = { isPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isPictureInPicture)
+        }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
+            DispatchQueue.main.schedule {
+                self.issue = issue
+            }
+            sendSupportEventToServer(event: issue) { success, result in
+                if success {
+                    self.issueUrl = result
+                } else {
+                    self.issueUrl = ""
+                }
+            }
+        }
+
+        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
+            guard let composite = callComposite else {
+                return
+            }
+            onCallStateChanged(callStateEvent,
+                    callComposite: composite)
+        }
+        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+            if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
+                relaunchComposite()
+            }
+        }
+
+        exitCompositeExecuted = false
+        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() +
+                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
+            ) { [weak callComposite] in
+                exitCompositeExecuted = true
+                callComposite?.dismiss()
+            }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -254,10 +360,12 @@ extension CallingDemoView {
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        roleHint: roomRoleData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                        roleHint: roomRoleData
+        )
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -302,6 +410,7 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+        callingViewModel.callComposite = callComposite
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
@@ -365,6 +474,11 @@ extension CallingDemoView {
         print("::::CallingDemoView error.code \(error.code)")
         callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
+    }
+
+    private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        self.callState = callState.requestString
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {

@@ -7,11 +7,11 @@ import AzureCommunicationCalling
 import Foundation
 
 extension AzureCommunicationCalling.RemoteParticipant {
-    func toParticipantInfoModel(recentSpeakingStamp: Date) -> ParticipantInfoModel {
-        let videoInfoModels: [VideoStreamInfoModel] = self.videoStreams.compactMap { videoStream in
+    func toParticipantInfoModel() -> ParticipantInfoModel {
+        let videoInfoModels: [VideoStreamInfoModel] = self.incomingVideoStreams.compactMap { videoStream in
             VideoStreamInfoModel(
                 videoStreamIdentifier: String(videoStream.id),
-                mediaStreamType: videoStream.mediaStreamType.converted())
+                mediaStreamType: videoStream.sourceType.converted())
         }
 
         let cameraVideoStreamModel = videoInfoModels.first(where: {$0.mediaStreamType == .cameraVideo})
@@ -23,7 +23,6 @@ extension AzureCommunicationCalling.RemoteParticipant {
                                     isRemoteUser: true,
                                     userIdentifier: identifier.rawId,
                                     status: state.toCompositeParticipantStatus(),
-                                    recentSpeakingStamp: recentSpeakingStamp,
                                     screenShareVideoStreamModel: screenShareVideoStreamModel,
                                     cameraVideoStreamModel: cameraVideoStreamModel)
     }
@@ -52,13 +51,13 @@ extension AzureCommunicationCalling.RemoteVideoStream {
     ) -> CompositeRemoteVideoStream<AzureCommunicationCalling.RemoteVideoStream> {
         CompositeRemoteVideoStream(
             id: Int(acsRemoteVideoStream.id),
-            mediaStreamType: acsRemoteVideoStream.mediaStreamType.asCompositeMediaStreamType,
+            mediaStreamType: acsRemoteVideoStream.sourceType.asCompositeMediaStreamType,
             wrappedObject: acsRemoteVideoStream
         )
     }
 }
 
-extension AzureCommunicationCalling.MediaStreamType {
+extension AzureCommunicationCalling.VideoStreamSourceType {
     func converted() -> VideoStreamInfoModel.MediaStreamType {
         switch self {
         case .screenSharing:

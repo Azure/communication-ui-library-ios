@@ -19,6 +19,7 @@ class SetupViewModel: ObservableObject {
     var subTitle: String?
 
     var networkManager: NetworkManager
+    var audioSessionManager: AudioSessionManagerProtocol
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
@@ -32,11 +33,13 @@ class SetupViewModel: ObservableObject {
          logger: Logger,
          store: Store<AppState, Action>,
          networkManager: NetworkManager,
+         audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil) {
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
+        self.audioSessionManager = audioSessionManager
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
@@ -69,8 +72,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
-        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
-
+        updateAccessibilityLabel()
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
             buttonType: .controlButton,
@@ -98,28 +100,28 @@ class SetupViewModel: ObservableObject {
         }.store(in: &cancellables)
     }
 
+    func updateAccessibilityLabel() {
+        if joinCallButtonViewModel.isDisabled {
+            // Update the accessibility label for the disabled state
+            joinCallButtonViewModel.update(accessibilityLabel:
+            self.localizationProvider.getLocalizedString(.joinCallDiableStateAccessibilityLabel))
+        } else {
+            // Update the accessibility label for the normal state
+            joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+        }
+    }
+
     deinit {
         networkManager.stopMonitor()
     }
 
-    func setupAudioPermissions() {
-        if store.state.permissionState.audioPermission == .notAsked {
-            store.dispatch(action: .permissionAction(.audioPermissionRequested))
-        }
-    }
-
-    func dismissSetupScreen() {
-        if store.state.callingState.operationStatus == .skipSetupRequested {
-            store.dispatch(action: .callingAction(.dismissSetup))
-        }
-    }
-    func setupCall() {
-        store.dispatch(action: .callingAction(.setupCall))
-    }
-
     func joinCallButtonTapped() {
-        guard networkManager.isOnline() else {
+        guard networkManager.isConnected else {
             handleOffline()
+            return
+        }
+        guard audioSessionManager.isAudioUsedByOther() else {
+            handleMicUnavailableEvent()
             return
         }
         isJoinRequested = true
@@ -143,14 +145,14 @@ class SetupViewModel: ObservableObject {
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
-        let defaultUserState = state.defaultUserState
         previewAreaViewModel.update(localUserState: localUserState,
-                                    permissionState: permissionState)
+                                    permissionState: permissionState,
+                                    visibilityState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
-                                        callingState: callingState,
-                                        defaultUserState: defaultUserState)
+                                        callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)
     }
 
@@ -160,7 +162,16 @@ class SetupViewModel: ObservableObject {
     }
 
     private func handleOffline() {
-        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
+        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .callJoinConnectionFailed,
+                                                                     error: nil)))
+        // only show banner again when user taps on button explicitly
+        // banner would not reappear when other events^1 send identical error state again
+        // 1: camera on/off, audio on/off, switch to background/foreground, etc.
+        errorInfoViewModel.show()
+    }
+
+    private func handleMicUnavailableEvent() {
+        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .micNotAvailable,
                                                                      error: nil)))
         // only show banner again when user taps on button explicitly
         // banner would not reappear when other events^1 send identical error state again

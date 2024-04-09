@@ -26,6 +26,8 @@ class CallingDemoViewController: UIViewController {
     }
     var callingViewModel: CallingDemoViewModel
 
+    private var callComposite: CallComposite?
+
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!
     private var acsTokenTextField: UITextField!
@@ -38,18 +40,22 @@ class CallingDemoViewController: UIViewController {
     private var settingsButton: UIButton!
     private var showCallHistoryButton: UIButton!
     private var startExperienceButton: UIButton!
+    private var showExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
     private var roomRoleTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
     private var titleLabel: UILabel!
+    private var callStateLabel: UILabel!
     private var titleLabelConstraint: NSLayoutConstraint!
+    private var callStateLabelConstraint: NSLayoutConstraint!
 
     // The space needed to fill the top part of the stack view,
     // in order to make the stackview content centered
     private var spaceToFullInStackView: CGFloat?
     private var userIsEditing: Bool = false
     private var isKeyboardShowing: Bool = false
+    private var exitCompositeExecuted: Bool = false
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
@@ -188,6 +194,11 @@ class CallingDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
+    private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
+        print("::::CallingDemoViewController::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        callStateLabel.text = callState.requestString
+    }
+
     private func startExperience(with link: String) async {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
@@ -201,11 +212,17 @@ class CallingDemoViewController: UIViewController {
                 layoutDirection: layoutDirection)
         }
 
+        let setupViewOrientation = envConfigSubject.setupViewOrientation
+        let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callCompositeOptions = CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
-            localization: localizationConfig)
+            localization: localizationConfig,
+            setupScreenOrientation: setupViewOrientation,
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
@@ -228,8 +245,41 @@ class CallingDemoViewController: UIViewController {
             self.onError(error,
                          callComposite: composite)
         }
+        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callState in
+            guard let composite = callComposite else {
+                return
+            }
+            self.onCallStateChanged(callState, callComposite: composite)
+        }
+        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+            if self.envConfigSubject.useRelaunchOnDismissedToggle && self.exitCompositeExecuted {
+                            DispatchQueue.main.async() {
+                                Task { @MainActor in
+                                    self.onStartExperienceBtnPressed()
+                                }
+                            }
+                        }
+        }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [] userIssue in
+            print("::::UIKitDemoView::getEventsHandler::onUserReportedIssue \(userIssue)")
+        }
+
+        exitCompositeExecuted = false
+        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() +
+                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
+            ) { [weak callComposite] in
+                self.exitCompositeExecuted = true
+                callComposite?.dismiss()
+            }
+        }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let roomRole = envConfigSubject.selectedRoomRoleType
         var roomRoleData: ParticipantRole?
@@ -248,10 +298,13 @@ class CallingDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        roleHint: roomRoleData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                        roleHint: roomRoleData
+        )
+        self.callComposite = callComposite
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
@@ -427,6 +480,10 @@ class CallingDemoViewController: UIViewController {
         }
     }
 
+    @objc func onShowExperienceBtnPressed() {
+        self.callComposite?.isHidden = false
+    }
+
     private func updateAcsTokenTypeFields() {
         switch selectedAcsTokenType {
         case .tokenUrl:
@@ -485,7 +542,36 @@ class CallingDemoViewController: UIViewController {
     private func setupUI() {
         updateUIBasedOnUserInterfaceStyle()
         let safeArea = view.safeAreaLayoutGuide
+#if DEBUG
+        // Debug Buttons for Instrumentation to press
+        // They shouldn't be visible
+        let audioOnlyButton = UIButton(type: .system)
+        audioOnlyButton.backgroundColor = UIColor.clear // Making the button transparent
+        audioOnlyButton.addTarget(self, action: #selector(toggleAudioOnly), for: .touchUpInside)
+        audioOnlyButton.accessibilityIdentifier = AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue
+        audioOnlyButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
 
+        let mockSdkButton = UIButton(type: .system)
+        mockSdkButton.backgroundColor = UIColor.clear // Making the button transparent
+        mockSdkButton.addTarget(self, action: #selector(toggleMockSdk), for: .touchUpInside)
+        mockSdkButton.accessibilityIdentifier = AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue
+        mockSdkButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
+
+        let debugButtonsStackView = UIStackView(arrangedSubviews: [audioOnlyButton, mockSdkButton])
+        debugButtonsStackView.axis = .horizontal
+        debugButtonsStackView.distribution = .fillEqually
+        debugButtonsStackView.spacing = 4 // Reduced spacing
+        debugButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(debugButtonsStackView)
+
+        NSLayoutConstraint.activate([
+            debugButtonsStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
+            debugButtonsStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 8),
+            debugButtonsStackView.widthAnchor.constraint(equalToConstant: 24), // Container width
+            audioOnlyButton.heightAnchor.constraint(equalToConstant: 10), // Button height
+            mockSdkButton.heightAnchor.constraint(equalToConstant: 10) // Button height
+        ])
+#endif
         titleLabel = UILabel()
         titleLabel.text = "UI Library - UIKit Sample"
         titleLabel.sizeToFit()
@@ -609,6 +695,32 @@ class CallingDemoViewController: UIViewController {
 
         startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
 
+        showExperienceButton = UIButton()
+        showExperienceButton.backgroundColor = .systemBlue
+        showExperienceButton.setTitleColor(UIColor.white, for: .normal)
+        showExperienceButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        showExperienceButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                   left: LayoutConstants.buttonHorizontalInset,
+                                                                   bottom: LayoutConstants.buttonVerticalInset,
+                                                                   right: LayoutConstants.buttonHorizontalInset)
+        showExperienceButton.layer.cornerRadius = 8
+        showExperienceButton.setTitle("Show", for: .normal)
+        showExperienceButton.sizeToFit()
+        showExperienceButton.translatesAutoresizingMaskIntoConstraints = false
+        showExperienceButton.addTarget(self, action: #selector(onShowExperienceBtnPressed), for: .touchUpInside)
+
+        showExperienceButton.accessibilityLabel = AccessibilityId.showExperienceAccessibilityID.rawValue
+
+        callStateLabel = UILabel()
+        callStateLabel.text = "State"
+        callStateLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(callStateLabel)
+        callStateLabelConstraint = callStateLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor,
+                                                                          constant: LayoutConstants.verticalSpacing)
+        callStateLabelConstraint.isActive = true
+        callStateLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
+        callStateLabel.centerYAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -10).isActive = true
+
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()
         settingButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
@@ -658,6 +770,22 @@ class CallingDemoViewController: UIViewController {
         startButtonHStack.distribution = .fill
         startButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        let showButtonHSpacer1 = UIView()
+        showButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        showButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showButtonHSpacer2 = UIView()
+        showButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        showButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showButtonHStack = UIStackView(arrangedSubviews: [showButtonHSpacer1,
+                                                               showExperienceButton,
+                                                               showButtonHSpacer2])
+        showButtonHStack.axis = .horizontal
+        showButtonHStack.alignment = .fill
+        showButtonHStack.distribution = .fill
+        showButtonHStack.translatesAutoresizingMaskIntoConstraints = false
+
         let spaceView1 = UIView()
         spaceView1.translatesAutoresizingMaskIntoConstraints = false
         spaceView1.heightAnchor.constraint(equalToConstant: 0).isActive = true
@@ -673,7 +801,8 @@ class CallingDemoViewController: UIViewController {
                                                    roomRoleTypeSegmentedControl,
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,
-                                                   startButtonHStack])
+                                                   startButtonHStack,
+                                                   showButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -706,6 +835,7 @@ class CallingDemoViewController: UIViewController {
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
         showHistoryButtonHSpacer2.widthAnchor.constraint(equalTo: showHistoryButtonHSpacer1.widthAnchor).isActive = true
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
+        showButtonHSpacer2.widthAnchor.constraint(equalTo: showButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()
         updateMeetingTypeFields()
@@ -727,6 +857,14 @@ class CallingDemoViewController: UIViewController {
                 scrollView.scrollIndicatorInsets = .zero
             }
         }
+    }
+
+    @objc func toggleAudioOnly() {
+        envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+    }
+
+    @objc func toggleMockSdk() {
+        envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
     }
 }
 

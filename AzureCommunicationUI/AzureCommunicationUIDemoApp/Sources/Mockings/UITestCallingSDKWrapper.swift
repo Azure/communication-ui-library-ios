@@ -20,6 +20,20 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfoMocking) -> Void)?
 
+    private var mediaDiagnostics: [MediaCallDiagnostic] = [
+        .speakingWhileMicrophoneIsMuted,
+        .cameraStartFailed,
+        .cameraStartTimedOut,
+        .noSpeakerDevicesAvailable,
+        .noMicrophoneDevicesAvailable,
+        .microphoneNotFunctioning,
+        .speakerNotFunctioning,
+        .speakerMuted
+    ]
+
+    private var currentMediaDiagnostic: Int = 0
+    private var currentNetworkDiagnostic: Int = 0
+
     public override init() {
         logger = DefaultLogger()
         callingEventsHandler = CallingSDKEventsHandlerMocking(logger: logger)
@@ -111,6 +125,10 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return .front
     }
 
+    func getLogFiles() -> [URL] {
+        return []
+    }
+
     func startPreviewVideoStream() async throws -> String {
         return ""
     }
@@ -188,11 +206,19 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func addParticipant() async throws {
+        try await addParticipant(status: .connected)
+    }
+
+    func addInLobbyParticipant() async throws {
+        try await addParticipant(status: .inLobby)
+    }
+
+    func addParticipant(status: ParticipantStatus) async throws {
         guard callMocking != nil else {
             return
         }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
-            handler.addParticipant()
+            handler.addParticipant(status: status)
         }
     }
 
@@ -220,6 +246,113 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.holdParticipant()
+        }
+    }
+
+    func admitAllLobbyParticipants() async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.admitAllLobbyParticipants()
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.admitLobbyParticipant(participantId)
+        }
+    }
+
+    func emitMediaCallDiagnosticBadState() {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.emitMediaDiagnostic(mediaDiagnostics[currentMediaDiagnostic], value: true)
+        }
+    }
+
+    func emitMediaCallDiagnosticGoodState() {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.emitMediaDiagnostic(mediaDiagnostics[currentMediaDiagnostic], value: false)
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.declineLobbyParticipant(participantId)
+        }
+    }
+
+    func changeLocalParticipantRole(_ role: ParticipantRoleEnum) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.setParticipantRole(role)
+        }
+    }
+
+    func changeCurrentMediaDiagnostic() {
+        if currentMediaDiagnostic == mediaDiagnostics.count - 1 {
+            currentMediaDiagnostic = 0
+        } else {
+            currentMediaDiagnostic += 1
+        }
+    }
+
+    func emitNetworkCallDiagnosticBadState() {
+        guard callMocking != nil else {
+            return
+        }
+
+        if currentNetworkDiagnostic <= 1 {
+            if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+                handler.emitNetworkDiagnostic(
+                    NetworkCallDiagnostic.allCases[currentNetworkDiagnostic], value: true)
+            }
+        } else {
+            if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+                handler.emitNetworkQualityDiagnostic(
+                    NetworkQualityCallDiagnostic.allCases[currentNetworkDiagnostic - 2], value: .bad)
+            }
+        }
+    }
+
+    func emitNetworkCallDiagnosticGoodState() {
+        guard callMocking != nil else {
+            return
+        }
+
+        if currentNetworkDiagnostic <= 1 {
+            if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+                handler.emitNetworkDiagnostic(
+                    NetworkCallDiagnostic.allCases[currentNetworkDiagnostic], value: false)
+            }
+        } else {
+            if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+                handler.emitNetworkQualityDiagnostic(
+                    NetworkQualityCallDiagnostic.allCases[currentNetworkDiagnostic - 2], value: .good)
+            }
+        }
+    }
+
+    func changeCurrentNetworkDiagnostic() {
+        let count = NetworkCallDiagnostic.allCases.count + NetworkQualityCallDiagnostic.allCases.count
+        if currentNetworkDiagnostic == count - 1 {
+            currentNetworkDiagnostic = 0
+        } else {
+            currentNetworkDiagnostic += 1
         }
     }
 }

@@ -62,6 +62,7 @@ extension OnHoldOverlayViewModelTests {
                                       compositeViewModelFactory: factoryMocking,
                                       logger: logger,
                                       accessibilityProvider: accessibilityProvider,
+                                      audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
                                       resumeAction: {})
     }
 
@@ -78,6 +79,7 @@ extension OnHoldOverlayViewModelTests {
                                                   compositeViewModelFactory: factoryMocking,
                                                   logger: logger,
                                                   accessibilityProvider: accessibilityProvider,
+                                             audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
                                                   resumeAction: action)
     }
 }

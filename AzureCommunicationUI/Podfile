@@ -1,15 +1,18 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 platform :ios, '14.0'
 
 workspace 'AzureCommunicationUI'
 
 project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
-project 'sdk/AzureCommunicationUICalling/AzureCommunicationUIChat.xcodeproj'
+project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
 project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
 
 target 'AzureCommunicationUICalling' do
   project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.3.0-beta.1'
+  pod 'AzureCore', '1.0.0-beta.15'
+  pod 'AzureCommunicationCalling', '2.8.0'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
@@ -28,7 +31,7 @@ end
 target 'AzureCommunicationUIChat' do
   project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationChat', '1.3.1'
+  pod 'AzureCommunicationChat', '1.3.3'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
@@ -46,8 +49,8 @@ end
 target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.3.0-beta.1'
-  pod 'AzureCommunicationChat', '1.3.1'
+  pod 'AzureCommunicationCalling', '2.8.0'
+  pod 'AzureCommunicationChat', '1.3.3'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
@@ -56,7 +59,10 @@ target 'AzureCommunicationUIDemoApp' do
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
   pod 'SwiftLint', '0.42.0'
   pod 'AppCenter/Crashes', '4.4.1'
-  
+
+  # Include AlamoFire for use with the User Reported Issue handler
+  # pod 'Alamofire', '5.8'
+
   target 'AzureCommunicationUIDemoAppUITests' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
@@ -64,6 +70,20 @@ target 'AzureCommunicationUIDemoApp' do
 end
 
 post_install do |installer|
+  xcode_base_version = `xcodebuild -version | grep 'Xcode' | awk '{print $2}' | cut -d . -f 1`
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # For xcode 15+ only
+      if config.base_configuration_reference && Integer(xcode_base_version) >= 15
+        xcconfig_path = config.base_configuration_reference.real_path
+        xcconfig = File.read(xcconfig_path)
+        xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
+        File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
+      end
+    end
+  end
+
   installer.pods_project.targets.each do |target|
     if target.name == 'SwiftLint'
       target.build_configurations.each do |config|

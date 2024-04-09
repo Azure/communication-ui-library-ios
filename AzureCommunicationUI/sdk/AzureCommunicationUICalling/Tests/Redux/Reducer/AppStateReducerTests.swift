@@ -112,41 +112,17 @@ class AppStateReducerTests: XCTestCase {
         XCTAssertEqual(result.errorState, expectedState)
     }
 
-    func test_appStateReducer_reduce_when_participantListUpdate_then_stateUpdated() {
-        let userId = UUID().uuidString
-        let infoModel = ParticipantInfoModelBuilder.get(participantIdentifier: userId,
-                                                        videoStreamId: "",
-                                                        displayName: "",
-                                                        isSpeaking: false,
-                                                        recentSpeakingStamp: Date())
-        let action = Action.callingAction(.participantListUpdated(participants: [infoModel]))
-        let sut = getSUT()
-        let state = getAppState()
-        let result = sut.reduce(state, action)
+    func test_appStateReducer_reduceDiagnosticState_then_diagnosticsStateCalled_stateUpdated() {
+        let oldState = CallDiagnosticsState()
+        let model = MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: true)
+        let expectedState = CallDiagnosticsState(mediaDiagnostic: model)
+        let mockSubReducer: Reducer<CallDiagnosticsState, Action> = .mockReducer(outputState: expectedState)
 
-        XCTAssertEqual(result.remoteParticipantsState.participantInfoList.count, 1)
-        XCTAssertEqual(result.remoteParticipantsState.participantInfoList.first?.userIdentifier, userId)
-    }
+        let state = getAppState(diagnosticsState: oldState)
+        let sut = getSUT(diagnosticsReducer: mockSubReducer)
+        let result = sut.reduce(state, Action.callDiagnosticAction(.media(diagnostic: model)))
 
-    func test_appStateReducer_reduce_when_StatusErrorAndCallReset_then_remoteParticipantStateCleanup() {
-        let userId = UUID().uuidString
-        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callJoinFailed,
-                                                         error: nil))
-        let sut = getSUT()
-        let participant = ParticipantInfoModel(displayName: "displayname",
-                                               isSpeaking: false,
-                                               isMuted: true,
-                                               isRemoteUser: false,
-                                               userIdentifier: userId,
-                                               status: .idle,
-                                               recentSpeakingStamp: Date(),
-                                               screenShareVideoStreamModel: nil,
-                                               cameraVideoStreamModel: nil)
-        let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [participant])
-        let state = getAppState(remoteParticipantsState: remoteParticipantsState)
-        let result = sut.reduce(state, action)
-
-        XCTAssertEqual(result.remoteParticipantsState.participantInfoList.count, 0)
+        XCTAssertEqual(result.diagnosticsState, expectedState)
     }
 }
 
@@ -157,7 +133,8 @@ extension AppStateReducerTests {
                 audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = .mockReducer(),
                 callingReducer: Reducer<CallingState, Action> = .mockReducer(),
                 navigationReducer: Reducer<NavigationState, Action> = .mockReducer(),
-                errorReducer: Reducer<ErrorState, Action> = .mockReducer()
+                errorReducer: Reducer<ErrorState, Action> = .mockReducer(),
+                diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .mockReducer()
     ) -> Reducer<AppState, Action> {
         return Reducer<AppState, Action>.appStateReducer(
             permissionsReducer: permissionReducer,
@@ -166,7 +143,8 @@ extension AppStateReducerTests {
             audioSessionReducer: audioSessionReducer,
             callingReducer: callingReducer,
             navigationReducer: navigationReducer,
-            errorReducer: errorReducer
+            errorReducer: errorReducer,
+            diagnosticsReducer: diagnosticsReducer
         )
     }
 
@@ -176,13 +154,15 @@ extension AppStateReducerTests {
                      lifeCycleState: LifeCycleState = .init(),
                      navigationState: NavigationState = .init(),
                      remoteParticipantsState: RemoteParticipantsState = .init(),
-                     errorState: ErrorState = .init()) -> AppState {
+                     errorState: ErrorState = .init(),
+                     diagnosticsState: CallDiagnosticsState = .init()) -> AppState {
         return AppState(callingState: callingState,
                         permissionState: permissionState,
                         localUserState: localUserState,
                         lifeCycleState: lifeCycleState,
                         navigationState: navigationState,
                         remoteParticipantsState: remoteParticipantsState,
-                        errorState: errorState)
+                        errorState: errorState,
+                        diagnosticsState: diagnosticsState)
     }
 }

@@ -16,14 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Назад";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Присоединиться к звонку";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Присоединение к звонку отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Включить камеру";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Видео включено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Выключить камеру";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Микрофон выключен";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Включить микрофон";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Микрофон включен";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Микрофон включен";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Отключить микрофон";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Микрофон отключен";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Устройство";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Выберите звуковое устройство";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Перейти к параметрам";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Ваш звонок на удержании";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Возобновить";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Возобновить";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Ожидание присоединения других участников";
@@ -45,12 +47,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Звонок с несколькими (%d) людьми"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Участники";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Люди ожидают присоединения к звонку.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Посмотреть \"зал ожидания\"";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Посмотреть \"зал ожидания\"";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Закрыть уведомление о \"зале ожидания\"";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Действия в \"зале ожидания\" не поддерживаются.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="\"Зал ожидания\" отключен.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Ваша роль не предполагает действий в \"зале ожидания\".";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Участника нет в \"зале ожидания\".";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Ошибка действия в \"зале ожидания\".";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Закрыть уведомление об ошибке \"зала ожидания\"";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Участник без имени";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (Я)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Звук отключен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Звук включен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Говорит";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Коснитесь, чтобы допустить или не допустить участника";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Заждался в \"зале ожидания\" (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="В вызове (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Допустить всех";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Допустить всех участников?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Допустить %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Допустить";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Отклонить";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Переключиться на переднюю камеру";
@@ -59,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="Количество участников, присоединившихся к собранию: %d";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="Пользователь %@ покинул собрание";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="Количество участников, покинувших собрание: %d";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Вы присоединились к звонку";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Идет демонстрация контента";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Общий доступ к контенту закончился";
@@ -105,3 +130,31 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Вам отказано в доступе к звонку.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Ошибка переключения видео";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Не удалось присоединиться к звонку. Проверьте сетевое подключение.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Ваш звук отключен";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Низкое качество работы сети";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Сеть потеряна";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Повторное подключение…";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Не удалось запустить камеру";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Не удалось найти динамик.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Не удалось найти микрофон.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Микрофон работает не так, как ожидалось.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Динамик работает не так, как ожидалось.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Динамик отключен.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="Для %@ требуется разрешение";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ использовать камеру. Вы можете изменить это в параметрах позже. Если изменить это сейчас, звонок будет прерван.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Сообщить о проблеме";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Журналы будут вложены автоматически.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Политика конфиденциальности";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Опишите свою проблему...";
+"AzureCommunicationUICalling.CancelButton.Text"="Отмена";
+"AzureCommunicationUICalling.Attach.Screenshot"="Вложить снимок экрана";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
+"AzureCommunicationUICalling.SendFeedback.Text"="Отправить";

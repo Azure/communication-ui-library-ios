@@ -29,6 +29,8 @@ enum LocalizationKey: String {
     case micOnAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"
     case device = "AzureCommunicationUICalling.SetupView.Button.Device"
     case deviceAccesibiiltyLabel = "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"
+    case joinCallDiableStateAccessibilityLabel =
+            "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel"
     case goToSettings = "AzureCommunicationUICalling.SetupView.Button.GoToSettings"
     case cameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"
     case audioAndCameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"
@@ -41,6 +43,7 @@ enum LocalizationKey: String {
     /* OnHoldView */
     case onHoldMessage = "AzureCommunicationUICalling.OnHoldView.Text.OnHold"
     case resume = "AzureCommunicationUICalling.OnHoldView.Button.Resume"
+    case resumeAccessibilityLabel = "AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel"
 
     /* CallingView */
     case callWith0Person = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
@@ -50,6 +53,28 @@ enum LocalizationKey: String {
     case participantListAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"
 
+    /* Lobby waiting */
+    case lobbyWaitingToJoin = "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"
+    case lobbyWaitingHeaderViewButton =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"
+    case lobbyWaitingHeaderViewButtonAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"
+    case lobbyWaitingHeaderDismissButtonAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"
+
+    /* Lobby waiting error */
+    case lobbyActionErrorConversationTypeNotSupported =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"
+    case lobbyActionErrorLobbyDisabledByConfigurations =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"
+    case lobbyActionErrorMeetingRoleNotAllowed =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"
+    case lobbyActionErrorParticipantOperationFailure =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"
+    case lobbyActionUnknownError = "AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"
+
+    case lobbyActionErrorDismiss = "AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel"
+
     case unnamedParticipant = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"
     // %@ is local participant name
     case localeParticipantWithSuffix =
@@ -58,6 +83,16 @@ enum LocalizationKey: String {
     case unmuted = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"
     case speaking = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"
     case onHold = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"
+    case participantListLobbyAction = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"
+    case participantListWaitingInLobby = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"
+    case participantListInTheCall = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"
+    case participantListAdmitAll = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"
+    case participantListConfirmTitleAdmitAll =
+            "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"
+    case participantListConfirmTitleAdmitParticipant =
+            "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"
+    case participantListConfirmAdmit = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"
+    case participantListConfirmDecline = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"
 
     case frontCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"
@@ -66,6 +101,8 @@ enum LocalizationKey: String {
     case multiplePeopleJoined = "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"
     case onePersonLeft = "AzureCommunicationUICalling.CallingView.OnePersonLeft"
     case multiplePeopleLeft = "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"
+    case participantInformationAccessibilityLable =
+            "AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel"
     case joinedCallAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"
     case screenshareStartAccessibilityLabel =
@@ -126,4 +163,32 @@ enum LocalizationKey: String {
     case snackBarErrorCameraOnFailed = "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"
     case snackBarErrorConnectionError =
             "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"
+
+    /* Call Diagnostics */
+    case callDiagnosticsUserMuted = "AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"
+    case callDiagnosticsNetworkQualityLow = "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"
+    case callDiagnosticsNetworkLost = "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"
+    case callDiagnosticsNetworkReconnect = "AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"
+    case callDiagnosticsCameraNotWorking = "AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"
+    case callDiagnosticsUnableToLocateSpeaker = "AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"
+    case callDiagnosticsUnableToLocateMicrophone =
+            "AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"
+    case callDiagnosticsMicrophoneNotWorking = "AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"
+    case callDiagnosticsSpeakerNotWorking = "AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"
+    case callDiagnosticsSpeakerMuted = "AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"
+
+    case callDiagnosticsDismissAccessibilityLabel =
+            "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"
+    case callDiagnosticsDismissAccessibilityHint =
+            "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"
+
+    /* Support Form */
+    case supportFormReportIssueTitle = "AzureCommunicationUICalling.ReportIssue.Title"
+    case supportFormLogsAttachNotice = "AzureCommunicationUICalling.LogsAttach.Notice"
+    case supportFormPrivacyPolicyText = "AzureCommunicationUICalling.PrivacyPolicy.Text"
+    case supportFormDescribeYourIssueHintText = "AzureCommunicationUICalling.DescribeYourIssueHint.Text"
+    case supportFormCancelButtonText = "AzureCommunicationUICalling.CancelButton.Text"
+    case supportFormAttachScreenshot = "AzureCommunicationUICalling.Attach.Screenshot"
+    case supportFormReportAProblemText = "AzureCommunicationUICalling.ReportAProblem.Text"
+    case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
 }

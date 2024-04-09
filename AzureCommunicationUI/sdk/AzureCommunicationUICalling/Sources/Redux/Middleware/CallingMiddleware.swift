@@ -27,10 +27,13 @@ extension Middleware {
 
                         case .audioSessionAction(let audioAction):
                             handleAudioSessionAction(audioAction, actionHandler, getState, dispatch)
-
+                        case .remoteParticipantsAction(let action):
+                            handleRemoteParticipantAction(action, actionHandler, getState, dispatch)
                         case .errorAction(_),
                                 .compositeExitAction,
                                 .callingViewLaunched:
+                            break
+                        default:
                             break
                         }
                         return next(action)
@@ -86,7 +89,7 @@ private func handleLocalUserAction(_ action: LocalUserAction,
             .cameraPausedSucceeded,
             .cameraPausedFailed(error: _),
             .cameraSwitchSucceeded(cameraDevice: _),
-            .cameraSwitchFailed(error: _),
+            .cameraSwitchFailed(previousCamera: _, error: _),
             .microphoneOnFailed(error: _),
             .microphoneOffFailed(error: _),
             .microphoneMuteStateUpdated(isMuted: _),
@@ -94,7 +97,8 @@ private func handleLocalUserAction(_ action: LocalUserAction,
             .microphonePreviewOff,
             .audioDeviceChangeRequested(device: _),
             .audioDeviceChangeSucceeded(device: _),
-            .audioDeviceChangeFailed(error: _):
+            .audioDeviceChangeFailed(error: _),
+            .participantRoleChanged(participantRole: _):
         break
     }
 }
@@ -143,6 +147,24 @@ private func handleAudioSessionAction(_ action: AudioSessionAction,
         actionHandler.audioSessionInterrupted(state: getState(), dispatch: dispatch)
     case .audioInterruptEnded,
             .audioEngaged:
+        break
+    }
+}
+
+private func handleRemoteParticipantAction(_ action: RemoteParticipantsAction,
+                                           _ actionHandler: CallingMiddlewareHandling,
+                                           _ getState: () -> AppState,
+                                           _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .admitAll:
+        actionHandler.admitAllLobbyParticipants(state: getState(), dispatch: dispatch)
+    case .declineAll:
+        actionHandler.declineAllLobbyParticipants(state: getState(), dispatch: dispatch)
+    case .admit(participantId: let participantId):
+        actionHandler.admitLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    case .decline(participantId: let participantId):
+        actionHandler.declineLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    default:
         break
     }
 }

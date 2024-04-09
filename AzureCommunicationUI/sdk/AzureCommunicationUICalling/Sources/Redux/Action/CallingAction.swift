@@ -14,7 +14,6 @@ enum CallingAction: Equatable {
     case callIdUpdated(callId: String)
 
     case setupCall
-    case dismissSetup
     case recordingStateUpdated(isRecordingActive: Bool)
 
     case transcriptionStateUpdated(isTranscriptionActive: Bool)
@@ -22,7 +21,6 @@ enum CallingAction: Equatable {
     case resumeRequested
     case holdRequested
     case requestFailed
-    case participantListUpdated(participants: [ParticipantInfoModel])
 }
 
 enum ErrorAction: Equatable {

@@ -42,16 +42,19 @@ extension Reducer where State == CallingState,
         // Exhaustive un-implemented actions
         case .audioSessionAction,
                 .callingAction(.setupCall),
-                .callingAction(.dismissSetup),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .callingAction(.participantListUpdated(participants: _)),
                 .errorAction(.fatalErrorUpdated(internalError: _, error: _)),
                 .lifecycleAction(_),
                 .localUserAction(_),
                 .permissionAction(_),
+                .remoteParticipantsAction(_),
+                .callDiagnosticAction(_),
                 .compositeExitAction,
-                .callingViewLaunched:
+                .callingViewLaunched,
+                .hideSupportForm,
+                .showSupportForm,
+                .visibilityAction(_):
             return callingState
         }
         return CallingState(status: callingStatus,

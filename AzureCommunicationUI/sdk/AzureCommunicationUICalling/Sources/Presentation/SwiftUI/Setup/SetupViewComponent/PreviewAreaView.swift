@@ -56,19 +56,18 @@ struct PermissionWarningView: View {
                                 .font(Fonts.subhead.font)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color(StyleProvider.color.onSurface))
+                            PrimaryButton(viewModel: goToSettingsButtonViewModel)
+                                .accessibilityIdentifier(AccessibilityIdentifier.goToSettingsAccessibilityID.rawValue)
+                                .padding()
                         }
                         .frame(width: scrollViewGeometry.size.width)
                         .frame(minHeight: scrollViewGeometry.size.height)
                     }
                     .frame(height: scrollViewGeometry.size.height - Constants.horizontalSpacing * 2)
                 }
-                PrimaryButton(viewModel: goToSettingsButtonViewModel)
-                    .accessibilityIdentifier(AccessibilityIdentifier.goToSettingsAccessibilityID.rawValue)
-                    .padding()
-                Spacer()
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
-            .accessibilityElement(children: .combine)
+            .accessibilityElement(children: .contain)
         }
     }
 }

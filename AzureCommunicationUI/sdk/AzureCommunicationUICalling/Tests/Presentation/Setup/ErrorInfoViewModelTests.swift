@@ -85,7 +85,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateConnectionFailed_then_snackBarErrorConnectionErrorDisplayed() {
         let sut = makeSUT()
-        let state = ErrorState(internalError: .connectionFailed,
+        let state = ErrorState(internalError: .callJoinConnectionFailed,
                                error: nil,
                                errorCategory: .none)
         sut.update(errorState: state)

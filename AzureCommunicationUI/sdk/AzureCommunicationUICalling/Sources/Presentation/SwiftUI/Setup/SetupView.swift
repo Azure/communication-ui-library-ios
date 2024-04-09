@@ -31,9 +31,10 @@ struct SetupView: View {
                 SetupTitleView(viewModel: viewModel)
                 GeometryReader { geometry in
                     ZStack(alignment: .bottomLeading) {
-                        VStack(spacing: getSizeClass() == .ipadScreenSize ?
+                        VStack(alignment: .center,
+                               spacing: getSizeClass() == .ipadScreenSize ?
                                LayoutConstant.spacingLarge : LayoutConstant.spacing) {
-                            ZStack(alignment: .bottom) {
+                            ZStack(alignment: .center) {
                                 PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
                                                 viewManager: viewManager,
                                                 avatarManager: avatarManager)
@@ -43,6 +44,7 @@ struct SetupView: View {
                             }
                             .background(Color(StyleProvider.color.surface))
                             .cornerRadius(4)
+                            .accessibilityElement(children: .contain)
                             joinCallView
                                 .padding(.bottom)
                         }
@@ -51,13 +53,9 @@ struct SetupView: View {
                             .padding(.bottom, setupViewVerticalPadding(parentSize: geometry.size))
                     }
                     .padding(.horizontal, setupViewHorizontalPadding(parentSize: geometry.size))
+                    .accessibilityElement(children: .contain)
                 }
             }
-        }
-        .onAppear {
-            viewModel.setupAudioPermissions()
-            viewModel.setupCall()
-            viewModel.dismissSetupScreen()
         }
     }
 
@@ -67,6 +65,7 @@ struct SetupView: View {
                 JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+                    .frame(height: 52)
                     .accessibilityIdentifier(AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
             }
         }

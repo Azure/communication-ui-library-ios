@@ -166,7 +166,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
-            XCTAssertTrue(action == Action.localUserAction(.cameraSwitchFailed(error: error)))
+            XCTAssertTrue(action == Action.localUserAction(
+                .cameraSwitchFailed(previousCamera: LocalUserState.CameraDeviceSelectionStatus.front, error: error)))
         }
         mockCallingService.error = error
         await sut.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch).value
@@ -429,10 +430,23 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         await sut.enterForeground(
             state: getState(callingState: .connected,
                             cameraStatus: .paused,
-                            cameraDeviceStatus: .front),
+                            cameraDeviceStatus: .front,
+                            lifecycleStatus: .background),
             dispatch: getEmptyDispatch()
         ).value
         XCTAssertTrue(mockCallingService.startLocalVideoStreamCalled)
+    }
+
+    func test_callingMiddlewareHandler_enterForeground_when_notInBackground_callConnected_cameraStatusPaused_then_willNotStartLocalVideoStreamCalled() async {
+        let sut = makeSUT()
+        await sut.enterForeground(
+            state: getState(callingState: .connected,
+                            cameraStatus: .paused,
+                            cameraDeviceStatus: .front,
+                            lifecycleStatus: .foreground),
+            dispatch: getEmptyDispatch()
+        ).value
+        XCTAssertFalse(mockCallingService.startLocalVideoStreamCalled)
     }
 
     func test_callingMiddlewareHandler_enterForeground_when_callNotStarted_then_startLocalVideoStreamNotCalled() async {
@@ -566,8 +580,65 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                            cameraStatus: .off,
                                                            cameraDeviceStatus: .front,
                                                            cameraPermission: .granted,
-                                                           internalError: .connectionFailed),
+                                                           internalError: .callJoinConnectionFailed),
                             dispatch: dispatch).value
+    }
+
+    func test_callingMiddlewareHandler_admitAll_then_admitAllCalled() async {
+        let sut = makeSUT()
+        await sut.admitAllLobbyParticipants(
+            state: getState(callingState: .connected,
+                            cameraStatus: .off,
+                            cameraDeviceStatus: .front,
+                            cameraPermission: .granted,
+                            internalError: .callJoinConnectionFailed),
+            dispatch: getEmptyDispatch()
+        ).value
+
+        XCTAssertTrue(mockCallingService.admitAllLobbyParticipantsCalled)
+    }
+
+    func test_callingMiddlewareHandler_admit_then_admitCalled() async {
+        let sut = makeSUT()
+        await sut.admitLobbyParticipant(state: getState(callingState: .connected,
+                                                        cameraStatus: .off,
+                                                        cameraDeviceStatus: .front,
+                                                        cameraPermission: .granted,
+                                                        internalError: .callJoinConnectionFailed),
+                                        dispatch: getEmptyDispatch(),
+                                        participantId: "participantId").value
+
+        XCTAssertTrue(mockCallingService.admitLobbyParticipantCalled)
+    }
+
+    func test_callingMiddlewareHandlerAll_decline_then_declineCalled() async {
+        let sut = makeSUT()
+        await sut.declineLobbyParticipant(
+            state: getState(callingState: .connected,
+                            cameraStatus: .off,
+                            cameraDeviceStatus: .front,
+                            cameraPermission: .granted,
+                            internalError: .callJoinConnectionFailed),
+            dispatch: getEmptyDispatch(),
+            participantId: "participantId"
+        ).value
+
+        XCTAssertTrue(mockCallingService.declineLobbyParticipantCalled)
+    }
+
+    func test_callingMiddlewareHandler_decline_then_declineCalled() async {
+        let sut = makeSUT()
+        await sut.declineLobbyParticipant(
+            state: getState(callingState: .connected,
+                            cameraStatus: .off,
+                            cameraDeviceStatus: .front,
+                            cameraPermission: .granted,
+                            internalError: .callJoinConnectionFailed),
+            dispatch: getEmptyDispatch(),
+            participantId: "participantId"
+        ).value
+
+        XCTAssertTrue(mockCallingService.declineLobbyParticipantCalled)
     }
 }
 
@@ -586,7 +657,8 @@ extension CallingMiddlewareHandlerTests {
                           cameraDeviceStatus: LocalUserState.CameraDeviceSelectionStatus = .front,
                           cameraPermission: AppPermission.Status = .unknown,
                           cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local,
-                          internalError: CallCompositeInternalError? = nil) -> AppState {
+                          internalError: CallCompositeInternalError? = nil,
+                          lifecycleStatus: AppStatus = .foreground) -> AppState {
         let callState = CallingState(status: callingState)
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
@@ -599,11 +671,12 @@ extension CallingMiddlewareHandlerTests {
                                         localVideoStreamIdentifier: nil)
         let permissionState = PermissionState(audioPermission: .unknown,
                                               cameraPermission: cameraPermission)
+        let lifeCycleState = LifeCycleState(currentStatus: lifecycleStatus)
         let errorState = ErrorState(internalError: internalError)
         return AppState(callingState: callState,
                         permissionState: permissionState,
                         localUserState: localState,
-                        lifeCycleState: LifeCycleState(),
+                        lifeCycleState: lifeCycleState,
                         remoteParticipantsState: .init(),
                         errorState: errorState)
     }

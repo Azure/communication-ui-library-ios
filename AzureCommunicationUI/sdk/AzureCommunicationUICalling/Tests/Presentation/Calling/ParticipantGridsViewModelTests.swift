@@ -20,62 +20,52 @@ class ParticipantGridViewModelTests: XCTestCase {
         cancellable = nil
     }
 
-    // MARK: Sorting participant
-    func test_participantGridsViewModel_updateParticipantsState_when_newSevenInfoModels_then_participantViewModelsSortedByRecentSpeakingTimeStamp() {
-        var inputInfoModelArr = [ParticipantInfoModel]()
-        for i in 0...6 {
-            let date = Calendar.current.date(
-                byAdding: .minute,
-                value: i,
-                to: Date())!
-            inputInfoModelArr.append(ParticipantInfoModelBuilder.get(recentSpeakingStamp: date))
-        }
-        let lastUpdateTimeStamp = Calendar.current.date(
+    func test_participantGridsViewModel_updateParticipantsState_whenDominantSpeakerNotChange_noIndexChange() {
+        let date1 = Calendar.current.date(
             byAdding: .minute,
             value: -2,
             to: Date())!
-        let state = RemoteParticipantsState(participantInfoList: inputInfoModelArr,
-                                            lastUpdateTimeStamp: lastUpdateTimeStamp)
-        let callingState = CallingState()
-        let sut = makeSUT()
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
-        guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier,
-              let expectedId = inputInfoModelArr.last?.userIdentifier else {
-            XCTFail("Failed with empty userIdentifier")
-            return
-        }
-        XCTAssertEqual(firstUserIdentifier, expectedId)
-    }
-
-    func test_participantGridsViewModel_updateParticipantsState_when_existedTwoInfoModelsTimeStampUpdate_then_noIndexChange() {
-        let previousDate = Calendar.current.date(
-            byAdding: .minute,
-            value: -2,
-            to: Date())!
-        let previousDate2 = Calendar.current.date(
+        let date2 = Calendar.current.date(
             byAdding: .minute,
             value: -1,
             to: Date())!
         let uuid1 = UUID().uuidString
         let uuid2 = UUID().uuidString
-        let infoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1,
-                                                         recentSpeakingStamp: previousDate)
-        let infoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2,
-                                                         recentSpeakingStamp: previousDate2)
-        let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2],
-                                            lastUpdateTimeStamp: previousDate2)
+        let uuid3 = UUID().uuidString
+        let uuid4 = UUID().uuidString
+        let uuid5 = UUID().uuidString
+        let uuid6 = UUID().uuidString
+        let uuid7 = UUID().uuidString
+        let uuid8 = UUID().uuidString
+        let infoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1)
+        let infoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2)
+        let infoModel3 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid3)
+        let infoModel4 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid4)
+        let infoModel5 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid5)
+        let infoModel6 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid6)
+        let infoModel7 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid7)
+        let infoModel8 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid8)
+        let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2, infoModel3,
+                                                                  infoModel4, infoModel5, infoModel6,
+                                                                 infoModel7, infoModel8],
+                                            dominantSpeakers: [uuid7, uuid2],
+                                            dominantSpeakersModifiedTimestamp: date1)
         let callingState = CallingState()
         let sut = makeSUT()
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         let expectedUserId = sut.participantsCellViewModelArr.first?.participantIdentifier
-        let updatedStampInfoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1,
-                                                                     recentSpeakingStamp: Date())
-        let state2 = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, infoModel2],
-                                             lastUpdateTimeStamp: Date())
+        let state2 = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2, infoModel3,
+                                                                  infoModel4, infoModel5, infoModel6,
+                                                                 infoModel7, infoModel8],
+                                             dominantSpeakers: [uuid7, uuid2],
+                                             dominantSpeakersModifiedTimestamp: date2)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state2)
+                   remoteParticipantsState: state2,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier else {
             XCTFail("Failed with empty participantIdentifier")
             return
@@ -83,43 +73,61 @@ class ParticipantGridViewModelTests: XCTestCase {
         XCTAssertEqual(firstUserIdentifier, expectedUserId)
     }
 
-    func test_participantGridsViewModel_updateParticipantsState_when_existedTwoInfoModelsSpeakingTimeStampChange_then_viewModelUpdated() {
-        let previousDate = Calendar.current.date(
+    func test_participantGridsViewModel_updateParticipantsState_whenDominantSpeakerNotChangeButVideoStreamChange_indexChange() {
+        let date1 = Calendar.current.date(
             byAdding: .minute,
             value: -2,
             to: Date())!
-        let previousDate2 = Calendar.current.date(
+        let date2 = Calendar.current.date(
             byAdding: .minute,
             value: -1,
             to: Date())!
         let uuid1 = UUID().uuidString
         let uuid2 = UUID().uuidString
-        let infoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1,
-                                                         isSpeaking: false, recentSpeakingStamp: previousDate)
-        let infoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2,
-                                                         isSpeaking: false, recentSpeakingStamp: previousDate2)
-        let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2],
-                                            lastUpdateTimeStamp: previousDate2)
+        let uuid3 = UUID().uuidString
+        let uuid4 = UUID().uuidString
+        let uuid5 = UUID().uuidString
+        let uuid6 = UUID().uuidString
+        let uuid7 = UUID().uuidString
+        let uuid8 = UUID().uuidString
+        let uuid9 = UUID().uuidString
+        let uuid10 = UUID().uuidString
+        let infoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1, videoStreamId: nil)
+        let infoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2, videoStreamId: nil)
+        let infoModel3 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid3, videoStreamId: nil)
+        let infoModel4 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid4, videoStreamId: nil)
+        let infoModel5 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid5, videoStreamId: nil)
+        let infoModel6 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid6, videoStreamId: nil)
+        let infoModel7 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid7)
+        let infoModel8 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid8, videoStreamId: nil)
+        let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2, infoModel3,
+                                                                  infoModel4, infoModel5, infoModel6,
+                                                                 infoModel7, infoModel8],
+                                            dominantSpeakers: [],
+                                            dominantSpeakersModifiedTimestamp: date1)
         let callingState = CallingState()
-        let expectation = XCTestExpectation(description: "Participants list updated expectation")
-        expectation.expectedFulfillmentCount = 2
-        expectation.assertForOverFulfill = true
-        let sut = makeSUT { _ in
-            expectation.fulfill()
+        let sut = makeSUT()
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        let expectedUserId = uuid10
+        let infoModel9 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid9, videoStreamId: nil)
+        let infoModel10 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid10)
+        let state2 = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel10, infoModel3,
+                                                                  infoModel4, infoModel5, infoModel6,
+                                                                   infoModel9, infoModel8],
+                                             dominantSpeakers: [],
+                                             dominantSpeakersModifiedTimestamp: date2)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state2,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier else {
+            XCTFail("Failed with empty participantIdentifier")
+            return
         }
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
-
-        let expectedIsSpeaking = true
-        let updatedStampInfoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1,
-                                                                     isSpeaking: expectedIsSpeaking, recentSpeakingStamp: Date())
-        let updatedStampInfoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2,
-                                                                     isSpeaking: expectedIsSpeaking, recentSpeakingStamp: previousDate2)
-        let updatedState = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, updatedStampInfoModel2],
-                                                   lastUpdateTimeStamp: Date())
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
-        wait(for: [expectation], timeout: 1)
+        XCTAssertEqual(firstUserIdentifier, expectedUserId)
     }
 
     func test_participantGridsViewModel_updateParticipantsState_when_screenSharing_then_screenSharingviewModelUpdated() {
@@ -133,10 +141,32 @@ class ParticipantGridViewModelTests: XCTestCase {
                                             lastUpdateTimeStamp: Date())
         let sut = makeSUT()
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.count, 1)
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.userIdentifier, uuid1)
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.screenShareVideoStreamModel?.videoStreamIdentifier, expectedVideoStreamId)
+    }
+
+    func test_participantGridsViewModel_updateParticipantsState_when_someParticipantsInLobby_then_lobbyNotDisconnecteParticipantsNotDisplaydInGrid() {
+        let uuid1 = UUID().uuidString
+        let uuid2 = UUID().uuidString
+        let uuid3 = UUID().uuidString
+
+        let infoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1, screenShareStreamId: nil)
+        let infoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2, screenShareStreamId: nil, status: .inLobby)
+        let infoModel3 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid3, screenShareStreamId: nil, status: .disconnected)
+
+        let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2, infoModel3],
+                                            lastUpdateTimeStamp: Date())
+        let sut = makeSUT()
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState())
+        XCTAssertEqual(sut.displayedParticipantInfoModelArr.count, 1)
+        XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.userIdentifier, uuid1)
     }
 
     // MARK: Updating participants list
@@ -145,22 +175,26 @@ class ParticipantGridViewModelTests: XCTestCase {
             byAdding: .minute,
             value: -1,
             to: Date())!
-        let state = makeRemoteParticipantState(date: date)
+        let state = makeRemoteParticipantState(lastUpdatedTimeStamp: date)
         let callingState = CallingState()
         let expectation = XCTestExpectation(description: "Participants list updated expectation")
         expectation.assertForOverFulfill = true
         let expectedUpdatedInfoModel = ParticipantInfoModelBuilder.get(participantIdentifier: state.participantInfoList.first!.userIdentifier,
                                                                        isMuted: !state.participantInfoList.first!.isMuted)
-        let sut = makeSUT { infoModel in
+        let sut = makeSUT { infoModel, _ in
             XCTAssertEqual(expectedUpdatedInfoModel, infoModel)
             expectation.fulfill()
         }
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         let updatedParticipantInfoList = [expectedUpdatedInfoModel]
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -169,7 +203,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             byAdding: .minute,
             value: -1,
             to: Date())!
-        let state = makeRemoteParticipantState(date: date)
+        let state = makeRemoteParticipantState(lastUpdatedTimeStamp: date)
         let callingState = CallingState()
         let expectation = XCTestExpectation(description: "Participants list updated expectation")
         expectation.assertForOverFulfill = true
@@ -177,7 +211,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                                                                        isMuted: !state.participantInfoList.first!.isMuted)
         let sut = makeSUT()
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let participant = sut.participantsCellViewModelArr.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
             return
@@ -185,7 +221,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let updatedParticipantInfoList = [expectedUpdatedInfoModel]
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let updatedParticipant = sut.participantsCellViewModelArr.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
             return
@@ -198,15 +236,17 @@ class ParticipantGridViewModelTests: XCTestCase {
             byAdding: .minute,
             value: -1,
             to: Date())!
-        let state = makeRemoteParticipantState(date: date)
+        let state = makeRemoteParticipantState(lastUpdatedTimeStamp: date)
         let callingState = CallingState()
         let expectation = XCTestExpectation(description: "Participants list updated expectation")
         expectation.assertForOverFulfill = true
-        let sut = makeSUT { _ in
+        let sut = makeSUT { _, _ in
             expectation.fulfill()
         }
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let participant = sut.participantsCellViewModelArr.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
             return
@@ -216,7 +256,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                                           newParticipantInfoModel]
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let newParticipant = sut.participantsCellViewModelArr.first(where: { $0.participantIdentifier != participant.participantIdentifier }) else {
             XCTFail("Failed to find ParticipantGridCellViewModel with the same participantIdentifier")
             return
@@ -231,7 +273,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let callingState = CallingState()
         let sut = makeSUT()
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let participantInfo = state.participantInfoList.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
             return
@@ -241,7 +285,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                                ParticipantInfoModelBuilder.get()]
         let updatedState = RemoteParticipantsState(participantInfoList: updatedInfoList)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, updatedInfoList.count)
         XCTAssertEqual(sut.participantsCellViewModelArr.count, participantsInfoListCount)
         XCTAssertEqual(sut.participantsCellViewModelArr.map { $0.participantIdentifier }.sorted(),
@@ -254,12 +300,16 @@ class ParticipantGridViewModelTests: XCTestCase {
         let callingState = CallingState()
         let sut = makeSUT()
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         var updatedInfoList = state.participantInfoList
         updatedInfoList.removeFirst()
         let updatedState = RemoteParticipantsState(participantInfoList: updatedInfoList)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, updatedInfoList.count)
         XCTAssertNotEqual(sut.participantsCellViewModelArr.count, participantsInfoListCount)
         XCTAssertEqual(sut.participantsCellViewModelArr.map { $0.participantIdentifier },
@@ -272,34 +322,20 @@ class ParticipantGridViewModelTests: XCTestCase {
             byAdding: .minute,
             value: -2,
             to: Date())
-        let firstState = makeRemoteParticipantState(count: 1, date: firstDate!)
+        let firstState = makeRemoteParticipantState(count: 1, lastUpdatedTimeStamp: firstDate!)
         let currentDate = Date()
         let expectedCount = 2
-        let currentState = makeRemoteParticipantState(count: expectedCount, date: currentDate)
+        let currentState = makeRemoteParticipantState(count: expectedCount, lastUpdatedTimeStamp: currentDate)
         let callingState = CallingState()
         let sut = makeSUT()
         sut.update(callingState: callingState,
-                   remoteParticipantsState: firstState)
+                   remoteParticipantsState: firstState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         sut.update(callingState: callingState,
-                   remoteParticipantsState: currentState)
-        XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
-    }
-
-    func test_participantGridsViewModel_updateParticipantsState_when_viewModelLastUpdateTimeStampSame_then_noUpdateRemoteParticipantCellViewModel() {
-        let date = Calendar.current.date(
-            byAdding: .minute,
-            value: -1,
-            to: Date())
-        let expectedCount = 1
-
-        let firstState = makeRemoteParticipantState(count: expectedCount, date: date!)
-        let currentState = makeRemoteParticipantState(count: 2, date: date!)
-        let callingState = CallingState()
-        let sut = makeSUT()
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: firstState)
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: currentState)
+                   remoteParticipantsState: currentState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
     }
 
@@ -317,10 +353,35 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_participantGridsViewModel_updateParticipantsState_when_viewModelLastUpdateTimeStampSame_then_noUpdateRemoteParticipantCellViewModel() {
+        let date = Calendar.current.date(
+            byAdding: .minute,
+            value: -1,
+            to: Date())
+        let expectedCount = 1
+
+        let firstState = makeRemoteParticipantState(count: expectedCount, lastUpdatedTimeStamp: date!,
+                                                    dominantSpeakersModifiedTimestamp: date!)
+        let currentState = makeRemoteParticipantState(count: 2, lastUpdatedTimeStamp: date!,
+                                                      dominantSpeakersModifiedTimestamp: date!)
+        let callingState = CallingState()
+        let sut = makeSUT()
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: firstState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: currentState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
+    }
     func test_participantGridsViewModel_updateParticipantsState_when_newParticipantJoined_then_participantJoinedAnnouncementPosted() {
         let expectation = XCTestExpectation(description: "Announcement expection")
         let state = makeRemoteParticipantState(count: 1)
@@ -336,7 +397,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -350,7 +413,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
             expectation.fulfill()
@@ -358,7 +423,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let updatedState = RemoteParticipantsState(participantInfoList: state.participantInfoList.dropLast(2),
                                                    lastUpdateTimeStamp: Date())
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -373,7 +440,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
             expectation.fulfill()
@@ -381,7 +450,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let updatedState = RemoteParticipantsState(participantInfoList: state.participantInfoList.dropLast(2),
                                                    lastUpdateTimeStamp: Date())
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -396,13 +467,17 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         accessibilityProvider.postQueuedAnnouncementBlock = { _ in
             expectation.fulfill()
         }
         let updatedState = makeRemoteParticipantState(count: 3)
         sut.update(callingState: callingState,
-                   remoteParticipantsState: updatedState)
+                   remoteParticipantsState: updatedState,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -418,7 +493,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: RemoteParticipantsState())
+                   remoteParticipantsState: RemoteParticipantsState(),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
 
     }
@@ -436,7 +513,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -453,7 +532,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -470,7 +551,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -487,7 +570,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -504,7 +589,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -521,7 +608,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -538,13 +627,15 @@ class ParticipantGridViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: makeRemoteParticipantState(count: 7))
+                   remoteParticipantsState: makeRemoteParticipantState(count: 7),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
 }
 
 extension ParticipantGridViewModelTests {
-    func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
+    func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel, LifeCycleState) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let accessibilityProvider = AccessibilityProvider()
         var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
@@ -576,8 +667,10 @@ extension ParticipantGridViewModelTests {
     }
 
     func makeRemoteParticipantState(count: Int = 1,
-                                    date: Date = Date()) -> RemoteParticipantsState {
+                                    lastUpdatedTimeStamp: Date = Date(),
+                                    dominantSpeakersModifiedTimestamp: Date = Date()) -> RemoteParticipantsState {
         return RemoteParticipantsState(participantInfoList: ParticipantInfoModelBuilder.getArray(count: count),
-                                       lastUpdateTimeStamp: date)
+                                       lastUpdateTimeStamp: lastUpdatedTimeStamp,
+                                       dominantSpeakersModifiedTimestamp: dominantSpeakersModifiedTimestamp)
     }
 }

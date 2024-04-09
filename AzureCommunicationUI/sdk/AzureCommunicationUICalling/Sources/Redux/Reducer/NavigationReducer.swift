@@ -9,17 +9,19 @@ extension Reducer where State == NavigationState,
                         Actions == Action {
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
+        var supportFormVisible = state.supportFormVisible
         switch action {
         case .callingViewLaunched:
             navigationStatus = .inCall
-        case .callingAction(.dismissSetup),
-             .errorAction(.fatalErrorUpdated),
+        case .errorAction(.fatalErrorUpdated),
              .compositeExitAction:
             navigationStatus = .exit
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
-
-            // Exhaustive unimplemented actions
+        case .showSupportForm:
+            supportFormVisible = true
+        case .hideSupportForm:
+            supportFormVisible = false
         case .audioSessionAction(_),
                 .callingAction(.callIdUpdated(callId: _)),
                 .callingAction(.callStartRequested),
@@ -32,12 +34,14 @@ extension Reducer where State == NavigationState,
                 .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .callingAction(.participantListUpdated(participants: _)),
                 .lifecycleAction(_),
                 .localUserAction(_),
-                .permissionAction(_):
+                .remoteParticipantsAction(_),
+                .permissionAction(_),
+                .visibilityAction(_),
+                .callDiagnosticAction(_):
             return state
         }
-        return NavigationState(status: navigationStatus)
+        return NavigationState(status: navigationStatus, supportFormVisible: supportFormVisible)
     }
 }

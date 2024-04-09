@@ -11,7 +11,6 @@ struct LocalUserState {
         case off
         case paused
         case pending
-        case error(Error)
 
         static func == (lhs: LocalUserState.CameraOperationalStatus,
                         rhs: LocalUserState.CameraOperationalStatus) -> Bool {
@@ -19,8 +18,7 @@ struct LocalUserState {
             case (.on, .on),
                  (.off, .off),
                  (.paused, paused),
-                 (.pending, .pending),
-                 (.error, .error):
+                 (.pending, .pending):
                 return true
             default:
                 return false
@@ -32,15 +30,13 @@ struct LocalUserState {
         case front
         case back
         case switching
-        case error(Error)
 
         static func == (lhs: LocalUserState.CameraDeviceSelectionStatus,
                         rhs: LocalUserState.CameraDeviceSelectionStatus) -> Bool {
             switch (lhs, rhs) {
             case (.front, .front),
                  (.back, .back),
-                 (.switching, switching),
-                 (.error, .error):
+                 (.switching, switching):
                 return true
             default:
                 return false
@@ -68,15 +64,13 @@ struct LocalUserState {
         case on
         case off
         case pending
-        case error(Error)
 
         static func == (lhs: LocalUserState.AudioOperationalStatus,
                         rhs: LocalUserState.AudioOperationalStatus) -> Bool {
             switch (lhs, rhs) {
             case (.on, .on),
                  (.off, .off),
-                 (.pending, .pending),
-                 (.error, .error):
+                 (.pending, .pending):
                 return true
             default:
                 return false
@@ -93,7 +87,6 @@ struct LocalUserState {
         case bluetoothRequested
         case headphonesSelected
         case headphonesRequested
-        case error(Error)
 
         static func == (lhs: LocalUserState.AudioDeviceSelectionStatus,
                         rhs: LocalUserState.AudioDeviceSelectionStatus) -> Bool {
@@ -105,8 +98,7 @@ struct LocalUserState {
                  (.bluetoothSelected, bluetoothSelected),
                  (.bluetoothRequested, .bluetoothRequested),
                  (.headphonesSelected, headphonesSelected),
-                 (.headphonesRequested, .headphonesRequested),
-                 (.error, .error):
+                 (.headphonesRequested, .headphonesRequested):
                 return true
             default:
                 return false
@@ -127,17 +119,20 @@ struct LocalUserState {
         let operation: CameraOperationalStatus
         let device: CameraDeviceSelectionStatus
         let transmission: CameraTransmissionStatus
+        var error: Error?
     }
 
     struct AudioState {
         let operation: AudioOperationalStatus
         let device: AudioDeviceSelectionStatus
+        var error: Error?
     }
 
     let cameraState: CameraState
     let audioState: AudioState
     let displayName: String?
     let localVideoStreamIdentifier: String?
+    let participantRole: ParticipantRoleEnum?
 
     init(cameraState: CameraState = CameraState(operation: .off,
                                                 device: .front,
@@ -145,10 +140,12 @@ struct LocalUserState {
          audioState: AudioState = AudioState(operation: .off,
                                              device: .receiverSelected),
          displayName: String? = nil,
-         localVideoStreamIdentifier: String? = nil) {
+         localVideoStreamIdentifier: String? = nil,
+         participantRole: ParticipantRoleEnum? = nil) {
         self.cameraState = cameraState
         self.audioState = audioState
         self.displayName = displayName
         self.localVideoStreamIdentifier = localVideoStreamIdentifier
+        self.participantRole = participantRole
     }
 }

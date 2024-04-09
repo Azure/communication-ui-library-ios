@@ -39,17 +39,20 @@ extension Reducer where State == ErrorState,
                 .callingAction(.requestFailed),
                 .callingAction(.stateUpdated(status: _)),
                 .callingAction(.setupCall),
-                .callingAction(.dismissSetup),
                 .callingAction(.recordingStateUpdated(isRecordingActive: _)),
                 .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .callingAction(.participantListUpdated(participants: _)),
                 .lifecycleAction(_),
                 .localUserAction(_),
                 .permissionAction(_),
+                .remoteParticipantsAction(_),
+                .callDiagnosticAction(_),
                 .compositeExitAction,
-                .callingViewLaunched:
+                .callingViewLaunched,
+                .hideSupportForm,
+                .showSupportForm,
+                .visibilityAction(_):
             return state
         }
 

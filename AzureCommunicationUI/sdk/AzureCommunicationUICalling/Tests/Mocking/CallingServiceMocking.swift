@@ -26,6 +26,10 @@ class CallingServiceMocking: CallingServiceProtocol {
     var muteLocalMicCalled: Bool = false
     var unmuteLocalMicCalled: Bool = false
 
+    var admitAllLobbyParticipantsCalled: Bool = false
+    var admitLobbyParticipantCalled: Bool = false
+    var declineLobbyParticipantCalled: Bool = false
+
     private func possibleErrorTask() throws -> Task<Void, Error> {
         Task<Void, Error> {
             if let error = self.error {
@@ -76,8 +80,16 @@ class CallingServiceMocking: CallingServiceProtocol {
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
+    var dominantSpeakersSubject = CurrentValueSubject<[String], Never>([])
+    var dominantSpeakersModifiedTimestampSubject = PassthroughSubject<Date, Never>()
+
+    var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
+    var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
+    var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
 
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
+
+    var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
 
     func setupCall() async throws {
         setupCallCalled = true
@@ -113,4 +125,20 @@ class CallingServiceMocking: CallingServiceProtocol {
         resumeCallCalled = true
         try await possibleErrorTask().value
     }
+
+    func admitAllLobbyParticipants() async throws {
+        admitAllLobbyParticipantsCalled = true
+        try await possibleErrorTask().value
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        admitLobbyParticipantCalled = true
+        try await possibleErrorTask().value
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        declineLobbyParticipantCalled = true
+        try await possibleErrorTask().value
+    }
+
 }

@@ -13,7 +13,11 @@ extension Reducer {
         audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = .liveAudioSessionReducer,
         callingReducer: Reducer<CallingState, Action> = .liveCallingReducer,
         navigationReducer: Reducer<NavigationState, Action> = .liveNavigationReducer,
-        errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer
+        remoteParticipantsReducer: Reducer<RemoteParticipantsState, Action>
+            = .liveRemoteParticipantsReducer,
+        errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer,
+        visibilityReducer: Reducer<VisibilityState, VisibilityAction> = .visibilityReducer,
+        diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .liveDiagnosticsReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
@@ -26,7 +30,9 @@ extension Reducer {
             var navigationState = state.navigationState
             var errorState = state.errorState
             var audioSessionState = state.audioSessionState
+            var diagnosticsState = state.diagnosticsState
             let defaultUserState = state.defaultUserState
+            var visibilityState = state.visibilityState
 
             switch action {
             case let .permissionAction(permAction):
@@ -38,6 +44,9 @@ extension Reducer {
             case let .lifecycleAction(lifecycleAction):
                 lifeCycleState = lifeCycleReducer.reduce(state.lifeCycleState, lifecycleAction)
 
+            case let .visibilityAction(visibilityAction):
+                visibilityState = visibilityReducer.reduce(state.visibilityState, visibilityAction)
+
             default:
                 break
             }
@@ -45,18 +54,11 @@ extension Reducer {
             callingState = callingReducer.reduce(state.callingState, action)
             navigationState = navigationReducer.reduce(state.navigationState, action)
             errorState = errorReducer.reduce(state.errorState, action)
+            remoteParticipantState = remoteParticipantsReducer.reduce(state.remoteParticipantsState, action)
+            diagnosticsState = diagnosticsReducer.reduce(state.diagnosticsState, action)
 
             if case let .audioSessionAction(audioAction) = action {
                 audioSessionState = audioSessionReducer.reduce(state.audioSessionState, audioAction)
-            }
-
-            switch action {
-            case .callingAction(.participantListUpdated(participants: let newParticipants)):
-                remoteParticipantState = RemoteParticipantsState(participantInfoList: newParticipants)
-            case .errorAction(.statusErrorAndCallReset):
-                remoteParticipantState = RemoteParticipantsState(participantInfoList: [])
-            default:
-                break
             }
             return AppState(callingState: callingState,
                             permissionState: permissionState,
@@ -66,7 +68,9 @@ extension Reducer {
                             navigationState: navigationState,
                             remoteParticipantsState: remoteParticipantState,
                             errorState: errorState,
-                            defaultUserState: defaultUserState)
+                            defaultUserState: defaultUserState,
+                            visibilityState: visibilityState,
+                            diagnosticsState: diagnosticsState)
         }
     }
 }

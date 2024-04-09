@@ -16,14 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Voltar";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Ingressar na chamada";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ingressando na chamada…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Chamada de Ingresso Desabilitada";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Vídeo desativado";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Ligar a Câmera";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Vídeo Ativado";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Vídeo ativado";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Desligar a Câmera";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Vídeo Desativado";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfone desativado";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Desativar mudo";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfone ligado";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfone ligado";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Ativar mudo";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfone desativado";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Selecionar dispositivo de áudio";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Acesse Configurações";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Você está em espera";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Retomar";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Retomar";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Aguardando o ingresso de outros participantes";
@@ -45,12 +47,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Chamada com %d pessoas"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Participantes";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="As pessoas estão esperando para ingressar.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Exibir o lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Exibir o lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dispensar Notificação do Lobby";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Não há suporte para ações de lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="O lobby foi desabilitado.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Sua função não pode agir no lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="O participante não está no lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Ocorreu um erro de ação do lobby.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Ignorar notificação de erro do lobby";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Participante Sem Nome";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (eu)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Mudo ativado";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Mudo desativado";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Falando";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Em espera";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Toque para admitir ou recusar";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Aguardando no lobby (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="Na chamada (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Permitir todos";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Admitir todos os participantes?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Admitir %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Admitir";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Recusar";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Mudar para a câmera traseira";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Mudar para a câmera frontal";
@@ -59,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d participantes ingressaram na reunião";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ saiu da reunião";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d participantes saíram da reunião";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Você ingressou na chamada";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="O conteúdo está sendo compartilhado";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="O compartilhamento de conteúdo foi encerrado";
@@ -105,3 +130,31 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="O acesso à chamada foi negado.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Erro ao alternar o vídeo";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Não é possível ingressar na chamada. Verifique sua conexão de rede.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Você está com o mudo ativado";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="A qualidade da rede é baixa";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="A rede foi perdida";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconectando...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Não foi possível iniciar a câmera";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Não foi possível localizar o alto-falante.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Não foi possível localizar o microfone.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="O microfone não está funcionando conforme o esperado.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="O alto-falante não está funcionando conforme o esperado.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="O alto-falante está silenciado.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ precisa de permissão";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ não tem permissão para usar a câmera. Você pode alterar isso nas configurações mais tarde. Se você a alterar agora, sua chamada será descartada.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Ignorar Diagnóstico de Chamada";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Ignora esta Faixa de Diagnóstico de Chamadas";
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Relatar Problema";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Anexaremos os logs automaticamente.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Política de Privacidade";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Descreva seu problema...";
+"AzureCommunicationUICalling.CancelButton.Text"="Cancelar";
+"AzureCommunicationUICalling.Attach.Screenshot"="Anexar captura de tela";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Informar um problema";
+"AzureCommunicationUICalling.SendFeedback.Text"="Enviar";

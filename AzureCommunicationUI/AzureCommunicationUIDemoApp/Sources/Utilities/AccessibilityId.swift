@@ -9,6 +9,8 @@ enum AccessibilityId: String {
     /* DemoView */
     case startExperienceAccessibilityID =
             "AzureCommunicationUICalling.DemoView.StartExperience.AccessibilityID"
+    case showExperienceAccessibilityID =
+            "AzureCommunicationUICalling.DemoView.ShowExperience.AccessibilityID"
     case clearTokenTextFieldAccessibilityID =
             "AzureCommunicationUICalling.DemoView.ClearTokenTextField.AccessibilityID"
     case settingsButtonAccessibilityID =
@@ -28,4 +30,8 @@ enum AccessibilityId: String {
             "AzureCommunicationUICalling.SettingsView.useMockCallingSDKHandler.AccessibilityID"
     case settingsCloseButtonAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.CloseButton.AccessibilityID"
+    case useRelaunchOnDismissedToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.useRelaunchOnDismissed.AccessibilityID"
+    case toggleAudioOnlyModeAccessibilityID = "AzureCommunicationUICalling.SettingsView.AudioOnly.AccessibilityID"
+    case userReportedIssueAccessibilityID = "AzureCommunicationUICalling.Launcher.UserFeedback"
 }

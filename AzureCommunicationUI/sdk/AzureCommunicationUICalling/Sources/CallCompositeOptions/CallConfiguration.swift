@@ -19,7 +19,7 @@ struct CallConfiguration {
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
          displayName: String?,
-         roomRole: ParticipantRole?) {
+         roleHint: ParticipantRole?) {
         switch locator {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
@@ -35,7 +35,7 @@ struct CallConfiguration {
             self.compositeCallType = .teamsMeeting
         case let .roomCall(roomId: roomId):
             self.roomId = roomId
-            self.roomRoleHint = roomRole
+            self.roomRoleHint = roleHint
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .roomsCall

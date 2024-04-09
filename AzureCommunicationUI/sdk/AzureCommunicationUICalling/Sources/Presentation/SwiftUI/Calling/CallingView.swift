@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+// swiftlint:disable type_body_length
 struct CallingView: View {
     enum InfoHeaderViewConstants {
         static let horizontalPadding: CGFloat = 8.0
@@ -17,10 +18,18 @@ struct CallingView: View {
         static let horizontalPadding: CGFloat = 8
     }
 
+    enum Constants {
+        static let topAlertAreaViewTopPaddin: CGFloat = 10.0
+    }
+
+    enum DiagnosticToastInfoConstants {
+        static let bottomPaddingPortrait: CGFloat = 5
+        static let bottomPaddingLandscape: CGFloat = 16
+    }
+
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
-    let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
@@ -43,12 +52,21 @@ struct CallingView: View {
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
+            .modifier(PopupModalView(
+                isPresented: viewModel.showingSupportForm,
+                alignment: .bottom) {
+                    reportErrorView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+            })
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         .onRotate { newOrientation in
             updateChildViewIfNeededWith(newOrientation: newOrientation)
+        }.onAppear {
+            resetOrientation()
         }
     }
 
@@ -72,7 +90,7 @@ struct CallingView: View {
                 ZStack(alignment: .bottomTrailing) {
                     videoGridView
                         .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
-                    if viewModel.isParticipantGridDisplayed {
+                    if viewModel.isParticipantGridDisplayed && !viewModel.isInPip && viewModel.allowLocalCameraPreview {
                         Group {
                             DraggableLocalVideoView(containerBounds:
                                                         geometry.frame(in: .local),
@@ -85,12 +103,16 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                     }
+
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
+
+                    bottomToastDiagnosticsView
+                        .accessibilityElement(children: .contain)
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -124,7 +146,7 @@ struct CallingView: View {
             let widthWithoutHorizontalPadding = geoWidth - 2 * InfoHeaderViewConstants.horizontalPadding
             let infoHeaderViewWidth = isIpad ? min(widthWithoutHorizontalPadding,
                                                    InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
-            VStack {
+            VStack(spacing: 0) {
                 bannerView
                 HStack {
                     if isIpad {
@@ -133,17 +155,60 @@ struct CallingView: View {
                         EmptyView()
                     }
                     infoHeaderView
-                        .frame(width: infoHeaderViewWidth, height: InfoHeaderViewConstants.height, alignment: .leading)
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
-                Spacer()
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    lobbyWaitingHeaderView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    lobbyActionErrorView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    topMessageBarDiagnosticsView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
             }
+            .padding(.top, Constants.topAlertAreaViewTopPaddin)
         }
     }
 
     var infoHeaderView: some View {
         InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyWaitingHeaderView: some View {
+        LobbyWaitingHeaderView(viewModel: viewModel.lobbyWaitingHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyActionErrorView: some View {
+        LobbyErrorHeaderView(viewModel: viewModel.lobbyActionErrorViewModel,
                        avatarViewManager: avatarManager)
     }
 
@@ -193,6 +258,43 @@ struct CallingView: View {
                 .accessibilityAddTraits(.isModal)
         }
     }
+
+    var bottomToastDiagnosticsView: some View {
+        VStack {
+            Spacer()
+            if let currentBottomToastViewModel = viewModel.currentBottomToastDiagnostic {
+                BottomToastDiagnosticView(viewModel: currentBottomToastViewModel)
+                    .padding(
+                        EdgeInsets(top: 0,
+                                   leading: 0,
+                                   bottom:
+                                     getSizeClass() == .iphoneLandscapeScreenSize
+                                        ? DiagnosticToastInfoConstants.bottomPaddingLandscape
+                                        : DiagnosticToastInfoConstants.bottomPaddingPortrait,
+                                   trailing: 0)
+                    )
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isStaticText)
+            }
+        }.frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    var topMessageBarDiagnosticsView: some View {
+        VStack {
+            ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
+                MessageBarDiagnosticView(viewModel: diagnosticMessageBarViewModel)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isStaticText)
+            }
+            Spacer()
+        }
+    }
+    var reportErrorView: some View {
+        return Group {
+            SupportFormView(viewModel: viewModel.supportFormViewModel)
+        }
+    }
+
 }
 
 extension CallingView {
@@ -228,5 +330,10 @@ extension CallingView {
                 UIViewController.attemptRotationToDeviceOrientation()
             }
         }
+    }
+
+    private func resetOrientation() {
+        UIDevice.current.setValue(UIDevice.current.orientation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
     }
 }
