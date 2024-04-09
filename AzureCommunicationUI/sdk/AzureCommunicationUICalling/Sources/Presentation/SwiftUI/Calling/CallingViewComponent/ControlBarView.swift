@@ -13,7 +13,9 @@ struct ControlBarView: View {
     @State var leaveCallConfirmationListSourceView = UIView()
     @State var moreListSourceView = UIView()
     @State var debugInfoSourceView = UIView()
-    @AccessibilityFocusState var focusedOnAudioButton: Bool
+    @AccessibilityFocusState var focusedOnAudioDeviceButton: Bool
+    @AccessibilityFocusState var focusedOnHangUpButton: Bool
+    @AccessibilityFocusState var focusedOnMoreButton: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
@@ -130,7 +132,7 @@ struct ControlBarView: View {
         IconButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
             .accessibility(identifier: AccessibilityIdentifier.audioDeviceAccessibilityID.rawValue)
-            .accessibilityFocused($focusedOnAudioButton, equals: true)
+            .accessibilityFocused($focusedOnAudioDeviceButton, equals: true)
 
     }
 
@@ -138,6 +140,7 @@ struct ControlBarView: View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
             .background(SourceViewSpace(sourceView: leaveCallConfirmationListSourceView))
             .accessibilityIdentifier(AccessibilityIdentifier.hangupAccessibilityID.rawValue)
+            .accessibilityFocused($focusedOnHangUpButton, equals: true)
     }
 
     var audioDeviceSelectionListView: some View {
@@ -147,7 +150,7 @@ struct ControlBarView: View {
         .modifier(LockPhoneOrientation())
         .onDisappear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                focusedOnAudioButton = true
+                focusedOnAudioDeviceButton = true
             }
         }
     }
@@ -157,6 +160,11 @@ struct ControlBarView: View {
                                            viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
                                            sourceView: leaveCallConfirmationListSourceView)
         .modifier(LockPhoneOrientation())
+        .onDisappear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                focusedOnHangUpButton = true
+            }
+        }
     }
 
     var moreButton: some View {
@@ -164,6 +172,7 @@ struct ControlBarView: View {
             .background(SourceViewSpace(sourceView: moreListSourceView))
             .background(SourceViewSpace(sourceView: debugInfoSourceView))
             .accessibilityIdentifier(AccessibilityIdentifier.moreAccessibilityID.rawValue)
+            .accessibilityFocused($focusedOnMoreButton, equals: true)
     }
 
     var moreCallOptionsList: some View {
@@ -172,6 +181,11 @@ struct ControlBarView: View {
                                 viewModel: viewModel.moreCallOptionsListViewModel,
                                 sourceView: moreListSourceView)
             .modifier(LockPhoneOrientation())
+            .onDisappear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    focusedOnMoreButton = true
+                }
+            }
         }
     }
     var shareActivityView: some View {
