@@ -18,7 +18,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 
 ### Requirements
 
-- iOS 16+
+- iOS 15+
 - Xcode 13+
 - Swift 5.0+
 
