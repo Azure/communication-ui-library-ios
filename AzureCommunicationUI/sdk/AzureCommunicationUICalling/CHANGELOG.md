@@ -1,6 +1,6 @@
 # Azure Communication UI Calling Release History
 
-## 1.6.0 (2024-04-010)
+## 1.6.1 (2024-04-01)
 
 ### Bug Fixes
 - Accessibility bugs fixed for announcement for mic button, camera button, resume button, participant information
