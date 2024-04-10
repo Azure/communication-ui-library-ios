@@ -6,12 +6,12 @@ This ```script``` folder contains a list of scripts that facilitates the release
 
 | Name                 | Area        | Link |
 |----------------------|-------------|------|
-| main-repo-updater.py | Main Repo | [Go](main-repo-updater.py)     |
-| podspec-updater.py                  | PodSpec  |[Go](podspec-updater.py)  |
+| main-repo-updater.py | Main Repo   | [Go] (main-repo-updater.py)     |
+| podspec-updater.py   | PodSpec     | [Go] (podspec-updater.py)  |
 | TBA                  | QuickStarts | TBA  |
-| TBA                  | MS Doc      | TBA  |
+| gradleFlags          | Gradle tooling for Flag Management | [Go] (./gradleFlags/Readme.md) |
 | TBA                  | Hero Samples| TBA  |
-
+| 
 ## Main Repo Script
 #### Details
 

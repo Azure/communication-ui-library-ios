@@ -1,0 +1,1 @@
+apply from: file('java_compile_flags.gradle')

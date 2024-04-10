@@ -29,6 +29,9 @@ public class CallComposite {
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
         /// Closure to execute when the User reports an issue from within the call composite
         public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
+        /* <TEST_FEATURE:0>
+        public var TEST_FEATURE_API: ((String) -> Void)?
+        </TEST_FEATURE:0> */
     }
 
     /// The events handler for Call Composite
