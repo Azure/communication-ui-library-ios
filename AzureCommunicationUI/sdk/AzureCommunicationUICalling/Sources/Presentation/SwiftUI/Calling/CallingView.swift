@@ -188,28 +188,6 @@ struct CallingView: View {
                     } else {
                         EmptyView()
                     }
-                    lobbyWaitingHeaderView
-                        .frame(width: infoHeaderViewWidth, alignment: .leading)
-                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
-                    Spacer()
-                }
-                HStack {
-                    if isIpad {
-                        Spacer()
-                    } else {
-                        EmptyView()
-                    }
-                    lobbyActionErrorView
-                        .frame(width: infoHeaderViewWidth, alignment: .leading)
-                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
-                    Spacer()
-                }
-                HStack {
-                    if isIpad {
-                        Spacer()
-                    } else {
-                        EmptyView()
-                    }
                     topMessageBarDiagnosticsView
                         .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
