@@ -16,14 +16,15 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="上一步";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通話";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "加入通話已停用";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="視訊關閉";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="開啟相機";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="開啟視訊";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="視訊開啟";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="關閉相機";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="關閉視訊";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="麥克風關閉";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="啟用通知";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="已開啟麥克風";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="麥克風開啟";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="靜音";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="已關閉麥克風";
 "AzureCommunicationUICalling.SetupView.Button.Device"="裝置";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="選取音訊裝置";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="移至 [設定]";
@@ -38,6 +39,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="您的通話已保留";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="繼續";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "繼續";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="正在等待其他人加入";
@@ -69,7 +71,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="正在大廳等候 (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="通話中 (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="全部准許";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="准許所有參與者嗎?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="准許所有參與者?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="准許 %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="准許";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒絕";
@@ -81,6 +83,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d 個參與者已加入會議";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ 已離開會議";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d 個參與者已離開會議";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="您已加入通話";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="正在分享內容";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="已結束內容分享";
@@ -146,8 +149,6 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="關閉通話診斷";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="關閉此通話診斷橫幅";
-
-/* Feedback Form */
 
 "AzureCommunicationUICalling.ReportIssue.Title"="回報問題";
 "AzureCommunicationUICalling.LogsAttach.Notice"="我們將會自動附加記錄。";

@@ -59,7 +59,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
                 }
         }
         self.actionButtonViewModel?
-            .update(accessibilityLabel: AccessibilityIdentifier.callResumeAccessibilityID.rawValue)
+            .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.resumeAccessibilityLabel))
     }
 
     func update(callingStatus: CallingStatus,

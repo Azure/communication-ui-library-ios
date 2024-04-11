@@ -113,7 +113,7 @@ struct LocalVideoView: View {
             if localVideoStreamId != $0 {
                 localVideoStreamId = $0
             }
-        }
+        }.accessibilityIgnoresInvertColors(true)
     }
 
     var cameraSwitchButton: some View {

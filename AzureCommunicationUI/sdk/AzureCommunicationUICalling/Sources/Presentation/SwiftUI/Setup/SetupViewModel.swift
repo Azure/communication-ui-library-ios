@@ -72,8 +72,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
-        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
-
+        updateAccessibilityLabel()
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
             buttonType: .controlButton,
@@ -99,6 +98,17 @@ class SetupViewModel: ObservableObject {
         $isJoinRequested.sink { [weak self] value in
             self?.setupControlBarViewModel.update(isJoinRequested: value)
         }.store(in: &cancellables)
+    }
+
+    func updateAccessibilityLabel() {
+        if joinCallButtonViewModel.isDisabled {
+            // Update the accessibility label for the disabled state
+            joinCallButtonViewModel.update(accessibilityLabel:
+            self.localizationProvider.getLocalizedString(.joinCallDiableStateAccessibilityLabel))
+        } else {
+            // Update the accessibility label for the normal state
+            joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+        }
     }
 
     deinit {
@@ -142,6 +152,7 @@ class SetupViewModel: ObservableObject {
                                         permissionState: permissionState,
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)
     }
 

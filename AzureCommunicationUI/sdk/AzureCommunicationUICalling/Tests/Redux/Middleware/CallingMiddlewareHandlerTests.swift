@@ -430,10 +430,23 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         await sut.enterForeground(
             state: getState(callingState: .connected,
                             cameraStatus: .paused,
-                            cameraDeviceStatus: .front),
+                            cameraDeviceStatus: .front,
+                            lifecycleStatus: .background),
             dispatch: getEmptyDispatch()
         ).value
         XCTAssertTrue(mockCallingService.startLocalVideoStreamCalled)
+    }
+
+    func test_callingMiddlewareHandler_enterForeground_when_notInBackground_callConnected_cameraStatusPaused_then_willNotStartLocalVideoStreamCalled() async {
+        let sut = makeSUT()
+        await sut.enterForeground(
+            state: getState(callingState: .connected,
+                            cameraStatus: .paused,
+                            cameraDeviceStatus: .front,
+                            lifecycleStatus: .foreground),
+            dispatch: getEmptyDispatch()
+        ).value
+        XCTAssertFalse(mockCallingService.startLocalVideoStreamCalled)
     }
 
     func test_callingMiddlewareHandler_enterForeground_when_callNotStarted_then_startLocalVideoStreamNotCalled() async {
@@ -644,7 +657,8 @@ extension CallingMiddlewareHandlerTests {
                           cameraDeviceStatus: LocalUserState.CameraDeviceSelectionStatus = .front,
                           cameraPermission: AppPermission.Status = .unknown,
                           cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local,
-                          internalError: CallCompositeInternalError? = nil) -> AppState {
+                          internalError: CallCompositeInternalError? = nil,
+                          lifecycleStatus: AppStatus = .foreground) -> AppState {
         let callState = CallingState(status: callingState)
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
@@ -657,11 +671,12 @@ extension CallingMiddlewareHandlerTests {
                                         localVideoStreamIdentifier: nil)
         let permissionState = PermissionState(audioPermission: .unknown,
                                               cameraPermission: cameraPermission)
+        let lifeCycleState = LifeCycleState(currentStatus: lifecycleStatus)
         let errorState = ErrorState(internalError: internalError)
         return AppState(callingState: callState,
                         permissionState: permissionState,
                         localUserState: localState,
-                        lifeCycleState: LifeCycleState(),
+                        lifeCycleState: lifeCycleState,
                         remoteParticipantsState: .init(),
                         errorState: errorState)
     }

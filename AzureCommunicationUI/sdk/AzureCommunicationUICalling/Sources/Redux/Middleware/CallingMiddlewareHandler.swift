@@ -149,7 +149,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            guard state.callingState.status == .connected,
+            guard state.lifeCycleState.currentStatus == .background,
+                  state.callingState.status == .connected,
                   state.localUserState.cameraState.operation == .paused else {
                 return
             }

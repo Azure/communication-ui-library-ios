@@ -29,6 +29,8 @@ enum LocalizationKey: String {
     case micOnAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"
     case device = "AzureCommunicationUICalling.SetupView.Button.Device"
     case deviceAccesibiiltyLabel = "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"
+    case joinCallDiableStateAccessibilityLabel =
+            "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel"
     case goToSettings = "AzureCommunicationUICalling.SetupView.Button.GoToSettings"
     case cameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"
     case audioAndCameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"
@@ -41,6 +43,7 @@ enum LocalizationKey: String {
     /* OnHoldView */
     case onHoldMessage = "AzureCommunicationUICalling.OnHoldView.Text.OnHold"
     case resume = "AzureCommunicationUICalling.OnHoldView.Button.Resume"
+    case resumeAccessibilityLabel = "AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel"
 
     /* CallingView */
     case callWith0Person = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
@@ -98,6 +101,8 @@ enum LocalizationKey: String {
     case multiplePeopleJoined = "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"
     case onePersonLeft = "AzureCommunicationUICalling.CallingView.OnePersonLeft"
     case multiplePeopleLeft = "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"
+    case participantInformationAccessibilityLable =
+            "AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel"
     case joinedCallAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"
     case screenshareStartAccessibilityLabel =
