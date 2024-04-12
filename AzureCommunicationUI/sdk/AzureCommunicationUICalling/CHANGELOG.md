@@ -1,5 +1,10 @@
 # Azure Communication UI Calling Release History
 
+## 1.6.1 (2024-04-12)
+
+### Features
+- Ability to join Rooms call. Functionality is limited.
+
 ## 1.6.1 (2024-04-01)
 
 ### Bug Fixes
