@@ -135,6 +135,7 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
                 })
+                .accessibilityElement(children: .contain)
             }
         }
     }
@@ -158,7 +159,7 @@ struct CallingView: View {
                         .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
-                }
+                }.accessibilityElement(children: .contain)
                 HStack {
                     if isIpad {
                         Spacer()
@@ -194,6 +195,7 @@ struct CallingView: View {
                 }
             }
             .padding(.top, Constants.topAlertAreaViewTopPaddin)
+            .accessibilityElement(children: .contain)
         }
     }
 
