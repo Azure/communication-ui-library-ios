@@ -294,7 +294,7 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
-    func changeLocalParticipantRole(_ role: ParticipantRole) async throws {
+    func changeLocalParticipantRole(_ role: ParticipantRoleEnum) async throws {
         guard callMocking != nil else {
             return
         }

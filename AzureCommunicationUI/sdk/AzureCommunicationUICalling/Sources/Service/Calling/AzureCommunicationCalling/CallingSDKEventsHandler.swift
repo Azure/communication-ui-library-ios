@@ -16,7 +16,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> = .init([])
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
-    var participantRoleSubject = PassthroughSubject<ParticipantRole, Never>()
+    var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
 
     // User Facing Diagnostics Subjects
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()

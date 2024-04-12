@@ -14,7 +14,7 @@ protocol CallingServiceProtocol {
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
-    var participantRoleSubject: PassthroughSubject<ParticipantRole, Never> { get }
+    var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
@@ -53,7 +53,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never>
     var callIdSubject: PassthroughSubject<String, Never>
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never>
-    var participantRoleSubject: PassthroughSubject<ParticipantRole, Never>
+    var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never>
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()

@@ -89,7 +89,7 @@ class CallingServiceMocking: CallingServiceProtocol {
 
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
-    var participantRoleSubject = PassthroughSubject<ParticipantRole, Never>()
+    var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
 
     func setupCall() async throws {
         setupCallCalled = true

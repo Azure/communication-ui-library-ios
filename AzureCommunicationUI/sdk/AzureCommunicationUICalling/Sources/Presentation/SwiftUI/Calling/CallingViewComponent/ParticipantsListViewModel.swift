@@ -13,7 +13,7 @@ class ParticipantsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
 
     var lastUpdateTimeStamp = Date()
-    private var lastParticipantRole: ParticipantRole?
+    private var lastParticipantRole: ParticipantRoleEnum?
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatch: ActionDispatch
@@ -108,7 +108,7 @@ class ParticipantsListViewModel: ObservableObject {
         self.localizationProvider.getLocalizedString(.participantListConfirmDecline)
     }
 
-    private func shouldFilterOutLobbyUsers(participantRole: ParticipantRole?) -> Bool {
+    private func shouldFilterOutLobbyUsers(participantRole: ParticipantRoleEnum?) -> Bool {
         return participantRole == nil
             || !(participantRole == .organizer
                  || participantRole == .presenter

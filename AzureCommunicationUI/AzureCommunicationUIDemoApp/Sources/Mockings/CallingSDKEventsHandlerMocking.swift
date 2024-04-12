@@ -239,7 +239,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
         }
     }
 
-    func setParticipantRole(_ role: ParticipantRole) {
+    func setParticipantRole(_ role: ParticipantRoleEnum) {
         Task { @MainActor [weak self] in
             self?.participantRoleSubject.send(role)
         }
