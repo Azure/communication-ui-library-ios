@@ -99,9 +99,9 @@ public class CallComposite {
     }
 
     /// Create an instance of CallComposite with options.
-    /// - Parameter for: The CommunicationTokenCredential used for call.
+    /// - Parameter credential: The CommunicationTokenCredential used for call.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
-    public init(for: CommunicationTokenCredential,
+    public init(credential: CommunicationTokenCredential,
                 withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
@@ -120,13 +120,13 @@ public class CallComposite {
     }
 
     /// Handle push notification to receive incoming call notification.
-    public func handlePushNotification(for: CallCompositePushNotification,
+    public func handlePushNotification(pushNotification: CallCompositePushNotification,
                                        completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }
 
     /// Report incoming call to notify CallKit when in background mode.
     /// On success you can wake up application.
-    public static func reportIncomingCall(for: CallCompositePushNotification,
+    public static func reportIncomingCall(pushNotification: CallCompositePushNotification,
                                           callKitOptions: CallCompositeCallKitOptions,
                                           completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }
@@ -141,13 +141,13 @@ public class CallComposite {
     }
 
     /// Accept incoming call
-    public func acceptIncomingCall(callId: String,
-                                   localOptions: LocalOptions? = nil) {
+    public func accept(incomingCallId: String,
+                       localOptions: LocalOptions? = nil) {
     }
 
     /// Reject incoming call
-    public func rejectIncomingCall(callId: String,
-                                   completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+    public func reject(incomingCallId: String,
+                       completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
     }
 
     /// Hold  call
