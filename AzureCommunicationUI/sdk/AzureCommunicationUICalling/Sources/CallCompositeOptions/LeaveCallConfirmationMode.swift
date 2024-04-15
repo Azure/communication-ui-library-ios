@@ -6,21 +6,21 @@
 import Foundation
 
 /// Enum defining options for leaving a call confirmation.
-public enum LeaveCallConfirmationOptions {
+public enum LeaveCallConfirmationMode {
     /// Enables the leave call confirmation.
-    case enable
+    case alwaysEnabled
     /// Disables the leave call confirmation.
-    case disable
+    case alwaysDisabled
 
     /// Provides a `String` representation of the mode.
-    /// - For `.enable`, returns "enable".
-    /// - For `.disable`, returns "disable".
+    /// - For `.always_enabled`, returns "always_enabled".
+    /// - For `.always_disabled`, returns "always_disabled".
     var rawValue: String {
         switch self {
-        case .enable:
-            return "enable"
-        case .disable:
-            return "disable"
+        case .alwaysEnabled:
+            return "always_enabled"
+        case .alwaysDisabled:
+            return "always_disabled"
         }
     }
 }
