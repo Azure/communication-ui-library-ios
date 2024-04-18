@@ -307,8 +307,12 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo /* <ROOMS_SUPPORT:6> ,
-                                        roleHint: roomRoleData </ROOMS_SUPPORT:1> */
+                                        /* <ROOMS_SUPPORT:6>
+                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                         roleHint: roomRoleData
+                                        <|ROOMS_SUPPORT> */
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        /*</ROOMS_SUPPORT:1> */
         )
         self.callComposite = callComposite
 
@@ -543,8 +547,9 @@ class CallingDemoViewController: UIViewController {
             || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
             || (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty)
             || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty)
-            /* <ROOMS_SUPPORT> || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) </ROOMS_SUPPORT:5> */
-        {
+            /* <ROOMS_SUPPORT>
+            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty)
+            </ROOMS_SUPPORT:5> */ {
             return true
         }
 
@@ -651,7 +656,7 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
         teamsMeetingTextField.borderStyle = .roundedRect
         teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
-        
+
         /* <ROOMS_SUPPORT>
         roomCallTextField = UITextField()
         roomCallTextField.placeholder = "Room Id"
@@ -669,7 +674,6 @@ class CallingDemoViewController: UIViewController {
                                                for: .valueChanged)
         selectedRoomRoleType = envConfigSubject.selectedRoomRoleType
         </ROOMS_SUPPORT> */
-
 
         meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting", "Room Call"])
         meetingTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedMeetingType.rawValue

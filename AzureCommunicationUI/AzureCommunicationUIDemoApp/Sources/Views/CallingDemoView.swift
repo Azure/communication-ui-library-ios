@@ -139,26 +139,26 @@ struct CallingDemoView: View {
                 TextField(
                     "Group Call Id",
                     text: $envConfigSubject.groupCallId)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .textFieldStyle(.roundedBorder)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
             case .teamsMeeting:
                 TextField(
                     "Team Meeting",
                     text: $envConfigSubject.teamsMeetingLink)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .textFieldStyle(.roundedBorder)
-            /* <ROOMS_SUPPORT>
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+                /* <ROOMS_SUPPORT>
             case .roomCall:
                 TextField(
                     "Room Id",
                     text: $envConfigSubject.roomId)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .textFieldStyle(.roundedBorder)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+                </ROOMS_SUPPORT> */
             }
-            </ROOMS_SUPPORT> */
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
@@ -373,8 +373,12 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo /* <ROOMS_SUPPORT>,
-                                        roleHint: roomRoleData </ROOMS_SUPPORT> */
+                                        /* <ROOMS_SUPPORT>
+                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                         roleHint: roomRoleData
+                                        <|ROOMS_SUPPORT> */
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        /* <ROOMS_SUPPORT> */
         )
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
