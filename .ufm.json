@@ -1,0 +1,38 @@
+{
+    "activeScope": "beta",
+    "scopes": {
+        "beta": [
+            "ROOMS_SUPPORT"
+        ]
+    },
+    "prompts": {
+        "summary": [
+            {
+                "role": "system",
+                "content": "Write a summary of the feature for the user. They will provide a changelog of additions in regard to a feature they are adding to a software project. Summarize it for a general audience and always output well formatted and organized markdown"
+            },
+            {
+                "role": "assistant",
+                "content": "What would you like to summarize today?"
+            },
+            {
+                "role": "user",
+                "content": "Please summarize \n %CONTEXT%"
+            }
+        ],
+        "review": [
+            {
+                "role": "system",
+                "content": "Your are an experienced code reviewer. Please look at these additions to a project in regards to a feature. Respond in beautiful markdown. Be neutral, direct and constructive. Assume things outside the view are done already, i.e. Imports included."
+            },
+            {
+                "role": "assistant",
+                "content": "What would you like to summarize today?"
+            },
+            {
+                "role": "user",
+                "content": "Please summarize \n %CONTEXT%"
+            }
+        ]
+    }
+}

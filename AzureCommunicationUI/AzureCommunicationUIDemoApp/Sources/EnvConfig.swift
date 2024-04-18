@@ -19,10 +19,10 @@ enum EnvConfig: String {
     case teamsMeetingLink
     case threadId
     case endpointUrl
-    /* <ROOMS_SUPPORT:12>
+    /* <ROOMS_SUPPORT:12> */
     case roomId
     case roomRole
-    </ROOMS_SUPPORT> */
+    /* </ROOMS_SUPPORT> */
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
@@ -49,10 +49,10 @@ class EnvConfigSubject: ObservableObject {
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
-    /* <ROOMS_SUPPORT>
+    /* <ROOMS_SUPPORT> */
     @Published var selectedRoomRoleType: RoomRoleType = .presenter
     @Published var roomId: String = EnvConfig.roomId.value()
-    </ROOMS_SUPPORT> */
+    /* </ROOMS_SUPPORT> */
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
     @Published var selectedChatType: ChatType = .groupChat
