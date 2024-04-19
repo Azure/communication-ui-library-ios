@@ -378,8 +378,10 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
-        /* <ROOMS_SUPPORT:6> */ case .roomCall:
-            return roomCallTextField.text ?? "" /* </ROOMS_SUPPORT:2> */
+        /* <ROOMS_SUPPORT:6> */ 
+        case .roomCall:
+            return roomCallTextField.text ?? ""
+        /* </ROOMS_SUPPORT:2> */
         }
     }
 
