@@ -26,9 +26,7 @@ class PreviewAreaViewModel: ObservableObject {
         goToSettingsButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryOutline,
             buttonLabel: self.localizationProvider
-                .getLocalizedString(.goToSettings),
-            iconName: .none,
-            isDisabled: false) { [weak self] in
+                .getLocalizedString(.goToSettings)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -64,11 +62,11 @@ class PreviewAreaViewModel: ObservableObject {
         return displayText
     }
 
-    func update(localUserState: LocalUserState, permissionState: PermissionState) {
+    func update(localUserState: LocalUserState, permissionState: PermissionState, visibilityState: VisibilityState) {
         self.cameraPermission = permissionState.cameraPermission
         self.audioPermission = permissionState.audioPermission
         updatePermissionsState()
-        localVideoViewModel.update(localUserState: localUserState)
+        localVideoViewModel.update(localUserState: localUserState, visibilityState: visibilityState)
     }
 
     private func updatePermissionsState() {

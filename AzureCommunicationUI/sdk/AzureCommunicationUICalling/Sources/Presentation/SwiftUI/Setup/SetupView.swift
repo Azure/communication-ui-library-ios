@@ -44,6 +44,7 @@ struct SetupView: View {
                             }
                             .background(Color(StyleProvider.color.surface))
                             .cornerRadius(4)
+                            .accessibilityElement(children: .contain)
                             joinCallView
                                 .padding(.bottom)
                         }
@@ -52,11 +53,9 @@ struct SetupView: View {
                             .padding(.bottom, setupViewVerticalPadding(parentSize: geometry.size))
                     }
                     .padding(.horizontal, setupViewHorizontalPadding(parentSize: geometry.size))
+                    .accessibilityElement(children: .contain)
                 }
             }
-        }
-        .onAppear {
-            viewModel.dismissSetupScreen()
         }
     }
 
@@ -66,6 +65,7 @@ struct SetupView: View {
                 JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+                    .frame(height: 52)
                     .accessibilityIdentifier(AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
             }
         }

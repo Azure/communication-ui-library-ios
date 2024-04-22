@@ -14,9 +14,11 @@ enum NavigationStatus {
 struct NavigationState: Equatable {
 
     let status: NavigationStatus
+    let supportFormVisible: Bool
 
-    init(status: NavigationStatus = .setup) {
+    init(status: NavigationStatus = .setup, supportFormVisible: Bool = false) {
         self.status = status
+        self.supportFormVisible = supportFormVisible
     }
 
     static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {

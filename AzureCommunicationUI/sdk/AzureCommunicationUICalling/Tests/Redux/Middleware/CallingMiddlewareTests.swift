@@ -196,6 +196,58 @@ class CallingMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_callingMiddleware_apply_when_admitAllAction_then_handlerAdmitAllCalled() {
+
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "admitAllLobbyParticipants")
+        mockMiddlewareHandler.admitAllLobbyParticipants = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.remoteParticipantsAction(.admitAll))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_declineAllAction_then_handlerDeclineAllCalled() {
+
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "declineAllLobbyParticipants")
+        mockMiddlewareHandler.declineAllLobbyParticipants = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.remoteParticipantsAction(.declineAll))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_admitAction_then_handlerAdmitCalled() {
+
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "admitLobbyParticipant")
+        mockMiddlewareHandler.admitLobbyParticipant = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.remoteParticipantsAction(.admit(participantId: "id1")))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_declineAction_then_handlerDeclineCalled() {
+
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "declineLobbyParticipant")
+        mockMiddlewareHandler.declineLobbyParticipant = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.remoteParticipantsAction(.decline(participantId: "id1")))
+        wait(for: [expectation], timeout: 1)
+    }
+
 }
 
 extension CallingMiddlewareTests {

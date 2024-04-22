@@ -33,8 +33,24 @@ enum AccessibilityIdentifier: String {
     case activityViewControllerAccessibilityID = "ActivityListView"
     case callResumeAccessibilityID =
             "AzureCommunicationUICalling.CallingView.GridView.Resume.AccessibilityID"
+    case lobbyWaitingViewID =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityID"
+    case lobbyWaitingDismissID =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityID"
+    case lobbyErrorDismissID =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityID"
+    case participantListLobbyActionID =
+            "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction.AccessibilityID"
     case callDiagnosticBottomToastAccessibilityID =
             "AzureCommunicationUICalling.CallingView.Diagnostics.BottomToast.AccessibilityID"
     case callDiagnosticMessageBarAccessibilityID =
             "AzureCommunicationUICalling.CallingView.Diagnostics.MessageBar.AccessibilityID"
+    case reportIssueAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.ControlBarView.SupportForm.AccessibilityID"
+    case supportFormAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.SupportForm.AccessibilityID"
+    case supportFormSubmitAccessibilityId =
+            "AzureCommunicationUICalling.CallingView.SupportForm.Submit.AccessibilityID"
+    case supportFormTextFieldAccessibilityId =
+            "AzureCommunicationUICalling.CallingView.SupportForm.TextField.AccessibilityID"
 }

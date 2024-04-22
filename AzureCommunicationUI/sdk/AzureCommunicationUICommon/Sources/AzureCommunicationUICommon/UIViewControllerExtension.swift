@@ -8,10 +8,10 @@ import UIKit
 
 extension UIViewController {
 
-    func dismissSelf(completion: (() -> Void)? = nil) {
+    func dismissSelf(completion: (() -> Void)? = nil, animated: Bool = true) {
         if let presentingVc = presentingViewController {
             view.endEditing(true)
-            presentingVc.dismiss(animated: true, completion: completion)
+            presentingVc.dismiss(animated: animated, completion: completion)
         }
     }
 }

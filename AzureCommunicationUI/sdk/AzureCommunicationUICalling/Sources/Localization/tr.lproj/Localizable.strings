@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d kişi ile arama"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Katılımcılar";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Kişiler katılmak için bekliyor.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Lobiyi görüntüle";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Lobiyi görüntüle";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Lobi bildirimini kapat";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobi eylemleri desteklenmiyor.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobi devre dışı bırakıldı.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Rolünüz lobide etkili olamaz.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Katılımcı lobide değil.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobi eylemi hatası.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Lobi hatası bildirimini kapat";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Adsız Katılımcı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ben)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Sessize alındı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Sesi açıldı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Konuşma";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Beklemede";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Kabul etmek veya reddetmek için dokunun";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Lobide bekleniyor (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="Aramada (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Tümünü kabul et";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Tüm katılımcılar kabul edilsin mi?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ kabul edilsin mi?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Kabul et";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Reddet";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Ön kameraya geç";
@@ -124,3 +146,14 @@
 
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Çağrı Tanılamayı Kapat";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Bu Çağrı Tanılamayı Kapatma Başlığı";
+
+/* Feedback Form */
+
+"AzureCommunicationUICalling.ReportIssue.Title"="Sorun Bildir";
+"AzureCommunicationUICalling.LogsAttach.Notice"="Günlükler otomatik olarak eklenir.";
+"AzureCommunicationUICalling.PrivacyPolicy.Text"="Gizlilik İlkesi";
+"AzureCommunicationUICalling.DescribeYourIssueHint.Text"="Lütfen sorununuzu açıklayın...";
+"AzureCommunicationUICalling.CancelButton.Text"="İptal";
+"AzureCommunicationUICalling.Attach.Screenshot"="Ekran görüntüsü ekle";
+"AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
+"AzureCommunicationUICalling.SendFeedback.Text"="Gönder";

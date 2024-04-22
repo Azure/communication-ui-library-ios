@@ -342,6 +342,8 @@ class ParticipantsListViewModelTests: XCTestCase {
 extension ParticipantsListViewModelTests {
     func makeSUT() -> ParticipantsListViewModel {
         return ParticipantsListViewModel(compositeViewModelFactory: factoryMocking,
-                                         localUserState: LocalUserState())
+                                         localUserState: LocalUserState(),
+                                         dispatchAction: storeFactory.store.dispatch,
+                                         localizationProvider: localizationProvider)
     }
 }

@@ -21,6 +21,27 @@ class AzureCommunicationUIDemoAppRemoteParticipantsTests: XCUITestBase {
         wait(for: app.staticTexts.element(matching: predicate))
     }
 
+    func testCallCompositeAddInLobbyRemoteParticipantHandler() {
+        tapInterfaceFor(.callUIKit)
+        startExperience()
+
+        joinCall()
+
+        wait(for: app.buttons[AccessibilityIdentifier.hangupAccessibilityID.rawValue])
+
+        tapButton(accessibilityIdentifier: "Add InLobby Participant")
+
+        wait(for: app.staticTexts["Waiting for others to join"])
+
+        tapButton(accessibilityIdentifier: "Remove Participant")
+
+        tapButton(accessibilityIdentifier: "Change role to Presenter")
+
+        tapButton(accessibilityIdentifier: "Add InLobby Participant")
+
+        wait(for: app.staticTexts["People are waiting to join."])
+    }
+
     func testCallCompositeUnmuteRemoteParticipantHandler() {
         tapInterfaceFor(.callUIKit)
         startExperience()

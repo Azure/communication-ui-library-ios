@@ -8,6 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
+// swiftlint:disable file_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -80,8 +81,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
-        } else if let meetingLink = callConfiguration.meetingLink {
-            joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
+        } else if callConfiguration.compositeCallType == .teamsMeeting,
+                  let meetingLink = callConfiguration.meetingLink {
+            joinLocator = TeamsMeetingLinkLocator(
+                meetingLink: meetingLink.trimmingCharacters(in: .whitespacesAndNewlines))
+        } else if callConfiguration.compositeCallType == .roomsCall,
+                  let roomId = callConfiguration.roomId {
+            joinLocator = RoomCallLocator(roomId: roomId.trimmingCharacters(in: .whitespacesAndNewlines))
         } else {
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
@@ -249,6 +255,58 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Resume Call successful")
         } catch {
             logger.error( "ERROR: It was not possible to resume call. \(error)")
+            throw error
+        }
+    }
+    func getLogFiles() -> [URL] {
+        guard let callClient = callClient else {
+            return []
+        }
+        return callClient.debugInfo.supportFiles
+    }
+
+    func admitAllLobbyParticipants() async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+            try await call.callLobby.admitAll()
+            logger.debug("Admit All participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit all lobby participants. \(error)")
+            throw error
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            try await call.callLobby.admit(identifiers: [identifier])
+            logger.debug("Admit participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
+            throw error
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            try await call.callLobby.reject(identifier: identifier)
+            logger.debug("Reject lobby participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to reject lobby participants. \(error)")
             throw error
         }
     }

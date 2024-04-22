@@ -26,6 +26,8 @@ class CallingDemoViewController: UIViewController {
     }
     var callingViewModel: CallingDemoViewModel
 
+    private var callComposite: CallComposite?
+
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!
     private var acsTokenTextField: UITextField!
@@ -33,11 +35,15 @@ class CallingDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
+    private var roomCallTextField: UITextField!
+    private var selectedRoomRoleType: RoomRoleType = .presenter
     private var settingsButton: UIButton!
     private var showCallHistoryButton: UIButton!
     private var startExperienceButton: UIButton!
+    private var showExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
+    private var roomRoleTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
     private var titleLabel: UILabel!
     private var callStateLabel: UILabel!
@@ -150,11 +156,18 @@ class CallingDemoViewController: UIViewController {
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
         }
-
+        if !envConfigSubject.roomId.isEmpty {
+            roomCallTextField.text = envConfigSubject.roomId
+        }
         if envConfigSubject.selectedMeetingType == .groupCall {
             meetingTypeSegmentedControl.selectedSegmentIndex = 0
         } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
             meetingTypeSegmentedControl.selectedSegmentIndex = 1
+        }
+        if envConfigSubject.selectedRoomRoleType == .presenter {
+            roomRoleTypeSegmentedControl.selectedSegmentIndex = 0
+        } else if envConfigSubject.selectedRoomRoleType == .attendee {
+            roomRoleTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
@@ -207,7 +220,9 @@ class CallingDemoViewController: UIViewController {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
-            callingScreenOrientation: callingViewOrientation)
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
@@ -245,6 +260,11 @@ class CallingDemoViewController: UIViewController {
                             }
                         }
         }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [] userIssue in
+            print("::::UIKitDemoView::getEventsHandler::onUserReportedIssue \(userIssue)")
+        }
+
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
@@ -254,11 +274,22 @@ class CallingDemoViewController: UIViewController {
                 callComposite?.dismiss()
             }
         }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
+        let roomRole = envConfigSubject.selectedRoomRoleType
+        var roomRoleData: ParticipantRole?
+        if envConfigSubject.selectedMeetingType == .roomCall {
+            if roomRole == .presenter {
+                roomRoleData = ParticipantRole.presenter
+            } else if roomRole == .attendee {
+                roomRoleData = ParticipantRole.attendee
+            }
+        }
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
@@ -270,7 +301,10 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                        roleHint: roomRoleData,
                                         displayLeaveCallConfirmation: envConfigSubject.displayLeaveCallConfirmation)
+        self.callComposite = callComposite
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
@@ -284,6 +318,12 @@ class CallingDemoViewController: UIViewController {
                 callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
+                                     localOptions: localOptions)
+            case .roomCall:
+                callComposite.launch(remoteOptions:
+                                        RemoteOptions(for:
+                                                .roomCall(roomId: link),
+                                                      credential: credential, displayName: getDisplayName()),
                                      localOptions: localOptions)
             }
         } else {
@@ -326,6 +366,8 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
+        case .roomCall:
+            return roomCallTextField.text ?? ""
         }
     }
 
@@ -375,6 +417,9 @@ class CallingDemoViewController: UIViewController {
     @objc func onMeetingTypeValueChanged(_ sender: UISegmentedControl!) {
         selectedMeetingType = MeetingType(rawValue: sender.selectedSegmentIndex)!
         updateMeetingTypeFields()
+    }
+    @objc func onRoomRoleChanged(_ sender: UISegmentedControl!) {
+        selectedRoomRoleType = RoomRoleType(rawValue: sender.selectedSegmentIndex)!
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -435,6 +480,10 @@ class CallingDemoViewController: UIViewController {
         }
     }
 
+    @objc func onShowExperienceBtnPressed() {
+        self.callComposite?.isHidden = false
+    }
+
     private func updateAcsTokenTypeFields() {
         switch selectedAcsTokenType {
         case .tokenUrl:
@@ -451,9 +500,18 @@ class CallingDemoViewController: UIViewController {
         case .groupCall:
             groupCallTextField.isHidden = false
             teamsMeetingTextField.isHidden = true
+            roomCallTextField.isHidden = true
+            roomRoleTypeSegmentedControl.isHidden = true
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
+            roomCallTextField.isHidden = true
+            roomRoleTypeSegmentedControl.isHidden = true
+        case .roomCall:
+            groupCallTextField.isHidden = true
+            teamsMeetingTextField.isHidden = true
+            roomCallTextField.isHidden = false
+            roomRoleTypeSegmentedControl.isHidden = false
         }
     }
 
@@ -469,7 +527,8 @@ class CallingDemoViewController: UIViewController {
         if (selectedAcsTokenType == .token && acsTokenTextField.text!.isEmpty)
             || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
             || (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty)
-            || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty) {
+            || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty)
+            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) {
             return true
         }
 
@@ -483,7 +542,36 @@ class CallingDemoViewController: UIViewController {
     private func setupUI() {
         updateUIBasedOnUserInterfaceStyle()
         let safeArea = view.safeAreaLayoutGuide
+#if DEBUG
+        // Debug Buttons for Instrumentation to press
+        // They shouldn't be visible
+        let audioOnlyButton = UIButton(type: .system)
+        audioOnlyButton.backgroundColor = UIColor.clear // Making the button transparent
+        audioOnlyButton.addTarget(self, action: #selector(toggleAudioOnly), for: .touchUpInside)
+        audioOnlyButton.accessibilityIdentifier = AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue
+        audioOnlyButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
 
+        let mockSdkButton = UIButton(type: .system)
+        mockSdkButton.backgroundColor = UIColor.clear // Making the button transparent
+        mockSdkButton.addTarget(self, action: #selector(toggleMockSdk), for: .touchUpInside)
+        mockSdkButton.accessibilityIdentifier = AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue
+        mockSdkButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10) // Minimal size
+
+        let debugButtonsStackView = UIStackView(arrangedSubviews: [audioOnlyButton, mockSdkButton])
+        debugButtonsStackView.axis = .horizontal
+        debugButtonsStackView.distribution = .fillEqually
+        debugButtonsStackView.spacing = 4 // Reduced spacing
+        debugButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(debugButtonsStackView)
+
+        NSLayoutConstraint.activate([
+            debugButtonsStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
+            debugButtonsStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 8),
+            debugButtonsStackView.widthAnchor.constraint(equalToConstant: 24), // Container width
+            audioOnlyButton.heightAnchor.constraint(equalToConstant: 10), // Button height
+            mockSdkButton.heightAnchor.constraint(equalToConstant: 10) // Button height
+        ])
+#endif
         titleLabel = UILabel()
         titleLabel.text = "UI Library - UIKit Sample"
         titleLabel.sizeToFit()
@@ -547,15 +635,29 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
         teamsMeetingTextField.borderStyle = .roundedRect
         teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+        roomCallTextField = UITextField()
+        roomCallTextField.placeholder = "Room Id"
+        roomCallTextField.text = envConfigSubject.roomId
+        roomCallTextField.delegate = self
+        roomCallTextField.sizeToFit()
+        roomCallTextField.translatesAutoresizingMaskIntoConstraints = false
+        roomCallTextField.borderStyle = .roundedRect
+        roomCallTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
 
-        meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting"])
+        meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting", "Room Call"])
         meetingTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedMeetingType.rawValue
         meetingTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         meetingTypeSegmentedControl.addTarget(self,
                                               action: #selector(onMeetingTypeValueChanged(_:)),
                                               for: .valueChanged)
         selectedMeetingType = envConfigSubject.selectedMeetingType
-
+        roomRoleTypeSegmentedControl = UISegmentedControl(items: ["Presenter", "Attendee"])
+        roomRoleTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedRoomRoleType.rawValue
+        roomRoleTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        roomRoleTypeSegmentedControl.addTarget(self,
+                                              action: #selector(onRoomRoleChanged(_:)),
+                                              for: .valueChanged)
+        selectedRoomRoleType = envConfigSubject.selectedRoomRoleType
         settingsButton = UIButton()
         settingsButton.setTitle("Settings", for: .normal)
         settingsButton.backgroundColor = .systemBlue
@@ -592,6 +694,22 @@ class CallingDemoViewController: UIViewController {
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
 
         startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
+
+        showExperienceButton = UIButton()
+        showExperienceButton.backgroundColor = .systemBlue
+        showExperienceButton.setTitleColor(UIColor.white, for: .normal)
+        showExperienceButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        showExperienceButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                   left: LayoutConstants.buttonHorizontalInset,
+                                                                   bottom: LayoutConstants.buttonVerticalInset,
+                                                                   right: LayoutConstants.buttonHorizontalInset)
+        showExperienceButton.layer.cornerRadius = 8
+        showExperienceButton.setTitle("Show", for: .normal)
+        showExperienceButton.sizeToFit()
+        showExperienceButton.translatesAutoresizingMaskIntoConstraints = false
+        showExperienceButton.addTarget(self, action: #selector(onShowExperienceBtnPressed), for: .touchUpInside)
+
+        showExperienceButton.accessibilityLabel = AccessibilityId.showExperienceAccessibilityID.rawValue
 
         callStateLabel = UILabel()
         callStateLabel.text = "State"
@@ -652,6 +770,22 @@ class CallingDemoViewController: UIViewController {
         startButtonHStack.distribution = .fill
         startButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        let showButtonHSpacer1 = UIView()
+        showButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        showButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showButtonHSpacer2 = UIView()
+        showButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        showButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showButtonHStack = UIStackView(arrangedSubviews: [showButtonHSpacer1,
+                                                               showExperienceButton,
+                                                               showButtonHSpacer2])
+        showButtonHStack.axis = .horizontal
+        showButtonHStack.alignment = .fill
+        showButtonHStack.distribution = .fill
+        showButtonHStack.translatesAutoresizingMaskIntoConstraints = false
+
         let spaceView1 = UIView()
         spaceView1.translatesAutoresizingMaskIntoConstraints = false
         spaceView1.heightAnchor.constraint(equalToConstant: 0).isActive = true
@@ -663,9 +797,12 @@ class CallingDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
+                                                   roomCallTextField,
+                                                   roomRoleTypeSegmentedControl,
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,
-                                                   startButtonHStack])
+                                                   startButtonHStack,
+                                                   showButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -698,6 +835,7 @@ class CallingDemoViewController: UIViewController {
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
         showHistoryButtonHSpacer2.widthAnchor.constraint(equalTo: showHistoryButtonHSpacer1.widthAnchor).isActive = true
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
+        showButtonHSpacer2.widthAnchor.constraint(equalTo: showButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()
         updateMeetingTypeFields()
@@ -719,6 +857,14 @@ class CallingDemoViewController: UIViewController {
                 scrollView.scrollIndicatorInsets = .zero
             }
         }
+    }
+
+    @objc func toggleAudioOnly() {
+        envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+    }
+
+    @objc func toggleMockSdk() {
+        envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
     }
 }
 

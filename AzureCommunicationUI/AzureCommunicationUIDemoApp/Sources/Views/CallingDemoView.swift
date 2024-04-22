@@ -19,26 +19,58 @@ struct CallingDemoView: View {
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
     @State var callState: String = ""
+    @State var issue: CallCompositeUserReportedIssue?
+    @State var issueUrl: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let roomRoleChoices: [String] = ["Presenter", "Attendee"]
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
     var body: some View {
         VStack {
+#if DEBUG
+            // This HStack is for testing toggles.
+            // Adjusted to make buttons invisible but still accessible for automation.
+            HStack {
+                Button("AudioOnly") {
+                    envConfigSubject.audioOnly = !envConfigSubject.audioOnly
+                }
+                .frame(width: 0, height: 0)
+                .accessibilityIdentifier(AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue)
+                Button("MockSdk") {
+                    envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
+                }
+                .frame(width: 0, height: 0)
+                .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+            }
+#endif
             Text("UI Library - SwiftUI Sample")
             Spacer()
             acsTokenSelector
             displayNameTextField
             meetingSelector
+
             Group {
+                if envConfigSubject.selectedMeetingType == .roomCall {
+                    roomRoleSelector
+                } else {
+                    roomRoleSelector.hidden()
+                }
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
+                showExperienceButton
                 Text(callState)
+                Text(issue?.userMessage ?? "--")
+                .accessibilityIdentifier(AccessibilityId.userReportedIssueAccessibilityID.rawValue)
+                if !issueUrl.isEmpty {
+                    Link("Ticket Link", destination: URL(string: issueUrl)!)
+                }
             }
             Spacer()
         }
@@ -96,6 +128,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                Text("Room Call").tag(MeetingType.roomCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -112,10 +145,26 @@ struct CallingDemoView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
+            case .roomCall:
+                TextField(
+                    "Room Id",
+                    text: $envConfigSubject.roomId)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textFieldStyle(.roundedBorder)
             }
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
+    }
+    var roomRoleSelector: some View {
+
+        Section {
+            Picker("Room Role Type", selection: $envConfigSubject.selectedRoomRoleType) {
+                Text("Presenter").tag(RoomRoleType.presenter)
+                Text("Attendee").tag(RoomRoleType.attendee)
+            }.pickerStyle(.segmented)
+        }
     }
 
     var settingButton: some View {
@@ -144,6 +193,14 @@ struct CallingDemoView: View {
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
+    var showExperienceButton: some View {
+        Button("Show") {
+            showCallComposite()
+        }
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.showExperienceAccessibilityID.rawValue)
+    }
+
     var showCallHistoryButton: some View {
         Button("Show call history") {
             alertTitle = callingViewModel.callHistoryTitle
@@ -170,6 +227,10 @@ struct CallingDemoView: View {
 }
 
 extension CallingDemoView {
+    func showCallComposite() {
+        callingViewModel.callComposite?.isHidden = false
+    }
+
     fileprivate func relaunchComposite() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Task { @MainActor in
@@ -183,6 +244,7 @@ extension CallingDemoView {
             }
         }
     }
+
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -206,7 +268,9 @@ extension CallingDemoView {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
-            callingScreenOrientation: callingViewOrientation)
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
@@ -231,6 +295,24 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+
+        let onPipChangedHandler: (Bool) -> Void = { isPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isPictureInPicture)
+        }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
+            DispatchQueue.main.schedule {
+                self.issue = issue
+            }
+            sendSupportEventToServer(event: issue) { success, result in
+                if success {
+                    self.issueUrl = result
+                } else {
+                    self.issueUrl = ""
+                }
+            }
+        }
+
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -243,6 +325,7 @@ extension CallingDemoView {
                 relaunchComposite()
             }
         }
+
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
@@ -256,11 +339,23 @@ extension CallingDemoView {
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
+        let roomRole = envConfigSubject.selectedRoomRoleType
+        var roomRoleData: ParticipantRole?
+        if envConfigSubject.selectedMeetingType == .roomCall {
+            if roomRole == .presenter {
+                roomRoleData = ParticipantRole.presenter
+            } else if roomRole == .attendee {
+                roomRoleData = ParticipantRole.attendee
+            }
+        }
+
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
@@ -268,6 +363,8 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                        roleHint: roomRoleData,
                                         displayLeaveCallConfirmation: envConfigSubject.displayLeaveCallConfirmation)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
@@ -294,11 +391,26 @@ extension CallingDemoView {
                                                                       displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
                 }
+            case .roomCall:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions:
+                                            RemoteOptions(for: .roomCall(roomId: link),
+                                                          credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for:
+                                .roomCall(roomId: link),
+                                                     credential: credential,
+                                                     displayName: envConfigSubject.displayName),
+                        localOptions: localOptions)
+                }
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+        callingViewModel.callComposite = callComposite
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
@@ -333,6 +445,8 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        case .roomCall:
+            return envConfigSubject.roomId
         }
     }
 

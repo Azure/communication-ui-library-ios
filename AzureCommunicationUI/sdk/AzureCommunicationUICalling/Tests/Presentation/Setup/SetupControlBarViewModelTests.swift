@@ -355,6 +355,16 @@ class SetupControlBarViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: timeout)
     }
 
+    func test_SetupControlBarViewModel_audioVideoModeAudioOnlyHidesCameraButton() {
+        let sut = makeSUT(audioVideoMode: .audioOnly)
+        XCTAssertFalse(sut.isCameraDisplayed)
+    }
+
+    func test_SetupControlBarViewModel_audioVideoModeNormalShowsCameraButton() {
+        let sut = makeSUT(audioVideoMode: .audioAndVideo)
+        XCTAssertTrue(sut.isCameraDisplayed)
+    }
+
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_audioDeviceListViewModelUpdated() {
         let expectation = XCTestExpectation(description: "AudioDevicesListViewModel is updated")
         let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
@@ -405,12 +415,14 @@ class SetupControlBarViewModelTests: XCTestCase {
 }
 
 extension SetupControlBarViewModelTests {
-    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> SetupControlBarViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil,
+                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) -> SetupControlBarViewModel {
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,
                                         localUserState: LocalUserState(),
-                                        localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger))
+                                        localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
+                                        audioVideoMode: audioVideoMode)
     }
 
     func makeSUTLocalizationMocking() -> SetupControlBarViewModel {

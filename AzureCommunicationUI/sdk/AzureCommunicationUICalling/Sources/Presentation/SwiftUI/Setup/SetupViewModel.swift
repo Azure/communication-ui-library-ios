@@ -72,8 +72,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
-        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
-
+        updateAccessibilityLabel()
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
             buttonType: .controlButton,
@@ -101,14 +100,19 @@ class SetupViewModel: ObservableObject {
         }.store(in: &cancellables)
     }
 
-    deinit {
-        networkManager.stopMonitor()
+    func updateAccessibilityLabel() {
+        if joinCallButtonViewModel.isDisabled {
+            // Update the accessibility label for the disabled state
+            joinCallButtonViewModel.update(accessibilityLabel:
+            self.localizationProvider.getLocalizedString(.joinCallDiableStateAccessibilityLabel))
+        } else {
+            // Update the accessibility label for the normal state
+            joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+        }
     }
 
-    func dismissSetupScreen() {
-        if store.state.callingState.operationStatus == .skipSetupRequested {
-            store.dispatch(action: .callingAction(.dismissSetup))
-        }
+    deinit {
+        networkManager.stopMonitor()
     }
 
     func joinCallButtonTapped() {
@@ -142,11 +146,13 @@ class SetupViewModel: ObservableObject {
         let permissionState = state.permissionState
         let callingState = state.callingState
         previewAreaViewModel.update(localUserState: localUserState,
-                                    permissionState: permissionState)
+                                    permissionState: permissionState,
+                                    visibilityState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)
     }
 

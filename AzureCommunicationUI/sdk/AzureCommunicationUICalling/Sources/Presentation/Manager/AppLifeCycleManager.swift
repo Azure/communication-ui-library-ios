@@ -44,6 +44,16 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
         NotificationCenter.default.addObserver(self, selector: #selector(willTerminate),
                                                name: UIApplication.willTerminateNotification,
                                                object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(willDeactivate),
+                                               name: UIScene.didEnterBackgroundNotification,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didActivate),
+                                               name: UIScene.willEnterForegroundNotification,
+                                               object: nil)
     }
 
     private func receive(state: AppState) {

@@ -12,6 +12,7 @@ class AudioDevicesListViewController: DrawerContainerViewController<SelectableDr
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
         tableView.allowsSelection = true
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CompositeAudioDevicesListCell.self,
@@ -45,6 +46,7 @@ extension AudioDevicesListViewController: UITableViewDataSource, UITableViewDele
 
         cell.setup(viewModel: audioDeviceViewModel)
         cell.accessibilityValue = "\(indexPath.row + 1) of \(indexPath.count)"
+        cell.bottomSeparatorType = .none
         return cell
     }
 

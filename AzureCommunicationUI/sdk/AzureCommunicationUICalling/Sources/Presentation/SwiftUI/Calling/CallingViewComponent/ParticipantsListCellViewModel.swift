@@ -11,6 +11,7 @@ class ParticipantsListCellViewModel {
     let isHold: Bool
     let isLocalParticipant: Bool
     let localizationProvider: LocalizationProviderProtocol
+    let isInLobby: Bool
     private let displayName: String
 
     init(localUserState: LocalUserState,
@@ -21,6 +22,7 @@ class ParticipantsListCellViewModel {
         self.isMuted = localUserState.audioState.operation != .on
         self.isLocalParticipant = true
         self.isHold = false
+        self.isInLobby = false
     }
 
     init(participantInfoModel: ParticipantInfoModel,
@@ -31,6 +33,7 @@ class ParticipantsListCellViewModel {
         self.isMuted = participantInfoModel.isMuted
         self.isHold = participantInfoModel.status == .hold
         self.isLocalParticipant = false
+        self.isInLobby = participantInfoModel.status == .inLobby
     }
 
     func getParticipantViewData(from avatarViewManager: AvatarViewManager) -> ParticipantViewData? {
@@ -55,7 +58,8 @@ class ParticipantsListCellViewModel {
     }
 
     func getCellAccessibilityLabel(with participantViewData: ParticipantViewData?) -> String {
-        let status = isHold ? getOnHoldString() :
+        let status = isInLobby ? localizationProvider.getLocalizedString(.participantListLobbyAction)
+        : isHold ? getOnHoldString() :
         localizationProvider.getLocalizedString(isMuted ? .muted : .unmuted)
         return "\(getCellDisplayName(with: participantViewData)) \(status)"
     }

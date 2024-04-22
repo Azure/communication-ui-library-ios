@@ -20,7 +20,8 @@ class SetupControlBarViewModelMocking: SetupControlBarViewModel {
                    logger: logger,
                    dispatchAction: dispatchAction,
                    localUserState: localUserState,
-                   localizationProvider: LocalizationProviderMocking())
+                   localizationProvider: LocalizationProviderMocking(),
+                   audioVideoMode: .audioAndVideo)
     }
 
     override func update(localUserState: LocalUserState,

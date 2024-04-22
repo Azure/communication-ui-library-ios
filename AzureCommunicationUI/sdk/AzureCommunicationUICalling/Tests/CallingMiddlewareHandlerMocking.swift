@@ -23,6 +23,10 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var requestHoldCalled: ((Bool) -> Void)?
     var requestResumeCalled: ((Bool) -> Void)?
     var willTerminateCalled: ((Bool) -> Void)?
+    var admitAllLobbyParticipants: ((Bool) -> Void)?
+    var declineAllLobbyParticipants: ((Bool) -> Void)?
+    var admitLobbyParticipant: ((Bool) -> Void)?
+    var declineLobbyParticipant: ((Bool) -> Void)?
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -122,6 +126,30 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func willTerminate(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
         Task {
             willTerminateCalled?(true)
+        }
+    }
+
+    func admitAllLobbyParticipants(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            admitAllLobbyParticipants?(true)
+        }
+    }
+
+    func declineAllLobbyParticipants(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            declineAllLobbyParticipants?(true)
+        }
+    }
+
+    func admitLobbyParticipant(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, participantId: String) -> Task<Void, Never> {
+        Task {
+            admitLobbyParticipant?(true)
+        }
+    }
+
+    func declineLobbyParticipant(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, participantId: String) -> Task<Void, Never> {
+        Task {
+            declineLobbyParticipant?(true)
         }
     }
 }
