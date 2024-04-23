@@ -3,7 +3,8 @@
     "scopes": {
         "beta": [
             "ROOMS_SUPPORT"
-        ]
+        ],
+        "ga": []
     },
     "prompts": {
         "summary": [
