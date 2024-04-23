@@ -12,7 +12,7 @@ class ControlBarViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private var isCameraStateUpdating: Bool = false
     private var isDefaultUserStateMapped: Bool = false
-    private var displayLeaveCallConfirmation: Bool = true
+    private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
     @Published var cameraPermission: AppPermission.Status = .unknown
@@ -47,12 +47,12 @@ class ControlBarViewModel: ObservableObject {
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
-         displayLeaveCallConfirmation: Bool) {
+         leaveCallConfirmationMode: LeaveCallConfirmationMode) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
-        self.displayLeaveCallConfirmation = displayLeaveCallConfirmation
+        self.leaveCallConfirmationMode = leaveCallConfirmationMode
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
@@ -148,7 +148,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func endCallButtonTapped() {
-        if self.displayLeaveCallConfirmation {
+        if self.leaveCallConfirmationMode == .alwaysEnabled {
             self.isConfirmLeaveListDisplayed = true
         } else {
             self.displayEndCallConfirm()

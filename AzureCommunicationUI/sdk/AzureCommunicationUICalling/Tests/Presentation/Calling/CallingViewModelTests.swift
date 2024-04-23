@@ -64,7 +64,7 @@ class CallingViewModelTests: XCTestCase {
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         endCallConfirm: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
-                                                                        displayLeaveCallConfirmation: false)
+                                                                        leaveCallConfirmationMode: .alwaysDisabled)
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Verify Call End is Requested")
         storeFactory.store.$state
@@ -308,6 +308,7 @@ extension CallingViewModelTests {
                                 localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false,
-                                allowLocalCameraPreview: true)
+                                allowLocalCameraPreview: true,
+                                leaveCallConfirmationMode: .alwaysEnabled)
     }
 }

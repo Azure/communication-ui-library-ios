@@ -207,26 +207,6 @@ extension XCUITestBase {
                          shouldWait: true)
     }
 
-    func enableMockCallingSDKWrapper() {
-        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-        // scrolling is needed for devices with smaller screens as the switch may not be tappable
-        // because cells weren't loaded to memory
-        if #unavailable(iOS 16) {
-            // for <iOS 16, the table is shown
-            app.tables.firstMatch.swipeUp()
-        } else {
-            // for iOS 16, the collection is shown
-            app.collectionViews.firstMatch.swipeUp()
-        }
-
-        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        wait(for: toggle)
-
-        toggle.tap()
-        XCTAssertEqual(toggle.isOn, true)
-
-        closeDemoAppSettingsPage()
-    }
     func disableLeaveCallConfirmationToggle(useCallingSDKMock: Bool = true) {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         let leaveToggle = app.switches[AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue]

@@ -57,6 +57,7 @@ struct SettingsView: View {
             Group {
                 localizationSettings
                 skipSetupScreenSettings
+                displayLeaveCallConfirmationSettings
                 micSettings
                 localParticipantSettings
                 avatarSettings

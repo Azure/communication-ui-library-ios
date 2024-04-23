@@ -25,7 +25,7 @@ class CallingViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
     private var callClientRequested: Bool = false
-    private var displayLeaveCallConfirmation: Bool = true
+    private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -49,7 +49,8 @@ class CallingViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
-         allowLocalCameraPreview: Bool
+         allowLocalCameraPreview: Bool,
+         leaveCallConfirmationMode: LeaveCallConfirmationMode
     ) {
         self.logger = logger
         self.store = store
@@ -58,6 +59,7 @@ class CallingViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
+        self.leaveCallConfirmationMode = leaveCallConfirmationMode
         let actionDispatch: ActionDispatch = store.dispatch
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
@@ -92,7 +94,7 @@ class CallingViewModel: ObservableObject {
                 }
                 self.endCall()
             }, localUserState: store.state.localUserState,
-            displayLeaveCallConfirmation: displayLeaveCallConfirmation)
+            leaveCallConfirmationMode: leaveCallConfirmationMode)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {

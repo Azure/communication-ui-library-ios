@@ -78,7 +78,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
                                                     isIpadInterface: false,
-                                                    allowLocalCameraPreview: true)
+                                                    allowLocalCameraPreview: true,
+                                                    leaveCallConfirmationMode: .alwaysEnabled)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -190,7 +191,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 displayLeaveCallConfirmation: Bool) -> ControlBarViewModel {
+                                 leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localizationProvider: localizationProvider,
@@ -198,7 +199,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           endCallConfirm: endCallConfirm,
                                                           localUserState: localUserState,
                                                           audioVideoMode: .audioAndVideo,
-                                                          displayLeaveCallConfirmation: displayLeaveCallConfirmation)
+                                                          leaveCallConfirmationMode: leaveCallConfirmationMode)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,

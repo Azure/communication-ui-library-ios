@@ -302,8 +302,7 @@ class CallingDemoViewController: UIViewController {
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                        roleHint: roomRoleData,
-                                        displayLeaveCallConfirmation: envConfigSubject.displayLeaveCallConfirmation)
+                                        roleHint: roomRoleData)
         self.callComposite = callComposite
 
         if let credential = try? await getTokenCredential() {

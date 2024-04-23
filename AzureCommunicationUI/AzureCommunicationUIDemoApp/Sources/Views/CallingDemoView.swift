@@ -249,6 +249,10 @@ extension CallingDemoView {
         let link = getMeetingLink()
 
         var localizationConfig: LocalizationOptions?
+        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                        envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -270,7 +274,8 @@ extension CallingDemoView {
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
-            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
+            callScreenOptions: callScreenOptions)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
@@ -364,8 +369,7 @@ extension CallingDemoView {
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                        roleHint: roomRoleData,
-                                        displayLeaveCallConfirmation: envConfigSubject.displayLeaveCallConfirmation)
+                                        roleHint: roomRoleData)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

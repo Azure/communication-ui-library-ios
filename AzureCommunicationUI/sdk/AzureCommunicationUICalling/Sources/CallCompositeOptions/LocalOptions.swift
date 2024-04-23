@@ -26,8 +26,6 @@ public struct LocalOptions {
 
     /// Indicates whether to skip the setup screen and use default or specified settings.
     let skipSetupScreen: Bool?
-    /// The DisplayLeaveCallConfirmation is used when we ask for confirmation before leaving the call
-    let displayLeaveCallConfirmation: Bool?
 
     /// Specifies the audio/video mode for the call, affecting available functionalities.
     let audioVideoMode: CallCompositeAudioVideoMode
@@ -53,14 +51,12 @@ public struct LocalOptions {
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
-                roleHint: ParticipantRole? = nil,
-                displayLeaveCallConfirmation: Bool? = true) {
+                roleHint: ParticipantRole? = nil) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
-        self.displayLeaveCallConfirmation = displayLeaveCallConfirmation
         self.audioVideoMode = audioVideoMode
         self.roleHint = roleHint
     }

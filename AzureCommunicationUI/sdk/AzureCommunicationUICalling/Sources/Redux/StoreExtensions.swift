@@ -15,9 +15,7 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         displayName: String?,
         startWithCameraOn: Bool?,
         startWithMicrophoneOn: Bool?,
-        skipSetupScreen: Bool?,
-        displayLeaveCallConfirmation: Bool?
-    ) -> Store<AppState, Action> {
+        skipSetupScreen: Bool?) -> Store<AppState, Action> {
         let cameraState = startWithCameraOn
         ?? false ? DefaultUserState.CameraState.on : DefaultUserState.CameraState.off
 
