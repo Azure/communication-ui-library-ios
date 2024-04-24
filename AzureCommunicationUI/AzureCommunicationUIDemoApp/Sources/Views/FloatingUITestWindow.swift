@@ -93,6 +93,10 @@ class FloatingUITestWindow: UIWindow {
                      accessibilityID: "changeNetworkDiagnostic-AID",
                      selector: #selector(changeCurrentNetworkDiagnostic))
 
+        createButton(title: "Hide",
+                     accessibilityID: "hideCallComposite-AID",
+                     selector: #selector(hideCallComposite))
+
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stackView.widthAnchor.constraint(equalToConstant: 120.0),
@@ -232,6 +236,12 @@ class FloatingUITestWindow: UIWindow {
     @objc func changeCurrentNetworkDiagnostic(sender: UIButton) {
         debugPrint("UI Test:: changeCurrentNetworkDiagnostic")
         callingSDKWrapperMock?.changeCurrentNetworkDiagnostic()
+    }
+
+    @objc func hideCallComposite(sender: UIButton) {
+        debugPrint("UI Test:: hideCallComposite")
+        callingSDKWrapperMock?.hide()
+
     }
 }
 
