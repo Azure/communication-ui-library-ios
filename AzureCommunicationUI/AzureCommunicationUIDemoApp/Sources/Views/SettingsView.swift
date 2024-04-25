@@ -51,12 +51,23 @@ struct SettingsView: View {
         .accessibilityIdentifier(AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
     }
 
+    var displayLeaveCallConfirmationSettings: some View {
+        Section(header: Text("Display leave call confirmation")) {
+            Toggle("Display leave call confirmation", isOn: $envConfigSubject.displayLeaveCallConfirmation)
+                .onTapGesture {
+                    envConfigSubject.displayLeaveCallConfirmation = !envConfigSubject.displayLeaveCallConfirmation
+                }
+                .accessibilityIdentifier(AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue)
+        }
+    }
+
     var settingsForm: some View {
         Form {
             orientationOptions
             Group {
                 localizationSettings
                 skipSetupScreenSettings
+                displayLeaveCallConfirmationSettings
                 micSettings
                 localParticipantSettings
                 avatarSettings

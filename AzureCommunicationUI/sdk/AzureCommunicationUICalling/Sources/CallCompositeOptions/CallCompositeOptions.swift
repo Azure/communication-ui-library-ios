@@ -14,7 +14,7 @@ public struct CallCompositeOptions {
     private(set) var enableSystemPipWhenMultitasking: Bool = false
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
-
+    private(set) var callScreenOptions: CallScreenOptions?
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
     ///  Default value is `nil`.
@@ -33,12 +33,14 @@ public struct CallCompositeOptions {
                 setupScreenOrientation: OrientationOptions? = nil,
                 callingScreenOrientation: OrientationOptions? = nil,
                 enableMultitasking: Bool = false,
-                enableSystemPictureInPictureWhenMultitasking: Bool = false) {
+                enableSystemPictureInPictureWhenMultitasking: Bool = false,
+                callScreenOptions: CallScreenOptions? = nil) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
         self.callingScreenOrientation = callingScreenOrientation
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPictureInPictureWhenMultitasking
+        self.callScreenOptions = callScreenOptions
     }
 }

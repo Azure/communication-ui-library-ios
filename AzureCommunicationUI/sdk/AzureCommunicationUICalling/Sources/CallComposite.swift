@@ -62,6 +62,7 @@ public class CallComposite {
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
+    private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
@@ -91,6 +92,8 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
+        leaveCallConfirmationMode =
+               options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
     }
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
@@ -293,7 +296,8 @@ public class CallComposite {
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles
+                retrieveLogFiles: callingSdkWrapper.getLogFiles,
+                leaveCallConfirmationMode: leaveCallConfirmationMode
             )
         )
     }

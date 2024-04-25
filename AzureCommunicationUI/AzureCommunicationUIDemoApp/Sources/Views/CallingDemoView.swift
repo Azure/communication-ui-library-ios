@@ -250,6 +250,10 @@ extension CallingDemoView {
 
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
+        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                        envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -270,7 +274,8 @@ extension CallingDemoView {
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
-            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
+            callScreenOptions: callScreenOptions)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?

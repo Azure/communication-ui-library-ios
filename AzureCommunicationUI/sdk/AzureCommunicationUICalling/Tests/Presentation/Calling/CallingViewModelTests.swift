@@ -57,6 +57,28 @@ class CallingViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
         wait(for: [expectation], timeout: timeout)
     }
+    func test_callingViewModel_endCall_when_NoConfirmLeaveOverlayIsDisplayed() {
+        factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                        logger: logger,
+                                                                        localizationProvider: localizationProvider,
+                                                                        dispatchAction: storeFactory.store.dispatch,
+                                                                        endCallConfirm: {},
+                                                                        localUserState: storeFactory.store.state.localUserState,
+                                                                        leaveCallConfirmationMode: .alwaysDisabled)
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak storeFactory] _ in
+                XCTAssertEqual(storeFactory?.actions.count, 3)
+                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
+
+                expectation.fulfill()
+            }.store(in: cancellable)
+        sut.endCall()
+        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+        wait(for: [expectation], timeout: timeout)
+    }
 
     func test_callingViewModel_update_when_callStatusIsInLobby_then_isLobbyOverlayDisplayed_shouldBecomeTrue() {
         let sut = makeSUT()
@@ -286,6 +308,7 @@ extension CallingViewModelTests {
                                 localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false,
-                                allowLocalCameraPreview: true)
+                                allowLocalCameraPreview: true,
+                                leaveCallConfirmationMode: .alwaysEnabled)
     }
 }
