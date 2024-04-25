@@ -26,6 +26,7 @@ enum CompositeIcon: String {
     case addParticipant = "ic_fluent_guest_add_20_filled"
     case lobbyError = "ic_fluent_person_prohibited_24_regular"
     case leftArrow = "ic_ios_arrow_left_24"
+    case chat = "ic_fluent_chat_24_regular"
     case dismiss = "ic_fluent_dismiss_16_regular"
     case clock = "ic_fluent_clock_24_filled"
     case checkmark = "ic_fluent_checkmark_24_regular"

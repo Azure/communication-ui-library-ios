@@ -24,6 +24,7 @@ class InfoHeaderViewModel: ObservableObject {
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
+    var openChatButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
     var isPad: Bool = false
@@ -35,7 +36,8 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPipWhenMultitasking: Bool) {
+         enableSystemPipWhenMultitasking: Bool,
+         onChatOpenRequested: (() -> Void)?) {
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
@@ -70,6 +72,13 @@ class InfoHeaderViewModel: ObservableObject {
         }
         dismissButtonViewModel.update(
             accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
+
+        openChatButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+            iconName: .chat,
+            buttonType: .infoButton,
+            isDisabled: false) {
+                onChatOpenRequested?()
+        }
 
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)

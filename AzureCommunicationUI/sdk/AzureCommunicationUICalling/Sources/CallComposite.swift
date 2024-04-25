@@ -27,7 +27,7 @@ public class CallComposite {
         public var onCallStateChanged: ((CallState) -> Void)?
         /// Closure to Call Composite dismissed.
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
-        /// Closure to execute when the User reports an issue from within the call composite
+        /// Closure to execute when the User reports an issue from within the call composite.
         public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
     }
 

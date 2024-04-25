@@ -30,6 +30,8 @@ public struct LocalOptions {
     /// Specifies the audio/video mode for the call, affecting available functionalities.
     let audioVideoMode: CallCompositeAudioVideoMode
 
+    let onChatOpenRequested: (() -> Void)?
+
     /// Internal storage for the camera state, not directly exposed to the initializer.
     private let cameraOnInternal: Bool?
 
@@ -51,7 +53,8 @@ public struct LocalOptions {
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
-                roleHint: ParticipantRole? = nil) {
+                roleHint: ParticipantRole? = nil,
+                onChatOpenRequested: (() -> Void)? = nil) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn
@@ -59,6 +62,7 @@ public struct LocalOptions {
         self.skipSetupScreen = skipSetupScreen
         self.audioVideoMode = audioVideoMode
         self.roleHint = roleHint
+        self.onChatOpenRequested = onChatOpenRequested
     }
 
     /// Determines the actual state of the camera

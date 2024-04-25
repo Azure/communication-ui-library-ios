@@ -75,6 +75,7 @@ struct InfoHeaderView: View {
                                         Constants.defaultFontScale)
             Spacer()
             participantListButton
+            openChatButton
         }
         .padding(EdgeInsets(top: 0,
                             leading: Constants.hStackHorizontalPadding / 2.0,
@@ -109,5 +110,10 @@ struct InfoHeaderView: View {
                 EmptyView()
             }
         }
+    }
+
+    var openChatButton: some View {
+        IconButton(viewModel: viewModel.openChatButtonViewModel)
+            .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
     }
 }

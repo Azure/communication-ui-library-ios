@@ -14,6 +14,7 @@ import AVFoundation
 #else
 import AzureCommunicationUICalling
 #endif
+import AzureCommunicationUIChat
 
 class CallingDemoViewController: UIViewController {
 
@@ -75,6 +76,8 @@ class CallingDemoViewController: UIViewController {
         view.showsHorizontalScrollIndicator = false
         return view
     }()
+
+    var chatAdapter: ChatAdapter?
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -302,7 +305,43 @@ class CallingDemoViewController: UIViewController {
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                        roleHint: roomRoleData
+                                        roleHint: roomRoleData,
+                                        onChatOpenRequested: {
+            Task { @MainActor in
+                print("::::UIKitDemoView::getEventsHandler::onChatRequested")
+                self.callComposite?.isHidden = true
+
+                try await Task.sleep(nanoseconds: 1 * 1000 * 1000 * 1000)
+
+                let communicationIdentifier = CommunicationUserIdentifier(self.envConfigSubject.userId)
+                guard let communicationTokenCredential = try? CommunicationTokenCredential(
+                    token: self.envConfigSubject.acsToken) else {
+                    return
+                }
+                let threadId = self.envConfigSubject.threadId
+                self.chatAdapter = ChatAdapter(
+                    endpoint: self.envConfigSubject.endpointUrl,
+                    identifier: communicationIdentifier,
+                    credential: communicationTokenCredential,
+                    threadId: threadId,
+                    displayName: self.envConfigSubject.displayName)
+
+                try await self.chatAdapter?.connect()
+                let chatCompositeViewController = ChatCompositeViewController(
+                    with: self.chatAdapter!)
+
+                let closeItem = UIBarButtonItem(
+                    barButtonSystemItem: .close,
+                    target: nil,
+                    action: #selector(self.onBackBtnPressed))
+                chatCompositeViewController.title = "Chat"
+                chatCompositeViewController.navigationItem.leftBarButtonItem = closeItem
+                let navController = NavigationController(rootViewController: chatCompositeViewController)
+                navController.modalPresentationStyle = .fullScreen
+
+                self.present(navController, animated: false, completion: nil)
+            }
+        }
         )
         self.callComposite = callComposite
 
@@ -329,6 +368,16 @@ class CallingDemoViewController: UIViewController {
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
+        }
+    }
+
+    @objc func onBackBtnPressed() {
+        Task { @MainActor in
+            print("Dismissing chat")
+            self.dismiss(animated: true, completion: { [weak self] in
+                self?.chatAdapter?.disconnect(completionHandler: { _ in
+                })
+            })
         }
     }
 

@@ -213,7 +213,8 @@ extension CompositeViewModelFactory {
                             accessibilityProvider: accessibilityProvider,
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking)
+                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
+                            onChatOpenRequested: localOptions?.onChatOpenRequested)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
