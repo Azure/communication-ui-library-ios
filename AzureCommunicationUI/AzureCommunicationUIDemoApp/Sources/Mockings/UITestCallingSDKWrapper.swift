@@ -10,6 +10,7 @@ import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
+    var callComposite: CallComposite?
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger
@@ -43,6 +44,12 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     deinit {
         logger.debug("CallingSDKWrapper deallocated")
+    }
+
+    func hide() {
+        if callComposite != nil {
+            callComposite?.isHidden = true
+        }
     }
 
     func setupCall() async throws {
