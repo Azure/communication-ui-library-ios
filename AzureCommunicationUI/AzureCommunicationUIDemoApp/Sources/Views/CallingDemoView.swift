@@ -286,6 +286,9 @@ extension CallingDemoView {
             CallComposite(withOptions: callCompositeOptions,
                           callingSDKWrapperProtocol: callingSDKWrapperMock)
             : CallComposite(withOptions: callCompositeOptions)
+
+        callingSDKWrapperMock?.callComposite = callComposite
+
         #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         #endif

@@ -212,7 +212,11 @@ public class CallComposite {
         }
         set(isHidden) {
             if isHidden {
-                hide()
+                if self.enableSystemPipWhenMultitasking {
+                    store?.dispatch(action: .visibilityAction(.pipModeRequested))
+                } else if self.enableMultitasking {
+                    store?.dispatch(action: .visibilityAction(.hideRequested))
+                }
             } else {
                 displayCallCompositeIfWasHidden()
             }
