@@ -67,7 +67,6 @@ struct SettingsView: View {
             Group {
                 localizationSettings
                 skipSetupScreenSettings
-                displayLeaveCallConfirmationSettings
                 micSettings
                 localParticipantSettings
                 avatarSettings
@@ -77,6 +76,7 @@ struct SettingsView: View {
                 themeSettings
                 multitaskingSettings
             }
+            displayLeaveCallConfirmationSettings
             exitCompositeSettings
         }
     }
