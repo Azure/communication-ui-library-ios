@@ -13,7 +13,7 @@ public struct CallScreenControlBarOptions {
     /// Initializes an instance of CallScreenControlBarOptions.
     /// - Parameter leaveCallConfirmationMode: Whether to enable or disable the leave call confirmation.
     ///                                           Default is enabled.
-    init(leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled) {
+    public init(leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled) {
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
     }
 }
