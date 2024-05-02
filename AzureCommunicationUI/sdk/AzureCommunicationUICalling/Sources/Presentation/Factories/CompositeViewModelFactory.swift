@@ -35,8 +35,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
-         retrieveLogFiles: @escaping () -> [URL],
-         leaveCallConfirmationMode: LeaveCallConfirmationMode
+         leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
         self.store = store

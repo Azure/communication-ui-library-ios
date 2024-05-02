@@ -300,8 +300,8 @@ public class CallComposite {
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles,
-                leaveCallConfirmationMode: leaveCallConfirmationMode
+                leaveCallConfirmationMode: leaveCallConfirmationMode,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }
