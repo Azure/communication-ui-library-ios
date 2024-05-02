@@ -93,8 +93,8 @@ class ParticipantGridViewModel: ObservableObject {
             return infoModels
         }
         var dominantSpeakersOrder = [String: Int]()
-        for i in 0..<min(maximumParticipantsDisplayed, dominantSpeakers.count) {
-            dominantSpeakersOrder[dominantSpeakers[i]] = i
+        for idx in 0..<min(maximumParticipantsDisplayed, dominantSpeakers.count) {
+            dominantSpeakersOrder[dominantSpeakers[idx]] = idx
         }
         let sortedInfoList = infoModels.sorted(by: {
             if let order1 = dominantSpeakersOrder[$0.userIdentifier],
