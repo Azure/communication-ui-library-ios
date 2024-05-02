@@ -52,7 +52,7 @@ struct SettingsView: View {
     }
 
     var displayLeaveCallConfirmationSettings: some View {
-        Section(header: Text("Display leave call confirmation")) {
+        Section(header: Text("Call screen settings")) {
             Toggle("Display leave call confirmation", isOn: $envConfigSubject.displayLeaveCallConfirmation)
                 .onTapGesture {
                     envConfigSubject.displayLeaveCallConfirmation = !envConfigSubject.displayLeaveCallConfirmation
