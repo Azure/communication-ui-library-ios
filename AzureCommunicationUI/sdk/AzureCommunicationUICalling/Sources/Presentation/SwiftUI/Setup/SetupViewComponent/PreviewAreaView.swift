@@ -59,6 +59,7 @@ struct PermissionWarningView: View {
                             PrimaryButton(viewModel: goToSettingsButtonViewModel)
                                 .accessibilityIdentifier(AccessibilityIdentifier.goToSettingsAccessibilityID.rawValue)
                                 .padding()
+                                .frame(height: 52)
                         }
                         .frame(width: scrollViewGeometry.size.width)
                         .frame(minHeight: scrollViewGeometry.size.height)
