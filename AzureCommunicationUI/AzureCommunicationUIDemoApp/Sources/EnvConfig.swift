@@ -63,6 +63,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var cameraOn: Bool = false
     @Published var audioOnly: Bool = false
     @Published var skipSetupScreen: Bool = false
+    @Published var displayLeaveCallConfirmation: Bool = true
     @Published var useCustomColors: Bool = false
     @Published var useCustomRemoteParticipantViewData: Bool = false
     @Published var useMockCallingSDKHandler: Bool = false
