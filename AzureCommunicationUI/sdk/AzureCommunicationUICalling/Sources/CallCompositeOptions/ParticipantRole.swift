@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 
+/* <ROOMS_SUPPORT> */
 import AzureCore
 import Foundation
 
@@ -50,3 +51,4 @@ public struct ParticipantRole: Equatable, RequestStringConvertible {
     public static let presenter: ParticipantRole = .init(rawValue: "presenter")
     public static let attendee: ParticipantRole = .init(rawValue: "attendee")
 }
+ /* </ROOMS_SUPPORT> */

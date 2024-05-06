@@ -247,8 +247,7 @@ extension ChatDemoView {
             ChatCompositeErrorCode.fetchMessagesFailed,
             ChatCompositeErrorCode.requestParticipantsFetchFailed,
             ChatCompositeErrorCode.sendReadReceiptFailed,
-            ChatCompositeErrorCode.sendTypingIndicatorFailed,
-            ChatCompositeErrorCode.disconnectFailed:
+            ChatCompositeErrorCode.sendTypingIndicatorFailed:
             // no alert
             return
         default:
