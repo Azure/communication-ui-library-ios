@@ -24,7 +24,7 @@ steps:
     workingDirectory: AzureCommunicationUI/sdk
     displayName: "SwiftLint Version Check"
 
-- script:
+  - script:
       swiftlint --verbose
     workingDirectory: AzureCommunicationUI/sdk
     displayName: "SwiftLint Manual Pre-Check"
