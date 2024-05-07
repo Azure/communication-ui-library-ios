@@ -19,6 +19,11 @@ steps:
       forceRepoUpdate: true
       projectDirectory: ${{ parameters.workingDirectory }}
 
+  - script:
+      swiftlint
+    workingDirectory: AzureCommunicationUI/sdk
+    displayName: "SwiftLint Manual Pre-Check"
+
   - script: |
       swift build -v \
         -Xswiftc "-sdk" \
