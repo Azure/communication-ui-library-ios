@@ -19,6 +19,11 @@ steps:
       forceRepoUpdate: true
       projectDirectory: ${{ parameters.workingDirectory }}
 
+  - script: |
+      brew install swiftlint@0.53.0
+      brew link --overwrite swiftlint@0.53.0
+      displayName: 'Install SwiftLint 0.53.0'
+
   - script:
       swiftlint version 
     workingDirectory: AzureCommunicationUI/sdk
