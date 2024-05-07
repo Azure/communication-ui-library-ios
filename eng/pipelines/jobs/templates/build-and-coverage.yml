@@ -20,7 +20,7 @@ steps:
       projectDirectory: ${{ parameters.workingDirectory }}
 
   - script:
-      swiftlint
+      swiftlint --verbose
     workingDirectory: AzureCommunicationUI/sdk
     displayName: "SwiftLint Manual Pre-Check"
 
