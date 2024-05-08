@@ -45,7 +45,7 @@ PODS:
     - MicrosoftFluentUI/Separator_ios
   - MicrosoftFluentUI/TouchForwardingView_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - SwiftLint (0.42.0)
+  - SwiftLint (0.53.0)
   - Trouter (0.2.0)
 
 DEPENDENCIES:
@@ -59,7 +59,7 @@ DEPENDENCIES:
   - MicrosoftFluentUI/BottomSheet_ios (= 0.10.0)
   - MicrosoftFluentUI/Button_ios (= 0.10.0)
   - MicrosoftFluentUI/PopupMenu_ios (= 0.10.0)
-  - SwiftLint (= 0.42.0)
+  - SwiftLint (= 0.53.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -79,9 +79,9 @@ SPEC CHECKSUMS:
   AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
   MicrosoftFluentUI: f6db695718efb93f4ca9bdc366c00b80a1f91dba
-  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
+  SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   Trouter: 7eab36954ad740e32db3ff9f6025b0dff92193d7
 
-PODFILE CHECKSUM: eb2a002292106e7d1fbc6c842387f5ed3082f441
+PODFILE CHECKSUM: 1ef9c1f3eabfa1e879f8a71a7f77f6579561345d
 
 COCOAPODS: 1.15.2
