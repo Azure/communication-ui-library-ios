@@ -15,7 +15,10 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
             wait(for: popoverDismissRegion)
             popoverDismissRegion.tap()
         } else if UIDevice.current.userInterfaceIdiom == .phone {
-            tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue)
+            tapButton(accessibilityIdentifier:
+                        AccessibilityIdentifier
+                .activityViewControllerCloseButtonAccessibilityID
+                .rawValue)
         }
         checkActivityViewControllerDismissed()
     }
@@ -23,7 +26,9 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
     func testCallCompositeCopyDiagnosticInfo() {
         startCall()
         openShareDiagnosticsInfoMenu()
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier:
+                    AccessibilityIdentifier
+            .activityViewControllerCopyButtonAccessibilityID.rawValue)
         checkActivityViewControllerDismissed()
     }
 
@@ -34,10 +39,14 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
         hangupCall()
 
-        let userReportedOutput = app.staticTexts[AccessibilityId.userReportedIssueAccessibilityID.rawValue]
+        let userReportedOutput =
+        app.staticTexts[AccessibilityId
+            .userReportedIssueAccessibilityID.rawValue]
         wait(for: userReportedOutput)
         XCTAssertTrue(userReportedOutput.exists)
-        XCTAssertEqual(userReportedOutput.label, "Sample Message", "The user reported output does not match the expected text.")
+        XCTAssertEqual(userReportedOutput.label,
+                       "Sample Message",
+                       "The user reported output does not match the expected text.")
     }
 }
 

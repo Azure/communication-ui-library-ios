@@ -17,7 +17,7 @@ struct DefaultLogger: Logger {
 
     private let osLogger: OSLog
     init(subsystem: String = "com.azure",
-                              category: String = "AzureCommunicationUICommon") {
+         category: String = "AzureCommunicationUICommon") {
         osLogger = OSLog(subsystem: subsystem, category: category)
     }
 

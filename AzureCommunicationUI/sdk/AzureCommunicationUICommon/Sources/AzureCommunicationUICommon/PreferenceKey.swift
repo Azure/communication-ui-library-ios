@@ -27,7 +27,6 @@ struct ProximitySensorPreferenceKey: PreferenceKey {
 }
 
 struct PrefersHomeIndicatorAutoHiddenPreferenceKey: PreferenceKey {
-
     static var defaultValue: Bool {
         return false
     }
