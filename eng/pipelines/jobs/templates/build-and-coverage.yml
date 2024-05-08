@@ -20,12 +20,12 @@ steps:
       projectDirectory: ${{ parameters.workingDirectory }}
 
   - script: |
-      swiftlint version 
+      ../Pods/SwiftLint/swiftlint version 
     workingDirectory: AzureCommunicationUI/sdk
     displayName: "SwiftLint Version Check"
 
   - script: |
-      swiftlint --verbose
+      ../Pods/SwiftLint/swiftlint --verbose
     workingDirectory: AzureCommunicationUI/sdk
     displayName: "SwiftLint Manual Pre-Check"
 
