@@ -18,7 +18,7 @@ class OnHoldOverlayViewModelMocking: OnHoldOverlayViewModel {
          logger: Logger,
          accessibilityProvider: AccessibilityProviderProtocol,
          audioSessionManager: AudioSessionManagerProtocol,
-         resumeAction:  @escaping (() -> Void),
+         resumeAction: @escaping (() -> Void),
          updateState: ((CallingStatus) -> Void)? = nil) {
         self.resumeAction = resumeAction
         self.updateState = updateState
