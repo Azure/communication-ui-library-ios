@@ -37,7 +37,7 @@ struct TextMessageView: View {
     }
 
     var avatar: some View {
-        VStack() {
+        VStack {
             if showUsername {
                 Avatar(style: .outlinedPrimary, size: .size24, primaryText: messageModel.senderDisplayName)
                 Spacer()

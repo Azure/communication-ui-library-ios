@@ -101,8 +101,8 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
         }
 
         guard let chatEventModel = eventModel,
-              (isChatClientEvent(chatEventModel) ||
-               isLocalChatThread(chatEventModel))
+              isChatClientEvent(chatEventModel) ||
+               isLocalChatThread(chatEventModel)
         else {
             return
         }

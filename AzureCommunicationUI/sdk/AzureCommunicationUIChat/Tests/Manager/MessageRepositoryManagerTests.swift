@@ -8,7 +8,6 @@ import AzureCore
 import XCTest
 @testable import AzureCommunicationUIChat
 
-// swiftlint:disable type_body_length
 class MessageRepositoryManagerTests: XCTestCase {
     var eventsHandler: ChatAdapter.Events!
 
