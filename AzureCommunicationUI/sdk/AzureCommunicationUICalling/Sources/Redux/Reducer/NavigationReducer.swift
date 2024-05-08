@@ -22,24 +22,24 @@ extension Reducer where State == NavigationState,
             supportFormVisible = true
         case .hideSupportForm:
             supportFormVisible = false
-        case .audioSessionAction(_),
-                .callingAction(.callIdUpdated(callId: _)),
+        case .audioSessionAction,
+                .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
                 .callingAction(.callEndRequested),
                 .callingAction(.callEnded),
                 .callingAction(.requestFailed),
-                .callingAction(.stateUpdated(status: _)),
+                .callingAction(.stateUpdated),
                 .callingAction(.setupCall),
-                .callingAction(.recordingStateUpdated(isRecordingActive: _)),
-                .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
+                .callingAction(.recordingStateUpdated),
+                .callingAction(.transcriptionStateUpdated),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .lifecycleAction(_),
-                .localUserAction(_),
-                .remoteParticipantsAction(_),
-                .permissionAction(_),
-                .visibilityAction(_),
-                .callDiagnosticAction(_):
+                .lifecycleAction,
+                .localUserAction,
+                .remoteParticipantsAction,
+                .permissionAction,
+                .visibilityAction,
+                .callDiagnosticAction:
             return state
         }
         return NavigationState(status: navigationStatus, supportFormVisible: supportFormVisible)

@@ -35,15 +35,17 @@ class CallingDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
+    /* <ROOMS_SUPPORT> */
     private var roomCallTextField: UITextField!
     private var selectedRoomRoleType: RoomRoleType = .presenter
+    private var roomRoleTypeSegmentedControl: UISegmentedControl!
+    /* </ROOMS_SUPPORT> */
     private var settingsButton: UIButton!
     private var showCallHistoryButton: UIButton!
     private var startExperienceButton: UIButton!
     private var showExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
-    private var roomRoleTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
     private var titleLabel: UILabel!
     private var callStateLabel: UILabel!
@@ -156,19 +158,21 @@ class CallingDemoViewController: UIViewController {
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
         }
-        if !envConfigSubject.roomId.isEmpty {
-            roomCallTextField.text = envConfigSubject.roomId
-        }
         if envConfigSubject.selectedMeetingType == .groupCall {
             meetingTypeSegmentedControl.selectedSegmentIndex = 0
         } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
             meetingTypeSegmentedControl.selectedSegmentIndex = 1
+        }
+        /* <ROOMS_SUPPORT> */
+        if !envConfigSubject.roomId.isEmpty {
+            roomCallTextField.text = envConfigSubject.roomId
         }
         if envConfigSubject.selectedRoomRoleType == .presenter {
             roomRoleTypeSegmentedControl.selectedSegmentIndex = 0
         } else if envConfigSubject.selectedRoomRoleType == .attendee {
             roomRoleTypeSegmentedControl.selectedSegmentIndex = 1
         }
+        /* </ROOMS_SUPPORT> */
     }
 
     private func updateToken(_ token: String) {
@@ -285,6 +289,7 @@ class CallingDemoViewController: UIViewController {
         callComposite.events.onDismissed = onDismissedHandler
         callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
+        /* <ROOMS_SUPPORT> */
         let roomRole = envConfigSubject.selectedRoomRoleType
         var roomRoleData: ParticipantRole?
         if envConfigSubject.selectedMeetingType == .roomCall {
@@ -294,6 +299,7 @@ class CallingDemoViewController: UIViewController {
                 roomRoleData = ParticipantRole.attendee
             }
         }
+        /* </ROOMS_SUPPORT> */
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
@@ -305,8 +311,12 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                        roleHint: roomRoleData
+                                        /* <ROOMS_SUPPORT:6> */
+                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                         roleHint: roomRoleData
+                                        /* <|ROOMS_SUPPORT>
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        </ROOMS_SUPPORT:1> */
         )
         self.callComposite = callComposite
 
@@ -323,12 +333,14 @@ class CallingDemoViewController: UIViewController {
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
                                      localOptions: localOptions)
+            /* <ROOMS_SUPPORT:13> */
             case .roomCall:
                 callComposite.launch(remoteOptions:
                                         RemoteOptions(for:
                                                 .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
                                      localOptions: localOptions)
+            /* </ROOMS_SUPPORT:6> */
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -370,8 +382,10 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
+        /* <ROOMS_SUPPORT:6> */ 
         case .roomCall:
             return roomCallTextField.text ?? ""
+        /* </ROOMS_SUPPORT:2> */
         }
     }
 
@@ -422,9 +436,12 @@ class CallingDemoViewController: UIViewController {
         selectedMeetingType = MeetingType(rawValue: sender.selectedSegmentIndex)!
         updateMeetingTypeFields()
     }
+
+    /* <ROOMS_SUPPORT> */
     @objc func onRoomRoleChanged(_ sender: UISegmentedControl!) {
         selectedRoomRoleType = RoomRoleType(rawValue: sender.selectedSegmentIndex)!
     }
+    /* </ROOMS_SUPPORT> */
 
     @objc func keyboardWillShow(notification: NSNotification) {
         isKeyboardShowing = true
@@ -504,11 +521,14 @@ class CallingDemoViewController: UIViewController {
         case .groupCall:
             groupCallTextField.isHidden = false
             teamsMeetingTextField.isHidden = true
+            /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
+            /* </ROOMS_SUPPORT> */
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
+            /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
         case .roomCall:
@@ -516,6 +536,7 @@ class CallingDemoViewController: UIViewController {
             teamsMeetingTextField.isHidden = true
             roomCallTextField.isHidden = false
             roomRoleTypeSegmentedControl.isHidden = false
+        /* </ROOMS_SUPPORT> */
         }
     }
 
@@ -532,7 +553,9 @@ class CallingDemoViewController: UIViewController {
             || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
             || (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty)
             || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty)
-            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) {
+            /* <ROOMS_SUPPORT> */
+            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty)
+            /* </ROOMS_SUPPORT:5> */ {
             return true
         }
 
@@ -639,6 +662,8 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
         teamsMeetingTextField.borderStyle = .roundedRect
         teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+
+        /* <ROOMS_SUPPORT> */
         roomCallTextField = UITextField()
         roomCallTextField.placeholder = "Room Id"
         roomCallTextField.text = envConfigSubject.roomId
@@ -647,6 +672,14 @@ class CallingDemoViewController: UIViewController {
         roomCallTextField.translatesAutoresizingMaskIntoConstraints = false
         roomCallTextField.borderStyle = .roundedRect
         roomCallTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+        roomRoleTypeSegmentedControl = UISegmentedControl(items: ["Presenter", "Attendee"])
+        roomRoleTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedRoomRoleType.rawValue
+        roomRoleTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        roomRoleTypeSegmentedControl.addTarget(self,
+                                               action: #selector(onRoomRoleChanged(_:)),
+                                               for: .valueChanged)
+        selectedRoomRoleType = envConfigSubject.selectedRoomRoleType
+        /* </ROOMS_SUPPORT> */
 
         meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting", "Room Call"])
         meetingTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedMeetingType.rawValue
@@ -655,13 +688,6 @@ class CallingDemoViewController: UIViewController {
                                               action: #selector(onMeetingTypeValueChanged(_:)),
                                               for: .valueChanged)
         selectedMeetingType = envConfigSubject.selectedMeetingType
-        roomRoleTypeSegmentedControl = UISegmentedControl(items: ["Presenter", "Attendee"])
-        roomRoleTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedRoomRoleType.rawValue
-        roomRoleTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        roomRoleTypeSegmentedControl.addTarget(self,
-                                              action: #selector(onRoomRoleChanged(_:)),
-                                              for: .valueChanged)
-        selectedRoomRoleType = envConfigSubject.selectedRoomRoleType
         settingsButton = UIButton()
         settingsButton.setTitle("Settings", for: .normal)
         settingsButton.backgroundColor = .systemBlue
@@ -801,8 +827,8 @@ class CallingDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
-                                                   roomCallTextField,
-                                                   roomRoleTypeSegmentedControl,
+                                                   /* <ROOMS_SUPPORT:7> */ roomCallTextField,
+                                                   roomRoleTypeSegmentedControl, /* </ROOMS_SUPPORT:4> */
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,
                                                    startButtonHStack,

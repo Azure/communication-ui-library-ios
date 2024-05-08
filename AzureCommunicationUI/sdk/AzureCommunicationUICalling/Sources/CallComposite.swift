@@ -11,7 +11,6 @@ import FluentUI
 import AVKit
 import Combine
 
-// swiftlint:disable type_body_length
 // swiftlint:disable file_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
@@ -159,8 +158,8 @@ public class CallComposite {
                        localOptions: LocalOptions? = nil) {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName,
-                                                  roleHint: localOptions?.roleHint)
+                                                  displayName: remoteOptions.displayName /* <ROOMS_SUPPORT> */ ,
+                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
         launch(callConfiguration, localOptions: localOptions)
     }
 

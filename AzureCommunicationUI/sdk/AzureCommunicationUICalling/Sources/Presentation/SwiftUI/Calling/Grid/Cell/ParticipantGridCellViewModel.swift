@@ -126,7 +126,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
                                                     participantModel.isMuted ? .muted : .unmuted)
 
         let videoStatus = (videoViewModel?.videoStreamId?.isEmpty ?? true) ?
-        localizationProvider.getLocalizedString(.videoOff):
+        localizationProvider.getLocalizedString(.videoOff) :
         localizationProvider.getLocalizedString(.videoOn)
         return localizationProvider.getLocalizedString(.participantInformationAccessibilityLable,
                                                        participantModel.displayName, status, videoStatus)

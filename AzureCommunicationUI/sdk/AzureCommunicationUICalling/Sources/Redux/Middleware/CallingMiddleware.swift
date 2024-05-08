@@ -29,7 +29,7 @@ extension Middleware {
                             handleAudioSessionAction(audioAction, actionHandler, getState, dispatch)
                         case .remoteParticipantsAction(let action):
                             handleRemoteParticipantAction(action, actionHandler, getState, dispatch)
-                        case .errorAction(_),
+                        case .errorAction,
                                 .compositeExitAction,
                                 .callingViewLaunched:
                             break
@@ -82,23 +82,23 @@ private func handleLocalUserAction(_ action: LocalUserAction,
     case .microphoneOnTriggered:
         actionHandler.requestMicrophoneUnmute(state: getState(), dispatch: dispatch)
 
-    case .cameraOnSucceeded(videoStreamIdentifier: _),
-            .cameraOnFailed(error: _),
+    case .cameraOnSucceeded,
+            .cameraOnFailed,
             .cameraOffSucceeded,
-            .cameraOffFailed(error: _),
+            .cameraOffFailed,
             .cameraPausedSucceeded,
-            .cameraPausedFailed(error: _),
-            .cameraSwitchSucceeded(cameraDevice: _),
-            .cameraSwitchFailed(previousCamera: _, error: _),
-            .microphoneOnFailed(error: _),
-            .microphoneOffFailed(error: _),
-            .microphoneMuteStateUpdated(isMuted: _),
+            .cameraPausedFailed,
+            .cameraSwitchSucceeded,
+            .cameraSwitchFailed,
+            .microphoneOnFailed,
+            .microphoneOffFailed,
+            .microphoneMuteStateUpdated,
             .microphonePreviewOn,
             .microphonePreviewOff,
-            .audioDeviceChangeRequested(device: _),
-            .audioDeviceChangeSucceeded(device: _),
-            .audioDeviceChangeFailed(error: _),
-            .participantRoleChanged(participantRole: _):
+            .audioDeviceChangeRequested,
+            .audioDeviceChangeSucceeded,
+            .audioDeviceChangeFailed,
+            .participantRoleChanged:
         break
     }
 }

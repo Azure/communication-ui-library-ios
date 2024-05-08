@@ -92,7 +92,11 @@ class InfoHeaderViewModel: ObservableObject {
         guard !isVoiceOverEnabled else {
             return
         }
-        self.isInfoHeaderDisplayed ? hideInfoHeader() : displayWithTimer()
+        if self.isInfoHeaderDisplayed {
+            hideInfoHeader()
+        } else {
+            displayWithTimer()
+        }
     }
 
     func update(localUserState: LocalUserState,

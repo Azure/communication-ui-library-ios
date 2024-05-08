@@ -13,9 +13,4 @@ public struct CallHistoryRecord {
 
     /// Call Ids associated with particular call started on callStartedOn date.
     public let callIds: [String]
-
-    init(callStartedOn: Date, callIds: [String]) {
-        self.callStartedOn = callStartedOn
-        self.callIds = callIds
-    }
 }

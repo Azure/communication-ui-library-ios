@@ -59,17 +59,17 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
         // Workaround: improve data structure in MessageRepo user story
-        for m in previousMessages {
+        for message in previousMessages {
             if let index = messages.firstIndex(where: {
-                $0.id == m.id
+                $0.id == message.id
             }) {
-                messages[index] = m
-            } else if m.createdOn < initialFetchTimestamp {
+                messages[index] = message
+            } else if message.createdOn < initialFetchTimestamp {
                 // Add all previous message
-                messages.append(m)
-            } else if !m.type.isSystemMessage {
+                messages.append(message)
+            } else if !message.type.isSystemMessage {
                 // Workaround: for system message, use trouter msg, drop new fetched message after initialFetchTimestamp
-                messages.append(m)
+                messages.append(message)
             }
         }
 
