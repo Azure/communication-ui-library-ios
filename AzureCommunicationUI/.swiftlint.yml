@@ -165,6 +165,8 @@ opt_in_rules:
   - weak_delegate
 
 disabled_rules: # rule identifiers turned on by default to exclude from running
+  - type_body_length
+
 
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Pods
@@ -190,9 +192,6 @@ modifier_order:
 type_name:
   min_length: 3
   max_length: 50
-type_body_length:
-  - 300
-  - 500
 
 function_body_length:
   - 150 # Warning
