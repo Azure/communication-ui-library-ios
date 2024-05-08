@@ -12,6 +12,7 @@ import AVKit
 import Combine
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     /// The class to configure events closures for Call Composite.
@@ -446,3 +447,4 @@ extension CallComposite {
         })
     }
 }
+// swiftlint:enable type_body_length

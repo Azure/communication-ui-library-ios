@@ -39,7 +39,7 @@ class ControlBarViewModel: ObservableObject {
     var audioState = LocalUserState.AudioState(operation: .off,
                                                device: .receiverSelected)
     var displayEndCallConfirm: (() -> Void)
-
+    // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
@@ -145,6 +145,7 @@ class ControlBarViewModel: ObservableObject {
 
         isCameraDisplayed = audioVideoMode != .audioOnly
     }
+    // swiftlint:enable function_body_length
 
     func endCallButtonTapped() {
         if self.leaveCallConfirmationMode == .alwaysEnabled {

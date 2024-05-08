@@ -32,9 +32,6 @@ opt_in_rules:
   # When using trailing closures, empty parentheses should be avoided after the method call.
   - empty_parentheses_with_trailing_closure
 
-  # Properties should have a type interface
-  - explicit_type_interface
-
   # Prefer to use extension access modifiers.
   - extension_access_modifier
 

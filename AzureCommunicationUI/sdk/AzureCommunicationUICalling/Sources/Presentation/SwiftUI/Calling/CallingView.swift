@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+// swiftlint:disable type_body_length
 struct CallingView: View {
     enum InfoHeaderViewConstants {
         static let horizontalPadding: CGFloat = 8.0
@@ -297,6 +298,7 @@ struct CallingView: View {
     }
 
 }
+// swiftlint:enable type_body_length
 
 extension CallingView {
     private func getSizeClass() -> ScreenSizeClassType {
