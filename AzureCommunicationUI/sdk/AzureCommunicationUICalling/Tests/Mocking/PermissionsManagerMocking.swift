@@ -8,11 +8,11 @@ import Combine
 @testable import AzureCommunicationUICalling
 
 class PermissionsManagerMocking: PermissionsManagerProtocol {
-    private var requestWasCalled: Bool = false
+    private var requestWasCalled = false
     private var requestWasCalledWithPermission: AppPermission?
 
-    var didResolveStatus: Bool = false
-    var didRequestPermission: Bool = false
+    var didResolveStatus = false
+    var didRequestPermission = false
 
     func resolveStatus(for permission: AppPermission) -> AppPermission.Status {
         return .granted

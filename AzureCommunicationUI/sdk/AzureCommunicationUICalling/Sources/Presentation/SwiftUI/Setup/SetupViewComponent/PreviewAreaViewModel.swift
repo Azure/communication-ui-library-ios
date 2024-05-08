@@ -11,7 +11,7 @@ class PreviewAreaViewModel: ObservableObject {
     private var cameraPermission: AppPermission.Status = .unknown
     private var audioPermission: AppPermission.Status = .unknown
 
-    @Published var isPermissionsDenied: Bool = false
+    @Published var isPermissionsDenied = false
 
     var goToSettingsButtonViewModel: PrimaryButtonViewModel!
     let localVideoViewModel: LocalVideoViewModel!

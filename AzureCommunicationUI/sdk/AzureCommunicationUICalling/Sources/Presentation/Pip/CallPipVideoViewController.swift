@@ -14,7 +14,7 @@ final class CallPipVideoViewController: AVPictureInPictureVideoCallViewControlle
 //    private let pipPlaceholderView: UIView
 
     /// Indicate if the pip container is ready for adding content.
-    private var isPipPlaceholderReady: Bool = false
+    private var isPipPlaceholderReady = false
 
     public init(pipPlaceholderView: UIView) {
 //        self.pipPlaceholderView = pipPlaceholderView

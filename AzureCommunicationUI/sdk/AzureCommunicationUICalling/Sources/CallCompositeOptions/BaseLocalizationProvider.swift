@@ -19,7 +19,7 @@ class BaseLocalizationProvider: BaseLocalizationProviderProtocol {
     private var languageIdentifier: String = "en"
     private var languageCode: String = "en"
     private var localizableFilename: String = ""
-    private(set) var isRightToLeft: Bool = false
+    private(set) var isRightToLeft = false
 
     private var bundle: Bundle
     var supportedLocales: [String]

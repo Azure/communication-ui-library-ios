@@ -16,17 +16,17 @@ final class MappedSequenceTests: XCTestCase {
         mappedSequence.append(forKey: "6", value: 6)
         mappedSequence.append(forKey: "5", value: 5)
 
-        XCTAssertEqual(mappedSequence.toArray(), [1,2,3,4,6,5])
+        XCTAssertEqual(mappedSequence.toArray(), [1, 2, 3, 4, 6, 5])
 
         mappedSequence.removeValue(forKey: "6")
-        XCTAssertEqual(mappedSequence.toArray(), [1,2,3,4,5])
+        XCTAssertEqual(mappedSequence.toArray(), [1, 2, 3, 4, 5])
 
         mappedSequence.removeLast()
-        XCTAssertEqual(mappedSequence.toArray(), [1,2,3,4])
+        XCTAssertEqual(mappedSequence.toArray(), [1, 2, 3, 4])
 
         XCTAssertEqual(mappedSequence.value(forKey: "1"), 1)
 
         mappedSequence.prepend(forKey: "0", value: 0)
-        XCTAssertEqual(mappedSequence.toArray(), [0,1,2,3,4])
+        XCTAssertEqual(mappedSequence.toArray(), [0, 1, 2, 3, 4])
     }
 }

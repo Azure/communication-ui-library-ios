@@ -12,10 +12,10 @@ import AVFoundation
 import AzureCommunicationUICalling
 #endif
 struct CallingDemoView: View {
-    @State var isAlertDisplayed: Bool = false
-    @State var isSettingsDisplayed: Bool = false
-    @State var isStartExperienceLoading: Bool = false
-    @State var exitCompositeExecuted: Bool = false
+    @State var isAlertDisplayed = false
+    @State var isSettingsDisplayed = false
+    @State var isStartExperienceLoading = false
+    @State var exitCompositeExecuted = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
     @State var callState: String = ""
@@ -360,7 +360,7 @@ extension CallingDemoView {
         callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
-                                nil:envConfigSubject.renderedDisplayName
+                                nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         /* <ROOMS_SUPPORT> */

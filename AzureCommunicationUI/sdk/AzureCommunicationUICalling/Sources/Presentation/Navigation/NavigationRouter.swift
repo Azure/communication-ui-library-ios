@@ -14,7 +14,7 @@ enum ViewType {
 class NavigationRouter: ObservableObject {
     private let store: Store<AppState, Action>
     private let logger: Logger
-    private var isDismissed: Bool = false
+    private var isDismissed = false
     @Published var currentView: ViewType = .setupView
 
     var cancellables = Set<AnyCancellable>()

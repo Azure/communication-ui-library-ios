@@ -9,15 +9,15 @@ import Foundation
 class SetupControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var audioPermission: AppPermission.Status = .unknown
-    @Published var isAudioDeviceSelectionDisplayed: Bool = false
-    @Published var isCameraDisplayed: Bool = true
+    @Published var isAudioDeviceSelectionDisplayed = false
+    @Published var isCameraDisplayed = true
 
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
 
-    private var isJoinRequested: Bool = false
-    private var isDefaultUserStateMapped: Bool = false
+    private var isJoinRequested = false
+    private var isDefaultUserStateMapped = false
     private var callingStatus: CallingStatus = .none
     private var cameraStatus: LocalUserState.CameraOperationalStatus = .off
     private(set) var micStatus: LocalUserState.AudioOperationalStatus = .off

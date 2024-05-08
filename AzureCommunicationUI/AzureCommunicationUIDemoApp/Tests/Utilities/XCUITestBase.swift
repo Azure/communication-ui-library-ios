@@ -189,7 +189,7 @@ extension XCUITestBase {
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
-                        lifetime: XCTAttachment.Lifetime  = .keepAlways) {
+                        lifetime: XCTAttachment.Lifetime = .keepAlways) {
         let screenshot = app.screenshot()
         let attachment = XCTAttachment(screenshot: screenshot)
         attachment.name = name

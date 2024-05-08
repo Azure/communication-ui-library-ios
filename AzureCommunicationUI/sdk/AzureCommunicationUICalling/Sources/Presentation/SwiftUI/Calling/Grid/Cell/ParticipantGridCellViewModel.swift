@@ -26,7 +26,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var participantIdentifier: String
     @Published var isInBackground: Bool
 
-    private var isScreenSharing: Bool = false
+    private var isScreenSharing = false
     private var participantName: String
     private var renderDisplayName: String?
     private var isCameraEnabled: Bool

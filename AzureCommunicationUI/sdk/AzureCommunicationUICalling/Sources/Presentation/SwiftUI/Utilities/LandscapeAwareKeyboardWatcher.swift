@@ -11,7 +11,7 @@ internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     @Published var activeHeight: CGFloat = 0
 
     private var keyboardHeight: CGFloat = 0
-    private var isLandscape: Bool = false {
+    private var isLandscape = false {
         didSet {
             updateActiveHeight()
         }

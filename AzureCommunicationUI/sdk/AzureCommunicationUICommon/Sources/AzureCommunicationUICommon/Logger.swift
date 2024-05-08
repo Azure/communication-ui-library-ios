@@ -68,4 +68,3 @@ extension LogLevel: Comparable {
         return lhs.rawValue < rhs.rawValue
     }
 }
-
