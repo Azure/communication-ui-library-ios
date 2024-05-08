@@ -32,27 +32,27 @@ extension Reducer where State == ErrorState,
             errorCategory = .callState
 
             // Exhaustive unimplemented actions
-        case .audioSessionAction(_),
-                .callingAction(.callIdUpdated(callId: _)),
+        case .audioSessionAction,
+                .callingAction(.callIdUpdated),
                 .callingAction(.callEndRequested),
                 .callingAction(.callEnded),
                 .callingAction(.requestFailed),
-                .callingAction(.stateUpdated(status: _)),
+                .callingAction(.stateUpdated),
                 .callingAction(.setupCall),
-                .callingAction(.recordingStateUpdated(isRecordingActive: _)),
-                .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
+                .callingAction(.recordingStateUpdated),
+                .callingAction(.transcriptionStateUpdated),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .lifecycleAction(_),
-                .localUserAction(_),
-                .permissionAction(_),
-                .remoteParticipantsAction(_),
-                .callDiagnosticAction(_),
+                .lifecycleAction,
+                .localUserAction,
+                .permissionAction,
+                .remoteParticipantsAction,
+                .callDiagnosticAction,
                 .compositeExitAction,
                 .callingViewLaunched,
                 .hideSupportForm,
                 .showSupportForm,
-                .visibilityAction(_):
+                .visibilityAction:
             return state
         }
 

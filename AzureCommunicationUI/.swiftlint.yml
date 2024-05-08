@@ -99,7 +99,7 @@ opt_in_rules:
   - redundant_string_enum_value
 
   # Properties, variables, and constants should not have redundant type annotation
-  - redundant_type_annotation
+  # - redundant_type_annotation
 
   # Returning Void in a function declaration is redundant.
   - redundant_void_return
@@ -190,9 +190,13 @@ modifier_order:
 type_name:
   min_length: 3
   max_length: 50
+type_body_length:
+  - 300
+  - 500
+
 function_body_length:
-  - 75 # Warning
-  - 100 # Error
+  - 150 # Warning
+  - 300 # Error
 cyclomatic_complexity:
   - 25 # Warning
   - 50 # Error

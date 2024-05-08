@@ -116,8 +116,7 @@ class ControlBarViewModel: ObservableObject {
         moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .more,
             buttonType: .controlButton,
-            isDisabled: false) {
-                [weak self] in
+            isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
                 }

@@ -35,8 +35,4 @@ public struct DebugInfo {
 public struct Versions {
     /// A string representing the version of the ACS Calling UI SDK currently in use.
     public let callingUIVersion: String
-
-    internal init(callingUIVersion: String) {
-        self.callingUIVersion = callingUIVersion
-    }
 }

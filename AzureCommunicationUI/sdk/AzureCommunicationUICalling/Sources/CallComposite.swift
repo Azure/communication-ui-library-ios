@@ -11,7 +11,6 @@ import FluentUI
 import AVKit
 import Combine
 
-// swiftlint:disable type_body_length
 // swiftlint:disable file_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {

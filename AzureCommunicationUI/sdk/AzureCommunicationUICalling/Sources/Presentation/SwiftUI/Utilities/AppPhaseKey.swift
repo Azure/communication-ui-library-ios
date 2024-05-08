@@ -12,7 +12,6 @@ struct AppPhaseKey: EnvironmentKey {
 
 extension EnvironmentValues {
     var appPhase: AppStatus {
-        // swiftlint:disable implicit_getter
         get { self[AppPhaseKey.self] }
         set { self[AppPhaseKey.self] = newValue }
     }
