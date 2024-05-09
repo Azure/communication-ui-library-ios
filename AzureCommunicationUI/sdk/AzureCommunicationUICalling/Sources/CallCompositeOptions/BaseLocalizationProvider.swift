@@ -16,9 +16,9 @@ protocol BaseLocalizationProviderProtocol {
 
 class BaseLocalizationProvider: BaseLocalizationProviderProtocol {
     private let logger: Logger
-    private var languageIdentifier: String = "en"
-    private var languageCode: String = "en"
-    private var localizableFilename: String = ""
+    private var languageIdentifier = "en"
+    private var languageCode = "en"
+    private var localizableFilename = ""
     private(set) var isRightToLeft = false
 
     private var bundle: Bundle
