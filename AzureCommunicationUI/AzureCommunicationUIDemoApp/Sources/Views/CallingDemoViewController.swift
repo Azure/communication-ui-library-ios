@@ -55,9 +55,9 @@ class CallingDemoViewController: UIViewController {
     // The space needed to fill the top part of the stack view,
     // in order to make the stackview content centered
     private var spaceToFullInStackView: CGFloat?
-    private var userIsEditing: Bool = false
-    private var isKeyboardShowing: Bool = false
-    private var exitCompositeExecuted: Bool = false
+    private var userIsEditing = false
+    private var isKeyboardShowing = false
+    private var exitCompositeExecuted = false
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
@@ -261,7 +261,7 @@ class CallingDemoViewController: UIViewController {
         }
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
             if self.envConfigSubject.useRelaunchOnDismissedToggle && self.exitCompositeExecuted {
-                            DispatchQueue.main.async() {
+                            DispatchQueue.main.async {
                                 Task { @MainActor in
                                     self.onStartExperienceBtnPressed()
                                 }

@@ -15,7 +15,7 @@ class AccessibilityProviderMocking: AccessibilityProviderProtocol {
     var subscribeToVoiceOverStatusDidChangeNotificationBlock: ((AccessibilityProviderNotificationsObserver) -> Void)?
     var subscribeToUIFocusDidUpdateNotificationBlock: ((AccessibilityProviderNotificationsObserver) -> Void)?
 
-    var isVoiceOverEnabled: Bool = false
+    var isVoiceOverEnabled = false
 
     func postQueuedAnnouncement(_ announcement: String) {
         postQueuedAnnouncementBlock?(announcement)

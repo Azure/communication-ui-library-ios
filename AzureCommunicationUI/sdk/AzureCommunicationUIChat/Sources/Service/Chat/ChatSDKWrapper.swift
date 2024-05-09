@@ -7,6 +7,7 @@ import AzureCore
 import AzureCommunicationChat
 import Foundation
 
+// swiftlint:disable type_body_length
 class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     let chatEventsHandler: ChatSDKEventsHandling
 
@@ -326,3 +327,4 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         client.register(event: .participantsRemoved, handler: chatEventsHandler.handle)
     }
 }
+// swiftlint:enable type_body_length

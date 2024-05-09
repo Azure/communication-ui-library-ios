@@ -28,7 +28,7 @@ class PipManager: NSObject, PipManagerProtocol {
     /// Pip view controller embeds into System AVKit Pip Window
     private var pipVideoController: UIViewController?
 
-    private var turnCameraOffWhilePipIsStarting: Bool = false
+    private var turnCameraOffWhilePipIsStarting = false
 
     var cancellables = Set<AnyCancellable>()
 

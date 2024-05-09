@@ -6,8 +6,8 @@
 import Foundation
 
 class SupportFormViewModel: ObservableObject {
-    @Published var submitOnDismiss: Bool = false
-    @Published var blockSubmission: Bool = true
+    @Published var submitOnDismiss = false
+    @Published var blockSubmission = true
 
     // Strings
     @Published var reportIssueTitle: String

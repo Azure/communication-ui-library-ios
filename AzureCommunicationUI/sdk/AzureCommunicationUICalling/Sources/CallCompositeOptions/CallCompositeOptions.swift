@@ -10,8 +10,8 @@ import UIKit
 public struct CallCompositeOptions {
     private(set) var themeOptions: ThemeOptions?
     private(set) var localizationOptions: LocalizationOptions?
-    private(set) var enableMultitasking: Bool = false
-    private(set) var enableSystemPipWhenMultitasking: Bool = false
+    private(set) var enableMultitasking = false
+    private(set) var enableSystemPipWhenMultitasking = false
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
     private(set) var callScreenOptions: CallScreenOptions?

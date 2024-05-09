@@ -8,9 +8,9 @@ import Foundation
 
 class LocalizationProviderMocking: LocalizationProviderProtocol {
 
-    var isApplyCalled: Bool = false
-    var isGetLocalizedStringCalled: Bool = false
-    var isGetLocalizedStringWithArgsCalled: Bool = false
+    var isApplyCalled = false
+    var isGetLocalizedStringCalled = false
+    var isGetLocalizedStringWithArgsCalled = false
 
     var isRightToLeft: Bool {
         return false

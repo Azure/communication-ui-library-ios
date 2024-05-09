@@ -28,6 +28,7 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
         self.localUserId = localUserId
     }
 
+    // swiftlint:disable function_body_length
     func handle(response: TrouterEvent) {
         var eventModel: ChatEventModel?
         switch response {
@@ -108,6 +109,7 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
         }
         chatEventSubject.send(chatEventModel)
     }
+    // swiftlint:enable function_body_length
 
     func isChatClientEvent(_ eventModel: ChatEventModel) -> Bool {
         return eventModel.threadId == nil

@@ -9,6 +9,7 @@ import Combine
 import Foundation
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -411,6 +412,7 @@ extension CallingSDKWrapper {
         return "builtinCameraVideoStream"
     }
 }
+// swiftlint:enable type_body_length
 
 extension CallingSDKWrapper: DeviceManagerDelegate {
     func deviceManager(_ deviceManager: DeviceManager, didUpdateCameras args: VideoDevicesUpdatedEventArgs) {
