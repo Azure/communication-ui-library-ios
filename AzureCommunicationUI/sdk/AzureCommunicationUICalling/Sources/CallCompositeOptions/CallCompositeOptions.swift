@@ -17,6 +17,7 @@ public struct CallCompositeOptions {
     private(set) var callScreenOptions: CallScreenOptions?
     private(set) var callKitOptions: CallCompositeCallKitOptions?
     private(set) var disableInternalPushForIncomingCall = false
+    private(set) var displayName: String?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -34,6 +35,7 @@ public struct CallCompositeOptions {
     /// - Parameter callKitOptions: CallKitOptions for specifying CallKit customization. Default value is `nil`.
     /// - Parameter disableInternalPushForIncomingCall: Disables internal push for incoming call. 
     ///  default value is `false`.
+    /// - Parameter displayName: Display name for the user. Default value is `nil`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
@@ -42,7 +44,8 @@ public struct CallCompositeOptions {
                 enableSystemPictureInPictureWhenMultitasking: Bool = false,
                 callScreenOptions: CallScreenOptions? = nil,
                 callKitOptions: CallCompositeCallKitOptions? = nil,
-                disableInternalPushForIncomingCall: Bool = false) {
+                disableInternalPushForIncomingCall: Bool = false,
+                displayName: String? = nil) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
@@ -52,5 +55,6 @@ public struct CallCompositeOptions {
         self.callScreenOptions = callScreenOptions
         self.callKitOptions = callKitOptions
         self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        self.displayName = displayName
     }
 }
