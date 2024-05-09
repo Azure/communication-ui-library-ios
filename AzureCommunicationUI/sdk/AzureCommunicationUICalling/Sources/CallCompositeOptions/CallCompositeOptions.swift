@@ -15,6 +15,9 @@ public struct CallCompositeOptions {
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
     private(set) var callScreenOptions: CallScreenOptions?
+    private(set) var callKitOptions: CallCompositeCallKitOptions?
+    private(set) var disableInternalPushForIncomingCall = false
+
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
     ///  Default value is `nil`.
@@ -28,13 +31,18 @@ public struct CallCompositeOptions {
     ///  while on the call. Default value is `false`.
     /// - Parameter enableSystemPictureInPictureWhenMultitasking: enables syspem Picture-in-Picture while
     ///  enableMultitasking is on and user navigates away from call view. Default value is `false`.
+    /// - Parameter callKitOptions: CallKitOptions for specifying CallKit customization. Default value is `nil`.
+    /// - Parameter disableInternalPushForIncomingCall: Disables internal push for incoming call. 
+    ///  default value is `false`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
                 callingScreenOrientation: OrientationOptions? = nil,
                 enableMultitasking: Bool = false,
                 enableSystemPictureInPictureWhenMultitasking: Bool = false,
-                callScreenOptions: CallScreenOptions? = nil) {
+                callScreenOptions: CallScreenOptions? = nil,
+                callKitOptions: CallCompositeCallKitOptions? = nil,
+                disableInternalPushForIncomingCall: Bool = false) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
@@ -42,5 +50,7 @@ public struct CallCompositeOptions {
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPictureInPictureWhenMultitasking
         self.callScreenOptions = callScreenOptions
+        self.callKitOptions = callKitOptions
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 }
