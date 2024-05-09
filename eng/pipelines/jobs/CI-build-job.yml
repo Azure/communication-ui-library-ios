@@ -36,9 +36,9 @@ jobs:
         reporttypes: "Cobertura"
         targetdir: $(Pipeline.Workspace)/coveragereport
 
-    - task: PublishCodeCoverageResults@1
+    - task: PublishCodeCoverageResults@2
       inputs:
-        codeCoverageTool: "Cobertura"
+        # codeCoverageTool: "Cobertura"
         summaryFileLocation: $(Pipeline.Workspace)/coveragereport/Cobertura.xml
 
     - task: BuildQualityChecks@8
