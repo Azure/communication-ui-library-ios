@@ -76,13 +76,7 @@ internal struct SupportFormView: View {
                 .padding(.leading, 16)
                 .padding(.bottom, 32)
             }
-//            .background(Color(StyleProvider.color.backgroundColor))
-//            .cornerRadius( 16.0)
-//            .shadow(radius: 4.0)
-//            .padding(.leading, 8)
-//            .padding(.trailing, 8)
-//            .padding(.bottom, -16)
-            .offset(y: -landscapeKeyboardWatcher.activeHeight)
+
         }
     }
 

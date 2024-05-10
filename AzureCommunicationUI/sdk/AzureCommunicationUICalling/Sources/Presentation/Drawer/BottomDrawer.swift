@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import FluentUI
 
 enum DrawerState {
     case gone
@@ -14,7 +15,9 @@ enum DrawerState {
 struct BottomDrawer<Content: View>: View {
     @Binding var isPresented: Bool
     @State private var drawerState: DrawerState = .gone
+    @State private var keyboardHeight: CGFloat = 0
     let content: Content
+    let bottomOffset = 48.0
 
     init(isPresented: Binding<Bool>, @ViewBuilder content: () -> Content) {
         _isPresented = isPresented
@@ -24,7 +27,6 @@ struct BottomDrawer<Content: View>: View {
     var body: some View {
         ZStack {
             if drawerState != .gone {
-                // Background overlay to dim main content
                 Color.black.opacity(drawerState == .visible ? 0.4 : 0)
                     .ignoresSafeArea()
                     .onTapGesture {
@@ -34,7 +36,6 @@ struct BottomDrawer<Content: View>: View {
                     }
                     .allowsHitTesting(drawerState == .visible)
 
-                // Drawer content
                 VStack {
                     Spacer()
 
@@ -43,7 +44,7 @@ struct BottomDrawer<Content: View>: View {
                             .fill(.gray)
                             .frame(width: 36, height: 4)
                             .padding()
-                            .gesture( DragGesture()
+                            .gesture(DragGesture()
                                 .onEnded { value in
                                     if value.translation.height > 50 {
                                         withAnimation {
@@ -52,10 +53,14 @@ struct BottomDrawer<Content: View>: View {
                                     }
                                 })
                         content
-                    }.frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(16)
-                        .shadow(radius: 10)
+
+                        Spacer().frame(height: bottomOffset)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .background(Color(StyleProvider.color.surface))
+                    .cornerRadius(16)
+                    .shadow(radius: 10)
+                    .padding(.bottom, keyboardHeight - bottomOffset)
                 }
                 .transition(.move(edge: .bottom))
                 .animation(.easeInOut, value: drawerState == .visible)
@@ -65,22 +70,39 @@ struct BottomDrawer<Content: View>: View {
         }
         .onChange(of: isPresented) { newValue in
             if newValue {
-                // Move from gone to visible through hidden
-                if drawerState == .gone {
-                    drawerState = .hidden
-                    withAnimation {
-                        drawerState = .visible
-                    }
+                drawerState = .hidden
+                withAnimation {
+                    drawerState = .visible
                 }
             } else {
-                // Transition back to gone from visible through hidden
                 withAnimation {
                     drawerState = .hidden
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // Delay to allow animation to complete
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     drawerState = .gone
                 }
             }
+        }
+        .onAppear {
+            NotificationCenter.default
+                .addObserver(forName: UIResponder
+                .keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                    if let keyboardFrame = notification
+                        .userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                        keyboardHeight = keyboardFrame.height
+                    }
+                }
+
+            NotificationCenter.default.addObserver(forName:
+                                                    UIResponder
+                .keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                keyboardHeight = 0
+            }
+        }
+        .onDisappear {
+            // swiftlint:disable notification_center_detachment
+            NotificationCenter.default.removeObserver(self)
+            // swiftlint:enable notification_center_detachment
         }
     }
 }
