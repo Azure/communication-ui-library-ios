@@ -49,16 +49,15 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-            }
-            .frame(width: geometry.size.width,
-                   height: geometry.size.height)
-            .modifier(PopupModalView(
-                isPresented: viewModel.showingSupportForm,
-                alignment: .bottom) {
+
+                BottomDrawer(isPresented: $viewModel.showingSupportForm) {
                     reportErrorView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
-            })
+                }
+            }
+            .frame(width: geometry.size.width,
+                   height: geometry.size.height)
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
