@@ -13,9 +13,9 @@ class LocalVideoViewModel: ObservableObject {
 
     @Published var localVideoStreamId: String?
     @Published var displayName: String?
-    @Published var isMuted: Bool = false
+    @Published var isMuted = false
     @Published var cameraOperationalStatus: LocalUserState.CameraOperationalStatus = .off
-    @Published var isInPip: Bool = false
+    @Published var isInPip = false
 
     var cameraSwitchButtonPipViewModel: IconButtonViewModel!
     var cameraSwitchButtonFullViewModel: IconButtonViewModel!

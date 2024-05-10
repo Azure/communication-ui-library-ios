@@ -13,8 +13,8 @@ extension CallEndReason {
 
         var internalError: CallCompositeInternalError?
         switch callEndErrorCode {
-        case 0 :
-            if (callEndErrorSubCode == 5300 || callEndErrorSubCode == 5000),
+        case 0:
+            if callEndErrorSubCode == 5300 || callEndErrorSubCode == 5000,
                wasCallConnected {
                 internalError = CallCompositeInternalError.callEvicted
             } else if callEndErrorSubCode == 5854 {

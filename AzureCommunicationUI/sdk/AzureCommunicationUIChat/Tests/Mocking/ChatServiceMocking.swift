@@ -16,17 +16,17 @@ class ChatServiceMocking: ChatServiceProtocol {
     var listOfParticipants: [ParticipantInfoModel] = []
     var previousMessages: [ChatMessageInfoModel] = []
 
-    var initializeCalled: Bool = false
-    var getInitialMessagesCalled: Bool = false
-    var disconnectChatServiceCalled: Bool = false
-    var getMaskedParticipantIdsCalled: Bool = false
-    var getListOfParticipantsCalled: Bool = false
-    var getPreviousMessagesCalled: Bool = false
-    var sendMessageCalled: Bool = false
-    var editMessageCalled: Bool = false
-    var deleteMessageCalled: Bool = false
-    var sendReadReceiptCalled: Bool = false
-    var sendTypingIndicatorCalled: Bool = false
+    var initializeCalled = false
+    var getInitialMessagesCalled = false
+    var disconnectChatServiceCalled = false
+    var getMaskedParticipantIdsCalled = false
+    var getListOfParticipantsCalled = false
+    var getPreviousMessagesCalled = false
+    var sendMessageCalled = false
+    var editMessageCalled = false
+    var deleteMessageCalled = false
+    var sendReadReceiptCalled = false
+    var sendTypingIndicatorCalled = false
 
     func initialize() async throws {
         initializeCalled = true

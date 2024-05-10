@@ -26,7 +26,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
 
     @Published var actionButtonViewModel: PrimaryButtonViewModel?
 
-    @Published var isDisplayed: Bool = false
+    @Published var isDisplayed = false
 
     init(localizationProvider: LocalizationProviderProtocol,
          compositeViewModelFactory: CompositeViewModelFactoryProtocol,

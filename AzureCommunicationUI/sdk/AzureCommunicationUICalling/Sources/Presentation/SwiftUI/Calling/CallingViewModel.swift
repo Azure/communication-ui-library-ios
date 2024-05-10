@@ -7,14 +7,14 @@ import Combine
 import Foundation
 
 class CallingViewModel: ObservableObject {
-    @Published var isConfirmLeaveListDisplayed: Bool = false
+    @Published var isConfirmLeaveListDisplayed = false
     @Published var isParticipantGridDisplayed: Bool
-    @Published var isVideoGridViewAccessibilityAvailable: Bool = false
+    @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
-    @Published var isInPip: Bool = false
+    @Published var isInPip = false
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
-    @Published var allowLocalCameraPreview: Bool = false
-    @Published var showingSupportForm: Bool = false
+    @Published var allowLocalCameraPreview = false
+    @Published var showingSupportForm = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -23,8 +23,8 @@ class CallingViewModel: ObservableObject {
     private let accessibilityProvider: AccessibilityProviderProtocol
 
     private var cancellables = Set<AnyCancellable>()
-    private var callHasConnected: Bool = false
-    private var callClientRequested: Bool = false
+    private var callHasConnected = false
+    private var callClientRequested = false
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
 
     let localVideoViewModel: LocalVideoViewModel

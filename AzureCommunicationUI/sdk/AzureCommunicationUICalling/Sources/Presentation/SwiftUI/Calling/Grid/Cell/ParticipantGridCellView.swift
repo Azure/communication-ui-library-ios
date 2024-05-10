@@ -13,7 +13,7 @@ struct ParticipantGridCellView: View {
     let avatarViewManager: AvatarViewManagerProtocol
     @State var avatarImage: UIImage?
     @State var displayedVideoStreamId: String?
-    @State var isVideoChanging: Bool = false
+    @State var isVideoChanging = false
     let avatarSize: CGFloat = 56
 
     var body: some View {

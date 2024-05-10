@@ -23,7 +23,7 @@ class LobbyOverlayViewModel: OverlayViewModelProtocol {
         return localizationProvider.getLocalizedString(.waitingDetails)
     }
 
-    @Published var isDisplayed: Bool = false
+    @Published var isDisplayed = false
 
     func update(callingStatus: CallingStatus) {
         let shouldDisplay = callingStatus == .inLobby

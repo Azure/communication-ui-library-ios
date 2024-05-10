@@ -223,7 +223,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                                         forMessage: messageId,
                                         withOptions: SendChatReadReceiptOptions()) { result, error  in
                     switch result {
-                    case .success():
+                    case .success:
                         continuation.resume(returning: Void())
                     case .failure(let error):
                         continuation.resume(throwing: error)
@@ -283,7 +283,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     private func registerRealTimeNotifications() throws {
-        self.chatClient?.startRealTimeNotifications { [self] result in
+        self.chatClient?.startRealTimeNotifications { [self] (result: Result<Void, AzureError>) in
             switch result {
             case .success:
                 logger.info("Real-time notifications started.")
@@ -327,3 +327,4 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         client.register(event: .participantsRemoved, handler: chatEventsHandler.handle)
     }
 }
+// swiftlint:enable type_body_length

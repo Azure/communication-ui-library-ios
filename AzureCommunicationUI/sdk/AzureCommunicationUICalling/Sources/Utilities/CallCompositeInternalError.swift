@@ -41,7 +41,6 @@ enum CallCompositeInternalError: Error, Equatable {
                 .callResumeFailed,
                 .callEvicted,
                 .callDenied,
-                .callJoinConnectionFailed,
                 .micNotAvailable,
                 .cameraSwitchFailed:
             return nil

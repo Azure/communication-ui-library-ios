@@ -17,17 +17,17 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
         threadId: "threadId",
         localUserId: CommunicationUserIdentifier("userId"))
 
-    var initializeCalled: Bool = false
-    var unregisterRealTimeNotificationCalled: Bool = false
-    var getInitialMessagesCalled: Bool = false
-    var retrieveChatThreadPropertiesCalled: Bool = false
-    var getListOfParticipantsCalled: Bool = false
-    var getPreviousMessagesCalled: Bool = false
-    var sendMessageCalled: Bool = false
-    var editMessageCalled: Bool = false
-    var deleteMessageCalled: Bool = false
-    var sendReadReceiptCalled: Bool = false
-    var sendTypingIndicatorCalled: Bool = false
+    var initializeCalled = false
+    var unregisterRealTimeNotificationCalled = false
+    var getInitialMessagesCalled = false
+    var retrieveChatThreadPropertiesCalled = false
+    var getListOfParticipantsCalled = false
+    var getPreviousMessagesCalled = false
+    var sendMessageCalled = false
+    var editMessageCalled = false
+    var deleteMessageCalled = false
+    var sendReadReceiptCalled = false
+    var sendTypingIndicatorCalled = false
 
     func initializeChat() async throws {
         initializeCalled = true

@@ -47,7 +47,7 @@ struct PermissionWarningView: View {
             VStack(spacing: Constants.verticalSpacing) {
                 Spacer()
                 GeometryReader { scrollViewGeometry in
-                    ScrollView() {
+                    ScrollView {
                         VStack {
                             Icon(name: displayIcon, size: Constants.iconSize)
                                 .foregroundColor(Color(StyleProvider.color.onSurface))

@@ -6,8 +6,8 @@
 @testable import AzureCommunicationUIChat
 
 class LocalizationProviderMocking: BaseLocalizationProvider, LocalizationProviderProtocol {
-    var isGetLocalizedStringCalled: Bool = false
-    var isGetLocalizedStringWithArgsCalled: Bool = false
+    var isGetLocalizedStringCalled = false
+    var isGetLocalizedStringWithArgsCalled = false
 
     override var isRightToLeft: Bool {
         return false

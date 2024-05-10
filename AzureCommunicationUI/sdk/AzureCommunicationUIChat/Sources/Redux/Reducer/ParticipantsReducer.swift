@@ -76,7 +76,7 @@ extension Reducer where State == ParticipantsState,
                 break
             }
             switch message.type {
-            case .custom(_), .html, .text:
+            case .custom, .html, .text:
                 typingParticipants = typingParticipants.filter { $0.id != participantId }
             default:
                 break
