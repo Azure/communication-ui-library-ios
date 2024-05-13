@@ -52,10 +52,10 @@ extends:
           clean: true
           fetchTags: false
         - task: skvso.servicetree-build-tasks.servicetree-link-build-task.servicetree-link-build-task@1
-          displayName: 'ServiceTree: [$(BuildOutputUsage)] '
+          displayName: "ServiceTree: [$(BuildOutputUsage)] "
           condition: always()
           inputs:
-            ServiceTreeGateway: c29e963a-8ea3-4e6a-b28f-a035eaff83ab
+            ServiceTreeGateway: ServiceTree Gateway
             Service: 5b23174b-8c6d-467d-862d-a3f24958fb74
         - task: CmdLine@2
           displayName: Command Line Script
@@ -67,9 +67,9 @@ extends:
               git config --global user. password $nativeCallingSDKPrivateRepoToken
         - task: AzureKeyVault@2
           inputs:
-            azureSubscription: 'acs-native-ui'                    ## YOUR_SERVICE_CONNECTION_NAME
-            KeyVaultName: 'acs-ui-dev-kv'                         ## YOUR_KEY_VAULT_NAME
-            SecretsFilter: 'P12password'                          ## YOUR_SECRET_NAME. Default value: *
+            azureSubscription: 'acs-native-ui'                    
+            KeyVaultName: 'acs-ui-dev-kv'                         
+            SecretsFilter: 'P12password'                          
             RunAsPreJob: true
         - task: CmdLine@2
           displayName: Edit Info.plist CFBundleShortVersionString
