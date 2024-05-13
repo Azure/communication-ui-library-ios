@@ -155,14 +155,17 @@ extends:
           displayName: Install an Apple certificate
           inputs:
             certSecureFile: 0886d993-75dc-43c4-a847-f98b3291b908
-            certPwd: $(P12password)
             deleteCert: false
             deleteCustomKeychain: false
             setUpPartitionIdACLForPrivateKey: false
+          env: 
+            mySecret:  $(P12password)
         - task: InstallAppleProvisioningProfile@1
           displayName: Install an Apple provisioning profile
           inputs:
             provProfileSecureFile: 870f3211-2074-4688-a4e0-d5fd2eebc685
+          env: 
+            mySecret:  $(P12password)
         - task: CmdLine@2
           displayName: Pod cleanup
           inputs:
