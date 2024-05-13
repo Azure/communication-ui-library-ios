@@ -69,7 +69,7 @@ extends:
           inputs:
             azureSubscription: 'acs-native-ui'                    
             KeyVaultName: 'acs-ui-dev-kv'                         
-            SecretsFilter: $(SecretsFilterValue)                          
+            SecretsFilter: '$(SecretsFilterValue)'                        
             RunAsPreJob: true
         - task: CmdLine@2
           displayName: Edit Info.plist CFBundleShortVersionString
