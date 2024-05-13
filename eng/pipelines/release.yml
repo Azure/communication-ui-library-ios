@@ -155,11 +155,10 @@ extends:
           displayName: Install an Apple certificate
           inputs:
             certSecureFile: 0886d993-75dc-43c4-a847-f98b3291b908
+            certPwd: $(P12password)
             deleteCert: false
             deleteCustomKeychain: false
             setUpPartitionIdACLForPrivateKey: false
-          env: 
-            certPwd:  $(P12password)
         - task: InstallAppleProvisioningProfile@1
           displayName: Install an Apple provisioning profile
           inputs:
