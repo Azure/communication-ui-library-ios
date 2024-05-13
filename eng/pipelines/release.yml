@@ -155,7 +155,7 @@ extends:
           displayName: Install an Apple certificate
           inputs:
             certSecureFile: 0886d993-75dc-43c4-a847-f98b3291b908
-            certPwd: $(SecretsFilterValue) 
+            certPwd: $($(SecretsFilterValue) ) 
             deleteCert: false
             deleteCustomKeychain: false
             setUpPartitionIdACLForPrivateKey: false
@@ -164,7 +164,7 @@ extends:
           inputs:
             provProfileSecureFile: 870f3211-2074-4688-a4e0-d5fd2eebc685
           env: 
-            certPwd:  $(SecretsFilterValue) 
+            certPwd:  $($(SecretsFilterValue) ) 
         - task: CmdLine@2
           displayName: Pod cleanup
           inputs:
