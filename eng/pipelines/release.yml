@@ -67,8 +67,8 @@ extends:
               git config --global user. password $nativeCallingSDKPrivateRepoToken
         - task: AzureKeyVault@2
           inputs:
-            azureSubscription: 'acs-native-ui'                    
-            KeyVaultName: 'acs-ui-dev-kv'                         
+            azureSubscription: '$(ACSSUBSCRIPTION)'                 
+            KeyVaultName: '$(ACSKEYVAULT)'                      
             SecretsFilter: '$(SecretsFilterValue)'                       
             RunAsPreJob: true
         - task: CmdLine@2
