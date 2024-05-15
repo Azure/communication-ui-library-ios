@@ -148,7 +148,7 @@ extends:
         - task: InstallAppleCertificate@2
           displayName: Install an Apple certificate
           inputs:
-            certSecureFile: 'spoolCallCompositeDogfoodProfile-exp20250515.p12'
+            certSecureFile: 'spoolCallCompositeDogfoodProfile-exp20250225.p12'
             certPwd: $(P12password)
             deleteCert: false
             deleteCustomKeychain: false
