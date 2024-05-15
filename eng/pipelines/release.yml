@@ -199,7 +199,7 @@ extends:
             signingIdentity: $(APPLE_CERTIFICATE_SIGNING_IDENTITY)
             provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
             provisioningProfileName: Azure communication UI calling Dogfood Dev
-            destinationSimulators: iPhone 12 Pro
+            destinationSimulators: iPhone 14
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             cwd: AzureCommunicationUI
         - task: DownloadSecureFile@1
