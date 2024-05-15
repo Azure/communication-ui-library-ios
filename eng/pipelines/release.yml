@@ -163,8 +163,6 @@ extends:
           displayName: Install an Apple provisioning profile
           inputs:
             provProfileSecureFile: 'spoolCallCompositeDemoAppProfileDev-exp20250515.mobileprovision'
-          env:
-            certPwd:  $(P12password)
         - task: CmdLine@2
           displayName: Pod cleanup
           inputs:
