@@ -198,7 +198,7 @@ extends:
             signingOption: manual
             signingIdentity: $(APPLE_CERTIFICATE_SIGNING_IDENTITY)
             provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
-            provisioningProfileName: Azure communication UI calling Dogfood Dev
+            provisioningProfileName: Azure Communication UI Demo App Dogfood Dev
             destinationSimulators: iPhone 14
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             useXcpretty: false
