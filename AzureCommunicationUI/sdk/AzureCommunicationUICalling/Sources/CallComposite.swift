@@ -97,7 +97,7 @@ public class CallComposite {
 
     /// Get CXProvider
     public static func getCXProvider() -> CXProvider? {
-        return CallClient.getCXProviderInstance()
+        return nil /// CallClient.getCXProviderInstance()
     }
 
     /// Create an instance of CallComposite with options.
