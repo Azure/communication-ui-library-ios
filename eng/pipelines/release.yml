@@ -201,6 +201,7 @@ extends:
             provisioningProfileName: Azure communication UI calling Dogfood Dev
             destinationSimulators: iPhone 14
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
+            useXcpretty: false
             cwd: AzureCommunicationUI
         - task: DownloadSecureFile@1
           displayName: Download Distribution Profile from Azure secure files storage copy
