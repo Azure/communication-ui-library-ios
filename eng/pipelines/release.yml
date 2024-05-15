@@ -154,7 +154,7 @@ extends:
         - task: InstallAppleCertificate@2
           displayName: Install an Apple certificate
           inputs:
-            certSecureFile: 0886d993-75dc-43c4-a847-f98b3291b908
+            certSecureFile: 'spoolCallCompositeDogfoodProfile-exp20250514.p12'
             certPwd: $(P12password)
             deleteCert: false
             deleteCustomKeychain: false
@@ -162,7 +162,7 @@ extends:
         - task: InstallAppleProvisioningProfile@1
           displayName: Install an Apple provisioning profile
           inputs:
-            provProfileSecureFile: 870f3211-2074-4688-a4e0-d5fd2eebc685
+            provProfileSecureFile: 'spoolCallCompositeDemoAppProfileDev-exp20250514.mobileprovision'
           env: 
             certPwd:  $(P12password)
         - task: CmdLine@2
