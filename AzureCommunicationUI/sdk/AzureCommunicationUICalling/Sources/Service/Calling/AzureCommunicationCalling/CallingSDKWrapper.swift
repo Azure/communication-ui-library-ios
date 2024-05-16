@@ -33,6 +33,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         self.callingEventsHandler = callingEventsHandler
         self.callConfiguration = callConfiguration
         self.callKitOptions = callKitOptions
+        self.callKitRemoteParticipant = callKitRemoteParticipant
         super.init()
     }
 
@@ -81,8 +82,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
-        if let callKitOptions = callKitOptions,
-            let remoteInfo = callKitRemoteParticipant {
+        if let remoteInfo = callKitRemoteParticipant {
             let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
                 callKitRemoteInfo.displayName = remoteInfo.displayName
                 callKitRemoteInfo.handle = remoteInfo.handle

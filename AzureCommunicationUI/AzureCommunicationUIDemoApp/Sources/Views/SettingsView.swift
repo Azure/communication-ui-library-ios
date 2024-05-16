@@ -78,6 +78,7 @@ struct SettingsView: View {
             }
             displayLeaveCallConfirmationSettings
             exitCompositeSettings
+            callKitSettings
         }
     }
 
