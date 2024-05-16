@@ -36,4 +36,10 @@ enum AccessibilityId: String {
     case userReportedIssueAccessibilityID = "AzureCommunicationUICalling.Launcher.UserFeedback"
     case leaveCallConfirmationDisplayAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.leaveCallConfirmationDisplay.AccessibilityID"
+    case useEnableCalkitToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.enableCalkitToggle.AccessibilityID"
+    case useEnableRemoteHoldToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.enableRemoteHoldToggle.AccessibilityID"
+    case useEnableRemoteInfoToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.enableRemoteInfoToggle.AccessibilityID"
 }

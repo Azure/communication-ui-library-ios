@@ -68,6 +68,8 @@ public class CallComposite {
     private var viewController: UIViewController?
     private var pipViewController: UIViewController?
     private var cancellables = Set<AnyCancellable>()
+    private var callKitOptions: CallKitOptions?
+    private var callKitRemoteParticipant: CallKitRemoteParticipant?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -94,6 +96,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
+        callKitOptions = options?.callKitOptions
     }
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
@@ -153,10 +156,14 @@ public class CallComposite {
 
     /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
+    /// - Parameter callKitRemoteParticipant: CallKitRemoteParticipant used to set the 
+    /// CallKit information for the outgoing call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
     public func launch(remoteOptions: RemoteOptions,
+                       callKitRemoteParticipant: CallKitRemoteParticipant? = nil,
                        localOptions: LocalOptions? = nil) {
+        self.callKitRemoteParticipant = callKitRemoteParticipant
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName /* <ROOMS_SUPPORT> */ ,
@@ -243,7 +250,9 @@ public class CallComposite {
         let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
             logger: logger,
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
-            callConfiguration: callConfiguration)
+            callConfiguration: callConfiguration,
+            callKitOptions: callKitOptions,
+            callKitRemoteParticipant: callKitRemoteParticipant)
 
         let store = Store.constructStore(
             logger: logger,

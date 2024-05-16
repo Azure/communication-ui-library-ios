@@ -9,6 +9,7 @@ import SwiftUI
 import AzureCommunicationCommon
 import AppCenterCrashes
 import AVFoundation
+import CallKit
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -221,6 +222,7 @@ class CallingDemoViewController: UIViewController {
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
+        let callKitOptions = envConfigSubject.enableCallKit ? getCallKitOptions() : nil
         let callCompositeOptions = CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
@@ -230,7 +232,8 @@ class CallingDemoViewController: UIViewController {
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
-            callScreenOptions: callScreenOptions)
+            callScreenOptions: callScreenOptions,
+            callKitOptions: callKitOptions)
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
@@ -319,7 +322,14 @@ class CallingDemoViewController: UIViewController {
                                         </ROOMS_SUPPORT:1> */
         )
         self.callComposite = callComposite
-
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
+        }
+        let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
+        let callKitRemoteParticipant = envConfigSubject.enableRemoteInfo ?
+        CallKitRemoteParticipant(displayName: remoteInfoDisplayName,
+                                 handle: cxHandle) : nil
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
@@ -327,11 +337,13 @@ class CallingDemoViewController: UIViewController {
                 callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
+                                     callKitRemoteParticipant: callKitRemoteParticipant,
                                      localOptions: localOptions)
             case .teamsMeeting:
                 callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
+                                     callKitRemoteParticipant: callKitRemoteParticipant,
                                      localOptions: localOptions)
             /* <ROOMS_SUPPORT:13> */
             case .roomCall:
@@ -339,12 +351,62 @@ class CallingDemoViewController: UIViewController {
                                         RemoteOptions(for:
                                                 .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
+                                     callKitRemoteParticipant: callKitRemoteParticipant,
                                      localOptions: localOptions)
             /* </ROOMS_SUPPORT:6> */
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
+        }
+    }
+
+    private func getCallKitOptions() -> CallKitOptions {
+        let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        let isCallHoldSupported = envConfigSubject.enableRemoteHold
+        let callKitOptions = CallKitOptions(providerConfig: providerConfig,
+                                           isCallHoldSupported: isCallHoldSupported,
+                                           provideRemoteInfo: incomingCallRemoteInfo,
+                                           configureAudioSession: configureAudioSession)
+        return callKitOptions
+    }
+
+    public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteParticipant {
+        let cxHandle = CXHandle(type: .generic, value: "Incoming call")
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = info.displayName
+        }
+        let callKitRemoteInfo = CallKitRemoteParticipant(displayName: remoteInfoDisplayName,
+                                                               handle: cxHandle)
+        return callKitRemoteInfo
+    }
+
+    public func configureAudioSession() -> Error? {
+        let audioSession = AVAudioSession.sharedInstance()
+        var configError: Error?
+        do {
+            try audioSession.setCategory(.playAndRecord)
+        } catch {
+            configError = error
+        }
+        return configError
+    }
+
+    private func getCXHandleName() -> String {
+        switch envConfigSubject.selectedMeetingType {
+        case .groupCall:
+            return "Group call"
+        case .teamsMeeting:
+            return "Teams Metting"
+        case .roomCall:
+            return "Rooms call"
         }
     }
 

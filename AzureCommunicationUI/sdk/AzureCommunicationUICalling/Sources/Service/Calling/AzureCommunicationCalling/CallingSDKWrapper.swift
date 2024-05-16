@@ -20,15 +20,19 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var call: Call?
     private var deviceManager: DeviceManager?
     private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
-
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
+    private var callKitOptions: CallKitOptions?
+    private var callKitRemoteParticipant: CallKitRemoteParticipant?
 
     init(logger: Logger,
          callingEventsHandler: CallingSDKEventsHandling,
-         callConfiguration: CallConfiguration) {
+         callConfiguration: CallConfiguration,
+         callKitOptions: CallKitOptions?,
+         callKitRemoteParticipant: CallKitRemoteParticipant?) {
         self.logger = logger
         self.callingEventsHandler = callingEventsHandler
         self.callConfiguration = callConfiguration
+        self.callKitOptions = callKitOptions
         super.init()
     }
 
@@ -77,7 +81,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
-
+        if let callKitOptions = callKitOptions,
+            let remoteInfo = callKitRemoteParticipant {
+            let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = remoteInfo.displayName
+                callKitRemoteInfo.handle = remoteInfo.handle
+                joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
+        }
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
@@ -335,6 +345,24 @@ extension CallingSDKWrapper {
         let options = CallAgentOptions()
         if let displayName = callConfiguration.displayName {
             options.displayName = displayName
+        }
+        if let callKitConfig = callKitOptions?.providerConfig {
+            let sdkCallKitOptions = AzureCommunicationCalling.CallKitOptions(with: callKitConfig)
+            sdkCallKitOptions.isCallHoldSupported = callKitOptions!.isCallHoldSupported
+            sdkCallKitOptions.configureAudioSession = callKitOptions!.configureAudioSession
+            if let incomingRemoteInfoCallback = callKitOptions!.provideRemoteInfo {
+                sdkCallKitOptions.provideRemoteInfo = { (callerInfo: CallerInfo) -> CallKitRemoteInfo in
+                    let info = incomingRemoteInfoCallback(
+                        Caller(displayName: callerInfo.displayName,
+                               identifier: callerInfo.identifier))
+                    let callKitRemoteInfo = CallKitRemoteInfo()
+                    callKitRemoteInfo.displayName = info.displayName
+                    callKitRemoteInfo.handle = info.handle
+                    return callKitRemoteInfo
+                }
+            }
+
+            options.callKitOptions = sdkCallKitOptions
         }
         do {
             let callAgent = try await callClient?.createCallAgent(
