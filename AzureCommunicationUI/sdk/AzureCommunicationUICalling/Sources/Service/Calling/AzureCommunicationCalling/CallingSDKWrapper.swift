@@ -22,18 +22,18 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
     private var callKitOptions: CallKitOptions?
-    private var callKitRemoteParticipant: CallKitRemoteParticipant?
+    private var callKitRemoteInfo: CallKitRemoteInfo?
 
     init(logger: Logger,
          callingEventsHandler: CallingSDKEventsHandling,
          callConfiguration: CallConfiguration,
          callKitOptions: CallKitOptions?,
-         callKitRemoteParticipant: CallKitRemoteParticipant?) {
+         callKitRemoteInfo: CallKitRemoteInfo?) {
         self.logger = logger
         self.callingEventsHandler = callingEventsHandler
         self.callConfiguration = callConfiguration
         self.callKitOptions = callKitOptions
-        self.callKitRemoteParticipant = callKitRemoteParticipant
+        self.callKitRemoteInfo = callKitRemoteInfo
         super.init()
     }
 
@@ -82,7 +82,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
-        if let remoteInfo = callKitRemoteParticipant {
+        if let remoteInfo = callKitRemoteInfo {
             let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
                 callKitRemoteInfo.displayName = remoteInfo.displayName
                 callKitRemoteInfo.handle = remoteInfo.handle
@@ -351,11 +351,12 @@ extension CallingSDKWrapper {
             sdkCallKitOptions.isCallHoldSupported = callKitOptions!.isCallHoldSupported
             sdkCallKitOptions.configureAudioSession = callKitOptions!.configureAudioSession
             if let incomingRemoteInfoCallback = callKitOptions!.provideRemoteInfo {
-                sdkCallKitOptions.provideRemoteInfo = { (callerInfo: CallerInfo) -> CallKitRemoteInfo in
+                sdkCallKitOptions.provideRemoteInfo = { (callerInfo: CallerInfo) ->
+                    AzureCommunicationCalling.CallKitRemoteInfo in
                     let info = incomingRemoteInfoCallback(
                         Caller(displayName: callerInfo.displayName,
                                identifier: callerInfo.identifier))
-                    let callKitRemoteInfo = CallKitRemoteInfo()
+                    let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
                     callKitRemoteInfo.displayName = info.displayName
                     callKitRemoteInfo.handle = info.handle
                     return callKitRemoteInfo

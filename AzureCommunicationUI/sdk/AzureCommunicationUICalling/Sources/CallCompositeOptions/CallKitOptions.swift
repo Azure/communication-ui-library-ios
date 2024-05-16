@@ -19,7 +19,7 @@ public struct CallKitOptions {
 
     /// CallKit remote participant callback for incoming call
     public let provideRemoteInfo: ((Caller)
-                                          -> CallKitRemoteParticipant)?
+                                          -> CallKitRemoteInfo)?
 
     /// Create an instance of a CallCompositeCallKitOptions with options.
     /// - Parameters:
@@ -30,8 +30,7 @@ public struct CallKitOptions {
     ///     incoming call and before resuming the call after it has been put on hold
     public init(providerConfig: CXProviderConfiguration,
                 isCallHoldSupported: Bool = true,
-                provideRemoteInfo: ((Caller)
-                                                  -> CallKitRemoteParticipant)? = nil,
+                provideRemoteInfo: ((Caller) -> CallKitRemoteInfo)? = nil,
                 configureAudioSession: (() -> Error?)? = nil) {
         self.providerConfig = providerConfig
         self.isCallHoldSupported = isCallHoldSupported

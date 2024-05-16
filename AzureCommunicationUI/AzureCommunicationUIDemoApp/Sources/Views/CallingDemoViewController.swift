@@ -328,7 +328,7 @@ class CallingDemoViewController: UIViewController {
         }
         let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
         let callKitRemoteParticipant = envConfigSubject.enableRemoteInfo ?
-        CallKitRemoteParticipant(displayName: remoteInfoDisplayName,
+        CallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                  handle: cxHandle) : nil
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
@@ -337,13 +337,13 @@ class CallingDemoViewController: UIViewController {
                 callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
-                                     callKitRemoteParticipant: callKitRemoteParticipant,
+                                     callKitRemoteInfo: callKitRemoteParticipant,
                                      localOptions: localOptions)
             case .teamsMeeting:
                 callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
-                                     callKitRemoteParticipant: callKitRemoteParticipant,
+                                     callKitRemoteInfo: callKitRemoteParticipant,
                                      localOptions: localOptions)
             /* <ROOMS_SUPPORT:13> */
             case .roomCall:
@@ -351,7 +351,7 @@ class CallingDemoViewController: UIViewController {
                                         RemoteOptions(for:
                                                 .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
-                                     callKitRemoteParticipant: callKitRemoteParticipant,
+                                     callKitRemoteInfo: callKitRemoteParticipant,
                                      localOptions: localOptions)
             /* </ROOMS_SUPPORT:6> */
             }
@@ -377,13 +377,13 @@ class CallingDemoViewController: UIViewController {
         return callKitOptions
     }
 
-    public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteParticipant {
+    public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteInfo {
         let cxHandle = CXHandle(type: .generic, value: "Incoming call")
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
         if remoteInfoDisplayName.isEmpty {
             remoteInfoDisplayName = info.displayName
         }
-        let callKitRemoteInfo = CallKitRemoteParticipant(displayName: remoteInfoDisplayName,
+        let callKitRemoteInfo = CallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                                                handle: cxHandle)
         return callKitRemoteInfo
     }

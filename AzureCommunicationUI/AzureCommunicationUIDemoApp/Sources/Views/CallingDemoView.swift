@@ -397,7 +397,7 @@ extension CallingDemoView {
         }
         let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
         let callKitRemoteParticipant = $envConfigSubject.enableRemoteInfo.wrappedValue ?
-        CallKitRemoteParticipant(displayName: remoteInfoDisplayName,
+        CallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                  handle: cxHandle) : nil
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
@@ -406,26 +406,26 @@ extension CallingDemoView {
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential),
-                                         callKitRemoteParticipant: callKitRemoteParticipant,
+                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential,
                                                                       displayName: envConfigSubject.displayName),
-                                         callKitRemoteParticipant: callKitRemoteParticipant,
+                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential),
-                                         callKitRemoteParticipant: callKitRemoteParticipant,
+                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential,
                                                                       displayName: envConfigSubject.displayName),
-                                         callKitRemoteParticipant: callKitRemoteParticipant,
+                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 }
             /* <ROOMS_SUPPORT> */
@@ -434,7 +434,7 @@ extension CallingDemoView {
                     callComposite.launch(remoteOptions:
                                             RemoteOptions(for: .roomCall(roomId: link),
                                                           credential: credential),
-                                         callKitRemoteParticipant: callKitRemoteParticipant,
+                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(
@@ -442,7 +442,7 @@ extension CallingDemoView {
                                 .roomCall(roomId: link),
                                                      credential: credential,
                                                      displayName: envConfigSubject.displayName),
-                        callKitRemoteParticipant: callKitRemoteParticipant,
+                        callKitRemoteInfo: callKitRemoteParticipant,
                         localOptions: localOptions)
                 }
              /* </ROOMS_SUPPORT> */
@@ -470,13 +470,13 @@ extension CallingDemoView {
         return callKitOptions
     }
 
-    public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteParticipant {
+    public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteInfo {
         let cxHandle = CXHandle(type: .generic, value: "Incoming call")
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
         if remoteInfoDisplayName.isEmpty {
             remoteInfoDisplayName = info.displayName
         }
-        let callKitRemoteInfo = CallKitRemoteParticipant(displayName: remoteInfoDisplayName,
+        let callKitRemoteInfo = CallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                                                handle: cxHandle)
         return callKitRemoteInfo
     }

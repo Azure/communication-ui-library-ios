@@ -69,7 +69,7 @@ public class CallComposite {
     private var pipViewController: UIViewController?
     private var cancellables = Set<AnyCancellable>()
     private var callKitOptions: CallKitOptions?
-    private var callKitRemoteParticipant: CallKitRemoteParticipant?
+    private var callKitRemoteInfo: CallKitRemoteInfo?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -161,9 +161,9 @@ public class CallComposite {
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
     public func launch(remoteOptions: RemoteOptions,
-                       callKitRemoteParticipant: CallKitRemoteParticipant? = nil,
+                       callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
-        self.callKitRemoteParticipant = callKitRemoteParticipant
+        self.callKitRemoteInfo = callKitRemoteInfo
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName /* <ROOMS_SUPPORT> */ ,
@@ -252,7 +252,7 @@ public class CallComposite {
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
             callConfiguration: callConfiguration,
             callKitOptions: callKitOptions,
-            callKitRemoteParticipant: callKitRemoteParticipant)
+            callKitRemoteInfo: callKitRemoteInfo)
 
         let store = Store.constructStore(
             logger: logger,

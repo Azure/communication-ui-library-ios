@@ -6,7 +6,7 @@
 import CallKit
 
 /// CallKit data for callee(outgoing)
-public struct CallKitRemoteParticipant {
+public struct CallKitRemoteInfo {
     /// Display name of the remote participant
     public let displayName: String
 
