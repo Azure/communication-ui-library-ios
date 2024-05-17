@@ -19,8 +19,7 @@ resources:
   - repository: 1esPipelines
     type: git
     name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/heads/develop
-
+    ref: refs/tags/release
 parameters:
 - name: pools
   type: object
@@ -43,6 +42,18 @@ extends:
       jobs:
       - job: Job_1
         displayName: Agent job 1
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            targetPath: $(rootPath)/Framework/Release-universal
+            artifactName: xcframeworks_unsigned
+          - output: pipelineArtifact
+            targetPath: $(rootPath)/Symbols
+            artifactName: Symbols
+          - output: pipelineArtifact
+            targetPath: $(zipToSign)
+          - output: pipelineArtifact
+            targetPath: $(build.artifactstagingdirectory)
         pool:
           name: vsts-mac-131-xcode-142
         steps:
@@ -279,16 +290,6 @@ extends:
 
 
               cp -r $(rootPath)/Framework/Release-universal/AzureCommunicationUICalling.xcframework $(rootPath)/ToSign
-        - task: PublishBuildArtifacts@1
-          displayName: Publish xcframework unsigned
-          inputs:
-            PathtoPublish: $(rootPath)/Framework/Release-universal
-            ArtifactName: xcframeworks_unsigned
-        - task: PublishBuildArtifacts@1
-          displayName: Publish Symbols
-          inputs:
-            PathtoPublish: $(rootPath)/Symbols
-            ArtifactName: Symbols
         - task: UseDotNet@2
           displayName: Use .NET Core sdk 6.0.x
           inputs:
@@ -370,10 +371,6 @@ extends:
             rootFolderOrFile: $(archivePath)
             includeRootFolder: false
             archiveFile: $(zipToSign)
-        - task: PublishBuildArtifacts@1
-          displayName: Publish zip to sign
-          inputs:
-            PathtoPublish: $(zipToSign)
         - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@4
           displayName: Dogfood ESRP CodeSigning copy
           inputs:
@@ -442,10 +439,6 @@ extends:
             SourceFolder: $(signedExtractedPath)
             Contents: '**/*.ipa'
             TargetFolder: $(build.artifactstagingdirectory)
-        - task: PublishBuildArtifacts@1
-          displayName: 'Publish Artifact: drop copy copy'
-          inputs:
-            PathtoPublish: $(build.artifactstagingdirectory)
         - task: AppCenterDistribute@3
           displayName: Deploy **/*.ipa to Visual Studio App Center
           inputs:
@@ -461,97 +454,4 @@ extends:
 
               Build commit: $(Build.Repository.Uri)/commit/$(Build.SourceVersion)
             isSilent: true
-        - task: Xcode@5
-          displayName: Xcode Unit Test
-          enabled: False
-          inputs:
-            actions: test
-            configuration: $(TestConfiguration)
-            xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-            scheme: AzureCommunicationUICalling
-            destinationPlatformOption: iOS
-            destinationSimulators: iPhone 14
-        - task: Xcode@5
-          displayName: Xcode build AzureCommunicationUI iphoneos
-          enabled: False
-          inputs:
-            configuration: Release
-            sdk: iphoneos
-            xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-            scheme: AzureCommunicationUICalling
-            signingOption: default
-            args: CONFIGURATION_BUILD_DIR=$(rootPath)/DeviceFramework
-            cwd: AzureCommunicationUI
-            useXcpretty: false
-        - task: Xcode@5
-          displayName: Xcode build AzureCommunicationUI iphonesimulator copy
-          enabled: False
-          inputs:
-            configuration: Release
-            sdk: iphonesimulator
-            xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-            scheme: AzureCommunicationUICalling
-            signingOption: default
-            args: CONFIGURATION_BUILD_DIR=$(rootPath)/SimulatorFramework
-            cwd: AzureCommunicationUI
-        - task: PublishBuildArtifacts@1
-          displayName: Publish AzureCommunicationUICalling.xcframework copy
-          enabled: False
-          inputs:
-            PathtoPublish: $(rootPath)/Framework/Release-universal/AzureCommunicationUICalling.xcframework
-            ArtifactName: AzureCommunicationUICalling.zip
-        - task: PublishBuildArtifacts@1
-          displayName: Publish AzureCore.xcframework copy copy
-          enabled: False
-          inputs:
-            PathtoPublish: $(rootPath)/Framework/Release-universal/AzureCore.xcframework
-            ArtifactName: AzureCore.zip
-        - task: PublishBuildArtifacts@1
-          displayName: Publish FluentUI.xcframework copy copy
-          enabled: False
-          inputs:
-            PathtoPublish: $(rootPath)/Framework/Release-universal/FluentUI.xcframework
-            ArtifactName: FluentUI.zip
-        - task: PublishBuildArtifacts@1
-          displayName: Publish AzureCommunicationCalling.xcframework copy copy
-          enabled: False
-          inputs:
-            PathtoPublish: $(rootPath)/Framework/Release-universal/AzureCommunicationCalling.xcframework
-            ArtifactName: AzureCommunicationCalling.zip
-        - task: ArchiveFiles@2
-          displayName: Create zip for signing UICalling
-          enabled: False
-          inputs:
-            rootFolderOrFile: $(rootPath)/ToSign
-            includeRootFolder: false
-            archiveFile: $(archivePath)/AzureCommunicationUICalling
-        - task: PublishBuildArtifacts@1
-          displayName: Publish AzureCommunicationUICalling xcframework unsigned
-          enabled: False
-          inputs:
-            PathtoPublish: $(archivePath)/AzureCommunicationUICalling.zip
-            ArtifactName: AzureCommunicationUICalling_to_sign
-        - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@4
-          displayName: Dogfood ESRP CodeSigning
-          enabled: False
-          inputs:
-            ConnectedServiceName: cb3d1f72-016c-4cee-80b5-33219b645283
-            FolderPath: $(archivePath)
-            Pattern: AzureCommunicationUICalling.zip
-            signConfigType: inlineSignParams
-            inlineOperation: >-
-              [
-                {
-                  "KeyCode": "CP-464234-Apple",
-                  "OperationCode": "iOSSdkSign",
-                  "Parameters": {},
-                  "ToolName": "sign",
-                  "ToolVersion": "1.0"
-                }
-              ]
-        - task: PublishBuildArtifacts@1
-          displayName: Publish Signed AzureCommunicationUICalling.xcframework
-          enabled: False
-          inputs:
-            PathtoPublish: $(archivePath)/AzureCommunicationUICalling.zip
-            ArtifactName: AzureCommunicationUICalling_signed
+
