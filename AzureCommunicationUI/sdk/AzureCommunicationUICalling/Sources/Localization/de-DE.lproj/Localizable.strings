@@ -15,16 +15,18 @@
 "AzureCommunicationUICalling.SetupView.Title"="Einrichten";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Zurück";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="An Anruf teilnehmen";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Anruf wird beigetreten…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anruf beitreten deaktiviert";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video aus";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video Ein";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video Aus";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video ein";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video Aus";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video Ein";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon aus";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon ein";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon Aus";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon ein";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon aus";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon Ein";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Gerät";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audiogerät auswählen";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Zu „Einstellungen“ wechseln";
@@ -94,6 +96,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mehr";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnoseinformationen freigeben";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Die Aufzeichnung und Transkription haben begonnen.";
@@ -158,3 +162,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Screenshot anfügen";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ein Problem melden";
 "AzureCommunicationUICalling.SendFeedback.Text"="Senden";
+

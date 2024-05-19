@@ -15,16 +15,18 @@
 "AzureCommunicationUICalling.SetupView.Title"="إعداد";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="رجوع";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="انضمام إلى مكالمة";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="جاري الانضمام إلى المكالمة…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "تم تعطيل الانضمام إلى المكالمة";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="الفيديو قيد الإيقاف";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="الفيديو قيد التشغيل";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="الفيديو قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="الفيديو قيد التشغيل";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="الفيديو قيد الإيقاف";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="الفيديو قيد التشغيل";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="الميكروفون قيد الإيقاف";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="الميكروفون قيد التشغيل";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="الميكروفون قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="الميكروفون قيد التشغيل";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="الميكروفون قيد الإيقاف";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="الميكروفون قيد التشغيل";
 "AzureCommunicationUICalling.SetupView.Button.Device"="جهاز";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="تحديد جهاز صوتي";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="الانتقال إلى الإعدادات";
@@ -94,6 +96,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "المزيد";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "مشاركة معلومات التشخيص";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="بدء التسجيل والنسخ. ";
@@ -158,3 +162,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="إرفاق لقطة الشاشة";
 "AzureCommunicationUICalling.ReportAProblem.Text"="الإبلاغ عن مشكلة";
 "AzureCommunicationUICalling.SendFeedback.Text"="إرسال";
+

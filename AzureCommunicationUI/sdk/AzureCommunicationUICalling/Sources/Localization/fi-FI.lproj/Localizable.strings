@@ -15,16 +15,18 @@
 "AzureCommunicationUICalling.SetupView.Title"="Määritä";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Takaisin";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Liity puheluun";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Liitytään puheluun...";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Liity puheluun -toiminto on poistettu käytöstä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Videokuva ei käytössä";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Videokuva käytössä";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Videokuva käytössä";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Videokuva ei käytössä";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Videokuva käytössä";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofoni ei käytössä";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofoni käytössä";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofoni ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofoni käytössä";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofoni ei käytössä";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofoni käytössä";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Laite";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Valitse äänilaite";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Siirry asetuksiin";
@@ -94,6 +96,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Lisää";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Jaa diagnostiikkatiedot";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Tallentaminen ja litterointi on aloitettu.";
@@ -158,3 +162,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Liitä näyttökuva";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ilmoita ongelmasta";
 "AzureCommunicationUICalling.SendFeedback.Text"="Lähetä";
+

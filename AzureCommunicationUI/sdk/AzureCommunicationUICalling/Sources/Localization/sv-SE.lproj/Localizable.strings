@@ -15,16 +15,18 @@
 "AzureCommunicationUICalling.SetupView.Title"="Konfigurera";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tillbaka";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Anslut till samtal";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anslut till samtal inaktiverat";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video på";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video av";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video på";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon av";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon på";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon av";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon på";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon av";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon på";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Enhet";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Välj ljudenhet";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Gå till Inställningar";
@@ -94,6 +96,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Dela diagnostikinformation";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Inspelning och avskrift har startats.";
@@ -158,3 +162,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Bifoga skärmbild";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapportera ett problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Skicka";
+
