@@ -77,6 +77,8 @@ public class CallComposite {
     private var credential: CommunicationTokenCredential?
     private var displayName: String?
     private var disableInternalPushForIncomingCall = false
+    private var callingSDKInitializer: CallingSDKInitializer?
+    private var callConfiguration: CallConfiguration?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -116,9 +118,6 @@ public class CallComposite {
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(credential: CommunicationTokenCredential,
                 withOptions options: CallCompositeOptions? = nil) {
-        guard credential != nil else {
-            fatalError("CommunicationTokenCredential cannot be nil.")
-        }
         self.credential = credential
         events = Events()
         themeOptions = options?.themeOptions
@@ -242,9 +241,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
-                                                  credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName /* <ROOMS_SUPPORT> */ ,
+        let callConfiguration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
                                                   roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
         launch(callConfiguration, localOptions: localOptions)
     }
@@ -262,10 +259,11 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 fatalError("CommunicationTokenCredential cannot be nil.")
         }
         self.callKitRemoteInfo = callKitRemoteInfo
-        let callConfiguration = CallConfiguration(locator: locator,
-                                                  credential: credential,
-                                                  displayName: displayName /* <ROOMS_SUPPORT> */ ,
-                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
+        callConfiguration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT> */
+                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
+        guard let callConfiguration = self.callConfiguration else {
+            fatalError("CallConfiguration is not set.")
+        }
         launch(callConfiguration, localOptions: localOptions)
     }
 
@@ -361,12 +359,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
             callConfiguration: callConfiguration,
             callKitOptions: callKitOptions,
-            callKitRemoteInfo: callKitRemoteInfo)
+            callKitRemoteInfo: callKitRemoteInfo,
+            callingSDKInitializer: getCallingSDKInitializer())
 
         let store = Store.constructStore(
             logger: logger,
             callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
-            displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName,
+            displayName: localOptions?.participantViewData?.displayName ?? displayName,
             startWithCameraOn: localOptions?.cameraOn,
             startWithMicrophoneOn: localOptions?.microphoneOn,
             skipSetupScreen: localOptions?.skipSetupScreen
@@ -482,6 +481,26 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
         let hasCallComposite = keyWindow.hasViewController(ofKind: ContainerUIHostingController.self)
         return !hasCallComposite
+    }
+
+    private func getCallingSDKInitializer() -> CallingSDKInitializer {
+        if let callingSDKInitializer = callingSDKInitializer {
+            return callingSDKInitializer
+        }
+        guard let callConfiguration = self.callConfiguration else {
+            fatalError("CallConfiguration is not set.")
+        }
+        guard let credential = credential else {
+            fatalError("CommunicationTokenCredential cannot be nil.")
+        }
+        let callingSDKInitializer = CallingSDKInitializer(tags: callConfiguration.diagnosticConfig.tags,
+                                                          credential: credential,
+                                                          callKitOptions: callKitOptions,
+                                                          disableInternalPushForIncomingCall:
+                                                            disableInternalPushForIncomingCall,
+                                                          logger: logger)
+        self.callingSDKInitializer = callingSDKInitializer
+        return callingSDKInitializer
     }
 }
 

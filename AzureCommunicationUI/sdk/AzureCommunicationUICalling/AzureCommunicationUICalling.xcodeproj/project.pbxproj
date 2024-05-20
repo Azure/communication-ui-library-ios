@@ -240,6 +240,7 @@
 		A4DBCEB92BFAE91E00332E7B /* IncomingCallCancelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */; };
 		A4DBCEBB2BFB9C4000332E7B /* PushNotificationEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */; };
 		A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */; };
+		A4DBCEBF2BFB9DA800332E7B /* CallingSDKInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -607,6 +608,7 @@
 		A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallCancelled.swift; sourceTree = "<group>"; };
 		A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationEventType.swift; sourceTree = "<group>"; };
 		A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
+		A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitializer.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -1229,6 +1231,7 @@
 				75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */,
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
 				1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */,
+				A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */,
 			);
 			path = AzureCommunicationCalling;
 			sourceTree = "<group>";
@@ -2084,6 +2087,7 @@
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
 				759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */,
+				A4DBCEBF2BFB9DA800332E7B /* CallingSDKInitializer.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
 				5A1F4BCD2BD9756D00EA7B2D /* LeaveCallConfirmationMode.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,
