@@ -19,6 +19,7 @@ enum EnvConfig: String {
     case teamsMeetingLink
     case threadId
     case endpointUrl
+    case participantMRIs
     /* <ROOMS_SUPPORT:12> */
     case roomId
     case roomRole
@@ -47,6 +48,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var navigationSubtitle: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
+    @Published var participantMRIs: String = EnvConfig.participantMRIs.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
     /* <ROOMS_SUPPORT> */
@@ -107,6 +109,12 @@ class EnvConfigSubject: ObservableObject {
             teamsMeetingLink = teamsLink
             selectedMeetingType = .teamsMeeting
             selectedChatType = .teamsChat
+        }
+
+        if let mris = dic["participantMRIs"],
+           !participantMRIs.isEmpty {
+            participantMRIs = mris
+            selectedMeetingType = .oneToNCall
         }
 
         if let communicationUserId = dic["userid"],

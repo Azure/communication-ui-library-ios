@@ -133,6 +133,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                Text("1:N Call").tag(MeetingType.oneToNCall)
                 /* <ROOMS_SUPPORT> */ Text("Room Call").tag(MeetingType.roomCall) /* </ROOMS_SUPPORT> */
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
@@ -147,6 +148,13 @@ struct CallingDemoView: View {
                 TextField(
                     "Team Meeting",
                     text: $envConfigSubject.teamsMeetingLink)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+            case .oneToNCall:
+                TextField(
+                    "participant MRIs(, separated)",
+                    text: $envConfigSubject.participantMRIs)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
@@ -428,6 +436,22 @@ extension CallingDemoView {
                                          callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 }
+            case .oneToNCall:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions:
+                                            RemoteOptions(for: .roomCall(roomId: link),
+                                                          credential: credential),
+                                         callKitRemoteInfo: callKitRemoteParticipant,
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for:
+                                .roomCall(roomId: link),
+                                                     credential: credential,
+                                                     displayName: envConfigSubject.displayName),
+                        callKitRemoteInfo: callKitRemoteParticipant,
+                        localOptions: localOptions)
+                }
             /* <ROOMS_SUPPORT> */
             case .roomCall:
                 if envConfigSubject.displayName.isEmpty {
@@ -498,6 +522,8 @@ extension CallingDemoView {
             return "Group call"
         case .teamsMeeting:
             return "Teams Metting"
+        case .oneToNCall:
+            return "Outgoing call"
         case .roomCall:
             return "Rooms call"
         }
@@ -535,6 +561,8 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        case .oneToNCall:
+            return envConfigSubject.participantMRIs
         /* <ROOMS_SUPPORT> */
         case .roomCall:
             return envConfigSubject.roomId
