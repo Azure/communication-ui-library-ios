@@ -414,26 +414,22 @@ extension CallingDemoView {
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential),
-                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential,
                                                                       displayName: envConfigSubject.displayName),
-                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential),
-                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential,
                                                                       displayName: envConfigSubject.displayName),
-                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 }
             case .oneToNCall:
@@ -441,7 +437,6 @@ extension CallingDemoView {
                     callComposite.launch(remoteOptions:
                                             RemoteOptions(for: .roomCall(roomId: link),
                                                           credential: credential),
-                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(
@@ -449,7 +444,6 @@ extension CallingDemoView {
                                 .roomCall(roomId: link),
                                                      credential: credential,
                                                      displayName: envConfigSubject.displayName),
-                        callKitRemoteInfo: callKitRemoteParticipant,
                         localOptions: localOptions)
                 }
             /* <ROOMS_SUPPORT> */
@@ -458,7 +452,6 @@ extension CallingDemoView {
                     callComposite.launch(remoteOptions:
                                             RemoteOptions(for: .roomCall(roomId: link),
                                                           credential: credential),
-                                         callKitRemoteInfo: callKitRemoteParticipant,
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(
@@ -466,7 +459,6 @@ extension CallingDemoView {
                                 .roomCall(roomId: link),
                                                      credential: credential,
                                                      displayName: envConfigSubject.displayName),
-                        callKitRemoteInfo: callKitRemoteParticipant,
                         localOptions: localOptions)
                 }
              /* </ROOMS_SUPPORT> */

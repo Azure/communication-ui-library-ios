@@ -341,19 +341,16 @@ class CallingDemoViewController: UIViewController {
                 callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
-                                     callKitRemoteInfo: callKitRemoteParticipant,
                                      localOptions: localOptions)
             case .teamsMeeting:
                 callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
-                                     callKitRemoteInfo: callKitRemoteParticipant,
                                      localOptions: localOptions)
             case.oneToNCall:
                 callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
-                                     callKitRemoteInfo: callKitRemoteParticipant,
                                      localOptions: localOptions)
             /* <ROOMS_SUPPORT:13> */
             case .roomCall:
@@ -361,7 +358,6 @@ class CallingDemoViewController: UIViewController {
                                         RemoteOptions(for:
                                                 .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
-                                     callKitRemoteInfo: callKitRemoteParticipant,
                                      localOptions: localOptions)
             /* </ROOMS_SUPPORT:6> */
             }

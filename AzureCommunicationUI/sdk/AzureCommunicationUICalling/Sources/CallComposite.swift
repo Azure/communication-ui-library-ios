@@ -29,6 +29,10 @@ public class CallComposite {
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
         /// Closure to execute when the User reports an issue from within the call composite
         public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
+        /// Closure to incoming call received.
+        public var onIncomingCall: ((IncomingCall) -> Void)?
+        /// Closure to incoming call cancelled.
+        public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -70,6 +74,8 @@ public class CallComposite {
     private var cancellables = Set<AnyCancellable>()
     private var callKitOptions: CallKitOptions?
     private var callKitRemoteInfo: CallKitRemoteInfo?
+    private var credential: CommunicationTokenCredential?
+    private var displayName: String?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -84,6 +90,7 @@ public class CallComposite {
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
+    @available(*, deprecated, message: "Use init with CommunicationTokenCredential instead.")
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
@@ -97,6 +104,27 @@ public class CallComposite {
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         callKitOptions = options?.callKitOptions
+        displayName = ""
+    }
+
+    /// Create an instance of CallComposite with options.
+    /// - Parameter credential: The CommunicationTokenCredential used for call.
+    /// - Parameter options: The CallCompositeOptions used to configure the experience.
+    public init(credential: CommunicationTokenCredential,
+                withOptions options: CallCompositeOptions? = nil) {
+        guard credential != nil else {
+            fatalError("CommunicationTokenCredential cannot be nil.")
+        }
+        self.credential = credential
+        events = Events()
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
+        localizationProvider = LocalizationProvider(logger: logger)
+        enableMultitasking = options?.enableMultitasking ?? false
+        enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
+        setupViewOrientationOptions = options?.setupScreenOrientation
+        callingViewOrientationOptions = options?.callingScreenOrientation
+        orientationProvider = OrientationProvider()
     }
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
@@ -156,19 +184,47 @@ public class CallComposite {
 
     /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
-    /// - Parameter callKitRemoteParticipant: CallKitRemoteParticipant used to set the 
-    /// CallKit information for the outgoing call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
+    @available(*, deprecated, message: """
+Use CallComposite init with CommunicationTokenCredential
+and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
+""")
     public func launch(remoteOptions: RemoteOptions,
-                       callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
-        self.callKitRemoteInfo = callKitRemoteInfo
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName /* <ROOMS_SUPPORT> */ ,
                                                   roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
         launch(callConfiguration, localOptions: localOptions)
+    }
+
+    /// Start Call Composite experience with joining a existing call.
+    /// - Parameter locator: Join existing call.
+    /// - Parameter callKitRemoteInfo: CallKitRemoteInfo used to set the
+    /// CallKit information for the outgoing call.
+    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
+    ///                            This is data is not sent up to ACS.
+    public func launch(locator: JoinLocator,
+                       callKitRemoteInfo: CallKitRemoteInfo? = nil,
+                       localOptions: LocalOptions? = nil) {
+        guard let credential = credential else {
+                fatalError("CommunicationTokenCredential cannot be nil.")
+        }
+        self.callKitRemoteInfo = callKitRemoteInfo
+        let callConfiguration = CallConfiguration(locator: locator,
+                                                  credential: credential,
+                                                  displayName: displayName /* <ROOMS_SUPPORT> */ ,
+                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
+        launch(callConfiguration, localOptions: localOptions)
+    }
+
+    /// Start Call Composite experience with dialing participants.
+    /// - Parameter participants: participants to dial.
+    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
+    ///                            This data is not sent up to ACS.
+    public func launch(participants: [CommunicationIdentifier],
+                       localOptions: LocalOptions? = nil) {
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.

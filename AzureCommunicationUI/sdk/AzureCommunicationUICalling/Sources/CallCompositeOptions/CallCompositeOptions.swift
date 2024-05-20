@@ -16,6 +16,7 @@ public struct CallCompositeOptions {
     private(set) var callingScreenOrientation: OrientationOptions?
     private(set) var callScreenOptions: CallScreenOptions?
     private(set) var callKitOptions: CallKitOptions?
+    private(set) var displayName: String?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -31,6 +32,7 @@ public struct CallCompositeOptions {
     /// - Parameter enableSystemPictureInPictureWhenMultitasking: enables syspem Picture-in-Picture while
     ///  enableMultitasking is on and user navigates away from call view. Default value is `false`.
     /// - Parameter callKitOptions: CallKitOptions for specifying CallKit customization. Default value is `nil`.
+    /// - Parameter displayName: Display name for the user. Default value is `nil`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
@@ -38,7 +40,8 @@ public struct CallCompositeOptions {
                 enableMultitasking: Bool = false,
                 enableSystemPictureInPictureWhenMultitasking: Bool = false,
                 callScreenOptions: CallScreenOptions? = nil,
-                callKitOptions: CallKitOptions? = nil) {
+                callKitOptions: CallKitOptions? = nil,
+                displayName: String? = nil) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
@@ -47,5 +50,6 @@ public struct CallCompositeOptions {
         self.enableSystemPipWhenMultitasking = enableSystemPictureInPictureWhenMultitasking
         self.callScreenOptions = callScreenOptions
         self.callKitOptions = callKitOptions
+        self.displayName = displayName
     }
 }
