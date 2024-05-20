@@ -76,7 +76,7 @@ public class CallComposite {
     private var callKitRemoteInfo: CallKitRemoteInfo?
     private var credential: CommunicationTokenCredential?
     private var displayName: String?
-    private var disableInternalPushForIncomingCall: Bool = false
+    private var disableInternalPushForIncomingCall = false
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -142,6 +142,45 @@ public class CallComposite {
     public func dismiss() {
         exitManager?.dismiss()
     }
+
+    /// Handle push notification to receive incoming call notification.
+     public func handlePushNotification(pushNotification: PushNotification,
+                                        completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+     }
+
+     /// Report incoming call to notify CallKit when in background mode.
+     /// On success you can wake up application.
+     public static func reportIncomingCall(pushNotification: PushNotification,
+                                           callKitOptions: CallKitOptions,
+                                           completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+     }
+
+     /// Register device token to receive Azure Notification Hubs push notifications.
+     public func registerPushNotifications(deviceRegistrationToken: Data,
+                                           completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+     }
+
+     /// Unregister Azure Notification Hubs push notifications
+     public func unregisterPushNotifications(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+     }
+
+     /// Accept incoming call
+     public func accept(incomingCallId: String,
+                        localOptions: LocalOptions? = nil) {
+     }
+
+     /// Reject incoming call
+     public func reject(incomingCallId: String,
+                        completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+     }
+
+     /// Hold  call
+     public func hold(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+     }
+
+     /// Resume  call
+     public func resume(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
@@ -239,7 +278,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     public func launch(participants: [CommunicationIdentifier],
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
-        
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.

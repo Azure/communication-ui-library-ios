@@ -238,6 +238,8 @@
 		A48BE79129FB424F009B2A46 /* CallStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */; };
 		A4DBCEB72BFAE8F500332E7B /* IncomingCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */; };
 		A4DBCEB92BFAE91E00332E7B /* IncomingCallCancelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */; };
+		A4DBCEBB2BFB9C4000332E7B /* PushNotificationEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */; };
+		A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -603,6 +605,8 @@
 		A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManagerTests.swift; sourceTree = "<group>"; };
 		A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCall.swift; sourceTree = "<group>"; };
 		A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallCancelled.swift; sourceTree = "<group>"; };
+		A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationEventType.swift; sourceTree = "<group>"; };
+		A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -1362,6 +1366,8 @@
 				A46B90982BF593C50096788C /* Caller.swift */,
 				A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */,
 				A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */,
+				A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */,
+				A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -2060,6 +2066,7 @@
 				1F11D2BD2640BD9800D33838 /* CallingMiddleware.swift in Sources */,
 				503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */,
 				982C2833267D0C4500427246 /* CompositeButton.swift in Sources */,
+				A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */,
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
 				756F59782966020800BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */,
 				988799912745EABE00AA3759 /* SourceViewSpace.swift in Sources */,
@@ -2095,6 +2102,7 @@
 				1F2BED6C262F8B7000D98266 /* StoreExtensions.swift in Sources */,
 				881D8F7227FB6992008EC897 /* LocalOptions.swift in Sources */,
 				50E2D69126EAAB33006B0EF4 /* CompositeParticipantsList.swift in Sources */,
+				A4DBCEBB2BFB9C4000332E7B /* PushNotificationEventType.swift in Sources */,
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
