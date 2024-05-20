@@ -285,7 +285,8 @@ extension CallingDemoView {
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callKitOptions = $envConfigSubject.enableCallKit.wrappedValue ? getCallKitOptions() : nil
-        let callCompositeOptions = CallCompositeOptions(
+
+        let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
@@ -295,179 +296,222 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
-            callKitOptions: callKitOptions)
-        #if DEBUG
+            callKitOptions: callKitOptions) :
+        CallCompositeOptions(
+            theme: envConfigSubject.useCustomColors
+            ? CustomColorTheming(envConfigSubject: envConfigSubject)
+            : Theming(envConfigSubject: envConfigSubject),
+            localization: localizationConfig,
+            setupScreenOrientation: setupViewOrientation,
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
+            callScreenOptions: callScreenOptions,
+            callKitOptions: callKitOptions,
+            displayName: envConfigSubject.displayName,
+            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)
+
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
-        let callComposite = useMockCallingSDKHandler ?
-            CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: callingSDKWrapperMock)
-            : CallComposite(withOptions: callCompositeOptions)
-
-        callingSDKWrapperMock?.callComposite = callComposite
-
-        #else
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
-        #endif
-
-        let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
-            guard let composite = callComposite else {
-                return
-            }
-            self.onRemoteParticipantJoined(to: composite,
-                                           identifiers: ids)
-        }
-        let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
-            guard let composite = callComposite else {
-                return
-            }
-            onError(error,
-                    callComposite: composite)
-        }
-
-        let onPipChangedHandler: (Bool) -> Void = { isPictureInPicture in
-            print("::::CallingDemoView:onPipChangedHandler: ", isPictureInPicture)
-        }
-
-        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
-            DispatchQueue.main.schedule {
-                self.issue = issue
-            }
-            sendSupportEventToServer(event: issue) { success, result in
-                if success {
-                    self.issueUrl = result
-                } else {
-                    self.issueUrl = ""
-                }
-            }
-        }
-
-        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
-            guard let composite = callComposite else {
-                return
-            }
-            onCallStateChanged(callStateEvent,
-                    callComposite: composite)
-        }
-        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
-            if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
-                relaunchComposite()
-            }
-        }
-
-        exitCompositeExecuted = false
-        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
-            DispatchQueue.main.asyncAfter(deadline: .now() +
-                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
-            ) { [weak callComposite] in
-                exitCompositeExecuted = true
-                callComposite?.dismiss()
-            }
-        }
-        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
-        callComposite.events.onError = onErrorHandler
-        callComposite.events.onCallStateChanged = onCallStateChangedHandler
-        callComposite.events.onDismissed = onDismissedHandler
-        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
-        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
-
-        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
-                                nil : envConfigSubject.renderedDisplayName
-        let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
-                                                      displayName: renderDisplayName)
-        /* <ROOMS_SUPPORT> */
-        let roomRole = envConfigSubject.selectedRoomRoleType
-        var roomRoleData: ParticipantRole?
-        if envConfigSubject.selectedMeetingType == .roomCall {
-            if roomRole == .presenter {
-                roomRoleData = ParticipantRole.presenter
-            } else if roomRole == .attendee {
-                roomRoleData = ParticipantRole.attendee
-            }
-        }
-        /* </ROOMS_SUPPORT> */
-        let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
-                                                          subtitle: envConfigSubject.navigationSubtitle)
-        let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData,
-                                        cameraOn: envConfigSubject.cameraOn,
-                                        microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        /* <ROOMS_SUPPORT> */
-                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                         roleHint: roomRoleData
-                                        /* <|ROOMS_SUPPORT>
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
-                                        </ROOMS_SUPPORT> */
-        )
-        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
-        if remoteInfoDisplayName.isEmpty {
-            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
-        }
-        let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
-        let callKitRemoteParticipant = $envConfigSubject.enableRemoteInfo.wrappedValue ?
-        CallKitRemoteInfo(displayName: remoteInfoDisplayName,
-                                 handle: cxHandle) : nil
         if let credential = try? await getTokenCredential() {
-            switch envConfigSubject.selectedMeetingType {
-            case .groupCall:
-                let uuid = UUID(uuidString: link) ?? UUID()
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
+            #if DEBUG
+            let callComposite = useMockCallingSDKHandler ?
+                CallComposite(withOptions: callCompositeOptions,
+                              callingSDKWrapperProtocol: callingSDKWrapperMock)
+            : ( envConfigSubject.useDeprecatedLaunch ?
+                CallComposite(withOptions: callCompositeOptions) :
+                    CallComposite(credential: credential, withOptions: callCompositeOptions))
+
+            callingSDKWrapperMock?.callComposite = callComposite
+
+            #else
+            let callComposite = envConfigSubject.useDeprecatedLaunch ?
+            CallComposite(withOptions: callCompositeOptions) :
+                CallComposite(credential: credential, withOptions: callCompositeOptions)
+            #endif
+
+            let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+                guard let composite = callComposite else {
+                    return
                 }
-            case .teamsMeeting:
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
-                }
-            case .oneToNCall:
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions:
-                                            RemoteOptions(for: .roomCall(roomId: link),
-                                                          credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(
-                        remoteOptions: RemoteOptions(for:
-                                .roomCall(roomId: link),
-                                                     credential: credential,
-                                                     displayName: envConfigSubject.displayName),
-                        localOptions: localOptions)
-                }
-            /* <ROOMS_SUPPORT> */
-            case .roomCall:
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions:
-                                            RemoteOptions(for: .roomCall(roomId: link),
-                                                          credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(
-                        remoteOptions: RemoteOptions(for:
-                                .roomCall(roomId: link),
-                                                     credential: credential,
-                                                     displayName: envConfigSubject.displayName),
-                        localOptions: localOptions)
-                }
-             /* </ROOMS_SUPPORT> */
+                self.onRemoteParticipantJoined(to: composite,
+                                               identifiers: ids)
             }
+            let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
+                guard let composite = callComposite else {
+                    return
+                }
+                onError(error,
+                        callComposite: composite)
+            }
+
+            let onPipChangedHandler: (Bool) -> Void = { isPictureInPicture in
+                print("::::CallingDemoView:onPipChangedHandler: ", isPictureInPicture)
+            }
+
+            let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
+                DispatchQueue.main.schedule {
+                    self.issue = issue
+                }
+                sendSupportEventToServer(event: issue) { success, result in
+                    if success {
+                        self.issueUrl = result
+                    } else {
+                        self.issueUrl = ""
+                    }
+                }
+            }
+
+            let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
+                guard let composite = callComposite else {
+                    return
+                }
+                onCallStateChanged(callStateEvent,
+                        callComposite: composite)
+            }
+            let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+                if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
+                    relaunchComposite()
+                }
+            }
+
+            exitCompositeExecuted = false
+            if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now() +
+                                              Float64(envConfigSubject.exitCompositeAfterDuration)!
+                ) { [weak callComposite] in
+                    exitCompositeExecuted = true
+                    callComposite?.dismiss()
+                }
+            }
+            callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+            callComposite.events.onError = onErrorHandler
+            callComposite.events.onCallStateChanged = onCallStateChangedHandler
+            callComposite.events.onDismissed = onDismissedHandler
+            callComposite.events.onPictureInPictureChanged = onPipChangedHandler
+            callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
+
+            let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
+                                    nil : envConfigSubject.renderedDisplayName
+            let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
+                                                          displayName: renderDisplayName)
+            /* <ROOMS_SUPPORT> */
+            let roomRole = envConfigSubject.selectedRoomRoleType
+            var roomRoleData: ParticipantRole?
+            if envConfigSubject.selectedMeetingType == .roomCall {
+                if roomRole == .presenter {
+                    roomRoleData = ParticipantRole.presenter
+                } else if roomRole == .attendee {
+                    roomRoleData = ParticipantRole.attendee
+                }
+            }
+            /* </ROOMS_SUPPORT> */
+            let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
+                                                              subtitle: envConfigSubject.navigationSubtitle)
+            let localOptions = LocalOptions(participantViewData: participantViewData,
+                                            setupScreenViewData: setupScreenViewData,
+                                            cameraOn: envConfigSubject.cameraOn,
+                                            microphoneOn: envConfigSubject.microphoneOn,
+                                            skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                            /* <ROOMS_SUPPORT> */
+                                             audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                             roleHint: roomRoleData
+                                            /* <|ROOMS_SUPPORT>
+                                            audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                            </ROOMS_SUPPORT> */
+            )
+            var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+            if remoteInfoDisplayName.isEmpty {
+                remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
+            }
+            let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
+            let callKitRemoteInfo = $envConfigSubject.enableRemoteInfo.wrappedValue ?
+            CallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                     handle: cxHandle) : nil
+            if envConfigSubject.useDeprecatedLaunch {
+                switch envConfigSubject.selectedMeetingType {
+                case .groupCall:
+                    let uuid = UUID(uuidString: link) ?? UUID()
+                    if envConfigSubject.displayName.isEmpty {
+                        callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                          credential: credential),
+                                             localOptions: localOptions)
+                    } else {
+                        callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                          credential: credential,
+                                                                          displayName: envConfigSubject.displayName),
+                                             localOptions: localOptions)
+                    }
+                case .teamsMeeting:
+                    if envConfigSubject.displayName.isEmpty {
+                        callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                          credential: credential),
+                                             localOptions: localOptions)
+                    } else {
+                        callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                          credential: credential,
+                                                                          displayName: envConfigSubject.displayName),
+                                             localOptions: localOptions)
+                    }
+                case .oneToNCall:
+                    let ids: [String] = link.split(separator: ",").map {
+                        String($0).trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                    let communicationIdentifiers: [CommunicationIdentifier] =
+                    ids.map { createCommunicationIdentifier(fromRawId: $0) }
+                    callComposite.launch(participants: communicationIdentifiers,
+                                         callKitRemoteInfo: callKitRemoteInfo,
+                                         localOptions: localOptions)
+                    /* <ROOMS_SUPPORT> */
+                case .roomCall:
+                    if envConfigSubject.displayName.isEmpty {
+                        callComposite.launch(remoteOptions:
+                                                RemoteOptions(for: .roomCall(roomId: link),
+                                                              credential: credential),
+                                             localOptions: localOptions)
+                    } else {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for:
+                                    .roomCall(roomId: link),
+                                                         credential: credential,
+                                                         displayName: envConfigSubject.displayName),
+                            localOptions: localOptions)
+                    }
+                    /* </ROOMS_SUPPORT> */
+                }
+            } else {
+                switch envConfigSubject.selectedMeetingType {
+                case .groupCall:
+                    let uuid = UUID(uuidString: link) ?? UUID()
+                    callComposite.launch(locator: .groupCall(groupId: uuid),
+                                         callKitRemoteInfo: callKitRemoteInfo,
+                                         localOptions: localOptions)
+                case .teamsMeeting:
+                    callComposite.launch(locator: .teamsMeeting(teamsLink: link),
+                                         callKitRemoteInfo: callKitRemoteInfo,
+                                         localOptions: localOptions)
+                case .oneToNCall:
+                    let ids: [String] = link.split(separator: ",").map {
+                        String($0).trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                    let communicationIdentifiers: [CommunicationIdentifier] =
+                    ids.map { createCommunicationIdentifier(fromRawId: $0) }
+                    callComposite.launch(participants: communicationIdentifiers,
+                                         callKitRemoteInfo: callKitRemoteInfo,
+                                         localOptions: localOptions)
+                    /* <ROOMS_SUPPORT> */
+                case .roomCall:
+                    callComposite.launch(
+                        locator: .roomCall(roomId: link),
+                        callKitRemoteInfo: callKitRemoteInfo,
+                        localOptions: localOptions)
+                    /* </ROOMS_SUPPORT> */
+                }
+            }
+            callingViewModel.callComposite = callComposite
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
-        callingViewModel.callComposite = callComposite
     }
 
     private func getCallKitOptions() -> CallKitOptions {

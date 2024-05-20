@@ -64,6 +64,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
     @Published var isRightToLeft = false
+    @Published var disableInternalPushForIncomingCall = false
+    @Published var useDeprecatedLaunch = false
     @Published var microphoneOn = false
     @Published var cameraOn = false
     @Published var audioOnly = false

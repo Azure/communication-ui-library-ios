@@ -221,9 +221,12 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 
     /// Start Call Composite experience with dialing participants.
     /// - Parameter participants: participants to dial.
+    /// - Parameter callKitRemoteInfo: CallKitRemoteInfo used to set the
+    /// CallKit information for the outgoing call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This data is not sent up to ACS.
     public func launch(participants: [CommunicationIdentifier],
+                       callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
     }
 

@@ -79,6 +79,8 @@ struct SettingsView: View {
             displayLeaveCallConfirmationSettings
             exitCompositeSettings
             callKitSettings
+            pushNotificationsSettings
+            deprecatedAPIsSettings
         }
     }
 
@@ -187,6 +189,28 @@ struct SettingsView: View {
                 "Locale identifier (eg. zh-Hant, fr-CA)",
                 text: $envConfigSubject.localeIdentifier
             )
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var pushNotificationsSettings: some View {
+        Section(header: Text("Push notification")) {
+            Toggle("Disable internal push for incoming call",
+                   isOn: $envConfigSubject.disableInternalPushForIncomingCall)
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var deprecatedAPIsSettings: some View {
+        Section(header: Text("Deprecated APIs")) {
+            Toggle("Use deprecated launch",
+                   isOn: $envConfigSubject.useDeprecatedLaunch)
             .keyboardType(.default)
             .disableAutocorrection(true)
             .autocapitalization(.none)
