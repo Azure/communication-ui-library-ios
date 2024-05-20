@@ -76,6 +76,7 @@ public class CallComposite {
     private var callKitRemoteInfo: CallKitRemoteInfo?
     private var credential: CommunicationTokenCredential?
     private var displayName: String?
+    private var disableInternalPushForIncomingCall: Bool = false
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -105,6 +106,9 @@ public class CallComposite {
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         callKitOptions = options?.callKitOptions
         displayName = ""
+        if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
+            self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        }
     }
 
     /// Create an instance of CallComposite with options.
@@ -125,6 +129,13 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
+        leaveCallConfirmationMode =
+               options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
+        callKitOptions = options?.callKitOptions
+        displayName = options?.displayName
+        if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
+            self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        }
     }
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
@@ -228,6 +239,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     public func launch(participants: [CommunicationIdentifier],
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
+        
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
