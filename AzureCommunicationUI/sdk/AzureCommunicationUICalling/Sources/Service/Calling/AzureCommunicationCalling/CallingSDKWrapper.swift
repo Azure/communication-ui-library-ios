@@ -19,20 +19,17 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var deviceManager: DeviceManager?
     private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
-    private var callKitOptions: CallKitOptions?
     private var callKitRemoteInfo: CallKitRemoteInfo?
     private var callingSDKInitializer: CallingSDKInitializer
 
     init(logger: Logger,
          callingEventsHandler: CallingSDKEventsHandling,
          callConfiguration: CallConfiguration,
-         callKitOptions: CallKitOptions?,
          callKitRemoteInfo: CallKitRemoteInfo?,
          callingSDKInitializer: CallingSDKInitializer) {
         self.logger = logger
         self.callingEventsHandler = callingEventsHandler
         self.callConfiguration = callConfiguration
-        self.callKitOptions = callKitOptions
         self.callKitRemoteInfo = callKitRemoteInfo
         self.callingSDKInitializer = callingSDKInitializer
         super.init()
@@ -53,7 +50,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             callingEventsHandler.setupProperties()
         }
         logger.debug( "Starting call")
-        try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
+        if callConfiguration.compositeCallType == .groupCall ||
+            callConfiguration.compositeCallType == .teamsMeeting ||
+            callConfiguration.compositeCallType == .roomsCall {
+            try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
+        } else if callConfiguration.compositeCallType == .oneToNOutgoing {
+            try await outgoingCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
+        }
     }
 
     func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
@@ -110,6 +113,55 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             setupFeatures()
         } catch {
             logger.error( "Join call failed")
+            throw CallCompositeInternalError.callJoinFailed
+        }
+    }
+
+    func outgoingCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
+        logger.debug( "Starting outgoing call")
+        let startCallOptions = StartCallOptions()
+
+        // to fix iOS 15 issue
+        // by default on iOS 15 calling SDK incoming type is raw video
+        // because of this on iOS 15 remote video start event is not received
+        let incomingVideoOptions = IncomingVideoOptions()
+        incomingVideoOptions.streamType = .remoteIncoming
+
+        if isCameraPreferred,
+           let localVideoStream = localVideoStream {
+            let localVideoStreamArray = [localVideoStream]
+
+            let videoOptions = OutgoingVideoOptions()
+            videoOptions.streams = localVideoStreamArray
+            startCallOptions.outgoingVideoOptions = videoOptions
+        }
+
+        startCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        startCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
+        startCallOptions.incomingVideoOptions = incomingVideoOptions
+        if let remoteInfo = callKitRemoteInfo {
+            let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = remoteInfo.displayName
+                callKitRemoteInfo.handle = remoteInfo.handle
+                startCallOptions.callKitRemoteInfo = callKitRemoteInfo
+        }
+        do {
+            let callAgent = try await callingSDKInitializer.setupCallAgent()
+            if let participants = callConfiguration.participants {
+                let joinedCall = try await callAgent.startCall(participants: participants,
+                                                               options: startCallOptions)
+                if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                    joinedCall.delegate = callingEventsHandler
+                }
+                call = joinedCall
+                setupFeatures()
+            } else {
+                logger.error( "Start call failed")
+                throw CallCompositeInternalError.callJoinFailed
+            }
+
+        } catch {
+            logger.error( "Start call failed")
             throw CallCompositeInternalError.callJoinFailed
         }
     }

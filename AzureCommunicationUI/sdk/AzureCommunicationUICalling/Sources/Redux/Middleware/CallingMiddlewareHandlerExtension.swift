@@ -39,11 +39,13 @@ extension CallingMiddlewareHandler {
         completion?()
     }
 
-    func handle(callingStatus: CallingStatus,
+    func handle(callInfoModel: CallInfoModel,
                 dispatch: @escaping ActionDispatch) {
-        dispatch(.callingAction(.stateUpdated(status: callingStatus)))
+        dispatch(.callingAction(.stateUpdated(status: callInfoModel.status,
+                                              callEndReasonCode: callInfoModel.callEndReasonCode,
+                                              callEndReasonSubCode: callInfoModel.callEndReasonSubCode)))
 
-        switch callingStatus {
+        switch callInfoModel.status {
         case .none,
              .earlyMedia,
              .connecting,

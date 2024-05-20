@@ -241,8 +241,12 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
-                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
+        callConfiguration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
+                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+                                                  participants: nil)
+        guard let callConfiguration = self.callConfiguration else {
+            fatalError("CallConfiguration is not set.")
+        }
         launch(callConfiguration, localOptions: localOptions)
     }
 
@@ -260,7 +264,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
         self.callKitRemoteInfo = callKitRemoteInfo
         callConfiguration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
+                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+                                              participants: nil)
         guard let callConfiguration = self.callConfiguration else {
             fatalError("CallConfiguration is not set.")
         }
@@ -276,6 +281,17 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     public func launch(participants: [CommunicationIdentifier],
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
+        guard let credential = credential else {
+                fatalError("CommunicationTokenCredential cannot be nil.")
+        }
+        self.callKitRemoteInfo = callKitRemoteInfo
+        callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
+                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+                                              participants: participants)
+        guard let callConfiguration = self.callConfiguration else {
+            fatalError("CallConfiguration is not set.")
+        }
+        launch(callConfiguration, localOptions: localOptions)
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
@@ -358,7 +374,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             logger: logger,
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
             callConfiguration: callConfiguration,
-            callKitOptions: callKitOptions,
             callKitRemoteInfo: callKitRemoteInfo,
             callingSDKInitializer: getCallingSDKInitializer())
 
