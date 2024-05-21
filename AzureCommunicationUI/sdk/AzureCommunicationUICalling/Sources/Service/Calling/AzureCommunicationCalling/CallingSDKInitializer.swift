@@ -12,26 +12,36 @@ internal class CallingSDKInitializer: NSObject {
     // destroying call agent is time consuming and we don't want to do it
     private var callClient: CallClient?
     private var callAgent: CallAgent?
-    private var onCallAdded: ((String) -> Void)?
+    private var incomingCall: AzureCommunicationCalling.IncomingCall?
     private var displayName: String?
     private var callKitOptions: AzureCommunicationUICalling.CallKitOptions?
     private var disableInternalPushForIncomingCall = false
     private var tags: [String]
     private var credential: CommunicationTokenCredential
     private var logger: Logger
+    private var events: CallComposite.Events
+    private var onCallAdded: (String) -> Void
 
     init(tags: [String],
          credential: CommunicationTokenCredential,
          callKitOptions: CallKitOptions?,
          displayName: String? = nil,
          disableInternalPushForIncomingCall: Bool,
-         logger: Logger) {
+         logger: Logger,
+         events: CallComposite.Events,
+         onCallAdded: @escaping (String) -> Void) {
         self.logger = logger
         self.tags = tags
         self.credential = credential
         self.callKitOptions = callKitOptions
         self.displayName = displayName
         self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        self.events = events
+        self.onCallAdded = onCallAdded
+    }
+
+    func getIncomingCall() -> AzureCommunicationCalling.IncomingCall? {
+        return incomingCall
     }
 
     func setupCallClient() -> CallClient {
@@ -77,6 +87,7 @@ internal class CallingSDKInitializer: NSObject {
                 options: options
             )
             self.callAgent = callAgent
+            callAgent.delegate = self
             return callAgent
         } catch {
             logger.error("It was not possible to create a call agent.")
@@ -180,5 +191,47 @@ internal class CallingSDKInitializer: NSObject {
         diagnostics.tags.append(contentsOf: appendingTag)
         clientOptions.diagnostics = diagnostics
         return CallClient(options: clientOptions)
+    }
+}
+
+extension CallingSDKInitializer: CallAgentDelegate {
+    public func callAgent(_ callAgent: CallAgent, didUpdateCalls args: CallsUpdatedEventArgs) {
+        self.logger.debug("on calls update received")
+        if !args.addedCalls.isEmpty {
+            if let call = args.addedCalls.first {
+                let callId = call.id
+                self.logger.debug("on calls update received, notifying for \(callId)")
+                self.onCallAdded(callId)
+            }
+        }
+    }
+
+    public func callAgent(_ callAgent: CallAgent,
+                          didRecieveIncomingCall incomingCall: AzureCommunicationCalling.IncomingCall) {
+        self.incomingCall = incomingCall
+        incomingCall.delegate = self
+        let incomingCallInfo = IncomingCall(
+            callId: incomingCall.id,
+            callerDisplayName: incomingCall.callerInfo.displayName,
+            callerIdentifier: incomingCall.callerInfo.identifier)
+        guard let onIncomingCallEventHandler = events.onIncomingCall else {
+            return
+        }
+        onIncomingCallEventHandler(incomingCallInfo)
+    }
+}
+
+extension CallingSDKInitializer: IncomingCallDelegate {
+    func incomingCall(_ incomingCall: AzureCommunicationCalling.IncomingCall, didEnd args: PropertyChangedEventArgs) {
+        guard let onIncomingCallCancelled = events.onIncomingCallCancelled,
+              let callEndReason = incomingCall.callEndReason else {
+            return
+        }
+        let callCancelled = IncomingCallCancelled(
+            callId: incomingCall.id,
+            code: Int(callEndReason.code),
+            subCode: Int(callEndReason.subcode)
+        )
+        onIncomingCallCancelled(callCancelled)
     }
 }

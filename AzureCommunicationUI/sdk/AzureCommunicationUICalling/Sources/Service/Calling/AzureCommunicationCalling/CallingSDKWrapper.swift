@@ -56,6 +56,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
         } else if callConfiguration.compositeCallType == .oneToNOutgoing {
             try await outgoingCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
+        } else if callConfiguration.compositeCallType == .oneToOneIncoming {
+            try await incomingCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
         }
     }
 
@@ -160,6 +162,21 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 throw CallCompositeInternalError.callJoinFailed
             }
 
+        } catch {
+            logger.error( "Start call failed")
+            throw CallCompositeInternalError.callJoinFailed
+        }
+    }
+
+    func incomingCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
+        logger.debug( "Starting outgoing call")
+        do {
+            let callAgent = try await callingSDKInitializer.setupCallAgent()
+            call = callAgent.calls.first
+            if call?.id != callConfiguration.callId {
+                throw CallCompositeInternalError.callJoinFailed
+            }
+            setupFeatures()
         } catch {
             logger.error( "Start call failed")
             throw CallCompositeInternalError.callJoinFailed

@@ -79,6 +79,9 @@ public class CallComposite {
     private var disableInternalPushForIncomingCall = false
     private var callingSDKInitializer: CallingSDKInitializer?
     private var callConfiguration: CallConfiguration?
+    private var compositeUILaunched = false
+    private var incomingCallAcceptedByCallKitCallId = ""
+    private var videoViewManager: VideoViewManager?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -140,6 +143,7 @@ public class CallComposite {
     /// Dismiss call composite. If call is in progress, user will leave a call.
     public func dismiss() {
         exitManager?.dismiss()
+        compositeUILaunched = false
     }
 
     /// Handle push notification to receive incoming call notification.
@@ -266,6 +270,7 @@ public class CallComposite {
         }
 
         store.dispatch(action: .callingAction(.setupCall))
+        compositeUILaunched = true
     }
 
     /// Start Call Composite experience with joining a Teams meeting.
@@ -280,7 +285,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                        localOptions: LocalOptions? = nil) {
         callConfiguration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
                                                   roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
-                                                  participants: nil)
+                                                  participants: nil,
+                                                  callId: nil)
         guard let callConfiguration = self.callConfiguration else {
             fatalError("CallConfiguration is not set.")
         }
@@ -302,7 +308,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.callKitRemoteInfo = callKitRemoteInfo
         callConfiguration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT> */
                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
-                                              participants: nil)
+                                              participants: nil,
+                                              callId: nil)
         guard let callConfiguration = self.callConfiguration else {
             fatalError("CallConfiguration is not set.")
         }
@@ -324,7 +331,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.callKitRemoteInfo = callKitRemoteInfo
         callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
-                                              participants: participants)
+                                              participants: participants,
+                                              callId: nil)
         guard let callConfiguration = self.callConfiguration else {
             fatalError("CallConfiguration is not set.")
         }
@@ -347,6 +355,41 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
                           for: identifier,
                           completionHandler: completionHandler)
+    }
+
+    private func onCallAdded(callId: String) {
+        logger.debug("call composite onCallsAdded \(callId)")
+        if let incomingCall = callingSDKInitializer?.getIncomingCall() {
+            logger.debug("call composite incoming call id \(incomingCall.id)")
+            if incomingCall.id == callId {
+                /// will launch UI if no active call is in progress
+                /// notification accepted from incoming call
+                incomingCallAcceptedByCallKitCallId = callId
+                launchUIForIncomingCallAcceptedFromCallKit()
+            }
+        }
+    }
+
+    /// For incoming call to present the UI
+    /// It is possible that composite is in existing call, then on previous call disconnect launch UI
+    /// compositeUILaunched will be set to false once existing call is disconnected
+    private func launchUIForIncomingCallAcceptedFromCallKit() {
+        if !compositeUILaunched {
+            logger.debug("CallComposite: launcing UI for incoming call")
+
+            callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
+                                                  roleHint: nil /* </ROOMS_SUPPORT> */,
+                                                  participants: nil,
+                                                  callId: incomingCallAcceptedByCallKitCallId)
+            guard let callConfiguration = self.callConfiguration else {
+                fatalError("CallConfiguration is not set.")
+            }
+            let localOptions = LocalOptions(skipSetupScreen: true)
+            incomingCallAcceptedByCallKitCallId = ""
+            DispatchQueue.main.async {
+                self.launch(callConfiguration, localOptions: localOptions)
+            }
+        }
     }
 
     /// Display Call Composite if it was hidden by user going Back in navigation while on the call.
@@ -446,7 +489,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         let debugInfoManager = createDebugInfoManager(callingSDKWrapper: callingSdkWrapper)
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
-
+        self.videoViewManager = videoViewManager
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
@@ -553,7 +596,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                                                           displayName: displayName,
                                                           disableInternalPushForIncomingCall:
                                                             disableInternalPushForIncomingCall,
-                                                          logger: logger)
+                                                          logger: logger,
+                                                          events: events,
+                                                          onCallAdded: onCallAdded)
         self.callingSDKInitializer = callingSDKInitializer
         return callingSDKInitializer
     }
@@ -595,13 +640,22 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
-            self?.callStateManager?.onCompositeExit()
             containerUIHostingController?.dismissSelf()
+            self?.videoViewManager?.disposeViews()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
             self?.cleanUpManagers()
             UIApplication.shared.isIdleTimerDisabled = false
+            self?.compositeUILaunched = false
+            if self?.incomingCallAcceptedByCallKitCallId != "" {
+                DispatchQueue.main.async {
+                    self?.logger.debug("CallComposite: setDismissComposite containerUIHostingController launch")
+                    self?.launchUIForIncomingCallAcceptedFromCallKit()
+                }
+            } else {
+                self?.callStateManager?.onCompositeExit()
+            }
         }
 
         return containerUIHostingController

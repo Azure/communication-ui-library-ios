@@ -9,6 +9,7 @@ import AzureCommunicationCommon
 struct CallConfiguration {
     let groupId: UUID?
     let meetingLink: String?
+    let callId: String?
     let compositeCallType: CompositeCallType
     let diagnosticConfig: DiagnosticConfig
     let participants: [CommunicationIdentifier]?
@@ -18,8 +19,10 @@ struct CallConfiguration {
     /* </ROOMS_SUPPORT> */
     init(locator: JoinLocator?, /* <ROOMS_SUPPORT> */
          roleHint: ParticipantRole? /* </ROOMS_SUPPORT> */,
-         participants: [CommunicationIdentifier]?) {
+         participants: [CommunicationIdentifier]?,
+         callId: String?) {
         if let locator = locator {
+            self.callId = nil
             switch locator {
             case let .groupCall(groupId: groupId):
                 self.groupId = groupId
@@ -47,14 +50,22 @@ struct CallConfiguration {
                 self.participants = nil
             /* </ROOMS_SUPPORT> */
             }
-        } else {
+        } else if participants != nil {
             self.participants = participants
             self.roomId = nil
             self.roomRoleHint = nil
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToNOutgoing
-
+            self.callId = nil
+        } else {
+            self.participants = nil
+            self.roomId = nil
+            self.roomRoleHint = nil
+            self.groupId = nil
+            self.meetingLink = nil
+            self.compositeCallType = .oneToOneIncoming
+            self.callId = callId
         }
         self.diagnosticConfig = DiagnosticConfig()
     }
@@ -64,5 +75,6 @@ enum CompositeCallType {
     case groupCall
     case teamsMeeting
     case oneToNOutgoing
+    case oneToOneIncoming
     /* <ROOMS_SUPPORT:3> */ case roomsCall /* </ROOMS_SUPPORT:1> */
 }
