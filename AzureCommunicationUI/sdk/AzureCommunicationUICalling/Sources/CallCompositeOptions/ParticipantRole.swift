@@ -11,6 +11,7 @@ public struct ParticipantRole: Equatable, RequestStringConvertible {
     internal enum ParticipantRoleKV {
         case presenter
         case attendee
+        case consumer
         case unknown(String)
         var rawValue: String {
             switch self {
@@ -18,6 +19,8 @@ public struct ParticipantRole: Equatable, RequestStringConvertible {
                 return "presenter"
             case .attendee:
                 return "attendee"
+            case .consumer:
+                return "consumer"
             case .unknown(let value):
                 return value
             }
@@ -28,6 +31,8 @@ public struct ParticipantRole: Equatable, RequestStringConvertible {
                 self = .presenter
             case "attendee":
                 self = .attendee
+            case "consumer":
+                self = .consumer
             default:
                 self = .unknown(rawValue.lowercased())
             }
@@ -50,5 +55,6 @@ public struct ParticipantRole: Equatable, RequestStringConvertible {
 
     public static let presenter: ParticipantRole = .init(rawValue: "presenter")
     public static let attendee: ParticipantRole = .init(rawValue: "attendee")
+    public static let consumer: ParticipantRole = .init(rawValue: "consumer")
 }
  /* </ROOMS_SUPPORT> */
