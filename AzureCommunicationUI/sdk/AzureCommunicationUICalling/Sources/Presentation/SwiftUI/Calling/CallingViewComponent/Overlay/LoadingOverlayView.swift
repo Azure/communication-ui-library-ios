@@ -42,7 +42,7 @@ struct LoadingOverlayView: View {
             )
             .onAppear {
                 viewModel.handleOffline()
-                viewModel.handleMicAvailabilityCheck()
+                // viewModel.handleMicAvailabilityCheck()
             }
     }
 }

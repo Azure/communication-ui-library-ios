@@ -82,6 +82,8 @@ public class CallComposite {
     private var compositeUILaunched = false
     private var incomingCallAcceptedByCallKitCallId = ""
     private var videoViewManager: VideoViewManager?
+    private var callingSDKWrapper: CallingSDKWrapperProtocol?
+    private var callingSDKEventsHandler: CallingSDKEventsHandler?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -358,9 +360,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     }
 
     private func onCallAdded(callId: String) {
-        logger.debug("call composite onCallsAdded \(callId)")
+        logger.debug("InderpalTest -> call composite onCallsAdded \(callId)")
         if let incomingCall = callingSDKInitializer?.getIncomingCall() {
-            logger.debug("call composite incoming call id \(incomingCall.id)")
+            logger.debug("InderpalTest -> call composite incoming call id \(incomingCall.id)")
             if incomingCall.id == callId {
                 /// will launch UI if no active call is in progress
                 /// notification accepted from incoming call
@@ -375,7 +377,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// compositeUILaunched will be set to false once existing call is disconnected
     private func launchUIForIncomingCallAcceptedFromCallKit() {
         if !compositeUILaunched {
-            logger.debug("CallComposite: launcing UI for incoming call")
+            logger.debug("InderpalTest -> launcing UI for incoming call")
+            logger.debug( "InderpalTest -> inCallKitCallId \(self.incomingCallAcceptedByCallKitCallId)")
 
             callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                                   roleHint: nil /* </ROOMS_SUPPORT> */,
@@ -450,12 +453,15 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         callCompositeEventsHandler: CallComposite.Events,
         withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil
     ) -> CompositeViewFactoryProtocol {
+        let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
+        self.callingSDKEventsHandler = callingSDKEventsHandler
         let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
             logger: logger,
-            callingEventsHandler: CallingSDKEventsHandler(logger: logger),
+            callingEventsHandler: callingSDKEventsHandler,
             callConfiguration: callConfiguration,
             callKitRemoteInfo: callKitRemoteInfo,
             callingSDKInitializer: getCallingSDKInitializer())
+        self.callingSDKWrapper = callingSdkWrapper
 
         let store = Store.constructStore(
             logger: logger,
@@ -542,6 +548,11 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.pipManager = nil
         self.callHistoryService = nil
         self.exitManager = nil
+    }
+
+    private func disposeSDKWrappers() {
+        self.callingSDKEventsHandler = nil
+        self.callingSDKWrapper = nil
     }
 
     private func present(_ viewController: UIViewController) {
@@ -640,17 +651,19 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            self?.logger.debug( "InderpalTest -> dc \(self?.incomingCallAcceptedByCallKitCallId)")
             containerUIHostingController?.dismissSelf()
             self?.videoViewManager?.disposeViews()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
             self?.cleanUpManagers()
+            self?.disposeSDKWrappers()
             UIApplication.shared.isIdleTimerDisabled = false
             self?.compositeUILaunched = false
             if self?.incomingCallAcceptedByCallKitCallId != "" {
                 DispatchQueue.main.async {
-                    self?.logger.debug("CallComposite: setDismissComposite containerUIHostingController launch")
+                    self?.logger.debug("InderpalTest -> setDismissComposite containerUIHostingController launch")
                     self?.launchUIForIncomingCallAcceptedFromCallKit()
                 }
             } else {

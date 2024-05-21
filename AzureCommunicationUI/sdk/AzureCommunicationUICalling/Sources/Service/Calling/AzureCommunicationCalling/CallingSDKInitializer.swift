@@ -196,11 +196,11 @@ internal class CallingSDKInitializer: NSObject {
 
 extension CallingSDKInitializer: CallAgentDelegate {
     public func callAgent(_ callAgent: CallAgent, didUpdateCalls args: CallsUpdatedEventArgs) {
-        self.logger.debug("on calls update received")
+        self.logger.debug("InderpalTest -> on calls update received")
         if !args.addedCalls.isEmpty {
             if let call = args.addedCalls.first {
                 let callId = call.id
-                self.logger.debug("on calls update received, notifying for \(callId)")
+                self.logger.debug("InderpalTest -> on calls update received, notifying for \(callId)")
                 self.onCallAdded(callId)
             }
         }
@@ -210,6 +210,7 @@ extension CallingSDKInitializer: CallAgentDelegate {
                           didRecieveIncomingCall incomingCall: AzureCommunicationCalling.IncomingCall) {
         self.incomingCall = incomingCall
         incomingCall.delegate = self
+        self.logger.debug("InderpalTest -> incomingCall received, notifying for \(incomingCall.id)")
         let incomingCallInfo = IncomingCall(
             callId: incomingCall.id,
             callerDisplayName: incomingCall.callerInfo.displayName,

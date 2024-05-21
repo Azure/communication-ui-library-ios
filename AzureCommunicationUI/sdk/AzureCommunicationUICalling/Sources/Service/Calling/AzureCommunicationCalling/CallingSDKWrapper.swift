@@ -169,16 +169,21 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func incomingCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
-        logger.debug( "incoming call")
+        logger.debug( "InderpalTest -> incoming call")
         do {
             let callAgent = try await callingSDKInitializer.setupCallAgent()
             call = callAgent.calls.first
+            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                call?.delegate = callingEventsHandler
+            }
+            logger.debug( "InderpalTest -> call id from call agent \(self.call?.id)")
+            logger.debug( "InderpalTest -> call id from callConfiguration.callId \(self.callConfiguration.callId)")
             if call?.id != callConfiguration.callId {
                 throw CallCompositeInternalError.callJoinFailed
             }
             setupFeatures()
         } catch {
-            logger.error( "incoming call failed")
+            logger.error( "InderpalTest -> incoming call failed")
             throw CallCompositeInternalError.callJoinFailed
         }
     }

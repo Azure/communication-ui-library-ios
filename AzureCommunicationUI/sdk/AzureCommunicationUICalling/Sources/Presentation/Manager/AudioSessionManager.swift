@@ -65,10 +65,10 @@ class AudioSessionManager: AudioSessionManagerProtocol {
                                                name: AVAudioSession.routeChangeNotification,
                                                object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleInterruption),
-                                               name: AVAudioSession.interruptionNotification,
-                                               object: AVAudioSession.sharedInstance())
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(handleInterruption),
+//                                               name: AVAudioSession.interruptionNotification,
+//                                               object: AVAudioSession.sharedInstance())
     }
 
     @objc func handleInterruption(notification: Notification) {

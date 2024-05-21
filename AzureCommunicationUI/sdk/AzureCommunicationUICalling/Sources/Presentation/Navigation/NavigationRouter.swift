@@ -40,6 +40,7 @@ class NavigationRouter: ObservableObject {
         case .inCall:
             viewToNavigateTo = .callingView
         case .exit:
+            logger.debug("InderpalTest -> NavigationRouter exit")
             guard !self.isDismissed else {
                 return
             }
