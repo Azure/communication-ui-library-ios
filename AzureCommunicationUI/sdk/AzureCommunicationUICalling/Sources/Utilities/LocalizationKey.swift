@@ -19,6 +19,8 @@ enum LocalizationKey: String {
     case dismissAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"
     case joinCall = "AzureCommunicationUICalling.SetupView.Button.JoinCall"
     case joiningCall = "AzureCommunicationUICalling.SetupView.Button.JoiningCall"
+    case startCall = "AzureCommunicationUICalling.SetupView.Button.StartCall"
+    case startingCall = "AzureCommunicationUICalling.SetupView.Button.StartingCall"
     case videoOff = "AzureCommunicationUICalling.SetupView.Button.VideoOff"
     case videoOffAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"
     case videoOn = "AzureCommunicationUICalling.SetupView.Button.VideoOn"
@@ -52,6 +54,7 @@ enum LocalizationKey: String {
     case callWithNPerson = "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"
     case participantListAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"
+    case callingCallMessage = "AzureCommunicationUICalling.CallingView.GridView.Calling"
 
     /* Lobby waiting */
     case lobbyWaitingToJoin = "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"

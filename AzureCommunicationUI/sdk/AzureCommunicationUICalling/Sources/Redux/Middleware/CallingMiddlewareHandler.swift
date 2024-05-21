@@ -60,10 +60,12 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     private let logger: Logger
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
+    private let callType: CompositeCallType
 
-    init(callingService: CallingServiceProtocol, logger: Logger) {
+    init(callingService: CallingServiceProtocol, logger: Logger, callType: CompositeCallType) {
         self.callingService = callingService
         self.logger = logger
+        self.callType = callType
     }
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -378,7 +380,7 @@ extension CallingMiddlewareHandler {
                 }
                 let internalError = callInfoModel.internalError
                 let callingStatus = callInfoModel.status
-                self.handle(callInfoModel: callInfoModel, dispatch: dispatch)
+                self.handle(callInfoModel: callInfoModel, dispatch: dispatch, callType: callType)
                 self.logger.debug("Dispatch State Update: \(callingStatus)")
 
                 if let internalError = internalError {

@@ -383,7 +383,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             displayName: localOptions?.participantViewData?.displayName ?? displayName,
             startWithCameraOn: localOptions?.cameraOn,
             startWithMicrophoneOn: localOptions?.microphoneOn,
-            skipSetupScreen: localOptions?.skipSetupScreen
+            skipSetupScreen: localOptions?.skipSetupScreen,
+            callType: callConfiguration.compositeCallType
         )
         self.store = store
 
@@ -433,7 +434,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles
+                retrieveLogFiles: callingSdkWrapper.getLogFiles,
+                callType: callConfiguration.compositeCallType
             )
         )
     }
@@ -555,6 +557,7 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            self?.callStateManager?.onCompositeExit()
             containerUIHostingController?.dismissSelf()
             self?.viewController = nil
             self?.pipViewController = nil

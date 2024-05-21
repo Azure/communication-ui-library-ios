@@ -16,6 +16,7 @@ class LocalVideoViewModel: ObservableObject {
     @Published var isMuted = false
     @Published var cameraOperationalStatus: LocalUserState.CameraOperationalStatus = .off
     @Published var isInPip = false
+    @Published var isDisplayed = false
 
     var cameraSwitchButtonPipViewModel: IconButtonViewModel!
     var cameraSwitchButtonFullViewModel: IconButtonViewModel!
@@ -52,7 +53,10 @@ class LocalVideoViewModel: ObservableObject {
         dispatch(.localUserAction(.cameraSwitchTriggered))
     }
 
-    func update(localUserState: LocalUserState, visibilityState: VisibilityState) {
+    func update(localUserState: LocalUserState,
+                visibilityState: VisibilityState,
+                shouldDisplay: Bool = true) {
+        isDisplayed = shouldDisplay
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
         }

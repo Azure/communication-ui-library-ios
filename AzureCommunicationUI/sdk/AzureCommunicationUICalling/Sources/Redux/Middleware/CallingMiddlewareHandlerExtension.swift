@@ -40,23 +40,15 @@ extension CallingMiddlewareHandler {
     }
 
     func handle(callInfoModel: CallInfoModel,
-                dispatch: @escaping ActionDispatch) {
+                dispatch: @escaping ActionDispatch,
+                callType: CompositeCallType) {
         dispatch(.callingAction(.stateUpdated(status: callInfoModel.status,
                                               callEndReasonCode: callInfoModel.callEndReasonCode,
                                               callEndReasonSubCode: callInfoModel.callEndReasonSubCode)))
+        let activeStatuses: [CallingStatus] = callType == .oneToNOutgoing ?
+        [.connected, .ringing, .connecting] : [.connected, .inLobby]
 
-        switch callInfoModel.status {
-        case .none,
-             .earlyMedia,
-             .connecting,
-             .ringing,
-             .localHold,
-             .disconnecting,
-             .remoteHold,
-             .disconnected:
-            break
-        case .connected,
-                .inLobby:
+        if activeStatuses.contains(callInfoModel.status) {
             dispatch(.callingViewLaunched)
         }
     }
