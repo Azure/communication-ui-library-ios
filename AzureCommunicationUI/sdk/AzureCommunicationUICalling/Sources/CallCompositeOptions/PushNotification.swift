@@ -21,12 +21,14 @@ public struct PushNotification {
     public let fromDisplayName: String
     /// incoming with video
     public let hasIncomingVideo: Bool
+    let data: [AnyHashable: Any]
 
     /// Create an instance of a PushNotification with push notification payload.
     /// - Parameters:
     ///   - data: Push notification payload.
     public init(data: [AnyHashable: Any]) {
         let pushNotificationInfo = PushNotificationInfo.fromDictionary(data)
+        self.data = data
         self.callId = pushNotificationInfo.callId.uuidString
         self.eventType = pushNotificationInfo.eventType.toPushNotificationEventType()
         self.from = pushNotificationInfo.from

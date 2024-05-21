@@ -145,6 +145,15 @@ public class CallComposite {
     /// Handle push notification to receive incoming call notification.
      public func handlePushNotification(pushNotification: PushNotification,
                                         completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         Task {
+             do {
+                 let callingSDKInitializer = self.getCallingSDKInitializer()
+                 try await callingSDKInitializer.handlePushNotification(pushNotification: pushNotification)
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
+             }
+         }
      }
 
      /// Report incoming call to notify CallKit when in background mode.
@@ -152,15 +161,43 @@ public class CallComposite {
      public static func reportIncomingCall(pushNotification: PushNotification,
                                            callKitOptions: CallKitOptions,
                                            completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         Task {
+             do {
+                 try await CallingSDKInitializer.reportIncomingCall(pushNotification: pushNotification,
+                                                                    callKitOptions: callKitOptions)
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
+             }
+         }
      }
 
      /// Register device token to receive Azure Notification Hubs push notifications.
      public func registerPushNotifications(deviceRegistrationToken: Data,
                                            completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         Task {
+             do {
+                 let callingSDKInitializer = self.getCallingSDKInitializer()
+                 try await callingSDKInitializer.registerPushNotification(deviceRegistrationToken:
+                                                                            deviceRegistrationToken)
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
+             }
+         }
      }
 
      /// Unregister Azure Notification Hubs push notifications
      public func unregisterPushNotifications(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         Task {
+             do {
+                 let callingSDKInitializer = self.getCallingSDKInitializer()
+                 try await callingSDKInitializer.unregisterPushNotifications()
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
+             }
+         }
      }
 
      /// Accept incoming call

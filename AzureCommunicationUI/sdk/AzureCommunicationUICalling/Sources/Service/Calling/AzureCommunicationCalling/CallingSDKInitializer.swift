@@ -46,7 +46,7 @@ internal class CallingSDKInitializer: NSObject {
                 logger.debug("Reusing call agent")
                 return existingCallAgent
         }
-        var callClient = setupCallClient()
+        let callClient = setupCallClient()
         let options = CallAgentOptions()
         // options.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
         if let providerConfig = callKitOptions?.providerConfig {
@@ -72,7 +72,7 @@ internal class CallingSDKInitializer: NSObject {
             options.displayName = displayName
         }
         do {
-            var callAgent = try await callClient.createCallAgent(
+            let callAgent = try await callClient.createCallAgent(
                 userCredential: credential,
                 options: options
             )
@@ -80,6 +80,88 @@ internal class CallingSDKInitializer: NSObject {
             return callAgent
         } catch {
             logger.error("It was not possible to create a call agent.")
+            throw error
+        }
+    }
+
+    func registerPushNotification(deviceRegistrationToken: Data) async throws {
+        do {
+            let callAgent = try await setupCallAgent()
+            try await callAgent.registerPushNotifications(
+                deviceToken: deviceRegistrationToken)
+        } catch {
+            logger.error("Failed to registerPushNotification")
+            throw error
+        }
+    }
+
+    func unregisterPushNotifications() async throws {
+        do {
+            let callAgent = try await setupCallAgent()
+            try await callAgent.unregisterPushNotification()
+        } catch {
+            logger.error("Failed to unregisterPushNotification")
+            throw error
+        }
+    }
+
+    static func reportIncomingCall(pushNotification: PushNotification,
+                                   callKitOptions: CallKitOptions) async throws {
+        do {
+            let sdkCallKitOptions = AzureCommunicationCalling.CallKitOptions(with: callKitOptions.providerConfig)
+            sdkCallKitOptions.isCallHoldSupported = callKitOptions.isCallHoldSupported
+            sdkCallKitOptions.configureAudioSession = callKitOptions.configureAudioSession
+            if let provideRemoteInfo = callKitOptions.provideRemoteInfo {
+                sdkCallKitOptions.provideRemoteInfo = { (callerInfo: AzureCommunicationCalling.CallerInfo)
+                    -> AzureCommunicationCalling.CallKitRemoteInfo in
+                    let info = provideRemoteInfo(
+                        Caller(displayName: callerInfo.displayName,
+                               identifier: callerInfo.identifier))
+                    let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
+                    callKitRemoteInfo.displayName = info.displayName
+                    callKitRemoteInfo.handle = info.handle
+                    return callKitRemoteInfo
+                }
+            }
+            let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
+            try await CallClient.reportIncomingCall(
+                with: pushNotificationInfo,
+                callKitOptions: sdkCallKitOptions
+            )
+        } catch {}
+    }
+
+    func handlePushNotification(pushNotification: PushNotification) async throws {
+        do {
+            if let providerConfig = callKitOptions?.providerConfig {
+                let sdkCallKitOptions = AzureCommunicationCalling.CallKitOptions(with: providerConfig)
+                sdkCallKitOptions.isCallHoldSupported = ((callKitOptions?.isCallHoldSupported) != nil)
+                sdkCallKitOptions.configureAudioSession = callKitOptions?.configureAudioSession
+                if let provideRemoteInfo = callKitOptions?.provideRemoteInfo {
+                    sdkCallKitOptions.provideRemoteInfo = { (callerInfo: AzureCommunicationCalling.CallerInfo)
+                        -> AzureCommunicationCalling.CallKitRemoteInfo in
+                        let info = provideRemoteInfo(
+                            Caller(displayName: callerInfo.displayName,
+                                   identifier: callerInfo.identifier))
+                        let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
+                        callKitRemoteInfo.displayName = info.displayName
+                        callKitRemoteInfo.handle = info.handle
+                        return callKitRemoteInfo
+                    }
+                }
+                let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
+                try await CallClient.reportIncomingCall(
+                    with: pushNotificationInfo,
+                    callKitOptions: sdkCallKitOptions
+                )
+            }
+        } catch {}
+        do {
+            let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
+            let callAgent = try await setupCallAgent()
+            try await callAgent.handlePush(notification: pushNotificationInfo)
+        } catch {
+            logger.error("Failed to handlePush")
             throw error
         }
     }
