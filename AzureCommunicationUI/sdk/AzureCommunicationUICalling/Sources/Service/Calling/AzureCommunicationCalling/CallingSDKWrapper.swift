@@ -169,7 +169,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func incomingCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
-        logger.debug( "Starting outgoing call")
+        logger.debug( "incoming call")
         do {
             let callAgent = try await callingSDKInitializer.setupCallAgent()
             call = callAgent.calls.first
@@ -178,7 +178,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             }
             setupFeatures()
         } catch {
-            logger.error( "Start call failed")
+            logger.error( "incoming call failed")
             throw CallCompositeInternalError.callJoinFailed
         }
     }
