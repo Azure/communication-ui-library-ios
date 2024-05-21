@@ -48,7 +48,7 @@ internal class CallingSDKInitializer: NSObject {
         }
         let callClient = setupCallClient()
         let options = CallAgentOptions()
-        // options.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        options.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
         if let providerConfig = callKitOptions?.providerConfig {
             let sdkCallKitOptions = AzureCommunicationCalling.CallKitOptions(with: providerConfig)
             sdkCallKitOptions.isCallHoldSupported = callKitOptions!.isCallHoldSupported
