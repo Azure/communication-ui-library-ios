@@ -513,6 +513,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         let callingSDKInitializer = CallingSDKInitializer(tags: callConfiguration.diagnosticConfig.tags,
                                                           credential: credential,
                                                           callKitOptions: callKitOptions,
+                                                          displayName: displayName,
                                                           disableInternalPushForIncomingCall:
                                                             disableInternalPushForIncomingCall,
                                                           logger: logger)
