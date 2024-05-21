@@ -181,6 +181,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             if call?.id != callConfiguration.callId {
                 throw CallCompositeInternalError.callJoinFailed
             }
+            logger.debug( "InderpalTest -> setupFeatures")
             setupFeatures()
         } catch {
             logger.error( "InderpalTest -> incoming call failed")

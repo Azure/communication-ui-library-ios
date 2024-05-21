@@ -33,6 +33,8 @@ public class CallComposite {
         public var onIncomingCall: ((IncomingCall) -> Void)?
         /// Closure to incoming call cancelled.
         public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
+        /// Closure to incoming call id accepted by CallKit.
+        public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -80,7 +82,7 @@ public class CallComposite {
     private var callingSDKInitializer: CallingSDKInitializer?
     private var callConfiguration: CallConfiguration?
     private var compositeUILaunched = false
-    private var incomingCallAcceptedByCallKitCallId = ""
+    private var incomingCallAcceptedByCallKitCallId: String?
     private var videoViewManager: VideoViewManager?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
@@ -144,6 +146,7 @@ public class CallComposite {
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
     public func dismiss() {
+        logger.debug( "InderpalTest -> dismiss")
         exitManager?.dismiss()
         compositeUILaunched = false
     }
@@ -231,7 +234,7 @@ public class CallComposite {
     }
 
     deinit {
-        logger.debug("Call Composite deallocated")
+        logger.debug("InderpalTest -> Call Composite deallocated")
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
@@ -341,6 +344,35 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         launch(callConfiguration, localOptions: localOptions)
     }
 
+    /// Start Call Composite experience with dialing participants.
+    /// - Parameter callIdAcceptedFromCallKit: call id accepted from callkit.
+    /// - Parameter callKitRemoteInfo: CallKitRemoteInfo used to set the
+    /// CallKit information for the outgoing call.
+    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
+    ///                            This data is not sent up to ACS.
+    ///                            Skip setup screen options will be forced true as call is already accepted.
+    public func launch(callIdAcceptedFromCallKit: String,
+                       localOptions: LocalOptions? = nil) {
+        guard let credential = credential else {
+                fatalError("CommunicationTokenCredential cannot be nil.")
+        }
+        logger.debug( "InderpalTest -> launch \(callIdAcceptedFromCallKit)")
+        callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
+                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+                                              participants: nil,
+                                              callId: callIdAcceptedFromCallKit)
+        guard let callConfiguration = self.callConfiguration else {
+            fatalError("CallConfiguration is not set.")
+        }
+        let accptedCallLocalOptions = LocalOptions(participantViewData: localOptions?.participantViewData,
+                                                   setupScreenViewData: localOptions?.setupScreenViewData,
+                                                   cameraOn: localOptions?.cameraOn,
+                                                   microphoneOn: localOptions?.microphoneOn,
+                                                   skipSetupScreen: true,
+                                                   audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo)
+        launch(callConfiguration, localOptions: accptedCallLocalOptions)
+    }
+
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
     /// - Parameters:
     ///   - remoteParticipantViewData: ParticipantViewData used to set the participant's information for the call.
@@ -359,38 +391,31 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                           completionHandler: completionHandler)
     }
 
+    /// Native SDK do not follow call state change order for End and Accept 
+    /// Any state can be received first:  disconnected for existing call or connected for newly accepted call
+    /// Notify once UI is closed by disconnected state before notifying for new call accept
     private func onCallAdded(callId: String) {
         logger.debug("InderpalTest -> call composite onCallsAdded \(callId)")
         if let incomingCall = callingSDKInitializer?.getIncomingCall() {
             logger.debug("InderpalTest -> call composite incoming call id \(incomingCall.id)")
             if incomingCall.id == callId {
-                /// will launch UI if no active call is in progress
-                /// notification accepted from incoming call
                 incomingCallAcceptedByCallKitCallId = callId
-                launchUIForIncomingCallAcceptedFromCallKit()
+                notifyOnCallKitCallAccepted()
             }
         }
     }
 
-    /// For incoming call to present the UI
-    /// It is possible that composite is in existing call, then on previous call disconnect launch UI
-    /// compositeUILaunched will be set to false once existing call is disconnected
-    private func launchUIForIncomingCallAcceptedFromCallKit() {
+    /// On incoming call accepted by callkit
+    /// It is possible that composite is in existing call, then on previous call disconnect this function will be called
+    /// CompositeUILaunched will be set to false once existing call is disconnected
+    private func notifyOnCallKitCallAccepted() {
         if !compositeUILaunched {
-            logger.debug("InderpalTest -> launcing UI for incoming call")
-            logger.debug( "InderpalTest -> inCallKitCallId \(self.incomingCallAcceptedByCallKitCallId)")
-
-            callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                                  roleHint: nil /* </ROOMS_SUPPORT> */,
-                                                  participants: nil,
-                                                  callId: incomingCallAcceptedByCallKitCallId)
-            guard let callConfiguration = self.callConfiguration else {
-                fatalError("CallConfiguration is not set.")
-            }
-            let localOptions = LocalOptions(skipSetupScreen: true)
-            incomingCallAcceptedByCallKitCallId = ""
-            DispatchQueue.main.async {
-                self.launch(callConfiguration, localOptions: localOptions)
+            if let callId = incomingCallAcceptedByCallKitCallId {
+                logger.debug( "InderpalTest -> inCallKitCallId \(callId)")
+                if let onIncomingCallAcceptedByCallKit = events.onIncomingCallAcceptedFromCallKit {
+                    onIncomingCallAcceptedByCallKit(callId)
+                    incomingCallAcceptedByCallKitCallId = nil
+                }
             }
         }
     }
@@ -480,13 +505,16 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             localParticipantViewData: localOptions?.participantViewData
         )
         self.avatarViewManager = avatarViewManager
+        let audioSessionManager = AudioSessionManager(store: store,
+                                                      logger: logger,
+                                                      isCallKitEnabled: callKitOptions != nil)
 
         self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.callStateManager = CallStateManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.exitManager = CompositeExitManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
-        self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
+        self.audioSessionManager = audioSessionManager
         self.remoteParticipantsManager = RemoteParticipantsManager(
             store: store,
             callCompositeEventsHandler: callCompositeEventsHandler,
@@ -501,8 +529,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
-        let audioSessionManager = AudioSessionManager(store: store, logger: logger)
-        self.audioSessionManager = audioSessionManager
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
@@ -651,23 +677,18 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
-            self?.logger.debug( "InderpalTest -> dc \(self?.incomingCallAcceptedByCallKitCallId)")
-            containerUIHostingController?.dismissSelf()
-            self?.videoViewManager?.disposeViews()
-            self?.viewController = nil
-            self?.pipViewController = nil
-            self?.viewFactory = nil
-            self?.cleanUpManagers()
-            self?.disposeSDKWrappers()
-            UIApplication.shared.isIdleTimerDisabled = false
-            self?.compositeUILaunched = false
-            if self?.incomingCallAcceptedByCallKitCallId != "" {
-                DispatchQueue.main.async {
-                    self?.logger.debug("InderpalTest -> setDismissComposite containerUIHostingController launch")
-                    self?.launchUIForIncomingCallAcceptedFromCallKit()
-                }
-            } else {
+            containerUIHostingController?.dismissSelf {
+                self?.videoViewManager?.disposeViews()
+                self?.viewController = nil
+                self?.pipViewController = nil
+                self?.viewFactory = nil
+                self?.cleanUpManagers()
+                self?.disposeSDKWrappers()
+                UIApplication.shared.isIdleTimerDisabled = false
                 self?.callStateManager?.onCompositeExit()
+                self?.compositeUILaunched = false
+                self?.logger.debug( "InderpalTest -> setDismissComposite")
+                self?.notifyOnCallKitCallAccepted()
             }
         }
 

@@ -190,11 +190,14 @@ extension CallingSDKEventsHandler: CallDelegate,
                                           internalError: internalError,
                                           callEndReasonCode: Int(call.callEndReason.code),
                                           callEndReasonSubCode: Int(call.callEndReason.subcode))
-        logger.debug( "InderpalTest -> callInfoModel \(callInfoModel.status)")
+        logger.debug( "InderpalTest -> callInfoModel \(callInfoModel.status) \(call.id)")
 
         callInfoSubject.send(callInfoModel)
         if currentStatus == .connected || currentStatus == .connecting {
             addRemoteParticipants(call.remoteParticipants)
+        }
+        if currentStatus == .disconnected {
+            call.delegate = nil
         }
         self.previousCallingStatus = currentStatus
     }

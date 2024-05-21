@@ -419,6 +419,12 @@ extension CallingDemoView {
                                             audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
                                             </ROOMS_SUPPORT> */
             )
+
+            let callKitCallAccepted: (String) -> Void = { [weak callComposite] callId in
+                callComposite?.launch(callIdAcceptedFromCallKit: callId, localOptions: localOptions)
+            }
+            callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
+
             var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
             if remoteInfoDisplayName.isEmpty {
                 remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
