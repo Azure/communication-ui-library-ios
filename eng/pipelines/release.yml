@@ -198,7 +198,7 @@ extends:
             xcWorkspacePath: $(BuildParameters.xcWorkspacePath)
             scheme: $(BuildParameters.scheme)
             xcodeVersion: $(BuildParameters.xcodeVersion)
-            args: '-verbose'
+            xcargs: '-verbose'
             xcodeDeveloperDir: $(BuildParameters.xcodeDeveloperDir)
             packageApp: true
             archivePath: $(archivePath)
