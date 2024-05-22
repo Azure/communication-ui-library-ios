@@ -71,13 +71,6 @@
 			remoteGlobalIDString = A8C69FAF2728AE1A00143DB7;
 			remoteInfo = AzureCommunicationUIDemoApp;
 		};
-		A48D18112BFDB79000FD994E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A8C69FA82728AE1A00143DB7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A48D18092BFDB79000FD994E;
-			remoteInfo = AzureCommunicationUIDemoAppExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -434,7 +427,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A48D18122BFDB79000FD994E /* PBXTargetDependency */,
 			);
 			name = AzureCommunicationUIDemoApp;
 			productName = AzureCommunicationUIDemoApp;
@@ -706,11 +698,6 @@
 			isa = PBXTargetDependency;
 			target = A8C69FAF2728AE1A00143DB7 /* AzureCommunicationUIDemoApp */;
 			targetProxy = 1F8881C027909E08001427F0 /* PBXContainerItemProxy */;
-		};
-		A48D18122BFDB79000FD994E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A48D18092BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */;
-			targetProxy = A48D18112BFDB79000FD994E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
