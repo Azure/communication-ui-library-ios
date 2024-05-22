@@ -190,7 +190,7 @@ extension CallingSDKEventsHandler: CallDelegate,
                                           internalError: internalError,
                                           callEndReasonCode: Int(call.callEndReason.code),
                                           callEndReasonSubCode: Int(call.callEndReason.subcode))
-        logger.debug( "InderpalTest -> callInfoModel \(callInfoModel.status) \(call.id)")
+        logger.debug( "callInfoModel \(callInfoModel.status) \(call.id)")
 
         callInfoSubject.send(callInfoModel)
         if currentStatus == .connected || currentStatus == .connecting {

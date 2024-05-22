@@ -146,7 +146,7 @@ public class CallComposite {
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
     public func dismiss() {
-        logger.debug( "InderpalTest -> dismiss")
+        logger.debug( "dismiss")
         exitManager?.dismiss()
         compositeUILaunched = false
     }
@@ -215,7 +215,7 @@ public class CallComposite {
          guard let credential = credential else {
                  fatalError("CommunicationTokenCredential cannot be nil.")
          }
-         logger.debug( "InderpalTest -> launch \(incomingCallId)")
+         logger.debug( "launch \(incomingCallId)")
          callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                                roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                                participants: nil,
@@ -277,7 +277,7 @@ public class CallComposite {
     }
 
     deinit {
-        logger.debug("InderpalTest -> Call Composite deallocated")
+        logger.debug("Call Composite deallocated")
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
@@ -399,7 +399,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         guard let credential = credential else {
                 fatalError("CommunicationTokenCredential cannot be nil.")
         }
-        logger.debug( "InderpalTest -> launch \(callIdAcceptedFromCallKit)")
+        logger.debug( "launch \(callIdAcceptedFromCallKit)")
         callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                               participants: nil,
@@ -438,9 +438,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// Any state can be received first:  disconnected for existing call or connected for newly accepted call
     /// Notify once UI is closed by disconnected state before notifying for new call accept
     private func onCallAdded(callId: String) {
-        logger.debug("InderpalTest -> call composite onCallsAdded \(callId)")
         if let incomingCall = callingSDKInitializer?.getIncomingCall() {
-            logger.debug("InderpalTest -> call composite incoming call id \(incomingCall.id)")
+            logger.debug("OnCallAdded incoming call id \(incomingCall.id)")
             if incomingCall.id == callId {
                 incomingCallAcceptedByCallKitCallId = callId
                 notifyOnCallKitCallAccepted()
@@ -454,7 +453,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     private func notifyOnCallKitCallAccepted() {
         if !compositeUILaunched {
             if let callId = incomingCallAcceptedByCallKitCallId {
-                logger.debug( "InderpalTest -> inCallKitCallId \(callId)")
+                logger.debug( "notifyOnCallKitCallAccepted \(callId)")
                 if let onIncomingCallAcceptedByCallKit = events.onIncomingCallAcceptedFromCallKit {
                     onIncomingCallAcceptedByCallKit(callId)
                     incomingCallAcceptedByCallKitCallId = nil
@@ -721,6 +720,7 @@ extension CallComposite {
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             containerUIHostingController?.dismissSelf {
+                self?.logger.debug( "setDismissComposite")
                 self?.videoViewManager?.disposeViews()
                 self?.viewController = nil
                 self?.pipViewController = nil
@@ -730,7 +730,6 @@ extension CallComposite {
                 UIApplication.shared.isIdleTimerDisabled = false
                 self?.callStateManager?.onCompositeExit()
                 self?.compositeUILaunched = false
-                self?.logger.debug( "InderpalTest -> setDismissComposite")
                 self?.notifyOnCallKitCallAccepted()
             }
         }

@@ -161,7 +161,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 logger.error( "Start call failed")
                 throw CallCompositeInternalError.callJoinFailed
             }
-
         } catch {
             logger.error( "Start call failed")
             throw CallCompositeInternalError.callJoinFailed
@@ -169,12 +168,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func incomingCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
-        logger.debug( "InderpalTest -> incoming call")
+        logger.debug( "incoming call")
         do {
             let callAgent = try await callingSDKInitializer.setupCallAgent()
             call = callAgent.calls.first
             if call == nil && callingSDKInitializer.getIncomingCall()?.id == callConfiguration.callId {
                 // call is not accepted by callkit
+                logger.debug( "accept incoming call")
                 let options = AcceptCallOptions()
                 let incomingVideoOptions = IncomingVideoOptions()
                 incomingVideoOptions.streamType = .remoteIncoming
@@ -193,19 +193,20 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
                 call = try await callingSDKInitializer.getIncomingCall()?.accept(options: options)
             }
+
             if call == nil || call?.id != callConfiguration.callId {
                 throw CallCompositeInternalError.callJoinFailed
             }
-            logger.debug( "InderpalTest -> call id from call agent \(self.call?.id)")
-            logger.debug( "InderpalTest -> call id from callConfiguration.callId \(self.callConfiguration.callId)")
+
+            logger.debug( "call id from call \(self.call?.id)")
+            logger.debug( "call id from callConfiguration.callId \(self.callConfiguration.callId)")
 
             if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
                 call?.delegate = callingEventsHandler
             }
-            logger.debug( "InderpalTest -> setupFeatures")
             setupFeatures()
         } catch {
-            logger.error( "InderpalTest -> incoming call failed")
+            logger.error( "incoming call join failed")
             throw CallCompositeInternalError.callJoinFailed
         }
     }
