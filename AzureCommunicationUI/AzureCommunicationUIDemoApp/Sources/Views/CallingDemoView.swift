@@ -499,6 +499,7 @@ extension CallingDemoView {
         }
 
         let callKitCallAccepted: (String) -> Void = { [weak callComposite] callId in
+            isIncomingCall = false
             callComposite?.launch(callIdAcceptedFromCallKit: callId, localOptions: getLocalOptions())
         }
 
