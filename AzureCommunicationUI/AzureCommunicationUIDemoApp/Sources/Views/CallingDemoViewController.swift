@@ -44,6 +44,10 @@ class CallingDemoViewController: UIViewController {
     /* </ROOMS_SUPPORT> */
     private var settingsButton: UIButton!
     private var showCallHistoryButton: UIButton!
+    private var registerPushButton: UIButton!
+    private var unregisterPushButton: UIButton!
+    private var acceptCallButton: UIButton!
+    private var declineCallButton: UIButton!
     private var startExperienceButton: UIButton!
     private var showExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
@@ -627,6 +631,22 @@ class CallingDemoViewController: UIViewController {
         self.callComposite?.isHidden = false
     }
 
+    @objc func onRegisterPushBtnPressed() {
+        self.callComposite?.isHidden = false
+    }
+
+    @objc func onUnregisterPushBtnPressed() {
+        self.callComposite?.isHidden = false
+    }
+
+    @objc func onAcceptCallBtnPressed() {
+        self.callComposite?.isHidden = false
+    }
+
+    @objc func onDeclineCallBtnPressed() {
+        self.callComposite?.isHidden = false
+    }
+
     private func updateAcsTokenTypeFields() {
         switch selectedAcsTokenType {
         case .tokenUrl:
@@ -863,7 +883,6 @@ class CallingDemoViewController: UIViewController {
         startExperienceButton.sizeToFit()
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
-
         startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
 
         showExperienceButton = UIButton()
@@ -879,8 +898,67 @@ class CallingDemoViewController: UIViewController {
         showExperienceButton.sizeToFit()
         showExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         showExperienceButton.addTarget(self, action: #selector(onShowExperienceBtnPressed), for: .touchUpInside)
-
         showExperienceButton.accessibilityLabel = AccessibilityId.showExperienceAccessibilityID.rawValue
+
+        registerPushButton = UIButton()
+        registerPushButton.backgroundColor = .systemBlue
+        registerPushButton.setTitleColor(UIColor.white, for: .normal)
+        registerPushButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        registerPushButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                   left: LayoutConstants.buttonHorizontalInset,
+                                                                   bottom: LayoutConstants.buttonVerticalInset,
+                                                                   right: LayoutConstants.buttonHorizontalInset)
+        registerPushButton.layer.cornerRadius = 8
+        registerPushButton.setTitle("Register push", for: .normal)
+        registerPushButton.sizeToFit()
+        registerPushButton.translatesAutoresizingMaskIntoConstraints = false
+        registerPushButton.addTarget(self, action: #selector(onRegisterPushBtnPressed), for: .touchUpInside)
+        registerPushButton.accessibilityLabel = AccessibilityId.registerPushAccessibilityID.rawValue
+
+        unregisterPushButton = UIButton()
+        unregisterPushButton.backgroundColor = .systemBlue
+        unregisterPushButton.setTitleColor(UIColor.white, for: .normal)
+        unregisterPushButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        unregisterPushButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                   left: LayoutConstants.buttonHorizontalInset,
+                                                                   bottom: LayoutConstants.buttonVerticalInset,
+                                                                   right: LayoutConstants.buttonHorizontalInset)
+        unregisterPushButton.layer.cornerRadius = 8
+        unregisterPushButton.setTitle("Unregister push", for: .normal)
+        unregisterPushButton.sizeToFit()
+        unregisterPushButton.translatesAutoresizingMaskIntoConstraints = false
+        unregisterPushButton.addTarget(self, action: #selector(onUnregisterPushBtnPressed), for: .touchUpInside)
+        unregisterPushButton.accessibilityLabel = AccessibilityId.unregisterPushAccessibilityID.rawValue
+
+        acceptCallButton = UIButton()
+        acceptCallButton.backgroundColor = .systemBlue
+        acceptCallButton.setTitleColor(UIColor.white, for: .normal)
+        acceptCallButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        acceptCallButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                               left: LayoutConstants.buttonHorizontalInset,
+                                                               bottom: LayoutConstants.buttonVerticalInset,
+                                                               right: LayoutConstants.buttonHorizontalInset)
+        acceptCallButton.layer.cornerRadius = 8
+        acceptCallButton.setTitle("Accept", for: .normal)
+        acceptCallButton.sizeToFit()
+        acceptCallButton.translatesAutoresizingMaskIntoConstraints = false
+        acceptCallButton.addTarget(self, action: #selector(onAcceptCallBtnPressed), for: .touchUpInside)
+        acceptCallButton.accessibilityLabel = AccessibilityId.acceptCallAccessibilityID.rawValue
+
+        declineCallButton = UIButton()
+        declineCallButton.backgroundColor = .systemBlue
+        declineCallButton.setTitleColor(UIColor.white, for: .normal)
+        declineCallButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        declineCallButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                               left: LayoutConstants.buttonHorizontalInset,
+                                                               bottom: LayoutConstants.buttonVerticalInset,
+                                                               right: LayoutConstants.buttonHorizontalInset)
+        declineCallButton.layer.cornerRadius = 8
+        declineCallButton.setTitle("Reject", for: .normal)
+        declineCallButton.sizeToFit()
+        declineCallButton.translatesAutoresizingMaskIntoConstraints = false
+        declineCallButton.addTarget(self, action: #selector(onDeclineCallBtnPressed), for: .touchUpInside)
+        declineCallButton.accessibilityLabel = AccessibilityId.declineCallAccessibilityID.rawValue
 
         callStateLabel = UILabel()
         callStateLabel.text = "State"
@@ -925,6 +1003,22 @@ class CallingDemoViewController: UIViewController {
         showHistoryButtonHStack.distribution = .fill
         showHistoryButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        let startCallButtonHSpacer1 = UIView()
+        startCallButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        startCallButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let startCallButtonHSpacer2 = UIView()
+        startCallButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        startCallButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let startCallButtonHStack = UIStackView(arrangedSubviews: [startCallButtonHSpacer1,
+                                                                  startExperienceButton,
+                                                                  startCallButtonHSpacer2])
+        startCallButtonHStack.axis = .horizontal
+        startCallButtonHStack.alignment = .fill
+        startCallButtonHStack.distribution = .fill
+        startCallButtonHStack.translatesAutoresizingMaskIntoConstraints = false
+
         let startButtonHSpacer1 = UIView()
         startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
         startButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -961,6 +1055,18 @@ class CallingDemoViewController: UIViewController {
         spaceView1.translatesAutoresizingMaskIntoConstraints = false
         spaceView1.heightAnchor.constraint(equalToConstant: 0).isActive = true
 
+        let registerUnregisterHStack = UIStackView(arrangedSubviews:
+                                                    [registerPushButton, unregisterPushButton])
+        registerUnregisterHStack.axis = .horizontal
+        registerUnregisterHStack.distribution = .fillEqually // Adjust distribution as needed
+        registerUnregisterHStack.spacing = 8
+
+        let acceptDeclineHStack = UIStackView(arrangedSubviews:
+                                                    [acceptCallButton, declineCallButton])
+        acceptDeclineHStack.axis = .horizontal
+        acceptDeclineHStack.distribution = .fillEqually // Adjust distribution as needed
+        acceptDeclineHStack.spacing = 8
+
         stackView = UIStackView(arrangedSubviews: [spaceView1, acsTokenTypeSegmentedControl,
                                                    acsTokenUrlTextField,
                                                    acsTokenTextField,
@@ -974,7 +1080,9 @@ class CallingDemoViewController: UIViewController {
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,
                                                    startButtonHStack,
-                                                   showButtonHStack])
+                                                   showButtonHStack,
+                                                   registerUnregisterHStack,
+                                                   acceptDeclineHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
