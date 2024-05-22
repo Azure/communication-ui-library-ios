@@ -296,10 +296,13 @@ extension CallingDemoView {
 
     func registerPushNotification() {
         Task {
+            guard let token = $envConfigSubject.deviceToken.wrappedValue else {
+                showAlert(for: "deviceToken not found")
+                return
+            }
             await createCallComposite()?
                 .registerPushNotifications(
-                    deviceRegistrationToken:
-                        $envConfigSubject.deviceToken.wrappedValue!) { result in
+                    deviceRegistrationToken: token) { result in
                             switch result {
                             case .success:
                                 showAlert(for: "Register Voip Success")
