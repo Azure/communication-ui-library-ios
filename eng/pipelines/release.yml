@@ -115,7 +115,8 @@ extends:
 
               /usr/libexec/PlistBuddy -c "set :objects:A8C69FC62728AE1C00143DB7:buildSettings:PRODUCT_BUNDLE_IDENTIFIER com.microsoft.azure.communication.ui.calling-df" $PROJECT_PBPROJ_FILE
 
-
+              /usr/libexec/PlistBuddy -c "set :objects:A48D18192BFDB7D300FD994E:buildSettings:PRODUCT_BUNDLE_IDENTIFIER com.microsoft.azure.communication.ui.calling-df" $PROJECT_PBPROJ_FILE
+              /usr/libexec/PlistBuddy -c "set :objects:A48D18192BFDB7D300FD994E:buildSettings:PRODUCT_BUNDLE_IDENTIFIER com.microsoft.azure.communication.ui.calling-df" $PROJECT_PBPROJ_FILE
 
               export PROJ_FILE_COMPOSITE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj/project.pbxproj
 
@@ -197,6 +198,7 @@ extends:
             xcWorkspacePath: $(BuildParameters.xcWorkspacePath)
             scheme: $(BuildParameters.scheme)
             xcodeVersion: $(BuildParameters.xcodeVersion)
+            args: '-verbose'
             xcodeDeveloperDir: $(BuildParameters.xcodeDeveloperDir)
             packageApp: true
             archivePath: $(archivePath)
