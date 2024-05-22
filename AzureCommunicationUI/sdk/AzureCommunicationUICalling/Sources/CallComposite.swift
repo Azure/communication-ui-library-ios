@@ -665,13 +665,11 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         if let callingSDKInitializer = callingSDKInitializer {
             return callingSDKInitializer
         }
-        guard let callConfiguration = self.callConfiguration else {
-            fatalError("CallConfiguration is not set.")
-        }
         guard let credential = credential else {
             fatalError("CommunicationTokenCredential cannot be nil.")
         }
-        let callingSDKInitializer = CallingSDKInitializer(tags: callConfiguration.diagnosticConfig.tags,
+        let callingSDKInitializer = CallingSDKInitializer(tags: self.callConfiguration?.diagnosticConfig.tags
+                                                          ?? DiagnosticConfig().tags,
                                                           credential: credential,
                                                           callKitOptions: callKitOptions,
                                                           displayName: displayName,
