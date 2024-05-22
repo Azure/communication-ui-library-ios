@@ -12,4 +12,13 @@ public struct CallKitRemoteInfo {
 
     /// CXHandle of the remote participant, for call history
     public let handle: CXHandle
+
+    /// Initialize a `CallKitRemoteInfo`
+    /// - Parameters:
+    ///   - displayName: Display name of the remote participant
+    ///   - handle: CXHandle of the remote participant, for call history
+    public init(displayName: String, handle: CXHandle) {
+        self.displayName = displayName
+        self.handle = handle
+    }
 }
