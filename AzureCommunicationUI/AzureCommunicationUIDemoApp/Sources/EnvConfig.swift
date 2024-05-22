@@ -87,6 +87,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var enableCallKit = true
     @Published var enableRemoteInfo = true
     @Published var callkitRemoteInfo = ""
+    @Published var deviceToken: Data?
 
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],

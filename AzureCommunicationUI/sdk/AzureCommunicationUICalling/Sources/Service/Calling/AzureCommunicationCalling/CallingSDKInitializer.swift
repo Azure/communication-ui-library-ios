@@ -177,6 +177,19 @@ internal class CallingSDKInitializer: NSObject {
         }
     }
 
+    func reject(incomingCallId: String) async throws {
+        if incomingCall == nil ||
+            incomingCall?.id != incomingCallId {
+            throw IncomingCallError.callIdNotFound
+        }
+        do {
+            try await incomingCall?.reject()
+        } catch {
+            logger.error("Failed to handlePush")
+            throw error
+        }
+    }
+
     func dispose() {
         self.callAgent?.delegate = nil
         self.callAgent?.dispose()

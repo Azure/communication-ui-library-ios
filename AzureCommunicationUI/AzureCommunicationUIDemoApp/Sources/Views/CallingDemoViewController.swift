@@ -647,6 +647,9 @@ class CallingDemoViewController: UIViewController {
         self.callComposite?.isHidden = false
     }
 
+    func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+    }
+
     private func updateAcsTokenTypeFields() {
         switch selectedAcsTokenType {
         case .tokenUrl:

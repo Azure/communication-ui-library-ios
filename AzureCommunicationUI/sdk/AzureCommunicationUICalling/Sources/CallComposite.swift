@@ -212,19 +212,62 @@ public class CallComposite {
      /// Accept incoming call
      public func accept(incomingCallId: String,
                         localOptions: LocalOptions? = nil) {
+         guard let credential = credential else {
+                 fatalError("CommunicationTokenCredential cannot be nil.")
+         }
+         logger.debug( "InderpalTest -> launch \(incomingCallId)")
+         callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
+                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+                                               participants: nil,
+                                               callId: incomingCallId)
+         guard let callConfiguration = self.callConfiguration else {
+             fatalError("CallConfiguration is not set.")
+         }
+         launch(callConfiguration, localOptions: localOptions)
      }
 
      /// Reject incoming call
      public func reject(incomingCallId: String,
                         completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         Task {
+             do {
+                 let callingSDKInitializer = self.getCallingSDKInitializer()
+                 try await callingSDKInitializer.reject(incomingCallId: incomingCallId)
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
+             }
+         }
      }
 
      /// Hold  call
      public func hold(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         guard let callingSDKWrapper = callingSDKWrapper else {
+             fatalError("Call is not in progress")
+         }
+         Task {
+             do {
+                 try await callingSDKWrapper.holdCall()
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
+             }
+         }
      }
 
      /// Resume  call
      public func resume(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         guard let callingSDKWrapper = callingSDKWrapper else {
+             fatalError("Call is not in progress")
+         }
+         Task {
+             do {
+                 try await callingSDKWrapper.resumeCall()
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
+             }
+         }
      }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,

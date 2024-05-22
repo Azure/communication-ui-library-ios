@@ -7,6 +7,7 @@ import SwiftUI
 import AzureCommunicationCommon
 import AVFoundation
 import CallKit
+import OSLog
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -294,19 +295,53 @@ extension CallingDemoView {
     }
 
     func registerPushNotification() {
-
+        Task {
+            await createCallComposite()?
+                .registerPushNotifications(
+                    deviceRegistrationToken:
+                        $envConfigSubject.deviceToken.wrappedValue!) { result in
+                            switch result {
+                            case .success:
+                                showAlert(for: "Register Voip Success")
+                            case .failure(let error):
+                                showAlert(for: "Register Voip fail: \(error.localizedDescription)")
+                            }
+                }
+        }
     }
 
     func unregisterPushNotification() {
-
+        Task {
+            await createCallComposite()?
+                .unregisterPushNotifications { result in
+                            switch result {
+                            case .success:
+                                showAlert(for: "Unregister Voip Success")
+                            case .failure(let error):
+                                showAlert(for: "Unregister Voip fail: \(error.localizedDescription)")
+                            }
+                }
+        }
     }
 
     func accept() {
-
+        Task {
+            await createCallComposite()?.accept(incomingCallId: incomingCallId,
+                                                localOptions: getLocalOptions())
+        }
     }
 
     func decline() {
-
+        Task {
+            await createCallComposite()?.reject(incomingCallId: incomingCallId) { result in
+                switch result {
+                case .success:
+                    showAlert(for: "Reject Success")
+                case .failure(let error):
+                    showAlert(for: "Reject fail: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 
     fileprivate func relaunchComposite() {
@@ -397,6 +432,14 @@ extension CallingDemoView {
             return callComposite
         }
         return nil
+    }
+
+    func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+        let pushNotificationInfo = PushNotification(data: dictionaryPayload)
+        os_log("calling demo app: onPushNotificationReceived CallingDemoView")
+        Task {
+            await createCallComposite()?.handlePushNotification(pushNotification: pushNotificationInfo)
+        }
     }
 
     func subscribeToEvents(callComposite: CallComposite) {
@@ -722,6 +765,12 @@ extension CallingDemoView {
             alertMessage = "Unknown error"
         }
         alertTitle = "Error"
+        isAlertDisplayed = true
+    }
+
+    private func showAlert(for message: String) {
+        alertMessage = message
+        alertTitle = "Alert"
         isAlertDisplayed = true
     }
 

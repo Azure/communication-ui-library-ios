@@ -173,13 +173,34 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         do {
             let callAgent = try await callingSDKInitializer.setupCallAgent()
             call = callAgent.calls.first
-            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
-                call?.delegate = callingEventsHandler
+            if call == nil && callingSDKInitializer.getIncomingCall()?.id == callConfiguration.callId {
+                // call is not accepted by callkit
+                let options = AcceptCallOptions()
+                let incomingVideoOptions = IncomingVideoOptions()
+                incomingVideoOptions.streamType = .remoteIncoming
+
+                if isCameraPreferred,
+                   let localVideoStream = localVideoStream {
+                    let localVideoStreamArray = [localVideoStream]
+
+                    let videoOptions = OutgoingVideoOptions()
+                    videoOptions.streams = localVideoStreamArray
+                    options.outgoingVideoOptions = videoOptions
+                }
+                options.outgoingAudioOptions = OutgoingAudioOptions()
+                options.outgoingAudioOptions?.muted = !isAudioPreferred
+                options.incomingVideoOptions = incomingVideoOptions
+
+                call = try await callingSDKInitializer.getIncomingCall()?.accept(options: options)
+            }
+            if call == nil || call?.id != callConfiguration.callId {
+                throw CallCompositeInternalError.callJoinFailed
             }
             logger.debug( "InderpalTest -> call id from call agent \(self.call?.id)")
             logger.debug( "InderpalTest -> call id from callConfiguration.callId \(self.callConfiguration.callId)")
-            if call?.id != callConfiguration.callId {
-                throw CallCompositeInternalError.callJoinFailed
+
+            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                call?.delegate = callingEventsHandler
             }
             logger.debug( "InderpalTest -> setupFeatures")
             setupFeatures()
@@ -324,6 +345,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Hold Call successful")
         } catch {
             logger.error("ERROR: It was not possible to hold call. \(error)")
+            throw error
         }
     }
 
