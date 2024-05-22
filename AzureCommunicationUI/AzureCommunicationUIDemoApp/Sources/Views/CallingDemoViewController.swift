@@ -283,6 +283,7 @@ class CallingDemoViewController: UIViewController {
             #endif
             subscribeToEvents(callComposite: callComposite)
             GlobalCompositeManager.callComposite = callComposite
+            self.envConfigSubject.saveFromState()
             return callComposite
         }
         return nil
@@ -761,6 +762,9 @@ class CallingDemoViewController: UIViewController {
 
     func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
         let pushNotificationInfo = PushNotification(data: dictionaryPayload)
+        if envConfigSubject.acsToken.isEmpty {
+            self.envConfigSubject.load()
+        }
         Task {
             await createCallComposite()?.handlePushNotification(pushNotification: pushNotificationInfo)
         }

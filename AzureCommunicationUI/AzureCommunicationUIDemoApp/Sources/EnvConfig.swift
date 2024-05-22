@@ -89,16 +89,59 @@ class EnvConfigSubject: ObservableObject {
     @Published var callkitRemoteInfo = ""
     @Published var deviceToken: Data?
 
+    let acstokenKey: String = "ACS_TOKEN"
+    let displayNameKey: String = "DISPLAY_NAME"
+    // swiftlint:disable explicit_type_interface
+    let userDefault = UserDefaults.standard
+    // swiftlint:enable explicit_type_interface
+
+    private func readStringData(key: String) -> String {
+        if userDefault.object(forKey: key) == nil {
+            return ""
+        } else {
+            return userDefault.string(forKey: key)!
+        }
+    }
+
+    private func writeAnyData(key: String, value: Any) {
+        userDefault.set(value, forKey: key)
+        userDefault.synchronize()
+    }
+
+    func saveFromState() {
+        if !acsToken.isEmpty {
+            // We need to make a service call to get token for user in case application is not running
+            // Storing token in shared preferences for demo purpose as this app is not public
+            // In production, token should be fetched from server (storing token in pref can be a security issue)
+            writeAnyData(key: acstokenKey, value: acsToken)
+        }
+        if !displayName.isEmpty {
+            writeAnyData(key: displayNameKey, value: displayName)
+        }
+    }
+
+    func load() {
+        if !readStringData(key: acstokenKey).isEmpty && acsToken.isEmpty {
+            acsToken = readStringData(key: acstokenKey)
+            selectedAcsTokenType = .token
+        }
+        if !readStringData(key: displayNameKey).isEmpty && displayName.isEmpty {
+            displayName = readStringData(key: displayNameKey)
+        }
+    }
+
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],
            !token.isEmpty {
             acsToken = token
             selectedAcsTokenType = .token
+            writeAnyData(key: acstokenKey, value: token)
         }
 
         if let name = dic["name"],
            !name.isEmpty {
             displayName = name
+            writeAnyData(key: displayNameKey, value: name)
         }
 
         if let groupId = dic["groupid"],

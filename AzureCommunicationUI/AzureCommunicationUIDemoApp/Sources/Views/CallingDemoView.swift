@@ -429,6 +429,7 @@ extension CallingDemoView {
             #endif
             subscribeToEvents(callComposite: callComposite)
             GlobalCompositeManager.callComposite = callComposite
+            self.envConfigSubject.saveFromState()
             return callComposite
         }
         return nil
@@ -437,6 +438,10 @@ extension CallingDemoView {
     func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
         let pushNotificationInfo = PushNotification(data: dictionaryPayload)
         os_log("calling demo app: onPushNotificationReceived CallingDemoView")
+        if envConfigSubject.acsToken.isEmpty {
+            os_log("calling demo app: envConfigSubject acs token is empty")
+            self.envConfigSubject.load()
+        }
         Task {
             await createCallComposite()?.handlePushNotification(pushNotification: pushNotificationInfo)
         }
