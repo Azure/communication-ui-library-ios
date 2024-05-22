@@ -156,9 +156,7 @@ class CallingViewModel: ObservableObject {
                                    callingState: state.callingState,
                                    visibilityState: state.visibilityState)
         localVideoViewModel.update(localUserState: state.localUserState,
-                                   visibilityState: state.visibilityState,
-                                   shouldDisplay: state.callingState.status == .connected ||
-                                   !state.remoteParticipantsState.participantInfoList.isEmpty)
+                                   visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
                                            remoteParticipantsState: state.remoteParticipantsState,
                                            callingState: state.callingState,

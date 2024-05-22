@@ -335,6 +335,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                                                   roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                                   participants: nil,
                                                   callId: nil)
+        self.credential = remoteOptions.credential
+        self.displayName = remoteOptions.displayName
         guard let callConfiguration = self.callConfiguration else {
             fatalError("CallConfiguration is not set.")
         }

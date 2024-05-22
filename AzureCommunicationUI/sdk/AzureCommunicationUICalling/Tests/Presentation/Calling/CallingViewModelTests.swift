@@ -274,7 +274,8 @@ class CallingViewModelTests: XCTestCase {
                                                                               compositeViewModelFactory: factoryMocking,
                                                                               logger: logger,
                                                                               accessibilityProvider: accessibilityProvider,
-                                                                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
+                                                                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger,
+                                                                                                                       isCallKitEnabled: false),
                                                                               resumeAction: {},
                                                                               updateState: updateOnHoldOverlayViewModel)
 
@@ -309,6 +310,7 @@ extension CallingViewModelTests {
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
-                                leaveCallConfirmationMode: .alwaysEnabled)
+                                leaveCallConfirmationMode: .alwaysEnabled,
+                                callType: .groupCall)
     }
 }

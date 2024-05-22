@@ -16,7 +16,8 @@ class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
                    accessibilityProvider: AccessibilityProviderMocking(),
                    participantModel: participantModel,
                    lifeCycleState: LifeCycleState(currentStatus: .foreground),
-                   isCameraEnabled: true)
+                   isCameraEnabled: true,
+                   callType: .groupCall)
     }
 
     override func update(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) {

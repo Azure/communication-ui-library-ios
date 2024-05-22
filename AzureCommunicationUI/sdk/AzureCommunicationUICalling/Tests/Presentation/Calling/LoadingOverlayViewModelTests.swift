@@ -34,8 +34,9 @@ extension LoadingOverlayViewModelTests {
         return LoadingOverlayViewModel(localizationProvider: localizationProvider ?? LocalizationProvider(logger: LoggerMocking()),
                                      accessibilityProvider: AccessibilityProviderMocking(),
                                        networkManager: NetworkManager(),
-                                       audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: LoggerMocking()),
-                                       store: storeFactory.store
+                                       audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: LoggerMocking(), isCallKitEnabled: false),
+                                       store: storeFactory.store,
+                                       callType: .groupCall
         )
     }
 

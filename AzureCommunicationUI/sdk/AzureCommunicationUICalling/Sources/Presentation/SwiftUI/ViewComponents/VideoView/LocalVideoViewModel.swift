@@ -54,8 +54,7 @@ class LocalVideoViewModel: ObservableObject {
     }
 
     func update(localUserState: LocalUserState,
-                visibilityState: VisibilityState,
-                shouldDisplay: Bool = true) {
+                visibilityState: VisibilityState) {
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
         }
@@ -84,6 +83,5 @@ class LocalVideoViewModel: ObservableObject {
         }
 
         isInPip = visibilityState.currentStatus == .pipModeEntered
-        isDisplayed = shouldDisplay
     }
 }

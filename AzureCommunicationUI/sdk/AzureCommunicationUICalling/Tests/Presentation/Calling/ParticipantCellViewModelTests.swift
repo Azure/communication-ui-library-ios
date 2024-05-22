@@ -282,12 +282,14 @@ extension ParticipantCellViewModelTests {
                                                         screenShareStreamId: screenShareStreamId,
                                                         displayName: displayName,
                                                         isSpeaking: isSpeaking,
-                                                        isMuted: isMuted)
+                                                        isMuted: isMuted,
+                                                        status: .connected)
         return ParticipantGridCellViewModel(localizationProvider: LocalizationProviderMocking(),
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel,
                                             lifeCycleState: LifeCycleState(),
-                                            isCameraEnabled: true)
+                                            isCameraEnabled: true,
+                                            callType: .groupCall)
     }
 
 }
