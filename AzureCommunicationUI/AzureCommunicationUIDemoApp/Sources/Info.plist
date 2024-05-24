@@ -10,7 +10,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp</string>
+			<string>com.azure.ios.communication.ui.AzureCommunicationUIDemoApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>acsui</string>
@@ -37,7 +37,9 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>fetch</string>
 		<string>processing</string>
+		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
 	<key>aadToken</key>
@@ -56,13 +58,13 @@
 	<string>${expiredAcsToken}</string>
 	<key>groupCallId</key>
 	<string>${groupCallId}</string>
+	<key>participantMRIs</key>
+	<string>$(participantMRIs)</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
 	<key>threadId</key>
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>${userId}</string>
-    <key>participantMRIs</key>
-    <string>$(participantMRIs)</string>
 </dict>
 </plist>
