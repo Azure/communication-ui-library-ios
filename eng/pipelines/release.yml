@@ -52,10 +52,10 @@ extends:
           clean: true
           fetchTags: false
         - task: skvso.servicetree-build-tasks.servicetree-link-build-task.servicetree-link-build-task@1
-          displayName: 'ServiceTree: [$(BuildOutputUsage)] '
+          displayName: "ServiceTree: [$(BuildOutputUsage)] "
           condition: always()
           inputs:
-            ServiceTreeGateway: c29e963a-8ea3-4e6a-b28f-a035eaff83ab
+            ServiceTreeGateway: ServiceTree Gateway
             Service: 5b23174b-8c6d-467d-862d-a3f24958fb74
         - task: CmdLine@2
           displayName: Command Line Script
@@ -65,6 +65,12 @@ extends:
               git config --global user.name $nativeCallingSDKPrivateRepoUsername
 
               git config --global user. password $nativeCallingSDKPrivateRepoToken
+        - task: AzureKeyVault@2
+          inputs:
+            azureSubscription: '$(ACSSUBSCRIPTION)'                 
+            KeyVaultName: '$(ACSKEYVAULT)'                      
+            SecretsFilter: '$(SecretsFilterValue)'                       
+            RunAsPreJob: true
         - task: CmdLine@2
           displayName: Edit Info.plist CFBundleShortVersionString
           inputs:
@@ -148,7 +154,7 @@ extends:
         - task: InstallAppleCertificate@2
           displayName: Install an Apple certificate
           inputs:
-            certSecureFile: 0886d993-75dc-43c4-a847-f98b3291b908
+            certSecureFile: $(appleCertSecureFile)
             certPwd: $(P12password)
             deleteCert: false
             deleteCustomKeychain: false
@@ -156,7 +162,7 @@ extends:
         - task: InstallAppleProvisioningProfile@1
           displayName: Install an Apple provisioning profile
           inputs:
-            provProfileSecureFile: 870f3211-2074-4688-a4e0-d5fd2eebc685
+            provProfileSecureFile: $(provProfileSecureFile)
         - task: CmdLine@2
           displayName: Pod cleanup
           inputs:
@@ -199,7 +205,7 @@ extends:
             signingIdentity: $(APPLE_CERTIFICATE_SIGNING_IDENTITY)
             provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
             provisioningProfileName: Azure communication UI calling Dogfood Dev
-            destinationSimulators: iPhone 12 Pro
+            destinationSimulators: iPhone 14 Pro
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             cwd: AzureCommunicationUI
         - task: DownloadSecureFile@1
