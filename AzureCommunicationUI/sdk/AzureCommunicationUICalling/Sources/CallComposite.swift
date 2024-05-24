@@ -187,8 +187,10 @@ public class CallComposite {
 
      /// Accept incoming call
      public func accept(incomingCallId: String,
+                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                         localOptions: LocalOptions? = nil) {
          logger.debug( "launch \(incomingCallId)")
+         self.callKitRemoteInfo = callKitRemoteInfo
          callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                                roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                                participants: nil,

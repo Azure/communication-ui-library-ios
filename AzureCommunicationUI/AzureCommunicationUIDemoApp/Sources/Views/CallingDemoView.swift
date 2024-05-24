@@ -329,7 +329,16 @@ extension CallingDemoView {
 
     func accept() {
         Task {
+            var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+            if remoteInfoDisplayName.isEmpty {
+                remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
+            }
+            let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
+            let callKitRemoteInfo = $envConfigSubject.enableRemoteInfo.wrappedValue ?
+            CallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                     handle: cxHandle) : nil
             await createCallComposite()?.accept(incomingCallId: incomingCallId,
+                                                callKitRemoteInfo: callKitRemoteInfo,
                                                 localOptions: getLocalOptions())
         }
     }

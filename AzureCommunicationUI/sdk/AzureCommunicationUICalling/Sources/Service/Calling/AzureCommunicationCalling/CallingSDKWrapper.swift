@@ -190,12 +190,22 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 options.outgoingAudioOptions = OutgoingAudioOptions()
                 options.outgoingAudioOptions?.muted = !isAudioPreferred
                 options.incomingVideoOptions = incomingVideoOptions
-
-                call = try await callingSDKInitializer.getIncomingCall()?.accept(options: options)
-            }
-
-            if call == nil || call?.id != callConfiguration.callId {
-                throw CallCompositeInternalError.callJoinFailed
+                if let remoteInfo = callKitRemoteInfo {
+                    let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
+                        callKitRemoteInfo.displayName = remoteInfo.displayName
+                        callKitRemoteInfo.handle = remoteInfo.handle
+                    options.callKitRemoteInfo = callKitRemoteInfo
+                }
+                if let incomngCall = callingSDKInitializer.getIncomingCall() {
+                    call = try await incomngCall.accept(options: options)
+                    logger.debug( "accepted incoming call")
+                } else {
+                    throw CallCompositeInternalError.callJoinFailed
+                }
+            } else {
+                if call == nil || call?.id != callConfiguration.callId {
+                    throw CallCompositeInternalError.callJoinFailed
+                }
             }
             callingSDKInitializer.onIncomingCallAccpeted()
             logger.debug( "call id from call \(self.call?.id)")
