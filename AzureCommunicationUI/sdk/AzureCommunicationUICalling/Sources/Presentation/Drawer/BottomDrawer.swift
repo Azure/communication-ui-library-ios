@@ -60,12 +60,11 @@ struct BottomDrawer<Content: View>: View {
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(16)
                     .shadow(radius: 10)
-                    .padding(.bottom, keyboardWatcher.keyboardHeight - bottomOffset)
+                    .padding(.bottom, keyboardWatcher.activeHeight - bottomOffset)
                 }
                 .transition(.move(edge: .bottom))
                 .animation(.easeInOut, value: drawerState == .visible)
                 .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : 0)
-                .ignoresSafeArea()
             }
         }
         .onChange(of: isPresented) { newValue in

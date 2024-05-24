@@ -75,11 +75,15 @@ internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     }
 
     private func updateOrientationStatus() {
-        let currentOrientation = UIDevice.current.orientation
-        isLandscape = currentOrientation == .landscapeLeft || currentOrientation == .landscapeRight
+        if let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation {
+            isLandscape = orientation.isLandscape
+        } else {
+            isLandscape = false
+        }
     }
 
     private func updateActiveHeight() {
         activeHeight = isLandscape ? keyboardHeight : 0
+        print("Active height {activeHeight}")
     }
 }
