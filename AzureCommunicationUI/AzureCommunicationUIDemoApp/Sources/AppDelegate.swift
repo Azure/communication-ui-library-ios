@@ -66,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
                       for type: PKPushType,
                       completion: @escaping () -> Void) {
         print("pushRegistry payload: \(payload.dictionaryPayload)")
+        os_log("pushRegistry payload: \(payload.dictionaryPayload)")
         if isAppInForeground() {
             os_log("calling demo app: app is in foreground")
             if let entryViewController = findEntryViewController() {
@@ -75,7 +76,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         } else {
             os_log("calling demo app: app is not in foreground")
             let pushInfo = PushNotification(data: payload.dictionaryPayload)
-            let callKitOptions = CallKitOptions()
+            let providerConfig = CXProviderConfiguration()
+            providerConfig.supportsVideo = true
+            providerConfig.maximumCallGroups = 1
+            providerConfig.maximumCallsPerCallGroup = 1
+            providerConfig.includesCallsInRecents = true
+            providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+            let callKitOptions = CallKitOptions(providerConfig: providerConfig,
+                                                isCallHoldSupported: true,
+                                                provideRemoteInfo: incomingCallRemoteInfo)
             CallComposite.reportIncomingCall(pushNotification: pushInfo,
                                              callKitOptions: callKitOptions) { result in
                 if case .success = result {
@@ -95,6 +104,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         self.voipRegistration()
+    }
+
+    public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteInfo {
+        let cxHandle = CXHandle(type: .generic, value: "Incoming call")
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = info.displayName
+        }
+        let callKitRemoteInfo = CallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                                               handle: cxHandle)
+        return callKitRemoteInfo
     }
 
     private func isAppInForeground() -> Bool {

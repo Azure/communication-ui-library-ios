@@ -118,6 +118,7 @@ public class CallComposite {
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
             self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
         }
+        credential = nil
     }
 
     /// Create an instance of CallComposite with options.
@@ -157,15 +158,8 @@ public class CallComposite {
     /// Handle push notification to receive incoming call notification.
      public func handlePushNotification(pushNotification: PushNotification,
                                         completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         Task {
-             do {
-                 let callingSDKInitializer = self.getCallingSDKInitializer()
-                 try await callingSDKInitializer.handlePushNotification(pushNotification: pushNotification)
-                 completionHandler?(.success(()))
-             } catch {
-                 completionHandler?(.failure(error))
-             }
-         }
+         getCallingSDKInitializer().handlePushNotification(pushNotification: pushNotification,
+                                                           completionHandler: completionHandler)
      }
 
      /// Report incoming call to notify CallKit when in background mode.
@@ -173,51 +167,27 @@ public class CallComposite {
      public static func reportIncomingCall(pushNotification: PushNotification,
                                            callKitOptions: CallKitOptions,
                                            completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         Task {
-             do {
-                 try await CallingSDKInitializer.reportIncomingCall(pushNotification: pushNotification,
-                                                                    callKitOptions: callKitOptions)
-                 completionHandler?(.success(()))
-             } catch {
-                 completionHandler?(.failure(error))
-             }
-         }
+         CallingSDKInitializer.reportIncomingCall(pushNotification: pushNotification,
+                                                            callKitOptions: callKitOptions,
+                                                            completionHandler: completionHandler)
      }
 
      /// Register device token to receive Azure Notification Hubs push notifications.
      public func registerPushNotifications(deviceRegistrationToken: Data,
                                            completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         Task {
-             do {
-                 let callingSDKInitializer = self.getCallingSDKInitializer()
-                 try await callingSDKInitializer.registerPushNotification(deviceRegistrationToken:
-                                                                            deviceRegistrationToken)
-                 completionHandler?(.success(()))
-             } catch {
-                 completionHandler?(.failure(error))
-             }
-         }
+         getCallingSDKInitializer().registerPushNotification(deviceRegistrationToken:
+                                                                    deviceRegistrationToken,
+                                                                  completionHandler: completionHandler)
      }
 
      /// Unregister Azure Notification Hubs push notifications
      public func unregisterPushNotifications(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         Task {
-             do {
-                 let callingSDKInitializer = self.getCallingSDKInitializer()
-                 try await callingSDKInitializer.unregisterPushNotifications()
-                 completionHandler?(.success(()))
-             } catch {
-                 completionHandler?(.failure(error))
-             }
-         }
+         getCallingSDKInitializer().unregisterPushNotifications(completionHandler: completionHandler)
      }
 
      /// Accept incoming call
      public func accept(incomingCallId: String,
                         localOptions: LocalOptions? = nil) {
-         guard let credential = credential else {
-                 fatalError("CommunicationTokenCredential cannot be nil.")
-         }
          logger.debug( "launch \(incomingCallId)")
          callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                                roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
@@ -232,44 +202,38 @@ public class CallComposite {
      /// Reject incoming call
      public func reject(incomingCallId: String,
                         completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         Task {
-             do {
-                 let callingSDKInitializer = self.getCallingSDKInitializer()
-                 try await callingSDKInitializer.reject(incomingCallId: incomingCallId)
-                 completionHandler?(.success(()))
-             } catch {
-                 completionHandler?(.failure(error))
-             }
-         }
+        getCallingSDKInitializer().reject(incomingCallId: incomingCallId, completionHandler: completionHandler)
      }
 
      /// Hold  call
      public func hold(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         guard let callingSDKWrapper = callingSDKWrapper else {
-             fatalError("Call is not in progress")
-         }
-         Task {
-             do {
-                 try await callingSDKWrapper.holdCall()
-                 completionHandler?(.success(()))
-             } catch {
-                 completionHandler?(.failure(error))
+         if let callingSDKWrapper = callingSDKWrapper {
+             Task {
+                 do {
+                     try await callingSDKWrapper.holdCall()
+                     completionHandler?(.success(()))
+                 } catch {
+                     completionHandler?(.failure(error))
+                 }
              }
+         } else {
+             completionHandler?(.success(()))
          }
      }
 
      /// Resume  call
      public func resume(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         guard let callingSDKWrapper = callingSDKWrapper else {
-             fatalError("Call is not in progress")
-         }
-         Task {
-             do {
-                 try await callingSDKWrapper.resumeCall()
-                 completionHandler?(.success(()))
-             } catch {
-                 completionHandler?(.failure(error))
+         if let callingSDKWrapper = callingSDKWrapper {
+             Task {
+                 do {
+                     try await callingSDKWrapper.holdCall()
+                     completionHandler?(.success(()))
+                 } catch {
+                     completionHandler?(.failure(error))
+                 }
              }
+         } else {
+             completionHandler?(.success(()))
          }
      }
 

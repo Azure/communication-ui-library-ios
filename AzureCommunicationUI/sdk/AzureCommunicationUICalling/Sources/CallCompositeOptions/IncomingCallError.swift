@@ -5,7 +5,7 @@
 
 import Foundation
 
-/// An error that occurs during setting participants view data.
+/// An error that occurs on incoming call accept/decline.
 public enum IncomingCallError: String, Error {
     /// call id not found.
     case callIdNotFound
