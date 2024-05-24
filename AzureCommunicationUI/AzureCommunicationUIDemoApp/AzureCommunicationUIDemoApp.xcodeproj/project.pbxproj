@@ -37,10 +37,10 @@
 		A40EE69D2C0116B00089EA7B /* StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE69C2C0116B00089EA7B /* StartCallConvertible.swift */; };
 		A40EE69F2C0116CF0089EA7B /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE69E2C0116CF0089EA7B /* URL.swift */; };
 		A40EE6A12C0116E70089EA7B /* NSUserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE6A02C0116E70089EA7B /* NSUserActivity.swift */; };
-		A40EE6A32C011A240089EA7B /* AzureCommunicationUIDemoAppExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = A48D180A2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A40EE6F92C01524B0089EA7B /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D181A2BFDB85C00FD994E /* Intents.framework */; };
+		A40EE6FC2C01524B0089EA7B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE6FB2C01524B0089EA7B /* IntentHandler.swift */; };
+		A40EE7112C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A40EE6F82C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A48D18002BFD623B00FD994E /* GlobalCompositeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D17FF2BFD623B00FD994E /* GlobalCompositeManager.swift */; };
-		A48D18192BFDB7D300FD994E /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D18182BFDB7D300FD994E /* IntentHandler.swift */; };
-		A48D181B2BFDB85C00FD994E /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D181A2BFDB85C00FD994E /* Intents.framework */; };
 		A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCAF2728B12D001297B4 /* EnvConfig.swift */; };
 		A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB22728B140001297B4 /* ThemeOptions.swift */; };
 		A85DDCB82728B23B001297B4 /* CallingDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB42728B23A001297B4 /* CallingDemoViewController.swift */; };
@@ -74,11 +74,11 @@
 			remoteGlobalIDString = A8C69FAF2728AE1A00143DB7;
 			remoteInfo = AzureCommunicationUIDemoApp;
 		};
-		A40EE6A42C011A240089EA7B /* PBXContainerItemProxy */ = {
+		A40EE70F2C01524B0089EA7B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A8C69FA82728AE1A00143DB7 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A48D18092BFDB79000FD994E;
+			remoteGlobalIDString = A40EE6F72C01524B0089EA7B;
 			remoteInfo = AzureCommunicationUIDemoAppExtension;
 		};
 /* End PBXContainerItemProxy section */
@@ -90,9 +90,19 @@
 			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
 			dstSubfolderSpec = 16;
 			files = (
-				A40EE6A32C011A240089EA7B /* AzureCommunicationUIDemoAppExtension.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A40EE7182C01524B0089EA7B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A40EE7112C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FAA448A2282585F700BD0DC0 /* Embed Frameworks */ = {
@@ -155,8 +165,11 @@
 		A40EE69E2C0116CF0089EA7B /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		A40EE6A02C0116E70089EA7B /* NSUserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSUserActivity.swift; sourceTree = "<group>"; };
 		A40EE6A22C01181E0089EA7B /* AzureCommunicationUIDemoApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AzureCommunicationUIDemoApp.entitlements; sourceTree = "<group>"; };
+		A40EE6F82C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AzureCommunicationUIDemoAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A40EE6FB2C01524B0089EA7B /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		A40EE6FD2C01524B0089EA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A40EE7032C01524B0089EA7B /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		A48D17FF2BFD623B00FD994E /* GlobalCompositeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalCompositeManager.swift; sourceTree = "<group>"; };
-		A48D180A2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = AzureCommunicationUIDemoAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A48D18102BFDB79000FD994E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A48D18182BFDB7D300FD994E /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		A48D181A2BFDB85C00FD994E /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -198,11 +211,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A48D18072BFDB79000FD994E /* Frameworks */ = {
+		A40EE6F52C01524B0089EA7B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A48D181B2BFDB85C00FD994E /* Intents.framework in Frameworks */,
+				A40EE6F92C01524B0089EA7B /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +312,15 @@
 			path = ../Pods;
 			sourceTree = "<group>";
 		};
+		A40EE6FA2C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension */ = {
+			isa = PBXGroup;
+			children = (
+				A40EE6FB2C01524B0089EA7B /* IntentHandler.swift */,
+				A40EE6FD2C01524B0089EA7B /* Info.plist */,
+			);
+			path = AzureCommunicationUIDemoAppExtension;
+			sourceTree = "<group>";
+		};
 		A48D180B2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +339,7 @@
 				A8C69FB22728AE1A00143DB7 /* Sources */,
 				1F8881BB27909E08001427F0 /* Tests */,
 				A48D180B2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */,
+				A40EE6FA2C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension */,
 				A8C69FB12728AE1A00143DB7 /* Products */,
 				F74ACD1C99B1428891E02585 /* Frameworks */,
 				84D42CA48804501C17E76B52 /* Pods */,
@@ -328,7 +351,7 @@
 			children = (
 				A8C69FB02728AE1A00143DB7 /* AzureCommunicationUIDemoApp.app */,
 				1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */,
-				A48D180A2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension.appex */,
+				A40EE6F82C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -386,6 +409,7 @@
 				FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */,
 				747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */,
 				026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */,
+				A40EE7032C01524B0089EA7B /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -414,13 +438,13 @@
 			productReference = 1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		A48D18092BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */ = {
+		A40EE6F72C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A48D18172BFDB79000FD994E /* Build configuration list for PBXNativeTarget "AzureCommunicationUIDemoAppExtension" */;
+			buildConfigurationList = A40EE7152C01524B0089EA7B /* Build configuration list for PBXNativeTarget "AzureCommunicationUIDemoAppExtension" */;
 			buildPhases = (
-				A48D18062BFDB79000FD994E /* Sources */,
-				A48D18072BFDB79000FD994E /* Frameworks */,
-				A48D18082BFDB79000FD994E /* Resources */,
+				A40EE6F42C01524B0089EA7B /* Sources */,
+				A40EE6F52C01524B0089EA7B /* Frameworks */,
+				A40EE6F62C01524B0089EA7B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -428,8 +452,8 @@
 			);
 			name = AzureCommunicationUIDemoAppExtension;
 			productName = AzureCommunicationUIDemoAppExtension;
-			productReference = A48D180A2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension.appex */;
-			productType = "com.apple.product-type.extensionkit-extension";
+			productReference = A40EE6F82C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		A8C69FAF2728AE1A00143DB7 /* AzureCommunicationUIDemoApp */ = {
 			isa = PBXNativeTarget;
@@ -443,11 +467,12 @@
 				4CA6E42B5D6299A63290DA44 /* [CP] Embed Pods Frameworks */,
 				FAA448A2282585F700BD0DC0 /* Embed Frameworks */,
 				A40EE6A62C011A240089EA7B /* Embed ExtensionKit Extensions */,
+				A40EE7182C01524B0089EA7B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A40EE6A52C011A240089EA7B /* PBXTargetDependency */,
+				A40EE7102C01524B0089EA7B /* PBXTargetDependency */,
 			);
 			name = AzureCommunicationUIDemoApp;
 			productName = AzureCommunicationUIDemoApp;
@@ -468,7 +493,7 @@
 						CreatedOnToolsVersion = 13.1;
 						TestTargetID = A8C69FAF2728AE1A00143DB7;
 					};
-					A48D18092BFDB79000FD994E = {
+					A40EE6F72C01524B0089EA7B = {
 						CreatedOnToolsVersion = 15.4;
 					};
 					A8C69FAF2728AE1A00143DB7 = {
@@ -496,7 +521,7 @@
 			targets = (
 				A8C69FAF2728AE1A00143DB7 /* AzureCommunicationUIDemoApp */,
 				1F8881B927909E08001427F0 /* AzureCommunicationUIDemoAppUITests */,
-				A48D18092BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */,
+				A40EE6F72C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -509,7 +534,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A48D18082BFDB79000FD994E /* Resources */ = {
+		A40EE6F62C01524B0089EA7B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -670,11 +695,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A48D18062BFDB79000FD994E /* Sources */ = {
+		A40EE6F42C01524B0089EA7B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A48D18192BFDB7D300FD994E /* IntentHandler.swift in Sources */,
+				A40EE6FC2C01524B0089EA7B /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,10 +748,10 @@
 			target = A8C69FAF2728AE1A00143DB7 /* AzureCommunicationUIDemoApp */;
 			targetProxy = 1F8881C027909E08001427F0 /* PBXContainerItemProxy */;
 		};
-		A40EE6A52C011A240089EA7B /* PBXTargetDependency */ = {
+		A40EE7102C01524B0089EA7B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A48D18092BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */;
-			targetProxy = A40EE6A42C011A240089EA7B /* PBXContainerItemProxy */;
+			target = A40EE6F72C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension */;
+			targetProxy = A40EE70F2C01524B0089EA7B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -825,7 +850,7 @@
 			};
 			name = Release;
 		};
-		A48D18152BFDB79000FD994E /* Debug */ = {
+		A40EE7162C01524B0089EA7B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -863,7 +888,7 @@
 			};
 			name = Debug;
 		};
-		A48D18162BFDB79000FD994E /* Release */ = {
+		A40EE7172C01524B0089EA7B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1023,6 +1048,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = .dev;
@@ -1065,6 +1091,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EA3EA0A623669E62A5E601F /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "";
@@ -1114,11 +1141,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A48D18172BFDB79000FD994E /* Build configuration list for PBXNativeTarget "AzureCommunicationUIDemoAppExtension" */ = {
+		A40EE7152C01524B0089EA7B /* Build configuration list for PBXNativeTarget "AzureCommunicationUIDemoAppExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A48D18152BFDB79000FD994E /* Debug */,
-				A48D18162BFDB79000FD994E /* Release */,
+				A40EE7162C01524B0089EA7B /* Debug */,
+				A40EE7172C01524B0089EA7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
