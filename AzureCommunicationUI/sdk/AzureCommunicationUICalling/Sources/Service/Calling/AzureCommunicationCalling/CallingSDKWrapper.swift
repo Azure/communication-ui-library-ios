@@ -172,8 +172,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         do {
             let callAgent = try await callingSDKInitializer.setupCallAgent()
             call = callAgent.calls.first
+            // call is not accepted by callkit
             if call == nil && callingSDKInitializer.getIncomingCall()?.id == callConfiguration.callId {
-                // call is not accepted by callkit
                 logger.debug( "accept incoming call")
                 let options = AcceptCallOptions()
                 let incomingVideoOptions = IncomingVideoOptions()
@@ -197,7 +197,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             if call == nil || call?.id != callConfiguration.callId {
                 throw CallCompositeInternalError.callJoinFailed
             }
-
+            callingSDKInitializer.onIncomingCallAccpeted()
             logger.debug( "call id from call \(self.call?.id)")
             logger.debug( "call id from callConfiguration.callId \(self.callConfiguration.callId)")
 

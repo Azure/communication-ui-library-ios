@@ -796,7 +796,7 @@ extension CallingDemoView {
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
-        self.callState = callState.requestString
+        self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {

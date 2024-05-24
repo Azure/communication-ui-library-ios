@@ -184,6 +184,8 @@ internal class CallingSDKInitializer: NSObject {
         }
         do {
             try await incomingCall?.reject()
+            incomingCall?.delegate = nil
+            incomingCall = nil
         } catch {
             logger.error("Failed to handlePush")
             throw error
@@ -191,10 +193,17 @@ internal class CallingSDKInitializer: NSObject {
     }
 
     func dispose() {
+        incomingCall?.delegate = nil
+        incomingCall = nil
         self.callAgent?.delegate = nil
         self.callAgent?.dispose()
         self.callAgent = nil
         self.callClient = nil
+    }
+
+    func onIncomingCallAccpeted() {
+        incomingCall?.delegate = nil
+        incomingCall = nil
     }
 
     private func makeCallClient() -> CallClient {

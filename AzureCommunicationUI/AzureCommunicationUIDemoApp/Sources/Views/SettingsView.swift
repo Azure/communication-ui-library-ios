@@ -41,6 +41,10 @@ struct SettingsView: View {
             }
         }
         .accessibilityElement(children: .contain)
+        .onAppear {
+            GlobalCompositeManager.callComposite?.dismiss()
+            GlobalCompositeManager.callComposite = nil
+        }
     }
 
     var dismissButton: some View {

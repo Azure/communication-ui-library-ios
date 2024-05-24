@@ -114,7 +114,7 @@ public class CallComposite {
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         callKitOptions = options?.callKitOptions
-        displayName = ""
+        displayName = nil
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
             self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
         }
@@ -148,6 +148,9 @@ public class CallComposite {
     public func dismiss() {
         logger.debug( "dismiss")
         exitManager?.dismiss()
+        cleanUpManagers()
+        disposeSDKWrappers()
+        callingSDKInitializer?.dispose()
         compositeUILaunched = false
     }
 
@@ -453,14 +456,14 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// It is possible that composite is in existing call, then on previous call disconnect this function will be called
     /// CompositeUILaunched will be set to false once existing call is disconnected
     private func notifyOnCallKitCallAccepted() {
-        if !compositeUILaunched {
-            if let callId = incomingCallAcceptedByCallKitCallId {
-                logger.debug( "notifyOnCallKitCallAccepted \(callId)")
-                if let onIncomingCallAcceptedByCallKit = events.onIncomingCallAcceptedFromCallKit {
-                    onIncomingCallAcceptedByCallKit(callId)
-                    incomingCallAcceptedByCallKitCallId = nil
-                }
-            }
+        if !compositeUILaunched,
+           let incomingCall = callingSDKInitializer?.getIncomingCall(),
+           let callId = incomingCallAcceptedByCallKitCallId,
+           incomingCall.id == callId,
+           let onIncomingCallAcceptedByCallKit = events.onIncomingCallAcceptedFromCallKit {
+            logger.debug("notifyOnCallKitCallAccepted \(callId)")
+            onIncomingCallAcceptedByCallKit(callId)
+            incomingCallAcceptedByCallKitCallId = nil
         }
     }
 
@@ -719,16 +722,22 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
-            containerUIHostingController?.dismissSelf {
-                self?.logger.debug( "setDismissComposite")
-                self?.videoViewManager?.disposeViews()
-                self?.viewController = nil
-                self?.pipViewController = nil
-                self?.viewFactory = nil
-                self?.cleanUpManagers()
-                self?.disposeSDKWrappers()
-                UIApplication.shared.isIdleTimerDisabled = false
-                self?.callStateManager?.onCompositeExit()
+            self?.logger.debug( "setDismissComposite")
+            self?.videoViewManager?.disposeViews()
+            self?.viewController = nil
+            self?.pipViewController = nil
+            self?.viewFactory = nil
+            self?.cleanUpManagers()
+            self?.disposeSDKWrappers()
+            UIApplication.shared.isIdleTimerDisabled = false
+            self?.callStateManager?.onCompositeExit()
+            if let hostingController = containerUIHostingController {
+                hostingController.dismissSelf {
+                    self?.logger.debug( "hostingController dismissed")
+                    self?.compositeUILaunched = false
+                    self?.notifyOnCallKitCallAccepted()
+                }
+            } else {
                 self?.compositeUILaunched = false
                 self?.notifyOnCallKitCallAccepted()
             }

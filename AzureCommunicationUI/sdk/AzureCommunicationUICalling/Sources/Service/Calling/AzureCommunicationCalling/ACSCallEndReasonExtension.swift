@@ -22,7 +22,7 @@ extension CallEndReason {
             }
         case 401:
             internalError = CallCompositeInternalError.callTokenFailed
-        case 487:
+        case 487, 603:
             // Call cancelled by user as a happy path
             break
         default:
