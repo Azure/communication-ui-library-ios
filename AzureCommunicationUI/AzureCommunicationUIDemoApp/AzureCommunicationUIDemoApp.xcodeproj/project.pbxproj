@@ -34,6 +34,9 @@
 		5312A53E2B7D9A5F001C92E1 /* AzureCommunicationUIDemoAppAudioOnlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5312A53D2B7D9A5F001C92E1 /* AzureCommunicationUIDemoAppAudioOnlyTests.swift */; };
 		53C06D3B2B86E6F3001117C1 /* UserReportedIssueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C06D3A2B86E6F3001117C1 /* UserReportedIssueHandler.swift */; };
 		8926B039F67555DE4F89893B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */; };
+		A40EE69D2C0116B00089EA7B /* StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE69C2C0116B00089EA7B /* StartCallConvertible.swift */; };
+		A40EE69F2C0116CF0089EA7B /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE69E2C0116CF0089EA7B /* URL.swift */; };
+		A40EE6A12C0116E70089EA7B /* NSUserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE6A02C0116E70089EA7B /* NSUserActivity.swift */; };
 		A48D18002BFD623B00FD994E /* GlobalCompositeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D17FF2BFD623B00FD994E /* GlobalCompositeManager.swift */; };
 		A48D18192BFDB7D300FD994E /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D18182BFDB7D300FD994E /* IntentHandler.swift */; };
 		A48D181B2BFDB85C00FD994E /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D181A2BFDB85C00FD994E /* Intents.framework */; };
@@ -155,6 +158,9 @@
 		55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		645D1D3003E302ECA00BB66C /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A40EE69C2C0116B00089EA7B /* StartCallConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCallConvertible.swift; sourceTree = "<group>"; };
+		A40EE69E2C0116CF0089EA7B /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		A40EE6A02C0116E70089EA7B /* NSUserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSUserActivity.swift; sourceTree = "<group>"; };
 		A48D17FF2BFD623B00FD994E /* GlobalCompositeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalCompositeManager.swift; sourceTree = "<group>"; };
 		A48D180A2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = AzureCommunicationUIDemoAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A48D18102BFDB79000FD994E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -350,6 +356,9 @@
 				A8C69FC12728AE1C00143DB7 /* Info.plist */,
 				A8C69FBC2728AE1C00143DB7 /* Assets.xcassets */,
 				A48D17FF2BFD623B00FD994E /* GlobalCompositeManager.swift */,
+				A40EE69C2C0116B00089EA7B /* StartCallConvertible.swift */,
+				A40EE69E2C0116CF0089EA7B /* URL.swift */,
+				A40EE6A02C0116E70089EA7B /* NSUserActivity.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -695,14 +704,17 @@
 				A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */,
 				A85DDCB82728B23B001297B4 /* CallingDemoViewController.swift in Sources */,
 				50D8EE9F2926C0C6003C3A95 /* ChatDemoView.swift in Sources */,
+				A40EE69D2C0116B00089EA7B /* StartCallConvertible.swift in Sources */,
 				50D8EEA12926C0DD003C3A95 /* ChatDemoViewController.swift in Sources */,
 				0570901C299EBAC000D7AE5F /* CallingDemoViewModel.swift in Sources */,
+				A40EE69F2C0116CF0089EA7B /* URL.swift in Sources */,
 				A8C69FB62728AE1A00143DB7 /* SceneDelegate.swift in Sources */,
 				1B981B0429480DA8002EB167 /* FloatingUITestWindow.swift in Sources */,
 				A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */,
 				5312A53A2B76114A001C92E1 /* UserReportedIssueView.swift in Sources */,
 				1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */,
 				A8849E532732FFA10049FB1A /* AuthenticationHelper.swift in Sources */,
+				A40EE6A12C0116E70089EA7B /* NSUserActivity.swift in Sources */,
 				50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */,
 				1B5D6C1129231B900072C66D /* CallClientMockings.swift in Sources */,
 				A48D18002BFD623B00FD994E /* GlobalCompositeManager.swift in Sources */,
