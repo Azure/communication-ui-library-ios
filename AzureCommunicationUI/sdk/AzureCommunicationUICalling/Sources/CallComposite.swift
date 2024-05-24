@@ -457,6 +457,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// CompositeUILaunched will be set to false once existing call is disconnected
     private func notifyOnCallKitCallAccepted() {
         if !compositeUILaunched,
+           pipViewController == nil,
            let incomingCall = callingSDKInitializer?.getIncomingCall(),
            let callId = incomingCallAcceptedByCallKitCallId,
            incomingCall.id == callId,
