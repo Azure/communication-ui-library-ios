@@ -48,14 +48,18 @@ internal class LandscapeAwareKeyboardWatcher: ObservableObject {
             guard let self = self, let userInfo = notification.userInfo,
                   let keyboardRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-            self.keyboardHeight = keyboardRect.height
+            withAnimation {
+                self.keyboardHeight = keyboardRect.height
+            }
             self.updateActiveHeight()
         }
 
         keyboardHideObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification,
                                                                       object: nil,
                                                                       queue: .main) { [weak self] _ in
-            self?.keyboardHeight = 0
+            withAnimation {
+                self?.keyboardHeight = 0
+            }
             self?.updateActiveHeight()
         }
     }
