@@ -10,6 +10,7 @@ import CallKit
 import AzureCommunicationUICalling
 import PushKit
 import OSLog
+import AVFoundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate {
@@ -84,7 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
             let callKitOptions = CallKitOptions(providerConfig: providerConfig,
                                                 isCallHoldSupported: true,
-                                                provideRemoteInfo: incomingCallRemoteInfo)
+                                                provideRemoteInfo: incomingCallRemoteInfo,
+                                                configureAudioSession: configureAudioSession)
             CallComposite.reportIncomingCall(pushNotification: pushInfo,
                                              callKitOptions: callKitOptions) { result in
                 if case .success = result {
@@ -104,6 +106,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         self.voipRegistration()
+    }
+
+    public func configureAudioSession() -> Error? {
+        let audioSession = AVAudioSession.sharedInstance()
+        var configError: Error?
+        do {
+            try audioSession.setCategory(.playAndRecord)
+        } catch {
+            configError = error
+        }
+        return configError
     }
 
     public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteInfo {

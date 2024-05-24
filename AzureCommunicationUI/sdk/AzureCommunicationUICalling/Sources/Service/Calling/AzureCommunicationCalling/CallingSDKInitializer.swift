@@ -194,6 +194,18 @@ internal class CallingSDKInitializer: NSObject {
                     }
                 }
             }
+        } else {
+            Task {
+                do {
+                    let callAgent = try await self.setupCallAgent()
+                    let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
+                    try await callAgent.handlePush(notification: pushNotificationInfo)
+                    completionHandler?(.success(()))
+                } catch {
+                    self.logger.error("Failed to registerPushNotification")
+                    completionHandler?(.failure(error))
+                }
+            }
         }
     }
 

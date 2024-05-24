@@ -197,8 +197,12 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                     options.callKitRemoteInfo = callKitRemoteInfo
                 }
                 if let incomngCall = callingSDKInitializer.getIncomingCall() {
-                    call = try await incomngCall.accept(options: options)
-                    logger.debug( "accepted incoming call")
+                    do {
+                        call = try await incomngCall.accept(options: options)
+                    } catch let error as NSError {
+                        logger.debug( "call error \(error.localizedDescription) \(error.code)")
+                        throw CallCompositeInternalError.callJoinFailed
+                    }
                 } else {
                     throw CallCompositeInternalError.callJoinFailed
                 }
