@@ -9,8 +9,7 @@ import UIKit
 internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     static let shared = LandscapeAwareKeyboardWatcher()
     @Published var activeHeight: CGFloat = 0
-
-    private var keyboardHeight: CGFloat = 0
+    @Published var keyboardHeight: CGFloat = 0
     private var isLandscape = false {
         didSet {
             updateActiveHeight()
