@@ -456,6 +456,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// It is possible that composite is in existing call, then on previous call disconnect this function will be called
     /// CompositeUILaunched will be set to false once existing call is disconnected
     private func notifyOnCallKitCallAccepted() {
+        logger.debug("notifyOnCallKitCallAccepted start")
         if !compositeUILaunched,
            pipViewController == nil,
            let incomingCall = callingSDKInitializer?.getIncomingCall(),
