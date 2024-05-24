@@ -10,7 +10,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.azure.ios.communication.ui.AzureCommunicationUIDemoApp</string>
+			<string>com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>acsui</string>
