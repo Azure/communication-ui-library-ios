@@ -13,7 +13,7 @@ internal struct SupportFormView: View {
         = LandscapeAwareKeyboardWatcher.shared
 
     enum Constants {
-        static let otherControlsHeightEstimate: CGFloat = 104
+        static let otherControlsHeightEstimate: CGFloat = 144
         static let smallPad: CGFloat = 8
         static let largePad: CGFloat = 16
         static let disabledOpacity: CGFloat = 0.4

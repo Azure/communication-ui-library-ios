@@ -37,7 +37,7 @@ struct CallingView: View {
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
 
     var safeAreaIgnoreArea: Edge.Set {
-        return getSizeClass() != .iphoneLandscapeScreenSize ? [] : [.bottom]
+        return getSizeClass() != .iphoneLandscapeScreenSize ? [] : [/* .bottom */]
     }
 
     var body: some View {

@@ -71,9 +71,7 @@ class CallingViewModel: ObservableObject {
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
-
         infoHeaderViewModel = compositeViewModelFactory
-
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
                                      localUserState: store.state.localUserState)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory

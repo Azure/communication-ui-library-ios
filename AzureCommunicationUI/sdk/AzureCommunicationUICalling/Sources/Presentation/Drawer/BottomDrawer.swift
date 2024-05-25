@@ -23,7 +23,7 @@ enum DrawerConstants {
 }
 
 struct BottomDrawer<Content: View>: View {
-    @ObservedObject var keyboardWatcher = LandscapeAwareKeyboardWatcher.shared
+    // @ObservedObject var keyboardWatcher = LandscapeAwareKeyboardWatcher.shared
     @Binding var isPresented: Bool
     @State private var drawerState: DrawerState = .gone
     let content: Content
@@ -68,7 +68,7 @@ struct BottomDrawer<Content: View>: View {
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(16)
                     .shadow(radius: 10)
-                    .padding(.bottom, keyboardWatcher.activeHeight - DrawerConstants.bottomFillY)
+                    .padding(.bottom, /* keyboardWatcher.activeHeight */ -DrawerConstants.bottomFillY)
                 }
                 .transition(.move(edge: .bottom))
                 .animation(.easeInOut, value: drawerState == .visible)
