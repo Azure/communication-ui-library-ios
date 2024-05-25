@@ -83,7 +83,8 @@ internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     }
 
     private func updateActiveHeight() {
-        activeHeight = isLandscape ? keyboardHeight : 0
-        print("Active height {activeHeight}")
+        withAnimation {
+            activeHeight = isLandscape ? keyboardHeight : 0
+        }
     }
 }
