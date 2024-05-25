@@ -156,14 +156,25 @@ public class CallComposite {
     }
 
     /// Handle push notification to receive incoming call notification.
+    /// - Parameter pushNotification: The push notification received.
+    /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
+    ///                               a `Void` or an `Error`.
      public func handlePushNotification(pushNotification: PushNotification,
                                         completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         guard self.credential != nil else {
+             completionHandler?(.failure(CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
+             return
+         }
          getCallingSDKInitializer().handlePushNotification(pushNotification: pushNotification,
                                                            completionHandler: completionHandler)
      }
 
      /// Report incoming call to notify CallKit when in background mode.
      /// On success you can wake up application.
+     /// - Parameter pushNotification: The push notification received.
+     /// - Parameter callKitOptions: The CallKitOptions used to configure the incoming call.
+     /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
+     ///                               a `Void` or an `Error`.
      public static func reportIncomingCall(pushNotification: PushNotification,
                                            callKitOptions: CallKitOptions,
                                            completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
@@ -173,41 +184,61 @@ public class CallComposite {
      }
 
      /// Register device token to receive Azure Notification Hubs push notifications.
+     /// - Parameter deviceRegistrationToken: The device registration token.
+     /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
      public func registerPushNotifications(deviceRegistrationToken: Data,
                                            completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         guard self.credential != nil else {
+             completionHandler?(.failure(CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
+             return
+         }
          getCallingSDKInitializer().registerPushNotification(deviceRegistrationToken:
                                                                     deviceRegistrationToken,
                                                                   completionHandler: completionHandler)
      }
 
      /// Unregister Azure Notification Hubs push notifications
+     /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
      public func unregisterPushNotifications(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         guard self.credential != nil else {
+             completionHandler?(.failure(CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
+             return
+         }
          getCallingSDKInitializer().unregisterPushNotifications(completionHandler: completionHandler)
      }
 
      /// Accept incoming call
+     /// - Parameter incomingCallId: The incoming call id.
+     /// - Parameter callKitRemoteInfo: The CallKitRemoteInfo used to set the CallKit information for the outgoing call.
+     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
+     ///                            This is data is not sent up to ACS.
      public func accept(incomingCallId: String,
                         callKitRemoteInfo: CallKitRemoteInfo? = nil,
                         localOptions: LocalOptions? = nil) {
          logger.debug( "launch \(incomingCallId)")
          self.callKitRemoteInfo = callKitRemoteInfo
-         callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
+         let callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                                roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                                participants: nil,
                                                callId: incomingCallId)
-         guard let callConfiguration = self.callConfiguration else {
-             fatalError("CallConfiguration is not set.")
-         }
+         self.callConfiguration = callConfiguration
          launch(callConfiguration, localOptions: localOptions)
      }
 
      /// Reject incoming call
+     /// - Parameter incomingCallId: The incoming call id.
+     /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
      public func reject(incomingCallId: String,
                         completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+         guard self.credential != nil else {
+             completionHandler?(.failure(CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
+             return
+         }
         getCallingSDKInitializer().reject(incomingCallId: incomingCallId, completionHandler: completionHandler)
      }
 
      /// Hold  call
+     /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
      public func hold(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
          if let callingSDKWrapper = callingSDKWrapper {
              Task {
@@ -224,6 +255,7 @@ public class CallComposite {
      }
 
      /// Resume  call
+     /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
      public func resume(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
          if let callingSDKWrapper = callingSDKWrapper {
              Task {
@@ -300,39 +332,32 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        callConfiguration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
+        let configuration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
                                                   roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                                   participants: nil,
                                                   callId: nil)
         self.credential = remoteOptions.credential
         self.displayName = remoteOptions.displayName
-        guard let callConfiguration = self.callConfiguration else {
-            fatalError("CallConfiguration is not set.")
-        }
-        launch(callConfiguration, localOptions: localOptions)
+        self.callConfiguration = configuration
+        launch(configuration, localOptions: localOptions)
     }
 
     /// Start Call Composite experience with joining a existing call.
     /// - Parameter locator: Join existing call.
     /// - Parameter callKitRemoteInfo: CallKitRemoteInfo used to set the
-    /// CallKit information for the outgoing call.
+    ///                            CallKit information for the outgoing call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
     public func launch(locator: JoinLocator,
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
-        guard let credential = credential else {
-                fatalError("CommunicationTokenCredential cannot be nil.")
-        }
         self.callKitRemoteInfo = callKitRemoteInfo
-        callConfiguration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT> */
+        let configuration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT> */
                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                               participants: nil,
                                               callId: nil)
-        guard let callConfiguration = self.callConfiguration else {
-            fatalError("CallConfiguration is not set.")
-        }
-        launch(callConfiguration, localOptions: localOptions)
+        self.callConfiguration = configuration
+        launch(configuration, localOptions: localOptions)
     }
 
     /// Start Call Composite experience with dialing participants.
@@ -344,47 +369,37 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     public func launch(participants: [CommunicationIdentifier],
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
-        guard let credential = credential else {
-                fatalError("CommunicationTokenCredential cannot be nil.")
-        }
         self.callKitRemoteInfo = callKitRemoteInfo
-        callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
+        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                               participants: participants,
                                               callId: nil)
-        guard let callConfiguration = self.callConfiguration else {
-            fatalError("CallConfiguration is not set.")
-        }
-        launch(callConfiguration, localOptions: localOptions)
+        self.callConfiguration = configuration
+        launch(configuration, localOptions: localOptions)
     }
 
-    /// Start Call Composite experience with dialing participants.
-    /// - Parameter callIdAcceptedFromCallKit: call id accepted from callkit.
+    /// Start Call Composite experience with call accepted from CallKit.
+    /// - Parameter callIdAcceptedFromCallKit: call id accepted from CallKit.
     /// - Parameter callKitRemoteInfo: CallKitRemoteInfo used to set the
-    /// CallKit information for the outgoing call.
+    /// CallKit information for the accepted call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This data is not sent up to ACS.
     ///                            Skip setup screen options will be forced true as call is already accepted.
     public func launch(callIdAcceptedFromCallKit: String,
                        localOptions: LocalOptions? = nil) {
-        guard let credential = credential else {
-                fatalError("CommunicationTokenCredential cannot be nil.")
-        }
         logger.debug( "launch \(callIdAcceptedFromCallKit)")
-        callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
+        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                               participants: nil,
                                               callId: callIdAcceptedFromCallKit)
-        guard let callConfiguration = self.callConfiguration else {
-            fatalError("CallConfiguration is not set.")
-        }
-        let accptedCallLocalOptions = LocalOptions(participantViewData: localOptions?.participantViewData,
+        self.callConfiguration = configuration
+        let acceptedCallLocalOptions = LocalOptions(participantViewData: localOptions?.participantViewData,
                                                    setupScreenViewData: localOptions?.setupScreenViewData,
                                                    cameraOn: localOptions?.cameraOn,
                                                    microphoneOn: localOptions?.microphoneOn,
                                                    skipSetupScreen: true,
                                                    audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo)
-        launch(callConfiguration, localOptions: accptedCallLocalOptions)
+        launch(configuration, localOptions: acceptedCallLocalOptions)
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
@@ -637,7 +652,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             return callingSDKInitializer
         }
         guard let credential = credential else {
-            fatalError("CommunicationTokenCredential cannot be nil.")
+            if let didFail = events.onError {
+                let compositeError = CallCompositeError(
+                    code: CallCompositeErrorCode.communicationTokenCredentialsNotSet,
+                    error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
+                didFail(compositeError)
+            }
+            fatalError("CommunicationTokenCredential cannot be nil, use init with credentials.")
         }
         let callingSDKInitializer = CallingSDKInitializer(tags: self.callConfiguration?.diagnosticConfig.tags
                                                           ?? DiagnosticConfig().tags,
