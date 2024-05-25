@@ -321,15 +321,6 @@
 			path = AzureCommunicationUIDemoAppExtension;
 			sourceTree = "<group>";
 		};
-		A48D180B2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */ = {
-			isa = PBXGroup;
-			children = (
-				A48D18102BFDB79000FD994E /* Info.plist */,
-				A48D18182BFDB7D300FD994E /* IntentHandler.swift */,
-			);
-			path = AzureCommunicationUIDemoAppExtension;
-			sourceTree = "<group>";
-		};
 		A8C69FA72728AE1A00143DB7 = {
 			isa = PBXGroup;
 			children = (
@@ -338,7 +329,6 @@
 				FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */,
 				A8C69FB22728AE1A00143DB7 /* Sources */,
 				1F8881BB27909E08001427F0 /* Tests */,
-				A48D180B2BFDB79000FD994E /* AzureCommunicationUIDemoAppExtension */,
 				A40EE6FA2C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension */,
 				A8C69FB12728AE1A00143DB7 /* Products */,
 				F74ACD1C99B1428891E02585 /* Frameworks */,
