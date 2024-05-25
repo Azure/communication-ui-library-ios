@@ -13,7 +13,7 @@ internal struct SupportFormView: View {
         = LandscapeAwareKeyboardWatcher.shared
 
     enum Constants {
-        static let otherControlsHeightEstimate: CGFloat = 144
+        static let otherControlsHeightEstimate: CGFloat = 112
         static let smallPad: CGFloat = 8
         static let largePad: CGFloat = 16
         static let disabledOpacity: CGFloat = 0.4
@@ -78,6 +78,7 @@ internal struct SupportFormView: View {
             }
         }
         .padding()
+        .padding(.bottom, calculatedFormPadding())
     }
 
     func calculatedTextEditorHeight() -> CGFloat {
@@ -85,6 +86,20 @@ internal struct SupportFormView: View {
         let kh = landscapeKeyboardWatcher.activeHeight
         let och = Constants.otherControlsHeightEstimate
         let availableHeight = sh - kh - och
-        return max(0, min(150, availableHeight))
+        return max(24, min(150, availableHeight))
     }
+
+    func calculatedFormPadding() -> CGFloat {
+        // Calculated Text Editor Height will be going from 24->150
+        // When it's 24 we want (150-24)
+        // When it's 150 we want 0
+        // I'll normalize between (0-1) (24 = 0, 150 = 1), then multiply by (150-24)
+        var ch = calculatedTextEditorHeight()
+        ch -= 24
+        ch /= (150 - 24)
+        ch = 1 - ch
+        ch *= (150 - 24)
+        return ch
+    }
+
 }
