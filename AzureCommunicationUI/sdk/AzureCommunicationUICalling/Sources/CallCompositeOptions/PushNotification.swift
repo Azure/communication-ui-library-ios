@@ -21,6 +21,7 @@ public struct PushNotification {
     public let fromDisplayName: String
     /// incoming with video
     public let hasIncomingVideo: Bool
+
     let data: [AnyHashable: Any]
 
     /// Create an instance of a PushNotification with push notification payload.

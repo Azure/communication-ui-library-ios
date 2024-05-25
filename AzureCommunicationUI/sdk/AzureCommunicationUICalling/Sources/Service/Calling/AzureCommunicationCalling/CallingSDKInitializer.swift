@@ -60,22 +60,7 @@ internal class CallingSDKInitializer: NSObject {
         let options = CallAgentOptions()
         options.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
         if let providerConfig = callKitOptions?.providerConfig {
-            let sdkCallKitOptions = AzureCommunicationCalling.CallKitOptions(with: providerConfig)
-            sdkCallKitOptions.isCallHoldSupported = callKitOptions!.isCallHoldSupported
-            sdkCallKitOptions.configureAudioSession = callKitOptions!.configureAudioSession
-            if let provideRemoteInfo = callKitOptions!.provideRemoteInfo {
-                sdkCallKitOptions.provideRemoteInfo = { (callerInfo: AzureCommunicationCalling.CallerInfo)
-                    -> AzureCommunicationCalling.CallKitRemoteInfo in
-                    let info = provideRemoteInfo(
-                        Caller(displayName: callerInfo.displayName,
-                               identifier: callerInfo.identifier))
-                    let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
-                    callKitRemoteInfo.displayName = info.displayName
-                    callKitRemoteInfo.handle = info.handle
-                    return callKitRemoteInfo
-                }
-            }
-
+            let sdkCallKitOptions = configureSDKCallKitOptions(with: providerConfig)
             options.callKitOptions = sdkCallKitOptions
         }
         if let displayName = displayName {
@@ -157,54 +142,51 @@ internal class CallingSDKInitializer: NSObject {
 
     func handlePushNotification(pushNotification: PushNotification,
                                 completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
+        let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
         if let providerConfig = callKitOptions?.providerConfig {
-            let sdkCallKitOptions = AzureCommunicationCalling.CallKitOptions(with: providerConfig)
-            sdkCallKitOptions.isCallHoldSupported = ((callKitOptions?.isCallHoldSupported) != nil)
-            sdkCallKitOptions.configureAudioSession = callKitOptions?.configureAudioSession
-            if let provideRemoteInfo = callKitOptions?.provideRemoteInfo {
-                sdkCallKitOptions.provideRemoteInfo = { (callerInfo: AzureCommunicationCalling.CallerInfo)
-                    -> AzureCommunicationCalling.CallKitRemoteInfo in
-                    let info = provideRemoteInfo(
-                        Caller(displayName: callerInfo.displayName,
-                               identifier: callerInfo.identifier))
-                    let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
-                    callKitRemoteInfo.displayName = info.displayName
-                    callKitRemoteInfo.handle = info.handle
-                    return callKitRemoteInfo
-                }
-            }
-            let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
-            CallClient.reportIncomingCall(
-                with: pushNotificationInfo,
-                callKitOptions: sdkCallKitOptions
-            ) { error in
+            let sdkCallKitOptions = configureSDKCallKitOptions(with: providerConfig)
+            CallClient.reportIncomingCall(with: pushNotificationInfo, callKitOptions: sdkCallKitOptions) { error in
                 if let error = error {
                     completionHandler?(.failure(error))
                 } else {
-                    Task {
-                        do {
-                            let callAgent = try await self.setupCallAgent()
-                            let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
-                            try await callAgent.handlePush(notification: pushNotificationInfo)
-                            completionHandler?(.success(()))
-                        } catch {
-                            self.logger.error("Failed to registerPushNotification")
-                            completionHandler?(.failure(error))
-                        }
-                    }
+                    self.handlePushNotificationAsync(pushNotificationInfo: pushNotificationInfo,
+                                                     completionHandler: completionHandler)
                 }
             }
         } else {
-            Task {
-                do {
-                    let callAgent = try await self.setupCallAgent()
-                    let pushNotificationInfo = PushNotificationInfo.fromDictionary(pushNotification.data)
-                    try await callAgent.handlePush(notification: pushNotificationInfo)
-                    completionHandler?(.success(()))
-                } catch {
-                    self.logger.error("Failed to registerPushNotification")
-                    completionHandler?(.failure(error))
-                }
+            handlePushNotificationAsync(pushNotificationInfo: pushNotificationInfo,
+                                        completionHandler: completionHandler)
+        }
+    }
+
+    private func configureSDKCallKitOptions(with providerConfig: CXProviderConfiguration) ->
+    AzureCommunicationCalling.CallKitOptions {
+        let sdkCallKitOptions = AzureCommunicationCalling.CallKitOptions(with: providerConfig)
+        sdkCallKitOptions.isCallHoldSupported = callKitOptions?.isCallHoldSupported ?? false
+        sdkCallKitOptions.configureAudioSession = callKitOptions?.configureAudioSession
+        if let provideRemoteInfo = callKitOptions?.provideRemoteInfo {
+            sdkCallKitOptions.provideRemoteInfo = { (callerInfo: AzureCommunicationCalling.CallerInfo) in
+                let info = provideRemoteInfo(Caller(displayName: callerInfo.displayName,
+                                                    identifier: callerInfo.identifier))
+                let callKitRemoteInfo = AzureCommunicationCalling.CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = info.displayName
+                callKitRemoteInfo.handle = info.handle
+                return callKitRemoteInfo
+            }
+        }
+        return sdkCallKitOptions
+    }
+
+    private func handlePushNotificationAsync(pushNotificationInfo: PushNotificationInfo,
+                                             completionHandler: ((Result<Void, Error>) -> Void)?) {
+        Task {
+            do {
+                let callAgent = try await self.setupCallAgent()
+                try await callAgent.handlePush(notification: pushNotificationInfo)
+                completionHandler?(.success(()))
+            } catch {
+                self.logger.error("Failed to handle push notification")
+                completionHandler?(.failure(error))
             }
         }
     }
