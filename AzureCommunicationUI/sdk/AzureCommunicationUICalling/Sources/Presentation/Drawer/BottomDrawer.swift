@@ -12,12 +12,21 @@ enum DrawerState {
     case visible
 }
 
+enum DrawerConstants {
+    static let drawerCornerRadius: CGFloat = 4
+    static let handleColor: Color = .gray
+    static let handleWidth: CGFloat = 36
+    static let handleHeight: CGFloat = 4
+    static let handlePaddingTop: CGFloat = 8
+    static let bottomFillY: CGFloat = 48
+    static let overlayOpacity: CGFloat = 0.4
+}
+
 struct BottomDrawer<Content: View>: View {
     @ObservedObject var keyboardWatcher = LandscapeAwareKeyboardWatcher.shared
     @Binding var isPresented: Bool
     @State private var drawerState: DrawerState = .gone
     let content: Content
-    let bottomOffset = 48.0
 
     init(isPresented: Binding<Bool>, @ViewBuilder content: () -> Content) {
         _isPresented = isPresented
@@ -27,7 +36,7 @@ struct BottomDrawer<Content: View>: View {
     var body: some View {
         ZStack {
             if drawerState != .gone {
-                Color.black.opacity(drawerState == .visible ? 0.4 : 0)
+                Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
                     .ignoresSafeArea()
                     .onTapGesture {
                         withAnimation {
@@ -40,10 +49,10 @@ struct BottomDrawer<Content: View>: View {
                     Spacer()
 
                     VStack {
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(.gray)
-                            .frame(width: 36, height: 4)
-                            .padding()
+                        RoundedRectangle(cornerRadius: DrawerConstants.drawerCornerRadius)
+                            .fill(DrawerConstants.handleColor)
+                            .frame(width: DrawerConstants.handleWidth, height: DrawerConstants.handleHeight)
+                            .padding(.top, DrawerConstants.handlePaddingTop)
                             .gesture(DragGesture()
                                 .onEnded { value in
                                     if value.translation.height > 50 {
@@ -53,14 +62,13 @@ struct BottomDrawer<Content: View>: View {
                                     }
                                 })
                         content
-
-                        Spacer().frame(height: bottomOffset)
+                        Spacer().frame(height: DrawerConstants.bottomFillY)
                     }
                     .frame(maxWidth: .infinity)
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(16)
                     .shadow(radius: 10)
-                    .padding(.bottom, keyboardWatcher.activeHeight - bottomOffset)
+                    .padding(.bottom, keyboardWatcher.activeHeight - DrawerConstants.bottomFillY)
                 }
                 .transition(.move(edge: .bottom))
                 .animation(.easeInOut, value: drawerState == .visible)
