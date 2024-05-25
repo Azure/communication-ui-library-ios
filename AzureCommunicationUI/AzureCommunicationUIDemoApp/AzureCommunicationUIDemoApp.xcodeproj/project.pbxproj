@@ -39,7 +39,6 @@
 		A40EE6A12C0116E70089EA7B /* NSUserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE6A02C0116E70089EA7B /* NSUserActivity.swift */; };
 		A40EE6F92C01524B0089EA7B /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D181A2BFDB85C00FD994E /* Intents.framework */; };
 		A40EE6FC2C01524B0089EA7B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40EE6FB2C01524B0089EA7B /* IntentHandler.swift */; };
-		A40EE7192C017ABE0089EA7B /* AzureCommunicationUIDemoAppExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A40EE6F82C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A48D18002BFD623B00FD994E /* GlobalCompositeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D17FF2BFD623B00FD994E /* GlobalCompositeManager.swift */; };
 		A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCAF2728B12D001297B4 /* EnvConfig.swift */; };
 		A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB22728B140001297B4 /* ThemeOptions.swift */; };
@@ -85,17 +84,6 @@
 			files = (
 			);
 			name = "Embed ExtensionKit Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A40EE71C2C017ABE0089EA7B /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				A40EE7192C017ABE0089EA7B /* AzureCommunicationUIDemoAppExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FAA448A2282585F700BD0DC0 /* Embed Frameworks */ = {
@@ -460,7 +448,6 @@
 				4CA6E42B5D6299A63290DA44 /* [CP] Embed Pods Frameworks */,
 				FAA448A2282585F700BD0DC0 /* Embed Frameworks */,
 				A40EE6A62C011A240089EA7B /* Embed ExtensionKit Extensions */,
-				A40EE71C2C017ABE0089EA7B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -1030,7 +1017,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = .dev;
@@ -1070,7 +1056,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EA3EA0A623669E62A5E601F /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "";
