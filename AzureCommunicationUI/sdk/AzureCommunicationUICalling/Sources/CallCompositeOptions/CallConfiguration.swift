@@ -17,7 +17,7 @@ struct CallConfiguration {
     let roomId: String?
     let roomRoleHint: ParticipantRole?
     /* </ROOMS_SUPPORT> */
-    init(locator: JoinLocator?, /* <ROOMS_SUPPORT> */
+    init(locator: JoinLocator? /* <ROOMS_SUPPORT> */,
          roleHint: ParticipantRole? /* </ROOMS_SUPPORT> */,
          participants: [CommunicationIdentifier]?,
          callId: String?) {
@@ -52,16 +52,20 @@ struct CallConfiguration {
             }
         } else if participants != nil {
             self.participants = participants
+            /* <ROOMS_SUPPORT> */
             self.roomId = nil
             self.roomRoleHint = nil
+            /* </ROOMS_SUPPORT> */
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToNOutgoing
             self.callId = nil
         } else {
             self.participants = nil
+            /* <ROOMS_SUPPORT> */
             self.roomId = nil
             self.roomRoleHint = nil
+            /* </ROOMS_SUPPORT> */
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToOneIncoming

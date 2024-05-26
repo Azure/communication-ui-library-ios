@@ -393,12 +393,10 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
                                         /* <ROOMS_SUPPORT> */
-                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
                                          roleHint: roomRoleData
-                                        /* <|ROOMS_SUPPORT>
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
-                                        </ROOMS_SUPPORT> */
+                                        /* <|ROOMS_SUPPORT> */
         )
     }
 
@@ -427,14 +425,14 @@ class CallingDemoViewController: UIViewController {
                 ids.map { createCommunicationIdentifier(fromRawId: $0) }
                 callComposite.launch(participants: communicationIdentifiers,
                                      localOptions: localOptions)
-            /* <ROOMS_SUPPORT:13> */
+            /* <ROOMS_SUPPORT> */
             case .roomCall:
                 callComposite.launch(remoteOptions:
                                         RemoteOptions(for:
                                                 .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
                                      localOptions: localOptions)
-            /* </ROOMS_SUPPORT:6> */
+            /* </ROOMS_SUPPORT> */
             }
         }
     }
@@ -472,12 +470,12 @@ class CallingDemoViewController: UIViewController {
                     callComposite.launch(participants: communicationIdentifiers,
                                          callKitRemoteInfo: callKitRemoteInfo,
                                          localOptions: localOptions)
-                /* <ROOMS_SUPPORT:13> */
+                /* <ROOMS_SUPPORT> */
                 case .roomCall:
                     callComposite.launch(locator: .roomCall(roomId: link),
                                          callKitRemoteInfo: callKitRemoteInfo,
                                          localOptions: localOptions)
-                /* </ROOMS_SUPPORT:6> */
+                /* </ROOMS_SUPPORT> */
                 }
             }
         } else {

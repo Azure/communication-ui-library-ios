@@ -342,7 +342,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         launch(configuration, localOptions: localOptions)
     }
 
-    /// Start Call Composite experience with joining a existing call.
+    /// Start Call Composite experience with joining an existing call.
     /// - Parameter locator: Join existing call.
     /// - Parameter callKitRemoteInfo: CallKitRemoteInfo used to set the
     ///                            CallKit information for the outgoing call.

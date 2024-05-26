@@ -87,8 +87,9 @@ class CallingViewModel: ObservableObject {
             dispatchAction: actionDispatch)
 
         let isCallConnected = store.state.callingState.status == .connected
-        let isOutgoingCall = (callType == .oneToNOutgoing && (store.state.callingState.status == .connecting
-                                        || store.state.callingState.status == .ringing))
+        let callingStatus = store.state.callingState.status
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: callingStatus)
 
         isParticipantGridDisplayed = (isCallConnected || isOutgoingCall) &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
@@ -175,10 +176,8 @@ class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         let newIsCallConnected = state.callingState.status == .connected
-        let isOutgoingCall = (callType == .oneToNOutgoing
-         && (state.callingState.status == .connecting
-             || state.callingState.status == .ringing
-             || state.callingState.status == .remoteHold))
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: state.callingState.status)
         let shouldParticipantGridDisplayed = (newIsCallConnected || isOutgoingCall) &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
@@ -214,5 +213,13 @@ class CallingViewModel: ObservableObject {
         isVideoGridViewAccessibilityAvailable = !lobbyOverlayViewModel.isDisplayed
         && !onHoldOverlayViewModel.isDisplayed
         && (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
+    }
+
+    private static func isOutgoingCallDialingInProgress(callType: CompositeCallType,
+                                                        callingStatus: CallingStatus?) -> Bool {
+        let isOutgoingCall = (callType == .oneToNOutgoing && (callingStatus == nil
+                                                              || callingStatus == .connecting
+                                                              || callingStatus == .ringing))
+        return isOutgoingCall
     }
 }
