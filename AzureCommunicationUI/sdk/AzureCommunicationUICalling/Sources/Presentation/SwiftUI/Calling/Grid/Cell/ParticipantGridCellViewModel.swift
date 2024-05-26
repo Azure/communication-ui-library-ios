@@ -44,8 +44,9 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.accessibilityProvider = accessibilityProvider
         self.participantStatus = participantModel.status
         self.callType = callType
-        var isDisplayConnecting = callType == .oneToNOutgoing &&
-                (participantStatus == nil || participantStatus == .connecting || participantStatus == .ringing)
+        let isDisplayConnecting = ParticipantGridCellViewModel.isOutgoingCallDialingInProgress(
+            callType: callType,
+            participantStatus: participantModel.status)
         if  isDisplayConnecting {
             self.participantName = localizationProvider.getLocalizedString(LocalizationKey.callingCallMessage)
             self.displayName = self.participantName
@@ -118,8 +119,9 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     }
 
     func updateParticipantNameIfNeeded(with renderDisplayName: String?) {
-        var isDisplayConnecting = callType == .oneToNOutgoing &&
-                (participantStatus == nil || participantStatus == .connecting || participantStatus == .ringing)
+        let isDisplayConnecting = ParticipantGridCellViewModel.isOutgoingCallDialingInProgress(
+            callType: callType,
+            participantStatus: participantStatus)
         if isDisplayConnecting {
             self.participantName = localizationProvider.getLocalizedString(LocalizationKey.callingCallMessage)
             self.displayName = self.participantName
@@ -172,5 +174,11 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
                                       videoStreamId: screenShareVideoStreamIdentifier) :
         ParticipantVideoViewInfoModel(videoStreamType: cameraVideoStreamType,
                                       videoStreamId: cameraVideoStreamIdentifier)
+    }
+
+    private static func isOutgoingCallDialingInProgress(callType: CompositeCallType,
+                                                        participantStatus: ParticipantStatus?) -> Bool {
+        return callType == .oneToNOutgoing &&
+               (participantStatus == nil || participantStatus == .connecting || participantStatus == .ringing)
     }
 }
