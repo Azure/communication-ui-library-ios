@@ -15,9 +15,9 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configurar";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Volver";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Unirse a la llamada";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Iniciar llamada";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Uniéndose a la llamada…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Iniciando llamada…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Unirse a la llamada deshabilitado";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Vídeo desactivado";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Vídeo desactivado";
@@ -96,7 +96,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Más";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Compartir información de diagnóstico";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Llamando...";
 
 
 /* ComplianceBanner title */

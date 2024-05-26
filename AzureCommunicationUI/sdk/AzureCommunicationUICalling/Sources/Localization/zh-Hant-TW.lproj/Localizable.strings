@@ -15,9 +15,9 @@
 "AzureCommunicationUICalling.SetupView.Title"="設定";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="上一步";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通話";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="開始通話";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="開始通話...";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "加入通話已停用";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="視訊關閉";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="關閉視訊";
@@ -96,7 +96,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "其他";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "分享診斷資訊";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="通話中...";
 
 
 /* ComplianceBanner title */

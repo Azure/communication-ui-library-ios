@@ -15,9 +15,9 @@
 "AzureCommunicationUICalling.SetupView.Title"="安装";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="返回";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通话";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="开始呼叫";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通话...";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="正在开始呼叫…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "已禁用加入通话";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="视频关闭";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="视频关闭";
@@ -96,7 +96,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "更多";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "共享诊断信息";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="正在呼叫...";
 
 
 /* ComplianceBanner title */
