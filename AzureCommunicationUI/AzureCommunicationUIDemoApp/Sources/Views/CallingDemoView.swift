@@ -337,6 +337,7 @@ extension CallingDemoView {
             let callKitRemoteInfo = $envConfigSubject.enableRemoteInfo.wrappedValue ?
             CallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                      handle: cxHandle) : nil
+            isIncomingCall = false
             await createCallComposite()?.accept(incomingCallId: incomingCallId,
                                                 callKitRemoteInfo: callKitRemoteInfo,
                                                 localOptions: getLocalOptions())
@@ -345,6 +346,7 @@ extension CallingDemoView {
 
     func decline() {
         Task {
+            isIncomingCall = false
             await createCallComposite()?.reject(incomingCallId: incomingCallId) { result in
                 switch result {
                 case .success:
@@ -523,10 +525,13 @@ extension CallingDemoView {
         let onIncomingCall: (IncomingCall) -> Void = { [] incomingCall in
             incomingCallId = incomingCall.callId
             isIncomingCall = true
+            print("::::CallingDemoView::onIncomingCall \(incomingCall.callId)")
         }
 
-        let onIncomingCallCancelled: (IncomingCallCancelled) -> Void = { [] _ in
+        let onIncomingCallCancelled: (IncomingCallCancelled) -> Void = { [] event in
             isIncomingCall = false
+            print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
+            showAlert(for: "\(event.callId) cancelled")
         }
 
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
@@ -638,6 +643,7 @@ extension CallingDemoView {
                 remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
             }
             let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
+            isIncomingCall = false
             let callKitRemoteInfo = $envConfigSubject.enableRemoteInfo.wrappedValue ?
             CallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                      handle: cxHandle) : nil

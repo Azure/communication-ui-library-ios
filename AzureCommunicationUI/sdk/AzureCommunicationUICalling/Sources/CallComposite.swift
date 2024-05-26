@@ -383,8 +383,10 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// - Parameter callKitRemoteInfo: CallKitRemoteInfo used to set the
     /// CallKit information for the accepted call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
-    ///                            This data is not sent up to ACS.
-    ///                            Skip setup screen options will be forced true as call is already accepted.
+    ///                           This data is not sent up to ACS.
+    ///                           skipSetupScreen will be forced true as call is already accepted.
+    ///                           cameraOn will be false, default CallKit option
+    ///                           microphoneOn will be true, default CallKit option
     public func launch(callIdAcceptedFromCallKit: String,
                        localOptions: LocalOptions? = nil) {
         logger.debug( "launch \(callIdAcceptedFromCallKit)")
@@ -395,8 +397,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.callConfiguration = configuration
         let acceptedCallLocalOptions = LocalOptions(participantViewData: localOptions?.participantViewData,
                                                    setupScreenViewData: localOptions?.setupScreenViewData,
-                                                   cameraOn: localOptions?.cameraOn,
-                                                   microphoneOn: localOptions?.microphoneOn,
+                                                   cameraOn: false,
+                                                   microphoneOn: true,
                                                    skipSetupScreen: true,
                                                    audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo)
         launch(configuration, localOptions: acceptedCallLocalOptions)
