@@ -714,7 +714,6 @@ extension CallComposite {
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             self?.logger.debug( "setDismissComposite")
-            self?.videoViewManager?.disposeViews()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
@@ -724,11 +723,13 @@ extension CallComposite {
             self?.callStateManager?.onCompositeExit()
             if let hostingController = containerUIHostingController {
                 hostingController.dismissSelf {
+                    self?.videoViewManager?.disposeViews()
                     self?.logger.debug( "hostingController dismissed")
                     self?.compositeUILaunched = false
                     self?.notifyOnCallKitCallAccepted()
                 }
             } else {
+                self?.videoViewManager?.disposeViews()
                 self?.compositeUILaunched = false
                 self?.notifyOnCallKitCallAccepted()
             }
