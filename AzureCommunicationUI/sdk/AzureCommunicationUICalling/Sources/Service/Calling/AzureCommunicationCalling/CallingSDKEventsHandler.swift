@@ -191,7 +191,7 @@ extension CallingSDKEventsHandler: CallDelegate,
                                           callEndReasonCode: Int(call.callEndReason.code),
                                           callEndReasonSubCode: Int(call.callEndReason.subcode))
         logger.debug( "callInfoModel \(callInfoModel.status) \(call.id)")
-
+        logger.debug( "remoteParticipants \(call.remoteParticipants.count)")
         callInfoSubject.send(callInfoModel)
         if currentStatus == .connected || currentStatus == .connecting {
             addRemoteParticipants(call.remoteParticipants)

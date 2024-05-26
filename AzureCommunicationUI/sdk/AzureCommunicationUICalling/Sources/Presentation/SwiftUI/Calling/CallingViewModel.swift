@@ -184,8 +184,6 @@ class CallingViewModel: ObservableObject {
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
-        print("InderpalTest shouldParticipantGridDisplayed \(shouldParticipantGridDisplayed)")
-        print("InderpalTest isParticipantGridDisplayed \(isParticipantGridDisplayed)")
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
                 guard let self = self else {
