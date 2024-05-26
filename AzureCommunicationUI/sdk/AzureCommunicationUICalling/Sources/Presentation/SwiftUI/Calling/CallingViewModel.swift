@@ -87,8 +87,10 @@ class CallingViewModel: ObservableObject {
             dispatchAction: actionDispatch)
 
         let isCallConnected = store.state.callingState.status == .connected
+        let isOutgoingCall = (callType == .oneToNOutgoing && (store.state.callingState.status == .connecting
+                                        || store.state.callingState.status == .ringing))
 
-        isParticipantGridDisplayed = isCallConnected &&
+        isParticipantGridDisplayed = (isCallConnected || isOutgoingCall) &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
@@ -172,17 +174,18 @@ class CallingViewModel: ObservableObject {
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
-        let newIsCallConnected = state.callingState.status == .connected ||
-        (callType == .oneToNOutgoing
+        let newIsCallConnected = state.callingState.status == .connected
+        let isOutgoingCall = (callType == .oneToNOutgoing
          && (state.callingState.status == .connecting
              || state.callingState.status == .ringing
              || state.callingState.status == .remoteHold))
-        let shouldParticipantGridDisplayed = newIsCallConnected &&
+        let shouldParticipantGridDisplayed = (newIsCallConnected || isOutgoingCall) &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
-
+        print("InderpalTest shouldParticipantGridDisplayed \(shouldParticipantGridDisplayed)")
+        print("InderpalTest isParticipantGridDisplayed \(isParticipantGridDisplayed)")
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
                 guard let self = self else {
