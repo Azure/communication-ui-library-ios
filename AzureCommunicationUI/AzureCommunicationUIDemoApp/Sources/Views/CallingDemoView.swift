@@ -712,9 +712,10 @@ extension CallingDemoView {
 
     public func configureAudioSession() -> Error? {
         let audioSession = AVAudioSession.sharedInstance()
+        let options: AVAudioSession.CategoryOptions = .allowBluetooth
         var configError: Error?
         do {
-            try audioSession.setCategory(.playAndRecord)
+            try audioSession.setCategory(.playAndRecord, options: options)
         } catch {
             configError = error
         }
