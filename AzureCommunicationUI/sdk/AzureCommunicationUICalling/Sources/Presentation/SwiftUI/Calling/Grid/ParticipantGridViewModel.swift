@@ -75,9 +75,10 @@ class ParticipantGridViewModel: ObservableObject {
         updateCellViewModel(for: orderedInfoModelArr, lifeCycleState: lifeCycleState)
 
         displayedParticipantInfoModelArr = orderedInfoModelArr
-        if callingState.status == .connected || (callType == .oneToNOutgoing
-        && ( callingState.status == .connecting || callingState.status == .ringing
-           || callingState.status == .remoteHold)) {
+        if callingState.status == .connected
+            || callingState.status == .remoteHold
+            || (callType == .oneToNOutgoing
+        && ( callingState.status == .connecting || callingState.status == .ringing)) {
             // announce participants list changes only if the user is already connected to the call
             postParticipantsListUpdateAccessibilityAnnouncements(removedModels: removedModels,
                                                                  addedModels: addedModels)
