@@ -6,13 +6,13 @@
 import SwiftUI
 import FluentUI
 
-enum DrawerState {
+internal enum DrawerState {
     case gone
     case hidden
     case visible
 }
 
-enum DrawerConstants {
+internal enum DrawerConstants {
     // How round is the drawer handle
     static let drawerHandleCornerRadius: CGFloat = 4
 
@@ -64,7 +64,7 @@ enum DrawerConstants {
 ///         .accessibilityElement(children: .contain)
 ///         .accessibilityAddTraits(.isModal)
 ///    }
-struct BottomDrawer<Content: View>: View {
+internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone
     let isPresented: Bool
     let hideDrawer: () -> Void
