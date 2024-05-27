@@ -90,8 +90,9 @@ class CallingViewModel: ObservableObject {
         let callingStatus = store.state.callingState.status
         let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
                                                                               callingStatus: callingStatus)
+        let isRemoteHold = store.state.callingState.status == .remoteHold
 
-        isParticipantGridDisplayed = (isCallConnected || isOutgoingCall) &&
+        isParticipantGridDisplayed = (isCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
@@ -178,7 +179,8 @@ class CallingViewModel: ObservableObject {
         let newIsCallConnected = state.callingState.status == .connected
         let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
                                                                               callingStatus: state.callingState.status)
-        let shouldParticipantGridDisplayed = (newIsCallConnected || isOutgoingCall) &&
+        let isRemoteHold = store.state.callingState.status == .remoteHold
+        let shouldParticipantGridDisplayed = (newIsCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
