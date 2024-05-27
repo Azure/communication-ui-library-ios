@@ -95,6 +95,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if self.participantStatus != participantModel.status {
             self.participantStatus = participantModel.status
             updateParticipantNameIfNeeded(with: renderDisplayName)
+            self.isMuted = participantModel.isMuted && participantModel.status == .connected
         }
         if self.participantName != participantModel.displayName {
             self.participantName = participantModel.displayName

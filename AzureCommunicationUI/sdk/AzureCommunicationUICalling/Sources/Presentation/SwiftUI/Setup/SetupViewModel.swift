@@ -111,11 +111,19 @@ class SetupViewModel: ObservableObject {
     func updateAccessibilityLabel() {
         if joinCallButtonViewModel.isDisabled {
             // Update the accessibility label for the disabled state
+            var key = LocalizationKey.joinCallDiableStateAccessibilityLabel
+            if callType == .oneToNOutgoing {
+                key = LocalizationKey.startCallDiableStateAccessibilityLabel
+            }
             joinCallButtonViewModel.update(accessibilityLabel:
-            self.localizationProvider.getLocalizedString(.joinCallDiableStateAccessibilityLabel))
+            self.localizationProvider.getLocalizedString(key))
         } else {
             // Update the accessibility label for the normal state
-            joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+            var key = LocalizationKey.joinCall
+            if callType == .oneToNOutgoing {
+                key = LocalizationKey.startCall
+            }
+            joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(key))
         }
     }
 

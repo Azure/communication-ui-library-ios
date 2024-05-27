@@ -359,6 +359,48 @@ class ParticipantGridViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_participantGridsViewModel_updateParticipantsState_when_newParticipantsRinging_then_participantsJoinedAnnouncementPosted() {
+        let expectation = XCTestExpectation(description: "Announcement expection")
+        let state = makeRemoteParticipantState(count: 2)
+        let callingState = CallingState(status: .ringing)
+        let expectedAnnouncement = "2 participants joined the meeting"
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let localizationProvider = LocalizationProvider(logger: LoggerMocking())
+        accessibilityProvider.postQueuedAnnouncementBlock = { message in
+            XCTAssertEqual(message, expectedAnnouncement)
+            expectation.fulfill()
+        }
+        let sut = makeSUT(callType: CompositeCallType.oneToNOutgoing,
+                          accessibilityProvider: accessibilityProvider,
+                          localizationProvider: localizationProvider)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_participantGridsViewModel_updateParticipantsState_when_newParticipantsConnecting_then_participantsJoinedAnnouncementPosted() {
+        let expectation = XCTestExpectation(description: "Announcement expection")
+        let state = makeRemoteParticipantState(count: 2)
+        let callingState = CallingState(status: .connecting)
+        let expectedAnnouncement = "2 participants joined the meeting"
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let localizationProvider = LocalizationProvider(logger: LoggerMocking())
+        accessibilityProvider.postQueuedAnnouncementBlock = { message in
+            XCTAssertEqual(message, expectedAnnouncement)
+            expectation.fulfill()
+        }
+        let sut = makeSUT(callType: CompositeCallType.oneToNOutgoing,
+                          accessibilityProvider: accessibilityProvider,
+                          localizationProvider: localizationProvider)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_participantGridsViewModel_updateParticipantsState_when_viewModelLastUpdateTimeStampSame_then_noUpdateRemoteParticipantCellViewModel() {
         let date = Calendar.current.date(
             byAdding: .minute,
@@ -635,7 +677,8 @@ class ParticipantGridViewModelTests: XCTestCase {
 }
 
 extension ParticipantGridViewModelTests {
-    func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel, LifeCycleState) -> Void)? = nil) -> ParticipantGridViewModel {
+    func makeSUT(callType: CompositeCallType = .groupCall,
+                 participantGridCellViewUpdateCompletion: ((ParticipantInfoModel, LifeCycleState) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let accessibilityProvider = AccessibilityProvider()
         var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
@@ -652,10 +695,11 @@ extension ParticipantGridViewModelTests {
         								localizationProvider: LocalizationProviderMocking(),
                                         accessibilityProvider: accessibilityProvider,
                                         isIpadInterface: false,
-                                        callType: .groupCall)
+                                        callType: callType)
     }
 
-    func makeSUT(accessibilityProvider: AccessibilityProviderProtocol,
+    func makeSUT(callType: CompositeCallType = .groupCall,
+                 accessibilityProvider: AccessibilityProviderProtocol,
                  localizationProvider: LocalizationProviderProtocol) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
@@ -665,7 +709,7 @@ extension ParticipantGridViewModelTests {
                                         localizationProvider: localizationProvider,
                                         accessibilityProvider: accessibilityProvider,
                                         isIpadInterface: false,
-                                        callType: .groupCall)
+                                        callType: callType)
     }
 
     func makeRemoteParticipantState(count: Int = 1,
