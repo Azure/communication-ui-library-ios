@@ -35,6 +35,8 @@ class CallingDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
+    private var teamsMeetingIdTextField: UITextField!
+    private var teamsMeetingPasscodeTextField: UITextField!
     /* <ROOMS_SUPPORT> */
     private var roomCallTextField: UITextField!
     private var selectedRoomRoleType: RoomRoleType = .presenter
@@ -157,6 +159,12 @@ class CallingDemoViewController: UIViewController {
 
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
+        }
+        if !envConfigSubject.teamsMeetingId.isEmpty {
+            teamsMeetingIdTextField.text = envConfigSubject.teamsMeetingId
+        }
+        if !envConfigSubject.teamsMeetingPasscode.isEmpty {
+            teamsMeetingPasscodeTextField.text = envConfigSubject.teamsMeetingPasscode
         }
         if envConfigSubject.selectedMeetingType == .groupCall {
             meetingTypeSegmentedControl.selectedSegmentIndex = 0
@@ -329,10 +337,23 @@ class CallingDemoViewController: UIViewController {
                                                                   displayName: getDisplayName()),
                                      localOptions: localOptions)
             case .teamsMeeting:
-                callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                  credential: credential,
-                                                                  displayName: getDisplayName()),
-                                     localOptions: localOptions)
+                if !teamsMeetingTextField.text!.isEmpty {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                     credential: credential,
+                                                     displayName: getDisplayName()),
+                        localOptions: localOptions
+                    )
+                } else if !teamsMeetingIdTextField.text!.isEmpty && !teamsMeetingPasscodeTextField.text!.isEmpty {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId: teamsMeetingIdTextField.text!,
+                                                                          meetingPassword:
+                                                                            teamsMeetingPasscodeTextField.text!),
+                                                     credential: credential,
+                                                     displayName: getDisplayName()),
+                        localOptions: localOptions
+                    )
+                }
             /* <ROOMS_SUPPORT:13> */
             case .roomCall:
                 callComposite.launch(remoteOptions:
@@ -521,6 +542,8 @@ class CallingDemoViewController: UIViewController {
         case .groupCall:
             groupCallTextField.isHidden = false
             teamsMeetingTextField.isHidden = true
+            teamsMeetingIdTextField.isHidden = true
+            teamsMeetingPasscodeTextField.isHidden = true
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
@@ -528,12 +551,16 @@ class CallingDemoViewController: UIViewController {
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
+            teamsMeetingIdTextField.isHidden = false
+            teamsMeetingPasscodeTextField.isHidden = false
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
         case .roomCall:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = true
+            teamsMeetingIdTextField.isHidden = true
+            teamsMeetingPasscodeTextField.isHidden = true
             roomCallTextField.isHidden = false
             roomRoleTypeSegmentedControl.isHidden = false
         /* </ROOMS_SUPPORT> */
@@ -549,13 +576,13 @@ class CallingDemoViewController: UIViewController {
     }
 
     private var isStartExperienceDisabled: Bool {
-        if (selectedAcsTokenType == .token && acsTokenTextField.text!.isEmpty)
-            || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
-            || (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty)
-            || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty)
-            /* <ROOMS_SUPPORT> */
-            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty)
-            /* </ROOMS_SUPPORT:5> */ {
+        if (selectedAcsTokenType == .token && acsTokenTextField.text!.isEmpty) ||
+           (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty) ||
+           (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty) ||
+           (selectedMeetingType == .teamsMeeting &&
+            (teamsMeetingTextField.text!.isEmpty &&
+            (teamsMeetingIdTextField.text!.isEmpty || teamsMeetingPasscodeTextField.text!.isEmpty))) ||
+           (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) {
             return true
         }
 
@@ -662,6 +689,25 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
         teamsMeetingTextField.borderStyle = .roundedRect
         teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+
+        teamsMeetingIdTextField = UITextField()
+        teamsMeetingIdTextField.placeholder = "Teams Meeting Id"
+        teamsMeetingIdTextField.text = envConfigSubject.teamsMeetingId
+        teamsMeetingIdTextField.delegate = self
+        teamsMeetingIdTextField.sizeToFit()
+        teamsMeetingIdTextField.translatesAutoresizingMaskIntoConstraints = false
+        teamsMeetingIdTextField.borderStyle = .roundedRect
+        teamsMeetingIdTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+
+        teamsMeetingPasscodeTextField = UITextField()
+        teamsMeetingPasscodeTextField.placeholder = "Teams Meeting Passcode"
+        teamsMeetingPasscodeTextField.text = envConfigSubject.teamsMeetingPasscode
+        teamsMeetingPasscodeTextField.delegate = self
+        teamsMeetingPasscodeTextField.sizeToFit()
+        teamsMeetingPasscodeTextField.translatesAutoresizingMaskIntoConstraints = false
+        teamsMeetingPasscodeTextField.borderStyle = .roundedRect
+        teamsMeetingPasscodeTextField.addTarget(
+            self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
 
         /* <ROOMS_SUPPORT> */
         roomCallTextField = UITextField()
@@ -827,6 +873,8 @@ class CallingDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
+                                                   teamsMeetingIdTextField,
+                                                   teamsMeetingPasscodeTextField,
                                                    /* <ROOMS_SUPPORT:7> */ roomCallTextField,
                                                    roomRoleTypeSegmentedControl, /* </ROOMS_SUPPORT:4> */
                                                    settingsButtonHStack,

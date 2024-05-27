@@ -9,6 +9,8 @@ import AzureCommunicationCommon
 struct CallConfiguration {
     let groupId: UUID?
     let meetingLink: String?
+    let meetingId: String?
+    let meetingPasscode: String?
     let compositeCallType: CompositeCallType
     let credential: CommunicationTokenCredential
     let displayName: String?
@@ -25,6 +27,8 @@ struct CallConfiguration {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
             self.meetingLink = nil
+            self.meetingId = nil
+            self.meetingPasscode = nil
             /* <ROOMS_SUPPORT> */
             self.roomId = nil
             self.roomRoleHint = nil
@@ -33,6 +37,17 @@ struct CallConfiguration {
         case let .teamsMeeting(teamsLink: meetingLink):
             self.groupId = nil
             self.meetingLink = meetingLink
+            self.meetingId = nil
+            self.meetingPasscode = nil
+            self.compositeCallType = .teamsMeeting
+        /* <ROOMS_SUPPORT> */
+            self.roomId = nil
+            self.roomRoleHint = nil
+        case let .teamsMeetingId(meetingId: meetingId, meetingPassword: meetingPasscode):
+            self.groupId = nil
+            self.meetingLink = nil
+            self.meetingId = meetingId
+            self.meetingPasscode = meetingPasscode
             self.compositeCallType = .teamsMeeting
         /* <ROOMS_SUPPORT> */
             self.roomId = nil
@@ -42,6 +57,8 @@ struct CallConfiguration {
             self.roomRoleHint = roleHint
             self.groupId = nil
             self.meetingLink = nil
+            self.meetingId = nil
+            self.meetingPasscode = nil
             self.compositeCallType = .roomsCall
         /* </ROOMS_SUPPORT> */
         }

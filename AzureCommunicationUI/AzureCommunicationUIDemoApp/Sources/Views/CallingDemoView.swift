@@ -144,8 +144,14 @@ struct CallingDemoView: View {
                 .textFieldStyle(.roundedBorder)
             case .teamsMeeting:
                 TextField(
-                    "Team Meeting",
+                    "Team Meeting Link",
                     text: $envConfigSubject.teamsMeetingLink)
+                TextField(
+                    "Team Meeting Id",
+                    text: $envConfigSubject.teamsMeetingId)
+                TextField(
+                    "Team Meeting Passcode",
+                    text: $envConfigSubject.teamsMeetingPasscode)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
@@ -226,9 +232,17 @@ struct CallingDemoView: View {
             return true
         }
 
-        if (envConfigSubject.selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty)
-            || envConfigSubject.selectedMeetingType == .teamsMeeting && envConfigSubject.teamsMeetingLink.isEmpty {
+        if envConfigSubject.selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty {
             return true
+        } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
+            // Check if teamsMeetingLink is not empty or both meetingId and passcode are not empty
+            let isTeamsMeetingLinkValid = !envConfigSubject.teamsMeetingLink.isEmpty
+            let isTeamsMeetingIdAndPasscodeValid = !envConfigSubject.teamsMeetingId.isEmpty
+            && !envConfigSubject.teamsMeetingPasscode.isEmpty
+
+            if !isTeamsMeetingLinkValid && !isTeamsMeetingIdAndPasscodeValid {
+                return true
+            }
         }
 
         return false
@@ -403,16 +417,46 @@ extension CallingDemoView {
                                          localOptions: localOptions)
                 }
             case .teamsMeeting:
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
+                if !envConfigSubject.teamsMeetingLink.isEmpty {
+                    if envConfigSubject.displayName.isEmpty {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink:
+                                                                                envConfigSubject.teamsMeetingLink),
+                                                         credential: credential),
+                            localOptions: localOptions
+                        )
+                    } else {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink:
+                                                                                envConfigSubject.teamsMeetingLink),
+                                                         credential: credential,
+                                                         displayName: envConfigSubject.displayName),
+                            localOptions: localOptions
+                        )
+                    }
+                } else if !envConfigSubject.teamsMeetingId.isEmpty && !envConfigSubject.teamsMeetingPasscode.isEmpty {
+                    if envConfigSubject.displayName.isEmpty {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
+                                                                                envConfigSubject.teamsMeetingId,
+                                                                              meetingPassword:
+                                                                                envConfigSubject.teamsMeetingPasscode),
+                                                         credential: credential),
+                            localOptions: localOptions
+                        )
+                    } else {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
+                                                                                envConfigSubject.teamsMeetingId,
+                                                                              meetingPassword:
+                                                                                envConfigSubject.teamsMeetingPasscode),
+                                                         credential: credential,
+                                                         displayName: envConfigSubject.displayName),
+                            localOptions: localOptions
+                        )
+                    }
                 }
+
             /* <ROOMS_SUPPORT> */
             case .roomCall:
                 if envConfigSubject.displayName.isEmpty {

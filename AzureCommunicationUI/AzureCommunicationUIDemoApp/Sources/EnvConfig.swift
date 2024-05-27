@@ -17,6 +17,8 @@ enum EnvConfig: String {
     case displayName
     case groupCallId
     case teamsMeetingLink
+    case teamsMeetingId
+    case teamsMeetingPasscode
     case threadId
     case endpointUrl
     /* <ROOMS_SUPPORT:12> */
@@ -47,6 +49,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var navigationSubtitle: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
+    @Published var teamsMeetingId: String = EnvConfig.teamsMeetingId.value()
+    @Published var teamsMeetingPasscode: String = EnvConfig.teamsMeetingPasscode.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
     /* <ROOMS_SUPPORT> */
