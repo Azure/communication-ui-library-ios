@@ -163,6 +163,76 @@ class SetupViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: timeout)
     }
 
+    func test_setupViewModel_receive_when_appStateUpdated_then_startCallButtonViewModelUpdated() {
+        let appState = AppState()
+        let expectation = XCTestExpectation(description: "StartCallButtonViewModel is updated")
+        var stringList: [String?] = []
+        let updateJoinCallButtonViewModel: ((String?) -> Void) = { accessibilityLabel in
+            stringList.append(accessibilityLabel)
+            expectation.fulfill()
+        }
+        factoryMocking.primaryButtonViewModel = PrimaryButtonViewModelMocking(buttonStyle: .primaryFilled,
+                                                                              buttonLabel: "buttonLabel",
+                                                                              updateLabel: updateJoinCallButtonViewModel)
+        let sut = makeSUT(callType: .oneToNOutgoing)
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+        XCTAssertEqual(true, stringList.contains(LocalizationKey.startCall.rawValue))
+    }
+
+    func test_setupViewModel_receive_when_appStateUpdated_then_joinCallButtonViewModelLabelUpdated() {
+        let appState = AppState()
+        let expectation = XCTestExpectation(description: "JoinCallButtonViewModel is updated")
+        var stringList: [String?] = []
+        let updateJoinCallButtonViewModel: ((String?) -> Void) = { accessibilityLabel in
+            stringList.append(accessibilityLabel)
+            expectation.fulfill()
+        }
+        factoryMocking.primaryButtonViewModel = PrimaryButtonViewModelMocking(buttonStyle: .primaryFilled,
+                                                                              buttonLabel: "buttonLabel",
+                                                                              updateLabel: updateJoinCallButtonViewModel)
+        let sut = makeSUT(callType: .groupCall)
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+        XCTAssertEqual(true, stringList.contains(LocalizationKey.joinCall.rawValue))
+    }
+
+    func test_setupViewModel_receive_when_appStateUpdatedWithNoAudioPermissions_then_startCallButtonViewModelUpdated() {
+        let appState = AppState(permissionState: PermissionState(audioPermission: .denied))
+        let expectation = XCTestExpectation(description: "StartCallButtonViewModel is updated")
+        var stringList: [String?] = []
+        let updateJoinCallButtonViewModel: ((String?) -> Void) = { accessibilityLabel in
+            stringList.append(accessibilityLabel)
+            expectation.fulfill()
+        }
+        factoryMocking.primaryButtonViewModel = PrimaryButtonViewModelMocking(buttonStyle: .primaryFilled,
+                                                                              buttonLabel: "buttonLabel",
+                                                                              isDisabled: true,
+                                                                              updateLabel: updateJoinCallButtonViewModel)
+        let sut = makeSUT(callType: .oneToNOutgoing)
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+        XCTAssertEqual(true, stringList.contains(LocalizationKey.startCallDiableStateAccessibilityLabel.rawValue))
+    }
+
+    func test_setupViewModel_receive_when_appStateUpdatedWithNoAudioPermissions_then_joinCallButtonViewModelLabelUpdated() {
+        let appState = AppState(permissionState: PermissionState(audioPermission: .denied))
+        let expectation = XCTestExpectation(description: "JoinCallButtonViewModel is updated")
+        var stringList: [String?] = []
+        let updateJoinCallButtonViewModel: ((String?) -> Void) = { accessibilityLabel in
+            stringList.append(accessibilityLabel)
+            expectation.fulfill()
+        }
+        factoryMocking.primaryButtonViewModel = PrimaryButtonViewModelMocking(buttonStyle: .primaryFilled,
+                                                                              buttonLabel: "buttonLabel",
+                                                                              isDisabled: true,
+                                                                              updateLabel: updateJoinCallButtonViewModel)
+        let sut = makeSUT(callType: .groupCall)
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+        XCTAssertEqual(true, stringList.contains(LocalizationKey.joinCallDiableStateAccessibilityLabel.rawValue))
+    }
+
     func test_setupViewModel_receive_when_appStateUpdated_then_errorInfoViewModelUpdated() {
         let appState = AppState()
         let expectation = XCTestExpectation(description: "ErrorInfoViewModel is updated")
@@ -184,13 +254,13 @@ extension SetupViewModelTests {
                             isTranscriptionActive: false)
     }
 
-    func makeSUT() -> SetupViewModel {
+    func makeSUT(callType: CompositeCallType = .groupCall) -> SetupViewModel {
         return SetupViewModel(compositeViewModelFactory: factoryMocking,
                               logger: logger,
                               store: storeFactory.store,
                               networkManager: NetworkManager(),
                               audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger, isCallKitEnabled: false),
                               localizationProvider: LocalizationProviderMocking(),
-                              callType: .groupCall)
+                              callType: callType)
     }
 }

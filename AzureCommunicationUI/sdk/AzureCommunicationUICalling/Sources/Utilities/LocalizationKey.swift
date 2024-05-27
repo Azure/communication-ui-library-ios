@@ -33,6 +33,8 @@ enum LocalizationKey: String {
     case deviceAccesibiiltyLabel = "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"
     case joinCallDiableStateAccessibilityLabel =
             "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel"
+    case startCallDiableStateAccessibilityLabel =
+            "AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel"
     case goToSettings = "AzureCommunicationUICalling.SetupView.Button.GoToSettings"
     case cameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"
     case audioAndCameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"
