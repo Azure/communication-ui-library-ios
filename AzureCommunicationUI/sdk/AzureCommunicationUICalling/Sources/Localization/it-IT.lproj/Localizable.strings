@@ -19,6 +19,7 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Avvio chiamata in corso…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Partecipazione alla chiamata disabilitata";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video disattivato";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video disattivato";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video attivato";
