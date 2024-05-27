@@ -26,11 +26,13 @@ struct BottomDrawer<Content: View>: View {
     // @ObservedObject var keyboardWatcher = LandscapeAwareKeyboardWatcher.shared
     @Binding var isPresented: Bool
     @State private var drawerState: DrawerState = .gone
+    let hideDrawer: () -> Void
     let content: Content
 
-    init(isPresented: Binding<Bool>, @ViewBuilder content: () -> Content) {
+    init(isPresented: Binding<Bool>, hideDrawer: @escaping () -> Void, @ViewBuilder content: () -> Content) {
         _isPresented = isPresented
         self.content = content()
+        self.hideDrawer = hideDrawer
     }
 
     var body: some View {
@@ -40,7 +42,7 @@ struct BottomDrawer<Content: View>: View {
                     .ignoresSafeArea()
                     .onTapGesture {
                         withAnimation {
-                            isPresented = false
+                            hideDrawer()
                         }
                     }
                     .allowsHitTesting(drawerState == .visible)
@@ -57,7 +59,7 @@ struct BottomDrawer<Content: View>: View {
                                 .onEnded { value in
                                     if value.translation.height > 50 {
                                         withAnimation {
-                                            isPresented = false
+                                            hideDrawer()
                                         }
                                     }
                                 })
@@ -68,7 +70,7 @@ struct BottomDrawer<Content: View>: View {
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(16)
                     .shadow(radius: 10)
-                    .padding(.bottom, /* keyboardWatcher.activeHeight */ -DrawerConstants.bottomFillY)
+                    .padding(.bottom, -DrawerConstants.bottomFillY)
                 }
                 .transition(.move(edge: .bottom))
                 .animation(.easeInOut, value: drawerState == .visible)

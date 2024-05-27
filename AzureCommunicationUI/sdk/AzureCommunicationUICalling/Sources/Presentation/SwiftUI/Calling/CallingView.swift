@@ -50,7 +50,8 @@ struct CallingView: View {
                 }
                 errorInfoView
 
-                BottomDrawer(isPresented: $viewModel.showingSupportForm) {
+                BottomDrawer(isPresented: $viewModel.supportFormViewModel.isDisplayed,
+                             hideDrawer: viewModel.supportFormViewModel.hideForm) {
                     reportErrorView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)

@@ -14,7 +14,6 @@ class CallingViewModel: ObservableObject {
     @Published var isInPip = false
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var allowLocalCameraPreview = false
-    @Published var showingSupportForm = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -63,7 +62,6 @@ class CallingViewModel: ObservableObject {
         let actionDispatch: ActionDispatch = store.dispatch
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
-        showingSupportForm = store.state.navigationState.supportFormVisible
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
@@ -139,9 +137,8 @@ class CallingViewModel: ObservableObject {
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
-        showingSupportForm = store.state.navigationState.supportFormVisible
-            && store.state.visibilityState.currentStatus == .visible
 
+        supportFormViewModel.update(state: state)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
