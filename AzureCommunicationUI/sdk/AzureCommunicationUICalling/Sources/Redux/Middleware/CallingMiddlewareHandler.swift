@@ -41,6 +41,8 @@ protocol CallingMiddlewareHandling {
     @discardableResult
     func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func onMicPermissionIsGranted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func admitAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func declineAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -76,7 +78,9 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                    state.errorState.internalError == nil {
                     await requestCameraPreviewOn(state: state, dispatch: dispatch).value
                 }
-
+                if state.defaultUserState.audioState == .on {
+                    dispatch(.localUserAction(.microphonePreviewOn))
+                }
                 if state.callingState.operationStatus == .skipSetupRequested {
                     dispatch(.callingAction(.callStartRequested))
                 }
@@ -280,6 +284,15 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             case .remote:
                 dispatch(.localUserAction(.cameraOnTriggered))
             }
+        }
+    }
+
+    func onMicPermissionIsGranted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.permissionState.audioPermission == .requesting else {
+                return
+            }
+            setupCall(state: state, dispatch: dispatch)
         }
     }
 

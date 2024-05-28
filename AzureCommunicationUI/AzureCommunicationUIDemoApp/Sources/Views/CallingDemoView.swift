@@ -210,11 +210,6 @@ struct CallingDemoView: View {
         Button("Start Experience") {
             isStartExperienceLoading = true
             Task { @MainActor in
-                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
-                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
-                    isStartExperienceLoading = false
-                    return
-                }
                 await startCallComposite()
                 isStartExperienceLoading = false
             }
@@ -361,11 +356,6 @@ extension CallingDemoView {
     fileprivate func relaunchComposite() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Task { @MainActor in
-                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
-                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
-                    isStartExperienceLoading = false
-                    return
-                }
                 await startCallComposite()
                 isStartExperienceLoading = false
             }
@@ -795,10 +785,6 @@ extension CallingDemoView {
         alertMessage = message
         alertTitle = "Alert"
         isAlertDisplayed = true
-    }
-
-    private func getAudioPermissionStatus() -> AVAudioSession.RecordPermission {
-        return AVAudioSession.sharedInstance().recordPermission
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {

@@ -310,15 +310,11 @@ public class CallComposite {
         self.viewController = viewController
         present(viewController)
         UIApplication.shared.isIdleTimerDisabled = true
-
         if store.state.permissionState.audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
+        } else {
+            store.dispatch(action: .callingAction(.setupCall))
         }
-        if store.state.defaultUserState.audioState == .on {
-            store.dispatch(action: .localUserAction(.microphonePreviewOn))
-        }
-
-        store.dispatch(action: .callingAction(.setupCall))
         compositeUILaunched = true
     }
 
@@ -398,7 +394,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         let acceptedCallLocalOptions = LocalOptions(participantViewData: localOptions?.participantViewData,
                                                    setupScreenViewData: localOptions?.setupScreenViewData,
                                                    cameraOn: false,
-                                                   microphoneOn: true,
+                                                   microphoneOn: false,
                                                    skipSetupScreen: true,
                                                    audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo)
         launch(configuration, localOptions: acceptedCallLocalOptions)
@@ -440,6 +436,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// CompositeUILaunched will be set to false once existing call is disconnected
     private func notifyOnCallKitCallAccepted() {
         logger.debug("notifyOnCallKitCallAccepted start")
+        if store?.state.navigationState.status == .setup {
+            exitManager?.dismiss()
+        }
         if !compositeUILaunched,
            pipViewController == nil,
            let incomingCall = callingSDKInitializer?.getIncomingCall(),
