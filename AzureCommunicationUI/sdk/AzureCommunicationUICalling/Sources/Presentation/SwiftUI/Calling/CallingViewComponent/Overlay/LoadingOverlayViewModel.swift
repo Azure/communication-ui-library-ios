@@ -57,15 +57,15 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         let callingState = state.callingState
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
-        let shouldDisplay = operationStatus == .skipSetupRequested && callingStatus != .connected &&
-        callingState.status != .inLobby && callType != .oneToNOutgoing
+        let shouldDisplay = operationStatus == .skipSetupRequested &&
+        ((callingStatus == .connecting || callingStatus == .none) && callType != .oneToNOutgoing)
 
         if shouldDisplay != isDisplayed {
             isDisplayed = shouldDisplay
             accessibilityProvider.moveFocusToFirstElement()
         }
 
-        if isDisplayed && permissionState.audioPermission == .denied {
+        if permissionState.audioPermission == .denied {
             store.dispatch(action: .errorAction(.fatalErrorUpdated(
                 internalError: .callJoinFailedByMicPermission, error: nil)))
         }
