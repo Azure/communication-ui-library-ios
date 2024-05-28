@@ -38,6 +38,8 @@ protocol CallingServiceProtocol {
     func admitAllLobbyParticipants() async throws
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws
+    func removeParticipant(_ participantId: String) async throws
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType>
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -133,4 +135,13 @@ class CallingService: NSObject, CallingServiceProtocol {
     func declineLobbyParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.declineLobbyParticipant(participantId)
     }
+    
+    func removeParticipant(_ participantId: String) async throws {
+        try await callingSDKWrapper.removeParticipant(participantId)
+    }
+
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType> {
+        try await callingSDKWrapper.getCapabilities()
+    }
+    
 }

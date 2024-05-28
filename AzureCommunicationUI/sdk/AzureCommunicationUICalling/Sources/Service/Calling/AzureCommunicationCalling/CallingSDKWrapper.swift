@@ -11,6 +11,7 @@ import Foundation
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
+    
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger
@@ -311,6 +312,33 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+    
+    func removeParticipant(_ participantId: String) async throws {
+        guard let participantToRemove = call?.remoteParticipants.first(where: {$0.identifier.rawId == participantId}) else {
+            return
+        }
+        
+        do {
+            try await call?.remove(participant: participantToRemove)
+            logger.debug("Participant remove successful")
+        } catch {
+            logger.error("Error: Participant remove operation unsuccessful. Please check capabilities.")
+            throw error
+        }
+    }
+    
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType> {
+        guard let capabilitiesFeature = call?.feature(Features.capabilities) else {
+            return []
+        }
+        
+        let capabilities = capabilitiesFeature.capabilities
+        let filtered = capabilities.compactMap { $0.toParticipantCapability() }
+            .filter { $0.allowed }
+            .map { $0.type }
+        
+        return Set(filtered)
+    }
 }
 
 extension CallingSDKWrapper {
@@ -397,11 +425,13 @@ extension CallingSDKWrapper {
         let transcriptionCallFeature = call.feature(Features.transcription)
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
         let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
+        let capabilitiesFeature = call.feature(Features.capabilities)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
             callingEventsHandler.assign(localUserDiagnosticsFeature)
+            callingEventsHandler.assign(capabilitiesFeature)
         }
     }
 
