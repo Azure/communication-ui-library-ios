@@ -172,7 +172,9 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     private func disposeLocalVideoRendererCache(_ identifier: String) {
         if let renderer = localRendererViews.removeValue(forKey: identifier) {
-            renderer.renderer.dispose()
+            if renderer.rendererView.isRendering() {
+                renderer.renderer.dispose()
+            }
         }
     }
 

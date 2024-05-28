@@ -215,8 +215,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug( "call id from call \(self.call?.id)")
             logger.debug( "call id from callConfiguration.callId \(self.callConfiguration.callId)")
 
-            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
-                call?.delegate = callingEventsHandler
+            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler,
+            let call = call {
+                call.delegate = callingEventsHandler
             }
             setupFeatures()
         } catch {
@@ -483,6 +484,11 @@ extension CallingSDKWrapper {
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
             callingEventsHandler.assign(localUserDiagnosticsFeature)
+            if callConfiguration.compositeCallType == .oneToOneIncoming && call.state == .connected {
+                // If call is accepted from CallKit
+                // call state can already be accepted, thus call state change will be missed
+                callingEventsHandler.onStateChanged(call: call)
+            }
         }
     }
 
