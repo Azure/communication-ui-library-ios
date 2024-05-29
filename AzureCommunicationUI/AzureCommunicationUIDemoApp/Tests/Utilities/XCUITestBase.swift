@@ -189,7 +189,7 @@ extension XCUITestBase {
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
-                        lifetime: XCTAttachment.Lifetime  = .keepAlways) {
+                        lifetime: XCTAttachment.Lifetime = .keepAlways) {
         let screenshot = app.screenshot()
         let attachment = XCTAttachment(screenshot: screenshot)
         attachment.name = name
@@ -203,6 +203,28 @@ extension XCUITestBase {
         if useCallingSDKMock {
             enableMockCallingSDKWrapper()
         }
+        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+                         shouldWait: true)
+    }
+
+    func disableLeaveCallConfirmationToggle(useCallingSDKMock: Bool = true) {
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+        let leaveToggle = app.switches[AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue]
+        wait(for: leaveToggle)
+        leaveToggle.tap()
+        XCTAssertEqual(leaveToggle.isOn, false)
+        if #unavailable(iOS 16) {
+            // for <iOS 16, the table is shown
+            app.tables.firstMatch.swipeUp()
+        } else {
+            // for iOS 16, the collection is shown
+            app.collectionViews.firstMatch.swipeUp()
+        }
+        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        wait(for: toggle)
+        toggle.tap()
+        XCTAssertEqual(toggle.isOn, true)
+        closeDemoAppSettingsPage()
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
     }

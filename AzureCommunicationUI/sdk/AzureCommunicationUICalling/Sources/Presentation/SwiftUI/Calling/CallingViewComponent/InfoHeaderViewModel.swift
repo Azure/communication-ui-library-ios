@@ -9,9 +9,9 @@ import Foundation
 class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
-    @Published var isInfoHeaderDisplayed: Bool = true
-    @Published var isParticipantsListDisplayed: Bool = false
-    @Published var isVoiceOverEnabled: Bool = false
+    @Published var isInfoHeaderDisplayed = true
+    @Published var isParticipantsListDisplayed = false
+    @Published var isVoiceOverEnabled = false
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -26,7 +26,7 @@ class InfoHeaderViewModel: ObservableObject {
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
-    var isPad: Bool = false
+    var isPad = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -92,7 +92,11 @@ class InfoHeaderViewModel: ObservableObject {
         guard !isVoiceOverEnabled else {
             return
         }
-        self.isInfoHeaderDisplayed ? hideInfoHeader() : displayWithTimer()
+        if self.isInfoHeaderDisplayed {
+            hideInfoHeader()
+        } else {
+            displayWithTimer()
+        }
     }
 
     func update(localUserState: LocalUserState,

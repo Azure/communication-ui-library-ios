@@ -11,8 +11,8 @@ import FluentUI
 import AVKit
 import Combine
 
-// swiftlint:disable type_body_length
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     /// The class to configure events closures for Call Composite.
@@ -62,11 +62,13 @@ public class CallComposite {
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
+    private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
     private var pipViewController: UIViewController?
     private var cancellables = Set<AnyCancellable>()
+    private var callingSDKWrapper: CallingSDKWrapperProtocol?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -91,6 +93,8 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
+        leaveCallConfirmationMode =
+               options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
     }
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
@@ -156,7 +160,8 @@ public class CallComposite {
                        localOptions: LocalOptions? = nil) {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName)
+                                                  displayName: remoteOptions.displayName /* <ROOMS_SUPPORT> ,
+                                                  roleHint: localOptions?.roleHint </ROOMS_SUPPORT> */ )
         launch(callConfiguration, localOptions: localOptions)
     }
 
@@ -211,7 +216,11 @@ public class CallComposite {
         }
         set(isHidden) {
             if isHidden {
-                hide()
+                if self.enableSystemPipWhenMultitasking {
+                    store?.dispatch(action: .visibilityAction(.pipModeRequested))
+                } else if self.enableMultitasking {
+                    store?.dispatch(action: .visibilityAction(.hideRequested))
+                }
             } else {
                 displayCallCompositeIfWasHidden()
             }
@@ -236,7 +245,7 @@ public class CallComposite {
             logger: logger,
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
             callConfiguration: callConfiguration)
-
+        self.callingSDKWrapper = callingSdkWrapper
         let store = Store.constructStore(
             logger: logger,
             callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
@@ -292,6 +301,7 @@ public class CallComposite {
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
+                leaveCallConfirmationMode: leaveCallConfirmationMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
@@ -319,6 +329,8 @@ public class CallComposite {
         self.pipManager = nil
         self.callHistoryService = nil
         self.exitManager = nil
+        self.callingSDKWrapper?.dispose()
+        self.callingSDKWrapper = nil
     }
 
     private func present(_ viewController: UIViewController) {
@@ -438,3 +450,4 @@ extension CallComposite {
         })
     }
 }
+// swiftlint:enable type_body_length

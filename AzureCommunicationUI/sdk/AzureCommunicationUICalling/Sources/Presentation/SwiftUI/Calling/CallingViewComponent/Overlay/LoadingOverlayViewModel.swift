@@ -47,7 +47,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
 
     var subtitle: String = ""
 
-    @Published var isDisplayed: Bool = false
+    @Published var isDisplayed = false
 
     func receive(_ state: AppState) {
         let permissionState = state.permissionState

@@ -8,9 +8,9 @@ import Foundation
 class LobbyWaitingHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var title: String
-    @Published var isDisplayed: Bool = false
-    @Published var isParticipantsListDisplayed: Bool = false
-    @Published var isVoiceOverEnabled: Bool = false
+    @Published var isDisplayed = false
+    @Published var isParticipantsListDisplayed = false
+    @Published var isVoiceOverEnabled = false
 
     private let logger: Logger
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -21,7 +21,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
     var participantListButtonViewModel: PrimaryButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
-    var isPad: Bool = false
+    var isPad = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -107,7 +107,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
     private func canShowLobby(
         callingState: CallingState,
         visibilityState: VisibilityState,
-        participantRole: ParticipantRole?
+        participantRole: ParticipantRoleEnum?
     ) -> Bool {
         guard callingState.status != .inLobby,
               callingState.status != .localHold,

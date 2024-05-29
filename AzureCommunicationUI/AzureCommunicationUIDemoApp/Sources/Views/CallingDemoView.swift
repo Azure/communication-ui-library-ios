@@ -12,10 +12,10 @@ import AVFoundation
 import AzureCommunicationUICalling
 #endif
 struct CallingDemoView: View {
-    @State var isAlertDisplayed: Bool = false
-    @State var isSettingsDisplayed: Bool = false
-    @State var isStartExperienceLoading: Bool = false
-    @State var exitCompositeExecuted: Bool = false
+    @State var isAlertDisplayed = false
+    @State var isSettingsDisplayed = false
+    @State var isStartExperienceLoading = false
+    @State var exitCompositeExecuted = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
     @State var callState: String = ""
@@ -26,6 +26,10 @@ struct CallingDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    /* <ROOMS_SUPPORT>
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let roomRoleChoices: [String] = ["Presenter", "Attendee"]
+    </ROOMS_SUPPORT> */
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
@@ -52,7 +56,15 @@ struct CallingDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
+
             Group {
+                /* <ROOMS_SUPPORT>
+                if envConfigSubject.selectedMeetingType == .roomCall {
+                    roomRoleSelector
+                } else {
+                    roomRoleSelector.hidden()
+                }
+                </ROOMS_SUPPORT> */
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
@@ -120,27 +132,49 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                /* <ROOMS_SUPPORT> Text("Room Call").tag(MeetingType.roomCall) </ROOMS_SUPPORT> */
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 TextField(
                     "Group Call Id",
                     text: $envConfigSubject.groupCallId)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .textFieldStyle(.roundedBorder)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
             case .teamsMeeting:
                 TextField(
                     "Team Meeting",
                     text: $envConfigSubject.teamsMeetingLink)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .textFieldStyle(.roundedBorder)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+                /* <ROOMS_SUPPORT>
+            case .roomCall:
+                TextField(
+                    "Room Id",
+                    text: $envConfigSubject.roomId)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+                </ROOMS_SUPPORT> */
             }
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
     }
+
+    /* <ROOMS_SUPPORT>
+    var roomRoleSelector: some View {
+
+        Section {
+            Picker("Room Role Type", selection: $envConfigSubject.selectedRoomRoleType) {
+                Text("Presenter").tag(RoomRoleType.presenter)
+                Text("Attendee").tag(RoomRoleType.attendee)
+            }.pickerStyle(.segmented)
+        }
+    }
+    </ROOMS_SUPPORT> */
 
     var settingButton: some View {
         Button("Settings") {
@@ -225,6 +259,10 @@ extension CallingDemoView {
 
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
+        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                        envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -245,13 +283,17 @@ extension CallingDemoView {
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
-            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
+            callScreenOptions: callScreenOptions)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
                           callingSDKWrapperProtocol: callingSDKWrapperMock)
             : CallComposite(withOptions: callCompositeOptions)
+
+        callingSDKWrapperMock?.callComposite = callComposite
+
         #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         #endif
@@ -318,9 +360,20 @@ extension CallingDemoView {
         callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
-                                nil:envConfigSubject.renderedDisplayName
+                                nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
+        /* <ROOMS_SUPPORT>
+        let roomRole = envConfigSubject.selectedRoomRoleType
+        var roomRoleData: ParticipantRole?
+        if envConfigSubject.selectedMeetingType == .roomCall {
+            if roomRole == .presenter {
+                roomRoleData = ParticipantRole.presenter
+            } else if roomRole == .attendee {
+                roomRoleData = ParticipantRole.attendee
+            }
+        }
+        </ROOMS_SUPPORT> */
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
@@ -328,7 +381,12 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        /* <ROOMS_SUPPORT>
+                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                         roleHint: roomRoleData
+                                        <|ROOMS_SUPPORT> */
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        /* </ROOMS_SUPPORT> */
         )
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
@@ -355,6 +413,22 @@ extension CallingDemoView {
                                                                       displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
                 }
+            /* <ROOMS_SUPPORT>
+            case .roomCall:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions:
+                                            RemoteOptions(for: .roomCall(roomId: link),
+                                                          credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for:
+                                .roomCall(roomId: link),
+                                                     credential: credential,
+                                                     displayName: envConfigSubject.displayName),
+                        localOptions: localOptions)
+                }
+             </ROOMS_SUPPORT> */
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -395,6 +469,10 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        /* <ROOMS_SUPPORT>
+        case .roomCall:
+            return envConfigSubject.roomId
+        </ROOMS_SUPPORT> */
         }
     }
 

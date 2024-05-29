@@ -6,7 +6,7 @@
 import Foundation
 import AzureCommunicationCalling
 
-enum ParticipantRole: Int {
+enum ParticipantRoleEnum: Int {
     case uninitialized
     case attendee
     case consumer
@@ -16,7 +16,7 @@ enum ParticipantRole: Int {
 }
 
 extension AzureCommunicationCalling.CallParticipantRole {
-    func toParticipantRole() -> ParticipantRole {
+    func toParticipantRole() -> ParticipantRoleEnum {
         switch self {
         case .attendee:
             return .attendee

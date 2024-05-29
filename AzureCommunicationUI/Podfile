@@ -12,18 +12,19 @@ target 'AzureCommunicationUICalling' do
   project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
   use_frameworks!
   pod 'AzureCore', '1.0.0-beta.15'
-  pod 'AzureCommunicationCalling', '2.8.0'
+  pod 'AzureCommunicationCalling', '2.10.1'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
-  pod 'SwiftLint', '0.42.0'
+  pod 'AzureCore', '1.0.0-beta.15'
+  pod 'SwiftLint', '0.53.0'
 
   target 'AzureCommunicationUICallingTests' do
     # Pods for testing
-    pod 'SwiftLint', '0.42.0'
+    pod 'SwiftLint', '0.53.0'
   end
 end
 
@@ -37,18 +38,18 @@ target 'AzureCommunicationUIChat' do
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
-  pod 'SwiftLint', '0.42.0'
+  pod 'SwiftLint', '0.53.0'
 
   target 'AzureCommunicationUIChatTests' do
     # Pods for testing
-    pod 'SwiftLint', '0.42.0'
+    pod 'SwiftLint', '0.53.0'
   end
 end
 
 target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.8.0'
+  pod 'AzureCommunicationCalling', '2.10.1'
   pod 'AzureCommunicationChat', '1.3.3'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
@@ -56,7 +57,7 @@ target 'AzureCommunicationUIDemoApp' do
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
-  pod 'SwiftLint', '0.42.0'
+  pod 'SwiftLint', '0.53.0'
   pod 'AppCenter/Crashes', '4.4.1'
 
   # Include AlamoFire for use with the User Reported Issue handler
@@ -64,7 +65,7 @@ target 'AzureCommunicationUIDemoApp' do
 
   target 'AzureCommunicationUIDemoAppUITests' do
     # Pods for testing
-    pod 'SwiftLint', '0.42.0'
+    pod 'SwiftLint', '0.53.0'
   end
 end
 

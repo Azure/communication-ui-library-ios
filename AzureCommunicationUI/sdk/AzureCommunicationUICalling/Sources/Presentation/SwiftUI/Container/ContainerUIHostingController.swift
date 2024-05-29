@@ -144,7 +144,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
 
     // MARK: Prefers Home Indicator Auto Hidden
 
-    private var _prefersHomeIndicatorAutoHidden: Bool = false {
+    private var _prefersHomeIndicatorAutoHidden = false {
         didSet { setNeedsUpdateOfHomeIndicatorAutoHidden() }
     }
 

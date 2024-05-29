@@ -17,7 +17,7 @@ struct ContainerView: View {
     let callingViewOrientationMask: UIInterfaceOrientationMask?
     let isRightToLeft: Bool
     var isCallingScreenLocked: Bool {
-        return !(callingViewOrientationMask  == .allButUpsideDown || callingViewOrientationMask == nil)
+        return !(callingViewOrientationMask == .allButUpsideDown || callingViewOrientationMask == nil)
     }
 
     var body: some View {

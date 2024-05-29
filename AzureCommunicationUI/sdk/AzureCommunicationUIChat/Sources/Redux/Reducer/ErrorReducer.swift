@@ -55,10 +55,10 @@ extension Reducer where State == ErrorState,
             error = chatError
             errorCategory = .chatState
         // Exhaustive unimplemented actions
-        case .chatAction(_),
-                .participantsAction(_),
-                .lifecycleAction(_),
-                .repositoryAction(_),
+        case .chatAction,
+                .participantsAction,
+                .lifecycleAction,
+                .repositoryAction,
                 .compositeExitAction,
                 .chatViewLaunched,
                 .chatViewHeadless:

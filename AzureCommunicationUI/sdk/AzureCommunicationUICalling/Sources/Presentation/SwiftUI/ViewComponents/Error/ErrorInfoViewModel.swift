@@ -7,7 +7,7 @@ import Foundation
 import Combine
 
 class ErrorInfoViewModel: ObservableObject {
-    @Published private(set) var isDisplayed: Bool = false
+    @Published private(set) var isDisplayed = false
     @Published private(set) var title: String
     @Published private(set) var subtitle: String
 

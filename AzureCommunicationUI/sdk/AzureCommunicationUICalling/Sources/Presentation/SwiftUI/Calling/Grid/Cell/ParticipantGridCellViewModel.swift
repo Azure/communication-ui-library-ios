@@ -26,7 +26,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var participantIdentifier: String
     @Published var isInBackground: Bool
 
-    private var isScreenSharing: Bool = false
+    private var isScreenSharing = false
     private var participantName: String
     private var renderDisplayName: String?
     private var isCameraEnabled: Bool
@@ -126,7 +126,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
                                                     participantModel.isMuted ? .muted : .unmuted)
 
         let videoStatus = (videoViewModel?.videoStreamId?.isEmpty ?? true) ?
-        localizationProvider.getLocalizedString(.videoOff):
+        localizationProvider.getLocalizedString(.videoOff) :
         localizationProvider.getLocalizedString(.videoOn)
         return localizationProvider.getLocalizedString(.participantInformationAccessibilityLable,
                                                        participantModel.displayName, status, videoStatus)

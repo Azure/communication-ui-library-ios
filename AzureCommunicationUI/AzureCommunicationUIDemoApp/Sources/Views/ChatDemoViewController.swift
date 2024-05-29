@@ -38,8 +38,8 @@ class ChatDemoViewController: UIViewController {
     // The space needed to fill the top part of the stack view,
     // in order to make the stackview content centered
     private var spaceToFullInStackView: CGFloat?
-    private var userIsEditing: Bool = false
-    private var isKeyboardShowing: Bool = false
+    private var userIsEditing = false
+    private var isKeyboardShowing = false
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
@@ -205,8 +205,7 @@ class ChatDemoViewController: UIViewController {
             ChatCompositeErrorCode.fetchMessagesFailed,
             ChatCompositeErrorCode.requestParticipantsFetchFailed,
             ChatCompositeErrorCode.sendReadReceiptFailed,
-            ChatCompositeErrorCode.sendTypingIndicatorFailed,
-            ChatCompositeErrorCode.disconnectFailed:
+            ChatCompositeErrorCode.sendTypingIndicatorFailed:
             // no alert
             return
         default:

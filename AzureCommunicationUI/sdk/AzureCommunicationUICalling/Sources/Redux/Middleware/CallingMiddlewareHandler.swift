@@ -54,6 +54,7 @@ protocol CallingMiddlewareHandling {
                                  participantId: String) -> Task<Void, Never>
 }
 
+// swiftlint:disable type_body_length
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
     private let callingService: CallingServiceProtocol
     private let logger: Logger
@@ -452,3 +453,4 @@ extension CallingMiddlewareHandler {
             }.store(in: subscription)
     }
 }
+// swiftlint:enable type_body_length

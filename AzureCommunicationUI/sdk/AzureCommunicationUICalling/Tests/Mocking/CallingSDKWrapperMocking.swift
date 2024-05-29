@@ -22,6 +22,9 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         []
     }
 
+    func dispose() {
+    }
+
     func startCallLocalVideoStream() async throws -> String {
         return try await Task<String, Error> {
             ""
@@ -46,11 +49,11 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var switchCameraCallCount: Int = 0
     var getRemoteParticipantCallIds: [String] = []
 
-    var holdCallCalled: Bool = false
-    var resumeCallCalled: Bool = false
-    var muteLocalMicCalled: Bool = false
-    var unmuteLocalMicCalled: Bool = false
-    var startPreviewVideoStreamCalled: Bool = false
+    var holdCallCalled = false
+    var resumeCallCalled = false
+    var muteLocalMicCalled = false
+    var unmuteLocalMicCalled = false
+    var startPreviewVideoStreamCalled = false
 
     var isMuted: Bool?
     var isCameraPreferred: Bool?

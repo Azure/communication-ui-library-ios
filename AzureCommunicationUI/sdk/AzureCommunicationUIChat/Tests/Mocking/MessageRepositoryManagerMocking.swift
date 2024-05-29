@@ -9,23 +9,23 @@ import Foundation
 class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
     var messages: [ChatMessageInfoModel] = []
 
-    var addInitialMessagesCalled: Bool = false
-    var addPreviousMessagesCalled: Bool = false
-    var addNewSentMessageCalled: Bool = false
-    var editMessageCalled: Bool = false
-    var deleteMessageCalled: Bool = false
-    var replaceMessageIdCalled: Bool = false
-    var updateEditMessageTimestampCalled: Bool = false
-    var updateDeletedMessageTimestampCalled: Bool = false
-    var addReceivedMessageCalled: Bool = false
-    var addTopicUpdatedMessageCalled: Bool = false
-    var addParticipantAddedMessageCalled: Bool = false
-    var addParticipantRemovedMessageCalled: Bool = false
-    var updateMessageEditedCalled: Bool = false
-    var updateMessageDeletedCalled: Bool = false
-    var updateMessageSendStatusCalled: Bool = false
-    var addlocalUserRemovedMessageCalled: Bool = false
-    var updateMessageReadReceiptStatusCalled: Bool = false
+    var addInitialMessagesCalled = false
+    var addPreviousMessagesCalled = false
+    var addNewSentMessageCalled = false
+    var editMessageCalled = false
+    var deleteMessageCalled = false
+    var replaceMessageIdCalled = false
+    var updateEditMessageTimestampCalled = false
+    var updateDeletedMessageTimestampCalled = false
+    var addReceivedMessageCalled = false
+    var addTopicUpdatedMessageCalled = false
+    var addParticipantAddedMessageCalled = false
+    var addParticipantRemovedMessageCalled = false
+    var updateMessageEditedCalled = false
+    var updateMessageDeletedCalled = false
+    var updateMessageSendStatusCalled = false
+    var addlocalUserRemovedMessageCalled = false
+    var updateMessageReadReceiptStatusCalled = false
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         addInitialMessagesCalled = true

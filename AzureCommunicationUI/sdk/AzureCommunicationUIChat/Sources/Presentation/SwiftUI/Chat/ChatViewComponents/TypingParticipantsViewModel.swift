@@ -14,7 +14,7 @@ class TypingParticipantsViewModel: ObservableObject {
     var participants: [ParticipantInfoModel] = []
     var avatarGroup = TypingParticipantAvatarGroup()
     @Published var typingIndicatorLabel: String?
-    var shouldShowIndicator: Bool = false
+    var shouldShowIndicator = false
 
     private enum Constants {
         static let defaultTimeInterval: TimeInterval = 8.0

@@ -78,7 +78,7 @@ public class ChatAdapter {
     /// This function should be called before adding the Chat Composite to a view
     public func connect() async throws {
         return try await withCheckedThrowingContinuation { continuation in
-            connect() { result in
+            connect { result in
                 continuation.resume(with: result)
             }
         }

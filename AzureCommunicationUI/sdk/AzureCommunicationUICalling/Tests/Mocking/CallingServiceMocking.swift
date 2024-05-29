@@ -11,24 +11,24 @@ class CallingServiceMocking: CallingServiceProtocol {
     var error: Error?
     var videoStreamId: String?
     var cameraDevice: CameraDevice = .front
-    var setupCallCalled: Bool = false
-    var startCallCalled: Bool = false
-    var endCallCalled: Bool = false
-    var holdCallCalled: Bool = false
-    var resumeCallCalled: Bool = false
+    var setupCallCalled = false
+    var startCallCalled = false
+    var endCallCalled = false
+    var holdCallCalled = false
+    var resumeCallCalled = false
 
     var localCameraStream: String = "MockCameraStream"
 
-    var startLocalVideoStreamCalled: Bool = false
-    var stopLocalVideoStreamCalled: Bool = false
-    var switchCameraCalled: Bool = false
+    var startLocalVideoStreamCalled = false
+    var stopLocalVideoStreamCalled = false
+    var switchCameraCalled = false
 
-    var muteLocalMicCalled: Bool = false
-    var unmuteLocalMicCalled: Bool = false
+    var muteLocalMicCalled = false
+    var unmuteLocalMicCalled = false
 
-    var admitAllLobbyParticipantsCalled: Bool = false
-    var admitLobbyParticipantCalled: Bool = false
-    var declineLobbyParticipantCalled: Bool = false
+    var admitAllLobbyParticipantsCalled = false
+    var admitLobbyParticipantCalled = false
+    var declineLobbyParticipantCalled = false
 
     private func possibleErrorTask() throws -> Task<Void, Error> {
         Task<Void, Error> {
@@ -89,7 +89,7 @@ class CallingServiceMocking: CallingServiceProtocol {
 
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
-    var participantRoleSubject = PassthroughSubject<ParticipantRole, Never>()
+    var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
 
     func setupCall() async throws {
         setupCallCalled = true

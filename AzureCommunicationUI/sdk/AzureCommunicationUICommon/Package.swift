@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "AzureCommunicationUICommon",
-            targets: ["AzureCommunicationUICommon"]),
+            targets: ["AzureCommunicationUICommon"])
     ],
     dependencies: [
     ],
@@ -26,6 +26,6 @@ let package = Package(
         .testTarget(
             name: "AzureCommunicationUICommonTests",
             dependencies: ["AzureCommunicationUICommon"]
-        ),
+        )
     ]
 )

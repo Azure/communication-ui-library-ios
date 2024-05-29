@@ -76,6 +76,7 @@ protocol CallingSDKWrapperProtocol {
     func getLogFiles() -> [URL]
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
+    func dispose()
 }
 
 protocol CallingSDKEventsHandling {
@@ -92,7 +93,7 @@ protocol CallingSDKEventsHandling {
     var callIdSubject: PassthroughSubject<String, Never> { get }
 
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
-    var participantRoleSubject: PassthroughSubject<ParticipantRole, Never> { get }
+    var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
 
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }

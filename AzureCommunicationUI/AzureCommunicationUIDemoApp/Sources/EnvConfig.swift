@@ -19,6 +19,10 @@ enum EnvConfig: String {
     case teamsMeetingLink
     case threadId
     case endpointUrl
+    /* <ROOMS_SUPPORT:12>
+    case roomId
+    case roomRole
+    </ROOMS_SUPPORT> */
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
@@ -45,7 +49,10 @@ class EnvConfigSubject: ObservableObject {
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
-
+    /* <ROOMS_SUPPORT>
+    @Published var selectedRoomRoleType: RoomRoleType = .presenter
+    @Published var roomId: String = EnvConfig.roomId.value()
+    </ROOMS_SUPPORT> */
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
     @Published var selectedChatType: ChatType = .groupChat
@@ -54,18 +61,19 @@ class EnvConfigSubject: ObservableObject {
     @Published var callingViewOrientation: OrientationOptions = .allButUpsideDown
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
-    @Published var isRightToLeft: Bool = false
-    @Published var microphoneOn: Bool = false
-    @Published var cameraOn: Bool = false
-    @Published var audioOnly: Bool = false
-    @Published var skipSetupScreen: Bool = false
-    @Published var useCustomColors: Bool = false
-    @Published var useCustomRemoteParticipantViewData: Bool = false
-    @Published var useMockCallingSDKHandler: Bool = false
-    @Published var useRelaunchOnDismissedToggle: Bool = false
-    @Published var enableMultitasking: Bool = false
-    @Published var enablePipWhenMultitasking: Bool = false
-    @Published var useExpiredToken: Bool = false
+    @Published var isRightToLeft = false
+    @Published var microphoneOn = false
+    @Published var cameraOn = false
+    @Published var audioOnly = false
+    @Published var skipSetupScreen = false
+    @Published var displayLeaveCallConfirmation = true
+    @Published var useCustomColors = false
+    @Published var useCustomRemoteParticipantViewData = false
+    @Published var useMockCallingSDKHandler = false
+    @Published var useRelaunchOnDismissedToggle = false
+    @Published var enableMultitasking = false
+    @Published var enablePipWhenMultitasking = false
+    @Published var useExpiredToken = false
     @Published var primaryColor: Color = .blue
     @Published var tint10: Color = .blue
     @Published var tint20: Color = .blue

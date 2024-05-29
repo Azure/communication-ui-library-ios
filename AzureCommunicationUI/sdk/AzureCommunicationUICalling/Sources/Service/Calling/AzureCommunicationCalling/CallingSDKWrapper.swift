@@ -9,6 +9,7 @@ import Combine
 import Foundation
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -33,6 +34,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     deinit {
         logger.debug("CallingSDKWrapper deallocated")
+    }
+
+    func dispose() {
+        callAgent?.dispose()
+        callAgent = nil
     }
 
     func setupCall() async throws {
@@ -81,10 +87,14 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
-        } else if let meetingLink = callConfiguration.meetingLink {
+        } else if callConfiguration.compositeCallType == .teamsMeeting,
+                  let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(
                 meetingLink: meetingLink.trimmingCharacters(in: .whitespacesAndNewlines))
-        } else {
+        } /* <ROOMS_SUPPORT> else if callConfiguration.compositeCallType == .roomsCall,
+                  let roomId = callConfiguration.roomId {
+            joinLocator = RoomCallLocator(roomId: roomId.trimmingCharacters(in: .whitespacesAndNewlines))
+        } </ROOMS_SUPPORT> */ else {
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
         }
@@ -407,6 +417,7 @@ extension CallingSDKWrapper {
         return "builtinCameraVideoStream"
     }
 }
+// swiftlint:enable type_body_length
 
 extension CallingSDKWrapper: DeviceManagerDelegate {
     func deviceManager(_ deviceManager: DeviceManager, didUpdateCameras args: VideoDevicesUpdatedEventArgs) {

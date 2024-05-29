@@ -13,7 +13,7 @@ class BannerViewModel: ObservableObject {
         case stopped
     }
 
-    @Published var isBannerDisplayed: Bool = false
+    @Published var isBannerDisplayed = false
     var bannerTextViewModel: BannerTextViewModel
 
     private var callingState = CallingState()

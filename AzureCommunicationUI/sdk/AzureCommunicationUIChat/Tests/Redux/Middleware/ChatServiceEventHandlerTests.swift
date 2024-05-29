@@ -268,7 +268,7 @@ class ChatServiceEventHandlerTests: XCTestCase {
             switch action {
             case .chatAction(.chatMessageLocalUserRemoved):
                 expectation.fulfill()
-            case .participantsAction(.participantsRemoved(_)):
+            case .participantsAction(.participantsRemoved):
                 break
             default:
                 XCTExpectFailure("Should not reach default case.")

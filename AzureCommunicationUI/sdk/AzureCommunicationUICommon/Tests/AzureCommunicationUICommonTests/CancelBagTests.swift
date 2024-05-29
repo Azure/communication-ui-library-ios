@@ -9,7 +9,7 @@ import XCTest
 final class CancelBagTests: XCTestCase {
     func testCancelBag() throws {
         let cancelBag = CancelBag()
-        
+
         XCTAssertNotNil(cancelBag)
     }
 }

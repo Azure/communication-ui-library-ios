@@ -10,18 +10,19 @@ class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
-    private var isCameraStateUpdating: Bool = false
-    private var isDefaultUserStateMapped: Bool = false
+    private var isCameraStateUpdating = false
+    private var isDefaultUserStateMapped = false
+    private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
     @Published var cameraPermission: AppPermission.Status = .unknown
-    @Published var isAudioDeviceSelectionDisplayed: Bool = false
-    @Published var isConfirmLeaveListDisplayed: Bool = false
-    @Published var isMoreCallOptionsListDisplayed: Bool = false
-    @Published var isShareActivityDisplayed: Bool = false
-    @Published var isSupportFormOptionDisplayed: Bool = false
-    @Published var isDisplayed: Bool = false
-    @Published var isCameraDisplayed: Bool = true
+    @Published var isAudioDeviceSelectionDisplayed = false
+    @Published var isConfirmLeaveListDisplayed = false
+    @Published var isMoreCallOptionsListDisplayed = false
+    @Published var isShareActivityDisplayed = false
+    @Published var isSupportFormOptionDisplayed = false
+    @Published var isDisplayed = false
+    @Published var isCameraDisplayed = true
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
     var micButtonViewModel: IconButtonViewModel!
@@ -38,21 +39,20 @@ class ControlBarViewModel: ObservableObject {
     var audioState = LocalUserState.AudioState(operation: .off,
                                                device: .receiverSelected)
     var displayEndCallConfirm: (() -> Void)
-
+    // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
-         audioVideoMode: CallCompositeAudioVideoMode
-    ) {
-
+         audioVideoMode: CallCompositeAudioVideoMode,
+         leaveCallConfirmationMode: LeaveCallConfirmationMode) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
-
+        self.leaveCallConfirmationMode = leaveCallConfirmationMode
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
@@ -116,8 +116,7 @@ class ControlBarViewModel: ObservableObject {
         moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .more,
             buttonType: .controlButton,
-            isDisabled: false) {
-                [weak self] in
+            isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -146,9 +145,14 @@ class ControlBarViewModel: ObservableObject {
 
         isCameraDisplayed = audioVideoMode != .audioOnly
     }
+    // swiftlint:enable function_body_length
 
     func endCallButtonTapped() {
-        self.isConfirmLeaveListDisplayed = true
+        if self.leaveCallConfirmationMode == .alwaysEnabled {
+            self.isConfirmLeaveListDisplayed = true
+        } else {
+            self.displayEndCallConfirm()
+        }
     }
 
     func cameraButtonTapped() {
@@ -176,30 +180,9 @@ class ControlBarViewModel: ObservableObject {
         isMoreCallOptionsListDisplayed = true
     }
 
-    func dismissConfirmLeaveDrawerList() {
-        self.isConfirmLeaveListDisplayed = false
-    }
-
-    func isMoreButtonDisabled() -> Bool {
-        isBypassLoadingOverlay()
-    }
-
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
         callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
-    }
-
-    func isMicDisabled() -> Bool {
-        audioState.operation == .pending || callingStatus == .localHold || isBypassLoadingOverlay()
-    }
-
-    func isAudioDeviceDisabled() -> Bool {
-        callingStatus == .localHold || isBypassLoadingOverlay()
-    }
-
-    func isBypassLoadingOverlay() -> Bool {
-        operationStatus == .skipSetupRequested && callingStatus != .connected &&
-        callingStatus != .inLobby
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
