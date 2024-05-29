@@ -13,7 +13,6 @@
 - Accessibility bugs fixed for keyboard focus on device select button, more button, leave call button, participant button
 - Accessibility bugs fixed for camera smart invert
 
-
 ## 1.6.0 (2024-03-04)
 
 ### Features
