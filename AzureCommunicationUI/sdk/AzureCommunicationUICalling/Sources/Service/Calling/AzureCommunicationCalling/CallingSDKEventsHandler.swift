@@ -62,10 +62,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         localUserDiagnosticsFeature.mediaDiagnostics.delegate = self
         localUserDiagnosticsFeature.networkDiagnostics.delegate = self
     }
-    
+
     func assign(_ capabilitiesCallFeature: CapabilitiesCallFeature) {
         self.capabilitiesCallFeature = capabilitiesCallFeature
-        capabilitiesCallFeature.delegate = self
+        self.capabilitiesCallFeature?.delegate = self
     }
 
     func setupProperties() {
@@ -242,11 +242,12 @@ extension CallingSDKEventsHandler: CallDelegate,
         let role = call.callParticipantRole.toParticipantRole()
         participantRoleSubject.send(role)
     }
-    
+
     // MARK: CapabilitiesDelegate
-    func capabilitiesCallFeature(_ capabilitiesCallFeature: CapabilitiesCallFeature, didChangeCapabilities args: CapabilitiesChangedEventArgs) {
+    func capabilitiesCallFeature(_ capabilitiesCallFeature: CapabilitiesCallFeature,
+                                 didChangeCapabilities args: CapabilitiesChangedEventArgs) {
         let capabilitiesChangeEvent = args.toCapabilitiesChangedEvent()
-        capabilitiesChangeSubject.send(capabilitiesChangeEvent)
+        self.capabilitiesChangeSubject.send(capabilitiesChangeEvent)
     }
 
     // MARK: NetworkDiagnosticsDelegate

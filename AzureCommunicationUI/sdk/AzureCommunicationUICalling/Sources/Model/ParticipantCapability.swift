@@ -1,6 +1,6 @@
 //
-//  Copyright (c) Microsoft Corporation. All rights reserved.
-//  Licensed under the MIT License.
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
 //
 
 import Foundation
@@ -11,7 +11,10 @@ internal class ParticipantCapability {
     private let isAllowed: Bool
     private let capabilityResolutionReason: CapabilityResolutionReason
 
-    init(participantCapabilityType: ParticipantCapabilityType, isAllowed: Bool, capabilityResolutionReason: CapabilityResolutionReason) {
+    init(
+        participantCapabilityType: ParticipantCapabilityType,
+        isAllowed: Bool,
+        capabilityResolutionReason: CapabilityResolutionReason) {
         self.participantCapabilityType = participantCapabilityType
         self.isAllowed = isAllowed
         self.capabilityResolutionReason = capabilityResolutionReason
@@ -33,12 +36,15 @@ internal class ParticipantCapability {
 extension AzureCommunicationCalling.ParticipantCapability {
     func toParticipantCapability() -> ParticipantCapability {
         let isCapabilitySupportedByCallingUi = self.type.toParticipantCapabilityType() != .none
-        
-        if(isCapabilitySupportedByCallingUi) {
+
+        if isCapabilitySupportedByCallingUi {
             return ParticipantCapability(participantCapabilityType: self.type.toParticipantCapabilityType(),
-                                         isAllowed: self.isAllowed, 
+                                         isAllowed: self.isAllowed,
                                          capabilityResolutionReason: self.reason.toCapabilityResolutionReason())
         }
-        return ParticipantCapability(participantCapabilityType: .none, isAllowed: false, capabilityResolutionReason: .notInitialized)
+        return ParticipantCapability(
+            participantCapabilityType: .none,
+            isAllowed: false,
+            capabilityResolutionReason: .notInitialized)
     }
 }

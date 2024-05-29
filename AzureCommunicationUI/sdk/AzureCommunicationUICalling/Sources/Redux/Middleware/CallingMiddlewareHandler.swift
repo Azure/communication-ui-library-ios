@@ -451,6 +451,7 @@ extension CallingMiddlewareHandler {
             .sink { mediaDiagnostic in
                 dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
+
     }
 }
 // swiftlint:enable type_body_length

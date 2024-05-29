@@ -1,6 +1,6 @@
 //
-//  Copyright (c) Microsoft Corporation. All rights reserved.
-//  Licensed under the MIT License.
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
 //
 
 import Foundation
@@ -13,7 +13,8 @@ struct CapabilitiesChangedEvent {
 
 extension AzureCommunicationCalling.CapabilitiesChangedEventArgs {
     func toCapabilitiesChangedEvent() -> CapabilitiesChangedEvent {
-        return CapabilitiesChangedEvent(changedCapabilities: self.changedCapabilities.compactMap { $0.toParticipantCapability() },
-                                        capabilitiesChangedReason: self.reason.toCapabilitiesChangedReason())
+        return CapabilitiesChangedEvent(
+            changedCapabilities: self.changedCapabilities.compactMap { $0.toParticipantCapability() },
+            capabilitiesChangedReason: self.reason.toCapabilitiesChangedReason())
     }
 }

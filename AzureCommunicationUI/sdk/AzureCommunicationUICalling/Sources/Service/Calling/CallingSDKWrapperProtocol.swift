@@ -76,7 +76,6 @@ protocol CallingSDKWrapperProtocol {
     func removeParticipant(_ participantId: String) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
 
-
     func getLogFiles() -> [URL]
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
@@ -102,6 +101,6 @@ protocol CallingSDKEventsHandling {
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
 
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
-    
+
     var capabilitiesChangeSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
 }
