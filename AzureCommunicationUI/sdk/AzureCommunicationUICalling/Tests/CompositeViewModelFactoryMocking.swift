@@ -283,6 +283,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeSupportFormViewModel() -> AzureCommunicationUICalling.SupportFormViewModel {
         return supportFormViewModel ?? SupportFormViewModel(
+            isDisplayed: false,
             dispatchAction: store.dispatch,
             events: CallComposite.Events(),
             localizationProvider: localizationProvider,
