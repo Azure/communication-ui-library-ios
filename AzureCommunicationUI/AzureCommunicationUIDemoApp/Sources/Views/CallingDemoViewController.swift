@@ -35,7 +35,9 @@ class CallingDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
+    /* <MEETING_ID_LOCATOR> */
     private var teamsMeetingIdTextField: UITextField!
+    /* </MEETING_ID_LOCATOR> */
     private var teamsMeetingPasscodeTextField: UITextField!
     /* <ROOMS_SUPPORT> */
     private var roomCallTextField: UITextField!
@@ -160,12 +162,14 @@ class CallingDemoViewController: UIViewController {
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
         }
+        /* <MEETING_ID_LOCATOR> */
         if !envConfigSubject.teamsMeetingId.isEmpty {
             teamsMeetingIdTextField.text = envConfigSubject.teamsMeetingId
         }
         if !envConfigSubject.teamsMeetingPasscode.isEmpty {
             teamsMeetingPasscodeTextField.text = envConfigSubject.teamsMeetingPasscode
         }
+        /* </MEETING_ID_LOCATOR> */
         if envConfigSubject.selectedMeetingType == .groupCall {
             meetingTypeSegmentedControl.selectedSegmentIndex = 0
         } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
@@ -344,7 +348,8 @@ class CallingDemoViewController: UIViewController {
                                                      displayName: getDisplayName()),
                         localOptions: localOptions
                     )
-                } else if !teamsMeetingIdTextField.text!.isEmpty && !teamsMeetingPasscodeTextField.text!.isEmpty {
+                }/* <MEETING_ID_LOCATOR> 
+                  else if !teamsMeetingIdTextField.text!.isEmpty && !teamsMeetingPasscodeTextField.text!.isEmpty {
                     callComposite.launch(
                         remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId: teamsMeetingIdTextField.text!,
                                                                           meetingPassword:
@@ -353,7 +358,7 @@ class CallingDemoViewController: UIViewController {
                                                      displayName: getDisplayName()),
                         localOptions: localOptions
                     )
-                }
+                } </MEETING_ID_LOCATOR> */
             /* <ROOMS_SUPPORT:13> */
             case .roomCall:
                 callComposite.launch(remoteOptions:
@@ -542,8 +547,10 @@ class CallingDemoViewController: UIViewController {
         case .groupCall:
             groupCallTextField.isHidden = false
             teamsMeetingTextField.isHidden = true
+            /* <MEETING_ID_LOCATOR> */
             teamsMeetingIdTextField.isHidden = true
             teamsMeetingPasscodeTextField.isHidden = true
+             /* </MEETING_ID_LOCATOR> */
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
@@ -551,16 +558,20 @@ class CallingDemoViewController: UIViewController {
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
+            /* <MEETING_ID_LOCATOR> */
             teamsMeetingIdTextField.isHidden = false
             teamsMeetingPasscodeTextField.isHidden = false
+             /* </MEETING_ID_LOCATOR> */
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
         case .roomCall:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = true
+            /* <MEETING_ID_LOCATOR> */
             teamsMeetingIdTextField.isHidden = true
             teamsMeetingPasscodeTextField.isHidden = true
+             /* </MEETING_ID_LOCATOR> */
             roomCallTextField.isHidden = false
             roomRoleTypeSegmentedControl.isHidden = false
         /* </ROOMS_SUPPORT> */
@@ -580,8 +591,9 @@ class CallingDemoViewController: UIViewController {
            (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty) ||
            (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty) ||
            (selectedMeetingType == .teamsMeeting &&
-            (teamsMeetingTextField.text!.isEmpty &&
-            (teamsMeetingIdTextField.text!.isEmpty || teamsMeetingPasscodeTextField.text!.isEmpty))) ||
+            (teamsMeetingTextField.text!.isEmpty /* <MEETING_ID_LOCATOR> &&
+            (teamsMeetingIdTextField.text!.isEmpty || teamsMeetingPasscodeTextField.text!.isEmpty)
+                                                  </MEETING_ID_LOCATOR> */)) ||
            (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) {
             return true
         }
@@ -689,7 +701,7 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
         teamsMeetingTextField.borderStyle = .roundedRect
         teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
-
+        /* <MEETING_ID_LOCATOR>
         teamsMeetingIdTextField = UITextField()
         teamsMeetingIdTextField.placeholder = "Teams Meeting Id"
         teamsMeetingIdTextField.text = envConfigSubject.teamsMeetingId
@@ -708,7 +720,7 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingPasscodeTextField.borderStyle = .roundedRect
         teamsMeetingPasscodeTextField.addTarget(
             self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
-
+        </MEETING_ID_LOCATOR> */
         /* <ROOMS_SUPPORT> */
         roomCallTextField = UITextField()
         roomCallTextField.placeholder = "Room Id"
@@ -873,8 +885,10 @@ class CallingDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
+                                                   /* <MEETING_ID_LOCATOR> */
                                                    teamsMeetingIdTextField,
                                                    teamsMeetingPasscodeTextField,
+                                                   /* </MEETING_ID_LOCATOR> */
                                                    /* <ROOMS_SUPPORT:7> */ roomCallTextField,
                                                    roomRoleTypeSegmentedControl, /* </ROOMS_SUPPORT:4> */
                                                    settingsButtonHStack,
