@@ -56,7 +56,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
-        return SupportFormViewModel(dispatchAction: store.dispatch,
+        return SupportFormViewModel(
+            isDisplayed: store.state.navigationState.supportFormVisible
+            && store.state.visibilityState.currentStatus == .visible,
+            dispatchAction: store.dispatch,
                                     events: events,
                                     localizationProvider: localizationProvider,
                                     getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
