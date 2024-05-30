@@ -84,8 +84,8 @@ public class CallComposite {
     private var compositeUILaunched = false
     private var incomingCallAcceptedByCallKitCallId: String?
     private var videoViewManager: VideoViewManager?
-    private var callingSDKWrapper: CallingSDKWrapperProtocol?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
+    private var callingSDKWrapper: CallingSDKWrapperProtocol?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -102,6 +102,7 @@ public class CallComposite {
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     @available(*, deprecated, message: "Use init with CommunicationTokenCredential instead.")
     public init(withOptions options: CallCompositeOptions? = nil) {
+        credential = nil
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
@@ -114,11 +115,10 @@ public class CallComposite {
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         callKitOptions = options?.callKitOptions
-        displayName = nil
+        displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
             self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
         }
-        credential = nil
     }
 
     /// Create an instance of CallComposite with options.
@@ -239,6 +239,7 @@ public class CallComposite {
 
      /// Hold  call
      /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
+     ///                                a `Void` or an `Error`.
      public func hold(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
          if let callingSDKWrapper = callingSDKWrapper {
              Task {
@@ -256,6 +257,7 @@ public class CallComposite {
 
      /// Resume  call
      /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
+     ///                                a `Void` or an `Error`.
      public func resume(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
          if let callingSDKWrapper = callingSDKWrapper {
              Task {
@@ -605,6 +607,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.pipManager = nil
         self.callHistoryService = nil
         self.exitManager = nil
+        self.callingSDKWrapper?.dispose()
+        self.callingSDKWrapper = nil
     }
 
     private func disposeSDKWrappers() {
