@@ -113,10 +113,13 @@ class CallingViewModel: ObservableObject {
 
         callDiagnosticsViewModel.$currentBottomToastDiagnostic
                     .assign(to: &$currentBottomToastDiagnostic)
+
+        isConfirmLeaveListDisplayed = store.state.navigationState.endCallConfirmationVisible
     }
 
     func endCall() {
-        store.dispatch(action: .callingAction(.callEndRequested))
+        store.dispatch(action: .showEndCallConfirmation)
+        // store.dispatch(action: .callingAction(.callEndRequested))
     }
 
     func resumeOnHold() {
@@ -185,6 +188,7 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
         callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
+        isConfirmLeaveListDisplayed = store.state.navigationState.endCallConfirmationVisible
     }
 
     private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {

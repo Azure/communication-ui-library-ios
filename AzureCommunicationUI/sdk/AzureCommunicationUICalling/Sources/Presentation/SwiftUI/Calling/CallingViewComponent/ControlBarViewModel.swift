@@ -37,7 +37,7 @@ class ControlBarViewModel: ObservableObject {
                                                  transmission: .local)
     var audioState = LocalUserState.AudioState(operation: .off,
                                                device: .receiverSelected)
-    var displayEndCallConfirm: (() -> Void)
+    var onEndCallTapped: (() -> Void)
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -50,7 +50,7 @@ class ControlBarViewModel: ObservableObject {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
-        self.displayEndCallConfirm = endCallConfirm
+        self.onEndCallTapped = endCallConfirm
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
@@ -106,7 +106,7 @@ class ControlBarViewModel: ObservableObject {
                     return
                 }
                 self.logger.debug("Hangup button tapped")
-                self.endCallButtonTapped()
+                self.onEndCallTapped()
         }
 
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
@@ -145,15 +145,6 @@ class ControlBarViewModel: ObservableObject {
         isCameraDisplayed = audioVideoMode != .audioOnly
     }
     // swiftlint:enable function_body_length
-
-    func endCallButtonTapped() {
-        /*
-        if self.leaveCallConfirmationMode == .alwaysEnabled {
-            self.isConfirmLeaveListDisplayed = true
-        } else {
-            self.displayEndCallConfirm()
-        } */
-    }
 
     func cameraButtonTapped() {
         guard !isCameraStateUpdating else {
