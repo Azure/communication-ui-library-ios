@@ -10,7 +10,6 @@ struct ControlBarView: View {
 
     // anchor views for drawer views on (iPad)
     @State var audioDeviceButtonSourceView = UIView()
-    @State var leaveCallConfirmationListSourceView = UIView()
     @State var moreListSourceView = UIView()
     @State var debugInfoSourceView = UIView()
     @AccessibilityFocusState var focusedOnAudioDeviceButton: Bool
@@ -34,12 +33,6 @@ struct ControlBarView: View {
                 audioDeviceSelectionListView
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
-            })
-            .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
-                exitConfirmationDrawer
-                    .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
-                    .accessibilityElement(children: .contain)
-                    .accessibility(addTraits: .isModal)
             })
             .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
                 moreCallOptionsList
@@ -138,7 +131,6 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
-            .background(SourceViewSpace(sourceView: leaveCallConfirmationListSourceView))
             .accessibilityIdentifier(AccessibilityIdentifier.hangupAccessibilityID.rawValue)
             .accessibilityFocused($focusedOnHangUpButton, equals: true)
     }
@@ -151,18 +143,6 @@ struct ControlBarView: View {
         .onDisappear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 focusedOnAudioDeviceButton = true
-            }
-        }
-    }
-
-    var exitConfirmationDrawer: some View {
-        CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveListDisplayed,
-                                           viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
-                                           sourceView: leaveCallConfirmationListSourceView)
-        .modifier(LockPhoneOrientation())
-        .onDisappear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                focusedOnHangUpButton = true
             }
         }
     }

@@ -15,10 +15,14 @@ struct NavigationState: Equatable {
 
     let status: NavigationStatus
     let supportFormVisible: Bool
+    let endCallConfirmationVisible: Bool
 
-    init(status: NavigationStatus = .setup, supportFormVisible: Bool = false) {
+    init(status: NavigationStatus = .setup,
+         supportFormVisible: Bool = false,
+         endCallConfirmationVisible: Bool = false) {
         self.status = status
         self.supportFormVisible = supportFormVisible
+        self.endCallConfirmationVisible = endCallConfirmationVisible
     }
 
     static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {

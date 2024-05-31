@@ -17,7 +17,6 @@ class ControlBarViewModel: ObservableObject {
 
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed = false
-    @Published var isConfirmLeaveListDisplayed = false
     @Published var isMoreCallOptionsListDisplayed = false
     @Published var isShareActivityDisplayed = false
     @Published var isSupportFormOptionDisplayed = false
@@ -148,11 +147,12 @@ class ControlBarViewModel: ObservableObject {
     // swiftlint:enable function_body_length
 
     func endCallButtonTapped() {
+        /*
         if self.leaveCallConfirmationMode == .alwaysEnabled {
             self.isConfirmLeaveListDisplayed = true
         } else {
             self.displayEndCallConfirm()
-        }
+        } */
     }
 
     func cameraButtonTapped() {
@@ -183,44 +183,6 @@ class ControlBarViewModel: ObservableObject {
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
         callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
-    }
-
-    func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
-        return DrawerListItemViewModel(
-            icon: .endCallRegular,
-            title: localizationProvider.getLocalizedString(.leaveCall),
-            accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
-            action: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.logger.debug("Leave call button tapped")
-                self.displayEndCallConfirm()
-            })
-    }
-
-    func getCancelButtonViewModel() -> DrawerListItemViewModel {
-        return DrawerListItemViewModel(
-            icon: .dismiss,
-            title: localizationProvider.getLocalizedString(.cancel),
-            accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
-            action: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.logger.debug("Cancel button tapped")
-                self.dismissConfirmLeaveDrawerList()
-            })
-    }
-
-    func getLeaveCallConfirmationListViewModel() -> LeaveCallConfirmationListViewModel {
-        let leaveCallConfirmationVm: [DrawerListItemViewModel] = [
-            getLeaveCallButtonViewModel(),
-            getCancelButtonViewModel()
-        ]
-        let headerName = localizationProvider.getLocalizedString(.leaveCallListHeader)
-        return LeaveCallConfirmationListViewModel(headerName: headerName,
-                                                  listItemViewModel: leaveCallConfirmationVm)
     }
 
     func update(localUserState: LocalUserState,

@@ -56,6 +56,13 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
                 }
+
+                BottomDrawer(isPresented: viewModel.isConfirmLeaveListDisplayed,
+                             hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
+                    VStack {
+                        /*@START_MENU_TOKEN@*/Text("Placeholder")/*@END_MENU_TOKEN@*/
+                    }
+                }
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -281,6 +288,13 @@ struct CallingView: View {
         }.frame(maxWidth: .infinity, alignment: .center)
     }
 
+    var exitConfirmationDrawer: some View {
+        VStack {
+            Button("Yes") {}
+            Button("No") {}
+        }
+    }
+
     var topMessageBarDiagnosticsView: some View {
         VStack {
             ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
@@ -315,7 +329,6 @@ extension CallingView {
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
         guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-              !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
               !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
               !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
               !viewModel.controlBarViewModel.isShareActivityDisplayed else {

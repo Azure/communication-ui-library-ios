@@ -10,6 +10,8 @@ extension Reducer where State == NavigationState,
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
         var supportFormVisible = state.supportFormVisible
+        var endCallConfirmationVisible = state.endCallConfirmationVisible
+
         switch action {
         case .callingViewLaunched:
             navigationStatus = .inCall
@@ -22,6 +24,10 @@ extension Reducer where State == NavigationState,
             supportFormVisible = true
         case .hideSupportForm:
             supportFormVisible = false
+        case .showEndCallConfirmation:
+            endCallConfirmationVisible = true
+        case .hideEndCallConfirmation:
+            endCallConfirmationVisible = false
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -42,6 +48,8 @@ extension Reducer where State == NavigationState,
                 .callDiagnosticAction:
             return state
         }
-        return NavigationState(status: navigationStatus, supportFormVisible: supportFormVisible)
+        return NavigationState(status: navigationStatus,
+                               supportFormVisible: supportFormVisible,
+                               endCallConfirmationVisible: endCallConfirmationVisible)
     }
 }

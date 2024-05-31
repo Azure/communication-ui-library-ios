@@ -22,4 +22,6 @@ enum Action: Equatable {
     case callingViewLaunched
     case showSupportForm
     case hideSupportForm
+    case showEndCallConfirmation
+    case hideEndCallConfirmation
 }

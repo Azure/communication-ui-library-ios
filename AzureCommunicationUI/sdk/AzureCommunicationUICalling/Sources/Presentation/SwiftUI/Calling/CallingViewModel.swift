@@ -115,17 +115,16 @@ class CallingViewModel: ObservableObject {
                     .assign(to: &$currentBottomToastDiagnostic)
     }
 
-    func dismissConfirmLeaveDrawerList() {
-        self.isConfirmLeaveListDisplayed = false
-    }
-
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))
-        dismissConfirmLeaveDrawerList()
     }
 
     func resumeOnHold() {
         store.dispatch(action: .callingAction(.resumeRequested))
+    }
+
+    func dismissConfirmLeaveDrawerList() {
+        store.dispatch(action: .hideEndCallConfirmation)
     }
 
     func receive(_ state: AppState) {
