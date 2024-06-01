@@ -15,18 +15,43 @@ internal struct LeaveCallConfirmationView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: LeaveCallConfirmationViewConstants.vStackSpacing) {
+            Text("Leave call?")
+                .font(.system(size: LeaveCallConfirmationViewConstants.titleFontSize, weight: .bold))
+                .foregroundColor(.primary)
+                .padding(.top, LeaveCallConfirmationViewConstants.titlePaddingTop)
+
             ForEach(viewModel.options) { option in
-                Text(option.title)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    .onTapGesture {
-                        option.action()
-                        print("\(option) tapped")
-                    }
+                HStack {
+                    Icon(name: option.icon, size: LeaveCallConfirmationViewConstants.iconSize)
+                        .foregroundColor(.primary)
+                    Text(option.title)
+                        .foregroundColor(.primary)
+                        .padding(.leading, LeaveCallConfirmationViewConstants.textPaddingLeading)
+                        .font(.system(size: LeaveCallConfirmationViewConstants.textFontSize))
+                    Spacer()
+                }
+                .padding(.vertical, LeaveCallConfirmationViewConstants.optionPaddingVertical)
+                .padding(.horizontal, LeaveCallConfirmationViewConstants.optionPaddingHorizontal)
+                .frame(maxWidth: .infinity)
+                .background(option.title == "End Call" ? Color.red : Color.clear)
+                .cornerRadius(LeaveCallConfirmationViewConstants.optionCornerRadius)
+                .onTapGesture {
+                    option.action()
+                }
             }
         }
     }
+}
+
+class LeaveCallConfirmationViewConstants {
+    static let vStackSpacing: CGFloat = 20
+    static let titleFontSize: CGFloat = 20
+    static let titlePaddingTop: CGFloat = 20
+    static let iconSize: CGFloat = 24
+    static let textPaddingLeading: CGFloat = 8
+    static let textFontSize: CGFloat = 18
+    static let optionPaddingVertical: CGFloat = 12
+    static let optionPaddingHorizontal: CGFloat = 16
+    static let optionCornerRadius: CGFloat = 10
 }
