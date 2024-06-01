@@ -57,11 +57,9 @@ struct CallingView: View {
                         .accessibilityAddTraits(.isModal)
                 }
 
-                BottomDrawer(isPresented: viewModel.isConfirmLeaveListDisplayed,
+                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
-                    VStack {
-                        /*@START_MENU_TOKEN@*/Text("Placeholder")/*@END_MENU_TOKEN@*/
-                    }
+                    LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
                 }
             }
             .frame(width: geometry.size.width,

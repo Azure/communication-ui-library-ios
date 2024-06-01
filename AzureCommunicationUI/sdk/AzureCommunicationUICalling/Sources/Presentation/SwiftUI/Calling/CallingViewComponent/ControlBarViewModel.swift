@@ -43,14 +43,14 @@ class ControlBarViewModel: ObservableObject {
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
-         endCallConfirm: @escaping (() -> Void),
+         onEndCallTapped: @escaping (() -> Void),
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
          leaveCallConfirmationMode: LeaveCallConfirmationMode) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
-        self.onEndCallTapped = endCallConfirm
+        self.onEndCallTapped = onEndCallTapped
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,

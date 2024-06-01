@@ -38,7 +38,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -63,6 +63,11 @@ protocol CompositeViewModelFactoryProtocol {
                                      title: String,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
+
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
+
     func makeSelectableDrawerListItemViewModel(
         icon: CompositeIcon,
         title: String,

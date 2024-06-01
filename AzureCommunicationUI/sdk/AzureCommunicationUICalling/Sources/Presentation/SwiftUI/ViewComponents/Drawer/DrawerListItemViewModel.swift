@@ -5,7 +5,7 @@
 
 import Foundation
 
-class DrawerListItemViewModel {
+class DrawerListItemViewModel: Identifiable {
     let icon: CompositeIcon
     let title: String
     let accessibilityIdentifier: String

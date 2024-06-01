@@ -189,14 +189,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localizationProvider: localizationProvider,
                                                           dispatchAction: dispatchAction,
-                                                          endCallConfirm: endCallConfirm,
+                                                          endCallConfirm: onEndCallTapped,
                                                           localUserState: localUserState,
                                                           audioVideoMode: .audioAndVideo,
                                                           leaveCallConfirmationMode: leaveCallConfirmationMode)

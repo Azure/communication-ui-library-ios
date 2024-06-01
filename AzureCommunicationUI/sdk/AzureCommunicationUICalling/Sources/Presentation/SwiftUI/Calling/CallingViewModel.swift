@@ -7,7 +7,6 @@ import Combine
 import Foundation
 
 class CallingViewModel: ObservableObject {
-    @Published var isConfirmLeaveListDisplayed = false
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
@@ -31,6 +30,7 @@ class CallingViewModel: ObservableObject {
     let bannerViewModel: BannerViewModel
     let lobbyOverlayViewModel: LobbyOverlayViewModel
     let loadingOverlayViewModel: LoadingOverlayViewModel
+    let leaveCallConfirmationViewModel: LeaveCallConfirmationViewModel
     var onHoldOverlayViewModel: OnHoldOverlayViewModel!
     let isRightToLeft: Bool
 
@@ -83,12 +83,26 @@ class CallingViewModel: ObservableObject {
 
         isParticipantGridDisplayed = isCallConnected &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
+
+        leaveCallConfirmationViewModel = compositeViewModelFactory.makeLeaveCallConfirmationViewModel(
+            endCall: {
+                store.dispatch(action: .callingAction(.callEndRequested))
+            }, dismissConfirmation: {
+                store.dispatch(action: .hideEndCallConfirmation)
+            }
+      )
+
         controlBarViewModel = compositeViewModelFactory
-            .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
+            .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
                 guard let self = self else {
                     return
                 }
-                self.endCall()
+                if leaveCallConfirmationMode == .alwaysEnabled {
+                    store.dispatch(action: .showEndCallConfirmation)
+                } else {
+                    endCall()
+                }
+
             }, localUserState: store.state.localUserState,
             leaveCallConfirmationMode: leaveCallConfirmationMode)
 
@@ -113,13 +127,10 @@ class CallingViewModel: ObservableObject {
 
         callDiagnosticsViewModel.$currentBottomToastDiagnostic
                     .assign(to: &$currentBottomToastDiagnostic)
-
-        isConfirmLeaveListDisplayed = store.state.navigationState.endCallConfirmationVisible
     }
 
     func endCall() {
-        store.dispatch(action: .showEndCallConfirmation)
-        // store.dispatch(action: .callingAction(.callEndRequested))
+        store.dispatch(action: .callingAction(.callEndRequested))
     }
 
     func resumeOnHold() {
@@ -140,6 +151,7 @@ class CallingViewModel: ObservableObject {
             return
         }
 
+        leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
@@ -188,7 +200,6 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
         callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
-        isConfirmLeaveListDisplayed = store.state.navigationState.endCallConfirmationVisible
     }
 
     private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {

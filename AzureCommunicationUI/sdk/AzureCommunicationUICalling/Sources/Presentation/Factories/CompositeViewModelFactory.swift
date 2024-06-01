@@ -53,6 +53,15 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
     }
 
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(
+            state: store.state,
+            endCall: endCall,
+            dismissConfirmation: dismissConfirmation)
+    }
+
     func makeSupportFormViewModel() -> SupportFormViewModel {
         return SupportFormViewModel(
             isDisplayed: store.state.navigationState.supportFormVisible
@@ -200,7 +209,7 @@ extension CompositeViewModelFactory {
                                resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled)
     -> ControlBarViewModel {
@@ -208,7 +217,7 @@ extension CompositeViewModelFactory {
                             logger: logger,
                             localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
-                            endCallConfirm: endCallConfirm,
+                            onEndCallTapped: onEndCallTapped,
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled)
