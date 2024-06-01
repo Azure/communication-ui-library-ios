@@ -36,13 +36,13 @@ internal struct LeaveCallConfirmationView: View {
                 .onTapGesture {
                     option.action()
                 }
-            }.padding(.bottom, LeaveCallConfirmationViewConstants.bottomPadding)
-        }
+            }
+        }.padding(.bottom, LeaveCallConfirmationViewConstants.bottomPadding)
     }
 }
 
 class LeaveCallConfirmationViewConstants {
-    static let vStackSpacing: CGFloat = 20
+    static let vStackSpacing: CGFloat = 16
     static let titleFontSize: CGFloat = 20
     static let titlePaddingTop: CGFloat = 20
     static let iconSize: CGFloat = 24
