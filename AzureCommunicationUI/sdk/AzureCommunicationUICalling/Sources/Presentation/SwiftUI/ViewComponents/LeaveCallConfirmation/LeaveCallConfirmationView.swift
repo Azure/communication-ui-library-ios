@@ -17,7 +17,7 @@ internal struct LeaveCallConfirmationView: View {
     var body: some View {
         VStack(spacing: LeaveCallConfirmationViewConstants.vStackSpacing) {
             Text("Leave call?")
-                .font(.system(size: LeaveCallConfirmationViewConstants.titleFontSize, weight: .bold))
+                .font(.system(size: LeaveCallConfirmationViewConstants.titleFontSize))
                 .foregroundColor(.primary)
                 .padding(.top, LeaveCallConfirmationViewConstants.titlePaddingTop)
 
@@ -31,15 +31,12 @@ internal struct LeaveCallConfirmationView: View {
                         .font(.system(size: LeaveCallConfirmationViewConstants.textFontSize))
                     Spacer()
                 }
-                .padding(.vertical, LeaveCallConfirmationViewConstants.optionPaddingVertical)
                 .padding(.horizontal, LeaveCallConfirmationViewConstants.optionPaddingHorizontal)
                 .frame(maxWidth: .infinity)
-                .background(option.title == "End Call" ? Color.red : Color.clear)
-                .cornerRadius(LeaveCallConfirmationViewConstants.optionCornerRadius)
                 .onTapGesture {
                     option.action()
                 }
-            }
+            }.padding(.bottom, LeaveCallConfirmationViewConstants.bottomPadding)
         }
     }
 }
@@ -51,7 +48,7 @@ class LeaveCallConfirmationViewConstants {
     static let iconSize: CGFloat = 24
     static let textPaddingLeading: CGFloat = 8
     static let textFontSize: CGFloat = 18
-    static let optionPaddingVertical: CGFloat = 12
+    static let optionPaddingVertical: CGFloat = 8
     static let optionPaddingHorizontal: CGFloat = 16
-    static let optionCornerRadius: CGFloat = 10
+    static let bottomPadding: CGFloat = 24
 }

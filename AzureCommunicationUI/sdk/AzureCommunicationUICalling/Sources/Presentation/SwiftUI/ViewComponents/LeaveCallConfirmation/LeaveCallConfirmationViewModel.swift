@@ -17,14 +17,14 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
         self.options = [
             DrawerListItemViewModel(
                 icon: .endCallRegular,
-                title: "End Call",
-                accessibilityIdentifier: "Confirm End Call") {
+                title: "Leave",
+                accessibilityIdentifier: "Leave") {
                     endCall()
             },
             DrawerListItemViewModel(
-                icon: .endCallRegular,
-                title: "Dismiss",
-                accessibilityIdentifier: "Dismis End Call") {
+                icon: .dismiss,
+                title: "Cancel",
+                accessibilityIdentifier: "Cancel") {
                     dismissConfirmation()
             }
         ]
