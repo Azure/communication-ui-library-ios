@@ -301,6 +301,7 @@ extension CompositeViewModelFactory {
     }
 
     func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
 
@@ -309,7 +310,8 @@ extension CompositeViewModelFactory {
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
-                                            isSupportFormAvailable: events.onUserReportedIssue != nil)
+                                     isSupportFormAvailable: events.onUserReportedIssue != nil,
+                                     isDisplayed: isDisplayed)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,

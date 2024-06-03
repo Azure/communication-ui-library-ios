@@ -29,16 +29,16 @@ struct ControlBarView: View {
 
             .padding()
             .background(Color(StyleProvider.color.backgroundColor))
-            .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
-                audioDeviceSelectionListView
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            })
-            .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
-                moreCallOptionsList
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            })
+//            .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
+//                audioDeviceSelectionListView
+//                    .accessibilityElement(children: .contain)
+//                    .accessibilityAddTraits(.isModal)
+//            })
+//            .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
+//                moreCallOptionsList
+//                    .accessibilityElement(children: .contain)
+//                    .accessibilityAddTraits(.isModal)
+//            })
             .modifier(PopupModalView(
                 isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
                     shareActivityView
@@ -135,17 +135,17 @@ struct ControlBarView: View {
             .accessibilityFocused($focusedOnHangUpButton, equals: true)
     }
 
-    var audioDeviceSelectionListView: some View {
-        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                                  viewModel: viewModel.audioDevicesListViewModel,
-                                  sourceView: audioDeviceButtonSourceView)
-        .modifier(LockPhoneOrientation())
-        .onDisappear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                focusedOnAudioDeviceButton = true
-            }
-        }
-    }
+//    var audioDeviceSelectionListView: some View {
+//        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+//                                  viewModel: viewModel.audioDevicesListViewModel,
+//                                  sourceView: audioDeviceButtonSourceView)
+//        .modifier(LockPhoneOrientation())
+//        .onDisappear {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+//                focusedOnAudioDeviceButton = true
+//            }
+//        }
+//    }
 
     var moreButton: some View {
         IconButton(viewModel: viewModel.moreButtonViewModel)
@@ -155,19 +155,19 @@ struct ControlBarView: View {
             .accessibilityFocused($focusedOnMoreButton, equals: true)
     }
 
-    var moreCallOptionsList: some View {
-        return Group {
-            MoreCallOptionsList(isPresented: $viewModel.isMoreCallOptionsListDisplayed,
-                                viewModel: viewModel.moreCallOptionsListViewModel,
-                                sourceView: moreListSourceView)
-            .modifier(LockPhoneOrientation())
-            .onDisappear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    focusedOnMoreButton = true
-                }
-            }
-        }
-    }
+//    var moreCallOptionsList: some View {
+//        return Group {
+//            MoreCallOptionsList(isPresented: $viewModel.isMoreCallOptionsListDisplayed,
+//                                viewModel: viewModel.moreCallOptionsListViewModel,
+//                                sourceView: moreListSourceView)
+//            .modifier(LockPhoneOrientation())
+//            .onDisappear {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+//                    focusedOnMoreButton = true
+//                }
+//            }
+//        }
+//    }
     var shareActivityView: some View {
         return Group {
             SharingActivityView(viewModel: viewModel.debugInfoSharingActivityViewModel,

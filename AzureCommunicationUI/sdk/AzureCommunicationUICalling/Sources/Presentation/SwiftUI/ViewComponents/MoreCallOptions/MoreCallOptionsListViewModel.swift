@@ -11,15 +11,18 @@ class MoreCallOptionsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     let items: [DrawerListItemViewModel]
+    var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          showSharingViewAction: @escaping () -> Void,
          showSupportFormAction: @escaping () -> Void,
-         isSupportFormAvailable: Bool
+         isSupportFormAvailable: Bool,
+         isDisplayed: Bool
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
+        self.isDisplayed = isDisplayed
 
         let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .share,
@@ -39,5 +42,9 @@ class MoreCallOptionsListViewModel: ObservableObject {
             items.append(reportErrorInfoModel)
         }
         self.items = items
+    }
+
+    func setIsDisplayed(isDisplayed: Bool) {
+        self.isDisplayed = isDisplayed
     }
 }

@@ -56,8 +56,10 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
+        showSharingViewAction: @escaping () -> Void,
+        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,

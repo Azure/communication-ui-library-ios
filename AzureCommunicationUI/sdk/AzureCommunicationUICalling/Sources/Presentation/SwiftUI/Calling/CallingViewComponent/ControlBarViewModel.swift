@@ -23,12 +23,10 @@ class ControlBarViewModel: ObservableObject {
     @Published var isDisplayed = false
     @Published var isCameraDisplayed = true
 
-    let audioDevicesListViewModel: AudioDevicesListViewModel
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
     var moreButtonViewModel: IconButtonViewModel!
-    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
     var callingStatus: CallingStatus = .none
     var operationStatus: OperationStatus = .none
@@ -38,7 +36,7 @@ class ControlBarViewModel: ObservableObject {
     var audioState = LocalUserState.AudioState(operation: .off,
                                                device: .receiverSelected)
     var onEndCallTapped: (() -> Void)
-    // swiftlint:disable function_body_length
+
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
@@ -52,9 +50,9 @@ class ControlBarViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.onEndCallTapped = onEndCallTapped
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
-        audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
-            dispatchAction: dispatch,
-            localUserState: localUserState)
+//        audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
+//            dispatchAction: dispatch,
+//            localUserState: localUserState)
 
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
@@ -125,26 +123,10 @@ class ControlBarViewModel: ObservableObject {
         moreButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .moreAccessibilityLabel)
 
-        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
-            showSharingViewAction: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.isShareActivityDisplayed = true
-            },
-            showSupportFormAction: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.dispatch(.showSupportForm)
-            }
-        )
-
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
 
         isCameraDisplayed = audioVideoMode != .audioOnly
     }
-    // swiftlint:enable function_body_length
 
     func cameraButtonTapped() {
         guard !isCameraStateUpdating else {
@@ -210,7 +192,7 @@ class ControlBarViewModel: ObservableObject {
         )
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceState.getLabel(localizationProvider: localizationProvider))
-        audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
+//        audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
 
         moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
 

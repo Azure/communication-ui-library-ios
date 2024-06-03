@@ -37,9 +37,9 @@ struct SetupControlBarView: View {
                 .accessibilityElement(children: .contain)
             }.accessibilityElement(children: .contain)
         }
-        .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
-            audioDeviceSelectionListView
-        })
+//        .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
+//            audioDeviceSelectionListView
+//        })
     }
     var cameraButton: some View {
         IconWithLabelButton(viewModel: viewModel.cameraButtonViewModel)
@@ -59,16 +59,16 @@ struct SetupControlBarView: View {
             .accessibilityFocused($focusedOnAudioButton, equals: true)
     }
 
-    var audioDeviceSelectionListView: some View {
-        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                                  viewModel: viewModel.audioDevicesListViewModel,
-                                  sourceView: audioDeviceButtonSourceView)
-        .onDisappear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                focusedOnAudioButton = true
-            }
-        }
-    }
+//    var audioDeviceSelectionListView: some View {
+//        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+//                                  viewModel: viewModel.audioDevicesListViewModel,
+//                                  sourceView: audioDeviceButtonSourceView)
+//        .onDisappear {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+//                focusedOnAudioButton = true
+//            }
+//        }
+//    }
 
     private func getWidth(from geometry: GeometryProxy) -> CGFloat {
         if controlWidth > geometry.size.width {
