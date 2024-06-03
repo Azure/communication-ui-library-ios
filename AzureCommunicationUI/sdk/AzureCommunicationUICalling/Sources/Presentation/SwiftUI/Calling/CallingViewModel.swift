@@ -136,7 +136,6 @@ class CallingViewModel: ObservableObject {
                 // self.isShareActivityDisplayed = true
             },
             showSupportFormAction: {
-                store.dispatch(action: .hideMoreOptions)
                 store.dispatch(action: .showSupportForm)
             }
         )
@@ -174,7 +173,8 @@ class CallingViewModel: ObservableObject {
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
-                                   visibilityState: state.visibilityState)
+                                   visibilityState: state.visibilityState,
+                                   navigationState: state.navigationState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,

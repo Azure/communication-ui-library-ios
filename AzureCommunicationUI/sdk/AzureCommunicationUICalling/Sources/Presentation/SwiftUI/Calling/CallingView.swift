@@ -331,8 +331,7 @@ extension CallingView {
     }
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
-        guard !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
-              !viewModel.controlBarViewModel.isShareActivityDisplayed else {
+        guard !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
                 return
             }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all

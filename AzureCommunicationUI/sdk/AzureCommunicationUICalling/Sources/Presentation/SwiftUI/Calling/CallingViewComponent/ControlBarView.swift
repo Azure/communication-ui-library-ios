@@ -38,12 +38,12 @@ struct ControlBarView: View {
 //                    .accessibilityElement(children: .contain)
 //                    .accessibilityAddTraits(.isModal)
 //            })
-//            .modifier(PopupModalView(
-//                isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-//                    shareActivityView
-//                        .accessibilityElement(children: .contain)
-//                        .accessibilityAddTraits(.isModal)
-//            })
+            .modifier(PopupModalView(
+                isPresented: viewModel.isShareActivityDisplayed) {
+                    shareActivityView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+            })
         }
     }
 

@@ -23,19 +23,31 @@ extension Reducer where State == NavigationState,
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
         case .showSupportForm:
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
             supportFormVisible = true
+            moreOptionsVisible = false
         case .hideSupportForm:
             supportFormVisible = false
         case .showEndCallConfirmation:
+            audioSelectionVisible = false
             endCallConfirmationVisible = true
+            supportFormVisible = false
+            moreOptionsVisible = false
         case .hideEndCallConfirmation:
             endCallConfirmationVisible = false
         case .showMoreOptions:
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
+            supportFormVisible = false
             moreOptionsVisible = true
         case .hideMoreOptions:
             moreOptionsVisible = false
         case .showAudioSelection:
             audioSelectionVisible = true
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = false
         case .hideAudioSelection:
             audioSelectionVisible = false
         case .audioSessionAction,

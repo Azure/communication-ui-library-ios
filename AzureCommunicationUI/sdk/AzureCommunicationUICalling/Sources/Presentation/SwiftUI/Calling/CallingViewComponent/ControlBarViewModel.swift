@@ -47,9 +47,6 @@ class ControlBarViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.onEndCallTapped = onEndCallTapped
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
-//        audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
-//            dispatchAction: dispatch,
-//            localUserState: localUserState)
 
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
@@ -158,7 +155,10 @@ class ControlBarViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
                 callingState: CallingState,
-                visibilityState: VisibilityState) {
+                visibilityState: VisibilityState,
+                navigationState: NavigationState
+                ) {
+        isShareActivityDisplayed = navigationState.supportShareSheetVisible
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
         if cameraPermission != permissionState.cameraPermission {
