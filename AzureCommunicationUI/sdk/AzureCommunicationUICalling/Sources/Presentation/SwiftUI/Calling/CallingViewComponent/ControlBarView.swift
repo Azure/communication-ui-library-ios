@@ -26,7 +26,6 @@ struct ControlBarView: View {
                     nonCenteredStack
                 }
             }
-
             .padding()
             .background(Color(StyleProvider.color.backgroundColor))
 //            .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
@@ -39,12 +38,12 @@ struct ControlBarView: View {
 //                    .accessibilityElement(children: .contain)
 //                    .accessibilityAddTraits(.isModal)
 //            })
-            .modifier(PopupModalView(
-                isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-                    shareActivityView
-                        .accessibilityElement(children: .contain)
-                        .accessibilityAddTraits(.isModal)
-            })
+//            .modifier(PopupModalView(
+//                isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
+//                    shareActivityView
+//                        .accessibilityElement(children: .contain)
+//                        .accessibilityAddTraits(.isModal)
+//            })
         }
     }
 

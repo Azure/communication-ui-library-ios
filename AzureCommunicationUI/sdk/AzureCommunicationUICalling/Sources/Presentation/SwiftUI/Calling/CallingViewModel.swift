@@ -92,8 +92,7 @@ class CallingViewModel: ObservableObject {
             }, dismissConfirmation: {
                 store.dispatch(action: .hideEndCallConfirmation)
             }
-
-      )
+        )
 
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
@@ -143,6 +142,7 @@ class CallingViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
+                store.dispatch(action: .hideMoreOptions)
                 store.dispatch(action: .showSupportForm)
             }
         )
@@ -159,6 +159,10 @@ class CallingViewModel: ObservableObject {
 
     func dismissConfirmLeaveDrawerList() {
         store.dispatch(action: .hideEndCallConfirmation)
+    }
+
+    func dismissMoreCallOptionsDrawerList() {
+        store.dispatch(action: .hideMoreOptions)
     }
 
     func receive(_ state: AppState) {
@@ -198,6 +202,7 @@ class CallingViewModel: ObservableObject {
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
+        moreCallOptionsListViewModel.setIsDisplayed(isDisplayed: state.navigationState.moreOptionsVisible)
         let newIsCallConnected = state.callingState.status == .connected
         let shouldParticipantGridDisplayed = newIsCallConnected &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)

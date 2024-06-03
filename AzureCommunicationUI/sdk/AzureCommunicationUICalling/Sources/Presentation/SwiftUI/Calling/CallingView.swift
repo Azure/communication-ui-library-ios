@@ -61,6 +61,11 @@ struct CallingView: View {
                              hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
                     LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
                 }
+
+                BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissMoreCallOptionsDrawerList) {
+                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel)
+                }
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -326,9 +331,7 @@ extension CallingView {
     }
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
-        guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-              !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
-              !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
+        guard !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
               !viewModel.controlBarViewModel.isShareActivityDisplayed else {
                 return
             }

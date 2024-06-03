@@ -155,6 +155,7 @@
 		533D7AFC2B1965BC0021767F /* SupportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFB2B1965BC0021767F /* SupportFormView.swift */; };
 		533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */; };
 		534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */; };
+		53535A132C0E667F000BF96B /* MoreCallOptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */; };
 		538016522B900C690093AC4D /* LandscapeAwareKeyboardWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538016512B900C690093AC4D /* LandscapeAwareKeyboardWatcher.swift */; };
 		53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */; };
 		53D734D62C0AAD4700017EFB /* LeaveCallConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D734D52C0AAD4700017EFB /* LeaveCallConfirmationView.swift */; };
@@ -509,6 +510,7 @@
 		533D7AFB2B1965BC0021767F /* SupportFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormView.swift; sourceTree = "<group>"; };
 		533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormViewModel.swift; sourceTree = "<group>"; };
 		534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAudioVideoMode.swift; sourceTree = "<group>"; };
+		53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsListView.swift; sourceTree = "<group>"; };
 		538016512B900C690093AC4D /* LandscapeAwareKeyboardWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeAwareKeyboardWatcher.swift; sourceTree = "<group>"; };
 		53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryProtocols.swift; sourceTree = "<group>"; };
 		53D734D52C0AAD4700017EFB /* LeaveCallConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationView.swift; sourceTree = "<group>"; };
@@ -1159,6 +1161,7 @@
 			isa = PBXGroup;
 			children = (
 				FAACEE3C28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift */,
+				53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */,
 			);
 			path = MoreCallOptions;
 			sourceTree = "<group>";
@@ -1982,6 +1985,7 @@
 				985DF376269E07E700CFDA55 /* PrimaryButton.swift in Sources */,
 				1FBCB6AF2649DC7900F57EEA /* ParticipantInfoModel.swift in Sources */,
 				0532548B2A27B1D100267629 /* PipManager.swift in Sources */,
+				53535A132C0E667F000BF96B /* MoreCallOptionsListView.swift in Sources */,
 				988799932746CDEC00AA3759 /* LockPhoneOrientation.swift in Sources */,
 				05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */,
 				7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */,

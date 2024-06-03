@@ -16,10 +16,7 @@ class ControlBarViewModel: ObservableObject {
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
     @Published var cameraPermission: AppPermission.Status = .unknown
-    @Published var isAudioDeviceSelectionDisplayed = false
-    @Published var isMoreCallOptionsListDisplayed = false
     @Published var isShareActivityDisplayed = false
-    @Published var isSupportFormOptionDisplayed = false
     @Published var isDisplayed = false
     @Published var isCameraDisplayed = true
 
@@ -146,11 +143,13 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func selectAudioDeviceButtonTapped() {
-        self.isAudioDeviceSelectionDisplayed = true
+        dispatch(.hideMoreOptions)
+        dispatch(.showAudioSelection)
     }
 
     func moreButtonTapped() {
-        isMoreCallOptionsListDisplayed = true
+        dispatch(.hideMoreOptions)
+        dispatch(.showMoreOptions)
     }
 
     func isCameraDisabled() -> Bool {
