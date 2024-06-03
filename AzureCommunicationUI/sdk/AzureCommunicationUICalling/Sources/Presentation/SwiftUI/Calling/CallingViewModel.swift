@@ -43,7 +43,7 @@ class CallingViewModel: ObservableObject {
     var supportFormViewModel: SupportFormViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
 
-    // swiftlint:disable function_body_length
+    // wiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState, Action>,
@@ -132,22 +132,16 @@ class CallingViewModel: ObservableObject {
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isDisplayed: store.state.navigationState.moreOptionsVisible,
-            showSharingViewAction: { [weak self] in
-                guard let self = self else {
-                    return
-                }
+            showSharingViewAction: {
                 // self.isShareActivityDisplayed = true
             },
-            showSupportFormAction: { [weak self] in
-                guard let self = self else {
-                    return
-                }
+            showSupportFormAction: {
                 store.dispatch(action: .hideMoreOptions)
                 store.dispatch(action: .showSupportForm)
             }
         )
     }
-    // swiftlint:enable function_body_length
+    // wiftlint:enable function_body_length
 
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))

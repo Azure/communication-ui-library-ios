@@ -143,12 +143,10 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func selectAudioDeviceButtonTapped() {
-        dispatch(.hideMoreOptions)
         dispatch(.showAudioSelection)
     }
 
     func moreButtonTapped() {
-        dispatch(.hideMoreOptions)
         dispatch(.showMoreOptions)
     }
 
