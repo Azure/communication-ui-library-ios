@@ -24,4 +24,8 @@ enum Action: Equatable {
     case hideSupportForm
     case showEndCallConfirmation
     case hideEndCallConfirmation
+    case showAudioSelection
+    case hideAudioSelection
+    case showMoreOptions
+    case hideMoreOptions
 }
