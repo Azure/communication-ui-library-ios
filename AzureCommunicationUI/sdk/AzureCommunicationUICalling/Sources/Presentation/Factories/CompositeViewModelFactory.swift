@@ -315,6 +315,14 @@ extension CompositeViewModelFactory {
                                           debugInfoManager: debugInfoManager)
     }
 
+    func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,
+                                  dispatchAction: @escaping ActionDispatch) -> BottomToastViewModel {
+        BottomToastViewModel(dispatchAction: dispatchAction,
+                             localizationProvider: localizationProvider,
+                             accessibilityProvider: accessibilityProvider,
+                             toastNotificationState: toastNotificationState)
+    }
+
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
         PreviewAreaViewModel(compositeViewModelFactory: self,

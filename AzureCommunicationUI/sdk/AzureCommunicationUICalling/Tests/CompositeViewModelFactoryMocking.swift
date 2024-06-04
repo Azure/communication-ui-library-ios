@@ -49,6 +49,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var createCameraIconWithLabelButtonViewModel: ((CameraButtonState) -> IconWithLabelButtonViewModel<CameraButtonState>?)?
     var createMicIconWithLabelButtonViewModel: ((MicButtonState) -> IconWithLabelButtonViewModel<MicButtonState>?)?
     var createAudioIconWithLabelButtonViewModel: ((AudioButtonState) -> IconWithLabelButtonViewModel<AudioButtonState>?)?
+    var bottomToastViewModel: BottomToastViewModel?
 
     init(logger: Logger,
          store: Store<AppState, Action>,
@@ -340,4 +341,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                           dispatchAction: dispatchAction)
     }
 
+    func makeBottomToastViewModel(toastNotificationState: AzureCommunicationUICalling.ToastNotificationState,
+                                  dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
+    -> AzureCommunicationUICalling.BottomToastViewModel {
+        return bottomToastViewModel ?? BottomToastViewModel(dispatchAction: dispatchAction,
+                                                            localizationProvider: localizationProvider,
+                                                            accessibilityProvider: accessibilityProvider,
+                                                            toastNotificationState: ToastNotificationState())
+    }
 }

@@ -17,7 +17,8 @@ extension Reducer {
             = .liveRemoteParticipantsReducer,
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer,
         visibilityReducer: Reducer<VisibilityState, VisibilityAction> = .visibilityReducer,
-        diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .liveDiagnosticsReducer
+        diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .liveDiagnosticsReducer,
+        toastNotificationReducer: Reducer<ToastNotificationState, ToastNotificationAction> = .toastNotificationReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
@@ -33,6 +34,7 @@ extension Reducer {
             var diagnosticsState = state.diagnosticsState
             let defaultUserState = state.defaultUserState
             var visibilityState = state.visibilityState
+            var toastNotificationState = state.toastNotificationState
 
             switch action {
             case let .permissionAction(permAction):
@@ -46,6 +48,9 @@ extension Reducer {
 
             case let .visibilityAction(visibilityAction):
                 visibilityState = visibilityReducer.reduce(state.visibilityState, visibilityAction)
+
+            case let .toastNotificationAction(action):
+                toastNotificationState = toastNotificationReducer.reduce(state.toastNotificationState, action)
 
             default:
                 break
@@ -70,7 +75,8 @@ extension Reducer {
                             errorState: errorState,
                             defaultUserState: defaultUserState,
                             visibilityState: visibilityState,
-                            diagnosticsState: diagnosticsState)
+                            diagnosticsState: diagnosticsState,
+                            toastNotificationState: toastNotificationState)
         }
     }
 }
