@@ -39,6 +39,8 @@ class ControlBarViewModel: ObservableObject {
     var audioState = LocalUserState.AudioState(operation: .off,
                                                device: .receiverSelected)
     var displayEndCallConfirm: (() -> Void)
+    var capabilitiesManager: CapabilitiesManager
+    var capabilities: Set<ParticipantCapabilityType>
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -47,12 +49,15 @@ class ControlBarViewModel: ObservableObject {
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode) {
+         leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         capabilitiesManager: CapabilitiesManager) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.capabilitiesManager = capabilitiesManager
+        self.capabilities = localUserState.capabilities
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
@@ -60,7 +65,9 @@ class ControlBarViewModel: ObservableObject {
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: !self.capabilitiesManager
+                             .hasCapability(capabilities: localUserState.capabilities,
+                                           capability: ParticipantCapabilityType.turnVideoOn)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -74,7 +81,9 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .micOff,
             buttonType: .controlButton,
-            isDisabled: !localUserState.capabilities.contains(ParticipantCapabilityType.unmuteMicrophone)) { [weak self] in
+            isDisabled: !self.capabilitiesManager
+                             .hasCapability(capabilities: localUserState.capabilities,
+                                           capability: ParticipantCapabilityType.unmuteMicrophone)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -183,7 +192,8 @@ class ControlBarViewModel: ObservableObject {
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
         callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay() ||
-        // use manager here
+        !capabilitiesManager.hasCapability(capabilities: self.capabilities,
+                                           capability: ParticipantCapabilityType.turnVideoOn)
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
@@ -230,6 +240,7 @@ class ControlBarViewModel: ObservableObject {
                 visibilityState: VisibilityState) {
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
+        self.capabilities = localUserState.capabilities
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }

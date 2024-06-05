@@ -40,7 +40,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel
+                                 leaveCallConfirmationMode: LeaveCallConfirmationMode,
+                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,

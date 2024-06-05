@@ -302,7 +302,8 @@ public class CallComposite {
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles
+                retrieveLogFiles: callingSdkWrapper.getLogFiles,
+                capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType)
             )
         )
     }

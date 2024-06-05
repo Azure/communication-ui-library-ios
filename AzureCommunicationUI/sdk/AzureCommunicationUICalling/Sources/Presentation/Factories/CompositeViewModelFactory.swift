@@ -18,6 +18,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
+    private let capabilitiesManager: CapabilitiesManager
 
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
@@ -36,7 +37,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         retrieveLogFiles: @escaping () -> [URL]
+         retrieveLogFiles: @escaping () -> [URL],
+         capabilitiesManager: CapabilitiesManager
          ) {
         self.logger = logger
         self.store = store
@@ -51,6 +53,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.retrieveLogFiles = retrieveLogFiles
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.capabilitiesManager = capabilitiesManager
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
@@ -87,7 +90,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
                                             != CallCompositeAudioVideoMode.audioOnly,
-                                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled)
+                                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
+                                             capabilitiesManager: self.capabilitiesManager)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -199,7 +203,8 @@ extension CompositeViewModelFactory {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled)
+                                 leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
+                                 capabilitiesManager: CapabilitiesManager)
     -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -208,7 +213,8 @@ extension CompositeViewModelFactory {
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
-                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled)
+                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
+                            capabilitiesManager: capabilitiesManager)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
