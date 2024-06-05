@@ -159,8 +159,7 @@ public class CallComposite {
                        localOptions: LocalOptions? = nil) {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName /* <ROOMS_SUPPORT> */ ,
-                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */ )
+                                                  displayName: remoteOptions.displayName)
         launch(callConfiguration, localOptions: localOptions)
     }
 
