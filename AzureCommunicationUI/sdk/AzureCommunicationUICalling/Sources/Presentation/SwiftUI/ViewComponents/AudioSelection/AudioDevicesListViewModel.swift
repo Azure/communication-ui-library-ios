@@ -8,6 +8,7 @@ import AVFoundation
 
 class AudioDevicesListViewModel: ObservableObject {
     @Published var audioDevicesList: [SelectableDrawerListItemViewModel] = []
+    @Published var isDisplayed = false
 
     private var audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus
     private var previousConnectedDevice: AudioDeviceType?
@@ -25,12 +26,13 @@ class AudioDevicesListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
     }
 
-    func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) {
+    func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus, navigationState: NavigationState) {
         if audioDeviceStatus != self.audioDeviceStatus || audioDevicesList.isEmpty,
            LocalUserState.AudioDeviceSelectionStatus.isSelected(for: audioDeviceStatus) {
             self.audioDeviceStatus = audioDeviceStatus
             self.audioDevicesList = getAvailableAudioDevices(audioDeviceStatus: audioDeviceStatus)
         }
+        isDisplayed = navigationState.audioSelectionVisible
     }
 
     private func getAvailableAudioDevices(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus)

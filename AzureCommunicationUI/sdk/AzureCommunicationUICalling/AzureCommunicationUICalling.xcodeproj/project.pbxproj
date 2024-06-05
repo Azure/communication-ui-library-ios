@@ -156,6 +156,7 @@
 		533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */; };
 		534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */; };
 		53535A132C0E667F000BF96B /* MoreCallOptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */; };
+		53535A152C10FE5B000BF96B /* AudioDeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53535A142C10FE5B000BF96B /* AudioDeviceListView.swift */; };
 		538016522B900C690093AC4D /* LandscapeAwareKeyboardWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538016512B900C690093AC4D /* LandscapeAwareKeyboardWatcher.swift */; };
 		53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */; };
 		53D734D62C0AAD4700017EFB /* LeaveCallConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D734D52C0AAD4700017EFB /* LeaveCallConfirmationView.swift */; };
@@ -511,6 +512,7 @@
 		533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormViewModel.swift; sourceTree = "<group>"; };
 		534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAudioVideoMode.swift; sourceTree = "<group>"; };
 		53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsListView.swift; sourceTree = "<group>"; };
+		53535A142C10FE5B000BF96B /* AudioDeviceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceListView.swift; sourceTree = "<group>"; };
 		538016512B900C690093AC4D /* LandscapeAwareKeyboardWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeAwareKeyboardWatcher.swift; sourceTree = "<group>"; };
 		53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryProtocols.swift; sourceTree = "<group>"; };
 		53D734D52C0AAD4700017EFB /* LeaveCallConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationView.swift; sourceTree = "<group>"; };
@@ -1153,6 +1155,7 @@
 			isa = PBXGroup;
 			children = (
 				98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */,
+				53535A142C10FE5B000BF96B /* AudioDeviceListView.swift */,
 			);
 			path = AudioSelection;
 			sourceTree = "<group>";
@@ -1919,6 +1922,7 @@
 				05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
 				75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */,
+				53535A152C10FE5B000BF96B /* AudioDeviceListView.swift in Sources */,
 				7589CE1A297765E30092AE38 /* ViewExtension.swift in Sources */,
 				1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */,
 				9823AB4B26A13F4B0006266D /* PreviewAreaViewModel.swift in Sources */,

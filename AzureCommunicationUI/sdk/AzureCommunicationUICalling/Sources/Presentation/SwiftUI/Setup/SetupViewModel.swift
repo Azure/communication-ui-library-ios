@@ -150,7 +150,8 @@ class SetupViewModel: ObservableObject {
                                     visibilityState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
-                                        callingState: callingState)
+                                        callingState: callingState,
+                                        navigationState: state.navigationState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)
@@ -162,8 +163,9 @@ class SetupViewModel: ObservableObject {
     }
 
     private func handleOffline() {
-        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .callJoinConnectionFailed,
-                                                                     error: nil)))
+        store.dispatch(
+            action: .errorAction(
+                .statusErrorAndCallReset(internalError: .callJoinConnectionFailed, error: nil)))
         // only show banner again when user taps on button explicitly
         // banner would not reappear when other events^1 send identical error state again
         // 1: camera on/off, audio on/off, switch to background/foreground, etc.

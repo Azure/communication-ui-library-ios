@@ -7,10 +7,10 @@ import Foundation
 import SwiftUI
 import FluentUI
 
-internal struct MoreCallOptionsListView: View {
-    @ObservedObject var viewModel: MoreCallOptionsListViewModel
+internal struct AudioDevicesListView: View {
+    @ObservedObject var viewModel: AudioDevicesListViewModel
 
-    init(viewModel: MoreCallOptionsListViewModel) {
+    init(viewModel: AudioDevicesListViewModel) {
         self.viewModel = viewModel
     }
 
@@ -21,7 +21,7 @@ internal struct MoreCallOptionsListView: View {
                 .foregroundColor(.primary)
                 .padding(.top, MoreCallOptionsListViewConstants.titlePaddingTop)
 
-            ForEach(viewModel.items) { option in
+            ForEach(viewModel.audioDevicesList) { option in
                 HStack {
                     Icon(name: option.icon, size: MoreCallOptionsListViewConstants.iconSize)
                         .foregroundColor(.primary)
@@ -41,7 +41,7 @@ internal struct MoreCallOptionsListView: View {
     }
 }
 
-class MoreCallOptionsListViewConstants {
+class AudioDevicesListViewConstants {
     static let vStackSpacing: CGFloat = 16
     static let titleFontSize: CGFloat = 20
     static let titlePaddingTop: CGFloat = 20

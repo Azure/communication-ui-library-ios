@@ -66,6 +66,11 @@ struct CallingView: View {
                              hideDrawer: viewModel.dismissMoreCallOptionsDrawerList) {
                     MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel)
                 }
+
+                BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissAudioDevicesDrawer) {
+                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                }
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)

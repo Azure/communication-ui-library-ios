@@ -133,7 +133,8 @@ class SetupControlBarViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState) {
+                callingState: CallingState,
+                navigationState: NavigationState) {
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
@@ -149,7 +150,9 @@ class SetupControlBarViewModel: ObservableObject {
             updateButtonTypeColor(isLocalVideoOff: localVideoStreamId == nil)
         }
 
-        audioDevicesListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
+        audioDevicesListViewModel.update(
+            audioDeviceStatus: localUserState.audioState.device,
+            navigationState: navigationState)
     }
 
     func update(isJoinRequested: Bool) {

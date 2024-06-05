@@ -42,8 +42,9 @@ class CallingViewModel: ObservableObject {
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
     var supportFormViewModel: SupportFormViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
+    var audioDeviceListViewModel: AudioDevicesListViewModel!
 
-    // wiftlint:disable function_body_length
+    // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState, Action>,
@@ -62,6 +63,10 @@ class CallingViewModel: ObservableObject {
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         let actionDispatch: ActionDispatch = store.dispatch
+
+        audioDeviceListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
+                dispatchAction: actionDispatch,
+                localUserState: store.state.localUserState)
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
@@ -140,7 +145,7 @@ class CallingViewModel: ObservableObject {
             }
         )
     }
-    // wiftlint:enable function_body_length
+    // swiftlint:enable function_body_length
 
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))
@@ -158,6 +163,10 @@ class CallingViewModel: ObservableObject {
         store.dispatch(action: .hideMoreOptions)
     }
 
+    func dismissAudioDevicesDrawer() {
+        store.dispatch(action: .hideAudioSelection)
+    }
+
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
@@ -167,6 +176,10 @@ class CallingViewModel: ObservableObject {
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
+
+        audioDeviceListViewModel.update(
+            audioDeviceStatus: state.localUserState.audioState.device,
+            navigationState: state.navigationState)
 
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
