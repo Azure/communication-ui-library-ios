@@ -133,7 +133,7 @@ class CallingViewModel: ObservableObject {
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isDisplayed: store.state.navigationState.moreOptionsVisible,
             showSharingViewAction: {
-                // self.isShareActivityDisplayed = true
+                store.dispatch(action: .showSupportShare)
             },
             showSupportFormAction: {
                 store.dispatch(action: .showSupportForm)

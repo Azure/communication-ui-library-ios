@@ -58,6 +58,8 @@ extension Reducer where State == ErrorState,
                 .hideMoreOptions,
                 .showAudioSelection,
                 .hideAudioSelection,
+                .showSupportShare,
+                .hideSupportShare,
                 .visibilityAction:
             return state
         }

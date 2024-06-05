@@ -28,4 +28,6 @@ enum Action: Equatable {
     case hideAudioSelection
     case showMoreOptions
     case hideMoreOptions
+    case showSupportShare
+    case hideSupportShare
 }

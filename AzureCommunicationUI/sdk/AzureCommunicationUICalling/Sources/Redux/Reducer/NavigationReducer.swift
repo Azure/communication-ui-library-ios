@@ -10,6 +10,7 @@ extension Reducer where State == NavigationState,
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
         var supportFormVisible = state.supportFormVisible
+        var supportShareSheetVisible = state.supportShareSheetVisible
         var endCallConfirmationVisible = state.endCallConfirmationVisible
         var audioSelectionVisible = state.audioSelectionVisible
         var moreOptionsVisible = state.moreOptionsVisible
@@ -23,6 +24,7 @@ extension Reducer where State == NavigationState,
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
         case .showSupportForm:
+            supportShareSheetVisible = false
             audioSelectionVisible = false
             endCallConfirmationVisible = false
             supportFormVisible = true
@@ -30,6 +32,7 @@ extension Reducer where State == NavigationState,
         case .hideSupportForm:
             supportFormVisible = false
         case .showEndCallConfirmation:
+            supportShareSheetVisible = false
             audioSelectionVisible = false
             endCallConfirmationVisible = true
             supportFormVisible = false
@@ -37,6 +40,7 @@ extension Reducer where State == NavigationState,
         case .hideEndCallConfirmation:
             endCallConfirmationVisible = false
         case .showMoreOptions:
+            supportShareSheetVisible = false
             audioSelectionVisible = false
             endCallConfirmationVisible = false
             supportFormVisible = false
@@ -44,12 +48,22 @@ extension Reducer where State == NavigationState,
         case .hideMoreOptions:
             moreOptionsVisible = false
         case .showAudioSelection:
+            supportShareSheetVisible = false
             audioSelectionVisible = true
             endCallConfirmationVisible = false
             supportFormVisible = false
             moreOptionsVisible = false
         case .hideAudioSelection:
             audioSelectionVisible = false
+        case .showSupportShare:
+            supportShareSheetVisible = true
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = false
+        case .hideSupportShare:
+            supportShareSheetVisible = false
+
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -74,6 +88,7 @@ extension Reducer where State == NavigationState,
                                supportFormVisible: supportFormVisible,
                                endCallConfirmationVisible: endCallConfirmationVisible,
                                audioSelectionVisible: audioSelectionVisible,
-                               moreOptionsVisible: moreOptionsVisible)
+                               moreOptionsVisible: moreOptionsVisible,
+                               supportShareSheetVisible: supportShareSheetVisible)
     }
 }
