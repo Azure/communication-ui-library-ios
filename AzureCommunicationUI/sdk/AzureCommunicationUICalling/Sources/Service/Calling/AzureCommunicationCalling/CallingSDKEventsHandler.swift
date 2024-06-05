@@ -17,7 +17,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
-    var capabilitiesChangeSubject = PassthroughSubject<CapabilitiesChangedEvent, Never>()
+    var capabilitiesChangedSubject = PassthroughSubject<CapabilitiesChangedEvent, Never>()
 
     // User Facing Diagnostics Subjects
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
@@ -246,8 +246,8 @@ extension CallingSDKEventsHandler: CallDelegate,
     // MARK: CapabilitiesDelegate
     func capabilitiesCallFeature(_ capabilitiesCallFeature: CapabilitiesCallFeature,
                                  didChangeCapabilities args: CapabilitiesChangedEventArgs) {
-        let capabilitiesChangeEvent = args.toCapabilitiesChangedEvent()
-        self.capabilitiesChangeSubject.send(capabilitiesChangeEvent)
+        let capabilitiesChangedEvent = args.toCapabilitiesChangedEvent()
+        self.capabilitiesChangedSubject.send(capabilitiesChangedEvent)
     }
 
     // MARK: NetworkDiagnosticsDelegate

@@ -6,7 +6,17 @@
 import Foundation
 import AzureCommunicationCalling
 
-internal class ParticipantCapability {
+internal class ParticipantCapability: Equatable {
+    static func == (lhs: ParticipantCapability, rhs: ParticipantCapability) -> Bool {
+        if lhs.allowed == rhs.allowed &&
+           lhs.capabilityResolutionReason == rhs.capabilityResolutionReason &&
+           lhs.participantCapabilityType == rhs.participantCapabilityType {
+            return true
+        } else {
+            return false
+        }
+    }
+
     private let participantCapabilityType: ParticipantCapabilityType
     private let isAllowed: Bool
     private let capabilityResolutionReason: CapabilityResolutionReason

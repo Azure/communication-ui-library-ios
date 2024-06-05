@@ -19,6 +19,7 @@ protocol CallingServiceProtocol {
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> {get}
 
     func setupCall() async throws
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
@@ -43,7 +44,6 @@ protocol CallingServiceProtocol {
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
-
     private let logger: Logger
     private let callingSDKWrapper: CallingSDKWrapperProtocol
 
@@ -59,6 +59,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never>
 
     init(logger: Logger,
          callingSDKWrapper: CallingSDKWrapperProtocol ) {
@@ -75,6 +76,7 @@ class CallingService: NSObject, CallingServiceProtocol {
         networkQualityDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkQualityDiagnosticsSubject
         networkDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkDiagnosticsSubject
         mediaDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.mediaDiagnosticsSubject
+        capabilitiesChangedSubject = callingSDKWrapper.callingEventsHandler.capabilitiesChangedSubject
     }
 
     func setupCall() async throws {
@@ -135,7 +137,6 @@ class CallingService: NSObject, CallingServiceProtocol {
     func declineLobbyParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.declineLobbyParticipant(participantId)
     }
-    
     func removeParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.removeParticipant(participantId)
     }
@@ -143,5 +144,4 @@ class CallingService: NSObject, CallingServiceProtocol {
     func getCapabilities() async throws -> Set<ParticipantCapabilityType> {
         try await callingSDKWrapper.getCapabilities()
     }
-    
 }

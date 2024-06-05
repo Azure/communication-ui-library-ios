@@ -81,6 +81,8 @@ private func handleLocalUserAction(_ action: LocalUserAction,
         actionHandler.requestMicrophoneMute(state: getState(), dispatch: dispatch)
     case .microphoneOnTriggered:
         actionHandler.requestMicrophoneUnmute(state: getState(), dispatch: dispatch)
+    case .capabilitiesUpdated:
+        actionHandler.capabilitiesUpdated(state: getState(), dispatch: dispatch)
 
     case .cameraOnSucceeded,
             .cameraOnFailed,

@@ -52,18 +52,23 @@ protocol CallingMiddlewareHandling {
     func declineLobbyParticipant(state: AppState,
                                  dispatch: @escaping ActionDispatch,
                                  participantId: String) -> Task<Void, Never>
+    @discardableResult
+    func capabilitiesUpdated(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 // swiftlint:disable type_body_length
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
+
     private let callingService: CallingServiceProtocol
     private let logger: Logger
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
+    private let capabilitiesManager: CapabilitiesManager
 
-    init(callingService: CallingServiceProtocol, logger: Logger) {
+    init(callingService: CallingServiceProtocol, logger: Logger, capabilitiesManager: CapabilitiesManager) {
         self.callingService = callingService
         self.logger = logger
+        self.capabilitiesManager = capabilitiesManager
     }
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -360,6 +365,33 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }
         }
     }
+
+    func capabilitiesUpdated(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status != .disconnected else {
+                return
+            }
+
+            do {
+                let isInitialCapabilitySetting = state.localUserState.capabilities.isEmpty
+                if !capabilitiesManager.hasCapability(capabilities: state.localUserState.capabilities,
+                                                      capability: ParticipantCapabilityType.turnVideoOn) &&
+                    state.localUserState.cameraState.operation != .off {
+                    dispatch(.localUserAction(.cameraOffTriggered))
+                } else {
+                    if isInitialCapabilitySetting && state.callingState.operationStatus == .skipSetupRequested {
+                        await requestCameraOn(state: state, dispatch: dispatch).value
+                    }
+                }
+
+                if !capabilitiesManager.hasCapability(capabilities: state.localUserState.capabilities,
+                                                      capability: ParticipantCapabilityType.unmuteMicrophone) &&
+                    state.localUserState.audioState.operation != .off {
+                    dispatch(.localUserAction(.microphoneOffTriggered))
+                }
+            }
+        }
+    }
 }
 
 extension CallingMiddlewareHandler {
@@ -452,6 +484,22 @@ extension CallingMiddlewareHandler {
                 dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
 
+        subscibeCapabilitiesUpdate(dispatch: dispatch)
+    }
+
+    private func subscibeCapabilitiesUpdate(dispatch: @escaping ActionDispatch) {
+        callingService.capabilitiesChangedSubject
+            .removeDuplicates()
+            .sink { _ in
+                Task {
+                    do {
+                        let capabilities = try await self.callingService.getCapabilities()
+                        dispatch(.localUserAction(.capabilitiesUpdated(capabilities: capabilities)))
+                    } catch {
+                        self.logger.error("Fetch capabilities Failed with error : \(error)")
+                    }
+                }
+            }.store(in: subscription)
     }
 }
 // swiftlint:enable type_body_length

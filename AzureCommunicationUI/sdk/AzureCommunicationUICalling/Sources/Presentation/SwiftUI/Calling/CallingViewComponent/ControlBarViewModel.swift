@@ -74,7 +74,7 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .micOff,
             buttonType: .controlButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: !localUserState.capabilities.contains(ParticipantCapabilityType.unmuteMicrophone)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -182,7 +182,8 @@ class ControlBarViewModel: ObservableObject {
 
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
-        callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
+        callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay() ||
+        // use manager here
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {

@@ -251,7 +251,8 @@ public class CallComposite {
             displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName,
             startWithCameraOn: localOptions?.cameraOn,
             startWithMicrophoneOn: localOptions?.microphoneOn,
-            skipSetupScreen: localOptions?.skipSetupScreen
+            skipSetupScreen: localOptions?.skipSetupScreen,
+            compositeCallType: callConfiguration.compositeCallType
         )
         self.store = store
 

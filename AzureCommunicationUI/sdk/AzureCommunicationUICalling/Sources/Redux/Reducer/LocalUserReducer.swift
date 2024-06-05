@@ -22,6 +22,7 @@ extension Reducer where State == LocalUserState,
         let displayName = localUserState.displayName
         var localVideoStreamIdentifier = localUserState.localVideoStreamIdentifier
         var participantRole = localUserState.participantRole
+        var capabilities = localUserState.capabilities
 
         switch action {
         case .cameraPreviewOnTriggered:
@@ -78,6 +79,9 @@ extension Reducer where State == LocalUserState,
             audioError = error
         case .participantRoleChanged(let newParticipantRole):
             participantRole = newParticipantRole
+        case .capabilitiesUpdated(let newCapabilities):
+            capabilities = newCapabilities
+
         }
 
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
@@ -91,7 +95,8 @@ extension Reducer where State == LocalUserState,
                               audioState: audioState,
                               displayName: displayName,
                               localVideoStreamIdentifier: localVideoStreamIdentifier,
-                              participantRole: participantRole)
+                              participantRole: participantRole,
+                              capabilities: capabilities)
     }
 }
 
