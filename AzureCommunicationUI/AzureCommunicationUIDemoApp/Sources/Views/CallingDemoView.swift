@@ -91,6 +91,7 @@ struct CallingDemoView: View {
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
         }
+        #if DEBUG
         .onAppear(perform: {
             // Dev helper to jump through to mocked experiences
             Task {
@@ -105,6 +106,7 @@ struct CallingDemoView: View {
                 }
             }
         })
+        #endif
     }
 
     var acsTokenSelector: some View {
