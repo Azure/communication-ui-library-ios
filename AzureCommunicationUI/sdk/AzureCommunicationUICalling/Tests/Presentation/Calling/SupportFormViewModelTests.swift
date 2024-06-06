@@ -16,6 +16,7 @@ class SupportFormViewModelTests: XCTestCase {
             logFiles: [])
         // Initialize the viewModel with mocks
         let viewModel = SupportFormViewModel(
+            isDisplayed: true,
             dispatchAction: { _ in },
             events: events,
             localizationProvider: LocalizationProviderMocking(),
@@ -45,6 +46,7 @@ class SupportFormViewModelTests: XCTestCase {
         }
         // Initialize the viewModel with mocks
         let viewModel = SupportFormViewModel(
+            isDisplayed: true,
             dispatchAction: dispatchAction,
             events: events,
             localizationProvider: LocalizationProviderMocking(),
@@ -63,6 +65,7 @@ class SupportFormViewModelTests: XCTestCase {
         )
         // Initialize the viewModel with mocks
         let viewModel = SupportFormViewModel(
+            isDisplayed: true,
             dispatchAction: { _ in },
             events: events,
             localizationProvider: LocalizationProviderMocking(),
