@@ -32,6 +32,11 @@ class EntryViewController: UIViewController {
             window?.makeKeyAndVisible()
             window?.isHidden = true
         }
+
+        if EnvConfig.skipTo.value() != "" {
+            // Jump into The SwiftUI launcher if this is set
+            onCallingSwiftUIPressed()
+        }
 #endif
     }
 
