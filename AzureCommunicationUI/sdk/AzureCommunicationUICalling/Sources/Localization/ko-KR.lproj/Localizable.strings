@@ -158,3 +158,10 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="스크린샷 첨부";
 "AzureCommunicationUICalling.ReportAProblem.Text"="문제 보고";
 "AzureCommunicationUICalling.SendFeedback.Text"="보내기";
+
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute"
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu."
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call"
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu."
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you."
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you."
