@@ -54,6 +54,23 @@ protocol CallingMiddlewareHandling {
                                  participantId: String) -> Task<Void, Never>
     @discardableResult
     func capabilitiesUpdated(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    @discardableResult
+    func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
+                                                dispatch: @escaping ActionDispatch,
+                                                diagnisticModel: NetworkQualityDiagnosticModel) -> Task<Void, Never>
+    @discardableResult
+    func onNetworkCallDiagnosticsUpdated(state: AppState,
+                                         dispatch: @escaping ActionDispatch,
+                                         diagnisticModel: NetworkDiagnosticModel) -> Task<Void, Never>
+    @discardableResult
+    func onMediaCallDiagnosticsUpdated(state: AppState,
+                                       dispatch: @escaping ActionDispatch,
+                                       diagnisticModel: MediaDiagnosticModel) -> Task<Void, Never>
+
+    @discardableResult
+    func dismissNotification(state: AppState,
+                             dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 // swiftlint:disable type_body_length
@@ -389,6 +406,93 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                     state.localUserState.audioState.operation != .off {
                     dispatch(.localUserAction(.microphoneOffTriggered))
                 }
+            }
+        }
+    }
+
+    func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
+                                                dispatch: @escaping ActionDispatch,
+                                                diagnisticModel: NetworkQualityDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            if diagnisticModel.value == .bad || diagnisticModel.value == .poor {
+                switch diagnisticModel.diagnostic {
+                case .networkReceiveQuality:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkReceiveQuality)))
+                case .networkReconnectionQuality:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkReconnectionQuality)))
+                case .networkSendQuality:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkSendQuality)))
+                }
+            } else {
+                dispatch(.toastNotificationAction(.dismissNotification))
+            }
+        }
+    }
+
+    func onNetworkCallDiagnosticsUpdated(state: AppState,
+                                         dispatch: @escaping ActionDispatch,
+                                         diagnisticModel: NetworkDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            if diagnisticModel.value {
+                switch diagnisticModel.diagnostic {
+                case .networkRelaysUnreachable:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkRelaysUnreachable)))
+                case .networkUnavailable:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkUnavailable)))
+                }
+            }
+        }
+    }
+
+    func onMediaCallDiagnosticsUpdated(state: AppState,
+                                       dispatch: @escaping ActionDispatch,
+                                       diagnisticModel: MediaDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            switch diagnisticModel.diagnostic {
+            case .speakingWhileMicrophoneIsMuted:
+                if diagnisticModel.value {
+                    dispatch(.toastNotificationAction(.showNotification(kind: .speakingWhileMicrophoneIsMuted)))
+                } else {
+                    dispatch(.toastNotificationAction(.dismissNotification))
+                }
+            case .cameraStartFailed:
+                if diagnisticModel.value {
+                    dispatch(.toastNotificationAction(.showNotification(kind: .cameraStartFailed)))
+                }
+            case .cameraStartTimedOut:
+                if diagnisticModel.value {
+                    dispatch(.toastNotificationAction(.showNotification(kind: .cameraStartTimedOut)))
+                }
+            default:
+                break
+            }
+        }
+    }
+
+    func dismissNotification(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard let toastState = state.toastNotificationState.status else {
+                return
+            }
+            switch toastState {
+            case ToastNotificationKind.networkUnavailable:
+                dispatch(.callDiagnosticAction(.dismissNetwork(diagnostic: .networkUnavailable)))
+            case .networkRelaysUnreachable:
+                dispatch(.callDiagnosticAction(.dismissNetwork(diagnostic: .networkRelaysUnreachable)))
+            case .networkReceiveQuality:
+                dispatch(.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkReceiveQuality)))
+            case .networkReconnectionQuality:
+                dispatch(.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkReconnectionQuality)))
+            case .networkSendQuality:
+                dispatch(.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkSendQuality)))
+            case .speakingWhileMicrophoneIsMuted:
+                dispatch(.callDiagnosticAction(.dismissMedia(diagnostic: .speakingWhileMicrophoneIsMuted)))
+            case .cameraStartFailed:
+                dispatch(.callDiagnosticAction(.dismissMedia(diagnostic: .cameraStartFailed)))
+            case .cameraStartTimedOut:
+                dispatch(.callDiagnosticAction(.dismissMedia(diagnostic: .cameraStartTimedOut)))
+            case .someFeaturesLost, .someFeaturesGained:
+                break
             }
         }
     }

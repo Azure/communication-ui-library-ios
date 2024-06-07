@@ -311,12 +311,7 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        /* <ROOMS_SUPPORT:6> */
-                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                         roleHint: roomRoleData
-                                        /* <|ROOMS_SUPPORT>
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
-                                        </ROOMS_SUPPORT:1> */
         )
         self.callComposite = callComposite
 

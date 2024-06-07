@@ -33,6 +33,10 @@ extension Middleware {
                                 .compositeExitAction,
                                 .callingViewLaunched:
                             break
+                        case .callDiagnosticAction(let action):
+                            handleCallDiagnisticAction(action, actionHandler, getState, dispatch)
+                        case .toastNotificationAction(let action):
+                            handleToastNotificationAction(action, actionHandler, getState, dispatch)
                         default:
                             break
                         }
@@ -166,6 +170,36 @@ private func handleRemoteParticipantAction(_ action: RemoteParticipantsAction,
         actionHandler.admitLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
     case .decline(participantId: let participantId):
         actionHandler.declineLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    default:
+        break
+    }
+}
+
+private func handleCallDiagnisticAction(_ action: DiagnosticsAction,
+                                        _ actionHandler: CallingMiddlewareHandling,
+                                        _ getState: () -> AppState,
+                                        _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .networkQuality(diagnostic: let diagnostic):
+        actionHandler.onNetworkQualityCallDiagnosticsUpdated(
+            state: getState(), dispatch: dispatch, diagnisticModel: diagnostic)
+    case .network(diagnostic: let diagnostic):
+        actionHandler.onNetworkCallDiagnosticsUpdated(
+            state: getState(), dispatch: dispatch, diagnisticModel: diagnostic)
+    case .media(diagnostic: let diagnostic):
+        actionHandler.onMediaCallDiagnosticsUpdated(state: getState(), dispatch: dispatch, diagnisticModel: diagnostic)
+    default:
+        break
+    }
+}
+
+private func handleToastNotificationAction(_ action: ToastNotificationAction,
+                                           _ actionHandler: CallingMiddlewareHandling,
+                                           _ getState: () -> AppState,
+                                           _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .dismissNotification:
+        actionHandler.dismissNotification(state: getState(), dispatch: dispatch)
     default:
         break
     }

@@ -17,6 +17,7 @@ internal class ParticipantCapability: Equatable {
         }
     }
 
+internal class ParticipantCapability {
     private let participantCapabilityType: ParticipantCapabilityType
     private let isAllowed: Bool
     private let capabilityResolutionReason: CapabilityResolutionReason

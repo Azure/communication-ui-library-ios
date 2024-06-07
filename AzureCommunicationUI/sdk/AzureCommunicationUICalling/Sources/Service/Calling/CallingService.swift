@@ -137,6 +137,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     func declineLobbyParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.declineLobbyParticipant(participantId)
     }
+
     func removeParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.removeParticipant(participantId)
     }

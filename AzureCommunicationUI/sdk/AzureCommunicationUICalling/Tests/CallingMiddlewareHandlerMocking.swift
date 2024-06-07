@@ -27,6 +27,10 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var declineAllLobbyParticipants: ((Bool) -> Void)?
     var admitLobbyParticipant: ((Bool) -> Void)?
     var declineLobbyParticipant: ((Bool) -> Void)?
+    var onNetworkQualityCallDiagnosticsUpdated: ((Bool) -> Void)?
+    var onNetworkCallDiagnosticsUpdated: ((Bool) -> Void)?
+    var onMediaCallDiagnosticsUpdated: ((Bool) -> Void)?
+    var dismissNotification: ((Bool) -> Void)?
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -150,6 +154,30 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func declineLobbyParticipant(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, participantId: String) -> Task<Void, Never> {
         Task {
             declineLobbyParticipant?(true)
+        }
+    }
+
+    func onNetworkQualityCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.NetworkQualityDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            onNetworkQualityCallDiagnosticsUpdated?(true)
+        }
+    }
+
+    func onNetworkCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.NetworkDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            onNetworkCallDiagnosticsUpdated?(true)
+        }
+    }
+
+    func onMediaCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.MediaDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            onMediaCallDiagnosticsUpdated?(true)
+        }
+    }
+
+    func dismissNotification(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            dismissNotification?(true)
         }
     }
 }

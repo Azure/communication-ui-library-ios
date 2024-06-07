@@ -12,7 +12,6 @@ class CallingViewModel: ObservableObject {
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
     @Published var isInPip = false
-    @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var allowLocalCameraPreview = false
     @Published var showingSupportForm = false
 
@@ -41,6 +40,7 @@ class CallingViewModel: ObservableObject {
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
+    var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
     var capabilitiesManager: CapabilitiesManager!
 
@@ -119,8 +119,8 @@ class CallingViewModel: ObservableObject {
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
 
-        callDiagnosticsViewModel.$currentBottomToastDiagnostic
-                    .assign(to: &$currentBottomToastDiagnostic)
+        bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
+            toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -195,6 +195,7 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
         callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
+        bottomToastViewModel.update(toastNotificationState: state.toastNotificationState)
     }
 
     private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {

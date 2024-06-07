@@ -15,19 +15,16 @@ struct CallConfiguration {
     let diagnosticConfig: DiagnosticConfig
     /* <ROOMS_SUPPORT:7> */
     let roomId: String?
-    let roomRoleHint: ParticipantRole?
     /* </ROOMS_SUPPORT> */
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
-         displayName: String? /* <ROOMS_SUPPORT> */ ,
-         roleHint: ParticipantRole? /* </ROOMS_SUPPORT> */) {
+         displayName: String?) {
         switch locator {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
             self.meetingLink = nil
             /* <ROOMS_SUPPORT> */
             self.roomId = nil
-            self.roomRoleHint = nil
             /* </ROOMS_SUPPORT> */
             self.compositeCallType = .groupCall
         case let .teamsMeeting(teamsLink: meetingLink):
@@ -36,10 +33,8 @@ struct CallConfiguration {
             self.compositeCallType = .teamsMeeting
         /* <ROOMS_SUPPORT> */
             self.roomId = nil
-            self.roomRoleHint = nil
         case let .roomCall(roomId: roomId):
             self.roomId = roomId
-            self.roomRoleHint = roleHint
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .roomsCall
