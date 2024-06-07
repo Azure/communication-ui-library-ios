@@ -13,7 +13,9 @@ extension ControlBarViewModel {
     }
 
     func isMicDisabled() -> Bool {
-        audioState.operation == .pending || callingStatus == .localHold || isBypassLoadingOverlay()
+        audioState.operation == .pending || callingStatus == .localHold || isBypassLoadingOverlay() ||
+        !self.capabilitiesManager.hasCapability(capabilities: self.capabilities,
+                                                capability: ParticipantCapabilityType.unmuteMicrophone)
     }
 
     func isAudioDeviceDisabled() -> Bool {

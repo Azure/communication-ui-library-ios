@@ -250,7 +250,8 @@ public class CallComposite {
             displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName,
             startWithCameraOn: localOptions?.cameraOn,
             startWithMicrophoneOn: localOptions?.microphoneOn,
-            skipSetupScreen: localOptions?.skipSetupScreen
+            skipSetupScreen: localOptions?.skipSetupScreen,
+            compositeCallType: callConfiguration.compositeCallType
         )
         self.store = store
 
@@ -300,7 +301,8 @@ public class CallComposite {
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles
+                retrieveLogFiles: callingSdkWrapper.getLogFiles,
+                capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType)
             )
         )
     }

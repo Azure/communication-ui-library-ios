@@ -42,6 +42,7 @@ class CallingViewModel: ObservableObject {
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
     var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
+    var capabilitiesManager: CapabilitiesManager!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -50,7 +51,8 @@ class CallingViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode
+         leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         capabilitiesManager: CapabilitiesManager
     ) {
         self.logger = logger
         self.store = store
@@ -60,6 +62,7 @@ class CallingViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.capabilitiesManager = capabilitiesManager
         let actionDispatch: ActionDispatch = store.dispatch
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
@@ -94,7 +97,8 @@ class CallingViewModel: ObservableObject {
                 }
                 self.endCall()
             }, localUserState: store.state.localUserState,
-            leaveCallConfirmationMode: leaveCallConfirmationMode)
+            leaveCallConfirmationMode: leaveCallConfirmationMode,
+            capabilitiesManager: capabilitiesManager)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {

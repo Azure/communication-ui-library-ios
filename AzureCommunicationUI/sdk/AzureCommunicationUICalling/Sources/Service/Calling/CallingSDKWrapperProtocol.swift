@@ -102,5 +102,5 @@ protocol CallingSDKEventsHandling {
 
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
 
-    var capabilitiesChangeSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
 }

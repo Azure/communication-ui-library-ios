@@ -15,7 +15,8 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         displayName: String?,
         startWithCameraOn: Bool?,
         startWithMicrophoneOn: Bool?,
-        skipSetupScreen: Bool?
+        skipSetupScreen: Bool?,
+        compositeCallType: CompositeCallType?
     ) -> Store<AppState, Action> {
         let cameraState = startWithCameraOn
         ?? false ? DefaultUserState.CameraState.on : DefaultUserState.CameraState.off
@@ -39,7 +40,8 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                 .liveCallingMiddleware(
                     callingMiddlewareHandler: CallingMiddlewareHandler(
                         callingService: callingService,
-                        logger: logger
+                        logger: logger,
+                        capabilitiesManager: CapabilitiesManager(callType: compositeCallType ?? .groupCall)
                     )
                 )
             ],
