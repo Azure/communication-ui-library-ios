@@ -14,6 +14,8 @@ internal struct DrawerListContent: View {
             ForEach(items) { option in
                 if let selectableItem = option as? SelectableDrawerListItemViewModel {
                     SelectableDrawerItemView(item: selectableItem)
+                } else if let titleItem = option as? TitleDrawerListItemViewModel {
+                    DrawerTitleView(item: titleItem)
                 } else {
                     DrawerItemView(item: option)
                 }
@@ -66,6 +68,24 @@ internal struct DrawerItemView: View {
         }
     }
 }
+
+internal struct DrawerTitleView: View {
+    let item: TitleDrawerListItemViewModel
+
+    var body: some View {
+        HStack {
+            Spacer()
+            Text(item.title)
+                .foregroundColor(.primary)
+                .padding(.leading, DrawerListConstants.textPaddingLeading)
+                .font(.system(size: DrawerListConstants.textFontSize))
+            Spacer()
+        }
+        .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
+        .frame(maxWidth: .infinity)
+    }
+}
+
 internal class DrawerListConstants {
     static let vStackSpacing: CGFloat = 16
     static let titleFontSize: CGFloat = 20
