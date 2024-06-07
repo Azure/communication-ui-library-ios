@@ -5,6 +5,7 @@
 import AzureCommunicationCommon
 import Combine
 import Foundation
+import AzureCommunicationCalling
 
 enum CameraDevice {
     case front
@@ -72,6 +73,8 @@ protocol CallingSDKWrapperProtocol {
     func admitAllLobbyParticipants() async throws
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws
+    func removeParticipant(_ participantId: String) async throws
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType>
 
     func getLogFiles() -> [URL]
 
@@ -98,4 +101,6 @@ protocol CallingSDKEventsHandling {
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
 
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
+
+    var capabilitiesChangeSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
 }

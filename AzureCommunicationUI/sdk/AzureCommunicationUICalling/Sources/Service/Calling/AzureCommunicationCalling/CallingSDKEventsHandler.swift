@@ -17,6 +17,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
+    var capabilitiesChangeSubject = PassthroughSubject<CapabilitiesChangedEvent, Never>()
 
     // User Facing Diagnostics Subjects
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
@@ -30,6 +31,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var transcriptionCallFeature: TranscriptionCallFeature?
     private var dominantSpeakersCallFeature: DominantSpeakersCallFeature?
     private var localUserDiagnosticsFeature: LocalUserDiagnosticsCallFeature?
+    private var capabilitiesCallFeature: CapabilitiesCallFeature?
 
     private var previousCallingStatus: CallingStatus = .none
     private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
@@ -61,6 +63,11 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         localUserDiagnosticsFeature.networkDiagnostics.delegate = self
     }
 
+    func assign(_ capabilitiesCallFeature: CapabilitiesCallFeature) {
+        self.capabilitiesCallFeature = capabilitiesCallFeature
+        self.capabilitiesCallFeature?.delegate = self
+    }
+
     func setupProperties() {
         participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
@@ -69,6 +76,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         localUserDiagnosticsFeature = nil
         remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
         previousCallingStatus = .none
+        capabilitiesCallFeature = nil
     }
 
     private func setupRemoteParticipantEventsAdapter() {
@@ -171,7 +179,8 @@ extension CallingSDKEventsHandler: CallDelegate,
     TranscriptionCallFeatureDelegate,
     DominantSpeakersCallFeatureDelegate,
     MediaDiagnosticsDelegate,
-    NetworkDiagnosticsDelegate {
+    NetworkDiagnosticsDelegate,
+    CapabilitiesCallFeatureDelegate {
     func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
     }
@@ -232,6 +241,13 @@ extension CallingSDKEventsHandler: CallDelegate,
     func call(_ call: Call, didChangeRole args: PropertyChangedEventArgs) {
         let role = call.callParticipantRole.toParticipantRole()
         participantRoleSubject.send(role)
+    }
+
+    // MARK: CapabilitiesDelegate
+    func capabilitiesCallFeature(_ capabilitiesCallFeature: CapabilitiesCallFeature,
+                                 didChangeCapabilities args: CapabilitiesChangedEventArgs) {
+        let capabilitiesChangeEvent = args.toCapabilitiesChangedEvent()
+        self.capabilitiesChangeSubject.send(capabilitiesChangeEvent)
     }
 
     // MARK: NetworkDiagnosticsDelegate
