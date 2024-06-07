@@ -77,7 +77,7 @@ internal struct BottomDrawer<Content: View>: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             if drawerState != .gone {
                 Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
                     .ignoresSafeArea()

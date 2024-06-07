@@ -26,6 +26,7 @@ class SetupViewModel: ObservableObject {
     var setupControlBarViewModel: SetupControlBarViewModel!
     var joiningCallActivityViewModel: JoiningCallActivityViewModel!
     var cancellables = Set<AnyCancellable>()
+    var audioDeviceListViewModel: AudioDevicesListViewModel!
 
     @Published var isJoinRequested = false
 
@@ -36,6 +37,8 @@ class SetupViewModel: ObservableObject {
          audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil) {
+        let actionDispatch: ActionDispatch = store.dispatch
+
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -60,6 +63,10 @@ class SetupViewModel: ObservableObject {
 
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
+
+        audioDeviceListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
+            dispatchAction: actionDispatch,
+            localUserState: store.state.localUserState)
 
         joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
@@ -155,11 +162,19 @@ class SetupViewModel: ObservableObject {
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)
+        audioDeviceListViewModel.update(
+            audioDeviceStatus: state.localUserState.audioState.device,
+            navigationState: state.navigationState)
+        objectWillChange.send()
     }
 
     func shouldShowSetupControlBarView() -> Bool {
         let cameraStatus = store.state.localUserState.cameraState.operation
         return cameraStatus == .off || !isJoinRequested
+    }
+
+    func dismissAudioDevicesDrawer() {
+        store.dispatch(action: .hideAudioSelection)
     }
 
     private func handleOffline() {
