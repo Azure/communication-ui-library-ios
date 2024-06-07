@@ -16,10 +16,18 @@ class MoreCallOptionsListViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          showSharingViewAction: @escaping () -> Void,
          showSupportFormAction: @escaping () -> Void,
+         showCaptionsViewAction: @escaping() -> Void,
          isSupportFormAvailable: Bool
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
+
+        let captionsInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
+            icon: .closeCaptions,
+            title: localizationProvider.getLocalizedString(.captionsListTitile),
+            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            action: showCaptionsViewAction)
+        var items = [captionsInfoModel]
 
         let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .share,
@@ -27,7 +35,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             action: showSharingViewAction)
 
-        var items = [shareDebugInfoModel]
+        items.append(shareDebugInfoModel)
 
         if isSupportFormAvailable {
             let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(

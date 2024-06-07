@@ -29,6 +29,8 @@ extension Middleware {
                             handleAudioSessionAction(audioAction, actionHandler, getState, dispatch)
                         case .remoteParticipantsAction(let action):
                             handleRemoteParticipantAction(action, actionHandler, getState, dispatch)
+                        case .captionsAction(let action):
+                            handleCaptionsAction(action, actionHandler, getState, dispatch)
                         case .errorAction,
                                 .compositeExitAction,
                                 .callingViewLaunched:
@@ -164,6 +166,24 @@ private func handleRemoteParticipantAction(_ action: RemoteParticipantsAction,
         actionHandler.admitLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
     case .decline(participantId: let participantId):
         actionHandler.declineLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    default:
+        break
+    }
+}
+
+private func handleCaptionsAction(_ action: CaptionsAction,
+                                  _ actionHandler: CallingMiddlewareHandling,
+                                  _ getState: () -> AppState,
+                                  _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .startRequested(language: let language):
+        actionHandler.startCaptions(state: getState(), dispatch: dispatch, language: language)
+    case .stopRequested:
+        actionHandler.stopCaptions(state: getState(), dispatch: dispatch)
+    case .setSpokenLanguageRequested(language: let language):
+        actionHandler.setCaptionsSpokenLanguage(state: getState(), dispatch: dispatch, language: language)
+    case .setCaptionLanguageRequested(language: let language):
+        actionHandler.setCaptionsCaptionLanguage(state: getState(), dispatch: dispatch, language: language)
     default:
         break
     }

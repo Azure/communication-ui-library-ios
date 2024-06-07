@@ -316,6 +316,96 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+
+    func startCaptions(_ language: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let captionsFeature = call.feature(Features.captions)
+        let options = StartCaptionsOptions()
+        options.spokenLanguage = "en-us"
+        do {
+            let captions = try await captionsFeature.getCaptions()
+            try await captions.startCaptions(options: options)
+            logger.debug("Start captions successfully")
+        } catch {
+            logger.error("ERROR: It was not possible to start captions \(error)")
+            throw error
+        }
+    }
+
+    func getCaptions() async throws {
+        guard let call = call else {
+            return
+        }
+
+        let captionsFeature = call.feature(Features.captions)
+        do {
+            let captions = try await captionsFeature.getCaptions()
+
+            logger.debug("Stop captions successfully")
+        } catch {
+            logger.error("ERROR: It was not possible to stop captions \(error)")
+
+        }
+    }
+
+    func stopCaptions() async throws {
+        guard let call = call else {
+            return
+        }
+
+        let captionsFeature = call.feature(Features.captions)
+        do {
+
+            let captions = try await captionsFeature.getCaptions()
+            try await captions.stopCaptions()
+            logger.debug("Stop captions successfully")
+        } catch {
+            logger.error("ERROR: It was not possible to stop captions \(error)")
+
+        }
+    }
+
+    func setCaptionsSpokenLanguage(_ language: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let captionsFeature = call.feature(Features.captions)
+        do {
+
+            let captions = try await captionsFeature.getCaptions()
+            try await captions.set(spokenLanguage: language)
+            logger.debug("Set captions spoken language successfully")
+        } catch {
+            logger.error("ERROR: It was not possible to set captions spoken language \(error)")
+            throw error
+        }
+    }
+
+    func setCaptionsCaptionLanguage(_ language: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let captionsFeature = call.feature(Features.captions)
+        do {
+
+            let captions = try await captionsFeature.getCaptions()
+            if let teamsCaptions = captions as? TeamsCaptions {
+                try await teamsCaptions.set(captionLanguage: language)
+            }
+
+            logger.debug("Set captions caption language successfully")
+        } catch {
+            logger.error("ERROR: It was not possible to set captions caption language \(error)")
+            throw error
+        }
+
+    }
+
 }
 
 extension CallingSDKWrapper {
@@ -402,12 +492,13 @@ extension CallingSDKWrapper {
         let transcriptionCallFeature = call.feature(Features.transcription)
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
         let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
+        let captionsFeature = call.feature(Features.captions)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
             callingEventsHandler.assign(localUserDiagnosticsFeature)
-        }
+            callingEventsHandler.assign(captionsFeature)        }
     }
 
     private func getLocalVideoStreamIdentifier() -> String? {

@@ -257,11 +257,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                                                     localizationProvider: localizationProvider)
     }
 
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void, showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
+                                          showSupportFormAction: @escaping () -> Void,
+                                          showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
         moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                                                      localizationProvider: localizationProvider,
                                                                      showSharingViewAction: showSharingViewAction,
-                                                                     showSupportFormAction: showSupportFormAction,
+                                                                     showSupportFormAction: showSupportFormAction, showCaptionsViewAction: showCaptionsViewAction,
                                                                      isSupportFormAvailable: false)
     }
 

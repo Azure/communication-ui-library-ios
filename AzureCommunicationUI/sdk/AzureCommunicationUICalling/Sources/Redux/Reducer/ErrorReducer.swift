@@ -52,7 +52,10 @@ extension Reducer where State == ErrorState,
                 .callingViewLaunched,
                 .hideSupportForm,
                 .showSupportForm,
-                .visibilityAction:
+                .showCaptionsView,
+                .hideCaptionsView,
+                .visibilityAction,
+                .captionsAction:
             return state
         }
 

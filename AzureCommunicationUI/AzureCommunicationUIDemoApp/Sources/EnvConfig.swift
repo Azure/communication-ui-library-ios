@@ -57,11 +57,13 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedMeetingType: MeetingType = .groupCall
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
+    @Published var captionsLocale = SupportedCaptionsLocale.en
     @Published var setupViewOrientation: OrientationOptions = .portrait
     @Published var callingViewOrientation: OrientationOptions = .allButUpsideDown
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
     @Published var isRightToLeft = false
+    @Published var enableCaptions = false
     @Published var microphoneOn = false
     @Published var cameraOn = false
     @Published var audioOnly = false
@@ -119,6 +121,12 @@ class EnvConfigSubject: ObservableObject {
         if let acsEndpointUrl = dic["endpointurl"],
            !acsEndpointUrl.isEmpty {
             endpointUrl = acsEndpointUrl
+        }
+
+        let currentLocale = Locale.current
+        let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedCaptionsLocale.values
+        if supportedLanguage.contains(currentLocale) {
+            captionsLocale = currentLocale
         }
     }
 }

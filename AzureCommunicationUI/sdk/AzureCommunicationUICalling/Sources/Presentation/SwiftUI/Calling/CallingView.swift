@@ -88,8 +88,11 @@ struct CallingView: View {
         Group {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomTrailing) {
-                    videoGridView
-                        .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
+                    VStack {
+                        videoGridView
+                            .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
+                        captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom)
+                    }
                     if viewModel.isParticipantGridDisplayed && !viewModel.isInPip && viewModel.allowLocalCameraPreview {
                         Group {
                             DraggableLocalVideoView(containerBounds:
@@ -245,6 +248,12 @@ struct CallingView: View {
                 localVideoFullscreenView
             }
         }
+    }
+
+    var captionsInfoView: some View {
+       return Text("Captions Information")
+            .frame(maxWidth: .infinity, maxHeight: 115, alignment: .bottom)
+                .background(Color.white)
     }
 
     var errorInfoView: some View {

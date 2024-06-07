@@ -17,6 +17,7 @@ struct AppState {
     let errorState: ErrorState
     let defaultUserState: DefaultUserState
     let diagnosticsState: CallDiagnosticsState
+    let captionsState: CaptionsState
 
     init(callingState: CallingState = .init(),
          permissionState: PermissionState = .init(),
@@ -28,7 +29,9 @@ struct AppState {
          errorState: ErrorState = .init(),
          defaultUserState: DefaultUserState = .init(),
          visibilityState: VisibilityState = .init(),
-         diagnosticsState: CallDiagnosticsState = .init()) {
+         diagnosticsState: CallDiagnosticsState = .init(),
+         captionsState: CaptionsState = .init()
+    ) {
         self.callingState = callingState
         self.permissionState = permissionState
         self.localUserState = localUserState
@@ -40,5 +43,6 @@ struct AppState {
         self.defaultUserState = defaultUserState
         self.visibilityState = visibilityState
         self.diagnosticsState = diagnosticsState
+        self.captionsState = captionsState
     }
 }

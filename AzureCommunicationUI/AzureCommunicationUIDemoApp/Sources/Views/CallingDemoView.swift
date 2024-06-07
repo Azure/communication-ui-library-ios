@@ -275,6 +275,8 @@ extension CallingDemoView {
 
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
+        let captionsOptions = CaptionsOptions(spokenLanguage: envConfigSubject.captionsLocale,
+                                              enableCaptions: envConfigSubject.enableCaptions)
         let callCompositeOptions = CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
@@ -284,7 +286,9 @@ extension CallingDemoView {
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
-            callScreenOptions: callScreenOptions)
+            callScreenOptions: callScreenOptions,
+            captionsOptions: captionsOptions
+        )
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?

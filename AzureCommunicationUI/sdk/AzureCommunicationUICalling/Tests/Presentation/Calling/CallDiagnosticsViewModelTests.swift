@@ -54,6 +54,9 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .callingViewLaunched,
                  .showSupportForm,
                  .hideSupportForm,
+                 .showCaptionsView,
+                 .hideCaptionsView,
+                 .captionsAction(_),
                  .visibilityAction:
                 break
             }

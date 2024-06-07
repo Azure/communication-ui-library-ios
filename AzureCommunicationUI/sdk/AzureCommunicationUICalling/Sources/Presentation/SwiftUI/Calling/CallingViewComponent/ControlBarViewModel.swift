@@ -138,6 +138,12 @@ class ControlBarViewModel: ObservableObject {
                     return
                 }
                 self.dispatch(.showSupportForm)
+            },
+            showCaptionsViewAction: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.dispatch(.captionsAction(.startRequested(language: "en-us")))
             }
         )
 

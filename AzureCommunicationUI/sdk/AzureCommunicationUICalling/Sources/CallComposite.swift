@@ -36,6 +36,7 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let captionsOptions: CaptionsOptions?
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
     private let setupViewOrientationOptions: OrientationOptions?
@@ -88,6 +89,7 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
+        captionsOptions = options?.captionsOptions
         enableMultitasking = options?.enableMultitasking ?? false
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation

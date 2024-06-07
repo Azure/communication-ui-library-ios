@@ -52,6 +52,21 @@ protocol CallingMiddlewareHandling {
     func declineLobbyParticipant(state: AppState,
                                  dispatch: @escaping ActionDispatch,
                                  participantId: String) -> Task<Void, Never>
+    @discardableResult
+    func startCaptions(state: AppState,
+                       dispatch: @escaping ActionDispatch,
+                       language: String) -> Task<Void, Never>
+    @discardableResult
+    func stopCaptions(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    @discardableResult
+    func setCaptionsSpokenLanguage(state: AppState,
+                                   dispatch: @escaping ActionDispatch,
+                                   language: String) -> Task<Void, Never>
+    @discardableResult
+    func setCaptionsCaptionLanguage(state: AppState,
+                                    dispatch: @escaping ActionDispatch,
+                                    language: String) -> Task<Void, Never>
 }
 
 // swiftlint:disable type_body_length
@@ -360,9 +375,59 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }
         }
     }
+
+    func startCaptions(state: AppState, dispatch: @escaping ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            guard state.captionsState.isStarted == false else {
+                return
+            }
+            do {
+                try await callingService.startCaptions(language)
+                dispatch(.captionsAction(.started))
+            } catch {
+                dispatch(.captionsAction(.error(errors: .captionsFailedToStart)))
+            }
+        }
+    }
+
+    func stopCaptions(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                try await callingService.stopCaptions()
+                dispatch(.captionsAction(.stopped))
+            } catch {
+                dispatch(.captionsAction(.error(errors: .captionsFailedToStop)))
+            }
+        }
+    }
+
+    func setCaptionsSpokenLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
+    -> Task<Void, Never> {
+        Task {
+            do {
+                try await callingService.setCaptionsSpokenLanguage(language)
+                dispatch(.captionsAction(.spokenLanguageChanged(language: language)))
+            } catch {
+                dispatch(.captionsAction(.error(errors: .captionsFailedToSetSpokenLanguage)))
+            }
+        }
+    }
+
+    func setCaptionsCaptionLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
+    -> Task<Void, Never> {
+        Task {
+            do {
+                try await callingService.setCaptionsCaptionLanguage(language)
+                dispatch(.captionsAction(.captionLanguageChanged(language: language)))
+            } catch {
+                dispatch(.captionsAction(.error(errors: .failedToSetCaptionLanguage)))
+            }
+        }
+    }
 }
 
 extension CallingMiddlewareHandler {
+    // swiftlint:disable function_body_length
     private func subscription(dispatch: @escaping ActionDispatch) {
         logger.debug("Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
@@ -451,6 +516,25 @@ extension CallingMiddlewareHandler {
             .sink { mediaDiagnostic in
                 dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
+
+        callingService.supportedSpokenLanguagesSubject
+            .removeDuplicates()
+            .sink { supportSpokenLanguage in
+                dispatch(.captionsAction(.supportedSpokenLanguagesChanged(languages: supportSpokenLanguage)))
+            }.store(in: subscription)
+        callingService.supportedCaptionLanguagesSubject
+            .sink { supportCaptionsLanguage in
+                dispatch(.captionsAction(.supportedCaptionLanguagesChanged(languages: supportCaptionsLanguage)))
+            }.store(in: subscription)
+        callingService.activeSpokenLanguageSubject
+            .sink { spokenLanguage in
+                dispatch(.captionsAction(.spokenLanguageChanged(language: spokenLanguage)))
+            }.store(in: subscription)
+        callingService.activeCaptionLanguageSubject
+            .sink { captionsLanguage in
+                dispatch(.captionsAction(.captionLanguageChanged(language: captionsLanguage)))
+            }.store(in: subscription)
     }
+    // swiftlint:enable function_body_length
 }
 // swiftlint:enable type_body_length

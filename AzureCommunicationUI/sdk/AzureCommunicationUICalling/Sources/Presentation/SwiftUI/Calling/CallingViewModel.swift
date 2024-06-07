@@ -14,6 +14,7 @@ class CallingViewModel: ObservableObject {
     @Published var isInPip = false
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var allowLocalCameraPreview = false
+    @Published var captionsStarted = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -185,6 +186,7 @@ class CallingViewModel: ObservableObject {
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
+        captionsStarted = state.captionsState.isStarted ?? false
         callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
     }
 

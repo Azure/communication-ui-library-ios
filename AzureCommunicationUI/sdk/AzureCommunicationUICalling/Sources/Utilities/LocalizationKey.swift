@@ -191,4 +191,9 @@ enum LocalizationKey: String {
     case supportFormAttachScreenshot = "AzureCommunicationUICalling.Attach.Screenshot"
     case supportFormReportAProblemText = "AzureCommunicationUICalling.ReportAProblem.Text"
     case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
+
+    /* Captions */
+    case captionsListTitile = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
+    case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
+    case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
 }

@@ -63,6 +63,17 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                     getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
     }
 
+    func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void,
+                                   showSpokenLanguage: @escaping () -> Void,
+                                   isDisplayed: Bool) -> CaptionsListViewModel {
+
+        return CaptionsListViewModel(compositeViewModelFactory: self,
+                                     localizationProvider: localizationProvider,
+                                     showCaptionsLanguage: showCaptionsLanguage,
+                                     showSpokenLanguage: showSpokenLanguage,
+                                     isDisplayed: true)
+    }
+
     // MARK: CompositeViewModels
     func getSetupViewModel() -> SetupViewModel {
         guard let viewModel = self.setupViewModel else {
@@ -293,13 +304,15 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        showSupportFormAction: @escaping () -> Void,
+        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
+                                            showCaptionsViewAction: showCaptionsViewAction,
                                             isSupportFormAvailable: events.onUserReportedIssue != nil)
     }
 

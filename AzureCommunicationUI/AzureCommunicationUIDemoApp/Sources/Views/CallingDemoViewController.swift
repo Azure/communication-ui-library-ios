@@ -221,6 +221,8 @@ class CallingDemoViewController: UIViewController {
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
+        let captionsOptions = CaptionsOptions(spokenLanguage: envConfigSubject.captionsLocale,
+                                              enableCaptions: envConfigSubject.enableCaptions)
         let callCompositeOptions = CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
@@ -230,7 +232,9 @@ class CallingDemoViewController: UIViewController {
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
-            callScreenOptions: callScreenOptions)
+            callScreenOptions: callScreenOptions,
+            captionsOptions: captionsOptions
+        )
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
