@@ -34,6 +34,9 @@ internal struct SelectableDrawerItemView: View {
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.system(size: DrawerListConstants.textFontSize))
             Spacer()
+            if item.isSelected {
+                Icon(name: .checkmark, size: DrawerListConstants.iconSize)
+            }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .frame(maxWidth: .infinity)
