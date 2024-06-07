@@ -43,3 +43,11 @@ class SelectableDrawerListItemViewModel: DrawerListItemViewModel {
         super.init(icon: icon, title: title, accessibilityIdentifier: accessibilityIdentifier, action: action)
     }
 }
+
+class TitleDrawerListItemViewModel: DrawerListItemViewModel {
+    init(title: String, accessibilityIdentifier: String) {
+        super.init(icon: .addParticipant,
+                   title: title,
+                   accessibilityIdentifier: accessibilityIdentifier, action: {})
+    }
+}

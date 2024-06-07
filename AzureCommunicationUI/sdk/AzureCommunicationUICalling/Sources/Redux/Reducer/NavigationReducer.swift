@@ -63,7 +63,8 @@ extension Reducer where State == NavigationState,
             moreOptionsVisible = false
         case .hideSupportShare:
             supportShareSheetVisible = false
-
+        case .localUserAction(.audioDeviceChangeRequested):
+            audioSelectionVisible = false
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),

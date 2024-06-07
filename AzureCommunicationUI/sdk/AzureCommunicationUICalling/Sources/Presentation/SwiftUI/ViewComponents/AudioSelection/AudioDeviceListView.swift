@@ -15,40 +15,6 @@ internal struct AudioDevicesListView: View {
     }
 
     var body: some View {
-        VStack(spacing: MoreCallOptionsListViewConstants.vStackSpacing) {
-            Text("More Options")
-                .font(.system(size: MoreCallOptionsListViewConstants.titleFontSize))
-                .foregroundColor(.primary)
-                .padding(.top, MoreCallOptionsListViewConstants.titlePaddingTop)
-
-            ForEach(viewModel.audioDevicesList) { option in
-                HStack {
-                    Icon(name: option.icon, size: MoreCallOptionsListViewConstants.iconSize)
-                        .foregroundColor(.primary)
-                    Text(option.title)
-                        .foregroundColor(.primary)
-                        .padding(.leading, MoreCallOptionsListViewConstants.textPaddingLeading)
-                        .font(.system(size: MoreCallOptionsListViewConstants.textFontSize))
-                    Spacer()
-                }
-                .padding(.horizontal, MoreCallOptionsListViewConstants.optionPaddingHorizontal)
-                .frame(maxWidth: .infinity)
-                .onTapGesture {
-                    option.action()
-                }
-            }
-        }.padding(.bottom, MoreCallOptionsListViewConstants.bottomPadding)
+        DrawerListContent(items: viewModel.audioDevicesList)
     }
-}
-
-class AudioDevicesListViewConstants {
-    static let vStackSpacing: CGFloat = 16
-    static let titleFontSize: CGFloat = 20
-    static let titlePaddingTop: CGFloat = 20
-    static let iconSize: CGFloat = 24
-    static let textPaddingLeading: CGFloat = 8
-    static let textFontSize: CGFloat = 18
-    static let optionPaddingVertical: CGFloat = 8
-    static let optionPaddingHorizontal: CGFloat = 16
-    static let bottomPadding: CGFloat = 24
 }
