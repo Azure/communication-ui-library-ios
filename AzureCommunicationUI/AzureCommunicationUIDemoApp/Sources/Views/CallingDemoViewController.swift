@@ -1195,6 +1195,7 @@ class CallingDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
+                                                   participantMRIsTextField,
                                                    /* <ROOMS_SUPPORT:7> */ 
                                                    roomCallTextField,
                                                    roomRoleTypeSegmentedControl,
