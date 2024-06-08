@@ -40,8 +40,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func dispose() {
-        callAgent?.dispose()
-        callAgent = nil
+        call = nil
     }
 
     func setupCall() async throws {
