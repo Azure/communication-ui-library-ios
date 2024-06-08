@@ -4,7 +4,7 @@
 
 ### Features
 
-- 1 to 1 Calling
+- 1 to n Calling
 - CallKit Integration
 
 ## 1.7.0 (2024-05-29)

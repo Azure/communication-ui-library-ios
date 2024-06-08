@@ -79,7 +79,7 @@ public struct CallState: Equatable, RequestStringConvertible {
     private let value: CallStateKV
     private let callEndReasonCode: Int?
     private let callEndReasonSubCode: Int?
-    private let callIdInternal: String
+    private let callIdInternal: String?
 
     public var requestString: String {
         return value.rawValue
@@ -93,7 +93,7 @@ public struct CallState: Equatable, RequestStringConvertible {
         return callEndReasonSubCode
     }
 
-    public var callId: String {
+    public var callId: String? {
         return callIdInternal
     }
 
@@ -101,7 +101,7 @@ public struct CallState: Equatable, RequestStringConvertible {
         self.value = CallStateKV(rawValue: rawValue)
         self.callEndReasonCode = 0
         self.callEndReasonSubCode = 0
-        self.callIdInternal = ""
+        self.callIdInternal = nil
     }
 
     init(rawValue: String,

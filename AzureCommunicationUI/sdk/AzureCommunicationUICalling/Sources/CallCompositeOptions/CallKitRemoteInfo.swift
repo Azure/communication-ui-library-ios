@@ -5,7 +5,7 @@
 
 import CallKit
 
-/// CallKit data for callee(outgoing)
+/// CXHandle and Display Name for the Remote participant while using callKit.
 public struct CallKitRemoteInfo {
     /// Display name of the remote participant
     public let displayName: String
