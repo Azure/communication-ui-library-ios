@@ -9,8 +9,7 @@ import UIKit
 internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     static let shared = LandscapeAwareKeyboardWatcher()
     @Published var activeHeight: CGFloat = 0
-
-    private var keyboardHeight: CGFloat = 0
+    @Published var keyboardHeight: CGFloat = 0
     private var isLandscape = false {
         didSet {
             updateActiveHeight()
@@ -49,14 +48,18 @@ internal class LandscapeAwareKeyboardWatcher: ObservableObject {
             guard let self = self, let userInfo = notification.userInfo,
                   let keyboardRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-            self.keyboardHeight = keyboardRect.height
+            withAnimation {
+                self.keyboardHeight = keyboardRect.height
+            }
             self.updateActiveHeight()
         }
 
         keyboardHideObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification,
                                                                       object: nil,
                                                                       queue: .main) { [weak self] _ in
-            self?.keyboardHeight = 0
+            withAnimation {
+                self?.keyboardHeight = 0
+            }
             self?.updateActiveHeight()
         }
     }
@@ -72,11 +75,16 @@ internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     }
 
     private func updateOrientationStatus() {
-        let currentOrientation = UIDevice.current.orientation
-        isLandscape = currentOrientation == .landscapeLeft || currentOrientation == .landscapeRight
+        if let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation {
+            isLandscape = orientation.isLandscape
+        } else {
+            isLandscape = false
+        }
     }
 
     private func updateActiveHeight() {
-        activeHeight = isLandscape ? keyboardHeight : 0
+        withAnimation {
+            activeHeight = isLandscape ? keyboardHeight : 0
+        }
     }
 }

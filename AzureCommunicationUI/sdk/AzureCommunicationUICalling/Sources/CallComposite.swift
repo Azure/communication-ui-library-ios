@@ -84,8 +84,8 @@ public class CallComposite {
     private var compositeUILaunched = false
     private var incomingCallAcceptedByCallKitCallId: String?
     private var videoViewManager: VideoViewManager?
-    private var callingSDKWrapper: CallingSDKWrapperProtocol?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
+    private var callingSDKWrapper: CallingSDKWrapperProtocol?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -605,6 +605,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.pipManager = nil
         self.callHistoryService = nil
         self.exitManager = nil
+        self.callingSDKWrapper?.dispose()
+        self.callingSDKWrapper = nil
     }
 
     private func disposeSDKWrappers() {

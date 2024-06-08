@@ -105,6 +105,22 @@ struct CallingDemoView: View {
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
         }
+        #if DEBUG
+        .onAppear(perform: {
+            // Dev helper to jump through to mocked experiences
+            Task {
+                if EnvConfig.skipTo.value() == "MockCallScreen" {
+                    envConfigSubject.useMockCallingSDKHandler = true
+                    envConfigSubject.skipSetupScreen = true
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "MockSetupScreen" {
+                    envConfigSubject.useMockCallingSDKHandler = true
+                    envConfigSubject.skipSetupScreen = false
+                    await startCallComposite()
+                }
+            }
+        })
+        #endif
     }
 
     var acsTokenSelector: some View {

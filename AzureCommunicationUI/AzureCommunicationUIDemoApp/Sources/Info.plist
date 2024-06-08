@@ -66,5 +66,7 @@
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>${userId}</string>
+    <key>skipTo</key>
+    <string>${skipTo}</string>
 </dict>
 </plist>

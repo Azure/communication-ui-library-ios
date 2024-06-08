@@ -76,6 +76,7 @@ protocol CallingSDKWrapperProtocol {
     func getLogFiles() -> [URL]
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
+    func dispose()
 }
 
 protocol CallingSDKEventsHandling {

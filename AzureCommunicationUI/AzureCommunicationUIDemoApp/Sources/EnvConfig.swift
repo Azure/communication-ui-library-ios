@@ -20,6 +20,7 @@ enum EnvConfig: String {
     case threadId
     case endpointUrl
     case participantMRIs
+    case skipTo
     /* <ROOMS_SUPPORT:12> */
     case roomId
     case roomRole
