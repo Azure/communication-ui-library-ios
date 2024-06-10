@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051F73BA2C174F19006E097F /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8D238262BFD4BCA00EC04B4 /* AzureCommunicationUICalling.framework */; };
+		051F73BB2C174F19006E097F /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8D238262BFD4BCA00EC04B4 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0570901C299EBAC000D7AE5F /* CallingDemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */; };
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
@@ -47,9 +49,6 @@
 		A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */; };
 		A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */; };
 		B23FE9D12ADEDC93007F6365 /* AzureCommunicationUIDemoAppCallDiagnosticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23FE9CF2ADEDC75007F6365 /* AzureCommunicationUIDemoAppCallDiagnosticsTests.swift */; };
-		C8D2386E2BFD626C00EC04B4 /* AzureCommunicationCalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8D2386D2BFD626C00EC04B4 /* AzureCommunicationCalling.framework */; };
-		C8D2386F2BFD626C00EC04B4 /* AzureCommunicationCalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8D2386D2BFD626C00EC04B4 /* AzureCommunicationCalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C8D238752BFD6BEA00EC04B4 /* AzureCommunicationCalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8D2386D2BFD626C00EC04B4 /* AzureCommunicationCalling.framework */; };
 		FA1AEBEC2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1AEBEB2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift */; };
 		FA2E532D294D3DA800E87DDF /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */; };
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
@@ -182,7 +181,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C8D2386F2BFD626C00EC04B4 /* AzureCommunicationCalling.framework in Embed Frameworks */,
+				051F73BB2C174F19006E097F /* AzureCommunicationUICalling.framework in Embed Frameworks */,
 				50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -310,7 +309,7 @@
 		C8D2334C2BFD4BCA00EC04B4 /* AzureCommunicationUIDemoApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = AzureCommunicationUIDemoApp.xcodeproj; sourceTree = "<group>"; };
 		C8D2334D2BFD4BCA00EC04B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C8D233512BFD4BCA00EC04B4 /* all-product-headers.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "all-product-headers.yaml"; sourceTree = "<group>"; };
-		C8D233522BFD4BCA00EC04B4 /* assetcatalog_dependencies */ = {isa = PBXFileReference; lastKnownFileType = file; path = assetcatalog_dependencies; sourceTree = "<group>"; };
+		C8D233522BFD4BCA00EC04B4 /* assetcatalog_dependencies */ = {isa = PBXFileReference; lastKnownFileType = text; path = assetcatalog_dependencies; sourceTree = "<group>"; };
 		C8D233532BFD4BCA00EC04B4 /* assetcatalog_generated_info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = assetcatalog_generated_info.plist; sourceTree = "<group>"; };
 		C8D233542BFD4BCA00EC04B4 /* FluentUIResources-ios-all-non-framework-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FluentUIResources-ios-all-non-framework-target-headers.hmap"; sourceTree = "<group>"; };
 		C8D233552BFD4BCA00EC04B4 /* FluentUIResources-ios-all-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FluentUIResources-ios-all-target-headers.hmap"; sourceTree = "<group>"; };
@@ -318,11 +317,11 @@
 		C8D233572BFD4BCA00EC04B4 /* FluentUIResources-ios-own-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FluentUIResources-ios-own-target-headers.hmap"; sourceTree = "<group>"; };
 		C8D233582BFD4BCA00EC04B4 /* FluentUIResources-ios-project-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FluentUIResources-ios-project-headers.hmap"; sourceTree = "<group>"; };
 		C8D233592BFD4BCA00EC04B4 /* FluentUIResources-ios.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FluentUIResources-ios.hmap"; sourceTree = "<group>"; };
-		C8D2335D2BFD4BCA00EC04B4 /* 3f908bdbf560f63e0e239b855831260f */ = {isa = PBXFileReference; lastKnownFileType = file; path = 3f908bdbf560f63e0e239b855831260f; sourceTree = "<group>"; };
+		C8D2335D2BFD4BCA00EC04B4 /* 3f908bdbf560f63e0e239b855831260f */ = {isa = PBXFileReference; lastKnownFileType = text; path = 3f908bdbf560f63e0e239b855831260f; sourceTree = "<group>"; };
 		C8D2335E2BFD4BCA00EC04B4 /* 8bba4233626f64a7ea772bb94a08a1a9 */ = {isa = PBXFileReference; lastKnownFileType = text; path = 8bba4233626f64a7ea772bb94a08a1a9; sourceTree = "<group>"; };
-		C8D2335F2BFD4BCA00EC04B4 /* 08d610506d784a63bd58b4269109e092 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 08d610506d784a63bd58b4269109e092; sourceTree = "<group>"; };
-		C8D233602BFD4BCA00EC04B4 /* 9e4daf9096dfc19c64170c511de99dcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 9e4daf9096dfc19c64170c511de99dcf; sourceTree = "<group>"; };
-		C8D233612BFD4BCA00EC04B4 /* fd8314defc70a8778956f026c0ddfd19 */ = {isa = PBXFileReference; lastKnownFileType = file; path = fd8314defc70a8778956f026c0ddfd19; sourceTree = "<group>"; };
+		C8D2335F2BFD4BCA00EC04B4 /* 08d610506d784a63bd58b4269109e092 */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08d610506d784a63bd58b4269109e092; sourceTree = "<group>"; };
+		C8D233602BFD4BCA00EC04B4 /* 9e4daf9096dfc19c64170c511de99dcf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 9e4daf9096dfc19c64170c511de99dcf; sourceTree = "<group>"; };
+		C8D233612BFD4BCA00EC04B4 /* fd8314defc70a8778956f026c0ddfd19 */ = {isa = PBXFileReference; lastKnownFileType = text; path = fd8314defc70a8778956f026c0ddfd19; sourceTree = "<group>"; };
 		C8D233632BFD4BCA00EC04B4 /* build-request.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "build-request.json"; sourceTree = "<group>"; };
 		C8D233642BFD4BCA00EC04B4 /* description.msgpack */ = {isa = PBXFileReference; lastKnownFileType = file; path = description.msgpack; sourceTree = "<group>"; };
 		C8D233652BFD4BCA00EC04B4 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
@@ -1258,9 +1257,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				50CB82E128C9200300680566 /* AzureCommunicationUIChat.framework in Frameworks */,
-				C8D2386E2BFD626C00EC04B4 /* AzureCommunicationCalling.framework in Frameworks */,
-				C8D238752BFD6BEA00EC04B4 /* AzureCommunicationCalling.framework in Frameworks */,
 				3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */,
+				051F73BA2C174F19006E097F /* AzureCommunicationUICalling.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
