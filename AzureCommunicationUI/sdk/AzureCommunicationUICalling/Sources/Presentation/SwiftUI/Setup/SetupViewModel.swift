@@ -157,8 +157,7 @@ class SetupViewModel: ObservableObject {
                                     visibilityState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
-                                        callingState: callingState,
-                                        navigationState: state.navigationState)
+                                        callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)

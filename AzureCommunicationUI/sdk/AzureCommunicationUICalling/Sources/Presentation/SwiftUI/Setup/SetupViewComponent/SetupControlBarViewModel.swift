@@ -126,8 +126,7 @@ class SetupControlBarViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState,
-                navigationState: NavigationState) {
+                callingState: CallingState) {
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
