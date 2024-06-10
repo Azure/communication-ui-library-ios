@@ -6,7 +6,7 @@
 import FluentUI
 import UIKit
 
-class DrawerContainerViewController<T: Equatable>: UIViewController,
+internal class DrawerContainerViewController<T: Equatable>: UIViewController,
                                                     DrawerControllerDelegate,
                                                     DrawerViewControllerProtocol {
     weak var delegate: DrawerControllerDelegate?

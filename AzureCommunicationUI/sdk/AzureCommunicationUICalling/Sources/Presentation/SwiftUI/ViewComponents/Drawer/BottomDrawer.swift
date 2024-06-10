@@ -22,26 +22,11 @@ internal enum DrawerConstants {
     // How much shadow is under the drawer
     static let drawerShadowRadius: CGFloat = 10
 
-    // Color of the handle (Generic gray works in light/dark)
-    static let handleColor: Color = .gray
-
-    // Width of the handle
-    static let handleWidth: CGFloat = 36
-
-    // Height of the handle
-    static let handleHeight: CGFloat = 4
-
-    // Padding above the handle
-    static let handlePaddingTop: CGFloat = 8
-
     // How much "fill" below the content to push it off the bottom os the screen
     static let bottomFillY: CGFloat = 48
 
     // Opacity of faded items (like background overlay)
     static let overlayOpacity: CGFloat = 0.4
-
-    // How much drag you need on the drawer to dismiss in that way
-    static let dragThreshold: CGFloat = 50
 
     // After hiding, the delay before making it "gone", accounts for animation
     static let delayUntilGone: CGFloat = 0.3
@@ -92,18 +77,6 @@ internal struct BottomDrawer<Content: View>: View {
                     Spacer()
 
                     VStack {
-                        RoundedRectangle(cornerRadius: DrawerConstants.drawerCornerRadius)
-                            .fill(DrawerConstants.handleColor)
-                            .frame(width: DrawerConstants.handleWidth, height: DrawerConstants.handleHeight)
-                            .padding(.top, DrawerConstants.handlePaddingTop)
-                            .gesture(DragGesture()
-                                .onEnded { value in
-                                    if value.translation.height > DrawerConstants.dragThreshold {
-                                        withAnimation {
-                                            hideDrawer()
-                                        }
-                                    }
-                                })
                         content
                         Spacer().frame(height: DrawerConstants.bottomFillY)
                     }
@@ -119,12 +92,12 @@ internal struct BottomDrawer<Content: View>: View {
             }
         }
         .onChange(of: isPresented) { newValue in
-            if newValue {
+            if newValue && drawerState == .gone {
                 drawerState = .hidden
                 withAnimation {
                     drawerState = .visible
                 }
-            } else {
+            } else if !newValue && drawerState == .visible {
                 withAnimation {
                     drawerState = .hidden
                 }

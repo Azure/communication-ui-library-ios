@@ -751,8 +751,7 @@
 		1F04A650273491780028AAC8 /* Drawer */ = {
 			isa = PBXGroup;
 			children = (
-				988799902745EABE00AA3759 /* SourceViewSpace.swift */,
-				FA6B61A0290C89EC004B8188 /* DrawerViewControllerProtocol.swift */,
+				5318F62E2BEDFB0C00CAFA12 /* BottomDrawer.swift */,
 				885F3F99291DCDF500B86C9B /* DrawerListItemViewModel.swift */,
 				5347C1D62C13B4FE0084AE56 /* DrawerListContent.swift */,
 			);
@@ -819,7 +818,6 @@
 		1F11D2B92640AD2200D33838 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				5318F62D2BEDFAFA00CAFA12 /* Drawer */,
 				054F2B4F2A2675540017985B /* Pip */,
 				A8810CDF2640A3E100C88545 /* Factories */,
 				1F94DAE22673F72000691D1E /* Manager */,
@@ -1137,14 +1135,6 @@
 			path = ViewComponents;
 			sourceTree = "<group>";
 		};
-		5318F62D2BEDFAFA00CAFA12 /* Drawer */ = {
-			isa = PBXGroup;
-			children = (
-				5318F62E2BEDFB0C00CAFA12 /* BottomDrawer.swift */,
-			);
-			path = Drawer;
-			sourceTree = "<group>";
-		};
 		533D7AFA2B1965910021767F /* SupportForm */ = {
 			isa = PBXGroup;
 			children = (
@@ -1263,6 +1253,8 @@
 		982C2831267D0C3400427246 /* Wrapper */ = {
 			isa = PBXGroup;
 			children = (
+				FA6B61A0290C89EC004B8188 /* DrawerViewControllerProtocol.swift */,
+				988799902745EABE00AA3759 /* SourceViewSpace.swift */,
 				982C2834267D15AF00427246 /* CompositeAvatar.swift */,
 				982C2832267D0C4500427246 /* CompositeButton.swift */,
 				50E2D69026EAAB33006B0EF4 /* CompositeParticipantsList.swift */,

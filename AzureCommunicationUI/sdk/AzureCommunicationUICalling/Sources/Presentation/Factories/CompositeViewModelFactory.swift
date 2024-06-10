@@ -58,6 +58,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
         return LeaveCallConfirmationViewModel(
             state: store.state,
+            localizationProvider: localizationProvider,
             endCall: endCall,
             dismissConfirmation: dismissConfirmation)
     }

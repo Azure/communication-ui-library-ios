@@ -10,7 +10,7 @@ import SwiftUI
 internal struct DrawerListContent: View {
     let items: [DrawerListItemViewModel]
     var body: some View {
-        VStack(spacing: DrawerListConstants.vStackSpacing) {
+        VStack {
             ForEach(items) { option in
                 if let selectableItem = option as? SelectableDrawerListItemViewModel {
                     SelectableDrawerItemView(item: selectableItem)
@@ -20,7 +20,7 @@ internal struct DrawerListContent: View {
                     DrawerItemView(item: option)
                 }
             }
-        }
+        }.padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
     }
 }
 
@@ -34,13 +34,14 @@ internal struct SelectableDrawerItemView: View {
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
-                .font(.system(size: DrawerListConstants.textFontSize))
+                .font(.body)
             Spacer()
             if item.isSelected {
                 Icon(name: .checkmark, size: DrawerListConstants.iconSize)
             }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
+        .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .onTapGesture {
             item.action()
@@ -58,10 +59,11 @@ internal struct DrawerItemView: View {
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
-                .font(.system(size: DrawerListConstants.textFontSize))
+                .font(.body)
             Spacer()
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
+        .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .onTapGesture {
             item.action()
@@ -78,22 +80,19 @@ internal struct DrawerTitleView: View {
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
-                .font(.system(size: DrawerListConstants.textFontSize))
+                .font(.headline)
             Spacer()
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
+        .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
     }
 }
 
 internal class DrawerListConstants {
-    static let vStackSpacing: CGFloat = 16
-    static let titleFontSize: CGFloat = 20
-    static let titlePaddingTop: CGFloat = 20
     static let iconSize: CGFloat = 24
     static let textPaddingLeading: CGFloat = 8
-    static let textFontSize: CGFloat = 18
-    static let optionPaddingVertical: CGFloat = 8
+    static let optionPaddingVertical: CGFloat = 12
     static let optionPaddingHorizontal: CGFloat = 16
-    static let bottomPadding: CGFloat = 24
+    static let listVerticalPadding: CGFloat = 12
 }

@@ -12,19 +12,29 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
     let endCall: () -> Void
     let dismissConfirmation: () -> Void
 
-    init(state: AppState, endCall: @escaping () -> Void, dismissConfirmation: @escaping() -> Void) {
+    init(state: AppState,
+         localizationProvider: LocalizationProviderProtocol,
+         endCall: @escaping () -> Void,
+         dismissConfirmation: @escaping() -> Void) {
         self.isDisplayed = state.navigationState.endCallConfirmationVisible
+
+        var title = localizationProvider.getLocalizedString(LocalizationKey.leaveCallListHeader)
+        var leaveText = localizationProvider.getLocalizedString(LocalizationKey.leaveCall)
+        var cancelText = localizationProvider.getLocalizedString(LocalizationKey.cancel)
+
         self.options = [
+            TitleDrawerListItemViewModel(title: title,
+                                         accessibilityIdentifier: title),
             DrawerListItemViewModel(
                 icon: .endCallRegular,
-                title: "Leave",
-                accessibilityIdentifier: "Leave") {
+                title: leaveText,
+                accessibilityIdentifier: leaveText) {
                     endCall()
             },
             DrawerListItemViewModel(
                 icon: .dismiss,
-                title: "Cancel",
-                accessibilityIdentifier: "Cancel") {
+                title: cancelText,
+                accessibilityIdentifier: cancelText) {
                     dismissConfirmation()
             }
         ]

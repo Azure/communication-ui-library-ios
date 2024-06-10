@@ -24,7 +24,9 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isDisplayed = isDisplayed
 
-        let title = TitleDrawerListItemViewModel(title: "More Options", accessibilityIdentifier: "Title")
+        let title = TitleDrawerListItemViewModel(
+            title: localizationProvider.getLocalizedString(LocalizationKey.moreOptionsTitle),
+            accessibilityIdentifier: "MoreTitle")
 
         let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .share,
