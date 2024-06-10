@@ -24,17 +24,13 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isDisplayed = isDisplayed
 
-        let title = TitleDrawerListItemViewModel(
-            title: localizationProvider.getLocalizedString(LocalizationKey.moreOptionsTitle),
-            accessibilityIdentifier: "MoreTitle")
-
         let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .share,
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             action: showSharingViewAction)
 
-        var items = [title, shareDebugInfoModel]
+        var items = [shareDebugInfoModel]
 
         if isSupportFormAvailable {
             let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(

@@ -7,6 +7,13 @@ import Foundation
 import SwiftUI
 
 // Helper to inflate DrawerListItemViewModel into a drawer
+//
+// Give it a list of DrawerListItemViewModels
+// These come in 3 forms: Title, Selectable, Default (button)
+// This will inflate the list to a SwiftUI view, to show in a drawer
+// I.e. List[VM] -> Swift UI List View, for use with a drawer
+//
+//
 internal struct DrawerListContent: View {
     let items: [DrawerListItemViewModel]
     var body: some View {

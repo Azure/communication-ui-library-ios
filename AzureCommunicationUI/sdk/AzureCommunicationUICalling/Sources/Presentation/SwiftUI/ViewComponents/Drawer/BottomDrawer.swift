@@ -49,11 +49,15 @@ internal enum DrawerConstants {
 ///         .accessibilityElement(children: .contain)
 ///         .accessibilityAddTraits(.isModal)
 ///    }
+///
+///  Typically used (if presenting a list) with DrawerListContent
+///
 internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
+    var drawerWorkItem: DispatchWorkItem?
 
     init(isPresented: Bool, hideDrawer: @escaping () -> Void, @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
@@ -92,12 +96,12 @@ internal struct BottomDrawer<Content: View>: View {
             }
         }
         .onChange(of: isPresented) { newValue in
-            if newValue && drawerState == .gone {
+            if newValue {
                 drawerState = .hidden
                 withAnimation {
                     drawerState = .visible
                 }
-            } else if !newValue && drawerState == .visible {
+            } else {
                 withAnimation {
                     drawerState = .hidden
                 }
