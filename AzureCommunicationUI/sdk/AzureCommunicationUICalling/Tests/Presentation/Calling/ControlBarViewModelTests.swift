@@ -663,7 +663,7 @@ extension ControlBarViewModelTests {
                                    logger: logger,
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
+                                   onEndCallTapped: {},
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysEnabled)
@@ -673,7 +673,7 @@ extension ControlBarViewModelTests {
                                    logger: logger,
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
+                                   onEndCallTapped: {},
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysDisabled)

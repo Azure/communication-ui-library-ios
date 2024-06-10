@@ -52,9 +52,10 @@ class CallingViewModelTests: XCTestCase {
 
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.isConfirmLeaveListDisplayed = true
+        storeFactory.store.dispatch(action: .showEndCallConfirmation)
+        // sut.isConfirmLeaveListDisplayed = true
         sut.endCall()
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+        XCTAssertFalse(sut.leaveCallConfirmationViewModel.isDisplayed)
         wait(for: [expectation], timeout: timeout)
     }
     func test_callingViewModel_endCall_when_NoConfirmLeaveOverlayIsDisplayed() {
@@ -62,7 +63,7 @@ class CallingViewModelTests: XCTestCase {
                                                                         logger: logger,
                                                                         localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                        endCallConfirm: {},
+                                                                        onEndCallTapped: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         leaveCallConfirmationMode: .alwaysDisabled)
         let sut = makeSUT()
@@ -76,7 +77,7 @@ class CallingViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.endCall()
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+        XCTAssertFalse(sut.leaveCallConfirmationViewModel.isDisplayed)
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -148,7 +149,7 @@ class CallingViewModelTests: XCTestCase {
                                                                         logger: logger,
                                                                         localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                        endCallConfirm: {},
+                                                                        onEndCallTapped: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         updateState: updateControlBarViewModel)
         let sut = makeSUT()
