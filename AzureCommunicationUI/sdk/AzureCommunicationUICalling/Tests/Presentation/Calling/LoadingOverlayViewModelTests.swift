@@ -27,6 +27,33 @@ class LoadingOverlayViewModelTests: XCTestCase {
         let sut = makeSUT()
         XCTAssertEqual(sut.title, "Joining call…")
     }
+
+    func test_loadingOverlayViewModel_displays_false_for_init() {
+        let sut = makeSUT()
+        XCTAssertEqual(sut.isDisplayed, false)
+    }
+
+    func test_loadingOverlayViewModel_displays_true_for_connecting() {
+        let sut = makeSUT()
+        let callingState = CallingState(status: .connecting,
+                                        operationStatus: .skipSetupRequested,
+                                        isRecordingActive: true,
+                                        isTranscriptionActive: true)
+        let appState = AppState(callingState: callingState)
+        sut.receive(appState)
+        XCTAssertEqual(sut.isDisplayed, true)
+    }
+
+    func test_loadingOverlayViewModel_displays_true_for_connected() {
+        let sut = makeSUT()
+        let callingState = CallingState(status: .connected,
+                                        operationStatus: .skipSetupRequested,
+                                        isRecordingActive: true,
+                                        isTranscriptionActive: true)
+        let appState = AppState(callingState: callingState)
+        sut.receive(appState)
+        XCTAssertEqual(sut.isDisplayed, false)
+    }
 }
 
 extension LoadingOverlayViewModelTests {
