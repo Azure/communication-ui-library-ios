@@ -822,8 +822,10 @@ class CallingDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
-                                                   /* <ROOMS_SUPPORT:7> */ roomCallTextField,
-                                                   roomRoleTypeSegmentedControl, /* </ROOMS_SUPPORT:4> */
+                                                   /* <ROOMS_SUPPORT:7> */ 
+                                                   roomCallTextField,
+                                                   roomRoleTypeSegmentedControl,
+                                                   /* </ROOMS_SUPPORT:4> */
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,
                                                    startButtonHStack,

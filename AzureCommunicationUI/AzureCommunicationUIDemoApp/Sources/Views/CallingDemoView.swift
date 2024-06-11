@@ -91,6 +91,22 @@ struct CallingDemoView: View {
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
         }
+        #if DEBUG
+        .onAppear(perform: {
+            // Dev helper to jump through to mocked experiences
+            Task {
+                if EnvConfig.skipTo.value() == "MockCallScreen" {
+                    envConfigSubject.useMockCallingSDKHandler = true
+                    envConfigSubject.skipSetupScreen = true
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "MockSetupScreen" {
+                    envConfigSubject.useMockCallingSDKHandler = true
+                    envConfigSubject.skipSetupScreen = false
+                    await startCallComposite()
+                }
+            }
+        })
+        #endif
     }
 
     var acsTokenSelector: some View {
@@ -386,16 +402,25 @@ extension CallingDemoView {
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
-                let uuid = UUID(uuidString: link) ?? UUID()
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential),
-                                         localOptions: localOptions)
+                let uuid = try? parseUUID(from: link)
+                // Checking if UUID parsing was successful
+                if let uuid = uuid {
+                    if envConfigSubject.displayName.isEmpty {
+                        // Launch call composite without displayName
+                        callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                          credential: credential),
+                                             localOptions: localOptions)
+                    } else {
+                        // Launch call composite with displayName
+                        callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                          credential: credential,
+                                                                          displayName: envConfigSubject.displayName),
+                                             localOptions: localOptions)
+                    }
                 } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
+                    // Handle the case where UUID parsing fails
+                    showError(for: DemoError.invalidGroupCallId.getErrorCode())
+                    return
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
@@ -456,6 +481,13 @@ extension CallingDemoView {
             }
             throw DemoError.invalidToken
         }
+    }
+
+    private func parseUUID(from link: String) throws -> UUID {
+        guard let uuid = UUID(uuidString: link) else {
+            throw DemoError.invalidGroupCallId
+        }
+        return uuid
     }
 
     private func getMeetingLink() -> String {

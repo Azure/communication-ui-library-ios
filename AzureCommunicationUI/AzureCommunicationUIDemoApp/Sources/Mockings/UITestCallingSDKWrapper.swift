@@ -54,6 +54,9 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
+    func dispose() {
+    }
+
     func hide() {
         if callComposite != nil {
             callComposite?.isHidden = true

@@ -68,6 +68,7 @@ public class CallComposite {
     private var viewController: UIViewController?
     private var pipViewController: UIViewController?
     private var cancellables = Set<AnyCancellable>()
+    private var callingSDKWrapper: CallingSDKWrapperProtocol?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -243,7 +244,7 @@ public class CallComposite {
             logger: logger,
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
             callConfiguration: callConfiguration)
-
+        self.callingSDKWrapper = callingSdkWrapper
         let store = Store.constructStore(
             logger: logger,
             callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
@@ -329,6 +330,8 @@ public class CallComposite {
         self.pipManager = nil
         self.callHistoryService = nil
         self.exitManager = nil
+        self.callingSDKWrapper?.dispose()
+        self.callingSDKWrapper = nil
     }
 
     private func present(_ viewController: UIViewController) {

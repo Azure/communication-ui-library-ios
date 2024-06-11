@@ -37,6 +37,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
+    func dispose() {
+        callAgent?.dispose()
+        callAgent = nil
+    }
+
     func setupCall() async throws {
         try await setupCallClientAndDeviceManager()
     }
