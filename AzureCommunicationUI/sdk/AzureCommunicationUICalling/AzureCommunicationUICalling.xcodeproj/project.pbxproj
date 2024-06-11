@@ -239,6 +239,7 @@
 		A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */; };
 		A48BE79129FB424F009B2A46 /* CallStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */; };
 		A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D18012BFD84D600FD994E /* IncomingCallError.swift */; };
+		A4C736782C1783FD002CC78C /* CallError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C736772C1783FD002CC78C /* CallError.swift */; };
 		A4DBCEB72BFAE8F500332E7B /* IncomingCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */; };
 		A4DBCEB92BFAE91E00332E7B /* IncomingCallCancelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */; };
 		A4DBCEBB2BFB9C4000332E7B /* PushNotificationEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */; };
@@ -610,6 +611,7 @@
 		A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManagerTests.swift; sourceTree = "<group>"; };
 		A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManagerTests.swift; sourceTree = "<group>"; };
 		A48D18012BFD84D600FD994E /* IncomingCallError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallError.swift; sourceTree = "<group>"; };
+		A4C736772C1783FD002CC78C /* CallError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallError.swift; sourceTree = "<group>"; };
 		A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCall.swift; sourceTree = "<group>"; };
 		A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallCancelled.swift; sourceTree = "<group>"; };
 		A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationEventType.swift; sourceTree = "<group>"; };
@@ -1388,6 +1390,7 @@
 				A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */,
 				A48D18012BFD84D600FD994E /* IncomingCallError.swift */,
 				A40EE71D2C01A55D0089EA7B /* CommunicationTokenCredentialError.swift */,
+				A4C736772C1783FD002CC78C /* CallError.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -2082,6 +2085,7 @@
 				533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */,
 				534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
+				A4C736782C1783FD002CC78C /* CallError.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
 				1F94DADC2673E87700691D1E /* ThemeOptions.swift in Sources */,
