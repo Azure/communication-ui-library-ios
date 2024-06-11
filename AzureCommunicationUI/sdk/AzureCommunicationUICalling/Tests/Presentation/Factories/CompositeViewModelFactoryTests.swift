@@ -40,14 +40,16 @@ extension CompositeViewModelFactoryTests {
         return CompositeViewModelFactory(logger: logger,
                                          store: mockStoreFactory.store,
                                          networkManager: NetworkManager(),
-                                         audioSessionManager: AudioSessionManager(store: mockStoreFactory.store, logger: logger),
+                                         audioSessionManager: AudioSessionManager(store: mockStoreFactory.store, logger: logger, isCallKitEnabled: false),
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
                                          debugInfoManager: DebugInfoManagerMocking(),
                                          enableMultitasking: true,
                                          enableSystemPipWhenMultitasking: true,
                                          eventsHandler: CallComposite.Events(),
-                                         leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled) { [] }
+                                         leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled,
+                                         retrieveLogFiles: { return [] },
+                                         callType: .groupCall)
     }
 }
 

@@ -643,9 +643,9 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 }
 
 extension CallingMiddlewareHandlerTests {
-    private func makeSUT() -> CallingMiddlewareHandler {
+    private func makeSUT(callType: CompositeCallType = .groupCall) -> CallingMiddlewareHandler {
         let mockLogger = LoggerMocking()
-        return CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
+        return CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger, callType: callType)
     }
 
     private func getEmptyState() -> AppState {
