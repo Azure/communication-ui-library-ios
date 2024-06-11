@@ -241,17 +241,17 @@ public class CallComposite {
      /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
      ///                                a `Void` or an `Error`.
      public func hold(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         if let callingSDKWrapper = callingSDKWrapper {
-             Task {
-                 do {
-                     try await callingSDKWrapper.holdCall()
-                     completionHandler?(.success(()))
-                 } catch {
-                     completionHandler?(.failure(error))
-                 }
+         guard let callingSDKWrapper = callingSDKWrapper else {
+             completionHandler?(.failure((CallError.callIsNotInProgress)))
+            return
+         }
+         Task {
+             do {
+                 try await callingSDKWrapper.holdCall()
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
              }
-         } else {
-             completionHandler?(.success(()))
          }
      }
 
@@ -259,17 +259,17 @@ public class CallComposite {
      /// - Parameter completionHandler: The completion handler that receives `Result` enum value with either
      ///                                a `Void` or an `Error`.
      public func resume(completionHandler: ((Result<Void, Error>) -> Void)? = nil) {
-         if let callingSDKWrapper = callingSDKWrapper {
-             Task {
-                 do {
-                     try await callingSDKWrapper.holdCall()
-                     completionHandler?(.success(()))
-                 } catch {
-                     completionHandler?(.failure(error))
-                 }
+         guard let callingSDKWrapper = callingSDKWrapper else {
+             completionHandler?(.failure((CallError.callIsNotInProgress)))
+            return
+         }
+         Task {
+             do {
+                 try await callingSDKWrapper.resumeCall()
+                 completionHandler?(.success(()))
+             } catch {
+                 completionHandler?(.failure(error))
              }
-         } else {
-             completionHandler?(.success(()))
          }
      }
 

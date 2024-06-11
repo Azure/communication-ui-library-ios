@@ -8,6 +8,10 @@ import AzureCommunicationCalling
 
 extension CallEndReason {
     func toCompositeInternalError(_ wasCallConnected: Bool) -> CallCompositeInternalError? {
+        let getTokenFailed: Int32 = 401
+        let callCancelled: Int32 = 487
+        let globallyDeclined: Int32 = 603
+
         let callEndErrorCode = self.code
         let callEndErrorSubCode = self.subcode
 
@@ -20,9 +24,9 @@ extension CallEndReason {
             } else if callEndErrorSubCode == 5854 {
                 internalError = CallCompositeInternalError.callDenied
             }
-        case 401:
+        case getTokenFailed:
             internalError = CallCompositeInternalError.callTokenFailed
-        case 487, 603:
+        case callCancelled, globallyDeclined:
             // Call cancelled by user as a happy path
             break
         default:
