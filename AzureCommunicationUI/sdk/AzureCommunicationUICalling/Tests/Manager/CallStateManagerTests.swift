@@ -42,7 +42,9 @@ class CompositeStateManagerTests: XCTestCase {
                                      callId: "123",
                                      isRecordingActive: false,
                                      isTranscriptionActive: false,
-                                     callStartDate: Date()
+                                     callStartDate: Date(),
+                                     callEndReasonCode: 123,
+                                     callEndReasonSubCode: 567
         )
         let newState = getAppState(callingState: callState)
         expectedCallStateCode = status.toCallCompositeCallState()
@@ -109,6 +111,13 @@ class CompositeStateManagerTests: XCTestCase {
         expectedStateChangeCount = 2
         testCallingStatus(status)
     }
+
+    func test_callState_options() {
+        XCTAssertEqual(CallState.earlyMedia.requestString, "earlymedia")
+        XCTAssertEqual(CallState.localHold.requestString, "localhold")
+        XCTAssertEqual(CallState.remoteHold.requestString, "remotehold")
+        XCTAssertEqual(CallState.remoteHold.callId, nil)
+    }
 }
 
 extension CompositeStateManagerTests {
@@ -141,6 +150,13 @@ extension CompositeStateManagerTests {
             self.stateChangeCount += 1
             if self.stateChangeCount == self.expectedStateChangeCount {
                 XCTAssertEqual(callState, self.expectedCallStateCode)
+                if callState != .none {
+                    XCTAssertEqual(callState.callEndReasonCodeInt, 123)
+                    XCTAssertEqual(callState.callEndReasonSubCodeInt, 567)
+                } else {
+                    XCTAssertEqual(callState.callEndReasonCodeInt, nil)
+                    XCTAssertEqual(callState.callEndReasonSubCodeInt, nil)
+                }
                 self.handlerCallExpectation.fulfill()
             } else {
                 XCTAssertEqual(callState, CallState.none)

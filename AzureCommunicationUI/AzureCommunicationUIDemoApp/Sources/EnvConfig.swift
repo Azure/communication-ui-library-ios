@@ -23,6 +23,8 @@ enum EnvConfig: String {
     /* </MEETING_ID_LOCATOR> */
     case threadId
     case endpointUrl
+    case participantMRIs
+    case skipTo
     /* <ROOMS_SUPPORT:12> */
     case roomId
     case roomRole
@@ -55,6 +57,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var teamsMeetingId: String = EnvConfig.teamsMeetingId.value()
     @Published var teamsMeetingPasscode: String = EnvConfig.teamsMeetingPasscode.value()
     /* </MEETING_ID_LOCATOR> */
+    @Published var participantMRIs: String = EnvConfig.participantMRIs.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
     /* <ROOMS_SUPPORT> */
@@ -70,6 +73,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
     @Published var isRightToLeft = false
+    @Published var disableInternalPushForIncomingCall = false
+    @Published var useDeprecatedLaunch = false
     @Published var microphoneOn = false
     @Published var cameraOn = false
     @Published var audioOnly = false
@@ -87,17 +92,65 @@ class EnvConfigSubject: ObservableObject {
     @Published var tint20: Color = .blue
     @Published var tint30: Color = .blue
     @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
+    @Published var enableRemoteHold = true
+    @Published var enableCallKit = true
+    @Published var enableRemoteInfo = true
+    @Published var callkitRemoteInfo = ""
+    @Published var deviceToken: Data?
+
+    let acstokenKey: String = "ACS_TOKEN"
+    let displayNameKey: String = "DISPLAY_NAME"
+    // swiftlint:disable explicit_type_interface
+    let userDefault = UserDefaults.standard
+    // swiftlint:enable explicit_type_interface
+
+    private func readStringData(key: String) -> String {
+        if userDefault.object(forKey: key) == nil {
+            return ""
+        } else {
+            return userDefault.string(forKey: key)!
+        }
+    }
+
+    private func writeAnyData(key: String, value: Any) {
+        userDefault.set(value, forKey: key)
+        userDefault.synchronize()
+    }
+
+    func saveFromState() {
+        if !acsToken.isEmpty {
+            // We need to make a service call to get token for user in case application is not running
+            // Storing token in shared preferences for demo purpose as this app is not public
+            // In production, token should be fetched from server (storing token in pref can be a security issue)
+            writeAnyData(key: acstokenKey, value: acsToken)
+        }
+        if !displayName.isEmpty {
+            writeAnyData(key: displayNameKey, value: displayName)
+        }
+    }
+
+    func load() {
+        if !readStringData(key: acstokenKey).isEmpty && acsToken.isEmpty {
+            acsToken = readStringData(key: acstokenKey)
+            selectedAcsTokenType = .token
+        }
+        if !readStringData(key: displayNameKey).isEmpty && displayName.isEmpty {
+            displayName = readStringData(key: displayNameKey)
+        }
+    }
 
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],
            !token.isEmpty {
             acsToken = token
             selectedAcsTokenType = .token
+            writeAnyData(key: acstokenKey, value: token)
         }
 
         if let name = dic["name"],
            !name.isEmpty {
             displayName = name
+            writeAnyData(key: displayNameKey, value: name)
         }
 
         if let groupId = dic["groupid"],
@@ -111,6 +164,12 @@ class EnvConfigSubject: ObservableObject {
             teamsMeetingLink = teamsLink
             selectedMeetingType = .teamsMeeting
             selectedChatType = .teamsChat
+        }
+
+        if let mris = dic["participantMRIs"],
+           !participantMRIs.isEmpty {
+            participantMRIs = mris
+            selectedMeetingType = .oneToNCall
         }
 
         if let communicationUserId = dic["userid"],

@@ -9,6 +9,7 @@ import AzureCommunicationUICalling
 enum MeetingType: Int {
     case groupCall
     case teamsMeeting
+    case oneToNCall
     /* <ROOMS_SUPPORT:3> */ case roomCall /* </ROOMS_SUPPORT> */
 }
 
@@ -31,11 +32,14 @@ enum RoomRoleType: Int {
 
 enum DemoError: Error {
     case invalidToken
+    case invalidGroupCallId
 
     func getErrorCode() -> String {
         switch self {
         case .invalidToken:
             return CallCompositeErrorCode.tokenExpired
+        case .invalidGroupCallId:
+            return CallCompositeErrorCode.callJoin
         }
     }
 }

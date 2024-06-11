@@ -14,6 +14,7 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var enterForegroundCalled: ((Bool) -> Void)?
     var cameraPermissionSetCalled: ((Bool) -> Void)?
     var cameraPermissionGrantedCalled: ((Bool) -> Void)?
+    var micPermissionGrantedCalled: ((Bool) -> Void)?
     var requestCameraPreviewOnCalled: ((Bool) -> Void)?
     var requestCameraOnCalled: ((Bool) -> Void)?
     var requestCameraOffCalled: ((Bool) -> Void)?
@@ -67,6 +68,12 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func cameraPermissionGranted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             cameraPermissionGrantedCalled?(true)
+        }
+    }
+
+    func onMicPermissionIsGranted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            micPermissionGrantedCalled?(true)
         }
     }
 
