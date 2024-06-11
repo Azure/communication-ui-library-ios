@@ -59,13 +59,13 @@ class CompositeExitManagerTests: XCTestCase {
         wait(for: [actionExpectation], timeout: 1)
 
         // error test
-        XCTAssertTrue(CallCompositeError(code: "abc",
+        XCTAssertTrue(CallCompositeDismissed(errorCode: "abc",
                                          error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
-                      == CallCompositeError(code: "abc",
+                      == CallCompositeDismissed(errorCode: "abc",
                                             error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
-        XCTAssertTrue(CallCompositeError(code: "abc",
+        XCTAssertFalse(CallCompositeDismissed(errorCode: "abc",
                                          error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
-                      == CallCompositeError(code: "abc",
+                      == CallCompositeDismissed(errorCode: "ab",
                                             error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
     }
 

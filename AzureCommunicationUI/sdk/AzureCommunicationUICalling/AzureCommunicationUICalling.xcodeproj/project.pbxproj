@@ -249,6 +249,7 @@
 		A4F5F9FE2C18BAAD00A74513 /* CallKitOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */; };
 		A4F5FA002C18BFAD00A74513 /* CallingSDKInitializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */; };
 		A4F5FA022C18CF6500A74513 /* PushNotificationEventTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */; };
+		A4F5FA042C18E98800A74513 /* CallScreenOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -625,6 +626,7 @@
 		A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitOptionsTests.swift; sourceTree = "<group>"; };
 		A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitializerTests.swift; sourceTree = "<group>"; };
 		A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationEventTypeTests.swift; sourceTree = "<group>"; };
+		A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenOptionsTests.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -1198,6 +1200,7 @@
 				A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */,
 				A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */,
 				A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */,
+				A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1877,6 +1880,7 @@
 				50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */,
 				98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */,
 				B2F079672AC6262100E9AA9E /* CallDiagnosticsReducerTests.swift in Sources */,
+				A4F5FA042C18E98800A74513 /* CallScreenOptionsTests.swift in Sources */,
 				1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */,
 				B2DBBE582AC357EC000E8676 /* MessageBarDiagnosticViewModelTests.swift in Sources */,
 				50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */,
