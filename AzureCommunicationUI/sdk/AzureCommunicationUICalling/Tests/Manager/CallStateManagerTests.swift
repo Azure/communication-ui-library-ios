@@ -111,6 +111,13 @@ class CompositeStateManagerTests: XCTestCase {
         expectedStateChangeCount = 2
         testCallingStatus(status)
     }
+
+    func test_callState_options() {
+        XCTAssertEqual(CallState.earlyMedia.requestString, "earlymedia")
+        XCTAssertEqual(CallState.localHold.requestString, "localhold")
+        XCTAssertEqual(CallState.remoteHold.requestString, "remotehold")
+        XCTAssertEqual(CallState.remoteHold.callId, nil)
+    }
 }
 
 extension CompositeStateManagerTests {
