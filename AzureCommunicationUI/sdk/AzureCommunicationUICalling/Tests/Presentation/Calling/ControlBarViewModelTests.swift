@@ -589,27 +589,6 @@ class ControlBarViewModelTests: XCTestCase {
                    navigationState: NavigationState())
         wait(for: [expectation], timeout: 1)
     }
-
-    func test_controlBarViewModel_update_when_statesUpdated_then_audioDeviceListViewModelUpdated() {
-        let expectation = XCTestExpectation(description: "AudioDevicesListViewModel should be updated")
-        let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
-        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                         localUserState: localUserState,
-                                                                         localizationProvider: LocalizationProviderMocking())
-        audioDevicesListViewModel.updateState = { status in
-            XCTAssertEqual(status, localUserState.audioState.device)
-            expectation.fulfill()
-        }
-        factoryMocking.audioDevicesListViewModel = audioDevicesListViewModel
-        let sut = makeSUT()
-        sut.update(localUserState: localUserState,
-                   permissionState: PermissionState(),
-                   callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible),
-                   navigationState: NavigationState())
-        wait(for: [expectation], timeout: 1.0)
-    }
 }
 
 extension ControlBarViewModelTests {
