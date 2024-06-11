@@ -14,7 +14,7 @@ extension Middleware {
     //
     // I.e. if an action is dispatch 10 times in 0.4 seconds, only the first will pass through.
     // Meant for user-action's that could conflict with animations.
-    static func throttleMiddleware(actions: [Action], timeoutS: CGFloat = 0.4) -> Middleware<AppState, Action> {
+    static func throttleMiddleware(actions: [Action], timeoutS: CGFloat = 0.4) -> Middleware<State, Action> {
         var lastActionTime: [String: Date] = [:]
 
         func actionIdentifier(for action: Action) -> String {

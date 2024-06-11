@@ -107,7 +107,7 @@ class CallingViewModel: ObservableObject {
                 if leaveCallConfirmationMode == .alwaysEnabled {
                     store.dispatch(action: .showEndCallConfirmation)
                 } else {
-                    endCall()
+                    self.endCall()
                 }
 
             }, localUserState: store.state.localUserState,
