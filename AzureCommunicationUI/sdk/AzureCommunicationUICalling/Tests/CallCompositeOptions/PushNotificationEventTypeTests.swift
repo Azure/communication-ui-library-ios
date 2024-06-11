@@ -30,12 +30,12 @@ class PushNotificationEventType: XCTestCase {
         let eventTypeGroupCall = azureEventTypeGroupCall.toPushNotificationEventType()
         XCTAssertEqual(eventTypeGroupCall, .incomingGroupCall)
 
-        let azureEventTypePstn = AzureCommunicationCalling.PushNotificationEventType.incomingGroupCall
+        let azureEventTypePstn = AzureCommunicationCalling.PushNotificationEventType.incomingPstnCall
         let eventTypeGroupPstn = azureEventTypePstn.toPushNotificationEventType()
-        XCTAssertEqual(eventTypeGroupPstn, .incomingGroupCall)
+        XCTAssertEqual(eventTypeGroupPstn, .incomingPstnCall)
 
-        let azureEventTypeStopRinging = AzureCommunicationCalling.PushNotificationEventType.incomingGroupCall
+        let azureEventTypeStopRinging = AzureCommunicationCalling.PushNotificationEventType.stopRinging
         let eventTypeStopRinging = azureEventTypeStopRinging.toPushNotificationEventType()
-        XCTAssertEqual(eventTypeStopRinging, .incomingGroupCall)
+        XCTAssertEqual(eventTypeStopRinging, .stopRinging)
     }
 }
