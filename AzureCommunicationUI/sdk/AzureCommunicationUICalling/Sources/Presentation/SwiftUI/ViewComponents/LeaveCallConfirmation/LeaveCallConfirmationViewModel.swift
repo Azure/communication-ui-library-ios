@@ -24,17 +24,19 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
 
         self.options = [
             TitleDrawerListItemViewModel(title: title,
-                                         accessibilityIdentifier: title),
+                                         accessibilityIdentifier: AccessibilityIdentifier
+                .leaveCallConfirmTitleAccessibilityID
+                .rawValue),
             DrawerListItemViewModel(
                 icon: .endCallRegular,
                 title: leaveText,
-                accessibilityIdentifier: leaveText) {
+                accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue) {
                     endCall()
             },
             DrawerListItemViewModel(
                 icon: .dismiss,
                 title: cancelText,
-                accessibilityIdentifier: cancelText) {
+                accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue) {
                     dismissConfirmation()
             }
         ]
