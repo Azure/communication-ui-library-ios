@@ -18,13 +18,13 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Joining call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Join Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video off";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video On";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video Off";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video on";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video Off";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video On";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mic off";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mic on";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mic Off";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mic on";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mic off";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mic On";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Device";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Select audio device";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Go to Settings";

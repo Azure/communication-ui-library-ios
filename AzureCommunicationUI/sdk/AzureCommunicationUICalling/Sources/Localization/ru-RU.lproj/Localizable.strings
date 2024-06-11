@@ -18,13 +18,13 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Присоединение к звонку отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Видео включено";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Видео отключено";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Видео включено";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Микрофон выключен";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Микрофон включен";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Микрофон отключен";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Микрофон включен";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Микрофон отключен";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Микрофон включен";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Устройство";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Выберите звуковое устройство";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Перейти к параметрам";
@@ -159,9 +159,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
 "AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
 
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Отключить звук";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Меню отключения звука участника.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Удалить из звонка";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Меню удаления участника из звонка.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Параметры звонка обновлены. Некоторые функции могут быть недоступны вам.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Параметры звонка обновлены. Некоторые дополнительные действия теперь могут быть доступны вам.";

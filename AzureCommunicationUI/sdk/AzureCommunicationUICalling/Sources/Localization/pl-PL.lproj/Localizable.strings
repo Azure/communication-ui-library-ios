@@ -18,13 +18,13 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Trwa dołączanie do rozmowy…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Wyłączono dołączanie do rozmowy";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Wideo wyłączone";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Wideo włączone";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Wideo wyłączone";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Wideo włączone";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Wideo wyłączone";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Wideo włączone";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon wyłączony";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon włączony";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon jest wyłączony";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon włączony";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon wyłączony";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon jest włączony";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Urządzenie";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Wybierz urządzenie audio";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Przejdź do ustawień";
@@ -159,9 +159,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Zgłoś problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Wyślij";
 
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Wycisz";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Menu wyciszania uczestnika.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Usuń z rozmowy";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Menu usuwania uczestnika z rozmowy.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Zaktualizowano ustawienia połączeń. Niektóre funkcje mogą być niedostępne dla Ciebie.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Zaktualizowano ustawienia połączeń. Niektóre dodatkowe akcje mogą być teraz dostępne dla Ciebie.";

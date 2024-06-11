@@ -18,13 +18,13 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "הצטרפות לשיחה מושבתת";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו מופעל";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="וידאו כבוי";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="וידאו מופעל";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="מיקרופון כבוי";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="מיקרופון מופעל";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="כבה מיקרופון";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="מיקרופון מופעל";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="מיקרופון כבוי";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="מיקרופון מופעל";
 "AzureCommunicationUICalling.SetupView.Button.Device"="התקן";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="בחר התקן שמע";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="עבור אל ‘הגדרות‘";
@@ -159,9 +159,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
 "AzureCommunicationUICalling.SendFeedback.Text"="שלח";
 
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="השתק";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="תפריט השתקת משתתף.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="הסר משיחה";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="הסר משתתף דרך תפריט 'שיחה'.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="הגדרות השיחה עודכנו. ייתכן שתכונות מסוימות לא יהיו זמינות עבורך.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="הגדרות השיחה עודכנו. ייתכן שפעולות נוספות מסוימות יהיו זמינות כעת עבורך.";
