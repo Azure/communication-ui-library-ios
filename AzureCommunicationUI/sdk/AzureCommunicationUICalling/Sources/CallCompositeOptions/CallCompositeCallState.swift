@@ -99,8 +99,9 @@ public struct CallState: Equatable, RequestStringConvertible {
 
     private init(rawValue: String) {
         self.value = CallStateKV(rawValue: rawValue)
-        self.callEndReasonCode = 0
-        self.callEndReasonSubCode = 0
+        let callEndSuccess = 0
+        self.callEndReasonCode = callEndSuccess
+        self.callEndReasonSubCode = callEndSuccess
         self.callIdInternal = nil
     }
 
