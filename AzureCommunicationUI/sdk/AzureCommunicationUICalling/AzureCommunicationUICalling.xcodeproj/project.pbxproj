@@ -42,6 +42,8 @@
 		11A8FC332C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */; };
 		11A8FC352C10162300BF1FFA /* CaptionsLanguageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC342C10162300BF1FFA /* CaptionsLanguageListCell.swift */; };
 		11C50D382BD1A79900CB3615 /* CaptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C50D372BD1A79900CB3615 /* CaptionOptions.swift */; };
+		11D6C8C22C17901000FB560F /* CaptionsInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */; };
+		11D6C8C42C17902800FB560F /* CaptionsInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D6C8C32C17902800FB560F /* CaptionsInfoCell.swift */; };
 		11E792B12BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E792B02BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift */; };
 		11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */; };
 		11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */; };
@@ -377,6 +379,8 @@
 		11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListViewModel.swift; sourceTree = "<group>"; };
 		11A8FC342C10162300BF1FFA /* CaptionsLanguageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListCell.swift; sourceTree = "<group>"; };
 		11C50D372BD1A79900CB3615 /* CaptionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionOptions.swift; sourceTree = "<group>"; };
+		11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCellViewModel.swift; sourceTree = "<group>"; };
+		11D6C8C32C17902800FB560F /* CaptionsInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCell.swift; sourceTree = "<group>"; };
 		11E792B02BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCaptionsData.swift; sourceTree = "<group>"; };
 		11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayView.swift; sourceTree = "<group>"; };
 		11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModel.swift; sourceTree = "<group>"; };
@@ -761,6 +765,8 @@
 				11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */,
 				11A8FC342C10162300BF1FFA /* CaptionsLanguageListCell.swift */,
 				11045E7E2C12641700C66C94 /* CaptionsLanguageListCellViewModel.swift */,
+				11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */,
+				11D6C8C32C17902800FB560F /* CaptionsInfoCell.swift */,
 			);
 			path = Captions;
 			sourceTree = "<group>";
@@ -1945,6 +1951,7 @@
 			files = (
 				50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */,
 				A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */,
+				11D6C8C42C17902800FB560F /* CaptionsInfoCell.swift in Sources */,
 				1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */,
 				FAD20A8E292834500063D8A9 /* MappedSequence.swift in Sources */,
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
@@ -2082,6 +2089,7 @@
 				114879CE2BEC074700B7D7FF /* SupportedCaptionsLocale.swift in Sources */,
 				FA6B619F290C5987004B8188 /* SharingActivityContainerController.swift in Sources */,
 				50FA45F5267D3BD3001844AC /* ControlBarView.swift in Sources */,
+				11D6C8C22C17901000FB560F /* CaptionsInfoCellViewModel.swift in Sources */,
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,

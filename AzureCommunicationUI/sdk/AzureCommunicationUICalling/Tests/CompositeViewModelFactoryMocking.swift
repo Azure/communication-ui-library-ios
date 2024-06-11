@@ -343,4 +343,16 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                           dispatchAction: dispatchAction)
     }
 
+    func makeCaptionsInfoViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.CaptionsInfoViewModel {
+        <#code#>
+    }
+
+    func makeCaptionsInfoCellViewModel(participantInfoModel: AzureCommunicationUICalling.ParticipantInfoModel) -> AzureCommunicationUICalling.CaptionsInfoCellViewModel {
+        <#code#>
+    }
+
+    func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void, showSpokenLanguage: @escaping () -> Void, isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsListViewModel {
+        <#code#>
+    }
+
 }

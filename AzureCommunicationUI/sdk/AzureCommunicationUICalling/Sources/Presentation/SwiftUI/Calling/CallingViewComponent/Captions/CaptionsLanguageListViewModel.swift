@@ -21,6 +21,6 @@ class CaptionsLanguageListViewModel: ObservableObject {
     }
 
     func update(localUserState: LocalUserState,
-                remoteParticipantsState: RemoteParticipantsState) {
+                captionsState: CaptionsState) {
     }
 }

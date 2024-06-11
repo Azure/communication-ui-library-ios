@@ -52,10 +52,12 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
+    func makeCaptionsInfoViewModel(dispatchAction: @escaping ActionDispatch) -> CaptionsInfoViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
+    func makeCaptionsInfoCellViewModel(participantInfoModel: ParticipantInfoModel) -> CaptionsInfoCellViewModel
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
                                           showSupportFormAction: @escaping () -> Void,
                                           showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel

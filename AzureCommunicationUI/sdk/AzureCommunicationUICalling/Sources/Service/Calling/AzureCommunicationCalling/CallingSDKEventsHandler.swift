@@ -78,10 +78,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         captionsFeature.delegate = self
     }
 
-    func assign (_ teamsCaptions: TeamsCaptions) {
-        self.teamsCaptions = teamsCaptions
-        teamsCaptions.delegate = self
-    }
+//    func assign (_ teamsCaptions: TeamsCaptions) {
+//        self.teamsCaptions = teamsCaptions
+//        teamsCaptions.delegate = self
+//    }
 
     func assign (_ communicationCaptions: CommunicationCaptions) {
         self.communicationCaptions = communicationCaptions
@@ -95,8 +95,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         dominantSpeakersCallFeature = nil
         localUserDiagnosticsFeature = nil
         captionsFeature = nil
-        teamsCaptions = nil
-        communicationCaptions = nil
         remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
         previousCallingStatus = .none
     }
@@ -203,7 +201,6 @@ extension CallingSDKEventsHandler: CallDelegate,
     MediaDiagnosticsDelegate,
     NetworkDiagnosticsDelegate,
     CaptionsCallFeatureDelegate,
-    TeamsCaptionsDelegate,
     CommunicationCaptionsDelegate {
     func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
@@ -228,7 +225,28 @@ extension CallingSDKEventsHandler: CallDelegate,
             let subcode = call.callEndReason.subcode
             logger.error("Receive vaildate CallEndReason:\(code), subcode:\(subcode)")
         }
-
+        if currentStatus == .connected {
+            self.captionsFeature = call.feature(Features.captions)
+            self.captionsFeature?.getCaptions {(value, error) in
+                if let error = error {
+                    self.logger.error("Can not get the captions with error:\(error)")
+                } else {
+                    if value?.type == CaptionsType.communicationCaptions {
+                        // communication captions
+                        self.communicationCaptions = value as? CommunicationCaptions
+                        self.communicationCaptions?.delegate = self
+                        let startCaptionsOptions = StartCaptionsOptions()
+                        startCaptionsOptions.spokenLanguage = "en-us"
+                        self.communicationCaptions?.startCaptions(options: startCaptionsOptions,
+                                                                  completionHandler: { (error) in
+                            if error != nil {
+                                print("InderpalTest UICaptions failed to start")
+                            }
+                        })
+                    }
+                }
+            }
+        }
         let callInfoModel = CallInfoModel(status: currentStatus,
                                           internalError: internalError)
         callInfoSubject.send(callInfoModel)
@@ -259,41 +277,42 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     // MARK: Captions
-    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                                didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
-        captionsEnabledChanged.send(teamsCaptions.isEnabled)
+//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+//                                didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
+//        captionsEnabledChanged.send(teamsCaptions.isEnabled)
+//    }
+//
+//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+//                                didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
+//        let spokenLanguage = teamsCaptions.activeSpokenLanguage
+//        activeSpokenLanguageChanged.send(spokenLanguage)
+//    }
+//
+//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+//                                didReceiveCaptions args: TeamsCaptionsReceivedEventArgs) {
+//        captionsReceived.send(args.toCallCompositeCaptionsData())
+//    }
+//
+//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+//                                didChangeActiveCaptionLanguageState args: PropertyChangedEventArgs) {
+//        let captionsLanguage = teamsCaptions.activeCaptionLanguage
+//        activeCaptionLanguageChanged.send(captionsLanguage)
+//    }
+
+    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                               didReceiveCaptions: CommunicationCaptionsReceivedEventArgs) {
+        captionsReceived.send(didReceiveCaptions.toCallCompositeCaptionsData())
+        print("Shauna UICaptions -> \(didReceiveCaptions.spokenText)")
     }
 
-    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                                didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
-        let spokenLanguage = teamsCaptions.activeSpokenLanguage
-        activeSpokenLanguageChanged.send(spokenLanguage)
-    }
-
-    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                                didReceiveCaptions args: TeamsCaptionsReceivedEventArgs) {
-        captionsReceived.send(args.toCallCompositeCaptionsData())
-    }
-
-    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                                didChangeActiveCaptionLanguageState args: PropertyChangedEventArgs) {
-        let captionsLanguage = teamsCaptions.activeCaptionLanguage
-        activeCaptionLanguageChanged.send(captionsLanguage)
-    }
-
-    @nonobjc func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
-                                        didReceiveCaptions args: CommunicationCaptionsReceivedEventArgs) {
-        captionsReceived.send(args.toCallCompositeCaptionsData())
-    }
-
-    @nonobjc func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
-                                        didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
+    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                               didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
         let captionsLanguage = communicationCaptions.activeSpokenLanguage
         activeSpokenLanguageChanged.send(captionsLanguage)
     }
 
-    @nonobjc func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
-                                        didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
+   func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                              didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
         let isCaptionsEnabled = communicationCaptions.isEnabled
         captionsEnabledChanged.send(isCaptionsEnabled)
     }

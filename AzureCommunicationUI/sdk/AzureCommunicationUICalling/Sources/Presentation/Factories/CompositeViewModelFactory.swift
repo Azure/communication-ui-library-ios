@@ -282,6 +282,12 @@ extension CompositeViewModelFactory {
                                   localizationProvider: localizationProvider)
     }
 
+    func makeCaptionsInfoViewModel(dispatchAction: @escaping ActionDispatch) -> CaptionsInfoViewModel {
+        CaptionsInfoViewModel(compositeViewModelFactory: self,
+                              dispatchAction: dispatchAction,
+                              localizationProvider: localizationProvider)
+    }
+
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)
     }
@@ -299,6 +305,12 @@ extension CompositeViewModelFactory {
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
     -> ParticipantsListCellViewModel {
         ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
+                                      localizationProvider: localizationProvider)
+    }
+
+    func makeCaptionsInfoCellViewModel(participantInfoModel: ParticipantInfoModel)
+    -> CaptionsInfoCellViewModel {
+        CaptionsInfoCellViewModel(participantInfoModel: participantInfoModel,
                                       localizationProvider: localizationProvider)
     }
 
