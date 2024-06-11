@@ -247,6 +247,7 @@
 		A4F5F8F42C180A0100A74513 /* CallError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F8F32C180A0100A74513 /* CallError.swift */; };
 		A4F5F9FC2C18B33200A74513 /* PushNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */; };
 		A4F5F9FE2C18BAAD00A74513 /* CallKitOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */; };
+		A4F5FA002C18BFAD00A74513 /* CallingSDKInitializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -621,6 +622,7 @@
 		A4F5F8F32C180A0100A74513 /* CallError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallError.swift; sourceTree = "<group>"; };
 		A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationTests.swift; sourceTree = "<group>"; };
 		A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitOptionsTests.swift; sourceTree = "<group>"; };
+		A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitializerTests.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -1319,6 +1321,7 @@
 				A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */,
 				05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */,
 				05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */,
+				A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1907,6 +1910,7 @@
 				98966FE326A5E58D00069857 /* SetupControlBarViewModelTests.swift in Sources */,
 				FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */,
 				A830C30C264D7C0900766E3D /* PermissionReducerTests.swift in Sources */,
+				A4F5FA002C18BFAD00A74513 /* CallingSDKInitializerTests.swift in Sources */,
 				A869A63B26546A2E003CC4F2 /* PermissionsManagerMocking.swift in Sources */,
 				1F09A10A26BA47EC00BACED7 /* SetupViewModelTests.swift in Sources */,
 				A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */,
