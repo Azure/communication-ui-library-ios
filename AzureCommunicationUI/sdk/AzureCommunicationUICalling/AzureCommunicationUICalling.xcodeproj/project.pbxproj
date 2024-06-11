@@ -245,6 +245,7 @@
 		A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */; };
 		A4DBCEBF2BFB9DA800332E7B /* CallingSDKInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */; };
 		A4F5F8F42C180A0100A74513 /* CallError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F8F32C180A0100A74513 /* CallError.swift */; };
+		A4F5F9FC2C18B33200A74513 /* PushNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -617,6 +618,7 @@
 		A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
 		A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitializer.swift; sourceTree = "<group>"; };
 		A4F5F8F32C180A0100A74513 /* CallError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallError.swift; sourceTree = "<group>"; };
+		A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationTests.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -1187,6 +1189,7 @@
 			children = (
 				1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */,
 				500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */,
+				A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1877,6 +1880,7 @@
 				FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */,
 				1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */,
 				FAC1FECC27C98FC200D95845 /* BannerViewModelMocking.swift in Sources */,
+				A4F5F9FC2C18B33200A74513 /* PushNotificationTests.swift in Sources */,
 				50E2D6A926FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift in Sources */,
 				FA03CC8327C8189900986D4E /* SetupControlBarViewModelMocking.swift in Sources */,
 				1F09A11126BA484000BACED7 /* ControlBarViewModelTests.swift in Sources */,
