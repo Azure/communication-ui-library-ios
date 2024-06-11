@@ -11,6 +11,7 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed = true
     @Published var isParticipantsListDisplayed = false
+    @Published var isParticipantMenuDisplayed = false
     @Published var isVoiceOverEnabled = false
     private let logger: Logger
     private let dispatch: ActionDispatch
@@ -23,6 +24,7 @@ class InfoHeaderViewModel: ObservableObject {
     private let enableSystemPipWhenMultitasking: Bool
 
     let participantsListViewModel: ParticipantsListViewModel
+    let participantMenuViewModel: ParticipantMenuViewModel
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -45,6 +47,9 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
+        self.participantMenuViewModel = compositeViewModelFactory.makeParticipantMenuViewModel(
+            localUserState: localUserState,
+            dispatchAction: dispatchAction)
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState, dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -56,6 +61,7 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
+        self.participantsListViewModel.displayParticipantMenu = self.displayParticipantMenu
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
 
@@ -86,6 +92,11 @@ class InfoHeaderViewModel: ObservableObject {
 
     func displayParticipantsList() {
         self.isParticipantsListDisplayed = true
+    }
+
+    func displayParticipantMenu(participantId: String, participantDisplayName: String) {
+        participantMenuViewModel.showMenu(participantId: participantId, participantDisplayName: participantDisplayName)
+        self.isParticipantMenuDisplayed = true
     }
 
     func toggleDisplayInfoHeaderIfNeeded() {
@@ -123,6 +134,7 @@ class InfoHeaderViewModel: ObservableObject {
         }
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
+        participantMenuViewModel.update(localUserState: localUserState)
 
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()

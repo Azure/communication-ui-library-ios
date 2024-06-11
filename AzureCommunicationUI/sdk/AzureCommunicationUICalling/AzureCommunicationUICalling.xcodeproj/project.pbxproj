@@ -16,6 +16,10 @@
 		051F739A2C0F68FE006E097F /* BottomToastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051F73992C0F68FE006E097F /* BottomToastViewModel.swift */; };
 		051F739C2C10DA64006E097F /* CapabilitiesChangedNotificationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051F739B2C10DA64006E097F /* CapabilitiesChangedNotificationMode.swift */; };
 		051F739E2C10DAB3006E097F /* SetupScreenOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051F739D2C10DAB3006E097F /* SetupScreenOptions.swift */; };
+		051F73C52C1756CC006E097F /* CompositeParticipantMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051F73C42C1756CC006E097F /* CompositeParticipantMenu.swift */; };
+		051F73C92C175A9E006E097F /* ParticipantMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051F73C82C175A9E006E097F /* ParticipantMenuViewModel.swift */; };
+		051F73CB2C175BB9006E097F /* ParticipantMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051F73CA2C175BB9006E097F /* ParticipantMenuViewController.swift */; };
+		051F73CD2C17D1A7006E097F /* ParticipantMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051F73CC2C17D1A7006E097F /* ParticipantMenuCell.swift */; };
 		05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */; };
 		05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */; };
 		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
@@ -347,6 +351,10 @@
 		051F73992C0F68FE006E097F /* BottomToastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToastViewModel.swift; sourceTree = "<group>"; };
 		051F739B2C10DA64006E097F /* CapabilitiesChangedNotificationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedNotificationMode.swift; sourceTree = "<group>"; };
 		051F739D2C10DAB3006E097F /* SetupScreenOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScreenOptions.swift; sourceTree = "<group>"; };
+		051F73C42C1756CC006E097F /* CompositeParticipantMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeParticipantMenu.swift; sourceTree = "<group>"; };
+		051F73C82C175A9E006E097F /* ParticipantMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantMenuViewModel.swift; sourceTree = "<group>"; };
+		051F73CA2C175BB9006E097F /* ParticipantMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantMenuViewController.swift; sourceTree = "<group>"; };
+		051F73CC2C17D1A7006E097F /* ParticipantMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantMenuCell.swift; sourceTree = "<group>"; };
 		05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceTests.swift; sourceTree = "<group>"; };
 		05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryMocking.swift; sourceTree = "<group>"; };
 		05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryTests.swift; sourceTree = "<group>"; };
@@ -1156,6 +1164,7 @@
 				5A1F4BD02BDA08D200EA7B2D /* ControlBarViewModelExtension.swift */,
 				50E2D69426EACB74006B0EF4 /* ParticipantsListViewModel.swift */,
 				50E2D69826F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift */,
+				051F73C82C175A9E006E097F /* ParticipantMenuViewModel.swift */,
 				1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */,
 				051EE2282AB90FC300A94632 /* LobbyWaitingHeaderView.swift */,
 				051EE22A2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift */,
@@ -1282,12 +1291,15 @@
 				1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */,
 				50E2D69026EAAB33006B0EF4 /* CompositeParticipantsList.swift */,
 				50E2D69626EBCD15006B0EF4 /* CompositeParticipantsListCell.swift */,
+				051F73C42C1756CC006E097F /* CompositeParticipantMenu.swift */,
 				1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */,
 				1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */,
 				FAACEE3728FA0E4C003F7D7C /* MoreCallOptionsList.swift */,
 				FAACEE3F28FA241A003F7D7C /* MoreCallOptionsListCell.swift */,
 				FAACEE3928FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift */,
 				9852C2D426EFD19300435252 /* ParticipantsListViewController.swift */,
+				051F73CC2C17D1A7006E097F /* ParticipantMenuCell.swift */,
+				051F73CA2C175BB9006E097F /* ParticipantMenuViewController.swift */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -1955,6 +1967,7 @@
 				28FE266D29E804F5009CC19D /* RemoteParticipantsAction.swift in Sources */,
 				1F2BED64262F86E600D98266 /* SetupView.swift in Sources */,
 				FAD845402819C129007DAFE1 /* RemoteParticipantsManager.swift in Sources */,
+				051F73C92C175A9E006E097F /* ParticipantMenuViewModel.swift in Sources */,
 				C89FCE602C0FAF5D00983444 /* CapabilitiesManager.swift in Sources */,
 				A874EDCC2666DF07003C7D92 /* ContainerUIHostingController.swift in Sources */,
 				A8810CD8263CC46500C88545 /* NavigationRouter.swift in Sources */,
@@ -1993,6 +2006,7 @@
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */,
 				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
+				051F73CB2C175BB9006E097F /* ParticipantMenuViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				051F73962C0E1164006E097F /* ToastNotificationReducer.swift in Sources */,
@@ -2104,6 +2118,7 @@
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
 				28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */,
+				051F73C52C1756CC006E097F /* CompositeParticipantMenu.swift in Sources */,
 				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
@@ -2128,6 +2143,7 @@
 				1F2BED6C262F8B7000D98266 /* StoreExtensions.swift in Sources */,
 				881D8F7227FB6992008EC897 /* LocalOptions.swift in Sources */,
 				50E2D69126EAAB33006B0EF4 /* CompositeParticipantsList.swift in Sources */,
+				051F73CD2C17D1A7006E097F /* ParticipantMenuCell.swift in Sources */,
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,

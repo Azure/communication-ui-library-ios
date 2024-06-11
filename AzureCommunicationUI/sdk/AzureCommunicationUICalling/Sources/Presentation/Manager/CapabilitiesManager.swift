@@ -17,9 +17,7 @@ internal class CapabilitiesManager {
         switch callType {
         case .groupCall:
             return true
-        case .teamsMeeting:
-            return true
-        case .roomsCall:
+        case .teamsMeeting, .roomsCall:
             return capabilities.contains(capability)
         }
     }

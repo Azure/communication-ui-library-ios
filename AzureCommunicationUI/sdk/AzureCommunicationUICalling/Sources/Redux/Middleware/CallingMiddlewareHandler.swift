@@ -71,6 +71,11 @@ protocol CallingMiddlewareHandling {
     @discardableResult
     func dismissNotification(state: AppState,
                              dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    @discardableResult
+    func removeParticipant(state: AppState,
+                           dispatch: @escaping ActionDispatch,
+                           participantId: String) -> Task<Void, Never>
 }
 
 // swiftlint:disable type_body_length
@@ -493,6 +498,22 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.callDiagnosticAction(.dismissMedia(diagnostic: .cameraStartTimedOut)))
             case .someFeaturesLost, .someFeaturesGained:
                 break
+            }
+        }
+    }
+
+    func removeParticipant(state: AppState,
+                           dispatch: @escaping ActionDispatch,
+                           participantId: String) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+
+            do {
+                try await callingService.removeParticipant(participantId)
+            } catch {
+                dispatch(.remoteParticipantsAction(.removeParticipantError))
             }
         }
     }

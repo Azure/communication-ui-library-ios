@@ -41,6 +41,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     private let confirmTitleAdmitAll: String
     private let confirmAdmit: String
     private let confirmDecline: String
+    private var openParticipantMenu: (_ participantId: String, _ participantDisplayName: String) -> Void
 
     private var admitAlert: UIAlertController?
 
@@ -74,7 +75,8 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
          confirmTitleAdmitParticipant: String,
          confirmTitleAdmitAll: String,
          confirmAdmit: String,
-         confirmDecline: String
+         confirmDecline: String,
+         openParticipantMenu: @escaping (_ participantId: String, _ participantDisplayName: String) -> Void
     ) {
         self.avatarViewManager = avatarViewManager
         self.admintAll = admintAll
@@ -88,6 +90,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
         self.confirmTitleAdmitAll = confirmTitleAdmitAll
         self.confirmAdmit = confirmAdmit
         self.confirmDecline = confirmDecline
+        self.openParticipantMenu = openParticipantMenu
         super.init(sourceView: sourceView, isRightToLeft: isRightToLeft)
     }
 
@@ -169,12 +172,27 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard isLobbySection(section: indexPath.section) else {
+        let participantsListCellViewModel = participants(section: indexPath.section)[indexPath.row]
+        if isLobbySection(section: indexPath.section) {
+            onLobbyParticipantSelect(participantsListCellViewModel: participantsListCellViewModel)
+        } else {
+            onParticipantSelect(participantsListCellViewModel: participantsListCellViewModel)
+        }
+    }
+
+    func onParticipantSelect(participantsListCellViewModel: ParticipantsListCellViewModel) {
+        guard let participantId = participantsListCellViewModel.participantId else {
             return
         }
+        dismissDrawer(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let participantViewData = participantsListCellViewModel.getParticipantViewData(from: self.avatarViewManager)
+            let displayName = participantsListCellViewModel.getParticipantName(with: participantViewData)
+            self.openParticipantMenu(participantId, displayName)
+        }
+    }
 
-        let participantsListCellViewModel = participants(section: indexPath.section)[indexPath.row]
-
+    func onLobbyParticipantSelect(participantsListCellViewModel: ParticipantsListCellViewModel) {
         guard let participantId = participantsListCellViewModel.participantId else {
             return
         }

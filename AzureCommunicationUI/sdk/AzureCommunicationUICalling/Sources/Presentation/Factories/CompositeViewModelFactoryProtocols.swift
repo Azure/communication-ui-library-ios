@@ -52,6 +52,9 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
+    func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
+
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
@@ -63,6 +66,9 @@ protocol CompositeViewModelFactoryProtocol {
                                      title: String,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String) -> DrawerListItemViewModel
     func makeSelectableDrawerListItemViewModel(
         icon: CompositeIcon,
         title: String,

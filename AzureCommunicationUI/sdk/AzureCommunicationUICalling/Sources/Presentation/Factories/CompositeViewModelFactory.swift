@@ -274,6 +274,15 @@ extension CompositeViewModelFactory {
                                   localizationProvider: localizationProvider)
     }
 
+    func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel {
+        ParticipantMenuViewModel(compositeViewModelFactory: self,
+                                 localUserState: localUserState,
+                                 dispatchAction: dispatchAction,
+                                 localizationProvider: localizationProvider,
+                                 capabilitiesManager: capabilitiesManager)
+    }
+
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)
     }
@@ -314,6 +323,14 @@ extension CompositeViewModelFactory {
                                 title: title,
                                 accessibilityIdentifier: accessibilityIdentifier,
                                 action: action)
+    }
+
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String) -> DrawerListItemViewModel {
+        DrawerListItemViewModel(icon: icon,
+                                title: title,
+                                accessibilityIdentifier: accessibilityIdentifier)
     }
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {

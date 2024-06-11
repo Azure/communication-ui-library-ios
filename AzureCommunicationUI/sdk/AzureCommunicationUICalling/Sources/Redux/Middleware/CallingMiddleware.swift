@@ -170,6 +170,8 @@ private func handleRemoteParticipantAction(_ action: RemoteParticipantsAction,
         actionHandler.admitLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
     case .decline(participantId: let participantId):
         actionHandler.declineLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    case .remove(participantId: let participantId):
+        actionHandler.removeParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
     default:
         break
     }
