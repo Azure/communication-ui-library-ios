@@ -18,13 +18,13 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "加入通話已停用";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="視訊關閉";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="開啟視訊";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="關閉視訊";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="視訊開啟";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="關閉視訊";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="開啟視訊";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="麥克風關閉";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="已開啟麥克風";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="麥克風關閉";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="麥克風開啟";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="已關閉麥克風";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="麥克風開啟";
 "AzureCommunicationUICalling.SetupView.Button.Device"="裝置";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="選取音訊裝置";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="移至 [設定]";
@@ -159,9 +159,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="回報問題";
 "AzureCommunicationUICalling.SendFeedback.Text"="傳送";
 
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="靜音";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="將參與者靜音功能表。";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="從通話移除";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="將參與者從通話移除功能表。";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="通話設定已更新。某些功能可能無法供您使用。";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="通話設定已更新。您現在可以使用一些其他動作。";

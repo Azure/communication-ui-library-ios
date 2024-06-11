@@ -18,13 +18,13 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Deelnemen aan gesprek uitgeschakeld";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video uit";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video aan";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video aan";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video uit";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video aan";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfoon uit";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfoon aan";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfoon uit";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfoon aan";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfoon uit";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfoon aan";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Apparaat";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audioapparaat selecteren";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ga naar Instellingen";
@@ -159,9 +159,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Een probleem melden";
 "AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";
 
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Dempen";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Deelnemersmenu dempen.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Uit gesprek verwijderen";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Verwijder de deelnemer uit het menu Bellen.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Oproepinstellingen bijgewerkt. Sommige functies zijn mogelijk niet beschikbaar voor u.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Oproepinstellingen bijgewerkt. Sommige aanvullende acties zijn mogelijk nu beschikbaar voor u.";
