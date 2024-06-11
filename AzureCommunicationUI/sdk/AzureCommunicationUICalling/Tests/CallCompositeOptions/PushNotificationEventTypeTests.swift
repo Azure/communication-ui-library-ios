@@ -19,6 +19,7 @@ class PushNotificationEventType: XCTestCase {
         XCTAssertEqual(incomingGroupCall.requestString, "incominggroupcall")
         XCTAssertEqual(incomingPstnCall.requestString, "incomingpstncall")
         XCTAssertEqual(stopRinging.requestString, "stopringing")
+        XCTAssertTrue(incomingCall == AzureCommunicationUICalling.PushNotificationEventType.incomingCall)
     }
 
     func test_pushNotificationEventType_conversion() {

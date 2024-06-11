@@ -56,4 +56,12 @@ class CallKitOptionsTests: XCTestCase {
         XCTAssertNotNil(callkitOptions.configureAudioSession)
         XCTAssertNotNil(callkitOptions.provideRemoteInfo)
     }
+
+    func test_calkitinfo_test() {
+        let cxHandle = CXHandle(type: .generic, value: "Incoming call")
+        let callKitRemoteInfo = CallKitRemoteInfo(displayName: "test",
+                                                               handle: cxHandle)
+        XCTAssertEqual(callKitRemoteInfo.displayName, "test")
+        XCTAssertEqual(callKitRemoteInfo.handle, cxHandle)
+    }
 }
