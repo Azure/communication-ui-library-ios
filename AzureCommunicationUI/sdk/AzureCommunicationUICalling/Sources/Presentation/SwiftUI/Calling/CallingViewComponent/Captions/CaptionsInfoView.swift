@@ -7,22 +7,31 @@ import UIKit
 import FluentUI
 import SwiftUI
 
-struct CaptionsInfoView: UIViewRepresentable {
-    private func getCaptionsListTableView() -> UITableView {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.backgroundColor = .white
-        tableView.sectionHeaderHeight = 40
-        tableView.sectionFooterHeight = 0
-        tableView.separatorStyle = .none
-        tableView.register(CompositeParticipantsListCell.self,
+struct CaptionsInfoView: UIViewControllerRepresentable {
+    let captionTableViewController: UITableViewController
+    private let captionsViewManager: CaptionsViewManager
+
+    private static func getCaptionsListTableViewController() -> UITableViewController {
+        let tableViewController = CaptionsTableViewController(style: .plain)
+        tableViewController.loadViewIfNeeded()
+        tableViewController.tableView.separatorStyle = .none
+        tableViewController.tableView.register(CompositeParticipantsListCell.self,
                            forCellReuseIdentifier: CompositeParticipantsListCell.identifier)
-        return tableView
+        return tableViewController
     }
 
-    func makeUIView(context: Context) -> some UIView {
-        return self.getCaptionsListTableView()
+    init(captionsViewManager: CaptionsViewManager) {
+        self.captionsViewManager = captionsViewManager
+        self.captionTableViewController = CaptionsInfoView.getCaptionsListTableViewController()
+        self.captionTableViewController.tableView.delegate = captionsViewManager
+        self.captionTableViewController.tableView.dataSource = captionsViewManager
     }
-    func updateUIView(_ uiView: UIViewType, context: Context) {
+
+    func makeUIViewController(context: Context) -> some UIViewController {
+        return captionTableViewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         return
     }
 

@@ -277,27 +277,27 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     // MARK: Captions
-//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-//                                didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
-//        captionsEnabledChanged.send(teamsCaptions.isEnabled)
-//    }
-//
-//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-//                                didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
-//        let spokenLanguage = teamsCaptions.activeSpokenLanguage
-//        activeSpokenLanguageChanged.send(spokenLanguage)
-//    }
-//
-//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-//                                didReceiveCaptions args: TeamsCaptionsReceivedEventArgs) {
-//        captionsReceived.send(args.toCallCompositeCaptionsData())
-//    }
-//
-//    @nonobjc func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-//                                didChangeActiveCaptionLanguageState args: PropertyChangedEventArgs) {
-//        let captionsLanguage = teamsCaptions.activeCaptionLanguage
-//        activeCaptionLanguageChanged.send(captionsLanguage)
-//    }
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
+        captionsEnabledChanged.send(teamsCaptions.isEnabled)
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
+        let spokenLanguage = teamsCaptions.activeSpokenLanguage
+        activeSpokenLanguageChanged.send(spokenLanguage)
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didReceiveCaptions args: TeamsCaptionsReceivedEventArgs) {
+        captionsReceived.send(args.toCallCompositeCaptionsData())
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeActiveCaptionLanguageState args: PropertyChangedEventArgs) {
+        let captionsLanguage = teamsCaptions.activeCaptionLanguage
+        activeCaptionLanguageChanged.send(captionsLanguage)
+    }
 
     func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
                                didReceiveCaptions: CommunicationCaptionsReceivedEventArgs) {
