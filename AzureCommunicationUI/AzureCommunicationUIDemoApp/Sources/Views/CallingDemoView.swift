@@ -438,7 +438,7 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
-            captionsOptions: captionsOptions，
+            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions) :
         CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -452,7 +452,6 @@ extension CallingDemoView {
             callScreenOptions: callScreenOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
-            captionsOptions: captionsOptions，
             disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)
 
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler

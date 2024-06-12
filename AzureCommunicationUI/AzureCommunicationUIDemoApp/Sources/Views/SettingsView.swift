@@ -205,6 +205,9 @@ struct SettingsView: View {
         Section(header: Text("Captions")) {
             CaptionsLocalePicker(selection: $envConfigSubject.captionsLocale)
             Toggle("Enable Captions", isOn: $envConfigSubject.enableCaptions)
+        }
+    }
+
     var pushNotificationsSettings: some View {
         Section(header: Text("Push notification")) {
             Toggle("Disable internal push for incoming call",

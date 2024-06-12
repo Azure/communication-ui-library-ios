@@ -43,7 +43,7 @@ public struct CallCompositeOptions {
                 enableMultitasking: Bool = false,
                 enableSystemPictureInPictureWhenMultitasking: Bool = false,
                 callScreenOptions: CallScreenOptions? = nil,
-                captionsOptions: CaptionsOptions? = nil
+                captionsOptions: CaptionsOptions? = nil,
                 callKitOptions: CallKitOptions? = nil,
                 displayName: String? = nil,
                 disableInternalPushForIncomingCall: Bool = false) {

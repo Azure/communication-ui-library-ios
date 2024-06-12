@@ -583,7 +583,7 @@ extension CallingSDKWrapper {
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
             callingEventsHandler.assign(localUserDiagnosticsFeature)
-            callingEventsHandler.assign(captionsFeature)    
+            callingEventsHandler.assign(captionsFeature)
             if callConfiguration.compositeCallType == .oneToOneIncoming && call.state == .connected {
                 // If call is accepted from CallKit
                 // call state can already be accepted, thus call state change will be missed
