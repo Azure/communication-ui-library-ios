@@ -143,7 +143,7 @@ struct LocalUserState {
          displayName: String? = nil,
          localVideoStreamIdentifier: String? = nil,
          participantRole: ParticipantRoleEnum? = nil,
-         capabilities: Set<ParticipantCapabilityType> = []) {
+         capabilities: Set<ParticipantCapabilityType> = [.unmuteMicrophone, .turnVideoOn]) {
         self.cameraState = cameraState
         self.audioState = audioState
         self.displayName = displayName

@@ -58,12 +58,12 @@ final class BottomToastViewModel: ObservableObject, Identifiable {
                                 icon: .videoOffRegular,
                                 isPersistent: false)
         case .someFeaturesLost:
-            displayNotification(localizationKey: .callDiagnosticsCameraNotWorking,
-                                icon: .videoOffRegular,
+            displayNotification(localizationKey: .callingViewToastFeaturesLost,
+                                icon: .warning,
                                 isPersistent: false)
         case .someFeaturesGained:
-            displayNotification(localizationKey: .callDiagnosticsCameraNotWorking,
-                                icon: .videoOffRegular,
+            displayNotification(localizationKey: .callingViewToastFeaturesGained,
+                                icon: .warning,
                                 isPersistent: false)
         }
     }

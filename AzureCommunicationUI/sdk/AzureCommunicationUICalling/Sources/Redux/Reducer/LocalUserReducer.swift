@@ -79,7 +79,7 @@ extension Reducer where State == LocalUserState,
             audioError = error
         case .participantRoleChanged(let newParticipantRole):
             participantRole = newParticipantRole
-        case .capabilitiesUpdated(let newCapabilities):
+        case .setCapabilities(let newCapabilities):
             capabilities = newCapabilities
 
         }

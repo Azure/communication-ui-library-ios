@@ -53,7 +53,9 @@ protocol CallingMiddlewareHandling {
                                  dispatch: @escaping ActionDispatch,
                                  participantId: String) -> Task<Void, Never>
     @discardableResult
-    func capabilitiesUpdated(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func setCapabilities(capabilities: Set<ParticipantCapabilityType>,
+                         state: AppState,
+                         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 
     @discardableResult
     func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
@@ -388,7 +390,9 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func capabilitiesUpdated(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func setCapabilities(capabilities: Set<ParticipantCapabilityType>,
+                         state: AppState,
+                         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             guard state.callingState.status != .disconnected else {
                 return
@@ -396,7 +400,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 let isInitialCapabilitySetting = state.localUserState.capabilities.isEmpty
-                if !capabilitiesManager.hasCapability(capabilities: state.localUserState.capabilities,
+                if !capabilitiesManager.hasCapability(capabilities: capabilities,
                                                       capability: ParticipantCapabilityType.turnVideoOn) &&
                     state.localUserState.cameraState.operation != .off {
                     dispatch(.localUserAction(.cameraOffTriggered))
@@ -406,7 +410,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                     }
                 }
 
-                if !capabilitiesManager.hasCapability(capabilities: state.localUserState.capabilities,
+                if !capabilitiesManager.hasCapability(capabilities: capabilities,
                                                       capability: ParticipantCapabilityType.unmuteMicrophone) &&
                     state.localUserState.audioState.operation != .off {
                     dispatch(.localUserAction(.microphoneOffTriggered))
@@ -615,14 +619,27 @@ extension CallingMiddlewareHandler {
     private func subscibeCapabilitiesUpdate(dispatch: @escaping ActionDispatch) {
         callingService.capabilitiesChangedSubject
             .removeDuplicates()
-            .sink { _ in
+            .sink { event in
                 Task {
                     do {
                         let capabilities = try await self.callingService.getCapabilities()
-                        dispatch(.localUserAction(.capabilitiesUpdated(capabilities: capabilities)))
+                        dispatch(.localUserAction(.setCapabilities(capabilities: capabilities)))
                     } catch {
                         self.logger.error("Fetch capabilities Failed with error : \(error)")
                     }
+
+                    let anyLostCapability = event.changedCapabilities.contains(where: { capability in
+                        (capability.type == .unmuteMicrophone && !capability.allowed) ||
+                        (capability.type == .turnVideoOn && !capability.allowed) ||
+                        (capability.type == .manageLobby && !capability.allowed)
+                    })
+
+                    var notificationType = ToastNotificationKind.someFeaturesGained
+
+                    if anyLostCapability {
+                        notificationType = ToastNotificationKind.someFeaturesLost
+                    }
+                    dispatch(.toastNotificationAction(.showNotification(kind: notificationType)))
                 }
             }.store(in: subscription)
     }

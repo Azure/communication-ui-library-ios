@@ -28,7 +28,6 @@ struct CallingDemoView: View {
     let horizontalPadding: CGFloat = 10
     /* <ROOMS_SUPPORT> */
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let roomRoleChoices: [String] = ["Presenter", "Attendee"]
     /* </ROOMS_SUPPORT> */
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -58,13 +57,6 @@ struct CallingDemoView: View {
             meetingSelector
 
             Group {
-                /* <ROOMS_SUPPORT> */
-                if envConfigSubject.selectedMeetingType == .roomCall {
-                    roomRoleSelector
-                } else {
-                    roomRoleSelector.hidden()
-                }
-                /* </ROOMS_SUPPORT> */
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
@@ -179,18 +171,6 @@ struct CallingDemoView: View {
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
     }
-
-    /* <ROOMS_SUPPORT> */
-    var roomRoleSelector: some View {
-
-        Section {
-            Picker("Room Role Type", selection: $envConfigSubject.selectedRoomRoleType) {
-                Text("Presenter").tag(RoomRoleType.presenter)
-                Text("Attendee").tag(RoomRoleType.attendee)
-            }.pickerStyle(.segmented)
-        }
-    }
-    /* </ROOMS_SUPPORT> */
 
     var settingButton: some View {
         Button("Settings") {
@@ -379,17 +359,6 @@ extension CallingDemoView {
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        /* <ROOMS_SUPPORT> */
-        let roomRole = envConfigSubject.selectedRoomRoleType
-        var roomRoleData: ParticipantRole?
-        if envConfigSubject.selectedMeetingType == .roomCall {
-            if roomRole == .presenter {
-                roomRoleData = ParticipantRole.presenter
-            } else if roomRole == .attendee {
-                roomRoleData = ParticipantRole.attendee
-            }
-        }
-        /* </ROOMS_SUPPORT> */
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,

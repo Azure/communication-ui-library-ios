@@ -40,7 +40,7 @@ enum LocalUserAction: Equatable {
     case audioDeviceChangeFailed(error: Error)
 
     case participantRoleChanged(participantRole: ParticipantRoleEnum)
-    case capabilitiesUpdated(capabilities: Set<ParticipantCapabilityType>)
+    case setCapabilities(capabilities: Set<ParticipantCapabilityType>)
 
     static func == (lhs: LocalUserAction, rhs: LocalUserAction) -> Bool {
 
@@ -82,7 +82,7 @@ enum LocalUserAction: Equatable {
         case let (.cameraSwitchFailed(lPreviousDevice, lErr), .cameraSwitchFailed(rPreviousDevice, rErr)):
             return lPreviousDevice == rPreviousDevice && (lErr as NSError).code == (rErr as NSError).code
 
-        case let (.capabilitiesUpdated(lCapabilities), .capabilitiesUpdated(rCapabilities)):
+        case let (.setCapabilities(lCapabilities), .setCapabilities(rCapabilities)):
             return lCapabilities == rCapabilities
 
         default:
