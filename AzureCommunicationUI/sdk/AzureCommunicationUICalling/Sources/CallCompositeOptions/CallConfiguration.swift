@@ -9,6 +9,10 @@ import AzureCommunicationCommon
 struct CallConfiguration {
     let groupId: UUID?
     let meetingLink: String?
+    /* <MEETING_ID_LOCATOR> */
+    let meetingId: String?
+    let meetingPasscode: String?
+    /* </MEETING_ID_LOCATOR> */
     let callId: String?
     let compositeCallType: CompositeCallType
     let diagnosticConfig: DiagnosticConfig
@@ -28,17 +32,38 @@ struct CallConfiguration {
                 self.groupId = groupId
                 self.meetingLink = nil
                 self.participants = nil
+                /* <MEETING_ID_LOCATOR> */
+                self.meetingId = nil
+                self.meetingPasscode = nil
+                /* </MEETING_ID_LOCATOR> */
                 /* <ROOMS_SUPPORT> */
                 self.roomId = nil
                 self.roomRoleHint = nil
                 /* </ROOMS_SUPPORT> */
                 self.compositeCallType = .groupCall
+            case let .teamsMeetingId(meetingId: meetingId, meetingPasscode: meetingPasscode):
+                self.groupId = nil
+                self.meetingLink = nil
+                self.participants = nil
+                /* <MEETING_ID_LOCATOR> */
+                self.meetingId = meetingId
+                self.meetingPasscode = meetingPasscode
+                /* </MEETING_ID_LOCATOR> */
+                /* <ROOMS_SUPPORT> */
+                self.roomId = nil
+                self.roomRoleHint = nil
+                /* </ROOMS_SUPPORT> */
+                self.compositeCallType = .teamsMeeting
             case let .teamsMeeting(teamsLink: meetingLink):
                 self.groupId = nil
                 self.participants = nil
                 self.meetingLink = meetingLink
+                /* <MEETING_ID_LOCATOR> */
+                self.meetingId = nil
+                self.meetingPasscode = nil
+                /* </MEETING_ID_LOCATOR> */               
                 self.compositeCallType = .teamsMeeting
-            /* <ROOMS_SUPPORT> */
+                /* <ROOMS_SUPPORT> */
                 self.roomId = nil
                 self.roomRoleHint = nil
             case let .roomCall(roomId: roomId):
@@ -46,6 +71,10 @@ struct CallConfiguration {
                 self.roomRoleHint = roleHint
                 self.groupId = nil
                 self.meetingLink = nil
+                /* <MEETING_ID_LOCATOR> */
+                self.meetingId = nil
+                self.meetingPasscode = nil
+                /* </MEETING_ID_LOCATOR> */
                 self.compositeCallType = .roomsCall
                 self.participants = nil
             /* </ROOMS_SUPPORT> */
@@ -56,6 +85,10 @@ struct CallConfiguration {
             self.roomId = nil
             self.roomRoleHint = nil
             /* </ROOMS_SUPPORT> */
+            /* <MEETING_ID_LOCATOR> */
+            self.meetingId = nil
+            self.meetingPasscode = nil
+            /* </MEETING_ID_LOCATOR> */            
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToNOutgoing
@@ -66,6 +99,10 @@ struct CallConfiguration {
             self.roomId = nil
             self.roomRoleHint = nil
             /* </ROOMS_SUPPORT> */
+            /* <MEETING_ID_LOCATOR> */
+            self.meetingId = nil
+            self.meetingPasscode = nil
+            /* </MEETING_ID_LOCATOR> */
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToOneIncoming

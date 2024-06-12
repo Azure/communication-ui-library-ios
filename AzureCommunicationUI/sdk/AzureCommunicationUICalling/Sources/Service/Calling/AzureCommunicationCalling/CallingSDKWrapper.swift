@@ -101,7 +101,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                   let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(
                 meetingLink: meetingLink.trimmingCharacters(in: .whitespacesAndNewlines))
-        } /* <ROOMS_SUPPORT> */ else if callConfiguration.compositeCallType == .roomsCall,
+        } /* <MEETING_ID_LOCATOR> */ else if callConfiguration.compositeCallType == .teamsMeeting,
+            let meetingId = callConfiguration.meetingId?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let meetingPasscode = callConfiguration.meetingPasscode?.trimmingCharacters(in: .whitespacesAndNewlines) {
+             joinLocator = TeamsMeetingIdLocator(with: meetingId, passcode: meetingPasscode)
+        } /* </MEETING_ID_LOCATOR> */ /* <ROOMS_SUPPORT> */ else if callConfiguration.compositeCallType == .roomsCall,
                   let roomId = callConfiguration.roomId {
             joinLocator = RoomCallLocator(roomId: roomId.trimmingCharacters(in: .whitespacesAndNewlines))
         } /* </ROOMS_SUPPORT> */ else {

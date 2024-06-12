@@ -175,11 +175,25 @@ struct CallingDemoView: View {
                 .textFieldStyle(.roundedBorder)
             case .teamsMeeting:
                 TextField(
-                    "Team Meeting",
+                    "Team Meeting Link",
                     text: $envConfigSubject.teamsMeetingLink)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
+                /* <MEETING_ID_LOCATOR> */
+                TextField(
+                    "Team Meeting Id",
+                    text: $envConfigSubject.teamsMeetingId)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+                TextField(
+                    "Team Meeting Passcode",
+                    text: $envConfigSubject.teamsMeetingPasscode)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+                /* </MEETING_ID_LOCATOR> */
             case .oneToNCall:
                 TextField(
                     "participant MRIs(, separated)",
@@ -291,11 +305,18 @@ struct CallingDemoView: View {
             return true
         }
 
-        if (envConfigSubject.selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty)
-            || envConfigSubject.selectedMeetingType == .teamsMeeting && envConfigSubject.teamsMeetingLink.isEmpty {
+        if envConfigSubject.selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty {
             return true
+        } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
+            // Check if teamsMeetingLink is not empty or both meetingId and passcode are not empty
+            let isTeamsMeetingLinkValid = !envConfigSubject.teamsMeetingLink.isEmpty
+            /* <MEETING_ID_LOCATOR> */
+            let isTeamsMeetingIdAndPasscodeValid = !envConfigSubject.teamsMeetingId.isEmpty
+            && !envConfigSubject.teamsMeetingPasscode.isEmpty
+            /* </MEETING_ID_LOCATOR> */
+            return !isTeamsMeetingLinkValid
+            /* <MEETING_ID_LOCATOR> */ && !isTeamsMeetingIdAndPasscodeValid /* </MEETING_ID_LOCATOR> */
         }
-
         return false
     }
 }
@@ -609,16 +630,46 @@ extension CallingDemoView {
                     return
                 }
             case .teamsMeeting:
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
-                }
+                if !envConfigSubject.teamsMeetingLink.isEmpty {
+                    if envConfigSubject.displayName.isEmpty {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink:
+                                                                                envConfigSubject.teamsMeetingLink),
+                                                         credential: credential),
+                            localOptions: localOptions
+                        )
+                    } else {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink:
+                                                                                envConfigSubject.teamsMeetingLink),
+                                                         credential: credential,
+                                                         displayName: envConfigSubject.displayName),
+                            localOptions: localOptions
+                        )
+                    }
+                } /* <MEETING_ID_LOCATOR> */ 
+                else if !envConfigSubject.teamsMeetingId.isEmpty && !envConfigSubject.teamsMeetingPasscode.isEmpty {
+                    if envConfigSubject.displayName.isEmpty {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
+                                                                                envConfigSubject.teamsMeetingId,
+                                                                              meetingPasscode:
+                                                                                envConfigSubject.teamsMeetingPasscode),
+                                                         credential: credential),
+                            localOptions: localOptions
+                        )
+                    } else {
+                        callComposite.launch(
+                            remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
+                                                                                envConfigSubject.teamsMeetingId,
+                                                                              meetingPasscode:
+                                                                                envConfigSubject.teamsMeetingPasscode),
+                                                         credential: credential,
+                                                         displayName: envConfigSubject.displayName),
+                            localOptions: localOptions
+                        )
+                    }
+                } /* </MEETING_ID_LOCATOR> */
             case .oneToNCall:
                 let ids: [String] = link.split(separator: ",").map {
                     String($0).trimmingCharacters(in: .whitespacesAndNewlines)
@@ -627,7 +678,7 @@ extension CallingDemoView {
                 ids.map { createCommunicationIdentifier(fromRawId: $0) }
                 callComposite.launch(participants: communicationIdentifiers,
                                      localOptions: localOptions)
-                /* <ROOMS_SUPPORT> */
+            /* <ROOMS_SUPPORT> */
             case .roomCall:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions:
@@ -670,9 +721,19 @@ extension CallingDemoView {
                                          callKitRemoteInfo: callKitRemoteInfo,
                                          localOptions: localOptions)
                 case .teamsMeeting:
-                    callComposite.launch(locator: .teamsMeeting(teamsLink: link),
-                                         callKitRemoteInfo: callKitRemoteInfo,
-                                         localOptions: localOptions)
+                    if !link.isEmpty {
+                        callComposite.launch(locator: .teamsMeeting(teamsLink: link),
+                                             callKitRemoteInfo: callKitRemoteInfo,
+                                             localOptions: localOptions)
+                    } else {
+                        callComposite.launch(locator: .teamsMeetingId(meetingId:
+                                                                        envConfigSubject.teamsMeetingId,
+                                                                      meetingPasscode:
+                                                                        envConfigSubject.teamsMeetingPasscode),
+                                             callKitRemoteInfo: callKitRemoteInfo,
+                                             localOptions: localOptions)
+                    }
+
                 case .oneToNCall:
                     let ids: [String] = link.split(separator: ",").map {
                         String($0).trimmingCharacters(in: .whitespacesAndNewlines)
