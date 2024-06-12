@@ -653,7 +653,7 @@ extension CallingDemoView {
                         callComposite.launch(
                             remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
                                                                                 envConfigSubject.teamsMeetingId,
-                                                                              meetingPassword:
+                                                                              meetingPasscode:
                                                                                 envConfigSubject.teamsMeetingPasscode),
                                                          credential: credential),
                             localOptions: localOptions
@@ -662,7 +662,7 @@ extension CallingDemoView {
                         callComposite.launch(
                             remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
                                                                                 envConfigSubject.teamsMeetingId,
-                                                                              meetingPassword:
+                                                                              meetingPasscode:
                                                                                 envConfigSubject.teamsMeetingPasscode),
                                                          credential: credential,
                                                          displayName: envConfigSubject.displayName),
@@ -721,9 +721,19 @@ extension CallingDemoView {
                                          callKitRemoteInfo: callKitRemoteInfo,
                                          localOptions: localOptions)
                 case .teamsMeeting:
-                    callComposite.launch(locator: .teamsMeeting(teamsLink: link),
-                                         callKitRemoteInfo: callKitRemoteInfo,
-                                         localOptions: localOptions)
+                    if !link.isEmpty {
+                        callComposite.launch(locator: .teamsMeeting(teamsLink: link),
+                                             callKitRemoteInfo: callKitRemoteInfo,
+                                             localOptions: localOptions)
+                    } else {
+                        callComposite.launch(locator: .teamsMeetingId(meetingId:
+                                                                        envConfigSubject.teamsMeetingId,
+                                                                      meetingPasscode:
+                                                                        envConfigSubject.teamsMeetingPasscode),
+                                             callKitRemoteInfo: callKitRemoteInfo,
+                                             localOptions: localOptions)
+                    }
+
                 case .oneToNCall:
                     let ids: [String] = link.split(separator: ",").map {
                         String($0).trimmingCharacters(in: .whitespacesAndNewlines)

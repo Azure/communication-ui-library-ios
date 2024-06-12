@@ -32,7 +32,7 @@ class RemoteOptionsTests: XCTestCase {
             XCTFail("Should not be a room call with roomId \(locatorRoomId)")
          /* </ROOMS_SUPPORT> */
         /* <MEETING_ID_LOCATOR> */
-        case .teamsMeetingId(meetingId: let meetingId, meetingPassword: let meetingPassword):
+        case .teamsMeetingId(meetingId: let meetingId, meetingPasscode: let meetingPasscode):
             XCTFail("Should not be a teams meeting with teamsLink \(meetingId)")
         }
         /* </MEETING_ID_LOCATOR> */
@@ -61,7 +61,7 @@ class RemoteOptionsTests: XCTestCase {
             XCTFail("Should not be a room call with roomId \(locatorRoomId)")
         /* </ROOMS_SUPPORT> */
         /* <MEETING_ID_LOCATOR> */
-        case .teamsMeetingId(meetingId: let meetingId, meetingPassword: let meetingPassword):
+        case .teamsMeetingId(meetingId: let meetingId, meetingPasscode: let meetingPasscode):
             XCTFail("Should not be a teams meeting with teamsLink \(meetingId)")
          /* </MEETING_ID_LOCATOR> */
         }
@@ -89,7 +89,7 @@ class RemoteOptionsTests: XCTestCase {
         case let .roomCall(roomId: locatorRoomId):
             XCTAssertEqual(roomID, locatorRoomId)
         /* <MEETING_ID_LOCATOR> */
-        case .teamsMeetingId(meetingId: let meetingId, meetingPassword: let meetingPassword):
+        case .teamsMeetingId(meetingId: let meetingId, meetingPasscode: let meetingPasscode):
             XCTFail("Should not be a teams meeting with teamsLink \(meetingId)")
         /* </MEETING_ID_LOCATOR> */
         }

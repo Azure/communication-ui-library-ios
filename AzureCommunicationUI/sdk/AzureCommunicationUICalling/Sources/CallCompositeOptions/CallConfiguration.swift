@@ -41,13 +41,13 @@ struct CallConfiguration {
                 self.roomRoleHint = nil
                 /* </ROOMS_SUPPORT> */
                 self.compositeCallType = .groupCall
-            case let .teamsMeetingId(teamsMeetingId: meetingId, teamsMeetingPasscode: passcode):
-                self.groupId = groupId
+            case let .teamsMeetingId(meetingId: meetingId, meetingPasscode: meetingPasscode):
+                self.groupId = nil
                 self.meetingLink = nil
                 self.participants = nil
                 /* <MEETING_ID_LOCATOR> */
                 self.meetingId = meetingId
-                self.meetingPasscode = passcode
+                self.meetingPasscode = meetingPasscode
                 /* </MEETING_ID_LOCATOR> */
                 /* <ROOMS_SUPPORT> */
                 self.roomId = nil
