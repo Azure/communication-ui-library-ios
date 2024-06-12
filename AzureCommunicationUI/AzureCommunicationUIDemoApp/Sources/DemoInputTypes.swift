@@ -10,7 +10,7 @@ enum MeetingType: Int {
     case groupCall
     case teamsMeeting
     case oneToNCall
-    /* <ROOMS_SUPPORT:3> */ case roomCall /* </ROOMS_SUPPORT> */
+    /* <ROOMS_SUPPORT:3> case roomCall </ROOMS_SUPPORT> */
 }
 
 enum ChatType: Int {
@@ -23,12 +23,12 @@ enum ACSTokenType: Int {
     case token
 }
 
-/* <ROOMS_SUPPORT:0> */
+/* <ROOMS_SUPPORT:0>
 enum RoomRoleType: Int {
     case presenter
     case attendee
 }
-/* </ROOMS_SUPPORT:0> */
+</ROOMS_SUPPORT:0> */
 
 enum DemoError: Error {
     case invalidToken

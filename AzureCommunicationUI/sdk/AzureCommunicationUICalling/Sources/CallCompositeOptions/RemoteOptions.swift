@@ -16,11 +16,11 @@ public enum JoinLocator {
     /// Teams Meeting with id and passcode
     case teamsMeetingId(meetingId: String, meetingPasscode: String)
     /* </MEETING_ID_LOCATOR> */
-    /* <ROOMS_SUPPORT:5> */
+    /* <ROOMS_SUPPORT:5>
     /// Rooms Call with room ID. You need to use LocalOptions parameter for
     /// CallComposite.launch() method with roleHint provided.
     case roomCall(roomId: String)
-    /* </ROOMS_SUPPORT:1> */
+    </ROOMS_SUPPORT:1> */
 }
 
 /// Object for remote options for Call Composite.
