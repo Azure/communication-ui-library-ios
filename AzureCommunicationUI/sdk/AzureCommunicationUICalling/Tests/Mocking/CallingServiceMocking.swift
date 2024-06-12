@@ -90,6 +90,7 @@ class CallingServiceMocking: CallingServiceProtocol {
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
+    var capabilitiesChangedSubject = PassthroughSubject<AzureCommunicationUICalling.CapabilitiesChangedEvent, Never>()
 
     func setupCall() async throws {
         setupCallCalled = true
@@ -141,4 +142,10 @@ class CallingServiceMocking: CallingServiceProtocol {
         try await possibleErrorTask().value
     }
 
+    func removeParticipant(_ participantId: String) async throws {
+    }
+
+    func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
+        return [.unmuteMicrophone, .turnVideoOn]
+    }
 }

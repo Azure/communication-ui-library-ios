@@ -14,6 +14,7 @@ class CallingViewModelTests: XCTestCase {
     var logger: LoggerMocking!
     var localizationProvider: LocalizationProviderMocking!
     var accessibilityProvider: AccessibilityProviderMocking!
+    var capabilitiesManager: CapabilitiesManager!
 
     private let timeout: TimeInterval = 10.0
 
@@ -29,6 +30,7 @@ class CallingViewModelTests: XCTestCase {
                                                           store: storeFactory.store,
                                                           accessibilityProvider: accessibilityProvider,
                                                           localizationProvider: localizationProvider)
+        capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
     override func tearDown() {
@@ -64,7 +66,8 @@ class CallingViewModelTests: XCTestCase {
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         endCallConfirm: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
-                                                                        leaveCallConfirmationMode: .alwaysDisabled)
+                                                                        leaveCallConfirmationMode: .alwaysDisabled,
+                                                                        capabilitiesManager: capabilitiesManager)
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Verify Call End is Requested")
         storeFactory.store.$state
@@ -150,7 +153,8 @@ class CallingViewModelTests: XCTestCase {
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         endCallConfirm: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
-                                                                        updateState: updateControlBarViewModel)
+                                                                        updateState: updateControlBarViewModel,
+                                                                        capabilitiesManager: capabilitiesManager)
         let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
@@ -309,6 +313,7 @@ extension CallingViewModelTests {
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
-                                leaveCallConfirmationMode: .alwaysEnabled)
+                                leaveCallConfirmationMode: .alwaysEnabled,
+                                capabilitiesManager: capabilitiesManager)
     }
 }

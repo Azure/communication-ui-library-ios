@@ -12,10 +12,12 @@ import Combine
 class CallingMiddlewareHandlerTests: XCTestCase {
 
     var mockCallingService: CallingServiceMocking!
+    var capabilitiesManager: CapabilitiesManager!
 
     override func setUp() {
         super.setUp()
         mockCallingService = CallingServiceMocking()
+        capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
     override func tearDown() {
@@ -645,7 +647,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 extension CallingMiddlewareHandlerTests {
     private func makeSUT() -> CallingMiddlewareHandler {
         let mockLogger = LoggerMocking()
-        return CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
+        return CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger, capabilitiesManager: capabilitiesManager)
     }
 
     private func getEmptyState() -> AppState {

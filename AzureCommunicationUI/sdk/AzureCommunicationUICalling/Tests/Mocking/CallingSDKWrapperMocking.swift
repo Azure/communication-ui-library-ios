@@ -163,4 +163,10 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     func declineLobbyParticipant(_ participantId: String) async throws {
     }
 
+    func removeParticipant(_ participantId: String) async throws {
+    }
+
+    func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
+        return [.unmuteMicrophone, .turnVideoOn]
+    }
 }

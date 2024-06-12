@@ -14,6 +14,7 @@ class ControlBarViewModelTests: XCTestCase {
     var localizationProvider: LocalizationProviderMocking!
     var logger: LoggerMocking!
     var factoryMocking: CompositeViewModelFactoryMocking!
+    var capabilitiesManager: CapabilitiesManager!
 
     private let timeout: TimeInterval = 10.0
 
@@ -24,6 +25,7 @@ class ControlBarViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
         logger = LoggerMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
     override func tearDown() {
@@ -33,6 +35,7 @@ class ControlBarViewModelTests: XCTestCase {
         localizationProvider = nil
         logger = nil
         factoryMocking = nil
+        capabilitiesManager = nil
     }
 
     // MARK: Leave Call / Cancel test
@@ -666,7 +669,8 @@ extension ControlBarViewModelTests {
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
-                                   leaveCallConfirmationMode: .alwaysEnabled)
+                                   leaveCallConfirmationMode: .alwaysEnabled,
+                                   capabilitiesManager: capabilitiesManager)
     }
     func makeSUTWhenDisplayLeaveDiabled(localizationProvider: LocalizationProviderMocking? = nil, audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
@@ -676,7 +680,8 @@ extension ControlBarViewModelTests {
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
-                                   leaveCallConfirmationMode: .alwaysDisabled)
+                                   leaveCallConfirmationMode: .alwaysDisabled,
+                                   capabilitiesManager: capabilitiesManager)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {

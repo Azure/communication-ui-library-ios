@@ -13,6 +13,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
+    private let capabilitiesManager: CapabilitiesManager
 
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
@@ -50,17 +51,20 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var createMicIconWithLabelButtonViewModel: ((MicButtonState) -> IconWithLabelButtonViewModel<MicButtonState>?)?
     var createAudioIconWithLabelButtonViewModel: ((AudioButtonState) -> IconWithLabelButtonViewModel<AudioButtonState>?)?
     var bottomToastViewModel: BottomToastViewModel?
+    var participantMenuViewModel: ParticipantMenuViewModel?
 
     init(logger: Logger,
          store: Store<AppState, Action>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
          localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking(),
-         debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking()) {
+         debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking(),
+         capabilitiesManager: CapabilitiesManager = CapabilitiesManager(callType: .groupCall)) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
+        self.capabilitiesManager = capabilitiesManager
     }
 
     func getSetupViewModel() -> SetupViewModel {
@@ -80,7 +84,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     accessibilityProvider: accessibilityProvider,
                                                     isIpadInterface: false,
                                                     allowLocalCameraPreview: true,
-                                                    leaveCallConfirmationMode: .alwaysEnabled)
+                                                    leaveCallConfirmationMode: .alwaysEnabled,
+                                                    capabilitiesManager: capabilitiesManager)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -192,7 +197,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel {
+                                 leaveCallConfirmationMode: LeaveCallConfirmationMode,
+                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localizationProvider: localizationProvider,
@@ -200,7 +206,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           endCallConfirm: endCallConfirm,
                                                           localUserState: localUserState,
                                                           audioVideoMode: .audioAndVideo,
-                                                          leaveCallConfirmationMode: leaveCallConfirmationMode)
+                                                          leaveCallConfirmationMode: leaveCallConfirmationMode,
+                                                          capabilitiesManager: capabilitiesManager)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
@@ -276,6 +283,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                              action: action)
     }
 
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String) -> DrawerListItemViewModel {
+        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
+                                                                             title: title,
+                                                                             accessibilityIdentifier: accessibilityIdentifier)
+    }
+
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         debugInfoSharingActivityViewModel ??
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
@@ -349,5 +364,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                             localizationProvider: localizationProvider,
                                                             accessibilityProvider: accessibilityProvider,
                                                             toastNotificationState: ToastNotificationState())
+    }
+
+    func makeParticipantMenuViewModel(localUserState: AzureCommunicationUICalling.LocalUserState, dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.ParticipantMenuViewModel {
+        return participantMenuViewModel ?? ParticipantMenuViewModel(compositeViewModelFactory: self,
+                                                                    localUserState: localUserState,
+                                                                    dispatchAction: dispatchAction,
+                                                                    localizationProvider: localizationProvider,
+                                                                    capabilitiesManager: capabilitiesManager)
     }
 }
