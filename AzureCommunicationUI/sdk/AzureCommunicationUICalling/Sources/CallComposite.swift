@@ -290,6 +290,7 @@ public class CallComposite {
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
+            captionsViewManager: CaptionsViewManager(avatarViewManager: avatarViewManager),
             videoViewManager: videoViewManager,
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,

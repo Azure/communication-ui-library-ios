@@ -28,6 +28,7 @@ struct CallingView: View {
     }
 
     @ObservedObject var viewModel: CallingViewModel
+    @ObservedObject var captionsViewManager: CaptionsViewManager
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
 
@@ -252,7 +253,7 @@ struct CallingView: View {
 
     var captionsInfoView: some View {
 
-       return CaptionsInfoView()
+        return CaptionsInfoView(captionsViewManager: captionsViewManager)
             .frame(maxWidth: .infinity, maxHeight: 115, alignment: .bottom)
                 .background(Color.white)
     }
