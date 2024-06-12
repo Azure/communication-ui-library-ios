@@ -152,24 +152,15 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private func addRemoteParticipants(
         _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
     ) {
+        var remoteParticipantsInfoList = participantsInfoListSubject.value
         for participant in remoteParticipants {
             let userIdentifier = participant.identifier.rawId
-            participant.delegate = remoteParticipantEventAdapter
-            self.remoteParticipants.append(forKey: userIdentifier, value: participant)
-        }
-        addRemoteParticipantsInfoModel(remoteParticipants)
-    }
-
-    private func addRemoteParticipantsInfoModel(
-        _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
-    ) {
-        guard !remoteParticipants.isEmpty
-        else { return }
-
-        var remoteParticipantsInfoList = participantsInfoListSubject.value
-        remoteParticipants.forEach {
-            let infoModel = $0.toParticipantInfoModel()
-            remoteParticipantsInfoList.append(infoModel)
+            if self.remoteParticipants.value(forKey: userIdentifier) == nil {
+                participant.delegate = remoteParticipantEventAdapter
+                self.remoteParticipants.append(forKey: userIdentifier, value: participant)
+                let infoModel = participant.toParticipantInfoModel()
+                remoteParticipantsInfoList.append(infoModel)
+            }
         }
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
@@ -216,8 +207,11 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
-        callIdSubject.send(call.id)
+        onStateChanged(call: call)
+    }
 
+    func onStateChanged(call: Call) {
+        callIdSubject.send(call.id)
         let currentStatus = call.state.toCallingStatus()
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
         if internalError != nil {
@@ -248,8 +242,18 @@ extension CallingSDKEventsHandler: CallDelegate,
             }
         }
         let callInfoModel = CallInfoModel(status: currentStatus,
-                                          internalError: internalError)
+                                          internalError: internalError,
+                                          callEndReasonCode: Int(call.callEndReason.code),
+                                          callEndReasonSubCode: Int(call.callEndReason.subcode))
+        logger.debug( "callInfoModel \(callInfoModel.status)")
+        logger.debug( "remoteParticipants \(call.remoteParticipants.count)")
         callInfoSubject.send(callInfoModel)
+        if currentStatus == .connected || currentStatus == .connecting {
+            addRemoteParticipants(call.remoteParticipants)
+        }
+        if currentStatus == .disconnected {
+            call.delegate = nil
+        }
         self.previousCallingStatus = currentStatus
     }
 

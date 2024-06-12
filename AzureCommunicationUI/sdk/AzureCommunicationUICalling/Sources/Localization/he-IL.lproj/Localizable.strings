@@ -15,16 +15,19 @@
 "AzureCommunicationUICalling.SetupView.Title"="הגדרה";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="הקודם";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="הצטרף לשיחה";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="התחל שיחה";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="מתחיל התקשרות…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "הצטרפות לשיחה מושבתת";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו מופעל";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="וידאו כבוי";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="וידאו מופעל";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="מיקרופון כבוי";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="מיקרופון מופעל";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="כבה מיקרופון";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="מיקרופון מופעל";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="מיקרופון כבוי";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="מיקרופון מופעל";
 "AzureCommunicationUICalling.SetupView.Button.Device"="התקן";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="בחר התקן שמע";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="עבור אל ‘הגדרות‘";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "עוד";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="מתקשר...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="הקלטה ותמלול התחילו.";
@@ -158,3 +163,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="צרף צילום מסך";
 "AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
 "AzureCommunicationUICalling.SendFeedback.Text"="שלח";
+

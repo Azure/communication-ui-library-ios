@@ -16,6 +16,10 @@ public struct CallCompositeOptions {
     private(set) var callingScreenOrientation: OrientationOptions?
     private(set) var callScreenOptions: CallScreenOptions?
     private(set) var captionsOptions: CaptionsOptions?
+    private(set) var callKitOptions: CallKitOptions?
+    private(set) var disableInternalPushForIncomingCall = false
+    private(set) var displayName: String?
+
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
     ///  Default value is `nil`.
@@ -29,6 +33,9 @@ public struct CallCompositeOptions {
     ///  while on the call. Default value is `false`.
     /// - Parameter enableSystemPictureInPictureWhenMultitasking: enables syspem Picture-in-Picture while
     ///  enableMultitasking is on and user navigates away from call view. Default value is `false`.
+    /// - Parameter callKitOptions: CallKitOptions for specifying CallKit customization. Default value is `nil`.
+    /// - Parameter displayName: Display name for the user. Default value is `nil`.
+    /// - Parameter disableInternalPushForIncomingCall: Disables internal push for incoming call.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
@@ -36,7 +43,10 @@ public struct CallCompositeOptions {
                 enableMultitasking: Bool = false,
                 enableSystemPictureInPictureWhenMultitasking: Bool = false,
                 callScreenOptions: CallScreenOptions? = nil,
-                captionsOptions: CaptionsOptions? = nil) {
+                captionsOptions: CaptionsOptions? = nil
+                callKitOptions: CallKitOptions? = nil,
+                displayName: String? = nil,
+                disableInternalPushForIncomingCall: Bool = false) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
@@ -45,5 +55,8 @@ public struct CallCompositeOptions {
         self.enableSystemPipWhenMultitasking = enableSystemPictureInPictureWhenMultitasking
         self.callScreenOptions = callScreenOptions
         self.captionsOptions = captionsOptions
+        self.callKitOptions = callKitOptions
+        self.displayName = displayName
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 }

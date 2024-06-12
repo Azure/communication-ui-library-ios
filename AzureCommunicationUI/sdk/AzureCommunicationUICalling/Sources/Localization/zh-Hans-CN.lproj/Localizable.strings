@@ -15,16 +15,19 @@
 "AzureCommunicationUICalling.SetupView.Title"="安装";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="返回";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通话";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="开始呼叫";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通话...";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="正在开始呼叫…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "已禁用加入通话";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="视频关闭";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="打开视频";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="视频关闭";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="视频开启";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="关闭视频";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="视频开启";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="关闭麦克风";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="打开麦克风";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="麦克风关闭";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="打开麦克风";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="关闭麦克风";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="麦克风开启";
 "AzureCommunicationUICalling.SetupView.Button.Device"="设备";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="选择音频设备";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="转到“设置”";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "更多";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "共享诊断信息";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="正在呼叫...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="录制和听录已开始。";
@@ -158,3 +163,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="附加屏幕截图";
 "AzureCommunicationUICalling.ReportAProblem.Text"="报告问题";
 "AzureCommunicationUICalling.SendFeedback.Text"="发送";
+

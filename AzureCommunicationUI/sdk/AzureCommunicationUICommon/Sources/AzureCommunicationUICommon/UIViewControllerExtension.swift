@@ -7,11 +7,12 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-
     func dismissSelf(completion: (() -> Void)? = nil, animated: Bool = true) {
+        view.endEditing(true)
         if let presentingVc = presentingViewController {
-            view.endEditing(true)
             presentingVc.dismiss(animated: animated, completion: completion)
+        } else {
+            completion?()
         }
     }
 }

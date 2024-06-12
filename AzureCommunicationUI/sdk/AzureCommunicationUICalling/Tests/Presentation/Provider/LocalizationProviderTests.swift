@@ -38,6 +38,14 @@ class LocalizationProviderTests: XCTestCase {
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
     }
 
+    func test_localizationProvider_getLocalizedStringForStartCall_when_noApply_then_shouldReturnEnString() {
+        let sut = makeSUT()
+
+        let key = LocalizationKey.startCall
+        let startCallEn = "Start call"
+        XCTAssertEqual(sut.getLocalizedString(key), startCallEn)
+    }
+
     func test_localizationProvider_getLocalizedString_when_applyLocaleFr_then_shouldReturnLocalePredefinedString() {
         let sut = makeSUT()
 

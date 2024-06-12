@@ -23,6 +23,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
+    private let callType: CompositeCallType
 
     init(logger: Logger,
          store: Store<AppState, Action>,
@@ -36,8 +37,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         retrieveLogFiles: @escaping () -> [URL]
-         ) {
+         retrieveLogFiles: @escaping () -> [URL],
+         callType: CompositeCallType) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -51,6 +52,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.retrieveLogFiles = retrieveLogFiles
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.callType = callType
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
@@ -83,7 +85,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                            networkManager: networkManager,
                                            audioSessionManager: audioSessionManager,
                                            localizationProvider: localizationProvider,
-                                           setupScreenViewData: localOptions?.setupScreenViewData)
+                                           setupScreenViewData: localOptions?.setupScreenViewData,
+                                           callType: callType)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
@@ -101,7 +104,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
                                             != CallCompositeAudioVideoMode.audioOnly,
-                                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled)
+                                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
+                                             callType: callType)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -200,7 +204,8 @@ extension CompositeViewModelFactory {
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
                                 audioSessionManager: audioSessionManager,
-                                store: store)
+                                store: store,
+                                callType: callType)
     }
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
@@ -263,15 +268,16 @@ extension CompositeViewModelFactory {
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
                                      lifeCycleState: lifeCycleState,
-                                     isCameraEnabled: localOptions?.audioVideoMode != .audioOnly
-        )
+                                     isCameraEnabled: localOptions?.audioVideoMode != .audioOnly,
+                                     callType: callType)
     }
 
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
                                  accessibilityProvider: accessibilityProvider,
-                                 isIpadInterface: isIpadInterface)
+                                 isIpadInterface: isIpadInterface,
+                                 callType: callType)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
@@ -363,6 +369,6 @@ extension CompositeViewModelFactory {
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
-        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
+        JoiningCallActivityViewModel(title: self.localizationProvider.getLocalizedString(LocalizationKey.joiningCall))
     }
 }

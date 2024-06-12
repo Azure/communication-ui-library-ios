@@ -1,5 +1,12 @@
 # Azure Communication UI Calling Release History
 
+## 1.8.0 (*)
+
+### Features
+
+- 1 to n Calling
+- CallKit Integration
+
 ## 1.7.0 (2024-05-29)
 
 ### Features

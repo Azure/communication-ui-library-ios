@@ -41,6 +41,10 @@ struct SettingsView: View {
             }
         }
         .accessibilityElement(children: .contain)
+        .onAppear {
+            GlobalCompositeManager.callComposite?.dismiss()
+            GlobalCompositeManager.callComposite = nil
+        }
     }
 
     var dismissButton: some View {
@@ -79,6 +83,9 @@ struct SettingsView: View {
             }
             displayLeaveCallConfirmationSettings
             exitCompositeSettings
+            callKitSettings
+            pushNotificationsSettings
+            deprecatedAPIsSettings
         }
     }
 
@@ -145,6 +152,40 @@ struct SettingsView: View {
         }
     }
 
+    var callKitSettings: some View {
+        Section(header: Text("Callkit Settings")) {
+            enableCallKitToggle
+            enableRemoteHold
+            enableRemoteInfo
+            TextField(
+                "Remote info, default is Group/Teams call",
+                text: $envConfigSubject.callkitRemoteInfo
+            )
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var enableCallKitToggle: some View {
+        Toggle("Enable Callkit",
+               isOn: $envConfigSubject.enableCallKit)
+        .accessibilityIdentifier(AccessibilityId.useEnableCalkitToggleToggleAccessibilityID.rawValue)
+    }
+
+    var enableRemoteHold: some View {
+        Toggle("Enable remote hold",
+               isOn: $envConfigSubject.enableRemoteHold)
+        .accessibilityIdentifier(AccessibilityId.useEnableRemoteHoldToggleToggleAccessibilityID.rawValue)
+    }
+
+    var enableRemoteInfo: some View {
+        Toggle("Enable remote info",
+               isOn: $envConfigSubject.enableRemoteInfo)
+        .accessibilityIdentifier(AccessibilityId.useEnableRemoteInfoToggleToggleAccessibilityID.rawValue)
+    }
+
     var localizationSettings: some View {
         Section(header: Text("Localilzation")) {
             LocalePicker(selection: $envConfigSubject.locale)
@@ -164,6 +205,25 @@ struct SettingsView: View {
         Section(header: Text("Captions")) {
             CaptionsLocalePicker(selection: $envConfigSubject.captionsLocale)
             Toggle("Enable Captions", isOn: $envConfigSubject.enableCaptions)
+    var pushNotificationsSettings: some View {
+        Section(header: Text("Push notification")) {
+            Toggle("Disable internal push for incoming call",
+                   isOn: $envConfigSubject.disableInternalPushForIncomingCall)
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var deprecatedAPIsSettings: some View {
+        Section(header: Text("Deprecated APIs")) {
+            Toggle("Use deprecated launch",
+                   isOn: $envConfigSubject.useDeprecatedLaunch)
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
         }
     }
 

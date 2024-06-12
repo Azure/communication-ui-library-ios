@@ -15,16 +15,19 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configurar";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Voltar";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Ingressar na chamada";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Iniciar chamada";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ingressando na chamada…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Iniciando chamada…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Chamada de Ingresso Desabilitada";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Vídeo desativado";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Vídeo Ativado";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Vídeo Desativado";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Vídeo ativado";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Vídeo Desativado";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Vídeo Ativado";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfone desativado";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfone ligado";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfone Desativado";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfone ligado";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfone desativado";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfone Ativado";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Selecionar dispositivo de áudio";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Acesse Configurações";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mais";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Compartilhar informações de diagnóstico";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Chamando...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="A gravação e a transcrição foram iniciadas.";
@@ -158,3 +163,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Anexar captura de tela";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Informar um problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Enviar";
+

@@ -12,6 +12,10 @@ public enum JoinLocator {
     case groupCall(groupId: UUID)
     /// Teams Meeting with string teamsLink URI.
     case teamsMeeting(teamsLink: String)
+    /* <MEETING_ID_LOCATOR> */
+    /// Teams Meeting with id and passcode
+    case teamsMeetingId(meetingId: String, meetingPasscode: String)
+    /* </MEETING_ID_LOCATOR> */
     /* <ROOMS_SUPPORT:5> */
     /// Rooms Call with room ID. You need to use LocalOptions parameter for
     /// CallComposite.launch() method with roleHint provided.
@@ -20,6 +24,10 @@ public enum JoinLocator {
 }
 
 /// Object for remote options for Call Composite.
+@available(*, deprecated, message: """
+Use CallComposite init with CommunicationTokenCredential
+and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
+""")
 public struct RemoteOptions {
     /// The unique identifier for the group conversation.
     public let locator: JoinLocator
