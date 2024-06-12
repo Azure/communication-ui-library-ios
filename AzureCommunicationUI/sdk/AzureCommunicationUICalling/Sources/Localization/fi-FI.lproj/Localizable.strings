@@ -19,7 +19,7 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Liitytään puheluun...";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Aloitetaan puhelua…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Liity puheluun -toiminto on poistettu käytöstä";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Aloita puhelu -toiminto on poistettu käytöstä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Videokuva käytössä";
