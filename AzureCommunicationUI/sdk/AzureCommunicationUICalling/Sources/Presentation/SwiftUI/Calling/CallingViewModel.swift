@@ -179,7 +179,8 @@ class CallingViewModel: ObservableObject {
 
         audioDeviceListViewModel.update(
             audioDeviceStatus: state.localUserState.audioState.device,
-            navigationState: state.navigationState)
+            navigationState: state.navigationState,
+            visibilityState: state.visibilityState)
 
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
@@ -209,7 +210,8 @@ class CallingViewModel: ObservableObject {
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
-        moreCallOptionsListViewModel.setIsDisplayed(isDisplayed: state.navigationState.moreOptionsVisible)
+        moreCallOptionsListViewModel.update(navigationState: state.navigationState,
+                                            visibilityState: state.visibilityState)
         let newIsCallConnected = state.callingState.status == .connected
         let shouldParticipantGridDisplayed = newIsCallConnected &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)

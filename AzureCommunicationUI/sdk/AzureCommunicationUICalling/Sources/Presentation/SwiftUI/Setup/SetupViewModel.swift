@@ -163,7 +163,9 @@ class SetupViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
         audioDeviceListViewModel.update(
             audioDeviceStatus: state.localUserState.audioState.device,
-            navigationState: state.navigationState)
+            navigationState: state.navigationState,
+            visibilityState: state.visibilityState
+        )
         objectWillChange.send()
     }
 

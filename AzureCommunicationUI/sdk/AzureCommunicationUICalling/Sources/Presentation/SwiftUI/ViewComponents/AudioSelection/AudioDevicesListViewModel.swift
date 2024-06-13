@@ -26,13 +26,15 @@ class AudioDevicesListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
     }
 
-    func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus, navigationState: NavigationState) {
+    func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus,
+                navigationState: NavigationState,
+                visibilityState: VisibilityState) {
         if audioDeviceStatus != self.audioDeviceStatus || audioDevicesList.isEmpty,
            LocalUserState.AudioDeviceSelectionStatus.isSelected(for: audioDeviceStatus) {
             self.audioDeviceStatus = audioDeviceStatus
             self.audioDevicesList = getAvailableAudioDevices(audioDeviceStatus: audioDeviceStatus)
         }
-        isDisplayed = navigationState.audioSelectionVisible
+        isDisplayed = visibilityState.currentStatus == .visible && navigationState.audioSelectionVisible
     }
 
     private func getAvailableAudioDevices(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus)

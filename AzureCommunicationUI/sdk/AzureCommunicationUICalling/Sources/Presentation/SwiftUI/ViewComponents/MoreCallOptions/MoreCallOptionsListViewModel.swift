@@ -44,7 +44,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.items = items
     }
 
-    func setIsDisplayed(isDisplayed: Bool) {
-        self.isDisplayed = isDisplayed
+    func update(navigationState: NavigationState, visibilityState: VisibilityState) {
+        isDisplayed = visibilityState.currentStatus == .visible && navigationState.moreOptionsVisible
     }
 }

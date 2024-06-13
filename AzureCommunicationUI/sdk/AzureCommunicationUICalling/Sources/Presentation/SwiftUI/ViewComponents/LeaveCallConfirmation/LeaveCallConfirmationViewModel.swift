@@ -18,9 +18,9 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
          dismissConfirmation: @escaping() -> Void) {
         self.isDisplayed = state.navigationState.endCallConfirmationVisible
 
-        var title = localizationProvider.getLocalizedString(LocalizationKey.leaveCallListHeader)
-        var leaveText = localizationProvider.getLocalizedString(LocalizationKey.leaveCall)
-        var cancelText = localizationProvider.getLocalizedString(LocalizationKey.cancel)
+        let title = localizationProvider.getLocalizedString(LocalizationKey.leaveCallListHeader)
+        let leaveText = localizationProvider.getLocalizedString(LocalizationKey.leaveCall)
+        let cancelText = localizationProvider.getLocalizedString(LocalizationKey.cancel)
 
         self.options = [
             TitleDrawerListItemViewModel(title: title,
@@ -46,5 +46,6 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
 
     func update(state: AppState) {
         self.isDisplayed = state.navigationState.endCallConfirmationVisible
+        && state.visibilityState.currentStatus == .visible
     }
 }
