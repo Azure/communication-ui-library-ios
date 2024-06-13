@@ -72,8 +72,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                 logger: logger,
                                                 store: store,
                                                 networkManager: NetworkManager(),
-                                                audioSessionManager: AudioSessionManager(store: store, logger: logger),
-                                                localizationProvider: localizationProvider)
+                                                audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
+                                                localizationProvider: localizationProvider, callType: .groupCall)
     }
 
     func getCallingViewModel() -> CallingViewModel {
@@ -85,6 +85,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     isIpadInterface: false,
                                                     allowLocalCameraPreview: true,
                                                     leaveCallConfirmationMode: .alwaysEnabled,
+                                                    callType: .groupCall,
                                                     capabilitiesManager: capabilitiesManager)
     }
 
@@ -189,8 +190,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return loadingOverlayViewModel ?? LoadingOverlayViewModel(localizationProvider: localizationProvider,
                                                               accessibilityProvider: accessibilityProvider,
                                                                   networkManager: NetworkManager(),
-                                                                  audioSessionManager: AudioSessionManager(store: store, logger: logger),
-                                                                  store: store
+                                                                  audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
+                                                                  store: store,
+                                                                  callType: .groupCall
         )
     }
 
@@ -228,14 +230,16 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             accessibilityProvider: accessibilityProvider,
             participantModel: participantModel,
             lifeCycleState: lifeCycleState,
-            isCameraEnabled: true)
+            isCameraEnabled: true,
+            callType: .groupCall)
     }
 
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self,
                                                                     localizationProvider: localizationProvider,
 																	accessibilityProvider: accessibilityProvider,
-                                                                    isIpadInterface: isIpadInterface)
+                                                                    isIpadInterface: isIpadInterface,
+                                                                    callType: .groupCall)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
@@ -324,7 +328,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
-        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
+        JoiningCallActivityViewModel(title: "")
     }
 
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
@@ -332,7 +336,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                       compositeViewModelFactory: self,
                                       logger: logger,
                                       accessibilityProvider: accessibilityProvider,
-                                      audioSessionManager: AudioSessionManager(store: store, logger: logger),
+                                      audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
                                       resumeAction: {})
     }
 

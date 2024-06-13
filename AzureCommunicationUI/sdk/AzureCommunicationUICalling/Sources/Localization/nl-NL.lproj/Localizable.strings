@@ -15,8 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configuratie";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Terug";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Gesprek starten";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Oproep starten…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Deelnemen aan gesprek uitgeschakeld";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Oproep starten uitgeschakeld";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video aan";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Meer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnostische gegevens delen";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Bellen...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Opname en transcriptie zijn gestart.";

@@ -15,8 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Kur";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Aramayı başlat";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Arama başlatılıyor…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Aramaya Katılma Devre Dışı";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Arama Başlatma Devre Dışı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Tümü";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Tanılama bilgilerini paylaş";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Aranıyor...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Kayıt ve döküm başlatıldı.";

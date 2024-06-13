@@ -15,8 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Määritä";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Takaisin";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Liity puheluun";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Aloita puhelu";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Liitytään puheluun...";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Aloitetaan puhelua…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Liity puheluun -toiminto on poistettu käytöstä";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Aloita puhelu -toiminto on poistettu käytöstä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Videokuva käytössä";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Lisää";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Jaa diagnostiikkatiedot";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Soitetaan...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Tallentaminen ja litterointi on aloitettu.";

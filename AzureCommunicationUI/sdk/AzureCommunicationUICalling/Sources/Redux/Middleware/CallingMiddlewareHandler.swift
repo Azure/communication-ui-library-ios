@@ -41,6 +41,8 @@ protocol CallingMiddlewareHandling {
     @discardableResult
     func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func onMicPermissionIsGranted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func admitAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func declineAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -88,10 +90,15 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
     private let capabilitiesManager: CapabilitiesManager
+    private let callType: CompositeCallType
 
-    init(callingService: CallingServiceProtocol, logger: Logger, capabilitiesManager: CapabilitiesManager) {
+    init(callingService: CallingServiceProtocol,
+         logger: Logger,
+         callType: CompositeCallType,
+         capabilitiesManager: CapabilitiesManager) {
         self.callingService = callingService
         self.logger = logger
+        self.callType = callType
         self.capabilitiesManager = capabilitiesManager
     }
 
@@ -103,7 +110,9 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                    state.errorState.internalError == nil {
                     await requestCameraPreviewOn(state: state, dispatch: dispatch).value
                 }
-
+                if state.defaultUserState.audioState == .on {
+                    dispatch(.localUserAction(.microphonePreviewOn))
+                }
                 if state.callingState.operationStatus == .skipSetupRequested {
                     dispatch(.callingAction(.callStartRequested))
                 }
@@ -120,7 +129,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                     isCameraPreferred: state.localUserState.cameraState.operation == .on,
                     isAudioPreferred: state.localUserState.audioState.operation == .on
                 )
-                subscription(dispatch: dispatch)
+                subscription(dispatch: dispatch,
+                             isSkipRequested: state.callingState.operationStatus == .skipSetupRequested)
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }
@@ -306,6 +316,15 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             case .remote:
                 dispatch(.localUserAction(.cameraOnTriggered))
             }
+        }
+    }
+
+    func onMicPermissionIsGranted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.permissionState.audioPermission == .requesting else {
+                return
+            }
+            setupCall(state: state, dispatch: dispatch)
         }
     }
 
@@ -524,7 +543,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 }
 
 extension CallingMiddlewareHandler {
-    private func subscription(dispatch: @escaping ActionDispatch) {
+    private func subscription(dispatch: @escaping ActionDispatch,
+                              isSkipRequested: Bool = false) {
         logger.debug("Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
@@ -539,14 +559,16 @@ extension CallingMiddlewareHandler {
                 }
                 let internalError = callInfoModel.internalError
                 let callingStatus = callInfoModel.status
-
-                self.handle(callingStatus: callingStatus, dispatch: dispatch)
+                self.handle(callInfoModel: callInfoModel, dispatch: dispatch, callType: self.callType)
                 self.logger.debug("Dispatch State Update: \(callingStatus)")
 
                 if let internalError = internalError {
                     self.handleCallInfo(internalError: internalError,
                                         dispatch: dispatch) {
                         self.logger.debug("Subscription cancelled with Error Code: \(internalError)")
+                        if isSkipRequested {
+                            dispatch(.compositeExitAction)
+                        }
                         self.subscription.cancel()
                     }
                     // to fix the bug that resume call won't work without Internet
@@ -595,6 +617,12 @@ extension CallingMiddlewareHandler {
                 dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
             }.store(in: subscription)
 
+        subscribeOnDiagnostics(dispatch: dispatch)
+        subscibeCapabilitiesUpdate(dispatch: dispatch)
+    }
+
+    private func subscribeOnDiagnostics(dispatch: @escaping ActionDispatch) {
+
         callingService.networkDiagnosticsSubject
             .removeDuplicates()
             .sink { networkDiagnostic in
@@ -612,8 +640,6 @@ extension CallingMiddlewareHandler {
             .sink { mediaDiagnostic in
                 dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
-
-        subscibeCapabilitiesUpdate(dispatch: dispatch)
     }
 
     private func subscibeCapabilitiesUpdate(dispatch: @escaping ActionDispatch) {

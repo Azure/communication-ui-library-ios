@@ -15,8 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Настройка";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Назад";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Присоединиться к звонку";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Позвонить";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Начало звонка…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Присоединение к звонку отключено";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Начало звонка отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Дополнительно";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Поделиться диагностическими сведениями";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Выполняется вызов...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Начата запись и транскрибирование.";

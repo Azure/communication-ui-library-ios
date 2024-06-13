@@ -116,9 +116,9 @@ private func handlePermissionAction(_ action: PermissionAction,
     switch action {
     case .cameraPermissionGranted:
         actionHandler.onCameraPermissionIsSet(state: getState(), dispatch: dispatch)
-
+    case .audioPermissionGranted:
+        actionHandler.onMicPermissionIsGranted(state: getState(), dispatch: dispatch)
     case .audioPermissionRequested,
-            .audioPermissionGranted,
             .audioPermissionDenied,
             .audioPermissionNotAsked,
             .cameraPermissionRequested,

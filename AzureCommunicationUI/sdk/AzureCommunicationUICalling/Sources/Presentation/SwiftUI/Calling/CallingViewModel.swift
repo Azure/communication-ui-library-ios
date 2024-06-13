@@ -19,6 +19,7 @@ class CallingViewModel: ObservableObject {
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let callType: CompositeCallType
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
@@ -51,7 +52,9 @@ class CallingViewModel: ObservableObject {
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         callType: CompositeCallType,
          capabilitiesManager: CapabilitiesManager
+
     ) {
         self.logger = logger
         self.store = store
@@ -62,6 +65,7 @@ class CallingViewModel: ObservableObject {
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.capabilitiesManager = capabilitiesManager
+        self.callType = callType
         let actionDispatch: ActionDispatch = store.dispatch
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
@@ -83,8 +87,12 @@ class CallingViewModel: ObservableObject {
             dispatchAction: actionDispatch)
 
         let isCallConnected = store.state.callingState.status == .connected
+        let callingStatus = store.state.callingState.status
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: callingStatus)
+        let isRemoteHold = store.state.callingState.status == .remoteHold
 
-        isParticipantGridDisplayed = isCallConnected &&
+        isParticipantGridDisplayed = (isCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
@@ -169,12 +177,14 @@ class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         let newIsCallConnected = state.callingState.status == .connected
-        let shouldParticipantGridDisplayed = newIsCallConnected &&
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: state.callingState.status)
+        let isRemoteHold = store.state.callingState.status == .remoteHold
+        let shouldParticipantGridDisplayed = (newIsCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
-
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
                 guard let self = self else {
@@ -206,5 +216,13 @@ class CallingViewModel: ObservableObject {
         isVideoGridViewAccessibilityAvailable = !lobbyOverlayViewModel.isDisplayed
         && !onHoldOverlayViewModel.isDisplayed
         && (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
+    }
+
+    private static func isOutgoingCallDialingInProgress(callType: CompositeCallType,
+                                                        callingStatus: CallingStatus?) -> Bool {
+        let isOutgoingCall = (callType == .oneToNOutgoing && (callingStatus == nil
+                                                              || callingStatus == .connecting
+                                                              || callingStatus == .ringing))
+        return isOutgoingCall
     }
 }

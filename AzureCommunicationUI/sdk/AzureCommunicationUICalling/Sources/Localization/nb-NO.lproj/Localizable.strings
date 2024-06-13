@@ -15,8 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Oppsett";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tilbake";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Bli med i samtale";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start anrop";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Blir med i samtalen …";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starter anrop …";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Bli med i samtalen er deaktivert";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Samtaleoppstart er deaktivert";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Del diagnoseinformasjon";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Ringer …";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Opptak og transkripsjon har startet.";

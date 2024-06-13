@@ -40,6 +40,51 @@ class ParticipantCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.participantIdentifier, expectedParticipantIdentifier)
     }
 
+    func test_participantCellViewModel_init_then_getCorrectRendererViewModel_for_outgoingCallRinging() {
+        let expectedParticipantIdentifier = "expectedParticipantIdentifier"
+        let expectedVideoStreamId = "expectedVideoStreamId"
+        let expectedDisplayName = "expectedDisplayName"
+        let expectedIsSpeaking = false
+        let sut = makeSUT(participantIdentifier: expectedParticipantIdentifier,
+                          videoStreamId: expectedVideoStreamId,
+                          displayName: expectedDisplayName,
+                          isSpeaking: expectedIsSpeaking,
+                          isMuted: false,
+                          status: .connecting,
+                          callType: .oneToNOutgoing)
+
+        XCTAssertEqual(sut.displayName, LocalizationKey.callingCallMessage.rawValue)
+        XCTAssertEqual(sut.avatarDisplayName, expectedDisplayName)
+        XCTAssertEqual(sut.videoViewModel?.videoStreamId, expectedVideoStreamId)
+        XCTAssertEqual(sut.isSpeaking, expectedIsSpeaking)
+        XCTAssertEqual(sut.isMuted, false)
+
+        XCTAssertEqual(sut.participantIdentifier, expectedParticipantIdentifier)
+    }
+
+    func test_participantCellViewModel_init_then_getCorrectRendererViewModel_for_outgoingCallConnecting() {
+        let expectedParticipantIdentifier = "expectedParticipantIdentifier"
+        let expectedVideoStreamId = "expectedVideoStreamId"
+        let expectedDisplayName = "expectedDisplayName"
+        let expectedIsSpeaking = false
+        let expectedIsMuted = false
+        let sut = makeSUT(participantIdentifier: expectedParticipantIdentifier,
+                          videoStreamId: expectedVideoStreamId,
+                          displayName: expectedDisplayName,
+                          isSpeaking: expectedIsSpeaking,
+                          isMuted: expectedIsMuted,
+                          status: .ringing,
+                          callType: .oneToNOutgoing)
+
+        XCTAssertEqual(sut.displayName, LocalizationKey.callingCallMessage.rawValue)
+        XCTAssertEqual(sut.avatarDisplayName, expectedDisplayName)
+        XCTAssertEqual(sut.videoViewModel?.videoStreamId, expectedVideoStreamId)
+        XCTAssertEqual(sut.isSpeaking, expectedIsSpeaking)
+        XCTAssertEqual(sut.isMuted, false)
+
+        XCTAssertEqual(sut.participantIdentifier, expectedParticipantIdentifier)
+    }
+
     func test_participantCellViewModel_update_then_updateRendererViewModel() {
         let expectedParticipantIdentifier = "expectedParticipantIdentifier"
         let expectedVideoStreamId = "expectedVideoStreamId"
@@ -57,6 +102,27 @@ class ParticipantCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isSpeaking, expectedIsSpeaking)
         XCTAssertEqual(sut.participantIdentifier, expectedParticipantIdentifier)
 
+    }
+
+    func test_participantCellViewModel_update_then_updateRendererViewModel_for_outGoingCall() {
+        let expectedParticipantIdentifier = "expectedParticipantIdentifier"
+        let expectedVideoStreamId = "expectedVideoStreamId"
+        let expectedDisplayName = "expectedDisplayName"
+        let expectedIsSpeaking = false
+        let sut = makeSUT(callType: .oneToNOutgoing)
+        let infoModel = ParticipantInfoModelBuilder.get(participantIdentifier: expectedParticipantIdentifier,
+                                                        videoStreamId: expectedVideoStreamId,
+                                                        displayName: expectedDisplayName,
+                                                        isSpeaking: expectedIsSpeaking,
+                                                        isMuted: true,
+                                                        status: .ringing)
+        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+
+        XCTAssertEqual(sut.displayName, LocalizationKey.callingCallMessage.rawValue)
+        XCTAssertEqual(sut.videoViewModel?.videoStreamId, expectedVideoStreamId)
+        XCTAssertEqual(sut.isSpeaking, expectedIsSpeaking)
+        XCTAssertEqual(sut.isMuted, false)
+        XCTAssertEqual(sut.participantIdentifier, expectedParticipantIdentifier)
     }
 
     // Marks: update videoStreamId
@@ -276,18 +342,22 @@ extension ParticipantCellViewModelTests {
                  screenShareStreamId: String? = nil,
                  displayName: String = "displayName",
                  isSpeaking: Bool = false,
-                 isMuted: Bool = true) -> ParticipantGridCellViewModel {
+                 isMuted: Bool = true,
+                 status: ParticipantStatus = .connected,
+                 callType: CompositeCallType = .groupCall) -> ParticipantGridCellViewModel {
         let infoModel = ParticipantInfoModelBuilder.get(participantIdentifier: participantIdentifier,
                                                         videoStreamId: videoStreamId,
                                                         screenShareStreamId: screenShareStreamId,
                                                         displayName: displayName,
                                                         isSpeaking: isSpeaking,
-                                                        isMuted: isMuted)
+                                                        isMuted: isMuted,
+                                                        status: status)
         return ParticipantGridCellViewModel(localizationProvider: LocalizationProviderMocking(),
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel,
                                             lifeCycleState: LifeCycleState(),
-                                            isCameraEnabled: true)
+                                            isCameraEnabled: true,
+                                            callType: callType)
     }
 
 }

@@ -13,7 +13,7 @@ parameters:
 
 steps:
   - task: CocoaPods@0
-    displayName: "pod install"
+    displayName: "pod install --repo-update"
     inputs:
       workingDirectory: ${{ parameters.workingDirectory }}
       forceRepoUpdate: true

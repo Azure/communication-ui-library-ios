@@ -15,8 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configuration";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Retour";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Rejoindre l’appel";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Débuter l'appel";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Connexion à l’appel en cours… Merci de patienter.";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Début de l’appel…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Jointure d’appel désactivée";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Démarrer l’appel qui désactivé";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Vidéo désactivée";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Vidéo désactivée";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Vidéo activée";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Plus";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Partager les informations de diagnostic";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Appel en cours...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Démarrage de l’enregistrement et de la transcription.";

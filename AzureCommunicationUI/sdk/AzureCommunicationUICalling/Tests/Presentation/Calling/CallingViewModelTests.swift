@@ -117,6 +117,28 @@ class CallingViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isParticipantGridDisplayed, true)
     }
 
+    func test_callingViewModel_update_when_callStatusIsRinging_remoteParticipantNotEmpty_then_isParticipantGridDisplayed_shouldBecomeTrue() {
+        let sut = makeSUT(callType: .oneToNOutgoing)
+        let mockingParticipantInfoModel = ParticipantInfoModelBuilder.get()
+        let remoteParticipantState = RemoteParticipantsState(participantInfoList: [mockingParticipantInfoModel],
+                                                             lastUpdateTimeStamp: Date())
+        let appState = AppState(callingState: CallingState(status: .ringing),
+                                remoteParticipantsState: remoteParticipantState)
+        sut.receive(appState)
+        XCTAssertEqual(sut.isParticipantGridDisplayed, true)
+    }
+
+    func test_callingViewModel_update_when_callStatusIsConnecting_remoteParticipantNotEmpty_then_isParticipantGridDisplayed_shouldBecomeTrue() {
+        let sut = makeSUT(callType: .oneToNOutgoing)
+        let mockingParticipantInfoModel = ParticipantInfoModelBuilder.get()
+        let remoteParticipantState = RemoteParticipantsState(participantInfoList: [mockingParticipantInfoModel],
+                                                             lastUpdateTimeStamp: Date())
+        let appState = AppState(callingState: CallingState(status: .connecting),
+                                remoteParticipantsState: remoteParticipantState)
+        sut.receive(appState)
+        XCTAssertEqual(sut.isParticipantGridDisplayed, true)
+    }
+
     func test_callingViewModel_update_when_callStatusIsNotConnected_remoteParticipantNotEmpty_then_isParticipantGridDisplayed_shouldBecomeFalse() {
         let sut = makeSUT()
         let mockingParticipantInfoModel = ParticipantInfoModelBuilder.get()
@@ -278,7 +300,8 @@ class CallingViewModelTests: XCTestCase {
                                                                               compositeViewModelFactory: factoryMocking,
                                                                               logger: logger,
                                                                               accessibilityProvider: accessibilityProvider,
-                                                                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
+                                                                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger,
+                                                                                                                       isCallKitEnabled: false),
                                                                               resumeAction: {},
                                                                               updateState: updateOnHoldOverlayViewModel)
 
@@ -305,7 +328,7 @@ class CallingViewModelTests: XCTestCase {
 }
 
 extension CallingViewModelTests {
-    func makeSUT() -> CallingViewModel {
+    func makeSUT(callType: CompositeCallType = .groupCall) -> CallingViewModel {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
@@ -314,6 +337,7 @@ extension CallingViewModelTests {
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
                                 leaveCallConfirmationMode: .alwaysEnabled,
+                                callType: callType,
                                 capabilitiesManager: capabilitiesManager)
     }
 }
