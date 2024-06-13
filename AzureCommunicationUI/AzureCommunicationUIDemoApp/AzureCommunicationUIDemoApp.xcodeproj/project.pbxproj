@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0570901C299EBAC000D7AE5F /* CallingDemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */; };
-		058371E42C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */; };
-		058371E52C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		058371E62C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
-		058371E72C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
 		1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */; };
@@ -63,6 +59,8 @@
 		FA93E3AA2942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */; };
 		FA93E3AC2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */; };
 		FA9A07E52953BE0600C2D328 /* AzureCommunicationUIDemoAppE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A07E42953BE0600C2D328 /* AzureCommunicationUIDemoAppE2ETests.swift */; };
+		FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
+		FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FABDDC992953DB4B00A142E5 /* AzureCommunicationUIDemoAppPIPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABDDC982953DB4B00A142E5 /* AzureCommunicationUIDemoAppPIPTests.swift */; };
 		FACEE494287364F4001D62BE /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */; };
 /* End PBXBuildFile section */
@@ -74,111 +72,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = A8C69FAF2728AE1A00143DB7;
 			remoteInfo = AzureCommunicationUIDemoApp;
-		};
-		C8D238252BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D237552BFD4BCA00EC04B4 /* AzureCommunicationUICalling.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A8659FC52602A22000C807DE;
-			remoteInfo = AzureCommunicationUICalling;
-		};
-		C8D238272BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D237552BFD4BCA00EC04B4 /* AzureCommunicationUICalling.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1FBCB69A2645285100F57EEA;
-			remoteInfo = AzureCommunicationUICallingTests;
-		};
-		C8D2382B2BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D2380F2BFD4BCA00EC04B4 /* AzureCommunicationUIChat.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 50CB81C228C26E0C00680566;
-			remoteInfo = AzureCommunicationUIChat;
-		};
-		C8D2382D2BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D2380F2BFD4BCA00EC04B4 /* AzureCommunicationUIChat.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 50CB81CA28C26E0C00680566;
-			remoteInfo = AzureCommunicationUIChatTests;
-		};
-		C8D2383E2BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2999E98379ED4CABFAB97444E8F65B03;
-			remoteInfo = AzureCommunicationChat;
-		};
-		C8D238402BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 046BE0A5D32340465034A0DF75B74940;
-			remoteInfo = AzureCommunicationCommon;
-		};
-		C8D238422BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2A0569FC6542319D29A5F4C7D66F6F5C;
-			remoteInfo = AzureCore;
-		};
-		C8D238442BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 479B603E5C8EAD405D4DCA6344A9E171;
-			remoteInfo = MicrosoftFluentUI;
-		};
-		C8D238462BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 419FF83B5DE08258908F2BF54EA6B771;
-			remoteInfo = "MicrosoftFluentUI-FluentUIResources-ios";
-		};
-		C8D238482BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 68638F701A409049BB02611212E4A365;
-			remoteInfo = "Pods-AzureCommunicationUICalling";
-		};
-		C8D2384A2BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B6C6E33A192C3A0EA4E5E247ECD88D6E;
-			remoteInfo = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests";
-		};
-		C8D2384C2BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 49D10E4AEB1C4CB19DF5C61EE28F2A92;
-			remoteInfo = "Pods-AzureCommunicationUIChat";
-		};
-		C8D2384E2BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C6F404C08A5171022F9C69D963B99AD4;
-			remoteInfo = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests";
-		};
-		C8D238502BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CD1DF2A94ABDE5650F7DC252AFE817E9;
-			remoteInfo = "Pods-AzureCommunicationUIDemoApp";
-		};
-		C8D238522BFD4BCA00EC04B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D59964D0C13D8577F3A93ADE53F4A50B;
-			remoteInfo = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -199,9 +92,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				058371E52C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 				50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
-				058371E72C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Embed Frameworks */,
+				FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,7 +103,6 @@
 /* Begin PBXFileReference section */
 		026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingDemoViewModel.swift; sourceTree = "<group>"; };
-		058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		058D6A282ACE0B33005CF1C8 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = "../../../../orient_workspace/SpoolCallingStack/native/staging.d/release/BETA/sdk/arm64-v8a/AzureCommunicationCalling.framework"; sourceTree = "<group>"; };
 		1AA61EC7BE9A4B43EEC5DBCC /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallTests.swift; sourceTree = "<group>"; };
@@ -260,6 +151,8 @@
 		A40EE6FD2C01524B0089EA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A40EE7032C01524B0089EA7B /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		A48D17FF2BFD623B00FD994E /* GlobalCompositeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalCompositeManager.swift; sourceTree = "<group>"; };
+		A48D18102BFDB79000FD994E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A48D18182BFDB7D300FD994E /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		A48D181A2BFDB85C00FD994E /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		A48D18242BFDC9E700FD994E /* AzureCommunicationUIDemoAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AzureCommunicationUIDemoAppDebug.entitlements; sourceTree = "<group>"; };
 		A85DDCAF2728B12D001297B4 /* EnvConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvConfig.swift; sourceTree = "<group>"; };
@@ -279,10 +172,6 @@
 		B23FE9CF2ADEDC75007F6365 /* AzureCommunicationUIDemoAppCallDiagnosticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallDiagnosticsTests.swift; sourceTree = "<group>"; };
 		BDAA751E28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		BDAA751F28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C8D2334C2BFD4BCA00EC04B4 /* AzureCommunicationUIDemoApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = AzureCommunicationUIDemoApp.xcodeproj; sourceTree = "<group>"; };
-		C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Pods.xcodeproj; sourceTree = "<group>"; };
-		C8D237552BFD4BCA00EC04B4 /* AzureCommunicationUICalling.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = AzureCommunicationUICalling.xcodeproj; sourceTree = "<group>"; };
-		C8D2380F2BFD4BCA00EC04B4 /* AzureCommunicationUIChat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = AzureCommunicationUIChat.xcodeproj; sourceTree = "<group>"; };
 		FA1AEBEB2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppRemoteParticipantsTests.swift; sourceTree = "<group>"; };
 		FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCaseExtension.swift; sourceTree = "<group>"; };
 		FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantAvatarHelper.swift; sourceTree = "<group>"; };
@@ -316,9 +205,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				50CB82E128C9200300680566 /* AzureCommunicationUIChat.framework in Frameworks */,
+				FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */,
 				3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */,
-				058371E62C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Frameworks */,
-				058371E42C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,51 +371,9 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		C8D2381B2BFD4BCA00EC04B4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C8D238262BFD4BCA00EC04B4 /* AzureCommunicationUICalling.framework */,
-				C8D238282BFD4BCA00EC04B4 /* AzureCommunicationUICallingTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C8D2381D2BFD4BCA00EC04B4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C8D2382C2BFD4BCA00EC04B4 /* AzureCommunicationUIChat.framework */,
-				C8D2382E2BFD4BCA00EC04B4 /* AzureCommunicationUIChatTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C8D2381F2BFD4BCA00EC04B4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C8D2383F2BFD4BCA00EC04B4 /* AzureCommunicationChat */,
-				C8D238412BFD4BCA00EC04B4 /* AzureCommunicationCommon */,
-				C8D238432BFD4BCA00EC04B4 /* AzureCore */,
-				C8D238452BFD4BCA00EC04B4 /* MicrosoftFluentUI */,
-				C8D238472BFD4BCA00EC04B4 /* MicrosoftFluentUI-FluentUIResources-ios */,
-				C8D238492BFD4BCA00EC04B4 /* Pods-AzureCommunicationUICalling */,
-				C8D2384B2BFD4BCA00EC04B4 /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests */,
-				C8D2384D2BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIChat */,
-				C8D2384F2BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests */,
-				C8D238512BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIDemoApp */,
-				C8D238532BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C8D238212BFD4BCA00EC04B4 /* Products */ = {
-			isa = PBXGroup;
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F74ACD1C99B1428891E02585 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */,
 				A48D181A2BFDB85C00FD994E /* Intents.framework */,
 				058D6A282ACE0B33005CF1C8 /* AzureCommunicationCalling.framework */,
 				50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */,
@@ -636,79 +482,10 @@
 				"zh-Hant",
 				it,
 				ar,
-				de,
-				he,
-				el,
-				"zh-Hans",
-				ja,
-				uk,
-				"nb-NO",
-				"en-GB",
-				es,
-				da,
-				sk,
-				ms,
-				sv,
-				cs,
-				ko,
-				hu,
-				tr,
-				pl,
-				"pt-BR",
-				vi,
-				"es-MX",
-				ru,
-				fi,
-				id,
-				nl,
-				th,
-				"pt-PT",
-				ro,
-				hr,
-				hi,
-				ca,
-				"zh-Hant-TW",
-				"it-IT",
-				nb,
-				"ru-RU",
-				"tr-TR",
-				"es-ES",
-				"ar-SA",
-				"fr-FR",
-				"ja-JP",
-				"ko-KR",
-				"fi-FI",
-				"nl-NL",
-				"en-US",
-				"de-DE",
-				"pl-PL",
-				pt,
-				"zh-Hans-CN",
-				"sv-SE",
-				"he-IL",
-				zh,
 			);
 			mainGroup = A8C69FA72728AE1A00143DB7;
 			productRefGroup = A8C69FB12728AE1A00143DB7 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C8D2381B2BFD4BCA00EC04B4 /* Products */;
-					ProjectRef = C8D237552BFD4BCA00EC04B4 /* AzureCommunicationUICalling.xcodeproj */;
-				},
-				{
-					ProductGroup = C8D2381D2BFD4BCA00EC04B4 /* Products */;
-					ProjectRef = C8D2380F2BFD4BCA00EC04B4 /* AzureCommunicationUIChat.xcodeproj */;
-				},
-				{
-					ProductGroup = C8D238212BFD4BCA00EC04B4 /* Products */;
-					ProjectRef = C8D2334C2BFD4BCA00EC04B4 /* AzureCommunicationUIDemoApp.xcodeproj */;
-				},
-				{
-					ProductGroup = C8D2381F2BFD4BCA00EC04B4 /* Products */;
-					ProjectRef = C8D235AA2BFD4BCA00EC04B4 /* Pods.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				A8C69FAF2728AE1A00143DB7 /* AzureCommunicationUIDemoApp */,
@@ -717,125 +494,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C8D238262BFD4BCA00EC04B4 /* AzureCommunicationUICalling.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AzureCommunicationUICalling.framework;
-			remoteRef = C8D238252BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238282BFD4BCA00EC04B4 /* AzureCommunicationUICallingTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AzureCommunicationUICallingTests.xctest;
-			remoteRef = C8D238272BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D2382C2BFD4BCA00EC04B4 /* AzureCommunicationUIChat.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AzureCommunicationUIChat.framework;
-			remoteRef = C8D2382B2BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D2382E2BFD4BCA00EC04B4 /* AzureCommunicationUIChatTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AzureCommunicationUIChatTests.xctest;
-			remoteRef = C8D2382D2BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D2383F2BFD4BCA00EC04B4 /* AzureCommunicationChat */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = AzureCommunicationChat;
-			path = AzureCommunicationChat.framework;
-			remoteRef = C8D2383E2BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238412BFD4BCA00EC04B4 /* AzureCommunicationCommon */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = AzureCommunicationCommon;
-			path = AzureCommunicationCommon.framework;
-			remoteRef = C8D238402BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238432BFD4BCA00EC04B4 /* AzureCore */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = AzureCore;
-			path = AzureCore.framework;
-			remoteRef = C8D238422BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238452BFD4BCA00EC04B4 /* MicrosoftFluentUI */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = MicrosoftFluentUI;
-			path = FluentUI.framework;
-			remoteRef = C8D238442BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238472BFD4BCA00EC04B4 /* MicrosoftFluentUI-FluentUIResources-ios */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			name = "MicrosoftFluentUI-FluentUIResources-ios";
-			path = "FluentUIResources-ios.bundle";
-			remoteRef = C8D238462BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238492BFD4BCA00EC04B4 /* Pods-AzureCommunicationUICalling */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = "Pods-AzureCommunicationUICalling";
-			path = Pods_AzureCommunicationUICalling.framework;
-			remoteRef = C8D238482BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D2384B2BFD4BCA00EC04B4 /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests";
-			path = Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework;
-			remoteRef = C8D2384A2BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D2384D2BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIChat */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = "Pods-AzureCommunicationUIChat";
-			path = Pods_AzureCommunicationUIChat.framework;
-			remoteRef = C8D2384C2BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D2384F2BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests";
-			path = Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework;
-			remoteRef = C8D2384E2BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238512BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIDemoApp */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = "Pods-AzureCommunicationUIDemoApp";
-			path = Pods_AzureCommunicationUIDemoApp.framework;
-			remoteRef = C8D238502BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C8D238532BFD4BCA00EC04B4 /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests";
-			path = Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework;
-			remoteRef = C8D238522BFD4BCA00EC04B4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1F8881B827909E08001427F0 /* Resources */ = {
@@ -1349,7 +1007,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = .dev;
@@ -1389,7 +1046,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EA3EA0A623669E62A5E601F /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "";
