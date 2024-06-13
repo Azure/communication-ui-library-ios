@@ -327,7 +327,9 @@ extension CompositeViewModelFactory {
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
-                                          debugInfoManager: debugInfoManager)
+                                          debugInfoManager: debugInfoManager) {
+            self.store.dispatch(action: .hideSupportShare)
+        }
     }
 
     // MARK: SetupViewModels
