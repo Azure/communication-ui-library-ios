@@ -8,6 +8,53 @@ import AzureCommunicationCalling
 import Foundation
 import Combine
 
+private class CommunicationCaptionsHandler: NSObject, CommunicationCaptionsDelegate {
+    weak var parentHandler: CallingSDKEventsHandler?
+
+    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                               didReceiveCaptions: CommunicationCaptionsReceivedEventArgs) {
+        parentHandler?.captionsReceived.send(didReceiveCaptions.toCallCompositeCaptionsData())
+    }
+
+    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                               didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
+        let captionsLanguage = communicationCaptions.activeSpokenLanguage
+        parentHandler?.activeSpokenLanguageChanged.send(captionsLanguage)
+    }
+
+   func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                              didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
+        let isCaptionsEnabled = communicationCaptions.isEnabled
+       parentHandler?.captionsEnabledChanged.send(isCaptionsEnabled)
+    }
+}
+
+private class TeamsCaptionsHandler: NSObject, TeamsCaptionsDelegate {
+    weak var parentHandler: CallingSDKEventsHandler?
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
+        parentHandler?.captionsEnabledChanged.send(teamsCaptions.isEnabled)
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
+        let spokenLanguage = teamsCaptions.activeSpokenLanguage
+        parentHandler?.activeSpokenLanguageChanged.send(spokenLanguage)
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didReceiveCaptions args: TeamsCaptionsReceivedEventArgs) {
+        parentHandler?.captionsReceived.send(args.toCallCompositeCaptionsData())
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeActiveCaptionLanguageState args: PropertyChangedEventArgs) {
+        let captionsLanguage = teamsCaptions.activeCaptionLanguage
+        parentHandler?.activeCaptionLanguageChanged.send(captionsLanguage)
+    }
+}
+
 class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])
     var callInfoSubject = PassthroughSubject<CallInfoModel, Never>()
@@ -46,10 +93,15 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var previousCallingStatus: CallingStatus = .none
     private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
 
+    private let communicationCaptionsHandler = CommunicationCaptionsHandler()
+    private let teamsCaptionsHandler = TeamsCaptionsHandler()
+
     init(logger: Logger) {
         self.logger = logger
         super.init()
         setupRemoteParticipantEventsAdapter()
+        communicationCaptionsHandler.parentHandler = self
+        teamsCaptionsHandler.parentHandler = self
     }
 
     func assign(_ recordingCallFeature: RecordingCallFeature) {
@@ -85,7 +137,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
 
     func assign (_ communicationCaptions: CommunicationCaptions) {
         self.communicationCaptions = communicationCaptions
-        communicationCaptions.delegate = self
+        communicationCaptions.delegate = communicationCaptionsHandler
     }
 
     func setupProperties() {
@@ -191,8 +243,7 @@ extension CallingSDKEventsHandler: CallDelegate,
     DominantSpeakersCallFeatureDelegate,
     MediaDiagnosticsDelegate,
     NetworkDiagnosticsDelegate,
-    CaptionsCallFeatureDelegate,
-    CommunicationCaptionsDelegate {
+    CaptionsCallFeatureDelegate {
     func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
     }
@@ -228,10 +279,24 @@ extension CallingSDKEventsHandler: CallDelegate,
                     if value?.type == CaptionsType.communicationCaptions {
                         // communication captions
                         self.communicationCaptions = value as? CommunicationCaptions
-                        self.communicationCaptions?.delegate = self
+                        self.communicationCaptions?.delegate = self.communicationCaptionsHandler
                         let startCaptionsOptions = StartCaptionsOptions()
                         startCaptionsOptions.spokenLanguage = "en-us"
                         self.communicationCaptions?.startCaptions(options: startCaptionsOptions,
+                                                                  completionHandler: { (error) in
+                            if error != nil {
+                                print("InderpalTest UICaptions failed to start")
+                            }
+                        })
+                    }
+
+                    if value?.type == CaptionsType.teamsCaptions {
+                        // communication captions
+                        self.teamsCaptions = value as? TeamsCaptions
+                        self.teamsCaptions?.delegate = self.teamsCaptionsHandler
+                        let startCaptionsOptions = StartCaptionsOptions()
+                        startCaptionsOptions.spokenLanguage = "en-us"
+                        self.teamsCaptions?.startCaptions(options: startCaptionsOptions,
                                                                   completionHandler: { (error) in
                             if error != nil {
                                 print("InderpalTest UICaptions failed to start")
@@ -278,47 +343,6 @@ extension CallingSDKEventsHandler: CallDelegate,
             speakers.append(userIdentifier)
         }
         dominantSpeakersSubject.send(speakers)
-    }
-
-    // MARK: Captions
-    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                       didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
-        captionsEnabledChanged.send(teamsCaptions.isEnabled)
-    }
-
-    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                       didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
-        let spokenLanguage = teamsCaptions.activeSpokenLanguage
-        activeSpokenLanguageChanged.send(spokenLanguage)
-    }
-
-    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                       didReceiveCaptions args: TeamsCaptionsReceivedEventArgs) {
-        captionsReceived.send(args.toCallCompositeCaptionsData())
-    }
-
-    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
-                       didChangeActiveCaptionLanguageState args: PropertyChangedEventArgs) {
-        let captionsLanguage = teamsCaptions.activeCaptionLanguage
-        activeCaptionLanguageChanged.send(captionsLanguage)
-    }
-
-    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
-                               didReceiveCaptions: CommunicationCaptionsReceivedEventArgs) {
-        captionsReceived.send(didReceiveCaptions.toCallCompositeCaptionsData())
-        print("Shauna UICaptions -> \(didReceiveCaptions.spokenText)")
-    }
-
-    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
-                               didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
-        let captionsLanguage = communicationCaptions.activeSpokenLanguage
-        activeSpokenLanguageChanged.send(captionsLanguage)
-    }
-
-   func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
-                              didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
-        let isCaptionsEnabled = communicationCaptions.isEnabled
-        captionsEnabledChanged.send(isCaptionsEnabled)
     }
 
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {

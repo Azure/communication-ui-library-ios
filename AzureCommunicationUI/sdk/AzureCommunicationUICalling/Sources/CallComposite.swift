@@ -581,7 +581,10 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
-            captionsViewManager: CaptionsViewManager(avatarViewManager: avatarViewManager),
+            captionsViewManager: CaptionsViewManager(
+                avatarViewManager: avatarViewManager,
+                callingSDKWrapper: callingSdkWrapper
+            ),
             videoViewManager: videoViewManager,
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,
