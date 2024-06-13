@@ -50,6 +50,7 @@ internal struct SelectableDrawerItemView: View {
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
         .onTapGesture {
             item.action()
         }
@@ -73,6 +74,7 @@ internal struct DrawerItemView: View {
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
         .onTapGesture {
             item.action()
         }
