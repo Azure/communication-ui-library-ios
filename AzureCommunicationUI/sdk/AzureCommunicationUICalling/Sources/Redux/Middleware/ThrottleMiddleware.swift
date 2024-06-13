@@ -16,6 +16,7 @@ extension Middleware {
     // Meant for user-action's that could conflict with animations.
     static func throttleMiddleware(actions: [Action], timeoutS: CGFloat = 0.4) -> Middleware<State, Action> {
         var lastActionTime: [String: Date] = [:]
+        let actionSet = Set(actions.map { actionIdentifier(for: $0) })
 
         func actionIdentifier(for action: Action) -> String {
             let mirror = Mirror(reflecting: action)
@@ -30,15 +31,21 @@ extension Middleware {
             apply: { _, _ in
                 return { next in
                     return { action in
-                        let currentTime = Date()
                         let actionID = actionIdentifier(for: action)
+
+                        // Check if the action is in the set of actions to throttle
+                        guard actionSet.contains(actionID) else {
+                            return next(action)
+                        }
+
+                        let currentTime = Date()
 
                         if let lastTime = lastActionTime[actionID],
                            currentTime.timeIntervalSince(lastTime) < TimeInterval(timeoutS) {
-                            // Drop the action if it's within the throttle timeout
+                            // Drop the action if it's within the throttle timeout and is the same as the last action
                             return
                         }
-                        // Update the last action time and dispatch the action
+                        // Update the last action time and the last action, then dispatch the action
                         lastActionTime[actionID] = currentTime
                         return next(action)
                     }
