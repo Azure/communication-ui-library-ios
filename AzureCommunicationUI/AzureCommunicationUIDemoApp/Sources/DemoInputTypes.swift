@@ -23,13 +23,6 @@ enum ACSTokenType: Int {
     case token
 }
 
-/* <ROOMS_SUPPORT:0> */
-enum RoomRoleType: Int {
-    case presenter
-    case attendee
-}
-/* </ROOMS_SUPPORT:0> */
-
 enum DemoError: Error {
     case invalidToken
     case invalidGroupCallId

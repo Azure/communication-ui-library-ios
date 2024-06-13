@@ -418,15 +418,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }
 
             do {
-                let isInitialCapabilitySetting = state.localUserState.capabilities.isEmpty
                 if !capabilitiesManager.hasCapability(capabilities: capabilities,
                                                       capability: ParticipantCapabilityType.turnVideoOn) &&
                     state.localUserState.cameraState.operation != .off {
                     dispatch(.localUserAction(.cameraOffTriggered))
-                } else {
-                    if isInitialCapabilitySetting && state.callingState.operationStatus == .skipSetupRequested {
-                        await requestCameraOn(state: state, dispatch: dispatch).value
-                    }
                 }
 
                 if !capabilitiesManager.hasCapability(capabilities: capabilities,
