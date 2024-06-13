@@ -6,8 +6,6 @@
 import Foundation
 import UIKit
 
-private let MAX_NUMBER_OF_CAPTIONS = 25
-
 class CaptionsViewManager: NSObject, ObservableObject, UITableViewDelegate, UITableViewDataSource {
 
     private var captionData = [CallCompositeCaptionsData]()
@@ -79,7 +77,7 @@ class CaptionsViewManager: NSObject, ObservableObject, UITableViewDelegate, UITa
         }
 
         tableView.performBatchUpdates {
-            while self.captionData.count > MAX_NUMBER_OF_CAPTIONS {
+            while self.captionData.count > 50 {
                 self.captionData.removeFirst()
                 let deleteIndexPath = IndexPath(row: 0, section: 0)
                 tableView.deleteRows(at: [deleteIndexPath], with: .top)
@@ -109,13 +107,15 @@ class CaptionsViewManager: NSObject, ObservableObject, UITableViewDelegate, UITa
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: CompositeParticipantsListCell.identifier,
+            withIdentifier: CaptionsInfoCell.identifier,
             for: indexPath
         )
-        if let compositeParticipantsListCell = cell as? CompositeParticipantsListCell,
+        if let captionsListCell = cell as? CaptionsInfoCell,
            let avatarViewManager = avatarViewManager as? AvatarViewManager {
             let viewModel = captionData[indexPath.row]
-            compositeParticipantsListCell.setup(title: viewModel.spokenText)
+            captionsListCell.setup(title: viewModel.speakerName,
+                                                subtitle: viewModel.spokenText
+            )
         }
         return cell
     }
