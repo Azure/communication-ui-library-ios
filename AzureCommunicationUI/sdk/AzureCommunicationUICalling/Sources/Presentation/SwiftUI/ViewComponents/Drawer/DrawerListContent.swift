@@ -53,6 +53,7 @@ internal struct SelectableDrawerItemView: View {
         .onTapGesture {
             item.action()
         }
+        .accessibilityIdentifier(item.accessibilityIdentifier)
     }
 }
 
@@ -75,6 +76,7 @@ internal struct DrawerItemView: View {
         .onTapGesture {
             item.action()
         }
+        .accessibilityIdentifier(item.accessibilityIdentifier)
     }
 }
 
@@ -93,6 +95,7 @@ internal struct DrawerTitleView: View {
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
+        .accessibilityIdentifier(item.accessibilityIdentifier)
     }
 }
 
