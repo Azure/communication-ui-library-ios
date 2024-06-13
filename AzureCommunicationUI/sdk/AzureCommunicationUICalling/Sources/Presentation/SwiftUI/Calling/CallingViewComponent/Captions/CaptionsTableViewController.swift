@@ -13,12 +13,12 @@ class CaptionsTableViewController: UITableViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        (tableView.dataSource as? CaptionsViewManager)?.startCaptionSimulationTimer(tableView: tableView)
+        (tableView.dataSource as? CaptionsViewManager)?.startReceivingCaptionUpdates(tableView: tableView)
         super.viewDidAppear(animated)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        (tableView.dataSource as? CaptionsViewManager)?.stopCaptionSimulationTimer()
+        (tableView.dataSource as? CaptionsViewManager)?.stopReceivingCaptionUpdates()
         super.viewDidDisappear(animated)
     }
 }
