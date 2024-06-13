@@ -15,7 +15,7 @@ internal class CapabilitiesManager {
     func hasCapability(capabilities: Set<ParticipantCapabilityType>,
                        capability: ParticipantCapabilityType) -> Bool {
         switch callType {
-        case .groupCall:
+        case .groupCall, .oneToNOutgoing, .oneToOneIncoming:
             return true
         case .teamsMeeting, .roomsCall:
             return capabilities.contains(capability)

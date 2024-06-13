@@ -378,8 +378,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
         self.callKitRemoteInfo = callKitRemoteInfo
-        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: nil,
                                               participants: participants,
                                               callId: nil)
         self.callConfiguration = configuration
@@ -398,8 +397,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     public func launch(callIdAcceptedFromCallKit: String,
                        localOptions: LocalOptions? = nil) {
         logger.debug( "launch \(callIdAcceptedFromCallKit)")
-        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: nil,
                                               participants: nil,
                                               callId: callIdAcceptedFromCallKit)
         self.callConfiguration = configuration
@@ -590,8 +588,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
-                capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
-                callType: callConfiguration.compositeCallType
+                callType: callConfiguration.compositeCallType,
+                capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType)
             )
         )
     }

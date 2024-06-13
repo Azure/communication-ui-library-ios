@@ -20,8 +20,7 @@ struct CallConfiguration {
     /* <ROOMS_SUPPORT:7> */
     let roomId: String?
     /* </ROOMS_SUPPORT> */
-    init(locator: JoinLocator? /* <ROOMS_SUPPORT> */,
-         roleHint: ParticipantRole? /* </ROOMS_SUPPORT> */,
+    init(locator: JoinLocator?,
          participants: [CommunicationIdentifier]?,
          callId: String?) {
         if let locator = locator {
@@ -58,7 +57,7 @@ struct CallConfiguration {
                 /* <MEETING_ID_LOCATOR> */
                 self.meetingId = nil
                 self.meetingPasscode = nil
-                /* </MEETING_ID_LOCATOR> */               
+                /* </MEETING_ID_LOCATOR> */
                 self.compositeCallType = .teamsMeeting
                 /* <ROOMS_SUPPORT> */
                 self.roomId = nil
@@ -72,20 +71,17 @@ struct CallConfiguration {
                 /* </MEETING_ID_LOCATOR> */
                 self.compositeCallType = .roomsCall
                 self.participants = nil
-                /* </ROOMS_SUPPORT> */
+            /* </ROOMS_SUPPORT> */
             }
         } else if participants != nil {
             self.participants = participants
-            self.compositeCallType = .groupCall
-        
-        /* <ROOMS_SUPPORT> */
+            /* <ROOMS_SUPPORT> */
             self.roomId = nil
-        case let .roomCall(roomId: roomId):
-            self.roomId = roomId
+            /* </ROOMS_SUPPORT> */
             /* <MEETING_ID_LOCATOR> */
             self.meetingId = nil
             self.meetingPasscode = nil
-            /* </MEETING_ID_LOCATOR> */            
+            /* </MEETING_ID_LOCATOR> */
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToNOutgoing

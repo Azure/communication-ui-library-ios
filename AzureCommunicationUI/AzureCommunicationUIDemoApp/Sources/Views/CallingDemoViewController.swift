@@ -824,7 +824,6 @@ class CallingDemoViewController: UIViewController {
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = true
             roomCallTextField.isHidden = true
-            roomRoleTypeSegmentedControl.isHidden = true
             participantMRIsTextField.isHidden = false
             /* <MEETING_ID_LOCATOR> */
             teamsMeetingIdTextField.isHidden = true
