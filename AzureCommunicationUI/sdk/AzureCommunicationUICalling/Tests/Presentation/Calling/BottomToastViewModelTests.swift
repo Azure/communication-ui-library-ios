@@ -43,7 +43,11 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
             .networkSendQuality: ("AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow",
                                    CompositeIcon.wifiWarning),
             .networkReconnectionQuality: ("AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect",
-                                   CompositeIcon.wifiWarning)
+                                   CompositeIcon.wifiWarning),
+            .someFeaturesGained: ("AzureCommunicationUICalling.CallingView.Toast.FeaturesGained",
+                                   CompositeIcon.warning),
+            .someFeaturesLost: ("AzureCommunicationUICalling.CallingView.Toast.FeaturesLost",
+                                   CompositeIcon.warning)
         ]
 
         for expected in expectedTextAndIcon {
