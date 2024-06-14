@@ -303,6 +303,59 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockCallingService.setupCallCalled)
     }
 
+    func test_callingMiddlewareHandler_setupCall_changeCapabilities_then_noToast() async {
+        let sut = makeSUT()
+
+        func dispatch(action: Action) {
+            XCTFail("Should not dispatch")
+        }
+
+        await sut.setupCall(
+            state: getEmptyState(), dispatch: dispatch
+        ).value
+
+        let capabilitiesChangedEvent = CapabilitiesChangedEvent(
+            changedCapabilities: [ParticipantCapability(participantCapabilityType: .unmuteMicrophone, isAllowed: true, capabilityResolutionReason: .capable),
+                                  ParticipantCapability(participantCapabilityType: .turnVideoOn, isAllowed: true, capabilityResolutionReason: .capable)],
+            capabilitiesChangedReason: .roleChanged)
+        mockCallingService.capabilitiesChangedSubject.send(capabilitiesChangedEvent)
+    }
+
+    func test_callingMiddlewareHandler_setupCall_changeCapabilities_then_gainedToast() async {
+        let sut = makeSUT()
+
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .someFeaturesGained)))
+        }
+
+        await sut.setupCall(
+            state: getEmptyState(), dispatch: dispatch
+        ).value
+
+        let capabilitiesChangedEvent = CapabilitiesChangedEvent(
+            changedCapabilities: [ParticipantCapability(participantCapabilityType: .removeParticipant, isAllowed: true, capabilityResolutionReason: .capable)],
+            capabilitiesChangedReason: .roleChanged)
+        mockCallingService.capabilitiesChangedSubject.send(capabilitiesChangedEvent)
+    }
+
+    func test_callingMiddlewareHandler_setupCall_changeCapabilities_then_lostToast() async {
+        let sut = makeSUT()
+
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .someFeaturesLost)))
+        }
+
+        await sut.setupCall(
+            state: getEmptyState(), dispatch: dispatch
+        ).value
+
+        let capabilitiesChangedEvent = CapabilitiesChangedEvent(
+            changedCapabilities: [ParticipantCapability(participantCapabilityType: .unmuteMicrophone, isAllowed: false, capabilityResolutionReason: .capable),
+                                  ParticipantCapability(participantCapabilityType: .turnVideoOn, isAllowed: false, capabilityResolutionReason: .capable)],
+            capabilitiesChangedReason: .roleChanged)
+        mockCallingService.capabilitiesChangedSubject.send(capabilitiesChangedEvent)
+    }
+
     func test_callingMiddlewareHandler_setupCall_when_cameraPermissionGranted_then_cameraOnTriggered() async {
         let sut = makeSUT()
 
