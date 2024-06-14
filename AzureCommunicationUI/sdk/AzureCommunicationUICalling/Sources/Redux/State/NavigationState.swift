@@ -26,7 +26,12 @@ struct NavigationState: Equatable {
          supportFormVisible: Bool = false,
          captionsViewVisible: Bool = false,
          captionsLanguageViewVisible: Bool = false,
-         spokenLanguageViewVisible: Bool = false) {
+         spokenLanguageViewVisible: Bool = false,
+         endCallConfirmationVisible: Bool = false,
+         audioSelectionVisible: Bool = false,
+         moreOptionsVisible: Bool = false,
+         supportShareSheetVisible: Bool = false
+    ) {
         self.status = status
         self.supportFormVisible = supportFormVisible
         self.captionsViewVisible = captionsViewVisible

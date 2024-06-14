@@ -36,9 +36,8 @@ class SetupViewModel: ObservableObject {
          networkManager: NetworkManager,
          audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
-         setupScreenViewData: SetupScreenViewData? = nil) {
-        let actionDispatch: ActionDispatch = store.dispatch
-
+         setupScreenViewData: SetupScreenViewData? = nil,
+         callType: CompositeCallType) {
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -48,6 +47,7 @@ class SetupViewModel: ObservableObject {
         self.logger = logger
         self.callType = callType
 
+        let actionDispatch: ActionDispatch = store.dispatch
         if let title = setupScreenViewData?.title, !title.isEmpty {
             // if title is not nil/empty, use given title and optional subtitle
             self.title = title
@@ -72,6 +72,10 @@ class SetupViewModel: ObservableObject {
             dispatchAction: actionDispatch,
             localUserState: store.state.localUserState)
 
+        var callButtonLocalization = LocalizationKey.joinCall
+        if self.callType == .oneToNOutgoing {
+            callButtonLocalization = LocalizationKey.startCall
+        }
         joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider

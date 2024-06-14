@@ -152,6 +152,9 @@ class CallingViewModel: ObservableObject {
             },
             showSupportFormAction: {
                 store.dispatch(action: .showSupportForm)
+            },
+            showCaptionsViewAction: {
+                store.dispatch(action: .showCaptionsView)
             }
         )
     }

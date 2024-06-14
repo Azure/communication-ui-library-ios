@@ -70,8 +70,6 @@ extension Reducer where State == NavigationState,
             captionsLanguageViewVisible = false
             spokenLanguageViewVisible = false
             moreOptionsVisible = false
-        case .hideSupportForm:
-            supportFormVisible = false
         case .showEndCallConfirmation:
             supportShareSheetVisible = false
             audioSelectionVisible = false

@@ -77,9 +77,8 @@ struct CallingView: View {
                              hideDrawer: viewModel.dismissAudioDevicesDrawer) {
                     AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
                 }
-            }
-            .frame(width: geometry.size.width,
-                   height: geometry.size.height)
+            }.frame(width: geometry.size.width,
+                    height: geometry.size.height)
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
