@@ -62,7 +62,7 @@ struct CallingView: View {
                     spokenLanguageView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
-
+                }
                 BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
                     LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
