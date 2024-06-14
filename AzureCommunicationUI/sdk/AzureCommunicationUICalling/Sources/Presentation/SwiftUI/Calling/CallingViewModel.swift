@@ -44,6 +44,7 @@ class CallingViewModel: ObservableObject {
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
     var supportFormViewModel: SupportFormViewModel!
     var captionsLanguageListViewModel: CaptionsLanguageListViewModel!
+    var captionsListViewModel: CaptionsListViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -149,6 +150,7 @@ class CallingViewModel: ObservableObject {
 
         supportFormViewModel.update(state: state)
         captionsLanguageListViewModel.update(state: state)
+        captionsListViewModel.update(state: state)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,

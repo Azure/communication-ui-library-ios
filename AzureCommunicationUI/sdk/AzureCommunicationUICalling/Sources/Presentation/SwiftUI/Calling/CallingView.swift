@@ -258,7 +258,6 @@ struct CallingView: View {
     }
 
     var captionsInfoView: some View {
-
         return CaptionsInfoView(captionsViewManager: captionsViewManager)
             .frame(maxWidth: .infinity, maxHeight: 115, alignment: .bottom)
                 .background(Color.white)
