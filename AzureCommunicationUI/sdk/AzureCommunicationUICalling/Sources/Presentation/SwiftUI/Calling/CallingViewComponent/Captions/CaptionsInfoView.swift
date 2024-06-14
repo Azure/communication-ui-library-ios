@@ -12,7 +12,7 @@ struct CaptionsInfoView: UIViewControllerRepresentable {
     private let captionsViewManager: CaptionsViewManager
 
     private static func getCaptionsListTableViewController() -> UITableViewController {
-        let tableViewController = CaptionsTableViewController(style: .plain)
+        let tableViewController = CaptionsInfoViewController(style: .plain)
         tableViewController.loadViewIfNeeded()
         tableViewController.tableView.separatorStyle = .none
         tableViewController.tableView.register(CompositeParticipantsListCell.self,

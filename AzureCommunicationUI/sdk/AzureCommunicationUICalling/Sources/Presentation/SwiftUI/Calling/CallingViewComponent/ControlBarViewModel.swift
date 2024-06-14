@@ -137,7 +137,7 @@ class ControlBarViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.dispatch(.showSupportForm)
+                self.dispatch(.showSpokenLanguageView)
             },
             showCaptionsViewAction: { [weak self] in
                 guard let self = self else {

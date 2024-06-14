@@ -130,16 +130,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         captionsFeature.delegate = self
     }
 
-//    func assign (_ teamsCaptions: TeamsCaptions) {
-//        self.teamsCaptions = teamsCaptions
-//        teamsCaptions.delegate = self
-//    }
-
-    func assign (_ communicationCaptions: CommunicationCaptions) {
-        self.communicationCaptions = communicationCaptions
-        communicationCaptions.delegate = communicationCaptionsHandler
-    }
-
     func setupProperties() {
         participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
@@ -280,28 +270,16 @@ extension CallingSDKEventsHandler: CallDelegate,
                         // communication captions
                         self.communicationCaptions = value as? CommunicationCaptions
                         self.communicationCaptions?.delegate = self.communicationCaptionsHandler
-                        let startCaptionsOptions = StartCaptionsOptions()
-                        startCaptionsOptions.spokenLanguage = "en-us"
-                        self.communicationCaptions?.startCaptions(options: startCaptionsOptions,
-                                                                  completionHandler: { (error) in
-                            if error != nil {
-                                print("InderpalTest UICaptions failed to start")
-                            }
-                        })
+                        self.captionsSupportedSpokenLanguages.send(self.communicationCaptions?
+                            .supportedSpokenLanguages ?? [])
                     }
 
                     if value?.type == CaptionsType.teamsCaptions {
-                        // communication captions
+                        // teams captions
                         self.teamsCaptions = value as? TeamsCaptions
                         self.teamsCaptions?.delegate = self.teamsCaptionsHandler
-                        let startCaptionsOptions = StartCaptionsOptions()
-                        startCaptionsOptions.spokenLanguage = "en-us"
-                        self.teamsCaptions?.startCaptions(options: startCaptionsOptions,
-                                                                  completionHandler: { (error) in
-                            if error != nil {
-                                print("InderpalTest UICaptions failed to start")
-                            }
-                        })
+                        self.captionsSupportedSpokenLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
+                        self.captionsSupportedCaptionLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
                     }
                 }
             }

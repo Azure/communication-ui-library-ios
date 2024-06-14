@@ -32,7 +32,7 @@ extension DrawerListItemViewModel: Equatable {
 }
 
 class SelectableDrawerListItemViewModel: DrawerListItemViewModel {
-    let isSelected: Bool
+    var isSelected: Bool
 
     init(icon: CompositeIcon,
          title: String,

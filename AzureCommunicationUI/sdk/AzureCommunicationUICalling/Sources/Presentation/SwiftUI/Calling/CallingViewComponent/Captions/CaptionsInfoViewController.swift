@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class CaptionsTableViewController: UITableViewController {
+class CaptionsInfoViewController: UITableViewController {
     override func viewDidLoad() {
         tableView.separatorStyle = .none
         super.viewDidLoad()

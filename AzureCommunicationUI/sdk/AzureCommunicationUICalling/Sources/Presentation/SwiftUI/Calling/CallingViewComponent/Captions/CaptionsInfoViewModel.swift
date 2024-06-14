@@ -20,14 +20,4 @@ class CaptionsInfoViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.localizationProvider = localizationProvider
     }
-
-    func update(remoteParticipantsState: CaptionsState) {
-//        captionsList = remoteParticipantsState.participantInfoList
-//            .filter({ participant in
-//                participant.status != .disconnected
-//            })
-//            .map {
-//                compositeViewModelFactory.makeCaptionsInfoCellViewModel(participantInfoModel: $0)
-//            }
-    }
 }

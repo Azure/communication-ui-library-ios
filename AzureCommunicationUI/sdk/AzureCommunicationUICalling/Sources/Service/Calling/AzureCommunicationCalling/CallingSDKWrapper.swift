@@ -443,7 +443,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         let captionsFeature = call.feature(Features.captions)
         let options = StartCaptionsOptions()
-        options.spokenLanguage = "en-us"
+        options.spokenLanguage = language
         do {
             let captions = try await captionsFeature.getCaptions()
             try await captions.startCaptions(options: options)

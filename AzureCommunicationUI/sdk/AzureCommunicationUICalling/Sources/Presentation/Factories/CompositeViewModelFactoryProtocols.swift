@@ -75,6 +75,7 @@ protocol CompositeViewModelFactoryProtocol {
         isSelected: Bool,
         onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
     func makeSupportFormViewModel() -> SupportFormViewModel
+    func makeCaptionsLanguageListViewModel() -> CaptionsLanguageListViewModel
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,

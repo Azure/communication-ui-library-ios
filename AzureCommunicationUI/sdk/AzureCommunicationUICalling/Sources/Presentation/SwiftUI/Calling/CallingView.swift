@@ -57,6 +57,12 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
                 }
+                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                             hideDrawer: viewModel.captionsLanguageListViewModel.hideForm) {
+                    spokenLanguageView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+                }
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -306,6 +312,13 @@ struct CallingView: View {
         return Group {
             SupportFormView(viewModel: viewModel.supportFormViewModel)
         }
+    }
+
+    var spokenLanguageView: some View {
+        return Group {
+            CaptionsLanguageListView(isPresented: $viewModel.captionsLanguageListViewModel.isDisplayed,
+                                     viewModel: viewModel.captionsLanguageListViewModel)
+        }.frame(maxHeight: 200)
     }
 
 }

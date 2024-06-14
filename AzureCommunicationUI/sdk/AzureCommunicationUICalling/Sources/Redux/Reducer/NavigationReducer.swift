@@ -11,6 +11,8 @@ extension Reducer where State == NavigationState,
         var navigationStatus = state.status
         var supportFormVisible = state.supportFormVisible
         var captionViewVisible = state.captionsViewVisible
+        var captionsLanguageViewVisible = state.captionsLanguageViewVisible
+        var spokenLanguageViewVisible = state.spokenLanguageViewVisible
         switch action {
         case .callingViewLaunched:
             navigationStatus = .inCall
@@ -22,15 +24,43 @@ extension Reducer where State == NavigationState,
         case .showSupportForm:
             supportFormVisible = true
             captionViewVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
         case .showCaptionsView:
             captionViewVisible = true
             supportFormVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
         case .hideCaptionsView:
             captionViewVisible = false
             supportFormVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
         case .hideSupportForm:
             supportFormVisible = false
             captionViewVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
+        case .showSpokenLanguageView:
+            supportFormVisible = false
+            captionViewVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = true
+        case .hideSpokenLanguageView:
+            supportFormVisible = false
+            captionViewVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
+        case .showCaptionsLanguageView:
+            supportFormVisible = false
+            captionViewVisible = false
+            captionsLanguageViewVisible = true
+            spokenLanguageViewVisible = false
+        case .hideCaptionsLanguageView:
+            supportFormVisible = false
+            captionViewVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -52,6 +82,10 @@ extension Reducer where State == NavigationState,
                 .callDiagnosticAction:
             return state
         }
-        return NavigationState(status: navigationStatus, supportFormVisible: supportFormVisible)
+        return NavigationState(status: navigationStatus,
+                               supportFormVisible: supportFormVisible,
+                               captionsViewVisible: captionViewVisible,
+                               captionsLanguageViewVisible: captionsLanguageViewVisible,
+                               spokenLanguageViewVisible: spokenLanguageViewVisible)
     }
 }

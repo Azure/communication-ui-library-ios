@@ -54,6 +54,10 @@ extension Reducer where State == ErrorState,
                 .showSupportForm,
                 .showCaptionsView,
                 .hideCaptionsView,
+                .showSpokenLanguageView,
+                .hideSpokenLanguageView,
+                .showCaptionsLanguageView,
+                .hideCaptionsLanguageView,
                 .visibilityAction,
                 .captionsAction:
             return state

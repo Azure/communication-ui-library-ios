@@ -43,6 +43,7 @@ class CallingViewModel: ObservableObject {
     var errorInfoViewModel: ErrorInfoViewModel!
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
     var supportFormViewModel: SupportFormViewModel!
+    var captionsLanguageListViewModel: CaptionsLanguageListViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -66,7 +67,7 @@ class CallingViewModel: ObservableObject {
         let actionDispatch: ActionDispatch = store.dispatch
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
-
+        captionsLanguageListViewModel = compositeViewModelFactory.makeCaptionsLanguageListViewModel()
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
                                                                                                 isIpadInterface)
@@ -147,6 +148,7 @@ class CallingViewModel: ObservableObject {
         }
 
         supportFormViewModel.update(state: state)
+        captionsLanguageListViewModel.update(state: state)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,

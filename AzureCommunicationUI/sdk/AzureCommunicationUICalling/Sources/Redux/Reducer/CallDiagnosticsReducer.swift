@@ -43,6 +43,10 @@ extension Reducer where State == CallDiagnosticsState,
              .hideSupportForm,
              .showCaptionsView,
              .hideCaptionsView,
+             .showSpokenLanguageView,
+             .hideSpokenLanguageView,
+             .showCaptionsLanguageView,
+             .hideCaptionsLanguageView,
              .visibilityAction,
              .captionsAction:
             return state

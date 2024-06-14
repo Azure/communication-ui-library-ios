@@ -24,5 +24,9 @@ enum Action: Equatable {
     case hideSupportForm
     case showCaptionsView
     case hideCaptionsView
+    case showSpokenLanguageView
+    case hideSpokenLanguageView
+    case showCaptionsLanguageView
+    case hideCaptionsLanguageView
     case captionsAction(CaptionsAction)
 }
