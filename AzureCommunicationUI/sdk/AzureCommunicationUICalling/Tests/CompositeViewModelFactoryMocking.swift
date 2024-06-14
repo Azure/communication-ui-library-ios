@@ -324,7 +324,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                     dispatchAction: dispatchAction,
                                                                     localUserState: localUserState,
                                                                     localizationProvider: localizationProvider,
-                                                                    audioVideoMode: .audioAndVideo)
+                                                                    audioVideoMode: .audioAndVideo,
+                                                                    setupScreenOptions: nil)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {

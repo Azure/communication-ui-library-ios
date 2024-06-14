@@ -50,6 +50,7 @@ extension CompositeViewModelFactoryTests {
                                          leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled,
                                          retrieveLogFiles: { return [] },
                                          callType: .groupCall,
+                                         setupScreenOptions: nil,
                                          capabilitiesManager: CapabilitiesManager(callType: .groupCall))
     }
 }

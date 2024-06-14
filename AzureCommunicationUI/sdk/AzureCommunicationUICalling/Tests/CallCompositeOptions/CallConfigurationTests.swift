@@ -51,6 +51,19 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertEqual(config.compositeCallType, .teamsMeeting)
         XCTAssertNil(config.participants)
     }
+    func testRoomIdInitialization() {
+        let roomId = "123345"
+        let locator = JoinLocator.roomCall(roomId: roomId)
+        let config = CallConfiguration(locator: locator, participants: nil, callId: nil)
+
+        XCTAssertNil(config.groupId)
+        XCTAssertNil(config.meetingLink)
+        XCTAssertNil(config.meetingId)
+        XCTAssertNil(config.meetingPasscode)
+        XCTAssertEqual(roomId, config.roomId)
+        XCTAssertEqual(config.compositeCallType, .roomsCall)
+        XCTAssertNil(config.participants)
+    }
     func testOneToOneIncomingInitialization() {
         let callId = "call123"
         let config = CallConfiguration(locator: nil, participants: nil, callId: callId)

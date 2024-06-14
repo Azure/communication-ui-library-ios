@@ -19,6 +19,7 @@ public struct CallCompositeOptions {
     private(set) var callKitOptions: CallKitOptions?
     private(set) var disableInternalPushForIncomingCall = false
     private(set) var displayName: String?
+    private(set) var setupScreenOptions: SetupScreenOptions?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -59,6 +60,7 @@ public struct CallCompositeOptions {
         self.capabilitiesChangedNotificationMode = capabilitiesChangedNotificationMode
         self.callKitOptions = callKitOptions
         self.displayName = displayName
+        self.setupScreenOptions = setupScreenOptions
         self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 }

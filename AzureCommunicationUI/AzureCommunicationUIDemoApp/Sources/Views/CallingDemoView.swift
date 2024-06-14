@@ -391,6 +391,7 @@ extension CallingDemoView {
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
+        let setupScreenOptions = SetupScreenOptions(cameraButtonEnabled: false, microphoneButtonEnabled: false)
         let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -416,7 +417,8 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
-            callKitOptions: callKitOptions) :
+            callKitOptions: callKitOptions,
+            setupScreenOptions: setupScreenOptions) :
         CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
@@ -429,7 +431,8 @@ extension CallingDemoView {
             callScreenOptions: callScreenOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
-            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)
+            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall,
+            setupScreenOptions: setupScreenOptions)
 
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         if let credential = try? await getTokenCredential() {

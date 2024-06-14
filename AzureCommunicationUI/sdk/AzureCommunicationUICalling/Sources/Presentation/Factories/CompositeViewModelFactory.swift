@@ -24,6 +24,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
+    private let setupScreenOptions: SetupScreenOptions?
     private let callType: CompositeCallType
 
     init(logger: Logger,
@@ -40,6 +41,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType,
+         setupScreenOptions: SetupScreenOptions?,
          capabilitiesManager: CapabilitiesManager
     ) {
 
@@ -56,6 +58,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.retrieveLogFiles = retrieveLogFiles
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.setupScreenOptions = setupScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
     }
@@ -373,7 +376,8 @@ extension CompositeViewModelFactory {
                                  dispatchAction: dispatchAction,
                                  localUserState: localUserState,
                                  localizationProvider: localizationProvider,
-                                 audioVideoMode: audioVideoMode)
+                                 audioVideoMode: audioVideoMode,
+                                 setupScreenOptions: setupScreenOptions)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
