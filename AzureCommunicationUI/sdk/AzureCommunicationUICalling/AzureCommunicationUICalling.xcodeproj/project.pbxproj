@@ -29,6 +29,7 @@
 		11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */; };
 		1115A0002A1D50EC00C0E3B8 /* OrientationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */; };
 		113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113738FE29D638BB00D48EAB /* DefaultUserState.swift */; };
+		11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */; };
 		11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */; };
 		11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
@@ -233,8 +234,24 @@
 		A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810529F33A43001B80A3 /* CallStateManager.swift */; };
 		A464810829F345E8001B80A3 /* CallCompositeDismissed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */; };
 		A464810A29F34A06001B80A3 /* CompositeExitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810929F34A06001B80A3 /* CompositeExitManager.swift */; };
+		A46B90952BF5937A0096788C /* CallKitOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46B90942BF5937A0096788C /* CallKitOptions.swift */; };
+		A46B90972BF5939D0096788C /* CallKitRemoteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46B90962BF5939D0096788C /* CallKitRemoteInfo.swift */; };
+		A46B90992BF593C50096788C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46B90982BF593C50096788C /* Caller.swift */; };
+		A47792962C02E96100F38FFC /* CommunicationTokenCredentialError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47792952C02E96100F38FFC /* CommunicationTokenCredentialError.swift */; };
 		A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */; };
 		A48BE79129FB424F009B2A46 /* CallStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */; };
+		A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D18012BFD84D600FD994E /* IncomingCallError.swift */; };
+		A4DBCEB72BFAE8F500332E7B /* IncomingCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */; };
+		A4DBCEB92BFAE91E00332E7B /* IncomingCallCancelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */; };
+		A4DBCEBB2BFB9C4000332E7B /* PushNotificationEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */; };
+		A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */; };
+		A4DBCEBF2BFB9DA800332E7B /* CallingSDKInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */; };
+		A4F5F8F42C180A0100A74513 /* CallError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F8F32C180A0100A74513 /* CallError.swift */; };
+		A4F5F9FC2C18B33200A74513 /* PushNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */; };
+		A4F5F9FE2C18BAAD00A74513 /* CallKitOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */; };
+		A4F5FA002C18BFAD00A74513 /* CallingSDKInitializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */; };
+		A4F5FA022C18CF6500A74513 /* PushNotificationEventTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */; };
+		A4F5FA042C18E98800A74513 /* CallScreenOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -348,6 +365,7 @@
 		11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationOptions.swift; sourceTree = "<group>"; };
 		11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationProvider.swift; sourceTree = "<group>"; };
 		113738FE29D638BB00D48EAB /* DefaultUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserState.swift; sourceTree = "<group>"; };
+		11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfigurationTests.swift; sourceTree = "<group>"; };
 		11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayView.swift; sourceTree = "<group>"; };
 		11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModel.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
@@ -592,8 +610,24 @@
 		A464810529F33A43001B80A3 /* CallStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManager.swift; sourceTree = "<group>"; };
 		A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeDismissed.swift; sourceTree = "<group>"; };
 		A464810929F34A06001B80A3 /* CompositeExitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManager.swift; sourceTree = "<group>"; };
+		A46B90942BF5937A0096788C /* CallKitOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitOptions.swift; sourceTree = "<group>"; };
+		A46B90962BF5939D0096788C /* CallKitRemoteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitRemoteInfo.swift; sourceTree = "<group>"; };
+		A46B90982BF593C50096788C /* Caller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caller.swift; sourceTree = "<group>"; };
+		A47792952C02E96100F38FFC /* CommunicationTokenCredentialError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationTokenCredentialError.swift; sourceTree = "<group>"; };
 		A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManagerTests.swift; sourceTree = "<group>"; };
 		A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManagerTests.swift; sourceTree = "<group>"; };
+		A48D18012BFD84D600FD994E /* IncomingCallError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallError.swift; sourceTree = "<group>"; };
+		A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCall.swift; sourceTree = "<group>"; };
+		A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallCancelled.swift; sourceTree = "<group>"; };
+		A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationEventType.swift; sourceTree = "<group>"; };
+		A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
+		A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitializer.swift; sourceTree = "<group>"; };
+		A4F5F8F32C180A0100A74513 /* CallError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallError.swift; sourceTree = "<group>"; };
+		A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationTests.swift; sourceTree = "<group>"; };
+		A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitOptionsTests.swift; sourceTree = "<group>"; };
+		A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitializerTests.swift; sourceTree = "<group>"; };
+		A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationEventTypeTests.swift; sourceTree = "<group>"; };
+		A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenOptionsTests.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -1181,6 +1215,11 @@
 			children = (
 				1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */,
 				500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */,
+				A4F5F9FB2C18B33200A74513 /* PushNotificationTests.swift */,
+				A4F5F9FD2C18BAAD00A74513 /* CallKitOptionsTests.swift */,
+				A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */,
+				A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */,
+				11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1242,6 +1281,7 @@
 				75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */,
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
 				1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */,
+				A4DBCEBE2BFB9DA800332E7B /* CallingSDKInitializer.swift */,
 			);
 			path = AzureCommunicationCalling;
 			sourceTree = "<group>";
@@ -1300,6 +1340,7 @@
 				A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */,
 				05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */,
 				05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */,
+				A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1368,6 +1409,16 @@
 				A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */,
 				532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */,
 				534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */,
+				A46B90942BF5937A0096788C /* CallKitOptions.swift */,
+				A46B90962BF5939D0096788C /* CallKitRemoteInfo.swift */,
+				A46B90982BF593C50096788C /* Caller.swift */,
+				A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */,
+				A4DBCEB82BFAE91E00332E7B /* IncomingCallCancelled.swift */,
+				A4DBCEBA2BFB9C4000332E7B /* PushNotificationEventType.swift */,
+				A4DBCEBC2BFB9C5D00332E7B /* PushNotification.swift */,
+				A48D18012BFD84D600FD994E /* IncomingCallError.swift */,
+				A47792952C02E96100F38FFC /* CommunicationTokenCredentialError.swift */,
+				A4F5F8F32C180A0100A74513 /* CallError.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1842,6 +1893,7 @@
 				50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */,
 				98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */,
 				B2F079672AC6262100E9AA9E /* CallDiagnosticsReducerTests.swift in Sources */,
+				A4F5FA042C18E98800A74513 /* CallScreenOptionsTests.swift in Sources */,
 				1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */,
 				B2DBBE582AC357EC000E8676 /* MessageBarDiagnosticViewModelTests.swift in Sources */,
 				50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */,
@@ -1854,7 +1906,9 @@
 				FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */,
 				1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */,
 				FAC1FECC27C98FC200D95845 /* BannerViewModelMocking.swift in Sources */,
+				A4F5F9FC2C18B33200A74513 /* PushNotificationTests.swift in Sources */,
 				50E2D6A926FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift in Sources */,
+				A4F5FA022C18CF6500A74513 /* PushNotificationEventTypeTests.swift in Sources */,
 				FA03CC8327C8189900986D4E /* SetupControlBarViewModelMocking.swift in Sources */,
 				1F09A11126BA484000BACED7 /* ControlBarViewModelTests.swift in Sources */,
 				50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */,
@@ -1878,8 +1932,10 @@
 				98966FE326A5E58D00069857 /* SetupControlBarViewModelTests.swift in Sources */,
 				FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */,
 				A830C30C264D7C0900766E3D /* PermissionReducerTests.swift in Sources */,
+				A4F5FA002C18BFAD00A74513 /* CallingSDKInitializerTests.swift in Sources */,
 				A869A63B26546A2E003CC4F2 /* PermissionsManagerMocking.swift in Sources */,
 				1F09A10A26BA47EC00BACED7 /* SetupViewModelTests.swift in Sources */,
+				11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */,
 				A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */,
 				A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */,
 				8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */,
@@ -1894,6 +1950,7 @@
 				756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */,
 				1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */,
 				FAC1FECE27C98FC200D95845 /* ParticipantGridViewModelMocking.swift in Sources */,
+				A4F5F9FE2C18BAAD00A74513 /* CallKitOptionsTests.swift in Sources */,
 				FAC1FEC127C94D9200D95845 /* AudioDeviceListViewModelMocking.swift in Sources */,
 				5A31489916982D3699CD756D /* LocalVideoViewModelTests.swift in Sources */,
 			);
@@ -1926,6 +1983,7 @@
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
 				75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */,
 				53535A152C10FE5B000BF96B /* AudioDeviceListView.swift in Sources */,
+				A46B90972BF5939D0096788C /* CallKitRemoteInfo.swift in Sources */,
 				7589CE1A297765E30092AE38 /* ViewExtension.swift in Sources */,
 				1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */,
 				9823AB4B26A13F4B0006266D /* PreviewAreaViewModel.swift in Sources */,
@@ -1945,6 +2003,7 @@
 				529C34E328A4B25400ACD918 /* NetworkManager.swift in Sources */,
 				A874EDCA266167E5003C7D92 /* LifeCycleReducer.swift in Sources */,
 				1FBCB6D72654765D00F57EEA /* LocalUserState.swift in Sources */,
+				A46B90992BF593C50096788C /* Caller.swift in Sources */,
 				05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */,
 				05E28FF62AD60E5900FF7020 /* ParticipantRoleEnum.swift in Sources */,
 				B2B1DB3D2ABE35B0003B00DB /* MessageBarDiagnosticView.swift in Sources */,
@@ -1971,13 +2030,17 @@
 				885F3F9A291DCDF500B86C9B /* DrawerListItemViewModel.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */,
+				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
+				A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
 				0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */,
+				A4DBCEB92BFAE91E00332E7B /* IncomingCallCancelled.swift in Sources */,
 				50E2D69726EBCD15006B0EF4 /* CompositeParticipantsListCell.swift in Sources */,
+				A47792962C02E96100F38FFC /* CommunicationTokenCredentialError.swift in Sources */,
 				0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */,
 				A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */,
 				FAACEE3E28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift in Sources */,
@@ -2026,6 +2089,7 @@
 				1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */,
 				985DF374269D096000CFDA55 /* SetupControlBarView.swift in Sources */,
 				A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */,
+				A4DBCEB72BFAE8F500332E7B /* IncomingCall.swift in Sources */,
 				88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */,
 				50FA45F8267D466D001844AC /* InfoHeaderView.swift in Sources */,
 				1F13D37026AB293700E31666 /* NavigationReducer.swift in Sources */,
@@ -2054,6 +2118,7 @@
 				533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */,
 				534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
+				A4F5F8F42C180A0100A74513 /* CallError.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
 				5347C1D92C179C730084AE56 /* ThrottleMiddleware.swift in Sources */,
@@ -2062,10 +2127,12 @@
 				1F11D2BD2640BD9800D33838 /* CallingMiddleware.swift in Sources */,
 				503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */,
 				982C2833267D0C4500427246 /* CompositeButton.swift in Sources */,
+				A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */,
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
 				756F59782966020800BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */,
 				988799912745EABE00AA3759 /* SourceViewSpace.swift in Sources */,
 				1FBCB6B12649EB1200F57EEA /* RemoteParticipantExtension.swift in Sources */,
+				A46B90952BF5937A0096788C /* CallKitOptions.swift in Sources */,
 				5A1F4BCF2BD9756D00EA7B2D /* CallScreenControlBarOptions.swift in Sources */,
 				FA6B61A1290C89EC004B8188 /* DrawerViewControllerProtocol.swift in Sources */,
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,
@@ -2078,6 +2145,7 @@
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
 				759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */,
+				A4DBCEBF2BFB9DA800332E7B /* CallingSDKInitializer.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
 				5A1F4BCD2BD9756D00EA7B2D /* LeaveCallConfirmationMode.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,
@@ -2096,6 +2164,7 @@
 				1F2BED6C262F8B7000D98266 /* StoreExtensions.swift in Sources */,
 				881D8F7227FB6992008EC897 /* LocalOptions.swift in Sources */,
 				50E2D69126EAAB33006B0EF4 /* CompositeParticipantsList.swift in Sources */,
+				A4DBCEBB2BFB9C4000332E7B /* PushNotificationEventType.swift in Sources */,
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
@@ -2366,6 +2435,7 @@
 			baseConfigurationReference = B75F3B6936323E60658040C6 /* Pods-AzureCommunicationUICalling.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UBF8T346G9;
@@ -2383,6 +2453,7 @@
 				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.Calling;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2396,6 +2467,7 @@
 			baseConfigurationReference = 69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UBF8T346G9;
@@ -2413,6 +2485,7 @@
 				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.Calling;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;

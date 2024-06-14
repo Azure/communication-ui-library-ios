@@ -15,16 +15,19 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configura";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Indietro";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Partecipa alla chiamata";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Avvia chiamata";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Avvio chiamata in corso…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Partecipazione alla chiamata disabilitata";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Avvia chiamata disabilitata";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video disattivato";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video attivato";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video disattivato";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video attivato";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video disattivato";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video attivato";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfono disattivato";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfono attivato";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfono disattivato";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfono attivato";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfono disattivato";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfono acceso";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Seleziona dispositivo audio";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Vai a Impostazioni";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Altro";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Condividi informazioni di diagnostica";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Chiamata in corso...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Registrazione e trascrizione avviate.";
@@ -158,3 +163,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Allega screenshot";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Segnala un problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Invia";
+

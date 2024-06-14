@@ -36,6 +36,9 @@ public struct CallCompositeErrorCode {
 
     /// Error when local user fails to resume a call.
     static let callResume: String = "callResume"
+
+    /// Communication token credential not set.
+    public static let communicationTokenCredentialNotSet: String = "communicationTokenCredentialNotSet"
 }
 
 /// The error thrown after Call Composite launching.

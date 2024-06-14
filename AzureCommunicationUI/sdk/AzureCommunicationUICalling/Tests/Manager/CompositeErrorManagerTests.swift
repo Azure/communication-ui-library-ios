@@ -59,6 +59,15 @@ class CompositeErrorManagerTests: XCTestCase {
 
         mockStoreFactory.setState(newState)
         wait(for: [handlerCallExpectation], timeout: 1)
+        // error test
+        XCTAssertTrue(CallCompositeError(code: "abc",
+                                         error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
+                      == CallCompositeError(code: "abc",
+                                            error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
+        XCTAssertFalse(CallCompositeError(code: "abc",
+                                         error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
+                      == CallCompositeError(code: "ab",
+                                            error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
     }
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {

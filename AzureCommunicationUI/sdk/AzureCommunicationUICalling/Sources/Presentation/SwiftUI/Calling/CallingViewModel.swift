@@ -19,6 +19,7 @@ class CallingViewModel: ObservableObject {
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let callType: CompositeCallType
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
@@ -52,7 +53,8 @@ class CallingViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode
+         leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         callType: CompositeCallType
     ) {
         self.logger = logger
         self.store = store
@@ -62,6 +64,7 @@ class CallingViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.callType = callType
         let actionDispatch: ActionDispatch = store.dispatch
 
         audioDeviceListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
@@ -87,8 +90,12 @@ class CallingViewModel: ObservableObject {
             dispatchAction: actionDispatch)
 
         let isCallConnected = store.state.callingState.status == .connected
+        let callingStatus = store.state.callingState.status
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: callingStatus)
+        let isRemoteHold = store.state.callingState.status == .remoteHold
 
-        isParticipantGridDisplayed = isCallConnected &&
+        isParticipantGridDisplayed = (isCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
 
         leaveCallConfirmationViewModel = compositeViewModelFactory.makeLeaveCallConfirmationViewModel(
@@ -213,12 +220,14 @@ class CallingViewModel: ObservableObject {
         moreCallOptionsListViewModel.update(navigationState: state.navigationState,
                                             visibilityState: state.visibilityState)
         let newIsCallConnected = state.callingState.status == .connected
-        let shouldParticipantGridDisplayed = newIsCallConnected &&
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: state.callingState.status)
+        let isRemoteHold = store.state.callingState.status == .remoteHold
+        let shouldParticipantGridDisplayed = (newIsCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
-
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
                 guard let self = self else {
@@ -249,5 +258,13 @@ class CallingViewModel: ObservableObject {
         isVideoGridViewAccessibilityAvailable = !lobbyOverlayViewModel.isDisplayed
         && !onHoldOverlayViewModel.isDisplayed
         && (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
+    }
+
+    private static func isOutgoingCallDialingInProgress(callType: CompositeCallType,
+                                                        callingStatus: CallingStatus?) -> Bool {
+        let isOutgoingCall = (callType == .oneToNOutgoing && (callingStatus == nil
+                                                              || callingStatus == .connecting
+                                                              || callingStatus == .ringing))
+        return isOutgoingCall
     }
 }

@@ -82,7 +82,7 @@ struct ParticipantGridCellView: View {
 
     var avatarView: some View {
         return VStack(alignment: .center, spacing: 5) {
-            CompositeAvatar(displayName: $viewModel.displayName,
+            CompositeAvatar(displayName: $viewModel.avatarDisplayName,
                             avatarImage: $avatarImage,
                             isSpeaking: viewModel.isSpeaking && !viewModel.isMuted)
             .frame(width: avatarSize, height: avatarSize)

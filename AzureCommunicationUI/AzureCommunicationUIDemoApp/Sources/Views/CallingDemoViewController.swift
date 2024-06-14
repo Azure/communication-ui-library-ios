@@ -9,6 +9,7 @@ import SwiftUI
 import AzureCommunicationCommon
 import AppCenterCrashes
 import AVFoundation
+import CallKit
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -26,8 +27,6 @@ class CallingDemoViewController: UIViewController {
     }
     var callingViewModel: CallingDemoViewModel
 
-    private var callComposite: CallComposite?
-
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!
     private var acsTokenTextField: UITextField!
@@ -35,6 +34,11 @@ class CallingDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
+    /* <MEETING_ID_LOCATOR> */
+    private var teamsMeetingIdTextField: UITextField!
+    /* </MEETING_ID_LOCATOR> */
+    private var teamsMeetingPasscodeTextField: UITextField!
+    private var participantMRIsTextField: UITextField!
     /* <ROOMS_SUPPORT> */
     private var roomCallTextField: UITextField!
     private var selectedRoomRoleType: RoomRoleType = .presenter
@@ -42,6 +46,10 @@ class CallingDemoViewController: UIViewController {
     /* </ROOMS_SUPPORT> */
     private var settingsButton: UIButton!
     private var showCallHistoryButton: UIButton!
+    private var registerPushButton: UIButton!
+    private var unregisterPushButton: UIButton!
+    private var acceptCallButton: UIButton!
+    private var declineCallButton: UIButton!
     private var startExperienceButton: UIButton!
     private var showExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
@@ -51,6 +59,8 @@ class CallingDemoViewController: UIViewController {
     private var callStateLabel: UILabel!
     private var titleLabelConstraint: NSLayoutConstraint!
     private var callStateLabelConstraint: NSLayoutConstraint!
+    private var incomingCallId = ""
+    private var isIncomingCall = false
 
     // The space needed to fill the top part of the stack view,
     // in order to make the stackview content centered
@@ -158,6 +168,17 @@ class CallingDemoViewController: UIViewController {
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
         }
+        /* <MEETING_ID_LOCATOR> */
+        if !envConfigSubject.teamsMeetingId.isEmpty {
+            teamsMeetingIdTextField.text = envConfigSubject.teamsMeetingId
+        }
+        if !envConfigSubject.teamsMeetingPasscode.isEmpty {
+            teamsMeetingPasscodeTextField.text = envConfigSubject.teamsMeetingPasscode
+        }
+        /* </MEETING_ID_LOCATOR> */
+        if !envConfigSubject.participantMRIs.isEmpty {
+            participantMRIsTextField.text = envConfigSubject.participantMRIs
+        }
         if envConfigSubject.selectedMeetingType == .groupCall {
             meetingTypeSegmentedControl.selectedSegmentIndex = 0
         } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
@@ -203,9 +224,19 @@ class CallingDemoViewController: UIViewController {
         callStateLabel.text = callState.requestString
     }
 
-    private func startExperience(with link: String) async {
+    func createCallComposite() async -> CallComposite? {
+        print("CallingDemoView:::: createCallComposite requesting")
+        if GlobalCompositeManager.callComposite != nil {
+            print("CallingDemoView:::: createCallComposite exist")
+            return GlobalCompositeManager.callComposite!
+        }
+        print("CallingDemoView:::: createCallComposite creating")
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
+        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                        envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
+        let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -215,13 +246,12 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
-        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
-                                                        envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled)
-        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
+
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
-        let callCompositeOptions = CallCompositeOptions(
+        let callKitOptions = envConfigSubject.enableCallKit ? getCallKitOptions() : nil
+
+        let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
@@ -230,15 +260,48 @@ class CallingDemoViewController: UIViewController {
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
-            callScreenOptions: callScreenOptions)
-        #if DEBUG
-        let callComposite = envConfigSubject.useMockCallingSDKHandler ?
-            CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: callingSDKWrapperMock)
-            : CallComposite(withOptions: callCompositeOptions)
-        #else
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
-        #endif
+            callScreenOptions: callScreenOptions,
+            callKitOptions: callKitOptions) :
+        CallCompositeOptions(
+            theme: envConfigSubject.useCustomColors
+            ? CustomColorTheming(envConfigSubject: envConfigSubject)
+            : Theming(envConfigSubject: envConfigSubject),
+            localization: localizationConfig,
+            setupScreenOrientation: setupViewOrientation,
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
+            callScreenOptions: callScreenOptions,
+            callKitOptions: callKitOptions,
+            displayName: envConfigSubject.displayName,
+            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)
+
+        let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
+        if let credential = try? await getTokenCredential() {
+            #if DEBUG
+            let callComposite = useMockCallingSDKHandler ?
+                CallComposite(withOptions: callCompositeOptions,
+                              callingSDKWrapperProtocol: callingSDKWrapperMock)
+            : ( envConfigSubject.useDeprecatedLaunch ?
+                CallComposite(withOptions: callCompositeOptions) :
+                    CallComposite(credential: credential, withOptions: callCompositeOptions))
+
+            callingSDKWrapperMock?.callComposite = callComposite
+
+            #else
+            let callComposite = envConfigSubject.useDeprecatedLaunch ?
+            CallComposite(withOptions: callCompositeOptions) :
+                CallComposite(credential: credential, withOptions: callCompositeOptions)
+            #endif
+            subscribeToEvents(callComposite: callComposite)
+            GlobalCompositeManager.callComposite = callComposite
+            self.envConfigSubject.saveFromState()
+            return callComposite
+        }
+        return nil
+    }
+
+    func subscribeToEvents(callComposite: CallComposite) {
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -251,13 +314,23 @@ class CallingDemoViewController: UIViewController {
                 return
             }
             self.onError(error,
-                         callComposite: composite)
+                    callComposite: composite)
         }
-        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callState in
+
+        let onPipChangedHandler: (Bool) -> Void = { isPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isPictureInPicture)
+        }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
+            print("::::UIKitDemoView::getEventsHandler::onUserReportedIssue \(issue)")
+        }
+
+        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
             }
-            self.onCallStateChanged(callState, callComposite: composite)
+            self.onCallStateChanged(callStateEvent,
+                    callComposite: composite)
         }
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
             if self.envConfigSubject.useRelaunchOnDismissedToggle && self.exitCompositeExecuted {
@@ -267,10 +340,6 @@ class CallingDemoViewController: UIViewController {
                                 }
                             }
                         }
-        }
-
-        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [] userIssue in
-            print("::::UIKitDemoView::getEventsHandler::onUserReportedIssue \(userIssue)")
         }
 
         exitCompositeExecuted = false
@@ -283,12 +352,41 @@ class CallingDemoViewController: UIViewController {
             }
         }
 
+        let callKitCallAccepted: (String) -> Void = { [weak callComposite] callId in
+            self.acceptCallButton.isHidden = true
+            self.declineCallButton.isHidden = true
+            callComposite?.launch(callIdAcceptedFromCallKit: callId, localOptions: self.getLocalOptions())
+        }
+
+        let onIncomingCall: (IncomingCall) -> Void = { [] incomingCall in
+            self.incomingCallId = incomingCall.callId
+            self.isIncomingCall = true
+            self.acceptCallButton.isHidden = false
+            self.declineCallButton.isHidden = false
+        }
+
+        let onIncomingCallCancelled: (IncomingCallCancelled) -> Void = { [] _ in
+            self.isIncomingCall = false
+            self.acceptCallButton.isHidden = true
+            self.declineCallButton.isHidden = true
+        }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
         callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
+        callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
+        callComposite.events.onIncomingCall = onIncomingCall
+        callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
+    }
 
+    func getLocalOptions() -> LocalOptions {
+        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
+                                nil : envConfigSubject.renderedDisplayName
+        let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
+                                                      displayName: renderDisplayName)
         /* <ROOMS_SUPPORT> */
         let roomRole = envConfigSubject.selectedRoomRoleType
         var roomRoleData: ParticipantRole?
@@ -300,27 +398,25 @@ class CallingDemoViewController: UIViewController {
             }
         }
         /* </ROOMS_SUPPORT> */
-        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
-                                nil : envConfigSubject.renderedDisplayName
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
-        let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
-                                                      displayName: renderDisplayName)
-        let localOptions = LocalOptions(participantViewData: participantViewData,
+        return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        /* <ROOMS_SUPPORT:6> */
-                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                        /* <ROOMS_SUPPORT> */
                                          roleHint: roomRoleData
-                                        /* <|ROOMS_SUPPORT>
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
-                                        </ROOMS_SUPPORT:1> */
+                                        /* <|ROOMS_SUPPORT> */
         )
-        self.callComposite = callComposite
+    }
 
-        if let credential = try? await getTokenCredential() {
+    func startCallWithDeprecatedLaunch() async {
+        if let credential = try? await getTokenCredential(),
+           let callComposite = try? await createCallComposite() {
+            let link = getMeetingLink()
+            var localOptions = getLocalOptions()
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
@@ -329,22 +425,148 @@ class CallingDemoViewController: UIViewController {
                                                                   displayName: getDisplayName()),
                                      localOptions: localOptions)
             case .teamsMeeting:
-                callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                  credential: credential,
-                                                                  displayName: getDisplayName()),
+                if !teamsMeetingTextField.text!.isEmpty {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                     credential: credential,
+                                                     displayName: getDisplayName()),
+                        localOptions: localOptions
+                    )
+                }/* <MEETING_ID_LOCATOR> */
+                  else if !teamsMeetingIdTextField.text!.isEmpty && !teamsMeetingPasscodeTextField.text!.isEmpty {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId: teamsMeetingIdTextField.text!,
+                                                                          meetingPasscode:
+                                                                            teamsMeetingPasscodeTextField.text!),
+                                                     credential: credential,
+                                                     displayName: getDisplayName()),
+                        localOptions: localOptions
+                    )
+                }/* </MEETING_ID_LOCATOR> */
+            case.oneToNCall:
+                let ids: [String] = link.split(separator: ",").map {
+                    String($0).trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+                let communicationIdentifiers: [CommunicationIdentifier] =
+                ids.map { createCommunicationIdentifier(fromRawId: $0) }
+                callComposite.launch(participants: communicationIdentifiers,
                                      localOptions: localOptions)
-            /* <ROOMS_SUPPORT:13> */
+            /* <ROOMS_SUPPORT> */
             case .roomCall:
                 callComposite.launch(remoteOptions:
                                         RemoteOptions(for:
                                                 .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
                                      localOptions: localOptions)
-            /* </ROOMS_SUPPORT:6> */
+            /* </ROOMS_SUPPORT> */
+            }
+        }
+    }
+
+    private func startExperience(with link: String) async {
+        if let callComposite = try? await createCallComposite() {
+            var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+            if remoteInfoDisplayName.isEmpty {
+                remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
+            }
+            let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
+            let callKitRemoteInfo = envConfigSubject.enableRemoteInfo ?
+            CallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                     handle: cxHandle) : nil
+            if envConfigSubject.useDeprecatedLaunch {
+                await startCallWithDeprecatedLaunch()
+            } else {
+                let localOptions = getLocalOptions()
+                switch selectedMeetingType {
+                case .groupCall:
+                    let uuid = UUID(uuidString: link) ?? UUID()
+                    callComposite.launch(locator: .groupCall(groupId: uuid),
+                                         callKitRemoteInfo: callKitRemoteInfo,
+                                         localOptions: localOptions)
+                case .teamsMeeting:
+                    if !link.isEmpty {
+                        callComposite.launch(locator: .teamsMeeting(teamsLink: link),
+                                             callKitRemoteInfo: callKitRemoteInfo,
+                                             localOptions: localOptions)
+                    } else {
+                        callComposite.launch(locator: .teamsMeetingId(meetingId:
+                                                                        envConfigSubject.teamsMeetingId,
+                                                                      meetingPasscode:
+                                                                        envConfigSubject.teamsMeetingPasscode),
+                                             callKitRemoteInfo: callKitRemoteInfo,
+                                             localOptions: localOptions)
+                    }
+                case.oneToNCall:
+                    let ids: [String] = link.split(separator: ",").map {
+                        String($0).trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                    let communicationIdentifiers: [CommunicationIdentifier] =
+                    ids.map { createCommunicationIdentifier(fromRawId: $0) }
+                    callComposite.launch(participants: communicationIdentifiers,
+                                         callKitRemoteInfo: callKitRemoteInfo,
+                                         localOptions: localOptions)
+                /* <ROOMS_SUPPORT> */
+                case .roomCall:
+                    callComposite.launch(locator: .roomCall(roomId: link),
+                                         callKitRemoteInfo: callKitRemoteInfo,
+                                         localOptions: localOptions)
+                /* </ROOMS_SUPPORT> */
+                }
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
+        }
+    }
+
+    private func getCallKitOptions() -> CallKitOptions {
+        let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        let isCallHoldSupported = envConfigSubject.enableRemoteHold
+        let callKitOptions = CallKitOptions(providerConfig: providerConfig,
+                                           isCallHoldSupported: isCallHoldSupported,
+                                           provideRemoteInfo: incomingCallRemoteInfo,
+                                           configureAudioSession: configureAudioSession)
+        return callKitOptions
+    }
+
+    public func incomingCallRemoteInfo(info: Caller) -> CallKitRemoteInfo {
+        let cxHandle = CXHandle(type: .generic, value: "Incoming call")
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = info.displayName
+        }
+        let callKitRemoteInfo = CallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                                               handle: cxHandle)
+        return callKitRemoteInfo
+    }
+
+    public func configureAudioSession() -> Error? {
+        let audioSession = AVAudioSession.sharedInstance()
+        var configError: Error?
+        do {
+            try audioSession.setCategory(.playAndRecord)
+        } catch {
+            configError = error
+        }
+        return configError
+    }
+
+    private func getCXHandleName() -> String {
+        switch envConfigSubject.selectedMeetingType {
+        case .groupCall:
+            return "Group call"
+        case .teamsMeeting:
+            return "Teams Metting"
+        case .oneToNCall:
+            return "Outgoing call"
+        case .roomCall:
+            return "Rooms call"
         }
     }
 
@@ -382,7 +604,9 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
-        /* <ROOMS_SUPPORT:6> */ 
+        case .oneToNCall:
+            return participantMRIsTextField.text ?? ""
+        /* <ROOMS_SUPPORT:6> */
         case .roomCall:
             return roomCallTextField.text ?? ""
         /* </ROOMS_SUPPORT:2> */
@@ -404,6 +628,14 @@ class CallingDemoViewController: UIViewController {
         let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(errorAlert,
+                animated: true,
+                completion: nil)
+    }
+
+    private func showAlert(for message: String) {
+        let alert = UIAlertController(title: "Message", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert,
                 animated: true,
                 completion: nil)
     }
@@ -502,7 +734,73 @@ class CallingDemoViewController: UIViewController {
     }
 
     @objc func onShowExperienceBtnPressed() {
-        self.callComposite?.isHidden = false
+        Task {
+            await createCallComposite()?.isHidden = false
+        }
+    }
+
+    @objc func onRegisterPushBtnPressed() {
+        Task {
+            await createCallComposite()?
+                .registerPushNotifications(
+                    deviceRegistrationToken:
+                        envConfigSubject.deviceToken!) { result in
+                            switch result {
+                            case .success:
+                                self.showAlert(for: "Register Voip Success")
+                            case .failure(let error):
+                                self.showAlert(for: "Register Voip fail: \(error.localizedDescription)")
+                            }
+                }
+        }
+    }
+
+    @objc func onUnregisterPushBtnPressed() {
+        Task {
+            await createCallComposite()?
+                .unregisterPushNotifications { result in
+                            switch result {
+                            case .success:
+                                self.showAlert(for: "Unregister Voip Success")
+                            case .failure(let error):
+                                self.showAlert(for: "Unregister Voip fail: \(error.localizedDescription)")
+                            }
+                }
+        }
+    }
+
+    @objc func onAcceptCallBtnPressed() {
+        self.acceptCallButton.isHidden = true
+        self.declineCallButton.isHidden = true
+        Task {
+            await createCallComposite()?.accept(incomingCallId: incomingCallId,
+                                                localOptions: getLocalOptions())
+        }
+    }
+
+    @objc func onDeclineCallBtnPressed() {
+        self.acceptCallButton.isHidden = true
+        self.declineCallButton.isHidden = true
+        Task {
+            await createCallComposite()?.reject(incomingCallId: incomingCallId) { result in
+                switch result {
+                case .success:
+                    self.showAlert(for: "Reject Success")
+                case .failure(let error):
+                    self.showAlert(for: "Reject fail: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+        let pushNotificationInfo = PushNotification(data: dictionaryPayload)
+        if envConfigSubject.acsToken.isEmpty {
+            self.envConfigSubject.load()
+        }
+        Task {
+            await createCallComposite()?.handlePushNotification(pushNotification: pushNotificationInfo)
+        }
     }
 
     private func updateAcsTokenTypeFields() {
@@ -521,6 +819,11 @@ class CallingDemoViewController: UIViewController {
         case .groupCall:
             groupCallTextField.isHidden = false
             teamsMeetingTextField.isHidden = true
+            /* <MEETING_ID_LOCATOR> */
+            teamsMeetingIdTextField.isHidden = true
+            teamsMeetingPasscodeTextField.isHidden = true
+             /* </MEETING_ID_LOCATOR> */
+            participantMRIsTextField.isHidden = true
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
@@ -528,15 +831,35 @@ class CallingDemoViewController: UIViewController {
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
+            /* <MEETING_ID_LOCATOR> */
+            teamsMeetingIdTextField.isHidden = false
+            teamsMeetingPasscodeTextField.isHidden = false
+             /* </MEETING_ID_LOCATOR> */
+            participantMRIsTextField.isHidden = true
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
         case .roomCall:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = true
+            /* <MEETING_ID_LOCATOR> */
+            teamsMeetingIdTextField.isHidden = true
+            teamsMeetingPasscodeTextField.isHidden = true
+             /* </MEETING_ID_LOCATOR> */
+            participantMRIsTextField.isHidden = true
             roomCallTextField.isHidden = false
             roomRoleTypeSegmentedControl.isHidden = false
         /* </ROOMS_SUPPORT> */
+        case .oneToNCall:
+            groupCallTextField.isHidden = true
+            teamsMeetingTextField.isHidden = true
+            roomCallTextField.isHidden = true
+            roomRoleTypeSegmentedControl.isHidden = true
+            participantMRIsTextField.isHidden = false
+            /* <MEETING_ID_LOCATOR> */
+            teamsMeetingIdTextField.isHidden = true
+            teamsMeetingPasscodeTextField.isHidden = true
+            /* </MEETING_ID_LOCATOR> */
         }
     }
 
@@ -549,16 +872,25 @@ class CallingDemoViewController: UIViewController {
     }
 
     private var isStartExperienceDisabled: Bool {
-        if (selectedAcsTokenType == .token && acsTokenTextField.text!.isEmpty)
-            || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
-            || (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty)
-            || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty)
-            /* <ROOMS_SUPPORT> */
-            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty)
+        if (selectedAcsTokenType == .token && acsTokenTextField.text!.isEmpty) ||
+            (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty) ||
+            (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty) ||
+            (selectedMeetingType == .teamsMeeting &&
+             (teamsMeetingTextField.text!.isEmpty /* <MEETING_ID_LOCATOR> */ &&
+              (teamsMeetingIdTextField.text!.isEmpty || teamsMeetingPasscodeTextField.text!.isEmpty)
+              /* </MEETING_ID_LOCATOR> */)) ||
+            (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) {
+            if (selectedAcsTokenType == .token && acsTokenTextField.text!.isEmpty)
+                || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
+                || (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty)
+                || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty)
+                || (selectedMeetingType == .oneToNCall && participantMRIsTextField.text!.isEmpty)
+                /* <ROOMS_SUPPORT> */
+                || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty)
             /* </ROOMS_SUPPORT:5> */ {
-            return true
+                return true
+            }
         }
-
         return false
     }
 
@@ -662,6 +994,34 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
         teamsMeetingTextField.borderStyle = .roundedRect
         teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+        /* <MEETING_ID_LOCATOR> */
+        teamsMeetingIdTextField = UITextField()
+        teamsMeetingIdTextField.placeholder = "Teams Meeting Id"
+        teamsMeetingIdTextField.text = envConfigSubject.teamsMeetingId
+        teamsMeetingIdTextField.delegate = self
+        teamsMeetingIdTextField.sizeToFit()
+        teamsMeetingIdTextField.translatesAutoresizingMaskIntoConstraints = false
+        teamsMeetingIdTextField.borderStyle = .roundedRect
+        teamsMeetingIdTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+
+        teamsMeetingPasscodeTextField = UITextField()
+        teamsMeetingPasscodeTextField.placeholder = "Teams Meeting Passcode"
+        teamsMeetingPasscodeTextField.text = envConfigSubject.teamsMeetingPasscode
+        teamsMeetingPasscodeTextField.delegate = self
+        teamsMeetingPasscodeTextField.sizeToFit()
+        teamsMeetingPasscodeTextField.translatesAutoresizingMaskIntoConstraints = false
+        teamsMeetingPasscodeTextField.borderStyle = .roundedRect
+        teamsMeetingPasscodeTextField.addTarget(
+            self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+        /* </MEETING_ID_LOCATOR> */
+        participantMRIsTextField = UITextField()
+        participantMRIsTextField.placeholder = "Partiicpant MRIs (, separated)"
+        participantMRIsTextField.text = envConfigSubject.participantMRIs
+        participantMRIsTextField.delegate = self
+        participantMRIsTextField.sizeToFit()
+        participantMRIsTextField.translatesAutoresizingMaskIntoConstraints = false
+        participantMRIsTextField.borderStyle = .roundedRect
+        participantMRIsTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
 
         /* <ROOMS_SUPPORT> */
         roomCallTextField = UITextField()
@@ -681,7 +1041,7 @@ class CallingDemoViewController: UIViewController {
         selectedRoomRoleType = envConfigSubject.selectedRoomRoleType
         /* </ROOMS_SUPPORT> */
 
-        meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting", "Room Call"])
+        meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting", "1:N", "Room Call"])
         meetingTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedMeetingType.rawValue
         meetingTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         meetingTypeSegmentedControl.addTarget(self,
@@ -722,7 +1082,6 @@ class CallingDemoViewController: UIViewController {
         startExperienceButton.sizeToFit()
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
-
         startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
 
         showExperienceButton = UIButton()
@@ -738,8 +1097,67 @@ class CallingDemoViewController: UIViewController {
         showExperienceButton.sizeToFit()
         showExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         showExperienceButton.addTarget(self, action: #selector(onShowExperienceBtnPressed), for: .touchUpInside)
-
         showExperienceButton.accessibilityLabel = AccessibilityId.showExperienceAccessibilityID.rawValue
+
+        registerPushButton = UIButton()
+        registerPushButton.backgroundColor = .systemBlue
+        registerPushButton.setTitleColor(UIColor.white, for: .normal)
+        registerPushButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        registerPushButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                   left: LayoutConstants.buttonHorizontalInset,
+                                                                   bottom: LayoutConstants.buttonVerticalInset,
+                                                                   right: LayoutConstants.buttonHorizontalInset)
+        registerPushButton.layer.cornerRadius = 8
+        registerPushButton.setTitle("Register push", for: .normal)
+        registerPushButton.sizeToFit()
+        registerPushButton.translatesAutoresizingMaskIntoConstraints = false
+        registerPushButton.addTarget(self, action: #selector(onRegisterPushBtnPressed), for: .touchUpInside)
+        registerPushButton.accessibilityLabel = AccessibilityId.registerPushAccessibilityID.rawValue
+
+        unregisterPushButton = UIButton()
+        unregisterPushButton.backgroundColor = .systemBlue
+        unregisterPushButton.setTitleColor(UIColor.white, for: .normal)
+        unregisterPushButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        unregisterPushButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                   left: LayoutConstants.buttonHorizontalInset,
+                                                                   bottom: LayoutConstants.buttonVerticalInset,
+                                                                   right: LayoutConstants.buttonHorizontalInset)
+        unregisterPushButton.layer.cornerRadius = 8
+        unregisterPushButton.setTitle("Unregister push", for: .normal)
+        unregisterPushButton.sizeToFit()
+        unregisterPushButton.translatesAutoresizingMaskIntoConstraints = false
+        unregisterPushButton.addTarget(self, action: #selector(onUnregisterPushBtnPressed), for: .touchUpInside)
+        unregisterPushButton.accessibilityLabel = AccessibilityId.unregisterPushAccessibilityID.rawValue
+
+        acceptCallButton = UIButton()
+        acceptCallButton.backgroundColor = .systemBlue
+        acceptCallButton.setTitleColor(UIColor.white, for: .normal)
+        acceptCallButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        acceptCallButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                               left: LayoutConstants.buttonHorizontalInset,
+                                                               bottom: LayoutConstants.buttonVerticalInset,
+                                                               right: LayoutConstants.buttonHorizontalInset)
+        acceptCallButton.layer.cornerRadius = 8
+        acceptCallButton.setTitle("Accept", for: .normal)
+        acceptCallButton.sizeToFit()
+        acceptCallButton.translatesAutoresizingMaskIntoConstraints = false
+        acceptCallButton.addTarget(self, action: #selector(onAcceptCallBtnPressed), for: .touchUpInside)
+        acceptCallButton.accessibilityLabel = AccessibilityId.acceptCallAccessibilityID.rawValue
+
+        declineCallButton = UIButton()
+        declineCallButton.backgroundColor = .systemBlue
+        declineCallButton.setTitleColor(UIColor.white, for: .normal)
+        declineCallButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        declineCallButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                               left: LayoutConstants.buttonHorizontalInset,
+                                                               bottom: LayoutConstants.buttonVerticalInset,
+                                                               right: LayoutConstants.buttonHorizontalInset)
+        declineCallButton.layer.cornerRadius = 8
+        declineCallButton.setTitle("Reject", for: .normal)
+        declineCallButton.sizeToFit()
+        declineCallButton.translatesAutoresizingMaskIntoConstraints = false
+        declineCallButton.addTarget(self, action: #selector(onDeclineCallBtnPressed), for: .touchUpInside)
+        declineCallButton.accessibilityLabel = AccessibilityId.declineCallAccessibilityID.rawValue
 
         callStateLabel = UILabel()
         callStateLabel.text = "State"
@@ -784,6 +1202,22 @@ class CallingDemoViewController: UIViewController {
         showHistoryButtonHStack.distribution = .fill
         showHistoryButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        let startCallButtonHSpacer1 = UIView()
+        startCallButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        startCallButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let startCallButtonHSpacer2 = UIView()
+        startCallButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        startCallButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let startCallButtonHStack = UIStackView(arrangedSubviews: [startCallButtonHSpacer1,
+                                                                  startExperienceButton,
+                                                                  startCallButtonHSpacer2])
+        startCallButtonHStack.axis = .horizontal
+        startCallButtonHStack.alignment = .fill
+        startCallButtonHStack.distribution = .fill
+        startCallButtonHStack.translatesAutoresizingMaskIntoConstraints = false
+
         let startButtonHSpacer1 = UIView()
         startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
         startButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -820,6 +1254,18 @@ class CallingDemoViewController: UIViewController {
         spaceView1.translatesAutoresizingMaskIntoConstraints = false
         spaceView1.heightAnchor.constraint(equalToConstant: 0).isActive = true
 
+        let registerUnregisterHStack = UIStackView(arrangedSubviews:
+                                                    [registerPushButton, unregisterPushButton])
+        registerUnregisterHStack.axis = .horizontal
+        registerUnregisterHStack.distribution = .fillEqually // Adjust distribution as needed
+        registerUnregisterHStack.spacing = 8
+
+        let acceptDeclineHStack = UIStackView(arrangedSubviews:
+                                                    [acceptCallButton, declineCallButton])
+        acceptDeclineHStack.axis = .horizontal
+        acceptDeclineHStack.distribution = .fillEqually // Adjust distribution as needed
+        acceptDeclineHStack.spacing = 8
+
         stackView = UIStackView(arrangedSubviews: [spaceView1, acsTokenTypeSegmentedControl,
                                                    acsTokenUrlTextField,
                                                    acsTokenTextField,
@@ -827,6 +1273,11 @@ class CallingDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
+                                                   /* <MEETING_ID_LOCATOR> */
+                                                   teamsMeetingIdTextField,
+                                                   teamsMeetingPasscodeTextField,
+                                                   /* </MEETING_ID_LOCATOR> */
+                                                   participantMRIsTextField,
                                                    /* <ROOMS_SUPPORT:7> */ 
                                                    roomCallTextField,
                                                    roomRoleTypeSegmentedControl,
@@ -834,7 +1285,9 @@ class CallingDemoViewController: UIViewController {
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,
                                                    startButtonHStack,
-                                                   showButtonHStack])
+                                                   showButtonHStack,
+                                                   registerUnregisterHStack,
+                                                   acceptDeclineHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -873,6 +1326,8 @@ class CallingDemoViewController: UIViewController {
         updateMeetingTypeFields()
         startExperienceButton.isEnabled = !isStartExperienceDisabled
         updateStartExperieceButton()
+        self.acceptCallButton.isHidden = true
+        self.declineCallButton.isHidden = true
     }
 
     private func adjustScrollView() {

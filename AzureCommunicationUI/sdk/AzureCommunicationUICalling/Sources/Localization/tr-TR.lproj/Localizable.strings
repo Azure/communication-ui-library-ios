@@ -15,16 +15,19 @@
 "AzureCommunicationUICalling.SetupView.Title"="Kur";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Aramayı başlat";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Arama başlatılıyor…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Aramaya Katılma Devre Dışı";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Arama Başlatma Devre Dışı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Görüntü açık";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Görüntü kapalı";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Görüntü açık";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon kapalı";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon açık";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon kapalı";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon açık";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon kapalı";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon açık";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Cihaz";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Ses cihazını seç";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ayarlara Git";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Tümü";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Tanılama bilgilerini paylaş";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Aranıyor...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Kayıt ve döküm başlatıldı.";
@@ -158,3 +163,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Ekran görüntüsü ekle";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
 "AzureCommunicationUICalling.SendFeedback.Text"="Gönder";
+

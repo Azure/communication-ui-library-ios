@@ -10,7 +10,7 @@ class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
-
+    private let callType: CompositeCallType
     private var callingStatus: CallingStatus = .none
 
     let isRightToLeft: Bool
@@ -36,9 +36,9 @@ class SetupViewModel: ObservableObject {
          networkManager: NetworkManager,
          audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
-         setupScreenViewData: SetupScreenViewData? = nil) {
+         setupScreenViewData: SetupScreenViewData? = nil,
+         callType: CompositeCallType) {
         let actionDispatch: ActionDispatch = store.dispatch
-
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -46,6 +46,7 @@ class SetupViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
+        self.callType = callType
 
         if let title = setupScreenViewData?.title, !title.isEmpty {
             // if title is not nil/empty, use given title and optional subtitle
@@ -58,9 +59,12 @@ class SetupViewModel: ObservableObject {
         }
 
         previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
-
-        joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
-
+        var joiningButtonLocalization = LocalizationKey.joiningCall
+        if self.callType == .oneToNOutgoing {
+            joiningButtonLocalization = LocalizationKey.startingCall
+        }
+        joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel(
+            title: self.localizationProvider.getLocalizedString(joiningButtonLocalization))
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
 
@@ -68,10 +72,15 @@ class SetupViewModel: ObservableObject {
             dispatchAction: actionDispatch,
             localUserState: store.state.localUserState)
 
+        var callButtonLocalization = LocalizationKey.joinCall
+        if self.callType == .oneToNOutgoing {
+            callButtonLocalization = LocalizationKey.startCall
+        }
+
         joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider
-                .getLocalizedString(.joinCall),
+                .getLocalizedString(callButtonLocalization),
             iconName: .meetNow,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
@@ -79,6 +88,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
+
         updateAccessibilityLabel()
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
@@ -110,11 +120,19 @@ class SetupViewModel: ObservableObject {
     func updateAccessibilityLabel() {
         if joinCallButtonViewModel.isDisabled {
             // Update the accessibility label for the disabled state
+            var key = LocalizationKey.joinCallDiableStateAccessibilityLabel
+            if callType == .oneToNOutgoing {
+                key = LocalizationKey.startCallDiableStateAccessibilityLabel
+            }
             joinCallButtonViewModel.update(accessibilityLabel:
-            self.localizationProvider.getLocalizedString(.joinCallDiableStateAccessibilityLabel))
+            self.localizationProvider.getLocalizedString(key))
         } else {
             // Update the accessibility label for the normal state
-            joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+            var key = LocalizationKey.joinCall
+            if callType == .oneToNOutgoing {
+                key = LocalizationKey.startCall
+            }
+            joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(key))
         }
     }
 

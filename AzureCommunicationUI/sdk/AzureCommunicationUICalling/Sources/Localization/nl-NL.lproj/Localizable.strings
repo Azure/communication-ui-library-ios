@@ -15,16 +15,19 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configuratie";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Terug";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Gesprek starten";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Oproep starten…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Deelnemen aan gesprek uitgeschakeld";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Oproep starten uitgeschakeld";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video uit";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video aan";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video aan";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video uit";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video aan";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfoon uit";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfoon aan";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfoon uit";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfoon aan";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfoon uit";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfoon aan";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Apparaat";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audioapparaat selecteren";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ga naar Instellingen";
@@ -94,6 +97,8 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Meer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnostische gegevens delen";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Bellen...";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Opname en transcriptie zijn gestart.";
@@ -158,3 +163,4 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Schermopname bijvoegen";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Een probleem melden";
 "AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";
+

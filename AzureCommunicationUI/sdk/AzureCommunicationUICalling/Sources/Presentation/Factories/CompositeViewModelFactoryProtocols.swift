@@ -80,7 +80,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
-    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
+    func makeJoiningCallActivityViewModel(title: String) -> JoiningCallActivityViewModel
 }
 
 extension CompositeViewModelFactoryProtocol {
@@ -95,5 +95,9 @@ extension CompositeViewModelFactoryProtocol {
                                           isDisabled: isDisabled,
                                           paddings: nil,
                                           action: action)
+    }
+
+    func makeJoiningCallActivityViewModel(title: String) -> JoiningCallActivityViewModel {
+        return JoiningCallActivityViewModel(title: title)
     }
 }

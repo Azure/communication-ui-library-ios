@@ -45,10 +45,6 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
         self.logger = logger
     }
 
-    deinit {
-        disposeViews()
-    }
-
     func updateDisplayedRemoteVideoStream(_ videoViewIdArray: [RemoteParticipantVideoViewId]) {
         let displayedKeys = videoViewIdArray.map {
             return generateCacheKey(userIdentifier: $0.userIdentifier, videoStreamId: $0.videoStreamIdentifier)
@@ -73,7 +69,6 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
         if let localRenderCache = localRendererViews.value(forKey: videoStreamId) {
             return localRenderCache.rendererView
         }
-
         guard let videoStream: CompositeLocalVideoStream<AzureCommunicationCalling.LocalVideoStream> =
                 callingSDKWrapper.getLocalVideoStream(videoStreamId) else {
             return nil
@@ -159,8 +154,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
     }
 
     // MARK: Helper functions
-
-    private func disposeViews() {
+    func disposeViews() {
         displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { key in
             self.disposeRemoteParticipantVideoRendererView(key)
         }
@@ -178,7 +172,9 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     private func disposeLocalVideoRendererCache(_ identifier: String) {
         if let renderer = localRendererViews.removeValue(forKey: identifier) {
-            renderer.renderer.dispose()
+            if renderer.rendererView.isRendering() {
+                renderer.renderer.dispose()
+            }
         }
     }
 
