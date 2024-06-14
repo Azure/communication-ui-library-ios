@@ -30,6 +30,7 @@
 		0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */; };
 		054F2B532A2679160017985B /* CallPipVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054F2B522A2679160017985B /* CallPipVideoViewController.swift */; };
 		058371FD2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */; };
+		058371FF2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */; };
 		058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */; };
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
@@ -383,6 +384,7 @@
 		0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderViewModel.swift; sourceTree = "<group>"; };
 		054F2B522A2679160017985B /* CallPipVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPipVideoViewController.swift; sourceTree = "<group>"; };
 		058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesManagerTests.swift; sourceTree = "<group>"; };
+		058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantMenuViewModelTests.swift; sourceTree = "<group>"; };
 		058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModelTest.swift; sourceTree = "<group>"; };
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
@@ -868,19 +870,20 @@
 				50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */,
 				503300FD27079FC900289BB5 /* BannerTextViewModelTests.swift */,
 				503300FB2706763800289BB5 /* BannerViewModelTests.swift */,
+				B26F4B082ABA2F6B00753B6C /* BottomToastViewModelTests.swift */,
+				B2B1DB372ABA5339003B00DB /* CallDiagnosticsViewModelTests.swift */,
 				1F09A10F26BA484000BACED7 /* CallingViewModelTests.swift */,
 				1F09A10C26BA484000BACED7 /* ControlBarViewModelTests.swift */,
 				50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */,
+				1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */,
 				8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */,
 				058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */,
+				B2DBBE572AC357EC000E8676 /* MessageBarDiagnosticViewModelTests.swift */,
 				1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */,
 				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
 				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
+				058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */,
 				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
-				1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */,
-				B26F4B082ABA2F6B00753B6C /* BottomToastViewModelTests.swift */,
-				B2B1DB372ABA5339003B00DB /* CallDiagnosticsViewModelTests.swift */,
-				B2DBBE572AC357EC000E8676 /* MessageBarDiagnosticViewModelTests.swift */,
 				5312A5372B75E8ED001C92E1 /* SupportFormViewModelTests.swift */,
 			);
 			path = Calling;
@@ -1982,6 +1985,7 @@
 				11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */,
 				A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */,
 				A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */,
+				058371FF2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift in Sources */,
 				8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */,
 				1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */,
 				FA03CC8127C8189900986D4E /* PreviewAreaViewModelMocking.swift in Sources */,
