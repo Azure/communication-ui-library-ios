@@ -65,9 +65,7 @@ class ControlBarViewModel: ObservableObject {
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
-            isDisabled: !self.capabilitiesManager
-                             .hasCapability(capabilities: localUserState.capabilities,
-                                           capability: ParticipantCapabilityType.turnVideoOn)) { [weak self] in
+            isDisabled: isCameraDisabled()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -81,9 +79,7 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .micOff,
             buttonType: .controlButton,
-            isDisabled: !self.capabilitiesManager
-                             .hasCapability(capabilities: localUserState.capabilities,
-                                           capability: ParticipantCapabilityType.unmuteMicrophone)) { [weak self] in
+            isDisabled: isMicDisabled()) { [weak self] in
                 guard let self = self else {
                     return
                 }

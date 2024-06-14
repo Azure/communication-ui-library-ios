@@ -590,6 +590,30 @@ class ControlBarViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isCameraDisplayed)
     }
 
+    func test_controlBarViewModel_capabilities_turnVideoOn_isCameraDisabledFalse() {
+        capabilitiesManager = CapabilitiesManager(callType: .roomsCall)
+        let sut = makeSUT(capabilities: [.turnVideoOn])
+        XCTAssertFalse(sut.isCameraDisabled())
+    }
+
+    func test_controlBarViewModel_capabilities_turnVideoOn_isCameraDisabledTrue() {
+        capabilitiesManager = CapabilitiesManager(callType: .roomsCall)
+        let sut = makeSUT(capabilities: [])
+        XCTAssertTrue(sut.isCameraDisabled())
+    }
+
+    func test_controlBarViewModel_capabilities_unmuteMicrophone_isMicDisabledFalse() {
+        capabilitiesManager = CapabilitiesManager(callType: .roomsCall)
+        let sut = makeSUT(capabilities: [.unmuteMicrophone])
+        XCTAssertFalse(sut.isMicDisabled())
+    }
+
+    func test_controlBarViewModel_capabilities_unmuteMicrophone_isMicDisabledTrue() {
+        capabilitiesManager = CapabilitiesManager(callType: .roomsCall)
+        let sut = makeSUT(capabilities: [])
+        XCTAssertTrue(sut.isMicDisabled())
+    }
+
     func test_controlBarViewModel_update_when_statesUpdated_then_micButtonViewModelDisabledStateUpdated() {
         let expectation = XCTestExpectation(description: "Mic button disabled state should be updated")
         expectation.assertForOverFulfill = true
@@ -661,13 +685,15 @@ class ControlBarViewModelTests: XCTestCase {
 
 extension ControlBarViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderMocking? = nil,
-                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) -> ControlBarViewModel {
+                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
+                 capabilities: Set<ParticipantCapabilityType> = []) -> ControlBarViewModel {
+        var localUserState = LocalUserState(capabilities: capabilities)
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
-                                   localUserState: storeFactory.store.state.localUserState,
+                                   localUserState: localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysEnabled,
                                    capabilitiesManager: capabilitiesManager)
