@@ -72,6 +72,30 @@ class CallDiagnosticsViewModelTests: XCTestCase {
         super.tearDown()
         localizationProvider = nil
     }
+
+    func test_receiving_media_diagnostic_update_should_be_showing_message_bar() {
+        for diagnostic in MessageBarDiagnosticViewModel.handledMediaDiagnostics {
+            let collector = DiagnosticCollector()
+
+            let sut = makeSUT(dispatchAction: collector.dispatch)
+
+            for messageBar in sut.messageBarStack {
+                XCTAssertFalse(messageBar.isDisplayed)
+            }
+
+            let badState = MediaDiagnosticModel(diagnostic: diagnostic, value: true)
+            sut.update(diagnosticsState: CallDiagnosticsState(mediaDiagnostic: badState))
+
+            XCTAssertTrue(sut.messageBarStack.first(where: { $0.mediaDiagnostic == diagnostic })?.isDisplayed ?? false)
+
+            let goodState = MediaDiagnosticModel(diagnostic: diagnostic, value: false)
+            sut.update(diagnosticsState: CallDiagnosticsState(mediaDiagnostic: goodState))
+
+            XCTAssertFalse(sut.messageBarStack.first(where: { $0.mediaDiagnostic == diagnostic })?.isDisplayed ?? true)
+
+            XCTAssertEqual(collector.dismissedMedia, [diagnostic])
+        }
+    }
 }
 
 extension CallDiagnosticsViewModelTests {
