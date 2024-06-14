@@ -285,8 +285,8 @@ class CallingViewModelTests: XCTestCase {
 }
 
 extension CallingViewModelTests {
-    func makeSUT() -> CallingViewModel {
-        var cvm = CallingViewModel(compositeViewModelFactory: factoryMocking,
+    func makeSUT(callType: CompositeCallType = .groupCall) -> CallingViewModel {
+        return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProvider(logger: logger),
@@ -294,8 +294,5 @@ extension CallingViewModelTests {
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
                                 leaveCallConfirmationMode: .alwaysEnabled)
-        // Actions can be dispatched in ViewModel creation, we should clear them for the tests
-        storeFactory.reset()
-        return cvm
     }
 }

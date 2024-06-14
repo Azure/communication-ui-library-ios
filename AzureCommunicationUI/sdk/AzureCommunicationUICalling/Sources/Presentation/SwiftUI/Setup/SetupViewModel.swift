@@ -38,6 +38,7 @@ class SetupViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil,
          callType: CompositeCallType) {
+        let actionDispatch: ActionDispatch = store.dispatch
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -87,6 +88,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
+
         updateAccessibilityLabel()
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,

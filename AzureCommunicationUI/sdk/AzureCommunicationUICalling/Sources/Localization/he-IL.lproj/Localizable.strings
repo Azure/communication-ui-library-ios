@@ -19,7 +19,7 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="מתחיל התקשרות…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "הצטרפות לשיחה מושבתת";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "התחלת שיחה מושבתת";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";

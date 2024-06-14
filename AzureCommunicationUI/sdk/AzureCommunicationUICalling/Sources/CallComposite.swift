@@ -679,7 +679,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         guard let credential = credential else {
             if let didFail = events.onError {
                 let compositeError = CallCompositeError(
-                    code: CallCompositeErrorCode.communicationTokenCredentialsNotSet,
+                    code: CallCompositeErrorCode.communicationTokenCredentialNotSet,
                     error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
                 didFail(compositeError)
             }

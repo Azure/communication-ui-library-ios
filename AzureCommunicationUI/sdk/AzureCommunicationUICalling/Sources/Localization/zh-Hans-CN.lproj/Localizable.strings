@@ -19,7 +19,7 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通话...";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="正在开始呼叫…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "已禁用加入通话";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "已禁用开始通话";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="视频关闭";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="视频关闭";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="视频开启";

@@ -19,7 +19,7 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="通話に参加しています...";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="通話を開始しています...";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "通話の参加が無効です";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "通話の開始が無効です";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="ビデオ オフ";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="ビデオ オフ";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="ビデオ オン";

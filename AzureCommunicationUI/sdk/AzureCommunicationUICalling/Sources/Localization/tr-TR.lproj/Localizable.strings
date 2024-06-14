@@ -19,7 +19,7 @@
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz…";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Arama başlatılıyor…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Aramaya Katılma Devre Dışı";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Arama Başlatma Devre Dışı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
