@@ -32,6 +32,7 @@
 		058371FD2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */; };
 		058371FF2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */; };
 		058372012C1C3456008D9A20 /* SetupScreenOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058372002C1C3456008D9A20 /* SetupScreenOptionsTests.swift */; };
+		058372032C1C54E4008D9A20 /* ToastNotificationReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058372022C1C54E4008D9A20 /* ToastNotificationReducerTests.swift */; };
 		058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */; };
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
@@ -387,6 +388,7 @@
 		058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesManagerTests.swift; sourceTree = "<group>"; };
 		058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantMenuViewModelTests.swift; sourceTree = "<group>"; };
 		058372002C1C3456008D9A20 /* SetupScreenOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScreenOptionsTests.swift; sourceTree = "<group>"; };
+		058372022C1C54E4008D9A20 /* ToastNotificationReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotificationReducerTests.swift; sourceTree = "<group>"; };
 		058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModelTest.swift; sourceTree = "<group>"; };
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
@@ -1409,6 +1411,7 @@
 				A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */,
 				28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */,
 				B2F079662AC6262100E9AA9E /* CallDiagnosticsReducerTests.swift */,
+				058372022C1C54E4008D9A20 /* ToastNotificationReducerTests.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -1988,6 +1991,7 @@
 				1F09A10A26BA47EC00BACED7 /* SetupViewModelTests.swift in Sources */,
 				11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */,
 				A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */,
+				058372032C1C54E4008D9A20 /* ToastNotificationReducerTests.swift in Sources */,
 				A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */,
 				058371FF2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift in Sources */,
 				8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */,

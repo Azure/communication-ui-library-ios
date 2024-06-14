@@ -18,7 +18,7 @@ enum ToastNotificationKind {
     case someFeaturesGained
 }
 
-struct ToastNotificationState {
+struct ToastNotificationState: Equatable {
     let status: ToastNotificationKind?
 
     init(status: ToastNotificationKind? = nil) {
