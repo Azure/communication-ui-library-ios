@@ -18,7 +18,10 @@ struct NavigationState: Equatable {
     let captionsViewVisible: Bool
     let captionsLanguageViewVisible: Bool
     let spokenLanguageViewVisible: Bool
-
+    let endCallConfirmationVisible: Bool
+    let audioSelectionVisible: Bool
+    let moreOptionsVisible: Bool
+    let supportShareSheetVisible: Bool
     init(status: NavigationStatus = .setup,
          supportFormVisible: Bool = false,
          captionsViewVisible: Bool = false,
@@ -29,9 +32,20 @@ struct NavigationState: Equatable {
         self.captionsViewVisible = captionsViewVisible
         self.captionsLanguageViewVisible = captionsLanguageViewVisible
         self.spokenLanguageViewVisible = spokenLanguageViewVisible
+        self.endCallConfirmationVisible = endCallConfirmationVisible
+        self.audioSelectionVisible = audioSelectionVisible
+        self.moreOptionsVisible = moreOptionsVisible
+        self.supportShareSheetVisible = supportShareSheetVisible
     }
 
     static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {
         return lhs.status == rhs.status
+            && lhs.supportFormVisible == rhs.supportFormVisible
+            && lhs.captionsLanguageViewVisible == rhs.captionsLanguageViewVisible
+            && lhs.captionsViewVisible == rhs.captionsViewVisible
+            && lhs.endCallConfirmationVisible == rhs.endCallConfirmationVisible
+            && lhs.audioSelectionVisible == rhs.audioSelectionVisible
+            && lhs.moreOptionsVisible == rhs.moreOptionsVisible
+            && lhs.supportShareSheetVisible == rhs.supportShareSheetVisible
     }
 }

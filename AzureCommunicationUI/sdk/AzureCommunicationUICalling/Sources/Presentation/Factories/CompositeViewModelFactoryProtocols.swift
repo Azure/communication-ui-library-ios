@@ -38,7 +38,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -58,9 +58,11 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeCaptionsInfoCellViewModel(participantInfoModel: ParticipantInfoModel) -> CaptionsInfoCellViewModel
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void,
-                                          showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
+        showSharingViewAction: @escaping () -> Void,
+        showSupportFormAction: @escaping () -> Void,
+        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void,
                                    showSpokenLanguage: @escaping () -> Void,
                                    isDisplayed: Bool) -> CaptionsListViewModel
@@ -69,6 +71,11 @@ protocol CompositeViewModelFactoryProtocol {
                                      title: String,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
+
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
+
     func makeSelectableDrawerListItemViewModel(
         icon: CompositeIcon,
         title: String,

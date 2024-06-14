@@ -9,7 +9,6 @@ import Foundation
 class SetupControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var audioPermission: AppPermission.Status = .unknown
-    @Published var isAudioDeviceSelectionDisplayed = false
     @Published var isCameraDisplayed = true
 
     private let logger: Logger
@@ -26,8 +25,6 @@ class SetupControlBarViewModel: ObservableObject {
     private(set) var micButtonViewModel: IconWithLabelButtonViewModel<MicButtonState>!
     private(set) var audioDeviceButtonViewModel: IconWithLabelButtonViewModel<AudioButtonState>!
 
-    let audioDevicesListViewModel: AudioDevicesListViewModel
-
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          dispatchAction: @escaping ActionDispatch,
@@ -38,10 +35,6 @@ class SetupControlBarViewModel: ObservableObject {
         self.logger = logger
         self.dispatch = dispatchAction
         self.localizationProvider = localizationProvider
-
-        audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
-            dispatchAction: dispatchAction,
-            localUserState: localUserState)
 
         cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             selectedButtonState: CameraButtonState.videoOff,
@@ -116,7 +109,7 @@ class SetupControlBarViewModel: ObservableObject {
     }
 
     func selectAudioDeviceButtonTapped() {
-        isAudioDeviceSelectionDisplayed = true
+        dispatch(.showAudioSelection)
     }
 
     func isCameraDisabled() -> Bool {
@@ -148,8 +141,6 @@ class SetupControlBarViewModel: ObservableObject {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
             updateButtonTypeColor(isLocalVideoOff: localVideoStreamId == nil)
         }
-
-        audioDevicesListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
     }
 
     func update(isJoinRequested: Bool) {

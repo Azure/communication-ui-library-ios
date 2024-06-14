@@ -29,4 +29,12 @@ enum Action: Equatable {
     case showCaptionsLanguageView
     case hideCaptionsLanguageView
     case captionsAction(CaptionsAction)
+    case showEndCallConfirmation
+    case hideEndCallConfirmation
+    case showAudioSelection
+    case hideAudioSelection
+    case showMoreOptions
+    case hideMoreOptions
+    case showSupportShare
+    case hideSupportShare
 }

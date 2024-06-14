@@ -10,7 +10,6 @@ struct ControlBarView: View {
 
     // anchor views for drawer views on (iPad)
     @State var audioDeviceButtonSourceView = UIView()
-    @State var leaveCallConfirmationListSourceView = UIView()
     @State var moreListSourceView = UIView()
     @State var debugInfoSourceView = UIView()
     @AccessibilityFocusState var focusedOnAudioDeviceButton: Bool
@@ -27,27 +26,20 @@ struct ControlBarView: View {
                     nonCenteredStack
                 }
             }
-
             .padding()
             .background(Color(StyleProvider.color.backgroundColor))
-            .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
-                audioDeviceSelectionListView
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            })
-            .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
-                exitConfirmationDrawer
-                    .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
-                    .accessibilityElement(children: .contain)
-                    .accessibility(addTraits: .isModal)
-            })
-            .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
-                moreCallOptionsList
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            })
+//            .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
+//                audioDeviceSelectionListView
+//                    .accessibilityElement(children: .contain)
+//                    .accessibilityAddTraits(.isModal)
+//            })
+//            .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
+//                moreCallOptionsList
+//                    .accessibilityElement(children: .contain)
+//                    .accessibilityAddTraits(.isModal)
+//            })
             .modifier(PopupModalView(
-                isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
+                isPresented: viewModel.isShareActivityDisplayed) {
                     shareActivityView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
@@ -138,34 +130,21 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
-            .background(SourceViewSpace(sourceView: leaveCallConfirmationListSourceView))
             .accessibilityIdentifier(AccessibilityIdentifier.hangupAccessibilityID.rawValue)
             .accessibilityFocused($focusedOnHangUpButton, equals: true)
     }
 
-    var audioDeviceSelectionListView: some View {
-        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                                  viewModel: viewModel.audioDevicesListViewModel,
-                                  sourceView: audioDeviceButtonSourceView)
-        .modifier(LockPhoneOrientation())
-        .onDisappear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                focusedOnAudioDeviceButton = true
-            }
-        }
-    }
-
-    var exitConfirmationDrawer: some View {
-        CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveListDisplayed,
-                                           viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
-                                           sourceView: leaveCallConfirmationListSourceView)
-        .modifier(LockPhoneOrientation())
-        .onDisappear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                focusedOnHangUpButton = true
-            }
-        }
-    }
+//    var audioDeviceSelectionListView: some View {
+//        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+//                                  viewModel: viewModel.audioDevicesListViewModel,
+//                                  sourceView: audioDeviceButtonSourceView)
+//        .modifier(LockPhoneOrientation())
+//        .onDisappear {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+//                focusedOnAudioDeviceButton = true
+//            }
+//        }
+//    }
 
     var moreButton: some View {
         IconButton(viewModel: viewModel.moreButtonViewModel)
@@ -175,19 +154,19 @@ struct ControlBarView: View {
             .accessibilityFocused($focusedOnMoreButton, equals: true)
     }
 
-    var moreCallOptionsList: some View {
-        return Group {
-            MoreCallOptionsList(isPresented: $viewModel.isMoreCallOptionsListDisplayed,
-                                viewModel: viewModel.moreCallOptionsListViewModel,
-                                sourceView: moreListSourceView)
-            .modifier(LockPhoneOrientation())
-            .onDisappear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    focusedOnMoreButton = true
-                }
-            }
-        }
-    }
+//    var moreCallOptionsList: some View {
+//        return Group {
+//            MoreCallOptionsList(isPresented: $viewModel.isMoreCallOptionsListDisplayed,
+//                                viewModel: viewModel.moreCallOptionsListViewModel,
+//                                sourceView: moreListSourceView)
+//            .modifier(LockPhoneOrientation())
+//            .onDisappear {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+//                    focusedOnMoreButton = true
+//                }
+//            }
+//        }
+//    }
     var shareActivityView: some View {
         return Group {
             SharingActivityView(viewModel: viewModel.debugInfoSharingActivityViewModel,

@@ -13,6 +13,11 @@ extension Reducer where State == NavigationState,
         var captionViewVisible = state.captionsViewVisible
         var captionsLanguageViewVisible = state.captionsLanguageViewVisible
         var spokenLanguageViewVisible = state.spokenLanguageViewVisible
+        var supportShareSheetVisible = state.supportShareSheetVisible
+        var endCallConfirmationVisible = state.endCallConfirmationVisible
+        var audioSelectionVisible = state.audioSelectionVisible
+        var moreOptionsVisible = state.moreOptionsVisible
+
         switch action {
         case .callingViewLaunched:
             navigationStatus = .inCall
@@ -22,6 +27,9 @@ extension Reducer where State == NavigationState,
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
         case .showSupportForm:
+            supportShareSheetVisible = false
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
             supportFormVisible = true
             captionViewVisible = false
             captionsLanguageViewVisible = false
@@ -61,6 +69,43 @@ extension Reducer where State == NavigationState,
             captionViewVisible = false
             captionsLanguageViewVisible = false
             spokenLanguageViewVisible = false
+            moreOptionsVisible = false
+        case .hideSupportForm:
+            supportFormVisible = false
+        case .showEndCallConfirmation:
+            supportShareSheetVisible = false
+            audioSelectionVisible = false
+            endCallConfirmationVisible = true
+            supportFormVisible = false
+            moreOptionsVisible = false
+        case .hideEndCallConfirmation:
+            endCallConfirmationVisible = false
+        case .showMoreOptions:
+            supportShareSheetVisible = false
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = true
+        case .hideMoreOptions:
+            moreOptionsVisible = false
+        case .showAudioSelection:
+            supportShareSheetVisible = false
+            audioSelectionVisible = true
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = false
+        case .hideAudioSelection:
+            audioSelectionVisible = false
+        case .showSupportShare:
+            supportShareSheetVisible = true
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = false
+        case .hideSupportShare:
+            supportShareSheetVisible = false
+        case .localUserAction(.audioDeviceChangeRequested):
+            audioSelectionVisible = false
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -86,6 +131,10 @@ extension Reducer where State == NavigationState,
                                supportFormVisible: supportFormVisible,
                                captionsViewVisible: captionViewVisible,
                                captionsLanguageViewVisible: captionsLanguageViewVisible,
-                               spokenLanguageViewVisible: spokenLanguageViewVisible)
+                               spokenLanguageViewVisible: spokenLanguageViewVisible,
+                               endCallConfirmationVisible: endCallConfirmationVisible,
+                               audioSelectionVisible: audioSelectionVisible,
+                               moreOptionsVisible: moreOptionsVisible,
+                               supportShareSheetVisible: supportShareSheetVisible)
     }
 }

@@ -60,6 +60,15 @@ extension Reducer where State == ErrorState,
                 .hideCaptionsLanguageView,
                 .visibilityAction,
                 .captionsAction:
+                .hideEndCallConfirmation,
+                .showEndCallConfirmation,
+                .showMoreOptions,
+                .hideMoreOptions,
+                .showAudioSelection,
+                .hideAudioSelection,
+                .showSupportShare,
+                .hideSupportShare,
+                .visibilityAction:
             return state
         }
 
