@@ -29,6 +29,7 @@ class CallingServiceMocking: CallingServiceProtocol {
     var admitAllLobbyParticipantsCalled = false
     var admitLobbyParticipantCalled = false
     var declineLobbyParticipantCalled = false
+    var remoteParticipantCalled = false
 
     private func possibleErrorTask() throws -> Task<Void, Error> {
         Task<Void, Error> {
@@ -143,6 +144,8 @@ class CallingServiceMocking: CallingServiceProtocol {
     }
 
     func removeParticipant(_ participantId: String) async throws {
+        remoteParticipantCalled = true
+        try await possibleErrorTask().value
     }
 
     func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
