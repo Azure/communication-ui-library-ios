@@ -613,6 +613,297 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockCallingService.admitLobbyParticipantCalled)
     }
 
+    func test_callingMiddlewareHandler_remove_then_removeCalled() async {
+        let sut = makeSUT()
+        await sut.removeParticipant(state: getState(callingState: .connected,
+                                                        cameraStatus: .off,
+                                                        cameraDeviceStatus: .front,
+                                                        cameraPermission: .granted),
+                                        dispatch: getEmptyDispatch(),
+                                        participantId: "participantId").value
+
+        XCTAssertTrue(mockCallingService.remoteParticipantCalled)
+    }
+
+    func test_callingMiddlewareHandler_set_empty_capabilities_then_cameraOff() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.localUserAction(.cameraOffTriggered))
+        }
+        await sut.setCapabilities(capabilities: Set(),
+                                  state: getState(callingState: .connected,
+                                                        cameraStatus: .on,
+                                                        cameraDeviceStatus: .front,
+                                                        cameraPermission: .granted,
+                                                        audioStatus: LocalUserState.AudioOperationalStatus.off),
+                                        dispatch: dispatch).value
+
+    }
+
+    func test_callingMiddlewareHandler_set_empty_then_micOff() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.localUserAction(.microphoneOffTriggered))
+        }
+        await sut.setCapabilities(capabilities: Set(),
+                                  state: getState(callingState: .connected,
+                                                        cameraStatus: .off,
+                                                        cameraDeviceStatus: .front,
+                                                        cameraPermission: .granted,
+                                                        audioStatus: LocalUserState.AudioOperationalStatus.on),
+                                        dispatch: dispatch).value
+
+    }
+
+    func test_onNetworkQualityCallDiagnosticsUpdated_set_good_then_dismissToast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.dismissNotification))
+        }
+        await sut.onNetworkQualityCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .good)
+        ).value
+
+    }
+
+    func test_onNetworkQualityCallDiagnosticsUpdated_set_bad_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .networkReceiveQuality)))
+        }
+        await sut.onNetworkQualityCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .bad)
+        ).value
+
+    }
+
+    func test_onNetworkQualityCallDiagnosticsUpdated_set_poor_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .networkReceiveQuality)))
+        }
+        await sut.onNetworkQualityCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .poor)
+        ).value
+    }
+
+    func test_networkReconnectionQualityUpdated_set_reconetct_poor_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .networkReconnectionQuality)))
+        }
+        await sut.onNetworkQualityCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: NetworkQualityDiagnosticModel(diagnostic: .networkReconnectionQuality, value: .poor)
+        ).value
+    }
+
+    func test_networkReconnectionQualityUpdated_set_send_poor_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .networkSendQuality)))
+        }
+        await sut.onNetworkQualityCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .poor)
+        ).value
+    }
+
+    func test_onNetworkCallDiagnosticsUpdated_set_networkRelaysUnreachable_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .networkRelaysUnreachable)))
+        }
+        await sut.onNetworkCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: NetworkDiagnosticModel(diagnostic: .networkRelaysUnreachable, value: true)
+        ).value
+    }
+
+    func test_onNetworkCallDiagnosticsUpdated_set_networkUnavailable_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .networkUnavailable)))
+        }
+        await sut.onNetworkCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: NetworkDiagnosticModel(diagnostic: .networkUnavailable, value: true)
+        ).value
+    }
+
+    func test_onMediaCallDiagnosticsUpdated_set_speakingWhileMicrophoneIsMuted_true_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .speakingWhileMicrophoneIsMuted)))
+        }
+        await sut.onMediaCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: true)
+        ).value
+    }
+
+    func test_onMediaCallDiagnosticsUpdated_set_speakingWhileMicrophoneIsMuted_false_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.dismissNotification))
+        }
+        await sut.onMediaCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: false)
+        ).value
+    }
+
+    func test_onMediaCallDiagnosticsUpdated_set_cameraStartFailed_true_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .cameraStartFailed)))
+        }
+        await sut.onMediaCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: MediaDiagnosticModel(diagnostic: .cameraStartFailed, value: true)
+        ).value
+    }
+
+    func test_onMediaCallDiagnosticsUpdated_set_cameraStartFailed_false_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.dismissNotification))
+        }
+        await sut.onMediaCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: MediaDiagnosticModel(diagnostic: .cameraStartFailed, value: false)
+        ).value
+    }
+
+    func test_onMediaCallDiagnosticsUpdated_set_cameraStartTimedOut_true_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.showNotification(kind: .cameraStartTimedOut)))
+        }
+        await sut.onMediaCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: MediaDiagnosticModel(diagnostic: .cameraStartTimedOut, value: true)
+        ).value
+    }
+
+    func test_onMediaCallDiagnosticsUpdated_set_cameraStartTimedOut_false_then_toast() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.toastNotificationAction(.dismissNotification))
+        }
+        await sut.onMediaCallDiagnosticsUpdated(
+            state: getState(callingState: .connected),
+            dispatch: dispatch,
+            diagnisticModel: MediaDiagnosticModel(diagnostic: .cameraStartTimedOut, value: false)
+        ).value
+    }
+
+    func test_dismissNotification_is_networkRelaysUnreachable_then_dismissNetworkUnavailable() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.callDiagnosticAction(.dismissNetwork(diagnostic: .networkRelaysUnreachable)))
+        }
+        await sut.dismissNotification(
+            state: getState(callingState: .connected,
+                            diagnosticsState: CallDiagnosticsState(networkDiagnostic: NetworkDiagnosticModel(diagnostic: .networkRelaysUnreachable, value: true))
+                           ),
+            dispatch: dispatch
+        ).value
+    }
+
+    func test_dismissNotification_is_networkUnavailable_then_dismissNetworkUnavailable() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.callDiagnosticAction(.dismissNetwork(diagnostic: .networkUnavailable)))
+        }
+        await sut.dismissNotification(
+            state: getState(callingState: .connected,
+                            diagnosticsState: CallDiagnosticsState(networkDiagnostic: NetworkDiagnosticModel(diagnostic: .networkUnavailable, value: true))
+                           ),
+            dispatch: dispatch
+        ).value
+    }
+
+    func test_dismissNotification_is_networkReceiveQuality_then_dismiss() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkReceiveQuality)))
+        }
+        await sut.dismissNotification(
+            state: getState(callingState: .connected,
+                            diagnosticsState: CallDiagnosticsState(networkDiagnostic: nil, networkQualityDiagnostic: NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .bad))
+                           ),
+            dispatch: dispatch
+        ).value
+    }
+
+    func test_dismissNotification_is_networkReconnectionQuality_then_dismiss() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkReconnectionQuality)))
+        }
+        await sut.dismissNotification(
+            state: getState(callingState: .connected,
+                            diagnosticsState: CallDiagnosticsState(networkDiagnostic: nil, networkQualityDiagnostic: NetworkQualityDiagnosticModel(diagnostic: .networkReconnectionQuality, value: .bad))
+                           ),
+            dispatch: dispatch
+        ).value
+    }
+
+    func test_dismissNotification_is_networkSendQuality_then_dismiss() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkSendQuality)))
+        }
+        await sut.dismissNotification(
+            state: getState(callingState: .connected,
+                            diagnosticsState: CallDiagnosticsState(networkDiagnostic: nil, networkQualityDiagnostic: NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .bad))
+                           ),
+            dispatch: dispatch
+        ).value
+    }
+
+    func test_dismissNotification_is_cameraStartFailed_then_dismiss() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.callDiagnosticAction(.dismissMedia(diagnostic: .cameraStartFailed)))
+        }
+        await sut.dismissNotification(
+            state: getState(callingState: .connected,
+                            diagnosticsState: CallDiagnosticsState(networkDiagnostic: nil, networkQualityDiagnostic: nil, mediaDiagnostic: MediaDiagnosticModel(diagnostic: .cameraStartFailed, value: true))
+                           ),
+            dispatch: dispatch
+        ).value
+    }
+
+    func test_dismissNotification_is_cameraStartTimedOut_then_dismiss() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.callDiagnosticAction(.dismissMedia(diagnostic: .cameraStartTimedOut)))
+        }
+        await sut.dismissNotification(
+            state: getState(callingState: .connected,
+                            diagnosticsState: CallDiagnosticsState(networkDiagnostic: nil, networkQualityDiagnostic: nil, mediaDiagnostic: MediaDiagnosticModel(diagnostic: .cameraStartTimedOut, value: true))
+                           ),
+            dispatch: dispatch
+        ).value
+    }
+
     func test_callingMiddlewareHandlerAll_decline_then_declineCalled() async {
         let sut = makeSUT()
         await sut.declineLobbyParticipant(
@@ -664,12 +955,14 @@ extension CallingMiddlewareHandlerTests {
                           cameraPermission: AppPermission.Status = .unknown,
                           cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local,
                           internalError: CallCompositeInternalError? = nil,
-                          lifecycleStatus: AppStatus = .foreground) -> AppState {
+                          lifecycleStatus: AppStatus = .foreground,
+                          audioStatus: LocalUserState.AudioOperationalStatus = .on,
+                          diagnosticsState: CallDiagnosticsState = .init()) -> AppState {
         let callState = CallingState(status: callingState)
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
                                                      transmission: cameraTransmissionStatus)
-        let audioState = LocalUserState.AudioState(operation: .off,
+        let audioState = LocalUserState.AudioState(operation: audioStatus,
                                                    device: .receiverSelected)
         let localState = LocalUserState(cameraState: cameraState,
                                         audioState: audioState,
@@ -684,7 +977,8 @@ extension CallingMiddlewareHandlerTests {
                         localUserState: localState,
                         lifeCycleState: lifeCycleState,
                         remoteParticipantsState: .init(),
-                        errorState: errorState)
+                        errorState: errorState,
+                        diagnosticsState: diagnosticsState)
     }
 
     private func getEmptyDispatch() -> ActionDispatch {
