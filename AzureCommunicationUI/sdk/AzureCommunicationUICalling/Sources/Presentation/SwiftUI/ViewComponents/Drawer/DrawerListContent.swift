@@ -65,11 +65,28 @@ internal struct DrawerItemView: View {
         HStack {
             Icon(name: item.icon, size: DrawerListConstants.iconSize)
                 .foregroundColor(.primary)
-            Text(item.title)
-                .foregroundColor(.primary)
-                .padding(.leading, DrawerListConstants.textPaddingLeading)
-                .font(.body)
+            VStack {
+                Text(item.title)
+                    .foregroundColor(.primary)
+                    .padding(.leading, DrawerListConstants.textPaddingLeading)
+                    .font(.body)
+                if let subtitle = item.subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+            }
             Spacer()
+            if item.showsToggle, let isToggleOn = item.isToggleOn {
+                Toggle(isOn: isToggleOn) {
+                    Text("")
+                }
+                .labelsHidden()
+                .toggleStyle(SwitchToggleStyle(tint: .blue))
+            } else if let accessoryView = item.titleTrailingAccessoryView,
+                      accessoryView != .none {
+                Icon(name: item.titleTrailingAccessoryView ?? .rightChevron, size: DrawerListConstants.trailingIconSize)
+            }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
@@ -103,6 +120,7 @@ internal struct DrawerTitleView: View {
 
 internal class DrawerListConstants {
     static let iconSize: CGFloat = 24
+    static let trailingIconSize: CGFloat = 20
     static let textPaddingLeading: CGFloat = 8
     static let optionPaddingVertical: CGFloat = 12
     static let optionPaddingHorizontal: CGFloat = 16

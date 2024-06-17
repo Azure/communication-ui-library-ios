@@ -6,11 +6,13 @@
 import Foundation
 import AVFoundation
 import Combine
+import SwiftUI
 
 class CaptionsListViewModel: ObservableObject {
+    @Published private var isToggleEnabled = false
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    let items: [DrawerListItemViewModel]
+    @Published var items: [DrawerListItemViewModel] = []
     var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -22,22 +24,43 @@ class CaptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isDisplayed = isDisplayed
+        self.isToggleEnabled = false
+        setupItems(showCaptionsLanguage: showCaptionsLanguage, showSpokenLanguage: showSpokenLanguage)
+    }
+
+    private func setupItems(showCaptionsLanguage: @escaping () -> Void, showSpokenLanguage: @escaping () -> Void) {
+
+        let isToggleEnabledBinding = Binding(
+            get: { self.isToggleEnabled },
+            set: { self.isToggleEnabled = $0 }
+        )
+        let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
+            icon: .closeCaptions,
+            title: localizationProvider.getLocalizedString(.captionsListTitile),
+            isToggleOn: isToggleEnabledBinding,
+            showToggle: true,
+            accessibilityIdentifier:
+                AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            action: {})
+        items = [enableCaptionsInfoModel]
 
         let spokenLanguageInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-            icon: .share,
+            icon: .personVoice,
             title: localizationProvider.getLocalizedString(.captionsSpokenLanguage),
+            subtitle: "",
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            titleTrailingAccessoryView: .rightChevron,
             action: showSpokenLanguage)
-
-        var items = [spokenLanguageInfoModel]
+        items.append(spokenLanguageInfoModel)
 
         let captionsLanguageInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-            icon: .share,
+            icon: .localLanguage,
             title: localizationProvider.getLocalizedString(.captionsCaptionLanguage),
+            subtitle: "",
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            titleTrailingAccessoryView: .rightChevron,
             action: showCaptionsLanguage)
         items.append(captionsLanguageInfoModel)
-        self.items = items
     }
 
     func update(state: AppState) {

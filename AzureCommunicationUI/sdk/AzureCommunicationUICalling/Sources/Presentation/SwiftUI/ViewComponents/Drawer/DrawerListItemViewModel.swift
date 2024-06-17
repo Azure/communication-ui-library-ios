@@ -4,21 +4,34 @@
 //
 
 import Foundation
+import SwiftUI
 
 class DrawerListItemViewModel: Identifiable {
     let icon: CompositeIcon
     let title: String
+    let subtitle: String?
     let accessibilityIdentifier: String
+    let titleTrailingAccessoryView: CompositeIcon?
     let action: (() -> Void)
+    var isToggleOn: Binding<Bool>?
+    var showsToggle: Bool
 
     init(icon: CompositeIcon,
          title: String,
+         subtitle: String? = "",
          accessibilityIdentifier: String,
+         titleTrailingAccessoryView: CompositeIcon? = CompositeIcon.none,
+         isToggleOn: Binding<Bool>? = nil,
+         showToggle: Bool = false,
          action: @escaping () -> Void) {
         self.icon = icon
         self.title = title
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
+        self.subtitle = subtitle ?? ""
+        self.isToggleOn = isToggleOn
+        self.showsToggle = showToggle
+        self.titleTrailingAccessoryView = titleTrailingAccessoryView ?? Optional.none
     }
 }
 

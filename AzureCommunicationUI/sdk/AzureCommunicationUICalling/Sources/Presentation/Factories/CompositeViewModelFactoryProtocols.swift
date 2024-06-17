@@ -5,6 +5,7 @@
 
 import FluentUI
 import Foundation
+import SwiftUI
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
@@ -30,6 +31,8 @@ protocol CompositeViewModelFactoryProtocol {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
+    func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
+                                            localUserState: LocalUserState) -> CaptionsLanguageListViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
@@ -57,7 +60,6 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeCaptionsInfoCellViewModel(participantInfoModel: ParticipantInfoModel) -> CaptionsInfoCellViewModel
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
@@ -69,9 +71,17 @@ protocol CompositeViewModelFactoryProtocol {
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
+                                     subtitle: String?,
                                      accessibilityIdentifier: String,
+                                     titleTrailingAccessoryView: CompositeIcon?,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
 
+    func makeToggleListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     isToggleOn: Binding<Bool>,
+                                     showToggle: Bool,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),
         dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
@@ -82,7 +92,6 @@ protocol CompositeViewModelFactoryProtocol {
         isSelected: Bool,
         onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
     func makeSupportFormViewModel() -> SupportFormViewModel
-    func makeCaptionsLanguageListViewModel() -> CaptionsLanguageListViewModel
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -93,7 +102,7 @@ protocol CompositeViewModelFactoryProtocol {
 extension CompositeViewModelFactoryProtocol {
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
-                                    iconName: CompositeIcon? = .none,
+                                    iconName: CompositeIcon? = CompositeIcon.none,
                                     isDisabled: Bool = false,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         return makePrimaryButtonViewModel(buttonStyle: buttonStyle,

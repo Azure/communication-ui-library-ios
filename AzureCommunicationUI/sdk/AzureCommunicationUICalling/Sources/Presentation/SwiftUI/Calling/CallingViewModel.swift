@@ -5,7 +5,7 @@
 
 import Combine
 import Foundation
-
+// swiftlint:disable type_body_length
 class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable = false
@@ -74,8 +74,11 @@ class CallingViewModel: ObservableObject {
                 dispatchAction: actionDispatch,
                 localUserState: store.state.localUserState)
 
+        captionsLanguageListViewModel = compositeViewModelFactory.makeCaptionsLanguageListViewModel(
+            dispatchAction: actionDispatch,
+            localUserState: store.state.localUserState)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
-        captionsLanguageListViewModel = compositeViewModelFactory.makeCaptionsLanguageListViewModel()
+
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
                                                                                                 isIpadInterface)
@@ -154,9 +157,18 @@ class CallingViewModel: ObservableObject {
                 store.dispatch(action: .showSupportForm)
             },
             showCaptionsViewAction: {
-                store.dispatch(action: .showCaptionsView)
+                store.dispatch(action: .showCaptionsListView)
             }
         )
+
+        captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
+            showCaptionsLanguage: {
+                store.dispatch(action: .showSpokenLanguageView)
+            },
+            showSpokenLanguage: {
+                store.dispatch(action: .showSpokenLanguageView)
+            },
+            isDisplayed: store.state.navigationState.captionsViewVisible)
     }
     // swiftlint:enable function_body_length
 
@@ -180,6 +192,13 @@ class CallingViewModel: ObservableObject {
         store.dispatch(action: .hideAudioSelection)
     }
 
+    func dismissCaptionLanguageDrawer() {
+        store.dispatch(action: .hideSpokenLanguageView)
+    }
+
+    func dismissCaptionsListDrawer() {
+        store.dispatch(action: .hideCaptionsListView)
+    }
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
@@ -197,8 +216,11 @@ class CallingViewModel: ObservableObject {
 
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
-        captionsLanguageListViewModel.update(state: state)
         captionsListViewModel.update(state: state)
+        captionsLanguageListViewModel.update(languageState: state.localUserState.languageState,
+                                             navigationState: state.navigationState,
+                                             visibilityState: state.visibilityState)
+       // captionsListViewModel.update(state: state)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
@@ -277,3 +299,4 @@ class CallingViewModel: ObservableObject {
         return isOutgoingCall
     }
 }
+// swiftlint:enable type_body_length

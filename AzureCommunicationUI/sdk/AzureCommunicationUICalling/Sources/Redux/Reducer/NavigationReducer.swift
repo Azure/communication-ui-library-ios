@@ -34,29 +34,24 @@ extension Reducer where State == NavigationState,
             captionViewVisible = false
             captionsLanguageViewVisible = false
             spokenLanguageViewVisible = false
-        case .showCaptionsView:
+            moreOptionsVisible = false
+        case .showCaptionsListView:
             captionViewVisible = true
             supportFormVisible = false
             captionsLanguageViewVisible = false
             spokenLanguageViewVisible = false
-        case .hideCaptionsView:
+            moreOptionsVisible = false
+        case .hideCaptionsListView:
             captionViewVisible = false
-            supportFormVisible = false
-            captionsLanguageViewVisible = false
-            spokenLanguageViewVisible = false
         case .hideSupportForm:
             supportFormVisible = false
-            captionViewVisible = false
-            captionsLanguageViewVisible = false
-            spokenLanguageViewVisible = false
         case .showSpokenLanguageView:
             supportFormVisible = false
             captionViewVisible = false
             captionsLanguageViewVisible = false
             spokenLanguageViewVisible = true
+            moreOptionsVisible = false
         case .hideSpokenLanguageView:
-            supportFormVisible = false
-            captionViewVisible = false
             captionsLanguageViewVisible = false
             spokenLanguageViewVisible = false
         case .showCaptionsLanguageView:
@@ -64,12 +59,10 @@ extension Reducer where State == NavigationState,
             captionViewVisible = false
             captionsLanguageViewVisible = true
             spokenLanguageViewVisible = false
+            moreOptionsVisible = false
         case .hideCaptionsLanguageView:
-            supportFormVisible = false
-            captionViewVisible = false
             captionsLanguageViewVisible = false
             spokenLanguageViewVisible = false
-            moreOptionsVisible = false
         case .showEndCallConfirmation:
             supportShareSheetVisible = false
             audioSelectionVisible = false

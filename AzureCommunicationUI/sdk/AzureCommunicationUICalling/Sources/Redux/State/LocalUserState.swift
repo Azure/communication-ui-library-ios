@@ -78,6 +78,16 @@ struct LocalUserState {
         }
     }
 
+    enum CaptionsLanguageStatus: Equatable {
+        case selected(String)
+        case unselected
+    }
+
+    enum SpokenLanguageStatus: Equatable {
+        case selected(String)
+        case unselected
+    }
+
     enum AudioDeviceSelectionStatus: Equatable {
         case speakerSelected
         case speakerRequested
@@ -128,22 +138,33 @@ struct LocalUserState {
         var error: Error?
     }
 
+    struct LanguageState {
+        var captions: CaptionsLanguageStatus
+        var spoken: SpokenLanguageStatus
+        var selectedLanguage: String
+        var error: Error?
+    }
+
     let cameraState: CameraState
     let audioState: AudioState
     let displayName: String?
     let localVideoStreamIdentifier: String?
     let participantRole: ParticipantRoleEnum?
+    let languageState: LanguageState
 
     init(cameraState: CameraState = CameraState(operation: .off,
                                                 device: .front,
                                                 transmission: .local),
          audioState: AudioState = AudioState(operation: .off,
                                              device: .receiverSelected),
+         languageState: LanguageState = LanguageState(captions: .unselected,
+                                                      spoken: .unselected, selectedLanguage: "en-us"),
          displayName: String? = nil,
          localVideoStreamIdentifier: String? = nil,
          participantRole: ParticipantRoleEnum? = nil) {
         self.cameraState = cameraState
         self.audioState = audioState
+        self.languageState = languageState
         self.displayName = displayName
         self.localVideoStreamIdentifier = localVideoStreamIdentifier
         self.participantRole = participantRole

@@ -5,7 +5,9 @@
 
 import FluentUI
 import Foundation
+import SwiftUI
 
+// swiftlint:disable file_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -73,24 +75,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                     events: events,
                                     localizationProvider: localizationProvider,
                                     getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
-    }
-
-    func makeCaptionsLanguageListViewModel() -> CaptionsLanguageListViewModel {
-        return CaptionsLanguageListViewModel(isDisplayed: store.state.navigationState.spokenLanguageViewVisible,
-                                                dispatchAction: store.dispatch,
-                                             captionsState: store.state.captionsState,
-                                             localizationProvider: localizationProvider
-        )
-    }
-    func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   isDisplayed: Bool) -> CaptionsListViewModel {
-
-        return CaptionsListViewModel(compositeViewModelFactory: self,
-                                     localizationProvider: localizationProvider,
-                                     showCaptionsLanguage: showCaptionsLanguage,
-                                     showSpokenLanguage: showSpokenLanguage,
-                                     isDisplayed: true)
     }
 
     // MARK: CompositeViewModels
@@ -182,6 +166,26 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   dispatchAction: dispatchAction,
                                   localUserState: localUserState,
                                   localizationProvider: localizationProvider)
+    }
+
+    func makeCaptionsLanguageListViewModel(dispatchAction: @escaping ActionDispatch,
+                                           localUserState: LocalUserState) -> CaptionsLanguageListViewModel {
+        CaptionsLanguageListViewModel(compositeViewModelFactory: self,
+                                      dispatchAction: dispatchAction,
+                                      localUserState: localUserState,
+                                      localizationProvider: localizationProvider)
+    }
+
+    func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void,
+                                   showSpokenLanguage: @escaping () -> Void,
+                                   isDisplayed: Bool) -> CaptionsListViewModel {
+
+        return CaptionsListViewModel(compositeViewModelFactory: self,
+                                     localizationProvider: localizationProvider,
+                                     showCaptionsLanguage: showCaptionsLanguage,
+                                     showSpokenLanguage: showSpokenLanguage,
+                                     isDisplayed: store.state.navigationState.captionsViewVisible
+                                     && store.state.visibilityState.currentStatus == .visible)
     }
 
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
@@ -331,12 +335,6 @@ extension CompositeViewModelFactory {
                                       localizationProvider: localizationProvider)
     }
 
-    func makeCaptionsInfoCellViewModel(participantInfoModel: ParticipantInfoModel)
-    -> CaptionsInfoCellViewModel {
-        CaptionsInfoCellViewModel(participantInfoModel: participantInfoModel,
-                                      localizationProvider: localizationProvider)
-    }
-
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
@@ -355,11 +353,29 @@ extension CompositeViewModelFactory {
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
+                                     subtitle: String? = "",
+                                     accessibilityIdentifier: String,
+                                     titleTrailingAccessoryView: CompositeIcon? =
+        .rightChevron,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
+        DrawerListItemViewModel(icon: icon,
+                                title: title,
+                                subtitle: subtitle,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                titleTrailingAccessoryView: titleTrailingAccessoryView,
+                                action: action)
+    }
+
+    func makeToggleListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     isToggleOn: Binding<Bool>,
+                                     showToggle: Bool,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel {
         DrawerListItemViewModel(icon: icon,
                                 title: title,
                                 accessibilityIdentifier: accessibilityIdentifier,
+                                showToggle: showToggle,
                                 action: action)
     }
 

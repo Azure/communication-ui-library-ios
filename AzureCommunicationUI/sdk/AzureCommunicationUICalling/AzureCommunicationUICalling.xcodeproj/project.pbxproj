@@ -25,7 +25,6 @@
 		05E28FF62AD60E5900FF7020 /* ParticipantRoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E28FF52AD60E5900FF7020 /* ParticipantRoleEnum.swift */; };
 		05F80DEE2A2E6F6700B20C87 /* PipReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DED2A2E6F6700B20C87 /* PipReducer.swift */; };
 		05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */; };
-		11045E7F2C12641700C66C94 /* CaptionsLanguageListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11045E7E2C12641700C66C94 /* CaptionsLanguageListCellViewModel.swift */; };
 		1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */; };
 		110DBE412C0998070080DBE1 /* CaptionsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110DBE402C0998070080DBE1 /* CaptionsAction.swift */; };
 		11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */; };
@@ -34,13 +33,12 @@
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
 		114879CE2BEC074700B7D7FF /* SupportedCaptionsLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CD2BEC074700B7D7FF /* SupportedCaptionsLocale.swift */; };
 		114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */; };
-		11781A952C1AD35B000B7656 /* CaptionsLanguageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11781A942C1AD35B000B7656 /* CaptionsLanguageListViewController.swift */; };
+		11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */; };
 		11A8FC292C0FC5A000BF1FFA /* CaptionsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC282C0FC5A000BF1FFA /* CaptionsInfoView.swift */; };
 		11A8FC2B2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2A2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift */; };
 		11A8FC2F2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */; };
 		11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */; };
 		11A8FC332C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */; };
-		11A8FC352C10162300BF1FFA /* CaptionsLanguageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC342C10162300BF1FFA /* CaptionsLanguageListCell.swift */; };
 		11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */; };
 		11C50D382BD1A79900CB3615 /* CaptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C50D372BD1A79900CB3615 /* CaptionOptions.swift */; };
 		11D6C8C22C17901000FB560F /* CaptionsInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */; };
@@ -379,7 +377,6 @@
 		05E28FF52AD60E5900FF7020 /* ParticipantRoleEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRoleEnum.swift; sourceTree = "<group>"; };
 		05F80DED2A2E6F6700B20C87 /* PipReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipReducer.swift; sourceTree = "<group>"; };
 		05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityAction.swift; sourceTree = "<group>"; };
-		11045E7E2C12641700C66C94 /* CaptionsLanguageListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListCellViewModel.swift; sourceTree = "<group>"; };
 		1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		110DBE402C0998070080DBE1 /* CaptionsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAction.swift; sourceTree = "<group>"; };
 		11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationOptions.swift; sourceTree = "<group>"; };
@@ -388,13 +385,12 @@
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
 		114879CD2BEC074700B7D7FF /* SupportedCaptionsLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCaptionsLocale.swift; sourceTree = "<group>"; };
 		114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsReducer.swift; sourceTree = "<group>"; };
-		11781A942C1AD35B000B7656 /* CaptionsLanguageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListViewController.swift; sourceTree = "<group>"; };
+		11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListView.swift; sourceTree = "<group>"; };
 		11A8FC282C0FC5A000BF1FFA /* CaptionsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoView.swift; sourceTree = "<group>"; };
 		11A8FC2A2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoViewModel.swift; sourceTree = "<group>"; };
 		11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListViewModel.swift; sourceTree = "<group>"; };
 		11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListView.swift; sourceTree = "<group>"; };
 		11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListViewModel.swift; sourceTree = "<group>"; };
-		11A8FC342C10162300BF1FFA /* CaptionsLanguageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListCell.swift; sourceTree = "<group>"; };
 		11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfigurationTests.swift; sourceTree = "<group>"; };
 		11C50D372BD1A79900CB3615 /* CaptionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionOptions.swift; sourceTree = "<group>"; };
 		11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCellViewModel.swift; sourceTree = "<group>"; };
@@ -797,11 +793,9 @@
 				11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */,
 				11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */,
 				11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */,
-				11A8FC342C10162300BF1FFA /* CaptionsLanguageListCell.swift */,
-				11045E7E2C12641700C66C94 /* CaptionsLanguageListCellViewModel.swift */,
 				11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */,
 				11D6C8C32C17902800FB560F /* CaptionsInfoCell.swift */,
-				11781A942C1AD35B000B7656 /* CaptionsLanguageListViewController.swift */,
+				11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */,
 			);
 			path = Captions;
 			sourceTree = "<group>";
@@ -2095,7 +2089,6 @@
 				885F3F9A291DCDF500B86C9B /* DrawerListItemViewModel.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */,
-				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				11A8FC2B2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift in Sources */,
 				114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */,
 				A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */,
@@ -2103,7 +2096,6 @@
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
-				11A8FC352C10162300BF1FFA /* CaptionsLanguageListCell.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
 				0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */,
 				A4DBCEB92BFAE91E00332E7B /* IncomingCallCancelled.swift in Sources */,
@@ -2133,6 +2125,7 @@
 				53D734D82C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift in Sources */,
 				1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
+				11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */,
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
 				A3EEF32A2C1931ED008B81B3 /* CaptionsViewManager.swift in Sources */,
 				1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */,
@@ -2146,7 +2139,6 @@
 				B2C2FFDD2AB8E566002F0763 /* BottomToastDiagnosticView.swift in Sources */,
 				503F4B672704EDC800C17DA6 /* BannerView.swift in Sources */,
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
-				11781A952C1AD35B000B7656 /* CaptionsLanguageListViewController.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				FAD20A8C292834500063D8A9 /* Logger.swift in Sources */,
 				533D7AFC2B1965BC0021767F /* SupportFormView.swift in Sources */,

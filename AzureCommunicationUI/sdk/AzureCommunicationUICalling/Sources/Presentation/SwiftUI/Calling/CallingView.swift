@@ -57,12 +57,6 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
                 }
-                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
-                             hideDrawer: viewModel.captionsLanguageListViewModel.hideForm) {
-                    spokenLanguageView
-                        .accessibilityElement(children: .contain)
-                        .accessibilityAddTraits(.isModal)
-                }
                 BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
                     LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
@@ -76,6 +70,14 @@ struct CallingView: View {
                 BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissAudioDevicesDrawer) {
                     AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                }
+                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissCaptionLanguageDrawer) {
+                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel)
+                }
+                BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissCaptionsListDrawer) {
+                    CaptionsListView(viewModel: viewModel.captionsListViewModel)
                 }
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
@@ -332,14 +334,6 @@ struct CallingView: View {
             SupportFormView(viewModel: viewModel.supportFormViewModel)
         }
     }
-
-    var spokenLanguageView: some View {
-        return Group {
-            CaptionsLanguageListView(isPresented: $viewModel.captionsLanguageListViewModel.isDisplayed,
-                                     viewModel: viewModel.captionsLanguageListViewModel)
-        }.frame(maxHeight: 200)
-    }
-
 }
 // swiftlint:enable type_body_length
 
