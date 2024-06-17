@@ -164,3 +164,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ilmoita ongelmasta";
 "AzureCommunicationUICalling.SendFeedback.Text"="Lähetä";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mykistä";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mykistä osallistuja -valikko.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Poista puhelusta";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Poista osallistuja puheluvalikosta.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Puheluasetukset päivitettiin. Jotkin ominaisuudet eivät ehkä ole käytettävissäsi.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Puheluasetukset päivitettiin. Jotkin lisätoiminnot saattavat olla nyt käytettävissäsi.";

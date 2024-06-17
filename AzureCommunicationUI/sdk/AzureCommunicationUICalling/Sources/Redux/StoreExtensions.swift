@@ -41,7 +41,8 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                     callingMiddlewareHandler: CallingMiddlewareHandler(
                         callingService: callingService,
                         logger: logger,
-                        callType: callType
+                        callType: callType,
+                        capabilitiesManager: CapabilitiesManager(callType: callType)
                     )
                 )
             ],

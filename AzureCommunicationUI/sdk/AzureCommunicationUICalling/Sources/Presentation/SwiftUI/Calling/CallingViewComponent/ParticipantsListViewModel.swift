@@ -17,6 +17,7 @@ class ParticipantsListViewModel: ObservableObject {
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatch: ActionDispatch
+    var displayParticipantMenu: ((_ participantId: String, _ participantDisplayName: String) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localUserState: LocalUserState,
@@ -106,6 +107,10 @@ class ParticipantsListViewModel: ObservableObject {
 
     func getConfirmDecline() -> String {
         self.localizationProvider.getLocalizedString(.participantListConfirmDecline)
+    }
+
+    func openParticipantMenu(participantId: String, participantDisplayName: String) {
+        self.displayParticipantMenu?(participantId, participantDisplayName)
     }
 
     private func shouldFilterOutLobbyUsers(participantRole: ParticipantRoleEnum?) -> Bool {

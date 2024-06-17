@@ -41,8 +41,6 @@ class CallingDemoViewController: UIViewController {
     private var participantMRIsTextField: UITextField!
     /* <ROOMS_SUPPORT> */
     private var roomCallTextField: UITextField!
-    private var selectedRoomRoleType: RoomRoleType = .presenter
-    private var roomRoleTypeSegmentedControl: UISegmentedControl!
     /* </ROOMS_SUPPORT> */
     private var settingsButton: UIButton!
     private var showCallHistoryButton: UIButton!
@@ -187,11 +185,6 @@ class CallingDemoViewController: UIViewController {
         /* <ROOMS_SUPPORT> */
         if !envConfigSubject.roomId.isEmpty {
             roomCallTextField.text = envConfigSubject.roomId
-        }
-        if envConfigSubject.selectedRoomRoleType == .presenter {
-            roomRoleTypeSegmentedControl.selectedSegmentIndex = 0
-        } else if envConfigSubject.selectedRoomRoleType == .attendee {
-            roomRoleTypeSegmentedControl.selectedSegmentIndex = 1
         }
         /* </ROOMS_SUPPORT> */
     }
@@ -387,17 +380,6 @@ class CallingDemoViewController: UIViewController {
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        /* <ROOMS_SUPPORT> */
-        let roomRole = envConfigSubject.selectedRoomRoleType
-        var roomRoleData: ParticipantRole?
-        if envConfigSubject.selectedMeetingType == .roomCall {
-            if roomRole == .presenter {
-                roomRoleData = ParticipantRole.presenter
-            } else if roomRole == .attendee {
-                roomRoleData = ParticipantRole.attendee
-            }
-        }
-        /* </ROOMS_SUPPORT> */
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         return LocalOptions(participantViewData: participantViewData,
@@ -405,10 +387,7 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                        /* <ROOMS_SUPPORT> */
-                                         roleHint: roomRoleData
-                                        /* <|ROOMS_SUPPORT> */
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
         )
     }
 
@@ -669,12 +648,6 @@ class CallingDemoViewController: UIViewController {
         updateMeetingTypeFields()
     }
 
-    /* <ROOMS_SUPPORT> */
-    @objc func onRoomRoleChanged(_ sender: UISegmentedControl!) {
-        selectedRoomRoleType = RoomRoleType(rawValue: sender.selectedSegmentIndex)!
-    }
-    /* </ROOMS_SUPPORT> */
-
     @objc func keyboardWillShow(notification: NSNotification) {
         isKeyboardShowing = true
         adjustScrollView()
@@ -826,7 +799,6 @@ class CallingDemoViewController: UIViewController {
             participantMRIsTextField.isHidden = true
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
-            roomRoleTypeSegmentedControl.isHidden = true
             /* </ROOMS_SUPPORT> */
         case .teamsMeeting:
             groupCallTextField.isHidden = true
@@ -838,7 +810,6 @@ class CallingDemoViewController: UIViewController {
             participantMRIsTextField.isHidden = true
             /* <ROOMS_SUPPORT> */
             roomCallTextField.isHidden = true
-            roomRoleTypeSegmentedControl.isHidden = true
         case .roomCall:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = true
@@ -848,13 +819,11 @@ class CallingDemoViewController: UIViewController {
              /* </MEETING_ID_LOCATOR> */
             participantMRIsTextField.isHidden = true
             roomCallTextField.isHidden = false
-            roomRoleTypeSegmentedControl.isHidden = false
         /* </ROOMS_SUPPORT> */
         case .oneToNCall:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = true
             roomCallTextField.isHidden = true
-            roomRoleTypeSegmentedControl.isHidden = true
             participantMRIsTextField.isHidden = false
             /* <MEETING_ID_LOCATOR> */
             teamsMeetingIdTextField.isHidden = true
@@ -1032,13 +1001,6 @@ class CallingDemoViewController: UIViewController {
         roomCallTextField.translatesAutoresizingMaskIntoConstraints = false
         roomCallTextField.borderStyle = .roundedRect
         roomCallTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
-        roomRoleTypeSegmentedControl = UISegmentedControl(items: ["Presenter", "Attendee"])
-        roomRoleTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedRoomRoleType.rawValue
-        roomRoleTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        roomRoleTypeSegmentedControl.addTarget(self,
-                                               action: #selector(onRoomRoleChanged(_:)),
-                                               for: .valueChanged)
-        selectedRoomRoleType = envConfigSubject.selectedRoomRoleType
         /* </ROOMS_SUPPORT> */
 
         meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting", "1:N", "Room Call"])
@@ -1280,7 +1242,6 @@ class CallingDemoViewController: UIViewController {
                                                    participantMRIsTextField,
                                                    /* <ROOMS_SUPPORT:7> */ 
                                                    roomCallTextField,
-                                                   roomRoleTypeSegmentedControl,
                                                    /* </ROOMS_SUPPORT:4> */
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,

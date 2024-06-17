@@ -230,6 +230,13 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isParticipantsListDisplayed)
     }
 
+    func test_infoHeaderViewModel_when_displayParticipantMenu_then_isParticipantMenuDisplayed() {
+        let sut = makeSUT()
+        sut.displayParticipantMenu(participantId: "participantId", participantDisplayName: "participantDisplayName")
+
+        XCTAssertTrue(sut.isParticipantMenuDisplayed)
+    }
+
     func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedFalse_then_shouldBecomeTrueAndPublish() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish isInfoHeaderDisplayed true")

@@ -164,3 +164,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="問題の報告";
 "AzureCommunicationUICalling.SendFeedback.Text"="送信";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="ミュート";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="参加者メニューをミュートにします。";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="通話から削除";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="通話メニューから参加者を削除します。";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="通話の設定が更新されました。一部の機能は利用できない可能性があります。";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="通話の設定が更新されました。一部の追加アクションが利用できる可能性があります。";

@@ -164,3 +164,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Informar de un problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Enviar";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Silenciar";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Silenciar el menú de participantes.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Quitar de la llamada";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Quitar participante del menú de llamada.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Configuración de llamada actualizada. Es posible que algunas características no estén disponibles para usted.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Configuración de llamada actualizada. Es posible que algunas acciones adicionales ya estén disponibles.";

@@ -33,7 +33,8 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
                                                             viewModel.getConfirmTitleAdmitParticipant(),
                                                         confirmTitleAdmitAll: viewModel.getConfirmTitleAdmitAll(),
                                                         confirmAdmit: viewModel.getConfirmAdmit(),
-                                                        confirmDecline: viewModel.getConfirmDecline()
+                                                        confirmDecline: viewModel.getConfirmDecline(),
+                                                        openParticipantMenu: viewModel.openParticipantMenu
         )
         controller.delegate = context.coordinator
         return controller

@@ -6,7 +6,7 @@
 import Foundation
 import AzureCommunicationCalling
 
-enum ParticipantRoleEnum: Int {
+enum ParticipantRoleEnum: Int, Equatable {
     case uninitialized
     case attendee
     case consumer

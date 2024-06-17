@@ -422,7 +422,8 @@ extension SetupControlBarViewModelTests {
                                         dispatchAction: storeFactory.store.dispatch,
                                         localUserState: LocalUserState(),
                                         localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
-                                        audioVideoMode: audioVideoMode)
+                                        audioVideoMode: audioVideoMode,
+                                        setupScreenOptions: nil)
     }
 
     func makeSUTLocalizationMocking() -> SetupControlBarViewModel {

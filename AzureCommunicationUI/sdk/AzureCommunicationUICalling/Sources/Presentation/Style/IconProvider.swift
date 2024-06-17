@@ -35,6 +35,7 @@ enum CompositeIcon: String {
     case speakerMute = "ic_fluent_speaker_mute_24_regular"
     case micProhibited = "ic_fluent_mic_prohibited_24_regular"
     case personFeedback = "ic_fluent_person_feedback_24_regular"
+    case personDelete = "ic_fluent_person_delete_24_regular"
 }
 
 struct IconProvider {

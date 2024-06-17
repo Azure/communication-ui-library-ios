@@ -75,6 +75,7 @@ public class CallComposite {
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
+    private var setupScreenOptions: SetupScreenOptions?
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
@@ -120,6 +121,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
+        setupScreenOptions = options?.setupScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -144,6 +146,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
+        setupScreenOptions = options?.setupScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -230,8 +233,7 @@ public class CallComposite {
                         localOptions: LocalOptions? = nil) {
          logger.debug( "launch \(incomingCallId)")
          self.callKitRemoteInfo = callKitRemoteInfo
-         let callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+         let callConfiguration = CallConfiguration(locator: nil,
                                                participants: nil,
                                                callId: incomingCallId)
          self.callConfiguration = callConfiguration
@@ -343,8 +345,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        let configuration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
-                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: remoteOptions.locator,
                                                   participants: nil,
                                                   callId: nil)
         self.credential = remoteOptions.credential
@@ -363,8 +364,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
         self.callKitRemoteInfo = callKitRemoteInfo
-        let configuration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: locator,
                                               participants: nil,
                                               callId: nil)
         self.callConfiguration = configuration
@@ -381,8 +381,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
         self.callKitRemoteInfo = callKitRemoteInfo
-        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: nil,
                                               participants: participants,
                                               callId: nil)
         self.callConfiguration = configuration
@@ -401,8 +400,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     public func launch(callIdAcceptedFromCallKit: String,
                        localOptions: LocalOptions? = nil) {
         logger.debug( "launch \(callIdAcceptedFromCallKit)")
-        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: nil,
                                               participants: nil,
                                               callId: callIdAcceptedFromCallKit)
         self.callConfiguration = configuration
@@ -593,7 +591,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
-                callType: callConfiguration.compositeCallType
+                callType: callConfiguration.compositeCallType,
+                setupScreenOptions: setupScreenOptions,
+                capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType)
             )
         )
     }
@@ -672,7 +672,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         guard let credential = credential else {
             if let didFail = events.onError {
                 let compositeError = CallCompositeError(
-                    code: CallCompositeErrorCode.communicationTokenCredentialsNotSet,
+                    code: CallCompositeErrorCode.communicationTokenCredentialNotSet,
                     error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
                 didFail(compositeError)
             }
@@ -733,6 +733,7 @@ extension CallComposite {
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
+            self?.exitManager?.onDismissed()
             self?.cleanUpManagers()
             self?.disposeSDKWrappers()
             UIApplication.shared.isIdleTimerDisabled = false

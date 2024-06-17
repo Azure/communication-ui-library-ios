@@ -11,3 +11,5 @@ ignore:
   - sdk/**/*Button.swift
   - sdk/**/*Cell.swift
   - sdk/**/*View.swift
+  - sdk/**/*Controller.swift
+

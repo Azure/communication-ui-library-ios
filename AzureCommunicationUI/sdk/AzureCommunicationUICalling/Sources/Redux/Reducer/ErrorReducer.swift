@@ -52,7 +52,8 @@ extension Reducer where State == ErrorState,
                 .callingViewLaunched,
                 .hideSupportForm,
                 .showSupportForm,
-                .visibilityAction:
+                .visibilityAction,
+                .toastNotificationAction:
             return state
         }
 
