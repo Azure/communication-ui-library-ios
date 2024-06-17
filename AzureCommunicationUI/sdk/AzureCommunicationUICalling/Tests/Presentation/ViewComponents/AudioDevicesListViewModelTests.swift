@@ -44,7 +44,8 @@ class AudioDevicesListViewModelTests: XCTestCase {
 
         XCTAssertTrue(sut.audioDevicesList.isEmpty)
         sut.update(audioDeviceStatus: .headphonesSelected,
-                   navigationState: NavigationState())
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         XCTAssertFalse(sut.audioDevicesList.isEmpty)
         wait(for: [expectation], timeout: 1)
     }
@@ -61,14 +62,16 @@ class AudioDevicesListViewModelTests: XCTestCase {
             }).store(in: cancellable)
 
         sut.update(audioDeviceStatus: .receiverSelected,
-                   navigationState: NavigationState())
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let initialSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertEqual(initialSelection?.title, self.localizationProvider
                         .getLocalizedString(AudioDeviceType.receiver.name))
         XCTAssertEqual(initialSelection?.icon, .speakerRegular)
 
         sut.update(audioDeviceStatus: .speakerRequested,
-                   navigationState: NavigationState())
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let requestedSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertEqual(requestedSelection?.title, self.localizationProvider
                         .getLocalizedString(AudioDeviceType.receiver.name))
@@ -93,14 +96,16 @@ class AudioDevicesListViewModelTests: XCTestCase {
             }).store(in: cancellable)
 
         sut.update(audioDeviceStatus: .bluetoothRequested,
-                   navigationState: NavigationState())
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let requestedSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertNotEqual(requestedSelection?.title, self.localizationProvider
                             .getLocalizedString(AudioDeviceType.bluetooth.name))
         XCTAssertNotEqual(requestedSelection?.icon, .speakerBluetooth)
 
         sut.update(audioDeviceStatus: .bluetoothSelected,
-                   navigationState: NavigationState())
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let updatedSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertEqual(updatedSelection?.title, self.localizationProvider
                         .getLocalizedString(AudioDeviceType.bluetooth.name))
