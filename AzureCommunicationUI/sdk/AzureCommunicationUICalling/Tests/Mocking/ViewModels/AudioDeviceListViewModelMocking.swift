@@ -9,7 +9,9 @@ import Foundation
 class AudioDevicesListViewModelMocking: AudioDevicesListViewModel {
     var updateState: ((LocalUserState.AudioDeviceSelectionStatus) -> Void)?
 
-    override func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus, navigationState: NavigationState) {
+    override func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus,
+                         navigationState: NavigationState,
+                         visibilityState: VisibilityState) {
         updateState?(audioDeviceStatus)
     }
 }

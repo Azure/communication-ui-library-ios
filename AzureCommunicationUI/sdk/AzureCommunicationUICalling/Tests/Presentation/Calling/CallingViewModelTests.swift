@@ -293,6 +293,7 @@ extension CallingViewModelTests {
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
-                                leaveCallConfirmationMode: .alwaysEnabled)
+                                leaveCallConfirmationMode: .alwaysEnabled,
+                                callType: callType)
     }
 }

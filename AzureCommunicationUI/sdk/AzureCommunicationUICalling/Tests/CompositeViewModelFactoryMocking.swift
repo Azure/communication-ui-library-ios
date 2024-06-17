@@ -293,7 +293,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         debugInfoSharingActivityViewModel ??
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
-                                          debugInfoManager: debugInfoManager)
+                                          debugInfoManager: debugInfoManager) {}
     }
 
     func makeSupportFormViewModel() -> AzureCommunicationUICalling.SupportFormViewModel {
