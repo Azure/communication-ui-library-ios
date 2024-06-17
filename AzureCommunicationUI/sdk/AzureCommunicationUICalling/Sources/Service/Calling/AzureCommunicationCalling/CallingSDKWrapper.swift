@@ -387,8 +387,21 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+
     func getLogFiles() -> [URL] {
-        return callingSDKInitializer.setupCallClient().debugInfo.supportFiles
+        // First lets check if any blog files exist
+        // Edge case this is called before any CallClient can cause crash
+        let fileManager = FileManager.default
+        let cacheDir = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let blogFiles = try? fileManager.contentsOfDirectory(at: cacheDir, includingPropertiesForKeys: nil, options: [])
+            .filter { $0.pathExtension == "blog" }
+
+        // If we have Blog Files, this is safe to call
+        if let blogFiles = blogFiles, !blogFiles.isEmpty {
+            return callingSDKInitializer.setupCallClient().debugInfo.supportFiles
+        } else {
+            return []
+        }
     }
 
     func admitAllLobbyParticipants() async throws {
