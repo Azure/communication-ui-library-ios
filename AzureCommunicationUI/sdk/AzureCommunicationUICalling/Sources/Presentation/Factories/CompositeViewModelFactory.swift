@@ -378,6 +378,7 @@ extension CompositeViewModelFactory {
         DrawerListItemViewModel(icon: icon,
                                 title: title,
                                 accessibilityIdentifier: accessibilityIdentifier,
+                                isToggleOn: isToggleOn,
                                 showToggle: showToggle,
                                 action: action)
     }
