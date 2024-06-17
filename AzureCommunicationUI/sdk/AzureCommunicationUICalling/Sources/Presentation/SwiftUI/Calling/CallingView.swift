@@ -296,13 +296,6 @@ struct CallingView: View {
         }.frame(maxWidth: .infinity, alignment: .center)
     }
 
-    var exitConfirmationDrawer: some View {
-        VStack {
-            Button("Yes") {}
-            Button("No") {}
-        }
-    }
-
     var topMessageBarDiagnosticsView: some View {
         VStack {
             ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
