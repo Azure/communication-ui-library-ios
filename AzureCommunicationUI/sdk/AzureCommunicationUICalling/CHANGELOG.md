@@ -1,11 +1,12 @@
 # Azure Communication UI Calling Release History
 
-## 1.8.0 (*)
+## 1.8.0-beta.1 (2024-06-17)
 
 ### Features
 
 - 1 to n Calling
 - CallKit Integration
+- Rooms call
 
 ## 1.7.0 (2024-05-29)
 
