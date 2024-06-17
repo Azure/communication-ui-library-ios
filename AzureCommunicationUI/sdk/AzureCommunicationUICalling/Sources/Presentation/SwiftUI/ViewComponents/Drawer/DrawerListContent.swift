@@ -17,17 +17,20 @@ import SwiftUI
 internal struct DrawerListContent: View {
     let items: [DrawerListItemViewModel]
     var body: some View {
-        VStack {
-            ForEach(items) { option in
-                if let selectableItem = option as? SelectableDrawerListItemViewModel {
-                    SelectableDrawerItemView(item: selectableItem)
-                } else if let titleItem = option as? TitleDrawerListItemViewModel {
-                    DrawerTitleView(item: titleItem)
-                } else {
-                    DrawerItemView(item: option)
-                }
+        ScrollView {
+            VStack {
+                ForEach(items) { option in
+                    if let selectableItem = option as? SelectableDrawerListItemViewModel {
+                        SelectableDrawerItemView(item: selectableItem)
+                    } else if let titleItem = option as? TitleDrawerListItemViewModel {
+                        DrawerTitleView(item: titleItem)
+                    } else {
+                        DrawerItemView(item: option)
+                    }
+                }.padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
             }
-        }.padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
+        }
+        .frame(maxHeight: DrawerListConstants.maxHeight)
     }
 }
 
@@ -36,8 +39,10 @@ internal struct SelectableDrawerItemView: View {
 
     var body: some View {
         HStack {
-            Icon(name: item.icon, size: DrawerListConstants.iconSize)
-                .foregroundColor(.primary)
+            if item.icon != .none {
+                Icon(name: item.icon, size: DrawerListConstants.iconSize)
+                    .foregroundColor(.primary)
+            }
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
@@ -125,4 +130,5 @@ internal class DrawerListConstants {
     static let optionPaddingVertical: CGFloat = 12
     static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
+    static let maxHeight: CGFloat = 400
 }

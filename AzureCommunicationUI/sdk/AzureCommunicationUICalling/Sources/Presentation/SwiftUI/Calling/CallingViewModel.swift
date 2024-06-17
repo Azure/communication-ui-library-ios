@@ -76,7 +76,9 @@ class CallingViewModel: ObservableObject {
 
         captionsLanguageListViewModel = compositeViewModelFactory.makeCaptionsLanguageListViewModel(
             dispatchAction: actionDispatch,
-            localUserState: store.state.localUserState)
+            localUserState: store.state.localUserState,
+            captionsState: store.state.captionsState
+        )
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)

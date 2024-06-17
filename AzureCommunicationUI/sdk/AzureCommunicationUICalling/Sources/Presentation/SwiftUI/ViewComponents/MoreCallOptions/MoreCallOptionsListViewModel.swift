@@ -30,7 +30,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             title: localizationProvider.getLocalizedString(.captionsListTitile),
             subtitle: nil,
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-            titleTrailingAccessoryView: nil,
+            titleTrailingAccessoryView: .rightChevron,
             action: showCaptionsViewAction)
         var items = [captionsInfoModel]
 

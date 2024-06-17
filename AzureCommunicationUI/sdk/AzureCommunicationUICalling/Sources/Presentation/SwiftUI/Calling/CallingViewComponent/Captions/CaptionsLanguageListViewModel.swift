@@ -11,6 +11,7 @@ class CaptionsLanguageListViewModel: ObservableObject {
     @Published var isDisplayed = false
 
     private var selectedLanguageStatus: LocalUserState.LanguageState
+    private var captionsState: CaptionsState
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
@@ -18,9 +19,11 @@ class CaptionsLanguageListViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
+         captionsState: CaptionsState,
          localizationProvider: LocalizationProviderProtocol) {
         self.dispatch = dispatchAction
         self.selectedLanguageStatus = localUserState.languageState
+        self.captionsState = captionsState
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
         loadLanguages()
@@ -38,14 +41,20 @@ class CaptionsLanguageListViewModel: ObservableObject {
     }
 
     private func loadLanguages() {
-        let supportedLanguages = SupportedCaptionsLocale.values
+        var supportedLanguages: [Locale]
+
+        if let spokenLanguages = captionsState.supportedSpokenLanguages, !spokenLanguages.isEmpty {
+            supportedLanguages = spokenLanguages.compactMap { Locale(identifier: $0) }
+        } else {
+            supportedLanguages = SupportedCaptionsLocale.values
+        }
+
         languageOptions = supportedLanguages.map { locale in
             createLanguageOption(language: locale)
         }
     }
 
     private func getAvailableLanguages(selectedLanguage: String) -> [SelectableDrawerListItemViewModel] {
-        // Assuming this might involve some filtering or additional logic based on availability
         return SupportedCaptionsLocale.values.map { createLanguageOption(language: $0) }
     }
 
@@ -53,7 +62,7 @@ class CaptionsLanguageListViewModel: ObservableObject {
         let languageName = Locale.current.localizedString(forIdentifier: language.identifier) ?? "Unknown"
         let isSelected = (language.identifier == selectedLanguageStatus.selectedLanguage)
         return compositeViewModelFactory.makeSelectableDrawerListItemViewModel(
-            icon: .checkmark,
+            icon: .none,
             title: languageName,
             isSelected: isSelected,
             onSelectedAction: { [weak self] in
