@@ -97,6 +97,10 @@ extension Reducer where State == NavigationState,
             supportShareSheetVisible = false
         case .localUserAction(.audioDeviceChangeRequested):
             audioSelectionVisible = false
+        case .captionsAction(.setCaptionLanguageRequested(let language)):
+            captionsLanguageViewVisible = false
+        case .captionsAction(.setSpokenLanguageRequested(let language)):
+            spokenLanguageViewVisible = false
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),

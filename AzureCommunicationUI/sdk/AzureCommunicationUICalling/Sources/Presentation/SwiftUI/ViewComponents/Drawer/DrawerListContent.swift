@@ -70,7 +70,7 @@ internal struct DrawerItemView: View {
         HStack {
             Icon(name: item.icon, size: DrawerListConstants.iconSize)
                 .foregroundColor(.primary)
-            VStack {
+            VStack(alignment: .leading) {
                 Text(item.title)
                     .foregroundColor(.primary)
                     .padding(.leading, DrawerListConstants.textPaddingLeading)
@@ -79,6 +79,7 @@ internal struct DrawerItemView: View {
                     Text(subtitle)
                         .font(.subheadline)
                         .foregroundColor(.gray)
+                        .padding(.leading, DrawerListConstants.textPaddingLeading)
                 }
             }
             Spacer()

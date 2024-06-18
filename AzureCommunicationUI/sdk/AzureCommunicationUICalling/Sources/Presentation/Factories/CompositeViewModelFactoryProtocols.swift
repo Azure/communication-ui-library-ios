@@ -65,7 +65,8 @@ protocol CompositeViewModelFactoryProtocol {
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
-    func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void,
+    func makeCaptionsListViewModel(state: AppState,
+                                   showCaptionsLanguage: @escaping () -> Void,
                                    showSpokenLanguage: @escaping () -> Void,
                                    isDisplayed: Bool) -> CaptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
