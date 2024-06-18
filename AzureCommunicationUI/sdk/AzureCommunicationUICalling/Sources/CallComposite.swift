@@ -158,10 +158,12 @@ public class CallComposite {
     public func dismiss() {
         logger.debug( "dismiss")
         exitManager?.dismiss()
-        cleanUpManagers()
-        disposeSDKWrappers()
-        callingSDKInitializer?.dispose()
-        compositeUILaunched = false
+        if !compositeUILaunched {
+            disposeSDKWrappers()
+            callingSDKInitializer?.dispose()
+            callingSDKInitializer = nil
+            exitManager?.onDismissed()
+        }
     }
 
     /* <SDK_CX_PROVIDER_SUPPORT>
@@ -454,9 +456,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// CompositeUILaunched will be set to false once existing call is disconnected
     private func notifyOnCallKitCallAccepted() {
         logger.debug("notifyOnCallKitCallAccepted start")
-        if store?.state.navigationState.status == .setup {
-            exitManager?.dismiss()
-        }
         if !compositeUILaunched,
            pipViewController == nil,
            let incomingCall = callingSDKInitializer?.getIncomingCall(),
@@ -737,13 +736,14 @@ extension CallComposite {
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             self?.logger.debug( "setDismissComposite")
+            self?.disposeSDKWrappers()
+            self?.callStateManager?.onCompositeExit()
+            self?.exitManager?.onDismissed()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
             self?.cleanUpManagers()
-            self?.disposeSDKWrappers()
             UIApplication.shared.isIdleTimerDisabled = false
-            self?.callStateManager?.onCompositeExit()
             if let hostingController = containerUIHostingController {
                 hostingController.dismissSelf {
                     self?.videoViewManager?.disposeViews()
