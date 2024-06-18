@@ -76,8 +76,7 @@ class CallingViewModel: ObservableObject {
 
         captionsLanguageListViewModel = compositeViewModelFactory.makeCaptionsLanguageListViewModel(
             dispatchAction: actionDispatch,
-            localUserState: store.state.localUserState,
-            captionsState: store.state.captionsState
+            state: store.state
         )
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
@@ -165,7 +164,7 @@ class CallingViewModel: ObservableObject {
 
         captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
             showCaptionsLanguage: {
-                store.dispatch(action: .showSpokenLanguageView)
+                store.dispatch(action: .showCaptionsLanguageView)
             },
             showSpokenLanguage: {
                 store.dispatch(action: .showSpokenLanguageView)
@@ -195,7 +194,11 @@ class CallingViewModel: ObservableObject {
     }
 
     func dismissCaptionLanguageDrawer() {
-        store.dispatch(action: .hideSpokenLanguageView)
+        store.dispatch(action: .hideCaptionsLanguageView)
+    }
+
+    func dismissSpokenLanguageDrawer() {
+        store.dispatch(action: .hideCaptionsLanguageView)
     }
 
     func dismissCaptionsListDrawer() {

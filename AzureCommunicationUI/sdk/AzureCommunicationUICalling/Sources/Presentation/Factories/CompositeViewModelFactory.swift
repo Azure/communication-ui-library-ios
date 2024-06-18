@@ -169,13 +169,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsLanguageListViewModel(dispatchAction: @escaping ActionDispatch,
-                                           localUserState: LocalUserState,
-                                           captionsState: CaptionsState
+                                           state: AppState
     ) -> CaptionsLanguageListViewModel {
         CaptionsLanguageListViewModel(compositeViewModelFactory: self,
                                       dispatchAction: dispatchAction,
-                                      localUserState: localUserState,
-                                      captionsState: captionsState,
+                                      state: state,
                                       localizationProvider: localizationProvider)
     }
 

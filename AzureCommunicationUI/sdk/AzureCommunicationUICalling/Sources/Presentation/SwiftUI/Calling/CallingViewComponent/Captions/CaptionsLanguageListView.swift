@@ -15,6 +15,6 @@ internal struct CaptionsLanguageListView: View {
     }
 
     var body: some View {
-        DrawerListContent(items: viewModel.languageOptions)
+        DrawerListContent(items: viewModel.items)
     }
 }

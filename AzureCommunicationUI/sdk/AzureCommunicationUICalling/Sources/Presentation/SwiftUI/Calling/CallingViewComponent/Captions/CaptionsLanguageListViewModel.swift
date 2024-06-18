@@ -7,7 +7,7 @@ import Foundation
 import Combine
 
 class CaptionsLanguageListViewModel: ObservableObject {
-    @Published var languageOptions: [SelectableDrawerListItemViewModel] = []
+    @Published var items: [DrawerListItemViewModel] = []
     @Published var isDisplayed = false
 
     private var selectedLanguageStatus: LocalUserState.LanguageState
@@ -15,52 +15,59 @@ class CaptionsLanguageListViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private var isSpokenLanguage = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          dispatchAction: @escaping ActionDispatch,
-         localUserState: LocalUserState,
-         captionsState: CaptionsState,
+         state: AppState,
          localizationProvider: LocalizationProviderProtocol) {
         self.dispatch = dispatchAction
-        self.selectedLanguageStatus = localUserState.languageState
-        self.captionsState = captionsState
+        self.selectedLanguageStatus = state.localUserState.languageState
+        self.captionsState = state.captionsState
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
+        self.isSpokenLanguage = state.navigationState.spokenLanguageViewVisible
+
         loadLanguages()
     }
 
     func update(languageState: LocalUserState.LanguageState,
                 navigationState: NavigationState,
                 visibilityState: VisibilityState) {
-        if languageState.selectedLanguage != selectedLanguageStatus.selectedLanguage || languageOptions.isEmpty {
-            self.selectedLanguageStatus = languageState
-            self.languageOptions = getAvailableLanguages(selectedLanguage: languageState.selectedLanguage)
+        self.isSpokenLanguage = navigationState.spokenLanguageViewVisible
+        isDisplayed = visibilityState.currentStatus == .visible && (isSpokenLanguage ?
+                                                                    navigationState.spokenLanguageViewVisible :
+                                                                        navigationState.captionsLanguageViewVisible)
+        if isDisplayed {
+            loadLanguages()
         }
-        isDisplayed = visibilityState.currentStatus == .visible &&
-        navigationState.spokenLanguageViewVisible
     }
 
     private func loadLanguages() {
-        var supportedLanguages: [Locale]
+        var newItems: [DrawerListItemViewModel] = []
+        let titleKey = isSpokenLanguage ? LocalizationKey.captionsSpokenLanguage :
+        LocalizationKey.captionsCaptionLanguage
+        let title = localizationProvider.getLocalizedString(titleKey)
+        let titleItem =
+        TitleDrawerListItemViewModel(title: title,
+                                     accessibilityIdentifier:
+                                        AccessibilityIdentifier.leaveCallConfirmTitleAccessibilityID.rawValue)
 
-        if let spokenLanguages = captionsState.supportedSpokenLanguages, !spokenLanguages.isEmpty {
-            supportedLanguages = spokenLanguages.compactMap { Locale(identifier: $0) }
-        } else {
-            supportedLanguages = SupportedCaptionsLocale.values
+        newItems.append(titleItem)
+        let languageIdentifiers = (isSpokenLanguage ?
+                                   captionsState.supportedSpokenLanguages :
+                                    captionsState.supportedCaptionLanguages) ?? []
+        let supportedLanguages = languageIdentifiers.isEmpty ?
+        SupportedCaptionsLocale.values : languageIdentifiers.compactMap(Locale.init)
+        supportedLanguages.forEach { locale in
+            newItems.append(createLanguageOption(language: locale))
         }
-
-        languageOptions = supportedLanguages.map { locale in
-            createLanguageOption(language: locale)
-        }
-    }
-
-    private func getAvailableLanguages(selectedLanguage: String) -> [SelectableDrawerListItemViewModel] {
-        return SupportedCaptionsLocale.values.map { createLanguageOption(language: $0) }
+        items = newItems
     }
 
     private func createLanguageOption(language: Locale) -> SelectableDrawerListItemViewModel {
         let languageName = Locale.current.localizedString(forIdentifier: language.identifier) ?? "Unknown"
-        let isSelected = (language.identifier == selectedLanguageStatus.selectedLanguage)
+        let isSelected = true
         return compositeViewModelFactory.makeSelectableDrawerListItemViewModel(
             icon: .none,
             title: languageName,
@@ -72,13 +79,11 @@ class CaptionsLanguageListViewModel: ObservableObject {
     }
 
     private func selectLanguage(_ languageIdentifier: String) {
-        selectedLanguageStatus.selectedLanguage = languageIdentifier
+//        if isSpokenLanguage {
+//            selectedLanguageStatus.selectedSpokenLanguage = languageIdentifier
+//        } else {
+//            selectedLanguageStatus.selectedCaptionLanguage = languageIdentifier
+//        }
         dispatch(.captionsAction(.setSpokenLanguageRequested(language: languageIdentifier)))
-        languageOptions = languageOptions.map { option in
-            var updatedOption = option
-            updatedOption.isSelected = (option.title ==
-                                        Locale.current.localizedString(forIdentifier: languageIdentifier) ?? "Unknown")
-            return updatedOption
-        }
     }
 }

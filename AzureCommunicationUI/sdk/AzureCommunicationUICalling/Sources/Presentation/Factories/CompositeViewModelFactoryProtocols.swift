@@ -32,8 +32,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
-                                            localUserState: LocalUserState,
-                                            captionsState: CaptionsState) -> CaptionsLanguageListViewModel
+                                            state: AppState) -> CaptionsLanguageListViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel

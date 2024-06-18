@@ -75,6 +75,10 @@ struct CallingView: View {
                              hideDrawer: viewModel.dismissCaptionLanguageDrawer) {
                     CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel)
                 }
+                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissSpokenLanguageDrawer) {
+                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel)
+                }
                 BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissCaptionsListDrawer) {
                     CaptionsListView(viewModel: viewModel.captionsListViewModel)
