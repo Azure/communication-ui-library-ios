@@ -731,22 +731,24 @@ extension CallComposite {
             self?.logger.debug( "setDismissComposite")
             self?.disposeSDKWrappers()
             self?.callStateManager?.onCompositeExit()
-            self?.exitManager?.onDismissed()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
-            self?.cleanUpManagers()
             UIApplication.shared.isIdleTimerDisabled = false
             if let hostingController = containerUIHostingController {
                 hostingController.dismissSelf {
                     self?.videoViewManager?.disposeViews()
                     self?.logger.debug( "hostingController dismissed")
                     self?.compositeUILaunched = false
+                    self?.exitManager?.onDismissed()
+                    self?.cleanUpManagers()
                     self?.notifyOnCallKitCallAccepted()
                 }
             } else {
                 self?.videoViewManager?.disposeViews()
                 self?.compositeUILaunched = false
+                self?.exitManager?.onDismissed()
+                self?.cleanUpManagers()
                 self?.notifyOnCallKitCallAccepted()
             }
         }
