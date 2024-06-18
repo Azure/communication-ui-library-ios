@@ -159,7 +159,9 @@ public class CallComposite {
             disposeSDKWrappers()
             callingSDKInitializer?.dispose()
             callingSDKInitializer = nil
-            exitManager?.onDismissed()
+            let exitManagerCache = exitManager
+            cleanUpManagers()
+            exitManagerCache?.onDismissed()
         }
     }
 
