@@ -47,6 +47,7 @@ struct NavigationState: Equatable {
         return lhs.status == rhs.status
             && lhs.supportFormVisible == rhs.supportFormVisible
             && lhs.captionsLanguageViewVisible == rhs.captionsLanguageViewVisible
+            && lhs.spokenLanguageViewVisible == rhs.spokenLanguageViewVisible
             && lhs.captionsViewVisible == rhs.captionsViewVisible
             && lhs.endCallConfirmationVisible == rhs.endCallConfirmationVisible
             && lhs.audioSelectionVisible == rhs.audioSelectionVisible

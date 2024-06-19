@@ -15,8 +15,8 @@ struct CaptionsInfoView: UIViewControllerRepresentable {
         let tableViewController = CaptionsInfoViewController(style: .plain)
         tableViewController.loadViewIfNeeded()
         tableViewController.tableView.separatorStyle = .none
-        tableViewController.tableView.register(CompositeParticipantsListCell.self,
-                           forCellReuseIdentifier: CompositeParticipantsListCell.identifier)
+        tableViewController.tableView.register(CaptionsInfoCell.self,
+                           forCellReuseIdentifier: CaptionsInfoCell.identifier)
         return tableViewController
     }
 

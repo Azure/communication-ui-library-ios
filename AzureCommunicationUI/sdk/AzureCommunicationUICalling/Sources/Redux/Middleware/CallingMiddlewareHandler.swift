@@ -66,9 +66,9 @@ protocol CallingMiddlewareHandling {
                                    dispatch: @escaping ActionDispatch,
                                    language: String) -> Task<Void, Never>
     @discardableResult
-    func setCaptionsCaptionLanguage(state: AppState,
-                                    dispatch: @escaping ActionDispatch,
-                                    language: String) -> Task<Void, Never>
+    func setCaptionsLanguage(state: AppState,
+                             dispatch: @escaping ActionDispatch,
+                             language: String) -> Task<Void, Never>
 }
 
 // swiftlint:disable type_body_length
@@ -429,7 +429,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func setCaptionsCaptionLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
+    func setCaptionsLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
     -> Task<Void, Never> {
         Task {
             do {

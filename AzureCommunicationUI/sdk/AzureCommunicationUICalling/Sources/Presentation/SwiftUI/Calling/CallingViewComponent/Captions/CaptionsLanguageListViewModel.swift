@@ -10,7 +10,6 @@ class CaptionsLanguageListViewModel: ObservableObject {
     @Published var items: [DrawerListItemViewModel] = []
     @Published var isDisplayed = false
 
-    private var languageState: LocalUserState.LanguageState
     private var captionsState: CaptionsState
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
@@ -22,7 +21,6 @@ class CaptionsLanguageListViewModel: ObservableObject {
          state: AppState,
          localizationProvider: LocalizationProviderProtocol) {
         self.dispatch = dispatchAction
-        self.languageState = state.localUserState.languageState
         self.captionsState = state.captionsState
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
@@ -31,11 +29,11 @@ class CaptionsLanguageListViewModel: ObservableObject {
         loadLanguages()
     }
 
-    func update(languageState: LocalUserState.LanguageState,
-                navigationState: NavigationState,
-                visibilityState: VisibilityState) {
+    func update(state: AppState) {
+        let navigationState = state.navigationState
         self.isSpokenLanguage = navigationState.spokenLanguageViewVisible
-        isDisplayed = visibilityState.currentStatus == .visible && (isSpokenLanguage ?
+        self.captionsState = state.captionsState
+        isDisplayed = state.visibilityState.currentStatus == .visible && (isSpokenLanguage ?
                                                                     navigationState.spokenLanguageViewVisible :
                                                                         navigationState.captionsLanguageViewVisible)
         if isDisplayed {
@@ -46,11 +44,11 @@ class CaptionsLanguageListViewModel: ObservableObject {
     private func loadLanguages() {
         var newItems: [DrawerListItemViewModel] = []
         newItems.append(createTitleItem())
-        let languageIdentifiers = (isSpokenLanguage ?
+        let languageIdentifiers = (self.isSpokenLanguage ?
                                    captionsState.supportedSpokenLanguages :
                                     captionsState.supportedCaptionLanguages) ?? []
         let supportedLanguages = languageIdentifiers.isEmpty ?
-        SupportedCaptionsLocale.values : languageIdentifiers.compactMap(Locale.init)
+        SupportedCaptionsLanguage.values : languageIdentifiers.compactMap(Locale.init)
         supportedLanguages.forEach { locale in
             newItems.append(createLanguageOption(language: locale))
         }
@@ -58,7 +56,7 @@ class CaptionsLanguageListViewModel: ObservableObject {
     }
 
     private func createTitleItem() -> TitleDrawerListItemViewModel {
-        let titleKey = isSpokenLanguage ? LocalizationKey.captionsSpokenLanguage :
+        let titleKey = self.isSpokenLanguage ? LocalizationKey.captionsSpokenLanguage :
         LocalizationKey.captionsCaptionLanguage
         let title = localizationProvider.getLocalizedString(titleKey)
         return TitleDrawerListItemViewModel(title: title,
@@ -80,18 +78,24 @@ class CaptionsLanguageListViewModel: ObservableObject {
     }
 
     private var currentSelectedIdentifier: String? {
-        isSpokenLanguage ? languageState.spokenStatus.currentIdentifier :
-        languageState.captionsStatus.currentIdentifier
+        isSpokenLanguage ? captionsState.activeSpokenLanguage :
+        captionsState.activeCaptionLanguage
     }
 
     private func selectLanguage(_ languageIdentifier: String) {
+        let language = convertLocaleIdentifierToLowercaseRegionCode(languageIdentifier)
         if isSpokenLanguage {
-            languageState.spokenStatus = .selected(languageIdentifier)
-            dispatch(.captionsAction(.setSpokenLanguageRequested(language: languageIdentifier)))
-
+            dispatch(.captionsAction(.setSpokenLanguageRequested(language: language)))
         } else {
-            languageState.captionsStatus = .selected(languageIdentifier)
-            dispatch(.captionsAction(.setCaptionLanguageRequested(language: languageIdentifier)))
+            dispatch(.captionsAction(.setCaptionLanguageRequested(language: language)))
         }
+    }
+
+    func convertLocaleIdentifierToLowercaseRegionCode(_ identifier: String) -> String {
+        let components = identifier.split(separator: "-")
+        guard components.count == 2 else {
+            return identifier
+        }
+        return "\(components[0])-\(components[1].lowercased())"
     }
 }

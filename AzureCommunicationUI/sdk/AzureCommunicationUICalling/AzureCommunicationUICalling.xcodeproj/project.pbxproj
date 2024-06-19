@@ -26,12 +26,13 @@
 		05F80DEE2A2E6F6700B20C87 /* PipReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DED2A2E6F6700B20C87 /* PipReducer.swift */; };
 		05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */; };
 		1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */; };
+		110786FA2C222367000149B5 /* SupportedSpokenLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110786F92C222367000149B5 /* SupportedSpokenLanguage.swift */; };
 		110DBE412C0998070080DBE1 /* CaptionsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110DBE402C0998070080DBE1 /* CaptionsAction.swift */; };
 		11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */; };
 		1115A0002A1D50EC00C0E3B8 /* OrientationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */; };
 		113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113738FE29D638BB00D48EAB /* DefaultUserState.swift */; };
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
-		114879CE2BEC074700B7D7FF /* SupportedCaptionsLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CD2BEC074700B7D7FF /* SupportedCaptionsLocale.swift */; };
+		114879CE2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */; };
 		114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */; };
 		11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */; };
 		11A8FC292C0FC5A000BF1FFA /* CaptionsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC282C0FC5A000BF1FFA /* CaptionsInfoView.swift */; };
@@ -378,12 +379,13 @@
 		05F80DED2A2E6F6700B20C87 /* PipReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipReducer.swift; sourceTree = "<group>"; };
 		05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityAction.swift; sourceTree = "<group>"; };
 		1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModelTests.swift; sourceTree = "<group>"; };
+		110786F92C222367000149B5 /* SupportedSpokenLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedSpokenLanguage.swift; sourceTree = "<group>"; };
 		110DBE402C0998070080DBE1 /* CaptionsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAction.swift; sourceTree = "<group>"; };
 		11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationOptions.swift; sourceTree = "<group>"; };
 		11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationProvider.swift; sourceTree = "<group>"; };
 		113738FE29D638BB00D48EAB /* DefaultUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserState.swift; sourceTree = "<group>"; };
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
-		114879CD2BEC074700B7D7FF /* SupportedCaptionsLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCaptionsLocale.swift; sourceTree = "<group>"; };
+		114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCaptionsLanguage.swift; sourceTree = "<group>"; };
 		114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsReducer.swift; sourceTree = "<group>"; };
 		11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListView.swift; sourceTree = "<group>"; };
 		11A8FC282C0FC5A000BF1FFA /* CaptionsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoView.swift; sourceTree = "<group>"; };
@@ -1464,7 +1466,7 @@
 				532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */,
 				534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */,
 				11C50D372BD1A79900CB3615 /* CaptionOptions.swift */,
-				114879CD2BEC074700B7D7FF /* SupportedCaptionsLocale.swift */,
+				114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */,
 				A46B90942BF5937A0096788C /* CallKitOptions.swift */,
 				A46B90962BF5939D0096788C /* CallKitRemoteInfo.swift */,
 				A46B90982BF593C50096788C /* Caller.swift */,
@@ -1475,6 +1477,7 @@
 				A48D18012BFD84D600FD994E /* IncomingCallError.swift */,
 				A47792952C02E96100F38FFC /* CommunicationTokenCredentialError.swift */,
 				A4F5F8F32C180A0100A74513 /* CallError.swift */,
+				110786F92C222367000149B5 /* SupportedSpokenLanguage.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -2145,6 +2148,7 @@
 				FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */,
+				110786FA2C222367000149B5 /* SupportedSpokenLanguage.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
 				53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */,
@@ -2158,7 +2162,7 @@
 				88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */,
 				50FA45F8267D466D001844AC /* InfoHeaderView.swift in Sources */,
 				1F13D37026AB293700E31666 /* NavigationReducer.swift in Sources */,
-				114879CE2BEC074700B7D7FF /* SupportedCaptionsLocale.swift in Sources */,
+				114879CE2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift in Sources */,
 				FA6B619F290C5987004B8188 /* SharingActivityContainerController.swift in Sources */,
 				50FA45F5267D3BD3001844AC /* ControlBarView.swift in Sources */,
 				11D6C8C22C17901000FB560F /* CaptionsInfoCellViewModel.swift in Sources */,

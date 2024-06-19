@@ -183,7 +183,7 @@ private func handleCaptionsAction(_ action: CaptionsAction,
     case .setSpokenLanguageRequested(language: let language):
         actionHandler.setCaptionsSpokenLanguage(state: getState(), dispatch: dispatch, language: language)
     case .setCaptionLanguageRequested(language: let language):
-        actionHandler.setCaptionsCaptionLanguage(state: getState(), dispatch: dispatch, language: language)
+        actionHandler.setCaptionsLanguage(state: getState(), dispatch: dispatch, language: language)
     default:
         break
     }

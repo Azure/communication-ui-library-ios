@@ -225,6 +225,15 @@ extension CallingSDKEventsHandler: CallDelegate,
                         self.communicationCaptions?.delegate = self.communicationCaptionsHandler
                         self.captionsSupportedSpokenLanguages.send(self.communicationCaptions?
                             .supportedSpokenLanguages ?? [])
+                        let startCaptionsOptions = StartCaptionsOptions()
+                        startCaptionsOptions.spokenLanguage = "en-us"
+                        self.communicationCaptions?.startCaptions(
+                            options: startCaptionsOptions,
+                                                                  completionHandler: { (error) in
+                                if error != nil {
+                                    print("InderpalTest UICaptions failed to start")
+                                }
+                                                                  })
                     }
 
                     if value?.type == CaptionsType.teamsCaptions {
@@ -421,8 +430,8 @@ private class CommunicationCaptionsHandler: NSObject, CommunicationCaptionsDeleg
 
     func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
                                didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
-        let captionsLanguage = communicationCaptions.activeSpokenLanguage
-        parentHandler?.activeSpokenLanguageChanged.send(captionsLanguage)
+        let spokenLanguage = communicationCaptions.activeSpokenLanguage
+        parentHandler?.activeSpokenLanguageChanged.send(spokenLanguage)
     }
 
    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,

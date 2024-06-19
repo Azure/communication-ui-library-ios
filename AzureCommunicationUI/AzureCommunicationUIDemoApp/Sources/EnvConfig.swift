@@ -68,7 +68,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedMeetingType: MeetingType = .groupCall
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
-    @Published var captionsLocale = SupportedCaptionsLocale.en
+    @Published var captionsLocale = SupportedCaptionsLanguage.enUS
     @Published var setupViewOrientation: OrientationOptions = .portrait
     @Published var callingViewOrientation: OrientationOptions = .allButUpsideDown
     @Published var localeIdentifier: String = ""
@@ -191,7 +191,7 @@ class EnvConfigSubject: ObservableObject {
         }
 
         let currentLocale = Locale.current
-        let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedCaptionsLocale.values
+        let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedCaptionsLanguage.values
         if supportedLanguage.contains(currentLocale) {
             captionsLocale = currentLocale
         }

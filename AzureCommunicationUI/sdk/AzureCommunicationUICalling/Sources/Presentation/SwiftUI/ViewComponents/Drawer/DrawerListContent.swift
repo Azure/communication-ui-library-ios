@@ -31,6 +31,7 @@ internal struct DrawerListContent: View {
             }
         }
         .frame(maxHeight: DrawerListConstants.maxHeight)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

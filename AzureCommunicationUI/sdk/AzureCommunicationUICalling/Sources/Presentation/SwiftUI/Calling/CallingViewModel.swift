@@ -164,11 +164,11 @@ class CallingViewModel: ObservableObject {
 
         captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
             state: store.state,
-            showCaptionsLanguage: {
-                store.dispatch(action: .showCaptionsLanguageView)
-            },
             showSpokenLanguage: {
                 store.dispatch(action: .showSpokenLanguageView)
+            },
+            showCaptionsLanguage: {
+                store.dispatch(action: .showCaptionsLanguageView)
             },
             isDisplayed: store.state.navigationState.captionsViewVisible)
     }
@@ -223,10 +223,7 @@ class CallingViewModel: ObservableObject {
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
         captionsListViewModel.update(state: state)
-        captionsLanguageListViewModel.update(languageState: state.localUserState.languageState,
-                                             navigationState: state.navigationState,
-                                             visibilityState: state.visibilityState)
-       // captionsListViewModel.update(state: state)
+        captionsLanguageListViewModel.update(state: state)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,

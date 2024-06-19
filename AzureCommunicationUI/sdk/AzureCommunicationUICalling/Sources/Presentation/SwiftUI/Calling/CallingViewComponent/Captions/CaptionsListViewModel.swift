@@ -12,7 +12,7 @@ class CaptionsListViewModel: ObservableObject {
     @Published private var isToggleEnabled = false
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    private let state: AppState
+    private var state: AppState
     private let showCaptionsLanguage: () -> Void
     private let showSpokenLanguage: () -> Void
     @Published var items: [DrawerListItemViewModel] = []
@@ -21,8 +21,8 @@ class CaptionsListViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          state: AppState,
-         showCaptionsLanguage: @escaping () -> Void,
          showSpokenLanguage: @escaping () -> Void,
+         showCaptionsLanguage: @escaping () -> Void,
          isDisplayed: Bool
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
@@ -41,26 +41,22 @@ class CaptionsListViewModel: ObservableObject {
             get: { self.isToggleEnabled },
             set: { self.isToggleEnabled = $0 }
         )
-        let currentSpokenLanguage = languageDisplayName(for:
-                                                            state.localUserState
-            .languageState.spokenStatus.currentIdentifier)
-        let currentCaptionsLanguage = languageDisplayName(for:
-                                                            state.localUserState
-            .languageState.captionsStatus.currentIdentifier)
+        let currentSpokenLanguage = languageDisplayName(for: state.captionsState.activeSpokenLanguage)
+        print(currentSpokenLanguage)
+        let currentCaptionsLanguage = languageDisplayName(for: state.captionsState.activeCaptionLanguage)
         let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
             icon: .closeCaptions,
             title: localizationProvider.getLocalizedString(.captionsListTitile),
             isToggleOn: isToggleEnabledBinding,
             showToggle: true,
-            accessibilityIdentifier:
-                AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            accessibilityIdentifier: "",
             action: {self.toggleCaptions()})
 
         let spokenLanguageInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .personVoice,
             title: localizationProvider.getLocalizedString(.captionsSpokenLanguage),
             subtitle: currentSpokenLanguage,
-            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            accessibilityIdentifier: "",
             titleTrailingAccessoryView: .rightChevron,
             action: showSpokenLanguage)
 
@@ -76,10 +72,11 @@ class CaptionsListViewModel: ObservableObject {
     }
 
     func update(state: AppState) {
+        self.state = state
         isDisplayed = state.navigationState.captionsViewVisible
         isToggleEnabled = state.captionsState.isEnabled ?? true
         setupItems(showCaptionsLanguage: self.showCaptionsLanguage,
-                   showSpokenLanguage: self.showCaptionsLanguage)
+                   showSpokenLanguage: self.showSpokenLanguage)
     }
 
     func toggleCaptions() {
