@@ -220,9 +220,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 }
             }
             callingSDKInitializer.onIncomingCallAccpeted()
-            logger.debug( "call id from call \(self.call?.id)")
-            logger.debug( "call id from callConfiguration.callId \(self.callConfiguration.callId)")
-
             if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler,
             let call = call {
                 call.delegate = callingEventsHandler

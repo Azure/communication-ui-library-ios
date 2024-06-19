@@ -126,6 +126,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if isDisplayConnecting {
             self.participantName = localizationProvider.getLocalizedString(LocalizationKey.callingCallMessage)
             self.displayName = self.participantName
+            self.renderDisplayName = renderDisplayName
             self.avatarDisplayName = renderDisplayName
             return
         }
