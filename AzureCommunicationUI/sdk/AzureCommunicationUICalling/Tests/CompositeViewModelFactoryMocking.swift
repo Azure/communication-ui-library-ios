@@ -41,6 +41,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel?
     var supportFormViewModel: SupportFormViewModel?
     var moreCallOptionsListCellViewModel: DrawerListItemViewModel?
+    var leaveCallConfirmationViewModel: LeaveCallConfirmationViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
@@ -174,6 +175,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                               action: onSelectedAction)
     }
 
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
+            leaveCallConfirmationViewModel ?? LeaveCallConfirmationViewModel(state: store.state,
+                                                  localizationProvider: localizationProvider,
+                                                  endCall: {}, dismissConfirmation: {})
+    }
+
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: localizationProvider,
@@ -191,14 +200,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localizationProvider: localizationProvider,
                                                           dispatchAction: dispatchAction,
-                                                          endCallConfirm: endCallConfirm,
+                                                          onEndCallTapped: onEndCallTapped,
                                                           localUserState: localUserState,
                                                           audioVideoMode: .audioAndVideo,
                                                           leaveCallConfirmationMode: leaveCallConfirmationMode)
@@ -261,12 +270,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                                                     localizationProvider: localizationProvider)
     }
 
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void, showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+    func makeMoreCallOptionsListViewModel(isDisplayed: Bool, showSharingViewAction: @escaping () -> Void, showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
         moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                                                      localizationProvider: localizationProvider,
                                                                      showSharingViewAction: showSharingViewAction,
                                                                      showSupportFormAction: showSupportFormAction,
-                                                                     isSupportFormAvailable: false)
+                                                                     isSupportFormAvailable: false,
+        isDisplayed: isDisplayed)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
@@ -282,7 +292,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         debugInfoSharingActivityViewModel ??
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
-                                          debugInfoManager: debugInfoManager)
+                                          debugInfoManager: debugInfoManager) {}
     }
 
     func makeSupportFormViewModel() -> AzureCommunicationUICalling.SupportFormViewModel {

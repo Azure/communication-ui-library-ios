@@ -55,6 +55,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.callType = callType
     }
 
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(
+            state: store.state,
+            localizationProvider: localizationProvider,
+            endCall: endCall,
+            dismissConfirmation: dismissConfirmation)
+    }
+
     func makeSupportFormViewModel() -> SupportFormViewModel {
         return SupportFormViewModel(
             isDisplayed: store.state.navigationState.supportFormVisible
@@ -205,7 +215,7 @@ extension CompositeViewModelFactory {
                                resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled)
     -> ControlBarViewModel {
@@ -213,7 +223,7 @@ extension CompositeViewModelFactory {
                             logger: logger,
                             localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
-                            endCallConfirm: endCallConfirm,
+                            onEndCallTapped: onEndCallTapped,
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled)
@@ -298,6 +308,7 @@ extension CompositeViewModelFactory {
     }
 
     func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
 
@@ -306,7 +317,8 @@ extension CompositeViewModelFactory {
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
-                                            isSupportFormAvailable: events.onUserReportedIssue != nil)
+                                     isSupportFormAvailable: events.onUserReportedIssue != nil,
+                                     isDisplayed: isDisplayed)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
@@ -321,7 +333,9 @@ extension CompositeViewModelFactory {
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
-                                          debugInfoManager: debugInfoManager)
+                                          debugInfoManager: debugInfoManager) {
+            self.store.dispatch(action: .hideSupportShare)
+        }
     }
 
     // MARK: SetupViewModels

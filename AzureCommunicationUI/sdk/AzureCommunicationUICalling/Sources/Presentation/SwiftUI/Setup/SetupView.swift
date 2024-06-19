@@ -56,6 +56,10 @@ struct SetupView: View {
                     .accessibilityElement(children: .contain)
                 }
             }
+            BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissAudioDevicesDrawer) {
+                AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+            }
         }
     }
 

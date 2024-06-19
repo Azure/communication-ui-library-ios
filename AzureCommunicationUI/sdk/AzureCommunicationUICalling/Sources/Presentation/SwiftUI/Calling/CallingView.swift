@@ -56,6 +56,21 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
                 }
+
+                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
+                    LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
+                }
+
+                BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissMoreCallOptionsDrawerList) {
+                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel)
+                }
+
+                BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissAudioDevicesDrawer) {
+                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                }
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -314,11 +329,7 @@ extension CallingView {
     }
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
-        guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-              !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
-              !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
-              !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
-              !viewModel.controlBarViewModel.isShareActivityDisplayed else {
+        guard !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
                 return
             }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all
