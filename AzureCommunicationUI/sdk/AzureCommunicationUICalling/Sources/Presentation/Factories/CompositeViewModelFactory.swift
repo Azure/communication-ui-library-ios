@@ -178,6 +178,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsListViewModel(state: AppState,
+                                   dispatchAction: @escaping ActionDispatch,
                                    showSpokenLanguage: @escaping () -> Void,
                                    showCaptionsLanguage: @escaping () -> Void,
                                    isDisplayed: Bool) -> CaptionsListViewModel {
@@ -185,6 +186,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         return CaptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      state: state,
+                                     dispatchAction: dispatchAction,
                                      showSpokenLanguage: showSpokenLanguage,
                                      showCaptionsLanguage: showCaptionsLanguage,
                                      isDisplayed: store.state.navigationState.captionsViewVisible

@@ -164,6 +164,7 @@ class CallingViewModel: ObservableObject {
 
         captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
             state: store.state,
+            dispatchAction: store.dispatch,
             showSpokenLanguage: {
                 store.dispatch(action: .showSpokenLanguageView)
             },

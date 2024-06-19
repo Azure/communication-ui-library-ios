@@ -225,15 +225,6 @@ extension CallingSDKEventsHandler: CallDelegate,
                         self.communicationCaptions?.delegate = self.communicationCaptionsHandler
                         self.captionsSupportedSpokenLanguages.send(self.communicationCaptions?
                             .supportedSpokenLanguages ?? [])
-                        let startCaptionsOptions = StartCaptionsOptions()
-                        startCaptionsOptions.spokenLanguage = "en-us"
-                        self.communicationCaptions?.startCaptions(
-                            options: startCaptionsOptions,
-                                                                  completionHandler: { (error) in
-                                if error != nil {
-                                    print("InderpalTest UICaptions failed to start")
-                                }
-                                                                  })
                     }
 
                     if value?.type == CaptionsType.teamsCaptions {

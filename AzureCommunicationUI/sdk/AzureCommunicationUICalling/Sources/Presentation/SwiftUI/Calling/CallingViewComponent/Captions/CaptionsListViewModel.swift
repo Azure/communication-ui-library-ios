@@ -10,17 +10,20 @@ import SwiftUI
 
 class CaptionsListViewModel: ObservableObject {
     @Published private var isToggleEnabled = false
+    @Published var items: [DrawerListItemViewModel] = []
+
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private var state: AppState
     private let showCaptionsLanguage: () -> Void
     private let showSpokenLanguage: () -> Void
-    @Published var items: [DrawerListItemViewModel] = []
+    private let dispatch: ActionDispatch
     var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          state: AppState,
+         dispatchAction: @escaping ActionDispatch,
          showSpokenLanguage: @escaping () -> Void,
          showCaptionsLanguage: @escaping () -> Void,
          isDisplayed: Bool
@@ -32,6 +35,7 @@ class CaptionsListViewModel: ObservableObject {
         self.state = state
         self.showSpokenLanguage = showSpokenLanguage
         self.showCaptionsLanguage = showCaptionsLanguage
+        self.dispatch = dispatchAction
         setupItems(showCaptionsLanguage: showCaptionsLanguage, showSpokenLanguage: showSpokenLanguage)
     }
 
@@ -49,7 +53,7 @@ class CaptionsListViewModel: ObservableObject {
             isToggleOn: isToggleEnabledBinding,
             showToggle: true,
             accessibilityIdentifier: "",
-            action: {self.toggleCaptions()})
+            action: { self.toggleCaptions()})
 
         let spokenLanguageInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .personVoice,
@@ -73,13 +77,18 @@ class CaptionsListViewModel: ObservableObject {
     func update(state: AppState) {
         self.state = state
         isDisplayed = state.navigationState.captionsViewVisible
-        isToggleEnabled = state.captionsState.isEnabled ?? true
+        isToggleEnabled = state.captionsState.isStarted ?? true
         setupItems(showCaptionsLanguage: self.showCaptionsLanguage,
                    showSpokenLanguage: self.showSpokenLanguage)
     }
 
     func toggleCaptions() {
         isToggleEnabled.toggle()
+        if isToggleEnabled {
+            dispatch(.captionsAction(.startRequested(language: "en-us")))
+        } else {
+            dispatch(.captionsAction(.stopRequested))
+        }
     }
 
     func languageDisplayName(for code: String) -> String {
