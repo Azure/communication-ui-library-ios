@@ -153,12 +153,13 @@ public class CallComposite {
 
     /// Dismiss call composite. If call is in progress, user will leave a call.
     public func dismiss() {
-        logger.debug( "dismiss")
+        logger.debug( "CallComposite dismiss")
         exitManager?.dismiss()
         if !compositeUILaunched {
             disposeSDKWrappers()
             callingSDKInitializer?.dispose()
             callingSDKInitializer = nil
+            logger.debug( "CallComposite callingSDKInitializer dispose")
             let exitManagerCache = exitManager
             cleanUpManagers()
             exitManagerCache?.onDismissed()
@@ -232,7 +233,6 @@ public class CallComposite {
      public func accept(incomingCallId: String,
                         callKitRemoteInfo: CallKitRemoteInfo? = nil,
                         localOptions: LocalOptions? = nil) {
-         logger.debug( "launch \(incomingCallId)")
          self.callKitRemoteInfo = callKitRemoteInfo
          let callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                                roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
@@ -297,12 +297,12 @@ public class CallComposite {
     }
 
     deinit {
-        logger.debug("Call Composite deallocated")
+        logger.debug("CallComposite Call Composite deallocated")
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
                         localOptions: LocalOptions?) {
-        logger.debug("launch composite experience")
+        logger.debug("CallComposite launch composite experience")
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
@@ -315,7 +315,7 @@ public class CallComposite {
         setupLocalization(with: localizationProvider)
 
         guard let store = self.store else {
-            fatalError("Construction of dependencies failed")
+            fatalError("CallComposite Construction of dependencies failed")
         }
 
         store.$state
@@ -404,7 +404,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     ///                           microphoneOn will be true, default CallKit option
     public func launch(callIdAcceptedFromCallKit: String,
                        localOptions: LocalOptions? = nil) {
-        logger.debug( "launch \(callIdAcceptedFromCallKit)")
         let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
                                               participants: nil,
@@ -442,7 +441,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// Notify once UI is closed by disconnected state before notifying for new call accept
     private func onCallAdded(callId: String) {
         if let incomingCall = callingSDKInitializer?.getIncomingCall() {
-            logger.debug("OnCallAdded incoming call id \(incomingCall.id)")
             if incomingCall.id == callId {
                 incomingCallAcceptedByCallKitCallId = callId
                 notifyOnCallKitCallAccepted()
@@ -454,14 +452,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     /// It is possible that composite is in existing call, then on previous call disconnect this function will be called
     /// CompositeUILaunched will be set to false once existing call is disconnected
     private func notifyOnCallKitCallAccepted() {
-        logger.debug("notifyOnCallKitCallAccepted start")
+        logger.debug("CallComposite notifyOnCallKitCallAccepted start")
         if !compositeUILaunched,
            pipViewController == nil,
            let incomingCall = callingSDKInitializer?.getIncomingCall(),
            let callId = incomingCallAcceptedByCallKitCallId,
            incomingCall.id == callId,
            let onIncomingCallAcceptedByCallKit = events.onIncomingCallAcceptedFromCallKit {
-            logger.debug("notifyOnCallKitCallAccepted \(callId)")
             onIncomingCallAcceptedByCallKit(callId)
             incomingCallAcceptedByCallKitCallId = nil
         }
@@ -730,27 +727,27 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
-            self?.logger.debug( "setDismissComposite")
+            self?.logger.debug( "CallComposite setDismissComposite")
             self?.disposeSDKWrappers()
             self?.callStateManager?.onCompositeExit()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
             UIApplication.shared.isIdleTimerDisabled = false
+            let exitManagerCache = self?.exitManager
+            self?.cleanUpManagers()
             if let hostingController = containerUIHostingController {
                 hostingController.dismissSelf {
                     self?.videoViewManager?.disposeViews()
-                    self?.logger.debug( "hostingController dismissed")
+                    self?.logger.debug( "CallComposite hostingController dismissed")
                     self?.compositeUILaunched = false
-                    self?.exitManager?.onDismissed()
-                    self?.cleanUpManagers()
+                    exitManagerCache?.onDismissed()
                     self?.notifyOnCallKitCallAccepted()
                 }
             } else {
                 self?.videoViewManager?.disposeViews()
                 self?.compositeUILaunched = false
-                self?.exitManager?.onDismissed()
-                self?.cleanUpManagers()
+                exitManagerCache?.onDismissed()
                 self?.notifyOnCallKitCallAccepted()
             }
         }
