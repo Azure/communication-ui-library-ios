@@ -27,8 +27,8 @@ internal struct DrawerListContent: View {
                     } else {
                         DrawerItemView(item: option)
                     }
-                }.padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
-            }
+                }
+            }.padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
         }
         .frame(maxHeight: DrawerListConstants.maxHeight)
         .fixedSize(horizontal: false, vertical: true)

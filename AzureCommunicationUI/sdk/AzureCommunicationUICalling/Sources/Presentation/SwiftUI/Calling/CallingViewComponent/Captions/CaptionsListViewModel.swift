@@ -41,9 +41,8 @@ class CaptionsListViewModel: ObservableObject {
             get: { self.isToggleEnabled },
             set: { self.isToggleEnabled = $0 }
         )
-        let currentSpokenLanguage = languageDisplayName(for: state.captionsState.activeSpokenLanguage)
-        print(currentSpokenLanguage)
-        let currentCaptionsLanguage = languageDisplayName(for: state.captionsState.activeCaptionLanguage)
+        let currentSpokenLanguage = languageDisplayName(for: state.captionsState.activeSpokenLanguage ?? "en-US")
+        let currentCaptionsLanguage = languageDisplayName(for: state.captionsState.activeCaptionLanguage ?? "en-US")
         let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
             icon: .closeCaptions,
             title: localizationProvider.getLocalizedString(.captionsListTitile),
@@ -83,11 +82,14 @@ class CaptionsListViewModel: ObservableObject {
         isToggleEnabled.toggle()
     }
 
-    func languageDisplayName(for code: String?) -> String {
-        guard let code = code, !code.isEmpty else {
-            return "Unknown Language"
+    func languageDisplayName(for code: String) -> String {
+        let locale = Locale(identifier: code)
+        guard let languageCode = locale.languageCode, let regionCode = locale.regionCode,
+              let languageName = Locale.current.localizedString(forLanguageCode: languageCode),
+              let regionName = Locale.current.localizedString(forRegionCode: regionCode) else {
+            return "English (US)"  // Default if any part fails
         }
-        return Locale.current.localizedString(forLanguageCode: code) ?? "Unknown Language"
+        return "\(languageName) (\(regionName))"
     }
 
 }

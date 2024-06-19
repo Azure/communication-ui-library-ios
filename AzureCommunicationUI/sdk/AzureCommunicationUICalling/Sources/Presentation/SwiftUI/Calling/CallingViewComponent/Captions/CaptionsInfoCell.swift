@@ -35,40 +35,10 @@ class CaptionsInfoCell: TableViewCell {
                                StyleProvider.color.drawerIconDark :
                                StyleProvider.color.onSurface)
 
-        if viewModel.isInLobby {
-            setup(title: viewModel.getCellDisplayName(with: participantViewData),
-                  customView: avatar)
-        } else {
-            let customAccessoryView = getCustomAccessoryView(isHold: viewModel.isHold,
-                                                             onHoldString: viewModel.getOnHoldString(),
-                                                             isMuted: viewModel.isMuted)
-            setup(title: viewModel.getCellDisplayName(with: participantViewData),
-                  customView: avatar,
-                  customAccessoryView: customAccessoryView)
-        }
+        setup(title: viewModel.getCellDisplayName(with: participantViewData),
+              customView: avatar,
+              customAccessoryView: customAccessoryView)
 
         self.titleNumberOfLines = 2
-    }
-
-    func getCustomAccessoryView(isHold: Bool,
-                                onHoldString: String,
-                                isMuted: Bool) -> UIView {
-        guard !isHold else {
-            let label = Label(style: .body, colorStyle: .secondary)
-            label.text = onHoldString
-            label.textColor = StyleProvider.color.onHoldLabel
-            label.sizeToFit()
-            label.numberOfLines = 0
-            return label
-        }
-        var micImage: UIImage?
-        if isMuted {
-            micImage = StyleProvider.icon.getUIImage(for: .micOffRegular)?
-                .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
-        } else {
-            micImage = StyleProvider.icon.getUIImage(for: .micOnRegular)?
-                .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
-        }
-        return UIImageView(image: micImage)
     }
 }

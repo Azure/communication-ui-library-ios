@@ -14,17 +14,17 @@ extension Reducer where State == CaptionsState, Actions == CaptionsAction {
         case .stopped:
             newState.isStarted = false
         case .spokenLanguageChanged(let language):
-            newState.activeSpokenLanguage = language
+            newState.activeSpokenLanguage = formatLocaleIdentifier(language)
         case .captionLanguageChanged(let language):
-            newState.activeCaptionLanguage = language
+            newState.activeCaptionLanguage = formatLocaleIdentifier(language)
         case .isTranslationSupportedChanged(let isSupported):
             newState.isTranslationSupported = isSupported
         case .error(let errors):
             newState.errors = errors
         case .supportedSpokenLanguagesChanged(let languages):
-            newState.supportedSpokenLanguages = languages
+            newState.supportedSpokenLanguages = languages.map(formatLocaleIdentifier)
         case .supportedCaptionLanguagesChanged(let languages):
-            newState.supportedCaptionLanguages = languages
+            newState.supportedCaptionLanguages = languages.map(formatLocaleIdentifier)
         case .typeChanged(let type):
             newState.activeType = type
         case .showCaptionsOptions:
@@ -42,5 +42,15 @@ extension Reducer where State == CaptionsState, Actions == CaptionsAction {
             return newState
         }
         return newState
+    }
+
+    static func formatLocaleIdentifier(_ identifier: String) -> String {
+        let components = identifier.split(separator: "-").map(String.init)
+        guard components.count > 1 else {
+            return identifier
+        }
+        return components.enumerated().map { index, component in
+            index == 1 ? component.uppercased() : component
+        }.joined(separator: "-")
     }
 }

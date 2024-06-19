@@ -11,9 +11,9 @@ struct CaptionsState: Equatable {
     var showSupportedSpokenLanguages: Bool?
     var showSupportedCaptionLanguages: Bool?
     var supportedSpokenLanguages: [String]?
-    var activeSpokenLanguage: String? = "en-US"
+    var activeSpokenLanguage: String?
     var supportedCaptionLanguages: [String]?
-    var activeCaptionLanguage: String? = "en-US"
+    var activeCaptionLanguage: String?
     var isTranslationSupported: Bool?
     var activeType: CallCompositeCaptionsType = .none
     var errors: CallCompositeCaptionsErrors = .none

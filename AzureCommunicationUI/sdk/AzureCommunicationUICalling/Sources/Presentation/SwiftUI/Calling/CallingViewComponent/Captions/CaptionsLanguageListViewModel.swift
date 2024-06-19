@@ -36,15 +36,13 @@ class CaptionsLanguageListViewModel: ObservableObject {
         isDisplayed = state.visibilityState.currentStatus == .visible && (isSpokenLanguage ?
                                                                     navigationState.spokenLanguageViewVisible :
                                                                         navigationState.captionsLanguageViewVisible)
-        if isDisplayed {
-            loadLanguages()
-        }
+        loadLanguages()
     }
 
     private func loadLanguages() {
         var newItems: [DrawerListItemViewModel] = []
         newItems.append(createTitleItem())
-        let languageIdentifiers = (self.isSpokenLanguage ?
+        let languageIdentifiers = (isSpokenLanguage ?
                                    captionsState.supportedSpokenLanguages :
                                     captionsState.supportedCaptionLanguages) ?? []
         let supportedLanguages = languageIdentifiers.isEmpty ?
