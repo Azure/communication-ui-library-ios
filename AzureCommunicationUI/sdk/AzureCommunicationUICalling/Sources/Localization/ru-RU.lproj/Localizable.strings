@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Допустить %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Допустить";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Отклонить";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@? more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Переключиться на переднюю камеру";

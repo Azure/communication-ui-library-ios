@@ -73,6 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Wpuścić %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Wpuść";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Odrzuć";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@? more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Przełącz na kamerę tylną";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Przełącz na kamerę przednią";

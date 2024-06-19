@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@을(를) 허용하시겠어요?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="허용";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="거절";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@? more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="후면 카메라로 전환";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="전면 카메라로 전환";

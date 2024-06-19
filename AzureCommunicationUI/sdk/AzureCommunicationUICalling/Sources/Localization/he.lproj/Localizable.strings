@@ -73,6 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="להכניס את %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="הכנס";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="דחה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@? more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="עבור למצלמה אחורית";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="עבור למצלמה קדמית";
