@@ -532,6 +532,7 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
+            print("::::CallingDemoView::onDismissedHandler")
         }
 
         exitCompositeExecuted = false
