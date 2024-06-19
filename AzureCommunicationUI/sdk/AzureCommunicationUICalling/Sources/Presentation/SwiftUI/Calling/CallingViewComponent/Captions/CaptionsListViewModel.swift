@@ -84,12 +84,6 @@ class CaptionsListViewModel: ObservableObject {
 
     func languageDisplayName(for code: String) -> String {
         let locale = Locale(identifier: code)
-        guard let languageCode = locale.languageCode, let regionCode = locale.regionCode,
-              let languageName = Locale.current.localizedString(forLanguageCode: languageCode),
-              let regionName = Locale.current.localizedString(forRegionCode: regionCode) else {
-            return "English (US)"  // Default if any part fails
-        }
-        return "\(languageName) (\(regionName))"
+        return Locale.current.localizedString(forIdentifier: locale.identifier) ?? "English (US)"
     }
-
 }
