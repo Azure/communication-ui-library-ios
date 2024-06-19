@@ -45,7 +45,8 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 
 1. Follow [QuickStart](https://learn.microsoft.com/en-us/azure/communication-services/how-tos/ui-library-sdk/one-to-one-calling?tabs=kotlin&pivots=platform-ios) to setup Push Notification Hub for ACS Resource or EventGrid
 2. For `AzureCommunicationUIDemoApp` add `Push Notification` Capability
-3. Change `AzureCommunicationUIDemoApp` to profile supporting `Push Notification`
+3. Add `AzureCommunicationUIDemoAppExtensions` into Frameworks for `AzureCommunicationUIDemoApp`
+4. Change `AzureCommunicationUIDemoApp` to profile supporting `Push Notification`
 
 ### Run Sample
 
