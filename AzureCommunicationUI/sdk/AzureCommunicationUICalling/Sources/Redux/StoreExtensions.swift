@@ -15,7 +15,8 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         displayName: String?,
         startWithCameraOn: Bool?,
         startWithMicrophoneOn: Bool?,
-        skipSetupScreen: Bool?
+        skipSetupScreen: Bool?,
+        callType: CompositeCallType
     ) -> Store<AppState, Action> {
         let cameraState = startWithCameraOn
         ?? false ? DefaultUserState.CameraState.on : DefaultUserState.CameraState.off
@@ -30,7 +31,7 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         let localUserState = LocalUserState(displayName: displayName)
 
         let callingState = skipSetupScreen ?? false ?
-                CallingState(operationStatus: .skipSetupRequested): CallingState()
+                CallingState(operationStatus: .skipSetupRequested) : CallingState()
         let navigationStatus: NavigationStatus = skipSetupScreen ?? false ? .inCall : .setup
         let navigationState = NavigationState(status: navigationStatus)
         return .init(
@@ -39,7 +40,8 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                 .liveCallingMiddleware(
                     callingMiddlewareHandler: CallingMiddlewareHandler(
                         callingService: callingService,
-                        logger: logger
+                        logger: logger,
+                        callType: callType
                     )
                 )
             ],

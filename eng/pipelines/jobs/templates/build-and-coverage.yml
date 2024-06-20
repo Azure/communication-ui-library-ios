@@ -13,11 +13,22 @@ parameters:
 
 steps:
   - task: CocoaPods@0
-    displayName: "pod install"
+    displayName: "pod install --repo-update"
     inputs:
       workingDirectory: ${{ parameters.workingDirectory }}
       forceRepoUpdate: true
       projectDirectory: ${{ parameters.workingDirectory }}
+
+  - script: |
+      Pods/SwiftLint/swiftlint version 
+    workingDirectory: AzureCommunicationUI
+    displayName: "SwiftLint Version Check"
+
+  - script: |
+      Pods/SwiftLint/swiftlint 
+    workingDirectory: AzureCommunicationUI
+    displayName: "SwiftLint Manual Pre-Check"
+
 
   - script: |
       swift build -v \

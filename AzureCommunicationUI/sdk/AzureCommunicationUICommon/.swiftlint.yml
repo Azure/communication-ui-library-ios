@@ -1,0 +1,3 @@
+# Need to disable file header because package.swift uses the header area comments.
+disabled_rules:
+    - file_header

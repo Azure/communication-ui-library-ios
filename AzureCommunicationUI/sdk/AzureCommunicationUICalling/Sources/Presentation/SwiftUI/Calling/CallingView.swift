@@ -37,7 +37,7 @@ struct CallingView: View {
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
 
     var safeAreaIgnoreArea: Edge.Set {
-        return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
+        return getSizeClass() != .iphoneLandscapeScreenSize ? [] : [/* .bottom */]
     }
 
     var body: some View {
@@ -49,16 +49,16 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-            }
-            .frame(width: geometry.size.width,
-                   height: geometry.size.height)
-            .modifier(PopupModalView(
-                isPresented: viewModel.showingSupportForm,
-                alignment: .bottom) {
+
+                BottomDrawer(isPresented: viewModel.supportFormViewModel.isDisplayed,
+                             hideDrawer: viewModel.supportFormViewModel.hideForm) {
                     reportErrorView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
-            })
+                }
+            }
+            .frame(width: geometry.size.width,
+                   height: geometry.size.height)
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -298,6 +298,7 @@ struct CallingView: View {
     }
 
 }
+// swiftlint:enable type_body_length
 
 extension CallingView {
     private func getSizeClass() -> ScreenSizeClassType {

@@ -6,8 +6,9 @@
 import Foundation
 
 class SupportFormViewModel: ObservableObject {
-    @Published var submitOnDismiss: Bool = false
-    @Published var blockSubmission: Bool = true
+    @Published var isDisplayed = false
+    @Published var submitOnDismiss = false
+    @Published var blockSubmission = true
 
     // Strings
     @Published var reportIssueTitle: String
@@ -22,7 +23,8 @@ class SupportFormViewModel: ObservableObject {
     let events: CallComposite.Events
     let getDebugInfo: () -> DebugInfo
 
-    init(dispatchAction: @escaping ActionDispatch,
+    init(isDisplayed: Bool,
+         dispatchAction: @escaping ActionDispatch,
          events: CallComposite.Events,
          localizationProvider: LocalizationProviderProtocol,
          getDebugInfo: @escaping () -> DebugInfo) {
@@ -36,6 +38,11 @@ class SupportFormViewModel: ObservableObject {
         cancelButtonText = localizationProvider.getLocalizedString(.supportFormCancelButtonText)
         reportAProblemText = localizationProvider.getLocalizedString(.supportFormReportAProblemText)
         sendFeedbackText = localizationProvider.getLocalizedString(.supportFormSendFeedbackText)
+    }
+
+    func update(state: AppState) {
+        isDisplayed = state.navigationState.supportFormVisible
+            && state.visibilityState.currentStatus == .visible
     }
 
     // Published properties that the view can observe

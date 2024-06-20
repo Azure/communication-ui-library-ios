@@ -34,14 +34,14 @@ extension Reducer where State == ChatState,
             topic = newTopic
         case .chatAction(.chatMessageLocalUserRemoved):
             isLocalUserRemovedFromChat = true
-        case .participantsAction(.readReceiptReceived(_)):
+        case .participantsAction(.readReceiptReceived):
             lastReadReceiptReceivedTimestamp = Date()
         case .participantsAction(.sendReadReceiptSuccess(messageId: let messageId)):
             lastReadReceiptSentTimestamp = messageId.convertEpochStringToTimestamp()
-        case .repositoryAction(.sendMessageTriggered(_, _)):
+        case .repositoryAction(.sendMessageTriggered):
             lastSendingMessageTimestamp = Date()
-        case .repositoryAction(.sendMessageSuccess(_, _)),
-             .repositoryAction(.sendMessageFailed(_, _)):
+        case .repositoryAction(.sendMessageSuccess),
+             .repositoryAction(.sendMessageFailed):
             lastSentOrFailedMessageTimestamp = Date()
         case .repositoryAction(.chatMessageReceived(let message)):
             if !message.isLocalUser {

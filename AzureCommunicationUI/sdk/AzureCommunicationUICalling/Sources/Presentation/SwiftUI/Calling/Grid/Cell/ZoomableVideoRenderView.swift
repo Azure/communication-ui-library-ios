@@ -165,7 +165,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
                 let ratioW = scrollView.frame.width / videoContentWidth
                 let ratioH = scrollView.frame.height / videoContentHeight
 
-                let ratio = ratioW < ratioH ? ratioW:ratioH
+                let ratio = ratioW < ratioH ? ratioW : ratioH
 
                 let newWidth = videoContentWidth * ratio
                 let newHeight = videoContentHeight * ratio

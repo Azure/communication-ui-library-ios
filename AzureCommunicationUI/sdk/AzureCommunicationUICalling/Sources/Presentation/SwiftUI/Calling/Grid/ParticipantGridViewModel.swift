@@ -11,6 +11,7 @@ class ParticipantGridViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let isIpadInterface: Bool
+    private let callType: CompositeCallType
     private var maximumParticipantsDisplayed: Int {
         return  self.visibilityStatus == .pipModeEntered ? 1 : isIpadInterface ? 9 : 6
     }
@@ -27,11 +28,13 @@ class ParticipantGridViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIpadInterface: Bool) {
+         isIpadInterface: Bool,
+         callType: CompositeCallType) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.isIpadInterface = isIpadInterface
+        self.callType = callType
     }
 
     func update(callingState: CallingState,
@@ -72,7 +75,10 @@ class ParticipantGridViewModel: ObservableObject {
         updateCellViewModel(for: orderedInfoModelArr, lifeCycleState: lifeCycleState)
 
         displayedParticipantInfoModelArr = orderedInfoModelArr
-        if callingState.status == .connected {
+        if callingState.status == .connected
+            || callingState.status == .remoteHold
+            || (callType == .oneToNOutgoing
+        && ( callingState.status == .connecting || callingState.status == .ringing)) {
             // announce participants list changes only if the user is already connected to the call
             postParticipantsListUpdateAccessibilityAnnouncements(removedModels: removedModels,
                                                                  addedModels: addedModels)
@@ -93,8 +99,8 @@ class ParticipantGridViewModel: ObservableObject {
             return infoModels
         }
         var dominantSpeakersOrder = [String: Int]()
-        for i in 0..<min(maximumParticipantsDisplayed, dominantSpeakers.count) {
-            dominantSpeakersOrder[dominantSpeakers[i]] = i
+        for idx in 0..<min(maximumParticipantsDisplayed, dominantSpeakers.count) {
+            dominantSpeakersOrder[dominantSpeakers[idx]] = idx
         }
         let sortedInfoList = infoModels.sorted(by: {
             if let order1 = dominantSpeakersOrder[$0.userIdentifier],

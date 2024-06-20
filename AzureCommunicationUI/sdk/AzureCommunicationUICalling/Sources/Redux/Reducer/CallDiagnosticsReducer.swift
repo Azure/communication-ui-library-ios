@@ -30,18 +30,18 @@ extension Reducer where State == CallDiagnosticsState,
                 mediaDiagnostic = nil
             }
         // Exhaustive unimplemented actions
-        case .audioSessionAction(_),
-             .callingAction(_),
-             .lifecycleAction(_),
-             .localUserAction(_),
-             .permissionAction(_),
-             .remoteParticipantsAction(_),
-             .errorAction(_),
+        case .audioSessionAction,
+             .callingAction,
+             .lifecycleAction,
+             .localUserAction,
+             .permissionAction,
+             .remoteParticipantsAction,
+             .errorAction,
              .compositeExitAction,
              .callingViewLaunched,
              .showSupportForm,
              .hideSupportForm,
-             .visibilityAction(_):
+             .visibilityAction:
             return state
         }
 

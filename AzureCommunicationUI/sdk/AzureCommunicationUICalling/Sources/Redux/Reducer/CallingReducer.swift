@@ -16,10 +16,14 @@ extension Reducer where State == CallingState,
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
         var callStartDate = callingState.callStartDate
+        var callEndReasonCode: Int?
+        var callEndReasonSubCode: Int?
 
         switch action {
-        case .callingAction(.stateUpdated(let status)):
+        case .callingAction(.stateUpdated(let status, let code, let subCode)):
             callingStatus = status
+            callEndReasonCode = code
+            callEndReasonSubCode = subCode
         case .callingAction(.callIdUpdated(let callId)):
             callIdValue = callId
         case .callingAction(.recordingStateUpdated(let newValue)):
@@ -44,17 +48,17 @@ extension Reducer where State == CallingState,
                 .callingAction(.setupCall),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .errorAction(.fatalErrorUpdated(internalError: _, error: _)),
-                .lifecycleAction(_),
-                .localUserAction(_),
-                .permissionAction(_),
-                .remoteParticipantsAction(_),
-                .callDiagnosticAction(_),
+                .errorAction(.fatalErrorUpdated),
+                .lifecycleAction,
+                .localUserAction,
+                .permissionAction,
+                .remoteParticipantsAction,
+                .callDiagnosticAction,
                 .compositeExitAction,
                 .callingViewLaunched,
                 .hideSupportForm,
                 .showSupportForm,
-                .visibilityAction(_):
+                .visibilityAction:
             return callingState
         }
         return CallingState(status: callingStatus,
@@ -62,6 +66,8 @@ extension Reducer where State == CallingState,
                             callId: callIdValue,
                             isRecordingActive: isRecordingActive,
                             isTranscriptionActive: isTranscriptionActive,
-                            callStartDate: callStartDate)
+                            callStartDate: callStartDate,
+                            callEndReasonCode: callEndReasonCode,
+                            callEndReasonSubCode: callEndReasonSubCode)
     }
 }

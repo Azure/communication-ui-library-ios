@@ -151,13 +151,13 @@ class RemoteParticipantsManagerTests: XCTestCase {
     func test_remoteParticipantsManager_receive_when_participantLeftCall_then_didRemoteParticipantsJoinEventIsNotPosted() {
         makeSUT()
         var participantInfoModels: [ParticipantInfoModel] = []
-        for i in 0...5 {
+        for idx in 0...5 {
             participantInfoModels.append(ParticipantInfoModel(
-                displayName: "Participant \(i)",
+                displayName: "Participant \(idx)",
                 isSpeaking: false,
                 isMuted: false,
                 isRemoteUser: true,
-                userIdentifier: "testUserIdentifier\(i)",
+                userIdentifier: "testUserIdentifier\(idx)",
                 status: .idle,
                 screenShareVideoStreamModel: nil,
                 cameraVideoStreamModel: nil))

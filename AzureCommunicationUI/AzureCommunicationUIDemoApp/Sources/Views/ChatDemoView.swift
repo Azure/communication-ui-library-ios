@@ -13,9 +13,9 @@ struct ChatDemoView: View {
         static let oneMillisecond: UInt64 = 10_000_000
     }
 
-    @State var isErrorDisplayed: Bool = false
+    @State var isErrorDisplayed = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
-    @State var isShowingChatView: Bool = false
+    @State var isShowingChatView = false
     @State var errorMessage: String = ""
 
     let verticalPadding: CGFloat = 5
@@ -192,7 +192,7 @@ extension ChatDemoView {
             return
         }
         chatAdapter.events.onError = showError(error:)
-        chatAdapter.connect() { _ in
+        chatAdapter.connect { _ in
             print("Chat connect completionHandler called")
         }
     }
@@ -247,8 +247,7 @@ extension ChatDemoView {
             ChatCompositeErrorCode.fetchMessagesFailed,
             ChatCompositeErrorCode.requestParticipantsFetchFailed,
             ChatCompositeErrorCode.sendReadReceiptFailed,
-            ChatCompositeErrorCode.sendTypingIndicatorFailed,
-            ChatCompositeErrorCode.disconnectFailed:
+            ChatCompositeErrorCode.sendTypingIndicatorFailed:
             // no alert
             return
         default:

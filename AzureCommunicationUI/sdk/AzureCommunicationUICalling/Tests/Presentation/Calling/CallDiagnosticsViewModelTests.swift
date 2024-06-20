@@ -43,18 +43,18 @@ class CallDiagnosticsViewModelTests: XCTestCase {
             switch action {
             case .callDiagnosticAction(let action):
                 actions.append(action)
-            case .audioSessionAction(_),
-                 .callingAction(_),
-                 .errorAction(_),
-                 .lifecycleAction(_),
-                 .localUserAction(_),
-                 .permissionAction(_),
-                 .remoteParticipantsAction(_),
+            case .audioSessionAction,
+                 .callingAction,
+                 .errorAction,
+                 .lifecycleAction,
+                 .localUserAction,
+                 .permissionAction,
+                 .remoteParticipantsAction,
                  .compositeExitAction,
                  .callingViewLaunched,
                  .showSupportForm,
                  .hideSupportForm,
-                 .visibilityAction(_):
+                 .visibilityAction:
                 break
             }
         }

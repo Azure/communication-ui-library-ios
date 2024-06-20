@@ -11,11 +11,25 @@ class CallingReducerTests: XCTestCase {
     func test_callingReducer_reduce_when_callingActionStateUpdated_then_stateUpdated() {
         let expectedState = CallingStatus.connected
         let state = CallingState(status: .disconnected)
-        let action = Action.callingAction(.stateUpdated(status: expectedState))
+        let action = Action.callingAction(.stateUpdated(status: expectedState, callEndReasonCode: nil, callEndReasonSubCode: nil))
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.status, expectedState)
+    }
+
+    func test_callingReducer_reduce_when_callingActionStateUpdatedWithError_then_stateUpdated() {
+        let expectedState = CallingStatus.connected
+        let state = CallingState(status: .disconnected)
+        let action = Action.callingAction(.stateUpdated(status: expectedState,
+                                                        callEndReasonCode: 200,
+                                                        callEndReasonSubCode: 400))
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.status, expectedState)
+        XCTAssertEqual(resultState.callEndReasonCode, 200)
+        XCTAssertEqual(resultState.callEndReasonSubCode, 400)
     }
 
     func test_callingReducer_reduce_when_unhandledAction_then_stateNotUpdate() {

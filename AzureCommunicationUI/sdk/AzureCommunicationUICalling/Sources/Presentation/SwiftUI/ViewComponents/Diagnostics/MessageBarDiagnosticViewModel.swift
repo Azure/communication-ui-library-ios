@@ -8,7 +8,7 @@ import Combine
 final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     @Published private(set) var text: String = ""
     @Published private(set) var icon: CompositeIcon?
-    @Published private(set) var isDisplayed: Bool = false
+    @Published private(set) var isDisplayed = false
 
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol

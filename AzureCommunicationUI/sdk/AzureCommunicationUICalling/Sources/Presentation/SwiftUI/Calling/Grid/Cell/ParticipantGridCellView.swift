@@ -13,7 +13,7 @@ struct ParticipantGridCellView: View {
     let avatarViewManager: AvatarViewManagerProtocol
     @State var avatarImage: UIImage?
     @State var displayedVideoStreamId: String?
-    @State var isVideoChanging: Bool = false
+    @State var isVideoChanging = false
     let avatarSize: CGFloat = 56
 
     var body: some View {
@@ -82,7 +82,7 @@ struct ParticipantGridCellView: View {
 
     var avatarView: some View {
         return VStack(alignment: .center, spacing: 5) {
-            CompositeAvatar(displayName: $viewModel.displayName,
+            CompositeAvatar(displayName: $viewModel.avatarDisplayName,
                             avatarImage: $avatarImage,
                             isSpeaking: viewModel.isSpeaking && !viewModel.isMuted)
             .frame(width: avatarSize, height: avatarSize)

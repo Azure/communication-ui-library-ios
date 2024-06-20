@@ -29,8 +29,8 @@ class DebugInfoManager: DebugInfoManagerProtocol {
 
     private func getCallHistory() -> [CallHistoryRecord] {
         return callHistoryRepository.getAll()
-            .sorted(by: { a, b in
-                return a.callStartedOn < b.callStartedOn
+            .sorted(by: { callA, callB in
+                return callA.callStartedOn < callB.callStartedOn
             })
     }
 }

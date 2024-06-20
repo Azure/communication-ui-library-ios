@@ -7,24 +7,24 @@ import Combine
 import Foundation
 
 class CallingViewModel: ObservableObject {
-    @Published var isConfirmLeaveListDisplayed: Bool = false
+    @Published var isConfirmLeaveListDisplayed = false
     @Published var isParticipantGridDisplayed: Bool
-    @Published var isVideoGridViewAccessibilityAvailable: Bool = false
+    @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
-    @Published var isInPip: Bool = false
+    @Published var isInPip = false
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
-    @Published var allowLocalCameraPreview: Bool = false
-    @Published var showingSupportForm: Bool = false
+    @Published var allowLocalCameraPreview = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let callType: CompositeCallType
 
     private var cancellables = Set<AnyCancellable>()
-    private var callHasConnected: Bool = false
-    private var callClientRequested: Bool = false
+    private var callHasConnected = false
+    private var callClientRequested = false
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
 
     let localVideoViewModel: LocalVideoViewModel
@@ -50,7 +50,8 @@ class CallingViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode
+         leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         callType: CompositeCallType
     ) {
         self.logger = logger
         self.store = store
@@ -60,10 +61,10 @@ class CallingViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.callType = callType
         let actionDispatch: ActionDispatch = store.dispatch
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
-        showingSupportForm = store.state.navigationState.supportFormVisible
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
@@ -71,9 +72,7 @@ class CallingViewModel: ObservableObject {
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
-
         infoHeaderViewModel = compositeViewModelFactory
-
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
                                      localUserState: store.state.localUserState)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
@@ -84,8 +83,12 @@ class CallingViewModel: ObservableObject {
             dispatchAction: actionDispatch)
 
         let isCallConnected = store.state.callingState.status == .connected
+        let callingStatus = store.state.callingState.status
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: callingStatus)
+        let isRemoteHold = store.state.callingState.status == .remoteHold
 
-        isParticipantGridDisplayed = isCallConnected &&
+        isParticipantGridDisplayed = (isCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
@@ -141,9 +144,8 @@ class CallingViewModel: ObservableObject {
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
-        showingSupportForm = store.state.navigationState.supportFormVisible
-            && store.state.visibilityState.currentStatus == .visible
 
+        supportFormViewModel.update(state: state)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
@@ -170,12 +172,14 @@ class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         let newIsCallConnected = state.callingState.status == .connected
-        let shouldParticipantGridDisplayed = newIsCallConnected &&
+        let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
+                                                                              callingStatus: state.callingState.status)
+        let isRemoteHold = store.state.callingState.status == .remoteHold
+        let shouldParticipantGridDisplayed = (newIsCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
-
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
                 guard let self = self else {
@@ -206,5 +210,14 @@ class CallingViewModel: ObservableObject {
         isVideoGridViewAccessibilityAvailable = !lobbyOverlayViewModel.isDisplayed
         && !onHoldOverlayViewModel.isDisplayed
         && (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
+    }
+
+    private static func isOutgoingCallDialingInProgress(callType: CompositeCallType,
+                                                        callingStatus: CallingStatus?) -> Bool {
+        let isOutgoingCall = (callType == .oneToNOutgoing && (callingStatus == nil
+                                                              || callingStatus == .connecting
+                                                              || callingStatus == .ringing
+                                                              || callingStatus == .earlyMedia))
+        return isOutgoingCall
     }
 }

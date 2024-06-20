@@ -23,7 +23,7 @@ extension Middleware where State == ChatAppState {
                             handleParticipantsAction(participantsAction, actionHandler, getState, dispatch)
                         case .repositoryAction(let repositoryAction):
                             handleRepositoryAction(repositoryAction, actionHandler, getState, dispatch)
-                        case .errorAction(_),
+                        case .errorAction,
                                 .compositeExitAction,
                                 .chatViewLaunched:
                             break
@@ -81,7 +81,7 @@ extension Middleware where State == ChatAppState {
         switch action {
         case .sendReadReceiptTriggered(let messageId):
             actionHandler.sendReadReceipt(messageId: messageId, state: getState(), dispatch: dispatch)
-        case .typingIndicatorReceived(_):
+        case .typingIndicatorReceived:
             actionHandler.setTypingParticipantTimer(getState, dispatch)
         default:
             break

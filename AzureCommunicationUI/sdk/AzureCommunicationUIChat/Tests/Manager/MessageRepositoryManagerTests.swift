@@ -343,8 +343,8 @@ class MessageRepositoryManagerTests: XCTestCase {
                                            editedOn: Iso8601Date())
         sut.updateMessageEdited(message: message)
         XCTAssertEqual(sut.messages.count, initialMessages.count)
-        for m in sut.messages {
-            XCTAssertNil(m.editedOn)
+        for message in sut.messages {
+            XCTAssertNil(message.editedOn)
         }
     }
 
@@ -381,8 +381,8 @@ class MessageRepositoryManagerTests: XCTestCase {
                                            deletedOn: Iso8601Date())
         sut.updateMessageDeleted(message: message)
         XCTAssertEqual(sut.messages.count, initialMessages.count)
-        for m in sut.messages {
-            XCTAssertNil(m.deletedOn)
+        for message in sut.messages {
+            XCTAssertNil(message.deletedOn)
         }
     }
 
