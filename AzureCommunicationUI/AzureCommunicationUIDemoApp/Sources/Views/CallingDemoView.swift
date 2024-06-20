@@ -592,6 +592,10 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        /* <ROOMS_SUPPORT>
+                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                                         roleHint: roomRoleData
+                                        <|ROOMS_SUPPORT> */
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
                                         /* <ROOMS_SUPPORT>
                                          roleHint: roomRoleData
@@ -747,6 +751,22 @@ extension CallingDemoView {
                         localOptions: localOptions)
                     </ROOMS_SUPPORT> */
                 }
+            /* <ROOMS_SUPPORT>
+            case .roomCall:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions:
+                                            RemoteOptions(for: .roomCall(roomId: link),
+                                                          credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for:
+                                .roomCall(roomId: link),
+                                                     credential: credential,
+                                                     displayName: envConfigSubject.displayName),
+                        localOptions: localOptions)
+                }
+             </ROOMS_SUPPORT> */
             }
             callingViewModel.callComposite = callComposite
         } else {
