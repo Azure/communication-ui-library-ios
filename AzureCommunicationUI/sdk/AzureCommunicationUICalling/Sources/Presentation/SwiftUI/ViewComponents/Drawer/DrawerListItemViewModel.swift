@@ -13,8 +13,9 @@ class DrawerListItemViewModel: Identifiable {
     let accessibilityIdentifier: String
     let titleTrailingAccessoryView: CompositeIcon?
     let action: (() -> Void)
-    var isToggleOn: Binding<Bool>?
-    var showsToggle: Bool
+    let isToggleOn: Binding<Bool>?
+    let showsToggle: Bool
+    let isEnabled: Bool
 
     init(icon: CompositeIcon,
          title: String,
@@ -23,6 +24,7 @@ class DrawerListItemViewModel: Identifiable {
          titleTrailingAccessoryView: CompositeIcon? = CompositeIcon.none,
          isToggleOn: Binding<Bool>? = nil,
          showToggle: Bool = false,
+         isEnabled: Bool? = true,
          action: @escaping () -> Void) {
         self.icon = icon
         self.title = title
@@ -31,6 +33,7 @@ class DrawerListItemViewModel: Identifiable {
         self.subtitle = subtitle ?? ""
         self.isToggleOn = isToggleOn
         self.showsToggle = showToggle
+        self.isEnabled = isEnabled ?? true
         self.titleTrailingAccessoryView = titleTrailingAccessoryView ?? Optional.none
     }
 }
@@ -40,7 +43,7 @@ extension DrawerListItemViewModel: Equatable {
                     rhs: DrawerListItemViewModel) -> Bool {
         return lhs.title == rhs.title &&
         lhs.accessibilityIdentifier == rhs.accessibilityIdentifier &&
-        lhs.icon == rhs.icon
+        lhs.icon == rhs.icon && lhs.isEnabled == rhs.isEnabled
     }
 }
 

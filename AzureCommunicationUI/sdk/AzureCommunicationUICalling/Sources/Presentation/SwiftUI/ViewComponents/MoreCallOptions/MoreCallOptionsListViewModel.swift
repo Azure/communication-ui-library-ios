@@ -28,7 +28,6 @@ class MoreCallOptionsListViewModel: ObservableObject {
         let captionsInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .closeCaptions,
             title: localizationProvider.getLocalizedString(.captionsListTitile),
-            subtitle: nil,
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             titleTrailingAccessoryView: .rightChevron,
             action: showCaptionsViewAction)
@@ -37,7 +36,6 @@ class MoreCallOptionsListViewModel: ObservableObject {
         let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .share,
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
-            subtitle: nil,
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             titleTrailingAccessoryView: nil,
             action: showSharingViewAction)
@@ -48,7 +46,6 @@ class MoreCallOptionsListViewModel: ObservableObject {
             let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
                 icon: .personFeedback,
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
-                subtitle: nil,
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
                 titleTrailingAccessoryView: nil,
                 action: showSupportFormAction)

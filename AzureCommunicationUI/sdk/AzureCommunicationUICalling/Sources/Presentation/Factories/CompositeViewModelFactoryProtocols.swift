@@ -73,7 +73,6 @@ protocol CompositeViewModelFactoryProtocol {
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
-                                     subtitle: String?,
                                      accessibilityIdentifier: String,
                                      titleTrailingAccessoryView: CompositeIcon?,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
@@ -84,6 +83,14 @@ protocol CompositeViewModelFactoryProtocol {
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
+
+    func makeLanguageListItemViewModel(icon: CompositeIcon,
+                                       title: String,
+                                       subtitle: String?,
+                                       accessibilityIdentifier: String,
+                                       titleTrailingAccessoryView: CompositeIcon?,
+                                       isEnabled: Bool?,
+                                       action: @escaping (() -> Void)) -> DrawerListItemViewModel
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),
         dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel

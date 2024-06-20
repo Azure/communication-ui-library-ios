@@ -358,17 +358,32 @@ extension CompositeViewModelFactory {
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
-                                     subtitle: String? = "",
                                      accessibilityIdentifier: String,
                                      titleTrailingAccessoryView: CompositeIcon? =
         .rightChevron,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel {
         DrawerListItemViewModel(icon: icon,
                                 title: title,
-                                subtitle: subtitle,
                                 accessibilityIdentifier: accessibilityIdentifier,
                                 titleTrailingAccessoryView: titleTrailingAccessoryView,
                                 action: action)
+    }
+
+    func makeLanguageListItemViewModel(icon: CompositeIcon,
+                                       title: String,
+                                       subtitle: String?,
+                                       accessibilityIdentifier: String,
+                                       titleTrailingAccessoryView: CompositeIcon?,
+                                       isEnabled: Bool?,
+                                       action: @escaping (() -> Void)) -> DrawerListItemViewModel {
+        DrawerListItemViewModel(icon: icon,
+                                title: title,
+                                subtitle: subtitle,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                titleTrailingAccessoryView: titleTrailingAccessoryView,
+                                isEnabled: isEnabled,
+                                action: action)
+
     }
 
     func makeToggleListItemViewModel(icon: CompositeIcon,

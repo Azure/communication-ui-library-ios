@@ -70,10 +70,10 @@ internal struct DrawerItemView: View {
     var body: some View {
         HStack {
             Icon(name: item.icon, size: DrawerListConstants.iconSize)
-                .foregroundColor(.primary)
+                .foregroundColor(item.isEnabled ? .primary : .gray)
             VStack(alignment: .leading) {
                 Text(item.title)
-                    .foregroundColor(.primary)
+                    .foregroundColor(item.isEnabled ? .primary : .gray)
                     .padding(.leading, DrawerListConstants.textPaddingLeading)
                     .font(.body)
                 if let subtitle = item.subtitle, !subtitle.isEmpty {
@@ -85,11 +85,9 @@ internal struct DrawerItemView: View {
             }
             Spacer()
             if item.showsToggle, let isToggleOn = item.isToggleOn {
-                Toggle(isOn: isToggleOn) {
-                    Text("")
-                }
-                .labelsHidden()
-                .toggleStyle(SwitchToggleStyle(tint: .blue))
+                Toggle("", isOn: isToggleOn)
+                    .labelsHidden()
+                    .toggleStyle(SwitchToggleStyle(tint: .blue))
             } else if let accessoryView = item.titleTrailingAccessoryView,
                       accessoryView != .none {
                 Icon(name: item.titleTrailingAccessoryView ?? .rightChevron, size: DrawerListConstants.trailingIconSize)
@@ -102,6 +100,8 @@ internal struct DrawerItemView: View {
         .onTapGesture {
             item.action()
         }
+        .disabled(!item.isEnabled)
+        .foregroundColor(item.isEnabled ? .primary : .gray)
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }
 }
