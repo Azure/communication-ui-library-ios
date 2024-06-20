@@ -1,5 +1,13 @@
 # Azure Communication UI Calling Release History
 
+## 1.8.0 (2024-05-20)
+
+### Features
+
+- 1 to N Calling with push notification support
+- CallKit Integration
+- Teams meeting join with meeting id
+
 ## 1.7.0 (2024-05-29)
 
 ### Features

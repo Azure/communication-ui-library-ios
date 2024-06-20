@@ -57,6 +57,16 @@ class CompositeExitManagerTests: XCTestCase {
         compositeExitManager.dismiss()
 
         wait(for: [actionExpectation], timeout: 1)
+
+        // error test
+        XCTAssertTrue(CallCompositeDismissed(errorCode: "abc",
+                                         error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
+                      == CallCompositeDismissed(errorCode: "abc",
+                                            error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
+        XCTAssertFalse(CallCompositeDismissed(errorCode: "abc",
+                                         error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet)
+                      == CallCompositeDismissed(errorCode: "ab",
+                                            error: CommunicationTokenCredentialError.communicationTokenCredentialNotSet))
     }
 
     func test_exitManager_when_none_callState_then_callEndRequestedCalled() {

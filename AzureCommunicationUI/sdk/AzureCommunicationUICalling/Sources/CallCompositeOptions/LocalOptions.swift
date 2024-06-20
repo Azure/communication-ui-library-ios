@@ -53,8 +53,8 @@ public struct LocalOptions {
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
-                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo /* <ROOMS_SUPPORT>
-                roleHint: ParticipantRole? = nil  </ROOMS_SUPPORT> */) {
+                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo /* <ROOMS_SUPPORT> ,
+                roleHint: ParticipantRole? = nil </ROOMS_SUPPORT> */) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn

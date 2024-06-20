@@ -18,11 +18,14 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     private var audioSessionState: AudioSessionStatus = .active
     private var audioSessionDetector: Timer?
     var cancellables = Set<AnyCancellable>()
+    private var isCallKitEnabled: Bool
 
     init(store: Store<AppState, Action>,
-         logger: Logger) {
+         logger: Logger,
+         isCallKitEnabled: Bool) {
         self.store = store
         self.logger = logger
+        self.isCallKitEnabled = isCallKitEnabled
         let currentAudioDevice = getCurrentAudioDevice()
         self.setupAudioSession()
         store.dispatch(action: .localUserAction(.audioDeviceChangeRequested(device: currentAudioDevice)))
@@ -59,16 +62,18 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
-        activateAudioSessionCategory()
+        if !isCallKitEnabled {
+            activateAudioSessionCategory()
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(handleInterruption),
+                                                   name: AVAudioSession.interruptionNotification,
+                                                   object: AVAudioSession.sharedInstance())
+        }
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
                                                name: AVAudioSession.routeChangeNotification,
                                                object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleInterruption),
-                                               name: AVAudioSession.interruptionNotification,
-                                               object: AVAudioSession.sharedInstance())
     }
 
     @objc func handleInterruption(notification: Notification) {
@@ -117,6 +122,9 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     func isAudioUsedByOther() -> Bool {
+        if isCallKitEnabled {
+            return true // Microphone is not in use, callkit will manage
+        }
         let audioSession = AVAudioSession.sharedInstance()
         do {
             // Try to activate the session
@@ -166,6 +174,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         } catch let error {
             logger.error("Failed to select audio device, reason: \(error.localizedDescription)")
             store.dispatch(action: .localUserAction(.audioDeviceChangeFailed(error: error)))
+            store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: getCurrentAudioDevice())))
         }
     }
 
