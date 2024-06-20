@@ -13,14 +13,14 @@ struct RemoteParticipantsState {
     let dominantSpeakers: [String]
     let dominantSpeakersModifiedTimestamp: Date
     let lobbyError: LobbyError?
-    let totalParticipantCount: Int32
+    let totalParticipantCount: Int
 
     init(participantInfoList: [ParticipantInfoModel] = [],
          lastUpdateTimeStamp: Date = Date(),
          dominantSpeakers: [String] = [],
          dominantSpeakersModifiedTimestamp: Date = Date(),
          lobbyError: LobbyError? = nil,
-         totalParticipantCount: Int32 = 0) {
+         totalParticipantCount: Int = 0) {
         self.participantInfoList = participantInfoList
         self.lastUpdateTimeStamp = lastUpdateTimeStamp
         self.dominantSpeakers = dominantSpeakers

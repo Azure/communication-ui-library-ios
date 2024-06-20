@@ -73,7 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ を許可しますか?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="参加許可";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒否";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@? more";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="バック カメラに切り替える";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="フロント カメラに切り替える";

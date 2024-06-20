@@ -97,7 +97,7 @@ protocol CallingSDKEventsHandling {
 
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
-    var totalParticipantCountSubject: PassthroughSubject<Int32, Never> { get }
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
 
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }

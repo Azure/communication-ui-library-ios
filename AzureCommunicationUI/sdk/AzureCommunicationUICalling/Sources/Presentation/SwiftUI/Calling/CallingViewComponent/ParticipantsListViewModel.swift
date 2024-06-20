@@ -11,6 +11,7 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
     private let localizationProvider: LocalizationProviderProtocol
+    private var plusMoreParticipantCount: Int?
 
     var lastUpdateTimeStamp = Date()
     private var lastParticipantRole: ParticipantRoleEnum?
@@ -53,6 +54,14 @@ class ParticipantsListViewModel: ObservableObject {
                 .map {
                     compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)
                 }
+
+            let plusMoreCount =
+            remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
+            if plusMoreCount > 0 {
+                self.plusMoreParticipantCount = plusMoreCount
+            } else {
+                self.plusMoreParticipantCount = nil
+            }
         }
     }
 
@@ -63,6 +72,15 @@ class ParticipantsListViewModel: ObservableObject {
             let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
             return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
+    }
+
+    func plusMoreMenuItem() -> ParticipantsListCellViewModel? {
+        if let plusMoreParticipantCount = self.plusMoreParticipantCount {
+            return ParticipantsListCellViewModel(plusMoreCount: plusMoreParticipantCount,
+                                                 localizationProvider: self.localizationProvider)
+        }
+
+        return nil
     }
 
     func admitAll() {
@@ -91,6 +109,10 @@ class ParticipantsListViewModel: ObservableObject {
 
     func getAdmitAllButtonText() -> String {
         self.localizationProvider.getLocalizedString(.participantListAdmitAll)
+    }
+
+    func getPlusMoreText() -> String {
+        self.localizationProvider.getLocalizedString(.participantListPlusMore)
     }
 
     func getConfirmTitleAdmitParticipant() -> String {

@@ -17,7 +17,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
-    var totalParticipantCountSubject = PassthroughSubject<Int32, Never>()
+    var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
     var capabilitiesChangedSubject = PassthroughSubject<CapabilitiesChangedEvent, Never>()
 
     // User Facing Diagnostics Subjects
@@ -250,7 +250,7 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func call(_ call: Call, didChangeTotalParticipantCount args: PropertyChangedEventArgs) {
         // substract local participant from total participantCount
-        totalParticipantCountSubject.send(call.totalParticipantCount - 1)
+        totalParticipantCountSubject.send(Int(call.totalParticipantCount) - 1)
     }
 
     // MARK: CapabilitiesDelegate

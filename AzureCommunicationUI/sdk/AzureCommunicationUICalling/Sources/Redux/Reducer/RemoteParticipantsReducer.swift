@@ -34,7 +34,7 @@ extension Reducer where State == RemoteParticipantsState,
             }
         case .remoteParticipantsAction(.setTotalParticipantCount(participantCount: let participantCount)):
             totalParticipantCount = participantCount
-
+            lastUpdateTimeStamp = Date()
         default:
             break
         }

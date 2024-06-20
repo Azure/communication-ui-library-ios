@@ -23,5 +23,5 @@ enum Action: Equatable {
     case showSupportForm
     case hideSupportForm
     case toastNotificationAction(ToastNotificationAction)
-    case setTotalParticipantCount(Int32)
+    case setTotalParticipantCount(Int)
 }

@@ -15,7 +15,7 @@ protocol CallingServiceProtocol {
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
-    var totalParticipantCountSubject: PassthroughSubject<Int32, Never> { get }
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
@@ -57,7 +57,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     var callIdSubject: PassthroughSubject<String, Never>
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never>
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never>
-    var totalParticipantCountSubject: PassthroughSubject<Int32, Never>
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never>
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()

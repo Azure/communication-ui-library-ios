@@ -29,6 +29,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     private var allParticipants: [ParticipantsListCellViewModel] = []
     private var inCallParticipants: [ParticipantsListCellViewModel] = []
     private var lobbyParticipants: [ParticipantsListCellViewModel] = []
+    private var plusMoreMenuItem: ParticipantsListCellViewModel?
 
     private var admintAll: () -> Void
     private var declineAll: () -> Void
@@ -42,6 +43,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     private let confirmAdmit: String
     private let confirmDecline: String
     private var openParticipantMenu: (_ participantId: String, _ participantDisplayName: String) -> Void
+    private let plusMoreText: String
 
     private var admitAlert: UIAlertController?
 
@@ -52,12 +54,18 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
         set {
             allParticipants = newValue
 
-            inCallParticipants = allParticipants.filter { participantsListCellViewModel in
+            inCallParticipants = newValue.filter { participantsListCellViewModel in
+                !participantsListCellViewModel.isPlusMoreMenuItem &&
                 !participantsListCellViewModel.isInLobby
             }
 
-            lobbyParticipants = allParticipants.filter { participantsListCellViewModel in
+            lobbyParticipants = newValue.filter { participantsListCellViewModel in
+                !participantsListCellViewModel.isPlusMoreMenuItem &&
                 participantsListCellViewModel.isInLobby
+            }
+
+            plusMoreMenuItem = newValue.first { participantsListCellViewModel in
+                participantsListCellViewModel.isPlusMoreMenuItem
             }
         }
     }
@@ -76,7 +84,8 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
          confirmTitleAdmitAll: String,
          confirmAdmit: String,
          confirmDecline: String,
-         openParticipantMenu: @escaping (_ participantId: String, _ participantDisplayName: String) -> Void
+         openParticipantMenu: @escaping (_ participantId: String, _ participantDisplayName: String) -> Void,
+         plusMoreText: String
     ) {
         self.avatarViewManager = avatarViewManager
         self.admintAll = admintAll
@@ -91,6 +100,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
         self.confirmAdmit = confirmAdmit
         self.confirmDecline = confirmDecline
         self.openParticipantMenu = openParticipantMenu
+        self.plusMoreText = plusMoreText
         super.init(sourceView: sourceView, isRightToLeft: isRightToLeft)
     }
 
@@ -116,24 +126,42 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return participants(section: section).count
+        var participantCount = participants(section: section).count
+        if !isLobbySection(section: section),
+           let plusMoreMenuItem = self.plusMoreMenuItem {
+            participantCount += 1
+        }
+        return participantCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let participantsListCellViewModels = participants(section: indexPath.section)
 
-        guard indexPath.row < participantsListCellViewModels.count,
+        guard indexPath.row <= participantsListCellViewModels.count,
               let cell = tableView.dequeueReusableCell(
                 withIdentifier: CompositeParticipantsListCell.identifier,
                 for: indexPath) as? CompositeParticipantsListCell else {
             return UITableViewCell()
         }
-        let participantCellViewModel = participantsListCellViewModels[indexPath.row]
 
-        cell.setup(viewModel: participantCellViewModel,
-                   avatarViewManager: avatarViewManager)
-        cell.bottomSeparatorType = .none
-        return cell
+        if indexPath.row == participantsListCellViewModels.count {
+            // this is a plus more lable cell
+            if let plusMoreMenuItem = self.plusMoreMenuItem,
+               let plusMoreCount = plusMoreMenuItem.plusMoreCount {
+                let title = String(format: self.plusMoreText, String(plusMoreCount))
+                cell.setup(title: title)
+            }
+
+            cell.bottomSeparatorType = .none
+            return cell
+        } else {
+            let participantCellViewModel = participantsListCellViewModels[indexPath.row]
+
+            cell.setup(viewModel: participantCellViewModel,
+                       avatarViewManager: avatarViewManager)
+            cell.bottomSeparatorType = .none
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
