@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Vill du släppa in %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Släpp in";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avböj";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Byt till kameran på baksidan";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Byt till kameran på framsidan";

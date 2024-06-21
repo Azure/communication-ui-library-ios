@@ -15,4 +15,5 @@ enum RemoteParticipantsAction: Equatable {
     case lobbyError(errorCode: LobbyErrorCode?)
     case remove(participantId: String)
     case removeParticipantError
+    case setTotalParticipantCount(participantCount: Int)
 }

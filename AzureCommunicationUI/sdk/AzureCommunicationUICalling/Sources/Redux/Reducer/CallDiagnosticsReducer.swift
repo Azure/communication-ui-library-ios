@@ -42,7 +42,8 @@ extension Reducer where State == CallDiagnosticsState,
              .showSupportForm,
              .hideSupportForm,
              .visibilityAction,
-             .toastNotificationAction:
+             .toastNotificationAction,
+             .setTotalParticipantCount:
             return state
         }
 

@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ toelaten?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Toelaten";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Weigeren";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Overschakelen naar de camera op de achterzijde";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Overschakelen naar de camera op de voorzijde";

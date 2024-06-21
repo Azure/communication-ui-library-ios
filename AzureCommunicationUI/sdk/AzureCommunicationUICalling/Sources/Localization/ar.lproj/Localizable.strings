@@ -73,6 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="السماح لـ %@؟";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="سماح";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="رفض";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="تبديل إلى الكاميرا الخلفية";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="تبديل إلى الكاميرا الأمامية";

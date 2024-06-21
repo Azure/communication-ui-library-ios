@@ -40,7 +40,8 @@ extension Reducer where State == NavigationState,
                 .permissionAction,
                 .visibilityAction,
                 .callDiagnosticAction,
-                .toastNotificationAction:
+                .toastNotificationAction,
+                .setTotalParticipantCount:
             return state
         }
         return NavigationState(status: navigationStatus, supportFormVisible: supportFormVisible)

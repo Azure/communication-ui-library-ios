@@ -53,7 +53,8 @@ extension Reducer where State == ErrorState,
                 .hideSupportForm,
                 .showSupportForm,
                 .visibilityAction,
-                .toastNotificationAction:
+                .toastNotificationAction,
+                .setTotalParticipantCount:
             return state
         }
 

@@ -612,6 +612,11 @@ extension CallingMiddlewareHandler {
                 dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
             }.store(in: subscription)
 
+        callingService.totalParticipantCountSubject
+            .removeDuplicates()
+            .sink { participantCount in
+                dispatch(.remoteParticipantsAction(.setTotalParticipantCount(participantCount: participantCount)))
+            }.store(in: subscription)
         subscribeOnDiagnostics(dispatch: dispatch)
         subscibeCapabilitiesUpdate(dispatch: dispatch)
     }
