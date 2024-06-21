@@ -34,16 +34,15 @@
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
 		114879CE2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */; };
 		114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */; };
+		116BC0C22C24D06500F8CF6F /* CaptionsInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */; };
+		116BC0C42C24D10D00F8CF6F /* CaptionsInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */; };
+		116BC0C62C24D15800F8CF6F /* CaptionsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */; };
 		11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */; };
-		11A8FC292C0FC5A000BF1FFA /* CaptionsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC282C0FC5A000BF1FFA /* CaptionsInfoView.swift */; };
-		11A8FC2B2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2A2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift */; };
 		11A8FC2F2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */; };
 		11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */; };
 		11A8FC332C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */; };
 		11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */; };
 		11C50D382BD1A79900CB3615 /* CaptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C50D372BD1A79900CB3615 /* CaptionOptions.swift */; };
-		11D6C8C22C17901000FB560F /* CaptionsInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */; };
-		11D6C8C42C17902800FB560F /* CaptionsInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D6C8C32C17902800FB560F /* CaptionsInfoCell.swift */; };
 		11E792B12BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E792B02BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift */; };
 		11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */; };
 		11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */; };
@@ -245,7 +244,6 @@
 		98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */; };
 		98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */; };
 		98FFD82826CC5FD900655398 /* PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FFD82726CC5FD900655398 /* PreferenceKey.swift */; };
-		A3EEF3282C1931D7008B81B3 /* CaptionsInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEF3272C1931D7008B81B3 /* CaptionsInfoViewController.swift */; };
 		A3EEF32A2C1931ED008B81B3 /* CaptionsViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEF3292C1931ED008B81B3 /* CaptionsViewManager.swift */; };
 		A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810329F3353B001B80A3 /* CallCompositeCallState.swift */; };
 		A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810529F33A43001B80A3 /* CallStateManager.swift */; };
@@ -387,16 +385,15 @@
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
 		114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCaptionsLanguage.swift; sourceTree = "<group>"; };
 		114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsReducer.swift; sourceTree = "<group>"; };
+		116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoViewModel.swift; sourceTree = "<group>"; };
+		116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCellView.swift; sourceTree = "<group>"; };
+		116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoView.swift; sourceTree = "<group>"; };
 		11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListView.swift; sourceTree = "<group>"; };
-		11A8FC282C0FC5A000BF1FFA /* CaptionsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoView.swift; sourceTree = "<group>"; };
-		11A8FC2A2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoViewModel.swift; sourceTree = "<group>"; };
 		11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListViewModel.swift; sourceTree = "<group>"; };
 		11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListView.swift; sourceTree = "<group>"; };
 		11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListViewModel.swift; sourceTree = "<group>"; };
 		11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfigurationTests.swift; sourceTree = "<group>"; };
 		11C50D372BD1A79900CB3615 /* CaptionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionOptions.swift; sourceTree = "<group>"; };
-		11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCellViewModel.swift; sourceTree = "<group>"; };
-		11D6C8C32C17902800FB560F /* CaptionsInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCell.swift; sourceTree = "<group>"; };
 		11E792B02BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCaptionsData.swift; sourceTree = "<group>"; };
 		11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayView.swift; sourceTree = "<group>"; };
 		11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModel.swift; sourceTree = "<group>"; };
@@ -638,7 +635,6 @@
 		98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModel.swift; sourceTree = "<group>"; };
 		98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModelTests.swift; sourceTree = "<group>"; };
 		98FFD82726CC5FD900655398 /* PreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKey.swift; sourceTree = "<group>"; };
-		A3EEF3272C1931D7008B81B3 /* CaptionsInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionsInfoViewController.swift; sourceTree = "<group>"; };
 		A3EEF3292C1931ED008B81B3 /* CaptionsViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionsViewManager.swift; sourceTree = "<group>"; };
 		A464810329F3353B001B80A3 /* CallCompositeCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallState.swift; sourceTree = "<group>"; };
 		A464810529F33A43001B80A3 /* CallStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManager.swift; sourceTree = "<group>"; };
@@ -789,15 +785,13 @@
 		11A8FC272C0FC53A00BF1FFA /* Captions */ = {
 			isa = PBXGroup;
 			children = (
-				A3EEF3272C1931D7008B81B3 /* CaptionsInfoViewController.swift */,
-				11A8FC282C0FC5A000BF1FFA /* CaptionsInfoView.swift */,
-				11A8FC2A2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift */,
 				11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */,
 				11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */,
 				11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */,
-				11D6C8C12C17901000FB560F /* CaptionsInfoCellViewModel.swift */,
-				11D6C8C32C17902800FB560F /* CaptionsInfoCell.swift */,
 				11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */,
+				116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */,
+				116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */,
+				116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */,
 			);
 			path = Captions;
 			sourceTree = "<group>";
@@ -2023,7 +2017,6 @@
 				5347C1D72C13B4FE0084AE56 /* DrawerListContent.swift in Sources */,
 				50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */,
 				A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */,
-				11D6C8C42C17902800FB560F /* CaptionsInfoCell.swift in Sources */,
 				1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */,
 				FAD20A8E292834500063D8A9 /* MappedSequence.swift in Sources */,
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
@@ -2092,10 +2085,10 @@
 				885F3F9A291DCDF500B86C9B /* DrawerListItemViewModel.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */,
-				11A8FC2B2C0FC5AE00BF1FFA /* CaptionsInfoViewModel.swift in Sources */,
 				114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */,
 				A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
+				116BC0C22C24D06500F8CF6F /* CaptionsInfoViewModel.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
@@ -2132,7 +2125,7 @@
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
 				A3EEF32A2C1931ED008B81B3 /* CaptionsViewManager.swift in Sources */,
 				1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */,
-				11A8FC292C0FC5A000BF1FFA /* CaptionsInfoView.swift in Sources */,
+				116BC0C62C24D15800F8CF6F /* CaptionsInfoView.swift in Sources */,
 				1FBCB6D92655825200F57EEA /* LocalUserReducer.swift in Sources */,
 				A874EDC826616792003C7D92 /* LifecycleAction.swift in Sources */,
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,
@@ -2165,9 +2158,9 @@
 				114879CE2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift in Sources */,
 				FA6B619F290C5987004B8188 /* SharingActivityContainerController.swift in Sources */,
 				50FA45F5267D3BD3001844AC /* ControlBarView.swift in Sources */,
-				11D6C8C22C17901000FB560F /* CaptionsInfoCellViewModel.swift in Sources */,
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
+				116BC0C42C24D10D00F8CF6F /* CaptionsInfoCellView.swift in Sources */,
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,
 				05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */,
 				5A1F4BD12BDA08D200EA7B2D /* ControlBarViewModelExtension.swift in Sources */,
@@ -2255,7 +2248,6 @@
 				1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */,
 				759BDEF928FF0851002B6853 /* StyleProvider.swift in Sources */,
 				5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */,
-				A3EEF3282C1931D7008B81B3 /* CaptionsInfoViewController.swift in Sources */,
 				752B953C2863A40F001C52E8 /* Action.swift in Sources */,
 				5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */,
 				5A3142DAFAB4EE338ABF2196 /* CompositeViewModelFactory.swift in Sources */,

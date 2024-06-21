@@ -3,36 +3,25 @@
 //  Licensed under the MIT License.
 //
 
-import UIKit
-import FluentUI
 import SwiftUI
 
-struct CaptionsInfoView: UIViewControllerRepresentable {
-    let captionTableViewController: UITableViewController
-    private let captionsViewManager: CaptionsViewManager
+struct CaptionsInfoView: View {
+    @ObservedObject var viewModel: CaptionsInfoViewModel
 
-    private static func getCaptionsListTableViewController() -> UITableViewController {
-        let tableViewController = CaptionsInfoViewController(style: .plain)
-        tableViewController.loadViewIfNeeded()
-        tableViewController.tableView.separatorStyle = .none
-        tableViewController.tableView.register(CaptionsInfoCell.self,
-                           forCellReuseIdentifier: CaptionsInfoCell.identifier)
-        return tableViewController
+    var body: some View {
+       ScrollView {
+            ScrollViewReader { scrollView in
+                VStack {
+                    ForEach(viewModel.captionsData.indices, id: \.self) { index in
+                        CaptionsInfoCellView(caption: viewModel.captionsData[index])
+                            .id(index)
+                    }
+                }.onChange(of: viewModel.captionsData.count) { _ in
+                    withAnimation {
+                        scrollView.scrollTo(viewModel.captionsData.count - 1, anchor: .bottom)
+                    }
+                }
+            }
+       }
     }
-
-    init(captionsViewManager: CaptionsViewManager) {
-        self.captionsViewManager = captionsViewManager
-        self.captionTableViewController = CaptionsInfoView.getCaptionsListTableViewController()
-        self.captionTableViewController.tableView.delegate = captionsViewManager
-        self.captionTableViewController.tableView.dataSource = captionsViewManager
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        return captionTableViewController
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        return
-    }
-
 }

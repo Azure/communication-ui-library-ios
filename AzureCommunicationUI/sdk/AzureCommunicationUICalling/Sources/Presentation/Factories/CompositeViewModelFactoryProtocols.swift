@@ -33,6 +33,7 @@ protocol CompositeViewModelFactoryProtocol {
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
                                             state: AppState) -> CaptionsLanguageListViewModel
+    func makeCaptionsInfoViewModel (state: AppState) -> CaptionsInfoViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
@@ -55,7 +56,6 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
-    func makeCaptionsInfoViewModel(dispatchAction: @escaping ActionDispatch) -> CaptionsInfoViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel

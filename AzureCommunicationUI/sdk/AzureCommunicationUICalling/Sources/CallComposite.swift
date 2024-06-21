@@ -576,13 +576,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
+
+        let captionsViewManager = CaptionsViewManager(
+            callingSDKWrapper: callingSdkWrapper
+        )
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
-            captionsViewManager: CaptionsViewManager(
-                avatarViewManager: avatarViewManager,
-                callingSDKWrapper: callingSdkWrapper
-            ),
             videoViewManager: videoViewManager,
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,
@@ -592,6 +592,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
+                captionsViewManager: captionsViewManager,
                 localOptions: localOptions,
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,

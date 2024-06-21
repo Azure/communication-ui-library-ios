@@ -30,7 +30,9 @@ enum CallCompositeCaptionsErrors: Int {
     case setCaptionLanguageTeamsPremiumLicenseNeeded
 }
 
-struct CallCompositeCaptionsData {
+struct CallCompositeCaptionsData: Identifiable {
+    var id: Date { timestamp }
+
     let resultType: CaptionsResultType
     let speakerRawId: String
     let speakerName: String

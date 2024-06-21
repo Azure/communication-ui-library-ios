@@ -16,6 +16,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
+    private let captionsViewManager: CaptionsViewManager
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
@@ -34,6 +35,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
+         captionsViewManager: CaptionsViewManager,
          localOptions: LocalOptions? = nil,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
@@ -48,6 +50,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
+        self.captionsViewManager = captionsViewManager
         self.events = eventsHandler
         self.localOptions = localOptions
         self.enableMultitasking = enableMultitasking
@@ -193,6 +196,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      && store.state.visibilityState.currentStatus == .visible)
     }
 
+    func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
+        return CaptionsInfoViewModel(state: state, captionsManager: captionsViewManager)
+    }
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
                                                title: String,
                                                isSelected: Bool,
@@ -312,12 +318,6 @@ extension CompositeViewModelFactory {
                                   localUserState: localUserState,
                                   dispatchAction: dispatchAction,
                                   localizationProvider: localizationProvider)
-    }
-
-    func makeCaptionsInfoViewModel(dispatchAction: @escaping ActionDispatch) -> CaptionsInfoViewModel {
-        CaptionsInfoViewModel(compositeViewModelFactory: self,
-                              dispatchAction: dispatchAction,
-                              localizationProvider: localizationProvider)
     }
 
     func makeBannerViewModel() -> BannerViewModel {

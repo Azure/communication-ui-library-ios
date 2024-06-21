@@ -28,7 +28,6 @@ struct CallingView: View {
     }
 
     @ObservedObject var viewModel: CallingViewModel
-    @ObservedObject var captionsViewManager: CaptionsViewManager
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
 
@@ -117,7 +116,9 @@ struct CallingView: View {
                     VStack {
                         videoGridView
                             .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
-                        captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom)
+                        if viewModel.captionsInfoViewModel.isDisplayed {
+                            captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom)
+                        }
                     }
                     if viewModel.isParticipantGridDisplayed && !viewModel.isInPip && viewModel.allowLocalCameraPreview {
                         Group {
@@ -277,9 +278,8 @@ struct CallingView: View {
     }
 
     var captionsInfoView: some View {
-        return CaptionsInfoView(captionsViewManager: captionsViewManager)
+        return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel)
             .frame(maxWidth: .infinity, maxHeight: 115, alignment: .bottom)
-                .background(Color.white)
     }
 
     var errorInfoView: some View {
