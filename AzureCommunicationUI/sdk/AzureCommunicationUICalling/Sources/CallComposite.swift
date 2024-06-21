@@ -237,8 +237,8 @@ public class CallComposite {
                         callKitRemoteInfo: CallKitRemoteInfo? = nil,
                         localOptions: LocalOptions? = nil) {
          self.callKitRemoteInfo = callKitRemoteInfo
-         let callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                               roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+         let callConfiguration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT>
+                                               roleHint: localOptions?.roleHint </ROOMS_SUPPORT> */
                                                participants: nil,
                                                callId: incomingCallId)
          self.callConfiguration = callConfiguration
@@ -350,8 +350,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        let configuration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT> */ ,
-                                                  roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: remoteOptions.locator /* <ROOMS_SUPPORT>
+                                                  roleHint: localOptions?.roleHint  </ROOMS_SUPPORT> */,
                                                   participants: nil,
                                                   callId: nil)
         self.credential = remoteOptions.credential
@@ -370,8 +370,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
         self.callKitRemoteInfo = callKitRemoteInfo
-        let configuration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: locator, /* <ROOMS_SUPPORT>
+                                              roleHint: localOptions?.roleHint  </ROOMS_SUPPORT> */
                                               participants: nil,
                                               callId: nil)
         self.callConfiguration = configuration
@@ -388,8 +388,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                        callKitRemoteInfo: CallKitRemoteInfo? = nil,
                        localOptions: LocalOptions? = nil) {
         self.callKitRemoteInfo = callKitRemoteInfo
-        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT>
+                                              roleHint: localOptions?.roleHint  </ROOMS_SUPPORT> */
                                               participants: participants,
                                               callId: nil)
         self.callConfiguration = configuration
@@ -407,8 +407,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     ///                           microphoneOn will be true, default CallKit option
     public func launch(callIdAcceptedFromCallKit: String,
                        localOptions: LocalOptions? = nil) {
-        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT> */
-                                              roleHint: localOptions?.roleHint /* </ROOMS_SUPPORT> */,
+        let configuration = CallConfiguration(locator: nil, /* <ROOMS_SUPPORT>
+                                              roleHint: localOptions?.roleHint  </ROOMS_SUPPORT> */
                                               participants: nil,
                                               callId: callIdAcceptedFromCallKit)
         self.callConfiguration = configuration
