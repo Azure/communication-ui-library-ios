@@ -4,18 +4,18 @@
 //
 
 import AzureCommunicationCommon
-/* <SDK_CX_PROVIDER_SUPPORT>
+/* <SDK_CX_PROVIDER_SUPPORT> */
 import AzureCommunicationCalling
-</SDK_CX_PROVIDER_SUPPORT> */
+/* </SDK_CX_PROVIDER_SUPPORT> */
 
 import UIKit
 import SwiftUI
 import FluentUI
 import AVKit
 import Combine
-/* <SDK_CX_PROVIDER_SUPPORT>
+/* <SDK_CX_PROVIDER_SUPPORT> */
 import CallKit
-</SDK_CX_PROVIDER_SUPPORT> */
+/* </SDK_CX_PROVIDER_SUPPORT> */
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -166,12 +166,12 @@ public class CallComposite {
         }
     }
 
-    /* <SDK_CX_PROVIDER_SUPPORT>
+    /* <SDK_CX_PROVIDER_SUPPORT> */
      /// Get CXProvider
      public static func getCXProvider() -> CXProvider? {
          return CallClient.getCXProviderInstance()
      }
-    </SDK_CX_PROVIDER_SUPPORT> */
+    /* </SDK_CX_PROVIDER_SUPPORT> */
 
     /// Handle push notification to receive incoming call notification.
     /// - Parameter pushNotification: The push notification received.
