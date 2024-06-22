@@ -12,7 +12,7 @@ class CallConfigurationTests: XCTestCase {
     func testGroupCallInitialization() {
         let groupId = UUID()
         let locator = JoinLocator.groupCall(groupId: groupId)
-        let config = CallConfiguration(locator: locator, participants: nil, callId: nil)
+        let config = CallConfiguration(locator: locator, roleHint: nil, participants: nil, callId: nil)
 
         XCTAssertEqual(config.groupId, groupId)
         XCTAssertNil(config.meetingLink)
@@ -29,7 +29,7 @@ class CallConfigurationTests: XCTestCase {
     func testTeamsMeetingLinkInitialization() {
         let meetingLink = "https://example.com/meeting"
         let locator = JoinLocator.teamsMeeting(teamsLink: meetingLink)
-        let config = CallConfiguration(locator: locator, participants: nil, callId: nil)
+        let config = CallConfiguration(locator: locator, roleHint: nil, participants: nil, callId: nil)
 
         XCTAssertNil(config.groupId)
         XCTAssertEqual(config.meetingLink, meetingLink)
@@ -47,7 +47,7 @@ class CallConfigurationTests: XCTestCase {
         let meetingId = "meeting123"
         let meetingPasscode = "pass123"
         let locator = JoinLocator.teamsMeetingId(meetingId: meetingId, meetingPasscode: meetingPasscode)
-        let config = CallConfiguration(locator: locator, participants: nil, callId: nil)
+        let config = CallConfiguration(locator: locator, roleHint: nil, participants: nil, callId: nil)
 
         XCTAssertNil(config.groupId)
         XCTAssertNil(config.meetingLink)
@@ -62,7 +62,7 @@ class CallConfigurationTests: XCTestCase {
     }
     func testOneToOneIncomingInitialization() {
         let callId = "call123"
-        let config = CallConfiguration(locator: nil, participants: nil, callId: callId)
+        let config = CallConfiguration(locator: nil, roleHint: nil, participants: nil, callId: callId)
 
         XCTAssertNil(config.groupId)
         XCTAssertNil(config.meetingLink)
