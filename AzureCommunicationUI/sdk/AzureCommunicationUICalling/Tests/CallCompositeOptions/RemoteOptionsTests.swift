@@ -27,10 +27,10 @@ class RemoteOptionsTests: XCTestCase {
             XCTAssertEqual(locatorGroupId.uuidString, groupId.uuidString)
         case let .teamsMeeting(teamsLink: locatorTeamsLink):
             XCTFail("Should not be a teams meeting with teamsLink \(locatorTeamsLink)")
-        /* <ROOMS_SUPPORT>
+        /* <ROOMS_SUPPORT> */
         case let .roomCall(roomId: locatorRoomId):
             XCTFail("Should not be a room call with roomId \(locatorRoomId)")
-        </ROOMS_SUPPORT> */
+        /* </ROOMS_SUPPORT> */
         case .teamsMeetingId(meetingId: let locatorMeetingId, meetingPasscode: let locatorMeetingPasscode):
             XCTFail("Should not be a teams meeting with teamsId \(locatorMeetingId)")
         }
@@ -54,16 +54,16 @@ class RemoteOptionsTests: XCTestCase {
             XCTFail("Should not be a group call with groupId \(locatorGroupId)")
         case let .teamsMeeting(teamsLink: locatorTeamsLink):
             XCTAssertEqual(locatorTeamsLink, meetingLink)
-        /* <ROOMS_SUPPORT>
+        /* <ROOMS_SUPPORT> */
         case let .roomCall(roomId: locatorRoomId):
             XCTFail("Should not be a room call with roomId \(locatorRoomId)")
-        </ROOMS_SUPPORT> */
+        /* </ROOMS_SUPPORT> */
         case .teamsMeetingId(meetingId: let locatorMeetingId, meetingPasscode: let locatorMeetingPasscode):
             XCTFail("Should not be a teams meeting with teamsId \(locatorMeetingId)")
         }
     }
 
-    /* <ROOMS_SUPPORT>
+    /* <ROOMS_SUPPORT> */
     func test_remoteOptions_init_roomCall_when_parametersAreValid_then_returnRemoteOptionsObject() {
         let sampleToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjMyNTAzNjgwMDAwfQ.9i7FNNHHJT8cOzo-yrAUJyBSfJ-tPPk2emcHavOEpWc"
         let communicationTokenCredential = try? CommunicationTokenCredential(token: sampleToken)
@@ -88,7 +88,7 @@ class RemoteOptionsTests: XCTestCase {
             XCTFail("Should not be a teams meeting with teamsId\(locatorMeetingId)")
         }
     }
-    </ROOMS_SUPPORT> */
+    /* </ROOMS_SUPPORT> */
 
     func test_remoteOptions_init_meetingId_when_parametersAreValid_then_returnRemoteOptionsObject() {
         let sampleToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjMyNTAzNjgwMDAwfQ.9i7FNNHHJT8cOzo-yrAUJyBSfJ-tPPk2emcHavOEpWc"
@@ -109,10 +109,10 @@ class RemoteOptionsTests: XCTestCase {
             XCTFail("Should not be a group call with groupId \(locatorGroupId)")
         case let .teamsMeeting(teamsLink: locatorTeamsLink):
             XCTFail("Should not be a teams meeting with teamsLink \(locatorTeamsLink)")
-        /* <ROOMS_SUPPORT>
+        /* <ROOMS_SUPPORT> */
         case let .roomCall(roomId: locatorRoomId):
             XCTFail("Should not be a room call with roomId \(locatorRoomId)")
-        </ROOMS_SUPPORT> */
+        /* </ROOMS_SUPPORT> */
         case .teamsMeetingId(meetingId: let locatorMeetingId,
                              meetingPasscode: let locatorMeetingPasscode):
             XCTAssertEqual(meetingId, locatorMeetingId)
