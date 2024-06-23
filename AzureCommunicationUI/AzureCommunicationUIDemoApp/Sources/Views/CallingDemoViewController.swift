@@ -242,10 +242,6 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
-        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
-                                                        envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled)
-        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
         let captionsOptions = CaptionsOptions(spokenLanguage: envConfigSubject.captionsLocale,
