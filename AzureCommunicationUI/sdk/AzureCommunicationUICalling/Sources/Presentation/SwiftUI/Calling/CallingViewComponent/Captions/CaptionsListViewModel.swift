@@ -70,7 +70,7 @@ class CaptionsListViewModel: ObservableObject {
             subtitle: languageDisplayName(for: state.captionsState.activeCaptionLanguage ?? "en-US"),
             accessibilityIdentifier: "",
             titleTrailingAccessoryView: .rightChevron,
-            isEnabled: self.isToggleEnabled,
+            isEnabled: self.isToggleEnabled && state.captionsState.activeType == .teams,
             action: self.isToggleEnabled ? showCaptionsLanguage : {})
 
         items = [enableCaptionsInfoModel, spokenLanguageInfoModel, captionsLanguageInfoModel]
@@ -99,7 +99,7 @@ class CaptionsListViewModel: ObservableObject {
         }
     }
 
-    func languageDisplayName(for code: String) -> String {
+    private func languageDisplayName(for code: String) -> String {
         let locale = Locale(identifier: code)
         return Locale.current.localizedString(forIdentifier: locale.identifier) ?? "English (United States)"
     }

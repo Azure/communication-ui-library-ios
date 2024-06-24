@@ -225,6 +225,7 @@ extension CallingSDKEventsHandler: CallDelegate,
                         self.communicationCaptions?.delegate = self.communicationCaptionsHandler
                         self.captionsSupportedSpokenLanguages.send(self.communicationCaptions?
                             .supportedSpokenLanguages ?? [])
+                        self.captionsTypeChanged.send(.communication)
                     }
 
                     if value?.type == CaptionsType.teamsCaptions {
@@ -233,6 +234,7 @@ extension CallingSDKEventsHandler: CallDelegate,
                         self.teamsCaptions?.delegate = self.teamsCaptionsHandler
                         self.captionsSupportedSpokenLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
                         self.captionsSupportedCaptionLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
+                        self.captionsTypeChanged.send(.teams)
                     }
                 }
             }

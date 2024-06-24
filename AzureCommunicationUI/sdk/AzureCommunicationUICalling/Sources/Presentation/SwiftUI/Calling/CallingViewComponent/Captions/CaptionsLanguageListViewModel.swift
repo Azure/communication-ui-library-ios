@@ -89,7 +89,7 @@ class CaptionsLanguageListViewModel: ObservableObject {
         }
     }
 
-    func convertLocaleIdentifierToLowercaseRegionCode(_ identifier: String) -> String {
+    private func convertLocaleIdentifierToLowercaseRegionCode(_ identifier: String) -> String {
         let components = identifier.split(separator: "-")
         guard components.count == 2 else {
             return identifier

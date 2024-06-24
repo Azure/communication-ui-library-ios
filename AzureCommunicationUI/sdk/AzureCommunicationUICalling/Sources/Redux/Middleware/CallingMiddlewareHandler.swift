@@ -553,6 +553,9 @@ extension CallingMiddlewareHandler {
             .sink { captionsLanguage in
                 dispatch(.captionsAction(.captionLanguageChanged(language: captionsLanguage)))
             }.store(in: subscription)
+        callingService.captionsTypeSubject.sink { captionsType in
+            dispatch(.captionsAction(.typeChanged(type: captionsType)))
+        }.store(in: subscription)
     }
     // swiftlint:enable function_body_length
 }
