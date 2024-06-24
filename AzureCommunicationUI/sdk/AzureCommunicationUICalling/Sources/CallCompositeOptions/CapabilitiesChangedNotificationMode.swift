@@ -10,14 +10,14 @@ import AzureCore
 public struct CapabilitiesChangedNotificationMode: Equatable, RequestStringConvertible {
     internal enum  CapabilitiesChangedNotificationModeKV {
         case always
-        case neverDisplay
+        case never
         case unknown(String)
 
         var rawValue: String {
             switch self {
             case .always:
                 return "always"
-            case .neverDisplay:
+            case .never:
                 return "never"
             case .unknown(let value):
                 return value
@@ -28,7 +28,7 @@ public struct CapabilitiesChangedNotificationMode: Equatable, RequestStringConve
             case "always":
                 self = .always
             case "never":
-                self = .neverDisplay
+                self = .never
             default:
                 self = .unknown(rawValue.lowercased())
             }
@@ -50,8 +50,8 @@ public struct CapabilitiesChangedNotificationMode: Equatable, RequestStringConve
     }
 
     /// Alwayd display notification.
-    public static let alwaysDisplay: CapabilitiesChangedNotificationMode = .init(rawValue: "always")
+    public static let always: CapabilitiesChangedNotificationMode = .init(rawValue: "always")
 
     /// Never display notification.
-    public static let neverDisplay: CapabilitiesChangedNotificationMode = .init(rawValue: "never")
+    public static let never: CapabilitiesChangedNotificationMode = .init(rawValue: "never")
 }
