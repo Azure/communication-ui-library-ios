@@ -15,10 +15,12 @@ protocol CallingServiceProtocol {
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> {get}
 
     func setupCall() async throws
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
@@ -38,10 +40,11 @@ protocol CallingServiceProtocol {
     func admitAllLobbyParticipants() async throws
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws
+    func removeParticipant(_ participantId: String) async throws
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType>
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
-
     private let logger: Logger
     private let callingSDKWrapper: CallingSDKWrapperProtocol
 
@@ -54,9 +57,11 @@ class CallingService: NSObject, CallingServiceProtocol {
     var callIdSubject: PassthroughSubject<String, Never>
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never>
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never>
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never>
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never>
 
     init(logger: Logger,
          callingSDKWrapper: CallingSDKWrapperProtocol ) {
@@ -73,6 +78,8 @@ class CallingService: NSObject, CallingServiceProtocol {
         networkQualityDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkQualityDiagnosticsSubject
         networkDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkDiagnosticsSubject
         mediaDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.mediaDiagnosticsSubject
+        capabilitiesChangedSubject = callingSDKWrapper.callingEventsHandler.capabilitiesChangedSubject
+        totalParticipantCountSubject = callingSDKWrapper.callingEventsHandler.totalParticipantCountSubject
     }
 
     func setupCall() async throws {
@@ -132,5 +139,13 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func declineLobbyParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.declineLobbyParticipant(participantId)
+    }
+
+    func removeParticipant(_ participantId: String) async throws {
+        try await callingSDKWrapper.removeParticipant(participantId)
+    }
+
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType> {
+        try await callingSDKWrapper.getCapabilities()
     }
 }

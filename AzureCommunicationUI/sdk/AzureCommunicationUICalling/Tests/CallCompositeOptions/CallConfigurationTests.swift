@@ -18,10 +18,7 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertNil(config.meetingLink)
         XCTAssertNil(config.meetingId)
         XCTAssertNil(config.meetingPasscode)
-        /* <ROOMS_SUPPORT>
         XCTAssertNil(config.roomId)
-        XCTAssertNil(config.roomRoleHint)
-         </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .groupCall)
         XCTAssertNil(config.participants)
     }
@@ -35,10 +32,7 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertEqual(config.meetingLink, meetingLink)
         XCTAssertNil(config.meetingId)
         XCTAssertNil(config.meetingPasscode)
-        /* <ROOMS_SUPPORT>
         XCTAssertNil(config.roomId)
-        XCTAssertNil(config.roomRoleHint)
-         </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .teamsMeeting)
         XCTAssertNil(config.participants)
     }
@@ -53,11 +47,21 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertNil(config.meetingLink)
         XCTAssertEqual(config.meetingId, meetingId)
         XCTAssertEqual(config.meetingPasscode, meetingPasscode)
-        /* <ROOMS_SUPPORT>
         XCTAssertNil(config.roomId)
-        XCTAssertNil(config.roomRoleHint)
-         </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .teamsMeeting)
+        XCTAssertNil(config.participants)
+    }
+    func testRoomIdInitialization() {
+        let roomId = "123345"
+        let locator = JoinLocator.roomCall(roomId: roomId)
+        let config = CallConfiguration(locator: locator, participants: nil, callId: nil)
+
+        XCTAssertNil(config.groupId)
+        XCTAssertNil(config.meetingLink)
+        XCTAssertNil(config.meetingId)
+        XCTAssertNil(config.meetingPasscode)
+        XCTAssertEqual(roomId, config.roomId)
+        XCTAssertEqual(config.compositeCallType, .roomsCall)
         XCTAssertNil(config.participants)
     }
     func testOneToOneIncomingInitialization() {
@@ -68,10 +72,7 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertNil(config.meetingLink)
         XCTAssertNil(config.meetingId)
         XCTAssertNil(config.meetingPasscode)
-        /* <ROOMS_SUPPORT>
         XCTAssertNil(config.roomId)
-        XCTAssertNil(config.roomRoleHint)
-         </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .oneToOneIncoming)
         XCTAssertEqual(config.callId, callId)
         XCTAssertNil(config.participants)

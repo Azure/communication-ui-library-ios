@@ -11,6 +11,7 @@ import Foundation
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
+
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger
@@ -55,8 +56,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         logger.debug( "Starting call")
         if callConfiguration.compositeCallType == .groupCall ||
-            callConfiguration.compositeCallType == .teamsMeeting  /* <ROOMS_SUPPORT> ||
-            callConfiguration.compositeCallType == .roomsCall </ROOMS_SUPPORT> */ {
+            callConfiguration.compositeCallType == .teamsMeeting ||
+            callConfiguration.compositeCallType == .roomsCall {
             try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
         } else if callConfiguration.compositeCallType == .oneToNOutgoing {
             try await outgoingCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
@@ -105,10 +106,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             let meetingId = callConfiguration.meetingId?.trimmingCharacters(in: .whitespacesAndNewlines),
             let meetingPasscode = callConfiguration.meetingPasscode?.trimmingCharacters(in: .whitespacesAndNewlines) {
              joinLocator = TeamsMeetingIdLocator(with: meetingId, passcode: meetingPasscode)
-        } /* <ROOMS_SUPPORT> else if callConfiguration.compositeCallType == .roomsCall,
+        } else if callConfiguration.compositeCallType == .roomsCall,
                   let roomId = callConfiguration.roomId {
             joinLocator = RoomCallLocator(roomId: roomId.trimmingCharacters(in: .whitespacesAndNewlines))
-        } </ROOMS_SUPPORT> */ else {
+        } else {
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
         }
@@ -445,6 +446,41 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+
+    func removeParticipant(_ participantId: String) async throws {
+        guard let participantToRemove = call?.remoteParticipants
+            .first(where: {$0.identifier.rawId == participantId}) else {
+            return
+        }
+
+        do {
+            try await call?.remove(participant: participantToRemove)
+            logger.debug("Participant remove successful")
+        } catch {
+            logger.error("Error: Participant remove operation unsuccessful. Please check capabilities.")
+            throw error
+        }
+    }
+
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType> {
+        guard let capabilitiesFeature = call?.feature(Features.capabilities) else {
+            return []
+        }
+
+        let capabilities = capabilitiesFeature.capabilities
+        for capability in capabilities {
+            print(capability)
+        }
+        let filtered = capabilities.compactMap { $0.toParticipantCapability() }
+            .filter { $0.allowed }
+            .map { $0.type }
+
+        for capability in filtered {
+            print(capability)
+        }
+
+        return Set(filtered)
+    }
 }
 
 extension CallingSDKWrapper {
@@ -497,11 +533,13 @@ extension CallingSDKWrapper {
         let transcriptionCallFeature = call.feature(Features.transcription)
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
         let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
+        let capabilitiesFeature = call.feature(Features.capabilities)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
             callingEventsHandler.assign(localUserDiagnosticsFeature)
+            callingEventsHandler.assign(capabilitiesFeature)
             if callConfiguration.compositeCallType == .oneToOneIncoming && call.state == .connected {
                 // If call is accepted from CallKit
                 // call state can already be accepted, thus call state change will be missed

@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ kabul edilsin mi?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Kabul et";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Reddet";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Ön kameraya geç";
@@ -164,3 +165,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
 "AzureCommunicationUICalling.SendFeedback.Text"="Gönder";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Bildirimleri kapat";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Katılımcı menüsünü sessize alın.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Aramadan kaldır";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Katılımcıyı arama menüsünden kaldırın.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Arama ayarları güncelleştirildi. Bazı özellikler kullanılamıyor olabilir.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Arama ayarları güncelleştirildi. Bazı ek eylemleri artık siz de kullanılabileceksiniz.";

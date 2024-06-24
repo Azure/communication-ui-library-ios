@@ -49,7 +49,9 @@ extension CompositeViewModelFactoryTests {
                                          eventsHandler: CallComposite.Events(),
                                          leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled,
                                          retrieveLogFiles: { return [] },
-                                         callType: .groupCall)
+                                         callType: .groupCall,
+                                         setupScreenOptions: nil,
+                                         capabilitiesManager: CapabilitiesManager(callType: .groupCall))
     }
 }
 

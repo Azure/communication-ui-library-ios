@@ -54,20 +54,52 @@ protocol CallingMiddlewareHandling {
     func declineLobbyParticipant(state: AppState,
                                  dispatch: @escaping ActionDispatch,
                                  participantId: String) -> Task<Void, Never>
+    @discardableResult
+    func setCapabilities(capabilities: Set<ParticipantCapabilityType>,
+                         state: AppState,
+                         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    @discardableResult
+    func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
+                                                dispatch: @escaping ActionDispatch,
+                                                diagnisticModel: NetworkQualityDiagnosticModel) -> Task<Void, Never>
+    @discardableResult
+    func onNetworkCallDiagnosticsUpdated(state: AppState,
+                                         dispatch: @escaping ActionDispatch,
+                                         diagnisticModel: NetworkDiagnosticModel) -> Task<Void, Never>
+    @discardableResult
+    func onMediaCallDiagnosticsUpdated(state: AppState,
+                                       dispatch: @escaping ActionDispatch,
+                                       diagnisticModel: MediaDiagnosticModel) -> Task<Void, Never>
+
+    @discardableResult
+    func dismissNotification(state: AppState,
+                             dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    @discardableResult
+    func removeParticipant(state: AppState,
+                           dispatch: @escaping ActionDispatch,
+                           participantId: String) -> Task<Void, Never>
 }
 
 // swiftlint:disable type_body_length
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
+
     private let callingService: CallingServiceProtocol
     private let logger: Logger
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
+    private let capabilitiesManager: CapabilitiesManager
     private let callType: CompositeCallType
 
-    init(callingService: CallingServiceProtocol, logger: Logger, callType: CompositeCallType) {
+    init(callingService: CallingServiceProtocol,
+         logger: Logger,
+         callType: CompositeCallType,
+         capabilitiesManager: CapabilitiesManager) {
         self.callingService = callingService
         self.logger = logger
         self.callType = callType
+        self.capabilitiesManager = capabilitiesManager
     }
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -376,6 +408,133 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }
         }
     }
+
+    func setCapabilities(capabilities: Set<ParticipantCapabilityType>,
+                         state: AppState,
+                         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status != .disconnected else {
+                return
+            }
+
+            do {
+                if !capabilitiesManager.hasCapability(capabilities: capabilities,
+                                                      capability: ParticipantCapabilityType.turnVideoOn) &&
+                    state.localUserState.cameraState.operation != .off {
+                    dispatch(.localUserAction(.cameraOffTriggered))
+                }
+
+                if !capabilitiesManager.hasCapability(capabilities: capabilities,
+                                                      capability: ParticipantCapabilityType.unmuteMicrophone) &&
+                    state.localUserState.audioState.operation != .off {
+                    dispatch(.localUserAction(.microphoneOffTriggered))
+                }
+            }
+        }
+    }
+
+    func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
+                                                dispatch: @escaping ActionDispatch,
+                                                diagnisticModel: NetworkQualityDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            if diagnisticModel.value == .bad || diagnisticModel.value == .poor {
+                switch diagnisticModel.diagnostic {
+                case .networkReceiveQuality:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkReceiveQuality)))
+                case .networkReconnectionQuality:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkReconnectionQuality)))
+                case .networkSendQuality:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkSendQuality)))
+                }
+            } else {
+                dispatch(.toastNotificationAction(.dismissNotification))
+            }
+        }
+    }
+
+    func onNetworkCallDiagnosticsUpdated(state: AppState,
+                                         dispatch: @escaping ActionDispatch,
+                                         diagnisticModel: NetworkDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            if diagnisticModel.value {
+                switch diagnisticModel.diagnostic {
+                case .networkRelaysUnreachable:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkRelaysUnreachable)))
+                case .networkUnavailable:
+                    dispatch(.toastNotificationAction(.showNotification(kind: .networkUnavailable)))
+                }
+            }
+        }
+    }
+
+    func onMediaCallDiagnosticsUpdated(state: AppState,
+                                       dispatch: @escaping ActionDispatch,
+                                       diagnisticModel: MediaDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            switch diagnisticModel.diagnostic {
+            case .speakingWhileMicrophoneIsMuted:
+                if diagnisticModel.value {
+                    dispatch(.toastNotificationAction(.showNotification(kind: .speakingWhileMicrophoneIsMuted)))
+                } else {
+                    dispatch(.toastNotificationAction(.dismissNotification))
+                }
+            case .cameraStartFailed:
+                if diagnisticModel.value {
+                    dispatch(.toastNotificationAction(.showNotification(kind: .cameraStartFailed)))
+                }
+            case .cameraStartTimedOut:
+                if diagnisticModel.value {
+                    dispatch(.toastNotificationAction(.showNotification(kind: .cameraStartTimedOut)))
+                }
+            default:
+                break
+            }
+        }
+    }
+
+    func dismissNotification(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard let toastState = state.toastNotificationState.status else {
+                return
+            }
+            switch toastState {
+            case ToastNotificationKind.networkUnavailable:
+                dispatch(.callDiagnosticAction(.dismissNetwork(diagnostic: .networkUnavailable)))
+            case .networkRelaysUnreachable:
+                dispatch(.callDiagnosticAction(.dismissNetwork(diagnostic: .networkRelaysUnreachable)))
+            case .networkReceiveQuality:
+                dispatch(.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkReceiveQuality)))
+            case .networkReconnectionQuality:
+                dispatch(.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkReconnectionQuality)))
+            case .networkSendQuality:
+                dispatch(.callDiagnosticAction(.dismissNetworkQuality(diagnostic: .networkSendQuality)))
+            case .speakingWhileMicrophoneIsMuted:
+                dispatch(.callDiagnosticAction(.dismissMedia(diagnostic: .speakingWhileMicrophoneIsMuted)))
+            case .cameraStartFailed:
+                dispatch(.callDiagnosticAction(.dismissMedia(diagnostic: .cameraStartFailed)))
+            case .cameraStartTimedOut:
+                dispatch(.callDiagnosticAction(.dismissMedia(diagnostic: .cameraStartTimedOut)))
+            case .someFeaturesLost, .someFeaturesGained:
+                break
+            }
+        }
+    }
+
+    func removeParticipant(state: AppState,
+                           dispatch: @escaping ActionDispatch,
+                           participantId: String) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+
+            do {
+                try await callingService.removeParticipant(participantId)
+            } catch {
+                dispatch(.remoteParticipantsAction(.removeParticipantError))
+            }
+        }
+    }
 }
 
 extension CallingMiddlewareHandler {
@@ -453,6 +612,17 @@ extension CallingMiddlewareHandler {
                 dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
             }.store(in: subscription)
 
+        callingService.totalParticipantCountSubject
+            .removeDuplicates()
+            .sink { participantCount in
+                dispatch(.remoteParticipantsAction(.setTotalParticipantCount(participantCount: participantCount)))
+            }.store(in: subscription)
+        subscribeOnDiagnostics(dispatch: dispatch)
+        subscibeCapabilitiesUpdate(dispatch: dispatch)
+    }
+
+    private func subscribeOnDiagnostics(dispatch: @escaping ActionDispatch) {
+
         callingService.networkDiagnosticsSubject
             .removeDuplicates()
             .sink { networkDiagnostic in
@@ -469,6 +639,34 @@ extension CallingMiddlewareHandler {
             .removeDuplicates()
             .sink { mediaDiagnostic in
                 dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
+            }.store(in: subscription)
+    }
+
+    private func subscibeCapabilitiesUpdate(dispatch: @escaping ActionDispatch) {
+        callingService.capabilitiesChangedSubject
+            .removeDuplicates()
+            .sink { event in
+                Task {
+                    do {
+                        let capabilities = try await self.callingService.getCapabilities()
+                        dispatch(.localUserAction(.setCapabilities(capabilities: capabilities)))
+                    } catch {
+                        self.logger.error("Fetch capabilities Failed with error : \(error)")
+                    }
+
+                    let anyLostCapability = event.changedCapabilities.contains(where: { capability in
+                        (capability.type == .unmuteMicrophone && !capability.allowed) ||
+                        (capability.type == .turnVideoOn && !capability.allowed) ||
+                        (capability.type == .manageLobby && !capability.allowed)
+                    })
+
+                    var notificationType = ToastNotificationKind.someFeaturesGained
+
+                    if anyLostCapability {
+                        notificationType = ToastNotificationKind.someFeaturesLost
+                    }
+                    dispatch(.toastNotificationAction(.showNotification(kind: notificationType)))
+                }
             }.store(in: subscription)
     }
 }

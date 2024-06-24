@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="להכניס את %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="הכנס";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="דחה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="עבור למצלמה אחורית";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="עבור למצלמה קדמית";
@@ -164,3 +165,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
 "AzureCommunicationUICalling.SendFeedback.Text"="שלח";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="השתק";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="תפריט השתקת משתתף.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="הסר משיחה";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="הסר משתתף דרך תפריט 'שיחה'.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="הגדרות השיחה עודכנו. ייתכן שתכונות מסוימות לא יהיו זמינות עבורך.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="הגדרות השיחה עודכנו. ייתכן שפעולות נוספות מסוימות יהיו זמינות כעת עבורך.";

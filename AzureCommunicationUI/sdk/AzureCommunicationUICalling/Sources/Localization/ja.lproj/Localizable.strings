@@ -73,6 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ を許可しますか?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="参加許可";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒否";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="バック カメラに切り替える";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="フロント カメラに切り替える";
@@ -157,3 +158,10 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="スクリーンショットを添付する";
 "AzureCommunicationUICalling.ReportAProblem.Text"="問題を報告する";
 "AzureCommunicationUICalling.SendFeedback.Text"="送信する";
+
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";

@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Ammetti %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Ammetti";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Rifiuta";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Passa alla videocamera posteriore";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Passa alla videocamera anteriore";
@@ -164,3 +165,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Segnala un problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Invia";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Disattiva audio";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Menu Disattiva l'audio del partecipante.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Rimuovi dalla chiamata";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Menu Rimuovi partecipante dalla chiamata.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Impostazioni di chiamata aggiornate. Alcune funzionalità potrebbero non essere disponibili.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Impostazioni di chiamata aggiornate. Alcune azioni aggiuntive potrebbero essere ora disponibili per te.";
