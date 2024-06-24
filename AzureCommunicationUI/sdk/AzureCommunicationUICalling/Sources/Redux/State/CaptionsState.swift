@@ -7,9 +7,6 @@ import Foundation
 struct CaptionsState: Equatable {
     var isEnabled: Bool?
     var isStarted: Bool?
-    var showCaptionsOptions: Bool?
-    var showSupportedSpokenLanguages: Bool?
-    var showSupportedCaptionLanguages: Bool?
     var supportedSpokenLanguages: [String]?
     var activeSpokenLanguage: String?
     var supportedCaptionLanguages: [String]?
@@ -20,9 +17,6 @@ struct CaptionsState: Equatable {
 
     init(isEnabled: Bool = false,
          isStarted: Bool = false,
-         showCaptionsOptions: Bool = false,
-         showSupportedSpokenLanguages: Bool = false,
-         showSupportedCaptionLanguages: Bool = false,
          supportedSpokenLanguages: [String] = [],
          activeSpokenLanguage: String = "en-US",
          supportedCaptionLanguages: [String] = [],
@@ -32,9 +26,6 @@ struct CaptionsState: Equatable {
          errors: CallCompositeCaptionsErrors = .none) {
            self.isEnabled = isEnabled
            self.isStarted = isStarted
-           self.showCaptionsOptions = showCaptionsOptions
-           self.showSupportedSpokenLanguages = showSupportedSpokenLanguages
-           self.showSupportedCaptionLanguages = showSupportedCaptionLanguages
            self.supportedSpokenLanguages = supportedSpokenLanguages
            self.activeSpokenLanguage = activeSpokenLanguage
            self.supportedCaptionLanguages = supportedCaptionLanguages

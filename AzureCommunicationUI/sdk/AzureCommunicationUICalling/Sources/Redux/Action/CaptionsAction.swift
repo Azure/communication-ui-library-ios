@@ -19,9 +19,4 @@ enum CaptionsAction: Equatable {
     case error(errors: CallCompositeCaptionsErrors)
     case supportedSpokenLanguagesChanged(languages: [String])
     case supportedCaptionLanguagesChanged(languages: [String])
-    case showCaptionsOptions
-    case closeCaptionsOptions
-    case showSupportedSpokenLanguagesOptions
-    case showSupportedCaptionLanguagesOptions
-    case hideSupportedLanguagesOptions
 }
