@@ -22,4 +22,5 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
     var capabilitiesChangedSubject = PassthroughSubject<AzureCommunicationUICalling.CapabilitiesChangedEvent, Never>()
+    var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
 }

@@ -56,8 +56,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         logger.debug( "Starting call")
         if callConfiguration.compositeCallType == .groupCall ||
-            callConfiguration.compositeCallType == .teamsMeeting ||
-            callConfiguration.compositeCallType == .roomsCall {
+            callConfiguration.compositeCallType == .teamsMeeting /* <ROOMS_SUPPORT> */ ||
+            callConfiguration.compositeCallType == .roomsCall /* </ROOMS_SUPPORT> */ {
             try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
         } else if callConfiguration.compositeCallType == .oneToNOutgoing {
             try await outgoingCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
@@ -102,11 +102,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                   let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(
                 meetingLink: meetingLink.trimmingCharacters(in: .whitespacesAndNewlines))
-        } /* <MEETING_ID_LOCATOR> */ else if callConfiguration.compositeCallType == .teamsMeeting,
+        } else if callConfiguration.compositeCallType == .teamsMeeting,
             let meetingId = callConfiguration.meetingId?.trimmingCharacters(in: .whitespacesAndNewlines),
             let meetingPasscode = callConfiguration.meetingPasscode?.trimmingCharacters(in: .whitespacesAndNewlines) {
              joinLocator = TeamsMeetingIdLocator(with: meetingId, passcode: meetingPasscode)
-        } /* </MEETING_ID_LOCATOR> */ /* <ROOMS_SUPPORT> */ else if callConfiguration.compositeCallType == .roomsCall,
+        } /* <ROOMS_SUPPORT> */ else if callConfiguration.compositeCallType == .roomsCall,
                   let roomId = callConfiguration.roomId {
             joinLocator = RoomCallLocator(roomId: roomId.trimmingCharacters(in: .whitespacesAndNewlines))
         } /* </ROOMS_SUPPORT> */ else {
@@ -221,9 +221,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 }
             }
             callingSDKInitializer.onIncomingCallAccpeted()
-            logger.debug( "call id from call \(self.call?.id)")
-            logger.debug( "call id from callConfiguration.callId \(self.callConfiguration.callId)")
-
             if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler,
             let call = call {
                 call.delegate = callingEventsHandler
@@ -387,8 +384,21 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+
     func getLogFiles() -> [URL] {
-        return callingSDKInitializer.setupCallClient().debugInfo.supportFiles
+        // First lets check if any blog files exist
+        // Edge case this is called before any CallClient can cause crash
+        let fileManager = FileManager.default
+        let cacheDir = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let blogFiles = try? fileManager.contentsOfDirectory(at: cacheDir, includingPropertiesForKeys: nil, options: [])
+            .filter { $0.pathExtension == "blog" }
+
+        // If we have Blog Files, this is safe to call
+        if let blogFiles = blogFiles, !blogFiles.isEmpty {
+            return callingSDKInitializer.setupCallClient().debugInfo.supportFiles
+        } else {
+            return []
+        }
     }
 
     func admitAllLobbyParticipants() async throws {

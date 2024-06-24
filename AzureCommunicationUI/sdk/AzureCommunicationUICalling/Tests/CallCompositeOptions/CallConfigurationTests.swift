@@ -18,7 +18,9 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertNil(config.meetingLink)
         XCTAssertNil(config.meetingId)
         XCTAssertNil(config.meetingPasscode)
+        /* <ROOMS_SUPPORT> */
         XCTAssertNil(config.roomId)
+         /* </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .groupCall)
         XCTAssertNil(config.participants)
     }
@@ -32,7 +34,9 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertEqual(config.meetingLink, meetingLink)
         XCTAssertNil(config.meetingId)
         XCTAssertNil(config.meetingPasscode)
+        /* <ROOMS_SUPPORT> */
         XCTAssertNil(config.roomId)
+         /* </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .teamsMeeting)
         XCTAssertNil(config.participants)
     }
@@ -47,7 +51,9 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertNil(config.meetingLink)
         XCTAssertEqual(config.meetingId, meetingId)
         XCTAssertEqual(config.meetingPasscode, meetingPasscode)
+        /* <ROOMS_SUPPORT> */
         XCTAssertNil(config.roomId)
+         /* </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .teamsMeeting)
         XCTAssertNil(config.participants)
     }
@@ -72,7 +78,9 @@ class CallConfigurationTests: XCTestCase {
         XCTAssertNil(config.meetingLink)
         XCTAssertNil(config.meetingId)
         XCTAssertNil(config.meetingPasscode)
+        /* <ROOMS_SUPPORT> */
         XCTAssertNil(config.roomId)
+         /* </ROOMS_SUPPORT> */
         XCTAssertEqual(config.compositeCallType, .oneToOneIncoming)
         XCTAssertEqual(config.callId, callId)
         XCTAssertNil(config.participants)

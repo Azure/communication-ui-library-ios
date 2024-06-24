@@ -9,10 +9,8 @@ import AzureCommunicationCommon
 struct CallConfiguration {
     let groupId: UUID?
     let meetingLink: String?
-    /* <MEETING_ID_LOCATOR> */
     let meetingId: String?
     let meetingPasscode: String?
-    /* </MEETING_ID_LOCATOR> */
     let callId: String?
     let compositeCallType: CompositeCallType
     let diagnosticConfig: DiagnosticConfig
@@ -30,10 +28,8 @@ struct CallConfiguration {
                 self.groupId = groupId
                 self.meetingLink = nil
                 self.participants = nil
-                /* <MEETING_ID_LOCATOR> */
                 self.meetingId = nil
                 self.meetingPasscode = nil
-                /* </MEETING_ID_LOCATOR> */
                 /* <ROOMS_SUPPORT> */
                 self.roomId = nil
                 /* </ROOMS_SUPPORT> */
@@ -42,10 +38,8 @@ struct CallConfiguration {
                 self.groupId = nil
                 self.meetingLink = nil
                 self.participants = nil
-                /* <MEETING_ID_LOCATOR> */
                 self.meetingId = meetingId
                 self.meetingPasscode = meetingPasscode
-                /* </MEETING_ID_LOCATOR> */
                 /* <ROOMS_SUPPORT> */
                 self.roomId = nil
                 /* </ROOMS_SUPPORT> */
@@ -54,10 +48,8 @@ struct CallConfiguration {
                 self.groupId = nil
                 self.participants = nil
                 self.meetingLink = meetingLink
-                /* <MEETING_ID_LOCATOR> */
                 self.meetingId = nil
                 self.meetingPasscode = nil
-                /* </MEETING_ID_LOCATOR> */
                 self.compositeCallType = .teamsMeeting
                 /* <ROOMS_SUPPORT> */
                 self.roomId = nil
@@ -65,10 +57,8 @@ struct CallConfiguration {
                 self.roomId = roomId
                 self.groupId = nil
                 self.meetingLink = nil
-                /* <MEETING_ID_LOCATOR> */
                 self.meetingId = nil
                 self.meetingPasscode = nil
-                /* </MEETING_ID_LOCATOR> */
                 self.compositeCallType = .roomsCall
                 self.participants = nil
             /* </ROOMS_SUPPORT> */
@@ -78,10 +68,8 @@ struct CallConfiguration {
             /* <ROOMS_SUPPORT> */
             self.roomId = nil
             /* </ROOMS_SUPPORT> */
-            /* <MEETING_ID_LOCATOR> */
             self.meetingId = nil
             self.meetingPasscode = nil
-            /* </MEETING_ID_LOCATOR> */
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToNOutgoing
@@ -91,10 +79,8 @@ struct CallConfiguration {
             /* <ROOMS_SUPPORT> */
             self.roomId = nil
             /* </ROOMS_SUPPORT> */
-            /* <MEETING_ID_LOCATOR> */
             self.meetingId = nil
             self.meetingPasscode = nil
-            /* </MEETING_ID_LOCATOR> */
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .oneToOneIncoming

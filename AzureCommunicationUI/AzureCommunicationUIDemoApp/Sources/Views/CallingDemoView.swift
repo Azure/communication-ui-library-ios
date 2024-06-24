@@ -172,7 +172,6 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* <MEETING_ID_LOCATOR> */
                 TextField(
                     "Team Meeting Id",
                     text: $envConfigSubject.teamsMeetingId)
@@ -185,7 +184,6 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* </MEETING_ID_LOCATOR> */
             case .oneToNCall:
                 TextField(
                     "participant MRIs(, separated)",
@@ -290,12 +288,10 @@ struct CallingDemoView: View {
         } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
             // Check if teamsMeetingLink is not empty or both meetingId and passcode are not empty
             let isTeamsMeetingLinkValid = !envConfigSubject.teamsMeetingLink.isEmpty
-            /* <MEETING_ID_LOCATOR> */
             let isTeamsMeetingIdAndPasscodeValid = !envConfigSubject.teamsMeetingId.isEmpty
             && !envConfigSubject.teamsMeetingPasscode.isEmpty
-            /* </MEETING_ID_LOCATOR> */
             return !isTeamsMeetingLinkValid
-            /* <MEETING_ID_LOCATOR> */ && !isTeamsMeetingIdAndPasscodeValid /* </MEETING_ID_LOCATOR> */
+            && !isTeamsMeetingIdAndPasscodeValid
         }
         return false
     }
@@ -515,6 +511,7 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
+            print("::::CallingDemoView::onDismissedHandler")
         }
 
         exitCompositeExecuted = false
@@ -616,8 +613,7 @@ extension CallingDemoView {
                             localOptions: localOptions
                         )
                     }
-                } /* <MEETING_ID_LOCATOR> */ 
-                else if !envConfigSubject.teamsMeetingId.isEmpty && !envConfigSubject.teamsMeetingPasscode.isEmpty {
+                } else if !envConfigSubject.teamsMeetingId.isEmpty && !envConfigSubject.teamsMeetingPasscode.isEmpty {
                     if envConfigSubject.displayName.isEmpty {
                         callComposite.launch(
                             remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
@@ -638,7 +634,7 @@ extension CallingDemoView {
                             localOptions: localOptions
                         )
                     }
-                } /* </MEETING_ID_LOCATOR> */
+                }
             case .oneToNCall:
                 let ids: [String] = link.split(separator: ",").map {
                     String($0).trimmingCharacters(in: .whitespacesAndNewlines)
@@ -775,8 +771,10 @@ extension CallingDemoView {
             return "Teams Metting"
         case .oneToNCall:
             return "Outgoing call"
+            /* <ROOMS_SUPPORT> */ 
         case .roomCall:
             return "Rooms call"
+             /* </ROOMS_SUPPORT> */
         }
     }
 

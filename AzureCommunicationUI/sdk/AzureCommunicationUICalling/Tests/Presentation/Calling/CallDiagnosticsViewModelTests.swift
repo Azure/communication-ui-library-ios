@@ -55,7 +55,8 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .showSupportForm,
                  .hideSupportForm,
                  .visibilityAction,
-                 .toastNotificationAction:
+                 .toastNotificationAction,
+                 .setTotalParticipantCount:
                 break
             }
         }

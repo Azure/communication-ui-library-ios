@@ -222,7 +222,8 @@ class CallingViewModel: ObservableObject {
                                                         callingStatus: CallingStatus?) -> Bool {
         let isOutgoingCall = (callType == .oneToNOutgoing && (callingStatus == nil
                                                               || callingStatus == .connecting
-                                                              || callingStatus == .ringing))
+                                                              || callingStatus == .ringing
+                                                              || callingStatus == .earlyMedia))
         return isOutgoingCall
     }
 }

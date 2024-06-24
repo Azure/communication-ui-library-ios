@@ -12,10 +12,8 @@ public enum JoinLocator {
     case groupCall(groupId: UUID)
     /// Teams Meeting with string teamsLink URI.
     case teamsMeeting(teamsLink: String)
-    /* <MEETING_ID_LOCATOR> */
     /// Teams Meeting with id and passcode
     case teamsMeetingId(meetingId: String, meetingPasscode: String)
-    /* </MEETING_ID_LOCATOR> */
     /* <ROOMS_SUPPORT:5> */
     /// Rooms Call with room ID.
     case roomCall(roomId: String)

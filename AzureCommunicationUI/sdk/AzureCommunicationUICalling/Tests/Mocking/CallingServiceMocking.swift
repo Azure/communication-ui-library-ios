@@ -92,6 +92,7 @@ class CallingServiceMocking: CallingServiceProtocol {
 
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
     var capabilitiesChangedSubject = PassthroughSubject<AzureCommunicationUICalling.CapabilitiesChangedEvent, Never>()
+    var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
 
     func setupCall() async throws {
         setupCallCalled = true

@@ -174,6 +174,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         } catch let error {
             logger.error("Failed to select audio device, reason: \(error.localizedDescription)")
             store.dispatch(action: .localUserAction(.audioDeviceChangeFailed(error: error)))
+            store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: getCurrentAudioDevice())))
         }
     }
 
