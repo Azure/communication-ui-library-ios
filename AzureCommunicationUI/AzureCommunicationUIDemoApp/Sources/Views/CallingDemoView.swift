@@ -446,6 +446,7 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
+            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
             disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)

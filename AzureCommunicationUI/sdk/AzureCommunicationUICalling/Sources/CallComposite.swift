@@ -599,7 +599,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
-                callType: callConfiguration.compositeCallType
+                callType: callConfiguration.compositeCallType,
+                captionsOptions: captionsOptions ?? CaptionsOptions()
             )
         )
     }

@@ -32,7 +32,6 @@
 		1115A0002A1D50EC00C0E3B8 /* OrientationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */; };
 		113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113738FE29D638BB00D48EAB /* DefaultUserState.swift */; };
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
-		114879CE2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */; };
 		114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */; };
 		116BC0C22C24D06500F8CF6F /* CaptionsInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */; };
 		116BC0C42C24D10D00F8CF6F /* CaptionsInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */; };
@@ -383,7 +382,6 @@
 		11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationProvider.swift; sourceTree = "<group>"; };
 		113738FE29D638BB00D48EAB /* DefaultUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserState.swift; sourceTree = "<group>"; };
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
-		114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCaptionsLanguage.swift; sourceTree = "<group>"; };
 		114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsReducer.swift; sourceTree = "<group>"; };
 		116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoViewModel.swift; sourceTree = "<group>"; };
 		116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCellView.swift; sourceTree = "<group>"; };
@@ -1460,7 +1458,6 @@
 				532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */,
 				534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */,
 				11C50D372BD1A79900CB3615 /* CaptionOptions.swift */,
-				114879CD2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift */,
 				A46B90942BF5937A0096788C /* CallKitOptions.swift */,
 				A46B90962BF5939D0096788C /* CallKitRemoteInfo.swift */,
 				A46B90982BF593C50096788C /* Caller.swift */,
@@ -2155,7 +2152,6 @@
 				88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */,
 				50FA45F8267D466D001844AC /* InfoHeaderView.swift in Sources */,
 				1F13D37026AB293700E31666 /* NavigationReducer.swift in Sources */,
-				114879CE2BEC074700B7D7FF /* SupportedCaptionsLanguage.swift in Sources */,
 				FA6B619F290C5987004B8188 /* SharingActivityContainerController.swift in Sources */,
 				50FA45F5267D3BD3001844AC /* ControlBarView.swift in Sources */,
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,

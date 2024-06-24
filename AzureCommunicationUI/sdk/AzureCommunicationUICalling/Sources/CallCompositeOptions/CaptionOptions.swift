@@ -8,10 +8,10 @@ import Foundation
 public struct CaptionsOptions {
     let enableCaptions: Bool
     let spokenLanguage: String
-    public init(spokenLanguage: Locale,
+    public init(spokenLanguage: Locale = Locale.current,
                 enableCaptions: Bool = false) {
         let currentLocale = Locale.current
-        let supportedLocales = SupportedCaptionsLanguage.values
+        let supportedLocales = SupportedSpokenLanguage.values
 
         // Check if user-provided spokenLanguage is supported
         if supportedLocales.contains(where: { $0.identifier == spokenLanguage.identifier }) {
@@ -24,18 +24,5 @@ public struct CaptionsOptions {
         }
 
         self.enableCaptions = enableCaptions
-    }
-}
-
-public enum EnableCaptionsOptions {
-    case enableCaptions
-    case disableCaptions
-    var rawValue: String {
-        switch self {
-        case .enableCaptions:
-            return "enableCaptions"
-        case .disableCaptions:
-            return "disableCaptions"
-        }
     }
 }

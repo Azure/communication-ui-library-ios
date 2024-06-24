@@ -384,7 +384,7 @@ struct LocalePicker: View {
 
 struct CaptionsLocalePicker: View {
     @Binding var selection: Locale
-    let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedCaptionsLanguage.values
+    let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedSpokenLanguage.values
 
     var body: some View {
             Picker("Language", selection: $selection) {

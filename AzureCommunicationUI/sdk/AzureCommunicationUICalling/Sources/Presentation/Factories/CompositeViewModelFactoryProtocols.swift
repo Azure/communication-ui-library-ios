@@ -66,6 +66,7 @@ protocol CompositeViewModelFactoryProtocol {
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeCaptionsListViewModel(state: AppState,
+                                   captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
                                    showSpokenLanguage: @escaping () -> Void,
                                    showCaptionsLanguage: @escaping () -> Void,

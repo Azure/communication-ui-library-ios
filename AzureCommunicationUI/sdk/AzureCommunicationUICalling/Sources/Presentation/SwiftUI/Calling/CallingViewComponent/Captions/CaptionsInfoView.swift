@@ -17,6 +17,7 @@ struct CaptionsInfoView: View {
                         CaptionsInfoCellView(caption: viewModel.captionsData[index],
                                              avatarViewManager: avatarViewManager )
                             .id(index)
+                            .animation(nil, value: viewModel.captionsData.count)
                     }
                 }.onChange(of: viewModel.captionsData.count) { _ in
                     withAnimation {

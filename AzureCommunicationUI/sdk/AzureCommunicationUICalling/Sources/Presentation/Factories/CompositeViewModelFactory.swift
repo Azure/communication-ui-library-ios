@@ -21,6 +21,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
+    private let captionsOptions: CaptionsOptions
 
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
@@ -42,7 +43,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          eventsHandler: CallComposite.Events,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          retrieveLogFiles: @escaping () -> [URL],
-         callType: CompositeCallType) {
+         callType: CompositeCallType,
+         captionsOptions: CaptionsOptions) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -58,6 +60,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.retrieveLogFiles = retrieveLogFiles
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.callType = callType
+        self.captionsOptions = captionsOptions
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -109,7 +112,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
                                             != CallCompositeAudioVideoMode.audioOnly,
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
-                                             callType: callType)
+                                             callType: callType,
+                                             captionsCaptions: captionsOptions)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -181,6 +185,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsListViewModel(state: AppState,
+                                   captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
                                    showSpokenLanguage: @escaping () -> Void,
                                    showCaptionsLanguage: @escaping () -> Void,
@@ -188,6 +193,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
         return CaptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
+                                     captionsOptions: captionsOptions,
                                      state: state,
                                      dispatchAction: dispatchAction,
                                      showSpokenLanguage: showSpokenLanguage,

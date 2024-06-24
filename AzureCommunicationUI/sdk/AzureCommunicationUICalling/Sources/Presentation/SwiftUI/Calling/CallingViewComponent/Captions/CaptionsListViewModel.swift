@@ -18,10 +18,12 @@ class CaptionsListViewModel: ObservableObject {
     private let showCaptionsLanguage: () -> Void
     private let showSpokenLanguage: () -> Void
     private let dispatch: ActionDispatch
+    private let captionsOptions: CaptionsOptions
     var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
+         captionsOptions: CaptionsOptions,
          state: AppState,
          dispatchAction: @escaping ActionDispatch,
          showSpokenLanguage: @escaping () -> Void,
@@ -36,6 +38,9 @@ class CaptionsListViewModel: ObservableObject {
         self.showCaptionsLanguage = showCaptionsLanguage
         self.isDisplayed = isDisplayed
         self.isToggleEnabled = state.captionsState.isStarted ?? false
+        self.captionsOptions = captionsOptions
+
+        updateDefaultOptions(captionsOptions: captionsOptions)
         setupItems()
     }
 
@@ -77,14 +82,21 @@ class CaptionsListViewModel: ObservableObject {
         setupItems()
     }
 
-    func toggleCaptions(newValue: Bool) {
+    private func toggleCaptions(newValue: Bool) {
         isToggleEnabled = newValue
+        let language = captionsOptions.spokenLanguage.lowercased()
         if isToggleEnabled {
-            dispatch(.captionsAction(.startRequested(language: "en-us")))
+            dispatch(.captionsAction(.startRequested(language: language)))
         } else {
             dispatch(.captionsAction(.stopRequested))
         }
         setupItems()
+    }
+
+    private func updateDefaultOptions(captionsOptions: CaptionsOptions) {
+        if captionsOptions.enableCaptions {
+            toggleCaptions(newValue: true)
+        }
     }
 
     func languageDisplayName(for code: String) -> String {

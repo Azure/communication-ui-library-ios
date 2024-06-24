@@ -21,6 +21,7 @@ class CallingViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let callType: CompositeCallType
+    private let captionsOptions: CaptionsOptions
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
@@ -58,7 +59,8 @@ class CallingViewModel: ObservableObject {
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         callType: CompositeCallType
+         callType: CompositeCallType,
+         captionsCaptions: CaptionsOptions
     ) {
         self.logger = logger
         self.store = store
@@ -69,6 +71,8 @@ class CallingViewModel: ObservableObject {
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.callType = callType
+        self.captionsOptions = captionsCaptions
+
         let actionDispatch: ActionDispatch = store.dispatch
 
         audioDeviceListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
@@ -168,6 +172,7 @@ class CallingViewModel: ObservableObject {
 
         captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
             state: store.state,
+            captionsOptions: captionsOptions,
             dispatchAction: store.dispatch,
             showSpokenLanguage: {
                 store.dispatch(action: .showSpokenLanguageView)

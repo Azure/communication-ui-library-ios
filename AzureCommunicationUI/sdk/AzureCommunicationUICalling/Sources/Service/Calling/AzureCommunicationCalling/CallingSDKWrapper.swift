@@ -464,22 +464,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
-    func getCaptions() async throws {
-        guard let call = call else {
-            return
-        }
-
-        let captionsFeature = call.feature(Features.captions)
-        do {
-            let captions = try await captionsFeature.getCaptions()
-
-            logger.debug("Stop captions successfully")
-        } catch {
-            logger.error("ERROR: It was not possible to stop captions \(error)")
-
-        }
-    }
-
     func stopCaptions() async throws {
         guard let call = call else {
             return
