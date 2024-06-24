@@ -30,9 +30,7 @@ struct CallingDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
-    /* <ROOMS_SUPPORT> */
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    /* </ROOMS_SUPPORT> */
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
@@ -155,7 +153,7 @@ struct CallingDemoView: View {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
                 Text("1:N Call").tag(MeetingType.oneToNCall)
-                /* <ROOMS_SUPPORT> */ Text("Room Call").tag(MeetingType.roomCall) /* </ROOMS_SUPPORT> */
+                Text("Room Call").tag(MeetingType.roomCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -191,7 +189,6 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* <ROOMS_SUPPORT> */
             case .roomCall:
                 TextField(
                     "Room Id",
@@ -199,7 +196,6 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* </ROOMS_SUPPORT> */
             }
         }
         .padding(.vertical, verticalPadding)
@@ -643,7 +639,6 @@ extension CallingDemoView {
                 ids.map { createCommunicationIdentifier(fromRawId: $0) }
                 callComposite.launch(participants: communicationIdentifiers,
                                      localOptions: localOptions)
-            /* <ROOMS_SUPPORT> */
             case .roomCall:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions:
@@ -658,7 +653,6 @@ extension CallingDemoView {
                                                      displayName: envConfigSubject.displayName),
                         localOptions: localOptions)
                 }
-                /* </ROOMS_SUPPORT> */
             }
         }
     }
@@ -708,13 +702,11 @@ extension CallingDemoView {
                     callComposite.launch(participants: communicationIdentifiers,
                                          callKitRemoteInfo: callKitRemoteInfo,
                                          localOptions: localOptions)
-                    /* <ROOMS_SUPPORT> */
                 case .roomCall:
                     callComposite.launch(
                         locator: .roomCall(roomId: link),
                         callKitRemoteInfo: callKitRemoteInfo,
                         localOptions: localOptions)
-                    /* </ROOMS_SUPPORT> */
                 }
             }
             callingViewModel.callComposite = callComposite
@@ -771,10 +763,8 @@ extension CallingDemoView {
             return "Teams Metting"
         case .oneToNCall:
             return "Outgoing call"
-            /* <ROOMS_SUPPORT> */ 
         case .roomCall:
             return "Rooms call"
-             /* </ROOMS_SUPPORT> */
         }
     }
 
@@ -819,10 +809,8 @@ extension CallingDemoView {
             return envConfigSubject.teamsMeetingLink
         case .oneToNCall:
             return envConfigSubject.participantMRIs
-        /* <ROOMS_SUPPORT> */
         case .roomCall:
             return envConfigSubject.roomId
-        /* </ROOMS_SUPPORT> */
         }
     }
 
