@@ -731,12 +731,9 @@ extension CallComposite {
             self?.logger.debug( "CallComposite setDismissComposite")
             self?.disposeSDKWrappers()
             self?.callStateManager?.onCompositeExit()
-            self?.exitManager?.onDismissed()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
-            self?.exitManager?.onDismissed()
-            self?.cleanUpManagers()
             UIApplication.shared.isIdleTimerDisabled = false
             let exitManagerCache = self?.exitManager
             self?.cleanUpManagers()
