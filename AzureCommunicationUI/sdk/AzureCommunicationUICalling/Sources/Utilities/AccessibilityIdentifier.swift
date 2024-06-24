@@ -12,6 +12,8 @@ enum AccessibilityIdentifier: String {
     case participantGridLayoutViewAccessibilityID =
             "AzureCommunicationUICalling.CallingView.ParticipantGridLayoutView.AccessibilityID"
     case draggablePipViewAccessibilityID = "AzureCommunicationUICalling.CallingView.DraggablePipView.AccessibilityID"
+    case leaveCallConfirmTitleAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.Overlay.LeaveCallConfirmTitle.AccessibilityID"
     case leaveCallAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall.AccessibilityID"
     case joinCallAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityID"
     case toggleVideoAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Video.AccessibilityID"

@@ -70,6 +70,7 @@ struct SettingsView: View {
             orientationOptions
             Group {
                 localizationSettings
+                captionsSettings
                 skipSetupScreenSettings
                 micSettings
                 localParticipantSettings
@@ -197,6 +198,13 @@ struct SettingsView: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var captionsSettings: some View {
+        Section(header: Text("Captions")) {
+            CaptionsLocalePicker(selection: $envConfigSubject.captionsLocale)
+            Toggle("Enable Captions", isOn: $envConfigSubject.enableCaptions)
         }
     }
 
@@ -360,6 +368,23 @@ struct SettingsView: View {
 struct LocalePicker: View {
     @Binding var selection: Locale
     let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedLocale.values
+
+    var body: some View {
+            Picker("Language", selection: $selection) {
+                ForEach(supportedLanguage, id: \.self) {
+                    if $0.identifier == "" {
+                        Text("Detect locale (en, zh-Hant, fr, fr-CA)")
+                    } else {
+                        Text($0.identifier)
+                    }
+                }
+            }
+    }
+}
+
+struct CaptionsLocalePicker: View {
+    @Binding var selection: Locale
+    let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedSpokenLanguage.values
 
     var body: some View {
             Picker("Language", selection: $selection) {

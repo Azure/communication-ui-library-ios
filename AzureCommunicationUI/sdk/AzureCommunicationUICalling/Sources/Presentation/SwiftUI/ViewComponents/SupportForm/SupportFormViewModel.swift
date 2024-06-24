@@ -5,7 +5,7 @@
 
 import Foundation
 
-class SupportFormViewModel: ObservableObject {
+internal class SupportFormViewModel: ObservableObject {
     @Published var isDisplayed = false
     @Published var submitOnDismiss = false
     @Published var blockSubmission = true

@@ -4,10 +4,6 @@
 //
 
 extension ControlBarViewModel {
-    func dismissConfirmLeaveDrawerList() {
-        self.isConfirmLeaveListDisplayed = false
-    }
-
     func isMoreButtonDisabled() -> Bool {
         isBypassLoadingOverlay()
     }

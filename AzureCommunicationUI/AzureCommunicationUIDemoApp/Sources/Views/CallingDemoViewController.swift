@@ -244,6 +244,8 @@ class CallingDemoViewController: UIViewController {
         }
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
+        let captionsOptions = CaptionsOptions(spokenLanguage: envConfigSubject.captionsLocale,
+                                              enableCaptions: envConfigSubject.enableCaptions)
         let callKitOptions = envConfigSubject.enableCallKit ? getCallKitOptions() : nil
 
         let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
@@ -256,6 +258,7 @@ class CallingDemoViewController: UIViewController {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
+            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions) :
         CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -267,6 +270,7 @@ class CallingDemoViewController: UIViewController {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
+            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
             disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)

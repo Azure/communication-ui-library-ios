@@ -26,6 +26,7 @@ class SetupViewModel: ObservableObject {
     var setupControlBarViewModel: SetupControlBarViewModel!
     var joiningCallActivityViewModel: JoiningCallActivityViewModel!
     var cancellables = Set<AnyCancellable>()
+    var audioDeviceListViewModel: AudioDevicesListViewModel!
 
     @Published var isJoinRequested = false
 
@@ -46,6 +47,7 @@ class SetupViewModel: ObservableObject {
         self.logger = logger
         self.callType = callType
 
+        let actionDispatch: ActionDispatch = store.dispatch
         if let title = setupScreenViewData?.title, !title.isEmpty {
             // if title is not nil/empty, use given title and optional subtitle
             self.title = title
@@ -65,6 +67,11 @@ class SetupViewModel: ObservableObject {
             title: self.localizationProvider.getLocalizedString(joiningButtonLocalization))
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
+
+        audioDeviceListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
+            dispatchAction: actionDispatch,
+            localUserState: store.state.localUserState)
+
         var callButtonLocalization = LocalizationKey.joinCall
         if self.callType == .oneToNOutgoing {
             callButtonLocalization = LocalizationKey.startCall
@@ -80,6 +87,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
+
         updateAccessibilityLabel()
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
@@ -170,6 +178,12 @@ class SetupViewModel: ObservableObject {
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)
+        audioDeviceListViewModel.update(
+            audioDeviceStatus: state.localUserState.audioState.device,
+            navigationState: state.navigationState,
+            visibilityState: state.visibilityState
+        )
+        objectWillChange.send()
     }
 
     func shouldShowSetupControlBarView() -> Bool {
@@ -177,9 +191,14 @@ class SetupViewModel: ObservableObject {
         return cameraStatus == .off || !isJoinRequested
     }
 
+    func dismissAudioDevicesDrawer() {
+        store.dispatch(action: .hideAudioSelection)
+    }
+
     private func handleOffline() {
-        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .callJoinConnectionFailed,
-                                                                     error: nil)))
+        store.dispatch(
+            action: .errorAction(
+                .statusErrorAndCallReset(internalError: .callJoinConnectionFailed, error: nil)))
         // only show banner again when user taps on button explicitly
         // banner would not reappear when other events^1 send identical error state again
         // 1: camera on/off, audio on/off, switch to background/foreground, etc.

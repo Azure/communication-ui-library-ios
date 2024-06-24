@@ -18,6 +18,15 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
 
+    var captionsSupportedSpokenLanguages = CurrentValueSubject<[String], Never>([])
+    var captionsSupportedCaptionLanguages = CurrentValueSubject<[String], Never>([])
+    var isCaptionsTranslationSupported = CurrentValueSubject<Bool, Never>(false)
+    var captionsReceived = PassthroughSubject<CallCompositeCaptionsData, Never>()
+    var activeSpokenLanguageChanged = CurrentValueSubject<String, Never>("")
+    var activeCaptionLanguageChanged = CurrentValueSubject<String, Never>("")
+    var captionsEnabledChanged = CurrentValueSubject<Bool, Never>(false)
+    var captionsTypeChanged = CurrentValueSubject<CallCompositeCaptionsType, Never>(.none)
+
     // User Facing Diagnostics Subjects
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
@@ -30,14 +39,22 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var transcriptionCallFeature: TranscriptionCallFeature?
     private var dominantSpeakersCallFeature: DominantSpeakersCallFeature?
     private var localUserDiagnosticsFeature: LocalUserDiagnosticsCallFeature?
+    private var captionsFeature: CaptionsCallFeature?
+    private var teamsCaptions: TeamsCaptions?
+    private var communicationCaptions: CommunicationCaptions?
 
     private var previousCallingStatus: CallingStatus = .none
     private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
+
+    private let communicationCaptionsHandler = CommunicationCaptionsHandler()
+    private let teamsCaptionsHandler = TeamsCaptionsHandler()
 
     init(logger: Logger) {
         self.logger = logger
         super.init()
         setupRemoteParticipantEventsAdapter()
+        communicationCaptionsHandler.parentHandler = self
+        teamsCaptionsHandler.parentHandler = self
     }
 
     func assign(_ recordingCallFeature: RecordingCallFeature) {
@@ -61,12 +78,18 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         localUserDiagnosticsFeature.networkDiagnostics.delegate = self
     }
 
+    func assign(_ captionsFeature: CaptionsCallFeature) {
+        self.captionsFeature = captionsFeature
+        captionsFeature.delegate = self
+    }
+
     func setupProperties() {
         participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
         transcriptionCallFeature = nil
         dominantSpeakersCallFeature = nil
         localUserDiagnosticsFeature = nil
+        captionsFeature = nil
         remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
         previousCallingStatus = .none
     }
@@ -156,13 +179,14 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
               previousCallingStatus == .remoteHold
     }
 }
-
+// swiftlint:disable file_length
 extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
     TranscriptionCallFeatureDelegate,
     DominantSpeakersCallFeatureDelegate,
     MediaDiagnosticsDelegate,
-    NetworkDiagnosticsDelegate {
+    NetworkDiagnosticsDelegate,
+    CaptionsCallFeatureDelegate {
     func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
     }
@@ -189,7 +213,32 @@ extension CallingSDKEventsHandler: CallDelegate,
             let subcode = call.callEndReason.subcode
             logger.error("Receive vaildate CallEndReason:\(code), subcode:\(subcode)")
         }
+        if currentStatus == .connected {
+            self.captionsFeature = call.feature(Features.captions)
+            self.captionsFeature?.getCaptions {(value, error) in
+                if let error = error {
+                    self.logger.error("Can not get the captions with error:\(error)")
+                } else {
+                    if value?.type == CaptionsType.communicationCaptions {
+                        // communication captions
+                        self.communicationCaptions = value as? CommunicationCaptions
+                        self.communicationCaptions?.delegate = self.communicationCaptionsHandler
+                        self.captionsSupportedSpokenLanguages.send(self.communicationCaptions?
+                            .supportedSpokenLanguages ?? [])
+                        self.captionsTypeChanged.send(.communication)
+                    }
 
+                    if value?.type == CaptionsType.teamsCaptions {
+                        // teams captions
+                        self.teamsCaptions = value as? TeamsCaptions
+                        self.teamsCaptions?.delegate = self.teamsCaptionsHandler
+                        self.captionsSupportedSpokenLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
+                        self.captionsSupportedCaptionLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
+                        self.captionsTypeChanged.send(.teams)
+                    }
+                }
+            }
+        }
         let callInfoModel = CallInfoModel(status: currentStatus,
                                           internalError: internalError,
                                           callEndReasonCode: Int(call.callEndReason.code),
@@ -361,5 +410,52 @@ extension CallingSDKEventsHandler: CallDelegate,
                           didChangeIsSpeakingWhileMicrophoneIsMuted args: DiagnosticFlagChangedEventArgs) {
         let model = MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
+    }
+}
+
+private class CommunicationCaptionsHandler: NSObject, CommunicationCaptionsDelegate {
+    weak var parentHandler: CallingSDKEventsHandler?
+
+    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                               didReceiveCaptions: CommunicationCaptionsReceivedEventArgs) {
+        parentHandler?.captionsReceived.send(didReceiveCaptions.toCallCompositeCaptionsData())
+    }
+
+    func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                               didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
+        let spokenLanguage = communicationCaptions.activeSpokenLanguage
+        parentHandler?.activeSpokenLanguageChanged.send(spokenLanguage)
+    }
+
+   func communicationCaptions(_ communicationCaptions: CommunicationCaptions,
+                              didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
+        let isCaptionsEnabled = communicationCaptions.isEnabled
+       parentHandler?.captionsEnabledChanged.send(isCaptionsEnabled)
+    }
+}
+
+private class TeamsCaptionsHandler: NSObject, TeamsCaptionsDelegate {
+    weak var parentHandler: CallingSDKEventsHandler?
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeCaptionsEnabledState args: PropertyChangedEventArgs) {
+        parentHandler?.captionsEnabledChanged.send(teamsCaptions.isEnabled)
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeActiveSpokenLanguageState args: PropertyChangedEventArgs) {
+        let spokenLanguage = teamsCaptions.activeSpokenLanguage
+        parentHandler?.activeSpokenLanguageChanged.send(spokenLanguage)
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didReceiveCaptions args: TeamsCaptionsReceivedEventArgs) {
+        parentHandler?.captionsReceived.send(args.toCallCompositeCaptionsData())
+    }
+
+    func teamsCaptions(_ teamsCaptions: TeamsCaptions,
+                       didChangeActiveCaptionLanguageState args: PropertyChangedEventArgs) {
+        let captionsLanguage = teamsCaptions.activeCaptionLanguage
+        parentHandler?.activeCaptionLanguageChanged.send(captionsLanguage)
     }
 }

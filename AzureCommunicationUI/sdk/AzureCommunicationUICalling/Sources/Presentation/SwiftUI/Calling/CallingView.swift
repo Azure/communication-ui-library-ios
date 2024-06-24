@@ -56,9 +56,34 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
                 }
-            }
-            .frame(width: geometry.size.width,
-                   height: geometry.size.height)
+                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
+                    LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
+                }
+
+                BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissMoreCallOptionsDrawerList) {
+                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel)
+                }
+
+                BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissAudioDevicesDrawer) {
+                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                }
+                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissCaptionLanguageDrawer) {
+                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel)
+                }
+                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissSpokenLanguageDrawer) {
+                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel)
+                }
+                BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissCaptionsListDrawer) {
+                    CaptionsListView(viewModel: viewModel.captionsListViewModel)
+                }
+            }.frame(width: geometry.size.width,
+                    height: geometry.size.height)
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -88,8 +113,13 @@ struct CallingView: View {
         Group {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomTrailing) {
-                    videoGridView
-                        .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
+                    VStack {
+                        videoGridView
+                            .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
+                        if viewModel.captionsInfoViewModel.isDisplayed {
+                            captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom)
+                        }
+                    }
                     if viewModel.isParticipantGridDisplayed && !viewModel.isInPip && viewModel.allowLocalCameraPreview {
                         Group {
                             DraggableLocalVideoView(containerBounds:
@@ -247,6 +277,12 @@ struct CallingView: View {
         }
     }
 
+    var captionsInfoView: some View {
+        return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
+                                avatarViewManager: avatarManager)
+            .frame(maxWidth: .infinity, maxHeight: 115, alignment: .bottom)
+    }
+
     var errorInfoView: some View {
         return VStack {
             Spacer()
@@ -296,7 +332,6 @@ struct CallingView: View {
             SupportFormView(viewModel: viewModel.supportFormViewModel)
         }
     }
-
 }
 // swiftlint:enable type_body_length
 
@@ -314,11 +349,7 @@ extension CallingView {
     }
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
-        guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-              !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
-              !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
-              !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
-              !viewModel.controlBarViewModel.isShareActivityDisplayed else {
+        guard !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
                 return
             }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all

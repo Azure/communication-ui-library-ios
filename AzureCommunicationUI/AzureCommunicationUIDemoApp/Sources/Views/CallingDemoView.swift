@@ -420,6 +420,8 @@ extension CallingDemoView {
 
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
+        let captionsOptions = CaptionsOptions(spokenLanguage: envConfigSubject.captionsLocale,
+                                              enableCaptions: envConfigSubject.enableCaptions)
         let callKitOptions = $envConfigSubject.enableCallKit.wrappedValue ? getCallKitOptions() : nil
 
         let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
@@ -432,6 +434,7 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
+            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions) :
         CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -443,6 +446,7 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
+            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
             disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)

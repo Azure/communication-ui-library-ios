@@ -48,6 +48,7 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let captionsOptions: CaptionsOptions?
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
     private let setupViewOrientationOptions: OrientationOptions?
@@ -113,6 +114,7 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
+        captionsOptions = options?.captionsOptions
         enableMultitasking = options?.enableMultitasking ?? false
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
@@ -144,6 +146,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
+        captionsOptions = options?.captionsOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -573,6 +576,10 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
+
+        let captionsViewManager = CaptionsViewManager(
+            callingSDKWrapper: callingSdkWrapper
+        )
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
@@ -585,13 +592,15 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
+                captionsViewManager: captionsViewManager,
                 localOptions: localOptions,
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
-                callType: callConfiguration.compositeCallType
+                callType: callConfiguration.compositeCallType,
+                captionsOptions: captionsOptions ?? CaptionsOptions()
             )
         )
     }

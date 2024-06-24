@@ -16,6 +16,7 @@ struct SharingActivityView: UIViewControllerRepresentable {
                                                   applicationActivities: applicationActivities,
                                                   sourceView: sourceView) {
             self.isPresented = false
+            viewModel.dismissDrawer()
         }
     }
 

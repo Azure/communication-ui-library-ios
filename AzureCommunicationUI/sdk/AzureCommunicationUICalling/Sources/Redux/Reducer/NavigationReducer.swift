@@ -10,6 +10,14 @@ extension Reducer where State == NavigationState,
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
         var supportFormVisible = state.supportFormVisible
+        var captionViewVisible = state.captionsViewVisible
+        var captionsLanguageViewVisible = state.captionsLanguageViewVisible
+        var spokenLanguageViewVisible = state.spokenLanguageViewVisible
+        var supportShareSheetVisible = state.supportShareSheetVisible
+        var endCallConfirmationVisible = state.endCallConfirmationVisible
+        var audioSelectionVisible = state.audioSelectionVisible
+        var moreOptionsVisible = state.moreOptionsVisible
+
         switch action {
         case .callingViewLaunched:
             navigationStatus = .inCall
@@ -19,9 +27,80 @@ extension Reducer where State == NavigationState,
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
         case .showSupportForm:
+            supportShareSheetVisible = false
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
             supportFormVisible = true
+            captionViewVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
+            moreOptionsVisible = false
+        case .showCaptionsListView:
+            captionViewVisible = true
+            supportFormVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
+            moreOptionsVisible = false
+        case .hideCaptionsListView:
+            captionViewVisible = false
         case .hideSupportForm:
             supportFormVisible = false
+        case .showSpokenLanguageView:
+            supportFormVisible = false
+            captionViewVisible = false
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = true
+            moreOptionsVisible = false
+        case .hideSpokenLanguageView:
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
+        case .showCaptionsLanguageView:
+            supportFormVisible = false
+            captionViewVisible = false
+            captionsLanguageViewVisible = true
+            spokenLanguageViewVisible = false
+            moreOptionsVisible = false
+        case .hideCaptionsLanguageView:
+            captionsLanguageViewVisible = false
+            spokenLanguageViewVisible = false
+        case .showEndCallConfirmation:
+            supportShareSheetVisible = false
+            audioSelectionVisible = false
+            endCallConfirmationVisible = true
+            supportFormVisible = false
+            moreOptionsVisible = false
+        case .hideEndCallConfirmation:
+            endCallConfirmationVisible = false
+        case .showMoreOptions:
+            supportShareSheetVisible = false
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = true
+        case .hideMoreOptions:
+            moreOptionsVisible = false
+        case .showAudioSelection:
+            supportShareSheetVisible = false
+            audioSelectionVisible = true
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = false
+        case .hideAudioSelection:
+            audioSelectionVisible = false
+        case .showSupportShare:
+            supportShareSheetVisible = true
+            audioSelectionVisible = false
+            endCallConfirmationVisible = false
+            supportFormVisible = false
+            moreOptionsVisible = false
+        case .hideSupportShare:
+            supportShareSheetVisible = false
+        case .localUserAction(.audioDeviceChangeRequested):
+            audioSelectionVisible = false
+        case .captionsAction(.setCaptionLanguageRequested(let language)):
+            captionsLanguageViewVisible = false
+        case .captionsAction(.setSpokenLanguageRequested(let language)):
+            spokenLanguageViewVisible = false
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -34,6 +113,7 @@ extension Reducer where State == NavigationState,
                 .callingAction(.transcriptionStateUpdated),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
+                .captionsAction,
                 .lifecycleAction,
                 .localUserAction,
                 .remoteParticipantsAction,
@@ -42,6 +122,14 @@ extension Reducer where State == NavigationState,
                 .callDiagnosticAction:
             return state
         }
-        return NavigationState(status: navigationStatus, supportFormVisible: supportFormVisible)
+        return NavigationState(status: navigationStatus,
+                               supportFormVisible: supportFormVisible,
+                               captionsViewVisible: captionViewVisible,
+                               captionsLanguageViewVisible: captionsLanguageViewVisible,
+                               spokenLanguageViewVisible: spokenLanguageViewVisible,
+                               endCallConfirmationVisible: endCallConfirmationVisible,
+                               audioSelectionVisible: audioSelectionVisible,
+                               moreOptionsVisible: moreOptionsVisible,
+                               supportShareSheetVisible: supportShareSheetVisible)
     }
 }

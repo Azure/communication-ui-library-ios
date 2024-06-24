@@ -5,6 +5,7 @@
 
 import FluentUI
 import Foundation
+import SwiftUI
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
@@ -30,6 +31,9 @@ protocol CompositeViewModelFactoryProtocol {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
+    func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
+                                            state: AppState) -> CaptionsLanguageListViewModel
+    func makeCaptionsInfoViewModel (state: AppState) -> CaptionsInfoViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
@@ -38,7 +42,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -56,13 +60,42 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
+        showSharingViewAction: @escaping () -> Void,
+        showSupportFormAction: @escaping () -> Void,
+        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeCaptionsListViewModel(state: AppState,
+                                   captionsOptions: CaptionsOptions,
+                                   dispatchAction: @escaping ActionDispatch,
+                                   showSpokenLanguage: @escaping () -> Void,
+                                   showCaptionsLanguage: @escaping () -> Void,
+                                   isDisplayed: Bool) -> CaptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String,
+                                     titleTrailingAccessoryView: CompositeIcon?,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
+
+    func makeToggleListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     isToggleOn: Binding<Bool>,
+                                     showToggle: Bool,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
+
+    func makeLanguageListItemViewModel(icon: CompositeIcon,
+                                       title: String,
+                                       subtitle: String?,
+                                       accessibilityIdentifier: String,
+                                       titleTrailingAccessoryView: CompositeIcon?,
+                                       isEnabled: Bool?,
+                                       action: @escaping (() -> Void)) -> DrawerListItemViewModel
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
+
     func makeSelectableDrawerListItemViewModel(
         icon: CompositeIcon,
         title: String,
@@ -79,7 +112,7 @@ protocol CompositeViewModelFactoryProtocol {
 extension CompositeViewModelFactoryProtocol {
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
-                                    iconName: CompositeIcon? = .none,
+                                    iconName: CompositeIcon? = CompositeIcon.none,
                                     isDisabled: Bool = false,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         return makePrimaryButtonViewModel(buttonStyle: buttonStyle,
