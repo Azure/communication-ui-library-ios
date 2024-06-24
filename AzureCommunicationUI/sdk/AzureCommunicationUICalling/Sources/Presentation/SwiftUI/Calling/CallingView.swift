@@ -278,7 +278,8 @@ struct CallingView: View {
     }
 
     var captionsInfoView: some View {
-        return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel)
+        return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
+                                avatarViewManager: avatarManager)
             .frame(maxWidth: .infinity, maxHeight: 115, alignment: .bottom)
     }
 
