@@ -9,25 +9,25 @@ import AzureCore
 /// Enum defining options for notification about capabilities change.
 public struct CapabilitiesChangedNotificationMode: Equatable, RequestStringConvertible {
     internal enum  CapabilitiesChangedNotificationModeKV {
-        case alwaysDisplay
+        case always
         case neverDisplay
         case unknown(String)
 
         var rawValue: String {
             switch self {
-            case .alwaysDisplay:
-                return "always_display"
+            case .always:
+                return "always"
             case .neverDisplay:
-                return "never_display"
+                return "never"
             case .unknown(let value):
                 return value
             }
         }
         init(rawValue: String) {
             switch rawValue.lowercased() {
-            case "always_display":
-                self = .alwaysDisplay
-            case "never_display":
+            case "always":
+                self = .always
+            case "never":
                 self = .neverDisplay
             default:
                 self = .unknown(rawValue.lowercased())
@@ -50,8 +50,8 @@ public struct CapabilitiesChangedNotificationMode: Equatable, RequestStringConve
     }
 
     /// Alwayd display notification.
-    public static let alwaysDisplay: CapabilitiesChangedNotificationMode = .init(rawValue: "always_display")
+    public static let alwaysDisplay: CapabilitiesChangedNotificationMode = .init(rawValue: "always")
 
     /// Never display notification.
-    public static let neverDisplay: CapabilitiesChangedNotificationMode = .init(rawValue: "never_display")
+    public static let neverDisplay: CapabilitiesChangedNotificationMode = .init(rawValue: "never")
 }
