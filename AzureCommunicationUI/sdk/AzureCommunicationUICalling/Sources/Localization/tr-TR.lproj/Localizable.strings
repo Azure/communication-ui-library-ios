@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Kur";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Aramayı başlat";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Arama başlatılıyor…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Aramaya Katılma Devre Dışı";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Arama Başlatma Devre Dışı";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
@@ -78,7 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ kabul edilsin mi?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Kabul et";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Reddet";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@? daha";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Ön kameraya geç";
@@ -98,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Tümü";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Tanılama bilgilerini paylaş";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Aranıyor...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
