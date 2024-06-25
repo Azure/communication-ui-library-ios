@@ -19,12 +19,16 @@ struct CallingView: View {
     }
 
     enum Constants {
-        static let topAlertAreaViewTopPaddin: CGFloat = 10.0
+        static let topAlertAreaViewTopPadding: CGFloat = 10.0
     }
 
     enum DiagnosticToastInfoConstants {
         static let bottomPaddingPortrait: CGFloat = 5
         static let bottomPaddingLandscape: CGFloat = 16
+    }
+
+    enum CaptionsInfoConstants {
+        static let maxHeight: CGFloat = 115.0
     }
 
     @ObservedObject var viewModel: CallingViewModel
@@ -114,26 +118,30 @@ struct CallingView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomTrailing) {
                     VStack {
-                        videoGridView
-                            .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
+                        ZStack(alignment: .bottomTrailing) {
+                            videoGridView
+                                .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
+                            if viewModel.isParticipantGridDisplayed &&
+                                !viewModel.isInPip &&
+                                viewModel.allowLocalCameraPreview {
+                                Group {
+                                    DraggableLocalVideoView(containerBounds:
+                                                                geometry.frame(in: .local),
+                                                            viewModel: viewModel,
+                                                            avatarManager: avatarManager,
+                                                            viewManager: viewManager,
+                                                            orientation: $orientation,
+                                                            screenSize: getSizeClass())
+                                }
+                                .accessibilityElement(children: .contain)
+                                .accessibilityIdentifier(
+                                    AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
+                            }
+                        }
                         if viewModel.captionsInfoViewModel.isDisplayed {
                             captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom)
                         }
                     }
-                    if viewModel.isParticipantGridDisplayed && !viewModel.isInPip && viewModel.allowLocalCameraPreview {
-                        Group {
-                            DraggableLocalVideoView(containerBounds:
-                                                        geometry.frame(in: .local),
-                                                    viewModel: viewModel,
-                                                    avatarManager: avatarManager,
-                                                    viewManager: viewManager,
-                                                    orientation: $orientation,
-                                                    screenSize: getSizeClass())
-                        }
-                        .accessibilityElement(children: .contain)
-                        .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
-                    }
-
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
@@ -228,7 +236,7 @@ struct CallingView: View {
                     Spacer()
                 }
             }
-            .padding(.top, Constants.topAlertAreaViewTopPaddin)
+            .padding(.top, Constants.topAlertAreaViewTopPadding)
             .accessibilityElement(children: .contain)
         }
     }
@@ -284,7 +292,7 @@ struct CallingView: View {
     var captionsInfoView: some View {
         return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
                                 avatarViewManager: avatarManager)
-            .frame(maxWidth: .infinity, maxHeight: 115, alignment: .bottom)
+            .frame(maxWidth: .infinity, maxHeight: CaptionsInfoConstants.maxHeight, alignment: .bottom)
     }
 
     var errorInfoView: some View {
