@@ -232,6 +232,9 @@ class CallingDemoViewController: UIViewController {
                 layoutDirection: layoutDirection)
         }
         let setupViewOrientation = envConfigSubject.setupViewOrientation
+        let setupScreenOptions = SetupScreenOptions(
+            cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
+            microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
         let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callKitOptions = envConfigSubject.enableCallKit ? getCallKitOptions() : nil
 
@@ -245,7 +248,8 @@ class CallingDemoViewController: UIViewController {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
-            callKitOptions: callKitOptions) :
+            callKitOptions: callKitOptions,
+            setupScreenOptions: setupScreenOptions) :
         CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
@@ -258,7 +262,8 @@ class CallingDemoViewController: UIViewController {
             callScreenOptions: callScreenOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
-            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)
+            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall,
+            setupScreenOptions: setupScreenOptions)
 
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         if let credential = try? await getTokenCredential() {

@@ -383,7 +383,9 @@ extension CallingDemoView {
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
-        let setupScreenOptions = SetupScreenOptions(cameraButtonEnabled: false, microphoneButtonEnabled: false)
+        let setupScreenOptions = SetupScreenOptions(
+            cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
+            microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
         let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)

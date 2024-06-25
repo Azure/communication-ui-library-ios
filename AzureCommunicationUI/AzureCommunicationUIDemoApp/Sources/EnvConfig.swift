@@ -87,6 +87,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var enableRemoteInfo = true
     @Published var callkitRemoteInfo = ""
     @Published var deviceToken: Data?
+    @Published var setupScreenOptionsCameraButtonEnabled = true
+    @Published var setupScreenOptionsMicButtonEnabled = true
 
     let acstokenKey: String = "ACS_TOKEN"
     let displayNameKey: String = "DISPLAY_NAME"
@@ -149,7 +151,7 @@ class EnvConfigSubject: ObservableObject {
             selectedMeetingType = .groupCall
         }
 
-        if let id = dic["roomId"],
+        if let id = dic["roomid"],
            !id.isEmpty {
             roomId = id
             selectedMeetingType = .roomCall
