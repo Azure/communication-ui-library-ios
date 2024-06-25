@@ -70,10 +70,14 @@ class CaptionsListViewModel: ObservableObject {
             subtitle: languageDisplayName(for: state.captionsState.activeCaptionLanguage ?? "en-US"),
             accessibilityIdentifier: "",
             titleTrailingAccessoryView: .rightChevron,
-            isEnabled: self.isToggleEnabled && state.captionsState.activeType == .teams,
+            isEnabled: self.isToggleEnabled,
             action: self.isToggleEnabled ? showCaptionsLanguage : {})
+        if state.captionsState.activeType == .teams {
+            items = [enableCaptionsInfoModel, spokenLanguageInfoModel, captionsLanguageInfoModel]
+        } else {
+            items = [enableCaptionsInfoModel, spokenLanguageInfoModel]
+        }
 
-        items = [enableCaptionsInfoModel, spokenLanguageInfoModel, captionsLanguageInfoModel]
     }
     func update(state: AppState) {
         self.state = state
@@ -94,7 +98,7 @@ class CaptionsListViewModel: ObservableObject {
     }
 
     private func updateDefaultOptions(captionsOptions: CaptionsOptions) {
-        if captionsOptions.isOnByDefault {
+        if captionsOptions.isOnByDefault && state.callingState.status == .connected {
             toggleCaptions(newValue: true)
         }
     }
