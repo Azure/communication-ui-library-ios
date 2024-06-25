@@ -192,6 +192,13 @@ class CallingViewModel: ObservableObject {
         store.dispatch(action: .callingAction(.resumeRequested))
     }
 
+    func updateCaptionsOptions() {
+        if captionsOptions.isOnByDefault && !store.state.captionsState.isStarted {
+            let language = captionsOptions.spokenLanguage.lowercased()
+            store.dispatch(action: .captionsAction(.startRequested(language: language)))
+        }
+    }
+
     func dismissConfirmLeaveDrawerList() {
         store.dispatch(action: .hideEndCallConfirmation)
     }

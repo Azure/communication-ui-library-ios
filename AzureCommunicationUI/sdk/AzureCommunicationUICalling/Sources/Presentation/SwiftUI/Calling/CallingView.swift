@@ -167,6 +167,10 @@ struct CallingView: View {
                 })
                 .accessibilityElement(children: .contain)
             }
+        }.onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                viewModel.updateCaptionsOptions()
+            }
         }
     }
 

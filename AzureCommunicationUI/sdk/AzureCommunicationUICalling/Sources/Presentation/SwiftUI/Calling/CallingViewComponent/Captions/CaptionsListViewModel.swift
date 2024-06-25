@@ -40,7 +40,6 @@ class CaptionsListViewModel: ObservableObject {
         self.isToggleEnabled = state.captionsState.isStarted ?? false
         self.captionsOptions = captionsOptions
 
-        updateDefaultOptions(captionsOptions: captionsOptions)
         setupItems()
     }
 
@@ -95,12 +94,6 @@ class CaptionsListViewModel: ObservableObject {
             dispatch(.captionsAction(.stopRequested))
         }
         setupItems()
-    }
-
-    private func updateDefaultOptions(captionsOptions: CaptionsOptions) {
-        if captionsOptions.isOnByDefault && state.callingState.status == .connected {
-            toggleCaptions(newValue: true)
-        }
     }
 
     private func languageDisplayName(for code: String) -> String {

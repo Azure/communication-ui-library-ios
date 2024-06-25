@@ -6,7 +6,7 @@ import Foundation
 
 struct CaptionsState: Equatable {
     var isEnabled: Bool?
-    var isStarted: Bool?
+    var isStarted: Bool
     var supportedSpokenLanguages: [String]?
     var activeSpokenLanguage: String?
     var supportedCaptionLanguages: [String]?
