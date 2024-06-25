@@ -94,7 +94,7 @@ class CaptionsListViewModel: ObservableObject {
     }
 
     private func updateDefaultOptions(captionsOptions: CaptionsOptions) {
-        if captionsOptions.enableCaptions {
+        if captionsOptions.isOnByDefault {
             toggleCaptions(newValue: true)
         }
     }

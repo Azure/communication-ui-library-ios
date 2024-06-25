@@ -6,7 +6,7 @@ import Foundation
 
 /// Configuration options for captions in a UI component.
 public struct CaptionsOptions {
-    let enableCaptions: Bool
+    let isOnByDefault: Bool
     let spokenLanguage: String
     public init(spokenLanguage: Locale = Locale.current,
                 enableCaptions: Bool = false) {
@@ -20,9 +20,9 @@ public struct CaptionsOptions {
             // If the spokenLanguage is not supported but currentLocale is, use currentLocale
             self.spokenLanguage = currentLocale.identifier
         } else {
-            self.spokenLanguage = "en-us"  // Default to English
+            self.spokenLanguage = "en-us"
         }
 
-        self.enableCaptions = enableCaptions
+        self.isOnByDefault = enableCaptions
     }
 }

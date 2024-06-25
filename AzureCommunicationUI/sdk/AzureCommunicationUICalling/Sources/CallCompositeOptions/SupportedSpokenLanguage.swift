@@ -6,7 +6,6 @@
 import Foundation
 /// SupportedCaptionsLocale representing the supported locales.
 public struct SupportedSpokenLanguage {
-    // Adding predefined locales as per the TypeScript interface CaptionLanguageStrings
     public static let arAE = Locale(identifier: "ar-AE")
     public static let arSA = Locale(identifier: "ar-SA")
     public static let daDK = Locale(identifier: "da-DK")
