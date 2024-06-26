@@ -68,9 +68,9 @@ struct SettingsView: View {
     var settingsForm: some View {
         Form {
             orientationOptions
+            captionsSettings
             Group {
                 localizationSettings
-                captionsSettings
                 skipSetupScreenSettings
                 micSettings
                 localParticipantSettings
