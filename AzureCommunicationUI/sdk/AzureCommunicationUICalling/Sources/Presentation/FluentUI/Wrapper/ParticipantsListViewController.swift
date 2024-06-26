@@ -177,7 +177,7 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         let label = UILabel()
         label.text = isLobbySection
         ? String(format: waitingInLobby, lobbyParticipants.count)
-        : String(format: inTheCall, inCallParticipants.count)
+        : String(format: inTheCall, inCallParticipants.count + (plusMoreMenuItem?.plusMoreCount ?? 0))
 
         label.font = .systemFont(ofSize: 14)
         label.textColor = StyleProvider.color.onHoldLabel
