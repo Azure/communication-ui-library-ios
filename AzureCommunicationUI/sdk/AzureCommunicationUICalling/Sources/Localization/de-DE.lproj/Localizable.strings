@@ -78,7 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ zulassen?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Zulassen";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Ablehnen";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@? weitere";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ mehr";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Zur Rückkamera wechseln";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Zur Frontkamera wechseln";
