@@ -24,7 +24,7 @@ struct CaptionsInfoCellView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
-            Text(caption.spokenText)
+            Text(caption.captionText?.isEmpty ?? true ? caption.spokenText : caption.captionText ?? "")
                 .font(.callout)
                 .foregroundColor(.primary)
         }

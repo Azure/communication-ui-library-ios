@@ -8,8 +8,7 @@ import Combine
 
 class CaptionsViewManager: ObservableObject {
     private let callingSDKWrapper: CallingSDKWrapperProtocol
-    private var captionData = [CallCompositeCaptionsData]()
-    var onDataReceived: ((CallCompositeCaptionsData) -> Void)?
+    @Published var captionData = [CallCompositeCaptionsData]()
     private var subscriptions = Set<AnyCancellable>()
 
     init(callingSDKWrapper: CallingSDKWrapperProtocol) {
@@ -37,7 +36,9 @@ class CaptionsViewManager: ObservableObject {
                 // Otherwise, append new data
                 self.captionData.append(newData)
             }
-            self.onDataReceived?(newData)
         }
+    }
+    func clearCaptions() {
+        captionData.removeAll()
     }
 }

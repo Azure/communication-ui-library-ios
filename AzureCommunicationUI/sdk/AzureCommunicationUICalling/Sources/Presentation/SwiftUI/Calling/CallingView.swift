@@ -138,7 +138,8 @@ struct CallingView: View {
                                     AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                             }
                         }
-                        if viewModel.captionsInfoViewModel.isDisplayed {
+                        if viewModel.captionsInfoViewModel.isDisplayed &&
+                            !viewModel.isInPip {
                             captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom)
                         }
                     }

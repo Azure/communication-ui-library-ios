@@ -17,21 +17,12 @@ class CaptionsInfoViewModel: ObservableObject {
     }
 
     private func bindCaptionsUpdates() {
-        captionsManager.onDataReceived = { [weak self] newCaption in
-            DispatchQueue.main.async {
-                self?.handleNewCaption(newCaption)
-            }
-        }
+        captionsManager.$captionData
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$captionsData)
     }
 
     private func handleNewCaption(_ newCaption: CallCompositeCaptionsData) {
-        if let lastCaption = captionsData.last,
-           lastCaption.speakerRawId == newCaption.speakerRawId,
-           lastCaption.resultType != .final {
-            captionsData[captionsData.count - 1] = newCaption
-        } else {
-            captionsData.append(newCaption)
-        }
         // Keep only the latest 50 captions
         if captionsData.count > 50 {
             captionsData.removeFirst(captionsData.count - 50)

@@ -10,21 +10,21 @@ struct CaptionsInfoView: View {
     var avatarViewManager: AvatarViewManagerProtocol
 
     var body: some View {
-       ScrollView {
+        ScrollView {
             ScrollViewReader { scrollView in
-                VStack {
+                LazyVStack {
                     ForEach(viewModel.captionsData.indices, id: \.self) { index in
                         CaptionsInfoCellView(caption: viewModel.captionsData[index],
-                                             avatarViewManager: avatarViewManager )
+                                             avatarViewManager: avatarViewManager)
                             .id(index)
-                            .animation(nil, value: viewModel.captionsData.count)
                     }
-                }.onChange(of: viewModel.captionsData.count) { _ in
+                }
+                .onChange(of: viewModel.captionsData.count) { _ in
                     withAnimation {
                         scrollView.scrollTo(viewModel.captionsData.count - 1, anchor: .bottom)
                     }
                 }
             }
-       }
+        }
     }
 }
