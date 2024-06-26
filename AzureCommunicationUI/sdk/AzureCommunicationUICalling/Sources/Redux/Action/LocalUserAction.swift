@@ -41,6 +41,7 @@ enum LocalUserAction: Equatable {
 
     case participantRoleChanged(participantRole: ParticipantRoleEnum)
     case setCapabilities(capabilities: Set<ParticipantCapabilityType>)
+    case onCapabilitiesChanged(event: CapabilitiesChangedEvent)
 
     static func == (lhs: LocalUserAction, rhs: LocalUserAction) -> Bool {
 
@@ -84,6 +85,8 @@ enum LocalUserAction: Equatable {
 
         case let (.setCapabilities(lCapabilities), .setCapabilities(rCapabilities)):
             return lCapabilities == rCapabilities
+        case let (.onCapabilitiesChanged(lEvent), .onCapabilitiesChanged(rEvent)):
+            return lEvent == rEvent
 
         default:
             return false

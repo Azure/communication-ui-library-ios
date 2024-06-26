@@ -34,6 +34,7 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var dismissNotification: ((Bool) -> Void)?
     var setCapabilities: ((Bool) -> Void)?
     var removeParticipant: ((Bool) -> Void)?
+    var onCapabilitiesChanged: ((CapabilitiesChangedEvent) -> Void)?
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -199,6 +200,12 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func removeParticipant(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, participantId: String) -> Task<Void, Never> {
         Task {
             removeParticipant?(true)
+        }
+    }
+
+    func onCapabilitiesChanged(event: AzureCommunicationUICalling.CapabilitiesChangedEvent, state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            onCapabilitiesChanged?(event)
         }
     }
 }

@@ -60,6 +60,11 @@ protocol CallingMiddlewareHandling {
                          dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 
     @discardableResult
+    func onCapabilitiesChanged(event: CapabilitiesChangedEvent,
+                               state: AppState,
+                               dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    @discardableResult
     func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
                                                 dispatch: @escaping ActionDispatch,
                                                 diagnisticModel: NetworkQualityDiagnosticModel) -> Task<Void, Never>
@@ -433,6 +438,39 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
+    func onCapabilitiesChanged(event: CapabilitiesChangedEvent,
+                               state: AppState,
+                               dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status != .disconnected else {
+                return
+            }
+
+            do {
+                let capabilities = try await self.callingService.getCapabilities()
+                dispatch(.localUserAction(.setCapabilities(capabilities: capabilities)))
+
+                let anyLostCapability = event.changedCapabilities.contains(where: { capability in
+                    (capability.type == .unmuteMicrophone && !capability.allowed) ||
+                    (capability.type == .turnVideoOn && !capability.allowed) ||
+                    (capability.type == .manageLobby && !capability.allowed) ||
+                    (capability.type == .removeParticipant && !capability.allowed)
+                })
+
+                if anyLostCapability || !state.localUserState.currentCapabilitiesAreDefault {
+                    var notificationType = ToastNotificationKind.someFeaturesGained
+
+                    if anyLostCapability {
+                        notificationType = ToastNotificationKind.someFeaturesLost
+                    }
+                    dispatch(.toastNotificationAction(.showNotification(kind: notificationType)))
+                }
+            } catch {
+                self.logger.error("Fetch capabilities Failed with error : \(error)")
+            }
+        }
+    }
+
     func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
                                                 dispatch: @escaping ActionDispatch,
                                                 diagnisticModel: NetworkQualityDiagnosticModel) -> Task<Void, Never> {
@@ -618,7 +656,7 @@ extension CallingMiddlewareHandler {
                 dispatch(.remoteParticipantsAction(.setTotalParticipantCount(participantCount: participantCount)))
             }.store(in: subscription)
         subscribeOnDiagnostics(dispatch: dispatch)
-        subscibeCapabilitiesUpdate(dispatch: dispatch)
+        subscribeCapabilitiesUpdate(dispatch: dispatch)
     }
 
     private func subscribeOnDiagnostics(dispatch: @escaping ActionDispatch) {
@@ -642,31 +680,11 @@ extension CallingMiddlewareHandler {
             }.store(in: subscription)
     }
 
-    private func subscibeCapabilitiesUpdate(dispatch: @escaping ActionDispatch) {
+    private func subscribeCapabilitiesUpdate(dispatch: @escaping ActionDispatch) {
         callingService.capabilitiesChangedSubject
             .removeDuplicates()
             .sink { event in
-                Task {
-                    do {
-                        let capabilities = try await self.callingService.getCapabilities()
-                        dispatch(.localUserAction(.setCapabilities(capabilities: capabilities)))
-                    } catch {
-                        self.logger.error("Fetch capabilities Failed with error : \(error)")
-                    }
-
-                    let anyLostCapability = event.changedCapabilities.contains(where: { capability in
-                        (capability.type == .unmuteMicrophone && !capability.allowed) ||
-                        (capability.type == .turnVideoOn && !capability.allowed) ||
-                        (capability.type == .manageLobby && !capability.allowed)
-                    })
-
-                    var notificationType = ToastNotificationKind.someFeaturesGained
-
-                    if anyLostCapability {
-                        notificationType = ToastNotificationKind.someFeaturesLost
-                    }
-                    dispatch(.toastNotificationAction(.showNotification(kind: notificationType)))
-                }
+                dispatch(.localUserAction(.onCapabilitiesChanged(event: event)))
             }.store(in: subscription)
     }
 }
