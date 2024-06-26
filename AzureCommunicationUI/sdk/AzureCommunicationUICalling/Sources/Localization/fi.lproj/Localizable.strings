@@ -73,7 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Hyväksytäänkö %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Hyväksy";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Hylkää";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ lisää";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Vaihda takakameraan";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Vaihda etukameraan";
@@ -159,9 +159,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ilmoita ongelmasta";
 "AzureCommunicationUICalling.SendFeedback.Text"="Lähetä";
 
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mykistä";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mykistä osallistuja -valikko.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Poista puhelusta";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Poista osallistuja puheluvalikosta.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Puheluasetukset päivitettiin. Jotkin ominaisuudet eivät ehkä ole käytettävissäsi.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Puheluasetukset päivitettiin. Jotkin lisätoiminnot saattavat olla nyt käytettävissäsi.";

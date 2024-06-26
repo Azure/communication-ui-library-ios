@@ -78,7 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Hyväksytäänkö %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Hyväksy";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Hylkää";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ lisää";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Vaihda takakameraan";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Vaihda etukameraan";

@@ -78,7 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Gi tilgang til %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Gi tilgang";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avslå";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ til";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Bytt til kamera bak";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Bytt til kamera foran";
