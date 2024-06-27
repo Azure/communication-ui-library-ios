@@ -12,7 +12,6 @@ class CallingViewModel: ObservableObject {
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
     @Published var isInPip = false
-    @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var allowLocalCameraPreview = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
@@ -41,7 +40,9 @@ class CallingViewModel: ObservableObject {
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
+    var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
+    var capabilitiesManager: CapabilitiesManager!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -51,7 +52,9 @@ class CallingViewModel: ObservableObject {
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         callType: CompositeCallType
+         callType: CompositeCallType,
+         capabilitiesManager: CapabilitiesManager
+
     ) {
         self.logger = logger
         self.store = store
@@ -61,6 +64,7 @@ class CallingViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         let actionDispatch: ActionDispatch = store.dispatch
 
@@ -97,7 +101,8 @@ class CallingViewModel: ObservableObject {
                 }
                 self.endCall()
             }, localUserState: store.state.localUserState,
-            leaveCallConfirmationMode: leaveCallConfirmationMode)
+            leaveCallConfirmationMode: leaveCallConfirmationMode,
+            capabilitiesManager: capabilitiesManager)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {
@@ -118,8 +123,8 @@ class CallingViewModel: ObservableObject {
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
 
-        callDiagnosticsViewModel.$currentBottomToastDiagnostic
-                    .assign(to: &$currentBottomToastDiagnostic)
+        bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
+            toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -195,6 +200,7 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
         callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
+        bottomToastViewModel.update(toastNotificationState: state.toastNotificationState)
     }
 
     private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {

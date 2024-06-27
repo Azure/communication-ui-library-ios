@@ -16,7 +16,8 @@ class ControlBarViewModelMocking: ControlBarViewModel {
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
          updateState: ((LocalUserState, PermissionState, VisibilityState) -> Void)? = nil,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled) {
+         leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
+         capabilitiesManager: CapabilitiesManager) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
@@ -25,7 +26,8 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    endCallConfirm: endCallConfirm,
                    localUserState: localUserState,
                    audioVideoMode: .audioAndVideo,
-                   leaveCallConfirmationMode: leaveCallConfirmationMode)
+                   leaveCallConfirmationMode: leaveCallConfirmationMode,
+                   capabilitiesManager: capabilitiesManager)
     }
 
     override func update(localUserState: LocalUserState,

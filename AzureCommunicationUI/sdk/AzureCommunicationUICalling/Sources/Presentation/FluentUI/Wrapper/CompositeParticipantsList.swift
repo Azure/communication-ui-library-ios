@@ -33,7 +33,9 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
                                                             viewModel.getConfirmTitleAdmitParticipant(),
                                                         confirmTitleAdmitAll: viewModel.getConfirmTitleAdmitAll(),
                                                         confirmAdmit: viewModel.getConfirmAdmit(),
-                                                        confirmDecline: viewModel.getConfirmDecline()
+                                                        confirmDecline: viewModel.getConfirmDecline(),
+                                                        openParticipantMenu: viewModel.openParticipantMenu,
+                                                        plusMoreText: viewModel.getPlusMoreText()
         )
         controller.delegate = context.coordinator
         return controller
@@ -50,7 +52,11 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     }
 
     private func getParticipantsList() -> [ParticipantsListCellViewModel] {
-        return viewModel.sortedParticipants(with: avatarViewManager)
+        var sortedParticipants = viewModel.sortedParticipants(with: avatarViewManager)
+        if let plusMoreMenuItem = viewModel.plusMoreMenuItem() {
+            sortedParticipants.append(plusMoreMenuItem)
+        }
+        return sortedParticipants
     }
 
     class Coordinator: NSObject, DrawerControllerDelegate {

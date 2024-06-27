@@ -11,12 +11,14 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
     private let localizationProvider: LocalizationProviderProtocol
+    private var plusMoreParticipantCount: Int?
 
     var lastUpdateTimeStamp = Date()
     private var lastParticipantRole: ParticipantRoleEnum?
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatch: ActionDispatch
+    var displayParticipantMenu: ((_ participantId: String, _ participantDisplayName: String) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localUserState: LocalUserState,
@@ -52,6 +54,14 @@ class ParticipantsListViewModel: ObservableObject {
                 .map {
                     compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)
                 }
+
+            let plusMoreCount =
+            remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
+            if plusMoreCount > 0 {
+                self.plusMoreParticipantCount = plusMoreCount
+            } else {
+                self.plusMoreParticipantCount = nil
+            }
         }
     }
 
@@ -62,6 +72,15 @@ class ParticipantsListViewModel: ObservableObject {
             let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
             return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
+    }
+
+    func plusMoreMenuItem() -> ParticipantsListCellViewModel? {
+        if let plusMoreParticipantCount = self.plusMoreParticipantCount {
+            return ParticipantsListCellViewModel(plusMoreCount: plusMoreParticipantCount,
+                                                 localizationProvider: self.localizationProvider)
+        }
+
+        return nil
     }
 
     func admitAll() {
@@ -92,6 +111,10 @@ class ParticipantsListViewModel: ObservableObject {
         self.localizationProvider.getLocalizedString(.participantListAdmitAll)
     }
 
+    func getPlusMoreText() -> String {
+        self.localizationProvider.getLocalizedString(.participantListPlusMore)
+    }
+
     func getConfirmTitleAdmitParticipant() -> String {
         self.localizationProvider.getLocalizedString(.participantListConfirmTitleAdmitParticipant)
     }
@@ -106,6 +129,10 @@ class ParticipantsListViewModel: ObservableObject {
 
     func getConfirmDecline() -> String {
         self.localizationProvider.getLocalizedString(.participantListConfirmDecline)
+    }
+
+    func openParticipantMenu(participantId: String, participantDisplayName: String) {
+        self.displayParticipantMenu?(participantId, participantDisplayName)
     }
 
     private func shouldFilterOutLobbyUsers(participantRole: ParticipantRoleEnum?) -> Bool {

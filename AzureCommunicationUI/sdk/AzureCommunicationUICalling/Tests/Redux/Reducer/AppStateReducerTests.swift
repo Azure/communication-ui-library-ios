@@ -124,6 +124,18 @@ class AppStateReducerTests: XCTestCase {
 
         XCTAssertEqual(result.diagnosticsState, expectedState)
     }
+
+    func test_appStateReducer_reduceToastNotificationState_then_toastNotificationState_stateUpdated() {
+        let oldState = ToastNotificationState()
+        let expectedState = ToastNotificationState(status: .cameraStartFailed)
+        let mockSubReducer: Reducer<ToastNotificationState, ToastNotificationAction> = .mockReducer(outputState: expectedState)
+
+        let state = getAppState(toastNotificationState: oldState)
+        let sut = getSUT(toastNotificationReducer: mockSubReducer)
+        let result = sut.reduce(state, Action.toastNotificationAction(.showNotification(kind: .cameraStartFailed)))
+
+        XCTAssertEqual(result.toastNotificationState, expectedState)
+    }
 }
 
 extension AppStateReducerTests {
@@ -134,7 +146,8 @@ extension AppStateReducerTests {
                 callingReducer: Reducer<CallingState, Action> = .mockReducer(),
                 navigationReducer: Reducer<NavigationState, Action> = .mockReducer(),
                 errorReducer: Reducer<ErrorState, Action> = .mockReducer(),
-                diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .mockReducer()
+                diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .mockReducer(),
+                toastNotificationReducer: Reducer<ToastNotificationState, ToastNotificationAction> = .mockReducer()
     ) -> Reducer<AppState, Action> {
         return Reducer<AppState, Action>.appStateReducer(
             permissionsReducer: permissionReducer,
@@ -144,7 +157,8 @@ extension AppStateReducerTests {
             callingReducer: callingReducer,
             navigationReducer: navigationReducer,
             errorReducer: errorReducer,
-            diagnosticsReducer: diagnosticsReducer
+            diagnosticsReducer: diagnosticsReducer,
+            toastNotificationReducer: toastNotificationReducer
         )
     }
 
@@ -155,7 +169,8 @@ extension AppStateReducerTests {
                      navigationState: NavigationState = .init(),
                      remoteParticipantsState: RemoteParticipantsState = .init(),
                      errorState: ErrorState = .init(),
-                     diagnosticsState: CallDiagnosticsState = .init()) -> AppState {
+                     diagnosticsState: CallDiagnosticsState = .init(),
+                     toastNotificationState: ToastNotificationState = .init()) -> AppState {
         return AppState(callingState: callingState,
                         permissionState: permissionState,
                         localUserState: localUserState,
@@ -163,6 +178,7 @@ extension AppStateReducerTests {
                         navigationState: navigationState,
                         remoteParticipantsState: remoteParticipantsState,
                         errorState: errorState,
-                        diagnosticsState: diagnosticsState)
+                        diagnosticsState: diagnosticsState,
+                        toastNotificationState: toastNotificationState)
     }
 }
