@@ -64,10 +64,11 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedMeetingType: MeetingType = .groupCall
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
-    @Published var captionsLocale = SupportedSpokenLanguage.enUS
+    @Published var spokenLanguage = "en-US"
     @Published var setupViewOrientation: OrientationOptions = .portrait
     @Published var callingViewOrientation: OrientationOptions = .allButUpsideDown
-    @Published var enableCaptions = false
+    @Published var startCaptions = false
+    @Published var displayCaptions = true
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
     @Published var isRightToLeft = false

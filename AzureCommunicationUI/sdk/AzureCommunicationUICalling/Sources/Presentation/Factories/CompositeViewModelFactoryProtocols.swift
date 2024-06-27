@@ -62,6 +62,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
+        isCaptionsAvailable: Bool,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel

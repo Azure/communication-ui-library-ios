@@ -13,6 +13,8 @@ public struct LocalOptions {
 
     /// Configuration for the call setup screen, including titles and subtitles.
     let setupScreenViewData: SetupScreenViewData?
+    /// Configuration for captions
+    let captionsOptions: CaptionsOptions?
 
     /* <ROOMS_SUPPORT>
     /// Hint the role of the user when the role is not available before a Rooms call is started.
@@ -44,6 +46,7 @@ public struct LocalOptions {
     ///   - cameraOn: Determines if the camera is enabled by default.
     ///   - microphoneOn: Determines if the microphone is enabled by default.
     ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
+    ///   - captionsOption: Configuration for captions
     ///   - audioVideoMode: The desired audio/video mode for the call.
     ///   - roleHint:Determins user role before a Rooms call is started.
     ///   This role will determine functionality of the Setup screen. The actual role will be syncronized 
@@ -53,6 +56,7 @@ public struct LocalOptions {
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
+                captionsOptions: CaptionsOptions? = CaptionsOptions(),
                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo /* <ROOMS_SUPPORT> ,
                 roleHint: ParticipantRole? = nil </ROOMS_SUPPORT> */) {
         self.participantViewData = participantViewData
@@ -61,6 +65,7 @@ public struct LocalOptions {
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
         self.audioVideoMode = audioVideoMode
+        self.captionsOptions = captionsOptions
         /* <ROOMS_SUPPORT> self.roleHint = roleHint </ROOMS_SUPPORT> */
     }
 

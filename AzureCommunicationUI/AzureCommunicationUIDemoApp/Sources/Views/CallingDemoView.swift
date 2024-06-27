@@ -406,7 +406,10 @@ extension CallingDemoView {
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled)
+            .alwaysEnabled : .alwaysDisabled,
+                                                     captionsMode: envConfigSubject.displayCaptions ?
+            .alwaysEnabled : .alwaysDisabled
+        )
         let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -420,8 +423,6 @@ extension CallingDemoView {
 
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
-        let captionsOptions = CaptionsOptions(spokenLanguage: envConfigSubject.captionsLocale,
-                                              enableCaptions: envConfigSubject.enableCaptions)
         let callKitOptions = $envConfigSubject.enableCallKit.wrappedValue ? getCallKitOptions() : nil
 
         let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
@@ -434,7 +435,6 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
-            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions) :
         CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -446,7 +446,6 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
-            captionsOptions: captionsOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
             disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)
@@ -591,11 +590,14 @@ extension CallingDemoView {
         </ROOMS_SUPPORT> */
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
+        let captionsOptions = CaptionsOptions(startCaptions: envConfigSubject.startCaptions,
+                                              spokenLanguage: envConfigSubject.spokenLanguage)
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
+                            captionsOptions: captionsOptions,
                                         /* <ROOMS_SUPPORT>
                                          audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
                                          roleHint: roomRoleData

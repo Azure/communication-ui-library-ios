@@ -21,12 +21,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
-    private let captionsOptions: CaptionsOptions
 
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
+    private var captionsMode: CaptionsMode?
     private let callType: CompositeCallType
 
     init(logger: Logger,
@@ -42,9 +42,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         captionsMode: CaptionsMode,
          retrieveLogFiles: @escaping () -> [URL],
-         callType: CompositeCallType,
-         captionsOptions: CaptionsOptions) {
+         callType: CompositeCallType) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -59,8 +59,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.retrieveLogFiles = retrieveLogFiles
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.captionsMode = captionsMode
         self.callType = callType
-        self.captionsOptions = captionsOptions
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -112,8 +112,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
                                             != CallCompositeAudioVideoMode.audioOnly,
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
+                                             captionsMode: self.captionsMode ?? .alwaysEnabled,
                                              callType: callType,
-                                             captionsCaptions: captionsOptions)
+                                             captionsCaptions: localOptions?.captionsOptions ?? CaptionsOptions())
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -348,6 +349,7 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
+        isCaptionsAvailable: Bool,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
@@ -358,6 +360,7 @@ extension CompositeViewModelFactory {
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
                                      showCaptionsViewAction: showCaptionsViewAction,
+                                     isCaptionsAvailable: isCaptionsAvailable,
                                      isSupportFormAvailable: events.onUserReportedIssue != nil,
                                      isDisplayed: isDisplayed)
     }

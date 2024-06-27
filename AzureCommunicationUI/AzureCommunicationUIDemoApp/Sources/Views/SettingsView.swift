@@ -203,8 +203,12 @@ struct SettingsView: View {
 
     var captionsSettings: some View {
         Section(header: Text("Captions")) {
-            CaptionsLocalePicker(selection: $envConfigSubject.captionsLocale)
-            Toggle("Enable Captions", isOn: $envConfigSubject.enableCaptions)
+            CaptionsLocalePicker(selection: $envConfigSubject.spokenLanguage)
+            Toggle("Start Captions", isOn: $envConfigSubject.startCaptions)
+            Toggle("Display Captions", isOn: $envConfigSubject.displayCaptions)
+                .onTapGesture {
+                    envConfigSubject.displayCaptions = !envConfigSubject.displayCaptions
+                }
         }
     }
 
@@ -384,8 +388,16 @@ struct LocalePicker: View {
 
 struct CaptionsLocalePicker: View {
     @Binding var selection: String
-    let supportedLanguages: [String] = [""] + SupportedSpokenLanguage.values
-
+    let supportedLanguages: [String] = [
+            "ar-AE", "ar-SA", "da-DK", "de-DE",
+            "en-AU", "en-CA", "en-GB", "en-IN", "en-NZ", "en-US",
+            "es-ES", "es-MX", "fi-FI",
+            "fr-CA", "fr-FR", "hi-IN",
+            "it-IT", "ja-JP", "ko-KR",
+            "nb-NO", "nl-BE", "nl-NL",
+            "pl-PL", "pt-BR", "ru-RU",
+            "sv-SE", "zh-CN", "zh-HK"
+    ]
     var body: some View {
         Picker("Language", selection: $selection) {
             ForEach(supportedLanguages, id: \.self) { language in

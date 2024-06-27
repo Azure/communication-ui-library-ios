@@ -48,7 +48,6 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
-    private let captionsOptions: CaptionsOptions?
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
     private let setupViewOrientationOptions: OrientationOptions?
@@ -76,6 +75,7 @@ public class CallComposite {
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
+    private var captionsMode: CaptionsMode = .alwaysEnabled
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
@@ -114,7 +114,6 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
-        captionsOptions = options?.captionsOptions
         enableMultitasking = options?.enableMultitasking ?? false
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
@@ -122,6 +121,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
+        captionsMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .alwaysEnabled
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -146,7 +146,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
-        captionsOptions = options?.captionsOptions
+        captionsMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .alwaysEnabled
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -599,9 +599,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
+                captionsMode: captionsMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
-                callType: callConfiguration.compositeCallType,
-                captionsOptions: captionsOptions ?? CaptionsOptions()
+                callType: callConfiguration.compositeCallType
             )
         )
     }
