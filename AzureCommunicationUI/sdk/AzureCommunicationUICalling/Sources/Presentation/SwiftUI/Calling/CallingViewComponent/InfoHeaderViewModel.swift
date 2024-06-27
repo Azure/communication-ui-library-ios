@@ -122,11 +122,7 @@ class InfoHeaderViewModel: ObservableObject {
             updateInfoHeaderAvailability()
         }
 
-        let updatedRemoteparticipantCount = remoteParticipantsState.participantInfoList
-            .filter({ participantInfoModel in
-                participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
-            })
-            .count
+        let updatedRemoteparticipantCount = getParticipantCount(remoteParticipantsState)
 
         if participantsCount != updatedRemoteparticipantCount {
             participantsCount = updatedRemoteparticipantCount
@@ -143,6 +139,19 @@ class InfoHeaderViewModel: ObservableObject {
         if visibilityState.currentStatus != .visible {
             isParticipantsListDisplayed = false
         }
+    }
+
+    private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
+        let remoteParticipantCountForGridView = remoteParticipantsState.participantInfoList
+            .filter({ participantInfoModel in
+                participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
+            })
+            .count
+
+        let filteredOutRemoteParticipantsCount =
+        remoteParticipantsState.participantInfoList.count - remoteParticipantCountForGridView
+
+        return remoteParticipantsState.totalParticipantCount - filteredOutRemoteParticipantsCount
     }
 
     private func isHoldingCall(callingState: CallingState) {
