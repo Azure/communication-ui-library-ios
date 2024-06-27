@@ -33,6 +33,5 @@ struct CaptionsState: Equatable {
            self.isTranslationSupported = isTranslationSupported
            self.activeType = activeType
            self.errors = errors
-        print(supportedSpokenLanguages)
        }
 }
