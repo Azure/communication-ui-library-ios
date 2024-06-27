@@ -200,7 +200,12 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let participantsListCellViewModel = participants(section: indexPath.section)[indexPath.row]
+        let participantsInSection = participants(section: indexPath.section)
+        guard indexPath.row < participantsInSection.count else {
+            // if row index beyond participant count, then it is plus more menu item
+            return
+        }
+        let participantsListCellViewModel = participantsInSection[indexPath.row]
         if isLobbySection(section: indexPath.section) {
             onLobbyParticipantSelect(participantsListCellViewModel: participantsListCellViewModel)
         } else {
