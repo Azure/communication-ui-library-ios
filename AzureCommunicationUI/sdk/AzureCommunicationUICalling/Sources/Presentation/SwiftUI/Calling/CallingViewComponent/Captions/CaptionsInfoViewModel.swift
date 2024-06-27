@@ -9,6 +9,7 @@ import Foundation
 class CaptionsInfoViewModel: ObservableObject {
     @Published var captionsData = [CallCompositeCaptionsData]()
     @Published var isDisplayed = false
+    private var isTranslationEnabled = false
     private var captionsManager: CaptionsViewManager
 
     init(state: AppState, captionsManager: CaptionsViewManager) {
@@ -23,7 +24,21 @@ class CaptionsInfoViewModel: ObservableObject {
     }
 
     private func handleNewCaption(_ newCaption: CallCompositeCaptionsData) {
-        // Keep only the latest 50 captions
+        guard shouldAddCaption(newCaption) else {
+              return
+        }
+
+        // Check if the new caption updates an existing caption
+        if let lastCaption = captionsData.last,
+           lastCaption.speakerRawId == newCaption.speakerRawId,
+           lastCaption.resultType != .final {
+            // Update the last caption if it's from the same speaker and not finalized
+            captionsData[captionsData.count - 1] = newCaption
+        } else {
+            // Add new caption otherwise
+            captionsData.append(newCaption)
+        }
+
         if captionsData.count > 50 {
             captionsData.removeFirst(captionsData.count - 50)
         }
@@ -31,5 +46,16 @@ class CaptionsInfoViewModel: ObservableObject {
 
     func update(state: AppState) {
         self.isDisplayed = state.captionsState.isStarted
+        self.isTranslationEnabled = state.captionsState.activeCaptionLanguage != nil
+    }
+
+    // Decide if a new caption should be added to the list
+    private func shouldAddCaption(_ caption: CallCompositeCaptionsData) -> Bool {
+        if isTranslationEnabled {
+            // Only add caption if translation is enabled and caption text is not empty
+            return !(caption.captionText?.isEmpty ?? true)
+        }
+        // Always add caption if translation is not enabled
+        return true
     }
 }

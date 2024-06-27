@@ -37,7 +37,7 @@ class CaptionsListViewModel: ObservableObject {
         self.showSpokenLanguage = showSpokenLanguage
         self.showCaptionsLanguage = showCaptionsLanguage
         self.isDisplayed = isDisplayed
-        self.isToggleEnabled = state.captionsState.isStarted ?? false
+        self.isToggleEnabled = state.captionsState.isStarted
         self.captionsOptions = captionsOptions
 
         setupItems()
