@@ -61,7 +61,7 @@ struct CaptionsInfoCellView: View {
     }
 
     private func determineTextDirection() {
-        let activeLanguageCode = (caption.captionText?.isEmpty ?? true) ?
+        let activeLanguageCode = (caption.captionLanguage?.isEmpty ?? true) ?
         caption.spokenLanguage : caption.captionLanguage ?? caption.spokenLanguage
         isRTL = isRightToLeftLanguage(activeLanguageCode)
     }

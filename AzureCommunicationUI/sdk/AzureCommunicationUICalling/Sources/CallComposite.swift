@@ -578,6 +578,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
         let captionsViewManager = CaptionsViewManager(
+            store: store,
             callingSDKWrapper: callingSdkWrapper
         )
         return CompositeViewFactory(

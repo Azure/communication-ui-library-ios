@@ -98,6 +98,6 @@ class CaptionsListViewModel: ObservableObject {
 
     private func languageDisplayName(for code: String) -> String {
         let locale = Locale(identifier: code)
-        return Locale.current.localizedString(forIdentifier: locale.identifier) ?? "English (United States)"
+        return Locale.current.localizedString(forIdentifier: locale.identifier) ?? ""
     }
 }
