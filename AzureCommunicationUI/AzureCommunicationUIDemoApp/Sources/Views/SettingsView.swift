@@ -383,18 +383,18 @@ struct LocalePicker: View {
 }
 
 struct CaptionsLocalePicker: View {
-    @Binding var selection: Locale
-    let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedSpokenLanguage.values
+    @Binding var selection: String
+    let supportedLanguages: [String] = [""] + SupportedSpokenLanguage.values
 
     var body: some View {
-            Picker("Language", selection: $selection) {
-                ForEach(supportedLanguage, id: \.self) {
-                    if $0.identifier == "" {
-                        Text("Detect locale (en, zh-Hant, fr, fr-CA)")
-                    } else {
-                        Text($0.identifier)
-                    }
+        Picker("Language", selection: $selection) {
+            ForEach(supportedLanguages, id: \.self) { language in
+                if language.isEmpty {
+                    Text("Detect locale (en, zh-Hant, fr, fr-CA)")
+                } else {
+                    Text(language)
                 }
             }
+        }
     }
 }

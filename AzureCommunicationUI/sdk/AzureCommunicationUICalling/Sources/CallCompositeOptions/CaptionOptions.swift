@@ -6,21 +6,21 @@ import Foundation
 
 /// Configuration options for captions in a UI component.
 public struct CaptionsOptions {
-    let isOnByDefault: Bool
-    let spokenLanguage: String
-    public init(spokenLanguage: Locale = Locale.current,
-                enableCaptions: Bool = false) {
-        let currentLocale = Locale.current
-        let supportedLocales = SupportedSpokenLanguage.values
+    var isOnByDefault: Bool
+    var spokenLanguage: String
+
+    public init(spokenLanguage: String = "en-US", enableCaptions: Bool = false) {
+        let currentLocaleIdentifier = Locale.current.identifier
 
         // Check if user-provided spokenLanguage is supported
-        if supportedLocales.contains(where: { $0.identifier == spokenLanguage.identifier }) {
-            self.spokenLanguage = spokenLanguage.identifier
-        } else if supportedLocales.contains(where: { $0.identifier == currentLocale.identifier }) {
+        if SupportedSpokenLanguage.values.contains(spokenLanguage) {
+            self.spokenLanguage = spokenLanguage
+        } else if SupportedSpokenLanguage.values.contains(currentLocaleIdentifier) {
             // If the spokenLanguage is not supported but currentLocale is, use currentLocale
-            self.spokenLanguage = currentLocale.identifier
+            self.spokenLanguage = currentLocaleIdentifier
         } else {
-            self.spokenLanguage = "en-us"
+            // Default to "en-US" if neither is supported
+            self.spokenLanguage = "en-US"
         }
 
         self.isOnByDefault = enableCaptions

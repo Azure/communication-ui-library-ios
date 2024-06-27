@@ -45,8 +45,7 @@ class CaptionsLanguageListViewModel: ObservableObject {
         let languageIdentifiers = (isSpokenLanguage ?
                                    captionsState.supportedSpokenLanguages :
                                     captionsState.supportedCaptionLanguages) ?? []
-        let supportedLanguages = languageIdentifiers.isEmpty ?
-        SupportedSpokenLanguage.values : languageIdentifiers.compactMap(Locale.init)
+        let supportedLanguages = languageIdentifiers.compactMap(Locale.init)
         supportedLanguages.forEach { locale in
             newItems.append(createLanguageOption(language: locale))
         }
