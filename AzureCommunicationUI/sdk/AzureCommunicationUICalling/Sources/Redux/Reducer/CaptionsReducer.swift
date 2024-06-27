@@ -24,7 +24,7 @@ extension Reducer where State == CaptionsState, Actions == CaptionsAction {
         case .supportedSpokenLanguagesChanged(let languages):
             newState.supportedSpokenLanguages = languages.map(formatLocaleIdentifier)
         case .supportedCaptionLanguagesChanged(let languages):
-            newState.supportedCaptionLanguages = languages.map(formatLocaleIdentifier)
+            newState.supportedCaptionLanguages = languages
         case .typeChanged(let type):
             newState.activeType = type
         default:

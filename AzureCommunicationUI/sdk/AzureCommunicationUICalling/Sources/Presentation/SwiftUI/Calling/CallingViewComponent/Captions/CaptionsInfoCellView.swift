@@ -43,7 +43,7 @@ struct CaptionsInfoCellView: View {
         CompositeAvatar(displayName: $displayName,
                         avatarImage: $avatarImage,
                         isSpeaking: false,
-                        avatarSize: .size24)
+                        avatarSize: .size32)
     }
 
     // Display text based on caption availability
@@ -55,7 +55,7 @@ struct CaptionsInfoCellView: View {
         if let participantViewData = avatarViewManager.avatarStorage.value(forKey: caption.speakerRawId) {
             avatarImage = participantViewData.avatarImage
         } else {
-            avatarImage = nil  // Reset the avatar if no data is found
+            avatarImage = nil
             displayName = caption.speakerName
         }
     }

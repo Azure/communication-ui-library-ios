@@ -66,7 +66,7 @@ class CaptionsListViewModel: ObservableObject {
         let captionsLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
             icon: .localLanguage,
             title: localizationProvider.getLocalizedString(.captionsCaptionLanguage),
-            subtitle: languageDisplayName(for: state.captionsState.activeCaptionLanguage ?? "en-US"),
+            subtitle: languageDisplayName(for: state.captionsState.activeCaptionLanguage ?? "en"),
             accessibilityIdentifier: "",
             titleTrailingAccessoryView: .rightChevron,
             isEnabled: self.isToggleEnabled,
@@ -81,7 +81,7 @@ class CaptionsListViewModel: ObservableObject {
     func update(state: AppState) {
         self.state = state
         isDisplayed = state.navigationState.captionsViewVisible
-        isToggleEnabled = state.captionsState.isStarted ?? false
+        isToggleEnabled = state.captionsState.isStarted
         setupItems()
     }
 

@@ -232,7 +232,7 @@ extension CallingSDKEventsHandler: CallDelegate,
                         // teams captions
                         self.teamsCaptions = value as? TeamsCaptions
                         self.teamsCaptions?.delegate = self.teamsCaptionsHandler
-                        self.captionsSupportedSpokenLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
+                        self.captionsSupportedSpokenLanguages.send(self.teamsCaptions?.supportedSpokenLanguages ?? [])
                         self.captionsSupportedCaptionLanguages.send(self.teamsCaptions?.supportedCaptionLanguages ?? [])
                         self.captionsTypeChanged.send(.teams)
                     }

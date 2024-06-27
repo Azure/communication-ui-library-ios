@@ -84,7 +84,7 @@ class CaptionsLanguageListViewModel: ObservableObject {
         if isSpokenLanguage {
             dispatch(.captionsAction(.setSpokenLanguageRequested(language: language)))
         } else {
-            dispatch(.captionsAction(.setCaptionLanguageRequested(language: language)))
+            dispatch(.captionsAction(.setCaptionLanguageRequested(language: languageIdentifier)))
         }
     }
 

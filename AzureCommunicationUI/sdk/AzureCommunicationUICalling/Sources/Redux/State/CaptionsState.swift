@@ -20,7 +20,7 @@ struct CaptionsState: Equatable {
          supportedSpokenLanguages: [String] = [],
          activeSpokenLanguage: String = "en-US",
          supportedCaptionLanguages: [String] = [],
-         activeCaptionLanguage: String = "en-US",
+         activeCaptionLanguage: String = "en",
          isTranslationSupported: Bool = false,
          activeType: CallCompositeCaptionsType = .none,
          errors: CallCompositeCaptionsErrors = .none) {
@@ -33,5 +33,6 @@ struct CaptionsState: Equatable {
            self.isTranslationSupported = isTranslationSupported
            self.activeType = activeType
            self.errors = errors
+        print(supportedSpokenLanguages)
        }
 }
