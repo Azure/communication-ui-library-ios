@@ -10,6 +10,8 @@ struct CaptionsInfoCellView: View {
     var caption: CallCompositeCaptionsData
     @State private var avatarImage: UIImage?
     @State private var displayName: String?
+    @State private var isRTL = false
+
     init(caption: CallCompositeCaptionsData, avatarViewManager: AvatarViewManagerProtocol) {
         self.caption = caption
         self.avatarViewManager = avatarViewManager
@@ -17,21 +19,23 @@ struct CaptionsInfoCellView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
             HStack {
                 avatarView
                 Text(caption.speakerName)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
-            Text(caption.captionText?.isEmpty ?? true ? caption.spokenText : caption.captionText ?? "")
+            Text(displayText)
                 .font(.callout)
                 .foregroundColor(.primary)
+                .multilineTextAlignment(isRTL ? .trailing : .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
         .padding(.horizontal)
         .onAppear {
             updateAvatar()
+            determineTextDirection()
         }
     }
 
@@ -42,6 +46,11 @@ struct CaptionsInfoCellView: View {
                         avatarSize: .size24)
     }
 
+    // Display text based on caption availability
+    private var displayText: String {
+        (caption.captionText?.isEmpty ?? true) ? caption.spokenText : caption.captionText ?? ""
+    }
+
     private func updateAvatar() {
         if let participantViewData = avatarViewManager.avatarStorage.value(forKey: caption.speakerRawId) {
             avatarImage = participantViewData.avatarImage
@@ -49,5 +58,18 @@ struct CaptionsInfoCellView: View {
             avatarImage = nil  // Reset the avatar if no data is found
             displayName = caption.speakerName
         }
+    }
+
+    private func determineTextDirection() {
+        let activeLanguageCode = (caption.captionText?.isEmpty ?? true) ?
+        caption.spokenLanguage : caption.captionLanguage ?? caption.spokenLanguage
+        isRTL = isRightToLeftLanguage(activeLanguageCode)
+    }
+
+    // Function to determine if the language is right-to-left
+    private func isRightToLeftLanguage(_ languageCode: String) -> Bool {
+        let rtlLanguages = ["ar", "he", "fa", "ur"] // Add more as needed
+        let locale = Locale(identifier: languageCode)
+        return rtlLanguages.contains(locale.languageCode ?? "")
     }
 }
