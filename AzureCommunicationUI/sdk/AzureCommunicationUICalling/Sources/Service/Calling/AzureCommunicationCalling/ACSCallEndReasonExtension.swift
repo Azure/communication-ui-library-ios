@@ -29,6 +29,8 @@ extension CallEndReason {
         case callCancelled, globallyDeclined:
             // Call cancelled by user as a happy path
             break
+        case 410:
+            internalError = CallCompositeInternalError.callJoinConnectionFailed
         default:
             // For all other errorCodes:
             // https://docs.microsoft.com/en-us/azure/communication-services/concepts/troubleshooting-info
