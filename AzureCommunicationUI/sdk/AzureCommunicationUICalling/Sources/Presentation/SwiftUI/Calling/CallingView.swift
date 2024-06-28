@@ -115,10 +115,10 @@ struct CallingView: View {
 
     var containerView: some View {
         Group {
-            GeometryReader { geometry in
-                ZStack(alignment: .bottomTrailing) {
-                    VStack {
-                        ZStack(alignment: .bottomTrailing) {
+            ZStack(alignment: .bottomTrailing) {
+                VStack(alignment: .leading) {
+                    GeometryReader { geometry in
+                        ZStack {
                             videoGridView
                                 .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
                             if viewModel.isParticipantGridDisplayed &&
@@ -138,44 +138,44 @@ struct CallingView: View {
                                     AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                             }
                         }.zIndex(2)
-                        if viewModel.captionsInfoViewModel.isDisplayed &&
-                            !viewModel.isInPip {
-                            captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom).zIndex(1)
-                        }
                     }
-                    topAlertAreaView
-                        .accessibilityElement(children: .contain)
-                        .accessibilitySortPriority(1)
-                        .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
-                                             || viewModel.onHoldOverlayViewModel.isDisplayed
-                                             || viewModel.loadingOverlayViewModel.isDisplayed)
-
-                    bottomToastDiagnosticsView
-                        .accessibilityElement(children: .contain)
+                    if viewModel.captionsInfoViewModel.isDisplayed &&
+                        !viewModel.isInPip {
+                        captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom).zIndex(1)
+                    }
                 }
-                .contentShape(Rectangle())
-                .animation(.linear(duration: 0.167))
-                .onTapGesture(perform: {
-                    viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
-                })
-                .modifier(PopupModalView(isPresented: viewModel.lobbyOverlayViewModel.isDisplayed) {
-                    OverlayView(viewModel: viewModel.lobbyOverlayViewModel)
-                        .accessibilityElement(children: .contain)
-                        .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
-                })
-                .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed &&
-                                         !viewModel.lobbyOverlayViewModel.isDisplayed) {
-                    LoadingOverlayView(viewModel: viewModel.loadingOverlayViewModel)
-                        .accessibilityElement(children: .contain)
-                        .accessibilityHidden(!viewModel.loadingOverlayViewModel.isDisplayed)
-                })
-                .modifier(PopupModalView(isPresented: viewModel.onHoldOverlayViewModel.isDisplayed) {
-                    OverlayView(viewModel: viewModel.onHoldOverlayViewModel)
-                        .accessibilityElement(children: .contain)
-                        .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
-                })
-                .accessibilityElement(children: .contain)
+                topAlertAreaView
+                    .accessibilityElement(children: .contain)
+                    .accessibilitySortPriority(1)
+                    .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
+                                         || viewModel.onHoldOverlayViewModel.isDisplayed
+                                         || viewModel.loadingOverlayViewModel.isDisplayed)
+
+                bottomToastDiagnosticsView
+                    .accessibilityElement(children: .contain)
             }
+            .contentShape(Rectangle())
+            .animation(.linear(duration: 0.167))
+            .onTapGesture(perform: {
+                viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
+            })
+            .modifier(PopupModalView(isPresented: viewModel.lobbyOverlayViewModel.isDisplayed) {
+                OverlayView(viewModel: viewModel.lobbyOverlayViewModel)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
+            })
+            .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed &&
+                                     !viewModel.lobbyOverlayViewModel.isDisplayed) {
+                LoadingOverlayView(viewModel: viewModel.loadingOverlayViewModel)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityHidden(!viewModel.loadingOverlayViewModel.isDisplayed)
+            })
+            .modifier(PopupModalView(isPresented: viewModel.onHoldOverlayViewModel.isDisplayed) {
+                OverlayView(viewModel: viewModel.onHoldOverlayViewModel)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
+            })
+            .accessibilityElement(children: .contain)
         }.onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 viewModel.updateCaptionsOptions()

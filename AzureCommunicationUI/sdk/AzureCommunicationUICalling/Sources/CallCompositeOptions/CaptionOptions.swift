@@ -10,8 +10,6 @@ public struct CaptionsOptions {
     var spokenLanguage: String
 
     public init(startCaptions: Bool = false, spokenLanguage: String = "en-US") {
-        let currentLocaleIdentifier = Locale.current.identifier
-
         self.spokenLanguage = spokenLanguage
         self.startCaptions = startCaptions
     }
