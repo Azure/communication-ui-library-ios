@@ -248,6 +248,77 @@ class CallingMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_callingMiddleware_apply_when_removeAction_then_removeParticipantCalled() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "removeParticipant")
+        mockMiddlewareHandler.removeParticipant = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.remoteParticipantsAction(.remove(participantId: "id1")))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_setCapabilities_then_setCapabilitiesCalled() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "setCapabilities")
+        mockMiddlewareHandler.setCapabilities = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.localUserAction(.setCapabilities(capabilities: [])))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_toastNotificationAction_then_dismissNotificationCalled() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "dismissNotification")
+        mockMiddlewareHandler.dismissNotification = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.toastNotificationAction(.dismissNotification))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_callDiagnosticAction_networkQuality_then_onNetworkQualityCallDiagnosticsUpdatedCalled() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "onNetworkQualityCallDiagnosticsUpdated")
+        mockMiddlewareHandler.onNetworkQualityCallDiagnosticsUpdated = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.callDiagnosticAction(.networkQuality(diagnostic: NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .bad))))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_callDiagnosticAction_network_then_onNetworkQualityCallDiagnosticsUpdatedCalled() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "onNetworkCallDiagnosticsUpdated")
+        mockMiddlewareHandler.onNetworkCallDiagnosticsUpdated = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.callDiagnosticAction(.network(diagnostic: NetworkDiagnosticModel(diagnostic: .networkRelaysUnreachable, value: true))))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddleware_apply_when_callDiagnosticAction_media_then_onNetworkQualityCallDiagnosticsUpdatedCalled() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        let expectation = expectation(description: "onMediaCallDiagnosticsUpdated")
+        mockMiddlewareHandler.onMediaCallDiagnosticsUpdated = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.callDiagnosticAction(.media(diagnostic: MediaDiagnosticModel(diagnostic: .cameraFrozen, value: true))))
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension CallingMiddlewareTests {

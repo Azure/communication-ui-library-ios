@@ -279,20 +279,18 @@ struct CallingView: View {
     var bottomToastDiagnosticsView: some View {
         VStack {
             Spacer()
-            if let currentBottomToastViewModel = viewModel.currentBottomToastDiagnostic {
-                BottomToastDiagnosticView(viewModel: currentBottomToastViewModel)
-                    .padding(
-                        EdgeInsets(top: 0,
-                                   leading: 0,
-                                   bottom:
-                                     getSizeClass() == .iphoneLandscapeScreenSize
-                                        ? DiagnosticToastInfoConstants.bottomPaddingLandscape
-                                        : DiagnosticToastInfoConstants.bottomPaddingPortrait,
-                                   trailing: 0)
-                    )
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isStaticText)
-            }
+            BottomToastView(viewModel: viewModel.bottomToastViewModel)
+                .padding(
+                    EdgeInsets(top: 0,
+                               leading: 0,
+                               bottom:
+                                 getSizeClass() == .iphoneLandscapeScreenSize
+                                    ? DiagnosticToastInfoConstants.bottomPaddingLandscape
+                                    : DiagnosticToastInfoConstants.bottomPaddingPortrait,
+                               trailing: 0)
+                )
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isStaticText)
         }.frame(maxWidth: .infinity, alignment: .center)
     }
 

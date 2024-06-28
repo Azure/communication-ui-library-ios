@@ -9,16 +9,29 @@ class DrawerListItemViewModel: Identifiable {
     let icon: CompositeIcon
     let title: String
     let accessibilityIdentifier: String
-    let action: (() -> Void)
+    var action: (() -> Void)
+    var isEnabled: Bool
 
     init(icon: CompositeIcon,
          title: String,
          accessibilityIdentifier: String,
-         action: @escaping () -> Void) {
+         action: @escaping () -> Void,
+         isEnabled: Bool = true) {
         self.icon = icon
         self.title = title
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
+        self.isEnabled = isEnabled
+    }
+
+    convenience init(icon: CompositeIcon,
+                     title: String,
+                     accessibilityIdentifier: String) {
+        self.init(icon: icon,
+                  title: title,
+                  accessibilityIdentifier: accessibilityIdentifier,
+                  action: {},
+                  isEnabled: true)
     }
 }
 

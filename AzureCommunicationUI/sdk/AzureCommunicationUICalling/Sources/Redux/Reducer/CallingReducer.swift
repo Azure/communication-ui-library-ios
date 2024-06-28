@@ -58,6 +58,7 @@ extension Reducer where State == CallingState,
                 .callingViewLaunched,
                 .hideSupportForm,
                 .showSupportForm,
+
                 .hideEndCallConfirmation,
                 .showEndCallConfirmation,
                 .showMoreOptions,
@@ -66,7 +67,13 @@ extension Reducer where State == CallingState,
                 .hideAudioSelection,
                 .showSupportShare,
                 .hideSupportShare,
-                .visibilityAction:
+                .visibilityAction,
+                .showParticipants,
+                .hideParticipants,
+                .showParticipantRemoval,
+                .hideParticipantRemoval,
+                .toastNotificationAction,
+                .setTotalParticipantCount:
             return callingState
         }
         return CallingState(status: callingStatus,

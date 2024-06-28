@@ -50,4 +50,11 @@ enum AccessibilityId: String {
             "AzureCommunicationUICalling.SettingsView.enableRemoteHoldToggle.AccessibilityID"
     case useEnableRemoteInfoToggleToggleAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.enableRemoteInfoToggle.AccessibilityID"
+
+    case setupScreenCameraButtonEnabledAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.setupScreenCameraButtonEnabled.AccessibilityID"
+
+    case setupScreenMicButtonEnabledAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.setupScreenMicButtonEnabled.AccessibilityID"
+
 }

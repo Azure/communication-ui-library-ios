@@ -17,18 +17,13 @@ enum EnvConfig: String {
     case displayName
     case groupCallId
     case teamsMeetingLink
-    /* <MEETING_ID_LOCATOR> */
     case teamsMeetingId
     case teamsMeetingPasscode
-    /* </MEETING_ID_LOCATOR> */
     case threadId
     case endpointUrl
     case participantMRIs
     case skipTo
-    /* <ROOMS_SUPPORT:12> */
     case roomId
-    case roomRole
-    /* </ROOMS_SUPPORT> */
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
@@ -53,17 +48,12 @@ class EnvConfigSubject: ObservableObject {
     @Published var navigationSubtitle: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
-    /* <MEETING_ID_LOCATOR> */
     @Published var teamsMeetingId: String = EnvConfig.teamsMeetingId.value()
     @Published var teamsMeetingPasscode: String = EnvConfig.teamsMeetingPasscode.value()
-    /* </MEETING_ID_LOCATOR> */
     @Published var participantMRIs: String = EnvConfig.participantMRIs.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
-    /* <ROOMS_SUPPORT> */
-    @Published var selectedRoomRoleType: RoomRoleType = .presenter
     @Published var roomId: String = EnvConfig.roomId.value()
-    /* </ROOMS_SUPPORT> */
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
     @Published var selectedChatType: ChatType = .groupChat
@@ -97,6 +87,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var enableRemoteInfo = true
     @Published var callkitRemoteInfo = ""
     @Published var deviceToken: Data?
+    @Published var setupScreenOptionsCameraButtonEnabled = true
+    @Published var setupScreenOptionsMicButtonEnabled = true
 
     let acstokenKey: String = "ACS_TOKEN"
     let displayNameKey: String = "DISPLAY_NAME"
@@ -157,6 +149,12 @@ class EnvConfigSubject: ObservableObject {
            !groupId.isEmpty {
             groupCallId = groupId
             selectedMeetingType = .groupCall
+        }
+
+        if let id = dic["roomid"],
+           !id.isEmpty {
+            roomId = id
+            selectedMeetingType = .roomCall
         }
 
         if let teamsLink = dic["teamsurl"],

@@ -34,6 +34,10 @@ class ControlBarViewModel: ObservableObject {
                                                device: .receiverSelected)
     var onEndCallTapped: (() -> Void)
 
+    var capabilitiesManager: CapabilitiesManager
+    var capabilities: Set<ParticipantCapabilityType>
+
+    // swaftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
@@ -41,17 +45,21 @@ class ControlBarViewModel: ObservableObject {
          onEndCallTapped: @escaping (() -> Void),
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode) {
+         leaveCallConfirmationMode: LeaveCallConfirmationMode,
+         capabilitiesManager: CapabilitiesManager) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.onEndCallTapped = onEndCallTapped
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
 
+        self.capabilitiesManager = capabilitiesManager
+        self.capabilities = localUserState.capabilities
+
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: isCameraDisabled()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -65,7 +73,7 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .micOff,
             buttonType: .controlButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: isMicDisabled()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -149,7 +157,9 @@ class ControlBarViewModel: ObservableObject {
 
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
-        callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
+        callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay() ||
+        !capabilitiesManager.hasCapability(capabilities: self.capabilities,
+                                           capability: ParticipantCapabilityType.turnVideoOn)
     }
 
     func update(localUserState: LocalUserState,
@@ -161,6 +171,7 @@ class ControlBarViewModel: ObservableObject {
         isShareActivityDisplayed = navigationState.supportShareSheetVisible
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
+        self.capabilities = localUserState.capabilities
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
@@ -189,10 +200,10 @@ class ControlBarViewModel: ObservableObject {
         )
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceState.getLabel(localizationProvider: localizationProvider))
-//        audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
 
         moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
 
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
     }
+    // swaftlint:enable function_body_length
 }

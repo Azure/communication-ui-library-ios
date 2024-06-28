@@ -60,7 +60,13 @@ extension Reducer where State == ErrorState,
                 .hideAudioSelection,
                 .showSupportShare,
                 .hideSupportShare,
-                .visibilityAction:
+                .showParticipants,
+                .hideParticipants,
+                .showParticipantRemoval,
+                .hideParticipantRemoval,
+                .visibilityAction,
+                .toastNotificationAction,
+                .setTotalParticipantCount:
             return state
         }
 

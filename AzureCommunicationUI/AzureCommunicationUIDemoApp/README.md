@@ -31,6 +31,7 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
       - `roomCallId`: the generated ID to join a room call meeting
       - `roomCallRole`: the type of role used to join a room call meeting
       - `aadToken`: the AAD token for Calling
+      - `participantMRIs`: the MRIs for remote participants to dial
    - for Chat:
       - `userId`: the ID of the local user for Chat
       - `threadId`: the ID of chat thread for Chat
@@ -39,6 +40,13 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
     ![EnvConfig](/docs/images/EnvConfig.png)
 
     Note: The `EnvConfig.xcconfig` file is created strictly for developers convenience. Those configurations can be input once the `AzureCommunicationUIDemoApp` is running.
+
+### 1 to N Calling Push Notifications Setup
+
+1. Follow [QuickStart](https://learn.microsoft.com/en-us/azure/communication-services/how-tos/ui-library-sdk/one-to-one-calling?tabs=kotlin&pivots=platform-ios) to setup Push Notification Hub for ACS Resource or EventGrid
+2. For `AzureCommunicationUIDemoApp` add `Push Notification` Capability
+3. Add `AzureCommunicationUIDemoAppExtensions` into Frameworks for `AzureCommunicationUIDemoApp`
+4. Change `AzureCommunicationUIDemoApp` to profile supporting `Push Notification`
 
 ### Run Sample
 

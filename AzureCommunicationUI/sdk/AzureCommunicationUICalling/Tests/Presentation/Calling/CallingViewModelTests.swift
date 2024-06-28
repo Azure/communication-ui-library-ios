@@ -14,6 +14,7 @@ class CallingViewModelTests: XCTestCase {
     var logger: LoggerMocking!
     var localizationProvider: LocalizationProviderMocking!
     var accessibilityProvider: AccessibilityProviderMocking!
+    var capabilitiesManager: CapabilitiesManager!
 
     private let timeout: TimeInterval = 10.0
 
@@ -29,6 +30,7 @@ class CallingViewModelTests: XCTestCase {
                                                           store: storeFactory.store,
                                                           accessibilityProvider: accessibilityProvider,
                                                           localizationProvider: localizationProvider)
+        capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
     override func tearDown() {
@@ -41,6 +43,49 @@ class CallingViewModelTests: XCTestCase {
         factoryMocking = nil
     }
 
+<<<<<<< HEAD
+=======
+    func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak storeFactory] _ in
+                XCTAssertEqual(storeFactory?.actions.count, 3)
+                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
+
+                expectation.fulfill()
+            }.store(in: cancellable)
+        sut.isConfirmLeaveListDisplayed = true
+        sut.endCall()
+        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+        wait(for: [expectation], timeout: timeout)
+    }
+    func test_callingViewModel_endCall_when_NoConfirmLeaveOverlayIsDisplayed() {
+        factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                        logger: logger,
+                                                                        localizationProvider: localizationProvider,
+                                                                        dispatchAction: storeFactory.store.dispatch,
+                                                                        endCallConfirm: {},
+                                                                        localUserState: storeFactory.store.state.localUserState,
+                                                                        leaveCallConfirmationMode: .alwaysDisabled,
+                                                                        capabilitiesManager: capabilitiesManager)
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak storeFactory] _ in
+                XCTAssertEqual(storeFactory?.actions.count, 3)
+                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
+
+                expectation.fulfill()
+            }.store(in: cancellable)
+        sut.endCall()
+        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+        wait(for: [expectation], timeout: timeout)
+    }
+
+>>>>>>> develop
     func test_callingViewModel_update_when_callStatusIsInLobby_then_isLobbyOverlayDisplayed_shouldBecomeTrue() {
         let sut = makeSUT()
         let appState = AppState(callingState: CallingState(status: .inLobby))
@@ -133,7 +178,8 @@ class CallingViewModelTests: XCTestCase {
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         onEndCallTapped: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
-                                                                        updateState: updateControlBarViewModel)
+                                                                        updateState: updateControlBarViewModel,
+                                                                        capabilitiesManager: capabilitiesManager)
         let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
@@ -294,6 +340,7 @@ extension CallingViewModelTests {
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
                                 leaveCallConfirmationMode: .alwaysEnabled,
-                                callType: callType)
+                                callType: callType,
+                                capabilitiesManager: capabilitiesManager)
     }
 }

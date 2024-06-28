@@ -49,7 +49,13 @@ extension Reducer where State == CallDiagnosticsState,
              .hideAudioSelection,
              .showSupportShare,
              .hideSupportShare,
-             .visibilityAction:
+             .showParticipants,
+             .hideParticipants,
+             .showParticipantRemoval,
+             .hideParticipantRemoval,
+             .visibilityAction,
+             .toastNotificationAction,
+             .setTotalParticipantCount:
             return state
         }
 

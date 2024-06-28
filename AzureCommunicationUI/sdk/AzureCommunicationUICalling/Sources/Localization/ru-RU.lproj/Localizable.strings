@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Допустить %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Допустить";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Отклонить";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ еще %@";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Переключиться на переднюю камеру";
@@ -164,3 +165,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
 "AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Отключить звук";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Меню отключения звука участника.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Удалить из звонка";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Меню удаления участника из звонка.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Параметры звонка обновлены. Некоторые функции могут быть недоступны вам.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Параметры звонка обновлены. Некоторые дополнительные действия теперь могут быть доступны вам.";

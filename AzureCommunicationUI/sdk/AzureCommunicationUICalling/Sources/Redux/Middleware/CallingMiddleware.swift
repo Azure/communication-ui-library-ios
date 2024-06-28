@@ -33,6 +33,10 @@ extension Middleware {
                                 .compositeExitAction,
                                 .callingViewLaunched:
                             break
+                        case .callDiagnosticAction(let action):
+                            handleCallDiagnisticAction(action, actionHandler, getState, dispatch)
+                        case .toastNotificationAction(let action):
+                            handleToastNotificationAction(action, actionHandler, getState, dispatch)
                         default:
                             break
                         }
@@ -81,7 +85,10 @@ private func handleLocalUserAction(_ action: LocalUserAction,
         actionHandler.requestMicrophoneMute(state: getState(), dispatch: dispatch)
     case .microphoneOnTriggered:
         actionHandler.requestMicrophoneUnmute(state: getState(), dispatch: dispatch)
-
+    case .setCapabilities(let capabilities):
+        actionHandler.setCapabilities(capabilities: capabilities, state: getState(), dispatch: dispatch)
+    case .onCapabilitiesChanged(let event):
+        actionHandler.onCapabilitiesChanged(event: event, state: getState(), dispatch: dispatch)
     case .cameraOnSucceeded,
             .cameraOnFailed,
             .cameraOffSucceeded,
@@ -164,6 +171,38 @@ private func handleRemoteParticipantAction(_ action: RemoteParticipantsAction,
         actionHandler.admitLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
     case .decline(participantId: let participantId):
         actionHandler.declineLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    case .remove(participantId: let participantId):
+        actionHandler.removeParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    default:
+        break
+    }
+}
+
+private func handleCallDiagnisticAction(_ action: DiagnosticsAction,
+                                        _ actionHandler: CallingMiddlewareHandling,
+                                        _ getState: () -> AppState,
+                                        _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .networkQuality(diagnostic: let diagnostic):
+        actionHandler.onNetworkQualityCallDiagnosticsUpdated(
+            state: getState(), dispatch: dispatch, diagnisticModel: diagnostic)
+    case .network(diagnostic: let diagnostic):
+        actionHandler.onNetworkCallDiagnosticsUpdated(
+            state: getState(), dispatch: dispatch, diagnisticModel: diagnostic)
+    case .media(diagnostic: let diagnostic):
+        actionHandler.onMediaCallDiagnosticsUpdated(state: getState(), dispatch: dispatch, diagnisticModel: diagnostic)
+    default:
+        break
+    }
+}
+
+private func handleToastNotificationAction(_ action: ToastNotificationAction,
+                                           _ actionHandler: CallingMiddlewareHandling,
+                                           _ getState: () -> AppState,
+                                           _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .dismissNotification:
+        actionHandler.dismissNotification(state: getState(), dispatch: dispatch)
     default:
         break
     }

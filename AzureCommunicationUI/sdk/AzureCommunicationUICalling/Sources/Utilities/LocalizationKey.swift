@@ -98,6 +98,7 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"
     case participantListConfirmAdmit = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"
     case participantListConfirmDecline = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"
+    case participantListPlusMore = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"
 
     case frontCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"
@@ -195,4 +196,14 @@ enum LocalizationKey: String {
     case supportFormAttachScreenshot = "AzureCommunicationUICalling.Attach.Screenshot"
     case supportFormReportAProblemText = "AzureCommunicationUICalling.ReportAProblem.Text"
     case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
+
+    /* Remote participant menu */
+    case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"
+    case callingViewParticipantMenuMuteAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"
+    case callingViewParticipantMenuRemove = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"
+    case callingViewParticipantMenuRemoveAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"
+    case callingViewToastFeaturesLost = "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"
+    case callingViewToastFeaturesGained = "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"
 }

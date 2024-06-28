@@ -82,7 +82,13 @@ extension Reducer where State == NavigationState,
                 .remoteParticipantsAction,
                 .permissionAction,
                 .visibilityAction,
-                .callDiagnosticAction:
+                .showParticipants,
+                .hideParticipants,
+                .showParticipantRemoval,
+                .hideParticipantRemoval,
+                .callDiagnosticAction,
+                .toastNotificationAction,
+                .setTotalParticipantCount:
             return state
         }
         return NavigationState(status: navigationStatus,

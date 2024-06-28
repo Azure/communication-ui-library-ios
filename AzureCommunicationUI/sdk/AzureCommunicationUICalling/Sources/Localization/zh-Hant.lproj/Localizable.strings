@@ -73,6 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="准許 %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="准許";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒絕";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ 更多";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切換到後相機";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切換到前相機";
@@ -158,3 +159,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="回報問題";
 "AzureCommunicationUICalling.SendFeedback.Text"="傳送";
 
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="靜音";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="將參與者靜音功能表。";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="從通話移除";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="將參與者從通話移除功能表。";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="通話設定已更新。某些功能可能無法供您使用。";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="通話設定已更新。您現在可以使用一些其他動作。";

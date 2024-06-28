@@ -10,8 +10,10 @@ class ParticipantsListCellViewModel {
     let isMuted: Bool
     let isHold: Bool
     let isLocalParticipant: Bool
+    let isPlusMoreMenuItem: Bool
     let localizationProvider: LocalizationProviderProtocol
     let isInLobby: Bool
+    let plusMoreCount: Int?
     private let displayName: String
 
     init(localUserState: LocalUserState,
@@ -23,6 +25,8 @@ class ParticipantsListCellViewModel {
         self.isLocalParticipant = true
         self.isHold = false
         self.isInLobby = false
+        self.plusMoreCount = nil
+        self.isPlusMoreMenuItem = false
     }
 
     init(participantInfoModel: ParticipantInfoModel,
@@ -34,6 +38,21 @@ class ParticipantsListCellViewModel {
         self.isHold = participantInfoModel.status == .hold
         self.isLocalParticipant = false
         self.isInLobby = participantInfoModel.status == .inLobby
+        self.plusMoreCount = nil
+        self.isPlusMoreMenuItem = false
+    }
+
+    init(plusMoreCount: Int,
+         localizationProvider: LocalizationProviderProtocol) {
+        participantId = nil
+        self.localizationProvider = localizationProvider
+        self.displayName = ""
+        self.isMuted = false
+        self.isLocalParticipant = false
+        self.isHold = false
+        self.isInLobby = false
+        self.isPlusMoreMenuItem = true
+        self.plusMoreCount = plusMoreCount
     }
 
     func getParticipantViewData(from avatarViewManager: AvatarViewManager) -> ParticipantViewData? {
