@@ -137,10 +137,10 @@ struct CallingView: View {
                                 .accessibilityIdentifier(
                                     AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                             }
-                        }
+                        }.zIndex(2)
                         if viewModel.captionsInfoViewModel.isDisplayed &&
                             !viewModel.isInPip {
-                            captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom)
+                            captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom).zIndex(1)
                         }
                     }
                     topAlertAreaView
