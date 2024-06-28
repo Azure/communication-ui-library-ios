@@ -12,7 +12,7 @@ struct CaptionsInfoView: View {
     var body: some View {
         ScrollView {
             ScrollViewReader { scrollView in
-                LazyVStack {
+                LazyVStack(spacing: 0) {
                     ForEach(viewModel.captionsData.indices, id: \.self) { index in
                         CaptionsInfoCellView(caption: viewModel.captionsData[index],
                                              avatarViewManager: avatarViewManager)
@@ -30,6 +30,6 @@ struct CaptionsInfoView: View {
                     }
                 }
             }
-        }
+        }.frame(maxWidth: 480)
     }
 }
