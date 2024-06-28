@@ -10,8 +10,8 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed = true
-    @Published var isParticipantsListDisplayed = false
-    @Published var isParticipantMenuDisplayed = false
+//    @Published var isParticipantsListDisplayed = false
+//    @Published var isParticipantMenuDisplayed = false
     @Published var isVoiceOverEnabled = false
     private let logger: Logger
     private let dispatch: ActionDispatch
@@ -23,8 +23,8 @@ class InfoHeaderViewModel: ObservableObject {
     let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
 
-    let participantsListViewModel: ParticipantsListViewModel
-    let participantMenuViewModel: ParticipantMenuViewModel
+//    let participantsListViewModel: ParticipantsListViewModel
+//    let participantMenuViewModel: ParticipantMenuViewModel
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -47,11 +47,11 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
-        self.participantMenuViewModel = compositeViewModelFactory.makeParticipantMenuViewModel(
-            localUserState: localUserState,
-            dispatchAction: dispatchAction)
-        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState, dispatchAction: dispatchAction)
+//        self.participantMenuViewModel = compositeViewModelFactory.makeParticipantMenuViewModel(
+//            localUserState: localUserState,
+//            dispatchAction: dispatchAction)
+//        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
+//            localUserState: localUserState, dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
             buttonType: .infoButton,
@@ -61,7 +61,7 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
-        self.participantsListViewModel.displayParticipantMenu = self.displayParticipantMenu
+//        self.participantsListViewModel.displayParticipantMenu = self.displayParticipantMenu
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
 
@@ -91,12 +91,15 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     func displayParticipantsList() {
-        self.isParticipantsListDisplayed = true
+        dispatch(.showParticipants)
+        // self.isParticipantsListDisplayed = true
     }
 
+    // TADO: This probably should be dispatched from participant list VM
     func displayParticipantMenu(participantId: String, participantDisplayName: String) {
-        participantMenuViewModel.showMenu(participantId: participantId, participantDisplayName: participantDisplayName)
-        self.isParticipantMenuDisplayed = true
+        dispatch(.showParticipantActions)
+//  participantMenuViewModel.showMenu(participantId: participantId, participantDisplayName: participantDisplayName)
+//        self.isParticipantMenuDisplayed = true
     }
 
     func toggleDisplayInfoHeaderIfNeeded() {
@@ -128,17 +131,17 @@ class InfoHeaderViewModel: ObservableObject {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
-        participantsListViewModel.update(localUserState: localUserState,
-                                         remoteParticipantsState: remoteParticipantsState)
-        participantMenuViewModel.update(localUserState: localUserState)
+//        participantsListViewModel.update(localUserState: localUserState,
+//                                         remoteParticipantsState: remoteParticipantsState)
+//        participantMenuViewModel.update(localUserState: localUserState)
 
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
         }
 
-        if visibilityState.currentStatus != .visible {
-            isParticipantsListDisplayed = false
-        }
+//        if visibilityState.currentStatus != .visible {
+//            isParticipantsListDisplayed = false
+//        }
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
@@ -162,9 +165,10 @@ class InfoHeaderViewModel: ObservableObject {
         if isInfoHeaderDisplayed {
             isInfoHeaderDisplayed = false
         }
-        if isParticipantsListDisplayed {
-            isParticipantsListDisplayed = false
-        }
+        // TADO: This should be handled in redux and VM generation for participant list
+//        if isParticipantsListDisplayed {
+//            isParticipantsListDisplayed = false
+//        }
     }
 
     private func updateInfoLabel() {

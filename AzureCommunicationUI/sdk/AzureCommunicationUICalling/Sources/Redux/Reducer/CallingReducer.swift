@@ -70,8 +70,8 @@ extension Reducer where State == CallingState,
                 .visibilityAction,
                 .showParticipants,
                 .hideParticipants,
-                .showParticipantRemoval,
-                .hideParticipantRemoval,
+                .showParticipantActions,
+                .hideParticipantActions,
                 .toastNotificationAction,
                 .setTotalParticipantCount:
             return callingState

@@ -2,7 +2,7 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
+// swiftlint:disable file_length
 import FluentUI
 import Foundation
 
@@ -291,6 +291,7 @@ extension CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel {
         ParticipantsListViewModel(compositeViewModelFactory: self,
                                   localUserState: localUserState,
@@ -299,12 +300,14 @@ extension CompositeViewModelFactory {
     }
 
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel {
         ParticipantMenuViewModel(compositeViewModelFactory: self,
                                  localUserState: localUserState,
                                  dispatchAction: dispatchAction,
                                  localizationProvider: localizationProvider,
-                                 capabilitiesManager: capabilitiesManager)
+                                 capabilitiesManager: capabilitiesManager,
+                                 isDisplayed: isDisplayed)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -398,3 +401,4 @@ extension CompositeViewModelFactory {
         JoiningCallActivityViewModel(title: self.localizationProvider.getLocalizedString(LocalizationKey.joiningCall))
     }
 }
+// swiftlint:enable file_length

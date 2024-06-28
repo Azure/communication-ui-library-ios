@@ -51,8 +51,10 @@ protocol CompositeViewModelFactoryProtocol {
                                       lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
 
     func makeBannerViewModel() -> BannerViewModel

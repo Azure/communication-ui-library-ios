@@ -32,8 +32,8 @@ enum Action: Equatable {
     case hideSupportShare
     case showParticipants
     case hideParticipants
-    case showParticipantRemoval
-    case hideParticipantRemoval
+    case showParticipantActions
+    case hideParticipantActions
     case toastNotificationAction(ToastNotificationAction)
     case setTotalParticipantCount(Int)
 

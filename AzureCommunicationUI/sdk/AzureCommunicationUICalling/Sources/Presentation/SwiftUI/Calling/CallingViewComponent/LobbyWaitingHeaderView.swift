@@ -41,11 +41,13 @@ struct LobbyWaitingHeaderView: View {
         .onAppear(perform: {
             viewModel.isPad = UIDevice.current.userInterfaceIdiom == .pad
         })
+        /*
         .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
             participantsListView
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
         })
+         */
     }
 
     var lobbyHeader: some View {
@@ -92,6 +94,7 @@ struct LobbyWaitingHeaderView: View {
             .accessibilityIdentifier(AccessibilityIdentifier.lobbyWaitingDismissID.rawValue)
     }
 
+    /*
     var participantsListView: some View {
         return Group {
             if let avatarManager = avatarViewManager as? AvatarViewManager {
@@ -105,4 +108,5 @@ struct LobbyWaitingHeaderView: View {
             }
         }
     }
+     */
 }

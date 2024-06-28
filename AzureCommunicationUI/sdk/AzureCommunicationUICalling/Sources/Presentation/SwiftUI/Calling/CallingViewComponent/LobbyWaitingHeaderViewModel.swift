@@ -17,7 +17,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private var lobbyParticipantCount: Int = 0
 
-    let participantsListViewModel: ParticipantsListViewModel
+    // let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: PrimaryButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -35,9 +35,9 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         let title = localizationProvider.getLocalizedString(.lobbyWaitingToJoin)
         self.title = title
         self.accessibilityLabel = title
-        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState,
-            dispatchAction: dispatchAction)
+//        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
+//            localUserState: localUserState,
+//            dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: localizationProvider.getLocalizedString(.lobbyWaitingHeaderViewButton),
@@ -92,8 +92,8 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
 
         self.lobbyParticipantCount = canShow ? newLobbyParticipantCount : 0
 
-        participantsListViewModel.update(localUserState: localUserState,
-                                         remoteParticipantsState: remoteParticipantsState)
+//        participantsListViewModel.update(localUserState: localUserState,
+//                                         remoteParticipantsState: remoteParticipantsState)
     }
 
     private func lobbyUsersCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
