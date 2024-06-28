@@ -46,9 +46,10 @@ class CaptionsViewManager: ObservableObject {
             if let lastNotFinishedMessageFromThisUserIndex = self.captionData.lastIndex(where: { data in
                 data.speakerRawId == newData.speakerRawId && data.resultType == .partial
             }) {
-                self.captionData.remove(at: lastNotFinishedMessageFromThisUserIndex)
+                self.captionData[lastNotFinishedMessageFromThisUserIndex] = newData
+            } else {
+                self.captionData.append(newData)
             }
-            self.captionData.append(newData)
         }
     }
 
