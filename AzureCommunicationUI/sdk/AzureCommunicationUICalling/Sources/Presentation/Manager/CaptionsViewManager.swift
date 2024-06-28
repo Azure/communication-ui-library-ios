@@ -43,15 +43,12 @@ class CaptionsViewManager: ObservableObject {
         }
 
         DispatchQueue.main.async {
-            if let lastCaption = self.captionData.last,
-               lastCaption.speakerRawId == newData.speakerRawId,
-               lastCaption.resultType != .final {
-                // If the last caption is not final and from the same speaker, update it
-                self.captionData[self.captionData.count - 1] = newData
-            } else {
-                // Otherwise, append new data
-                self.captionData.append(newData)
+            if let lastNotFinishedMessageFromThisUserIndex = self.captionData.lastIndex(where: { data in
+                data.speakerRawId == newData.speakerRawId && data.resultType == .partial
+            }) {
+                self.captionData.remove(at: lastNotFinishedMessageFromThisUserIndex)
             }
+            self.captionData.append(newData)
         }
     }
 
