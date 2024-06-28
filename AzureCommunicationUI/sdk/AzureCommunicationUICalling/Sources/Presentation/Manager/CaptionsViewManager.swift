@@ -12,6 +12,7 @@ class CaptionsViewManager: ObservableObject {
     @Published var captionData = [CallCompositeCaptionsData]()
     private var subscriptions = Set<AnyCancellable>()
     private var isTranslationEnabled = false
+    private let maxCaptionsCount = 50
 
     init(store: Store<AppState, Action>, callingSDKWrapper: CallingSDKWrapperProtocol) {
         self.callingSDKWrapper = callingSDKWrapper
@@ -49,6 +50,9 @@ class CaptionsViewManager: ObservableObject {
                 self.captionData[lastNotFinishedMessageFromThisUserIndex] = newData
             } else {
                 self.captionData.append(newData)
+                if self.captionData.count > self.maxCaptionsCount {
+                    self.captionData.removeFirst(self.captionData.count - self.maxCaptionsCount)
+                }
             }
         }
     }
