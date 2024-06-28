@@ -9,11 +9,7 @@ extension Reducer where State == NavigationState,
                         Actions == Action {
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
-        var supportFormVisible = state.supportFormVisible
-        var supportShareSheetVisible = state.supportShareSheetVisible
-        var endCallConfirmationVisible = state.endCallConfirmationVisible
-        var audioSelectionVisible = state.audioSelectionVisible
-        var moreOptionsVisible = state.moreOptionsVisible
+        var drawerVisibility = getDrawerVisibility(state: state)
 
         switch action {
         case .callingViewLaunched:
@@ -23,48 +19,26 @@ extension Reducer where State == NavigationState,
             navigationStatus = .exit
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
+        case .hideDrawer:
+            drawerVisibility = .hidden
         case .showSupportForm:
-            supportShareSheetVisible = false
-            audioSelectionVisible = false
-            endCallConfirmationVisible = false
-            supportFormVisible = true
-            moreOptionsVisible = false
-        case .hideSupportForm:
-            supportFormVisible = false
+            drawerVisibility = .supportFormVisible
         case .showEndCallConfirmation:
-            supportShareSheetVisible = false
-            audioSelectionVisible = false
-            endCallConfirmationVisible = true
-            supportFormVisible = false
-            moreOptionsVisible = false
-        case .hideEndCallConfirmation:
-            endCallConfirmationVisible = false
+            drawerVisibility = .endCallConfirmationVisible
         case .showMoreOptions:
-            supportShareSheetVisible = false
-            audioSelectionVisible = false
-            endCallConfirmationVisible = false
-            supportFormVisible = false
-            moreOptionsVisible = true
-        case .hideMoreOptions:
-            moreOptionsVisible = false
+            drawerVisibility = .moreOptionsVisible
         case .showAudioSelection:
-            supportShareSheetVisible = false
-            audioSelectionVisible = true
-            endCallConfirmationVisible = false
-            supportFormVisible = false
-            moreOptionsVisible = false
-        case .hideAudioSelection:
-            audioSelectionVisible = false
+            drawerVisibility = .audioSelectionVisible
         case .showSupportShare:
-            supportShareSheetVisible = true
-            audioSelectionVisible = false
-            endCallConfirmationVisible = false
-            supportFormVisible = false
-            moreOptionsVisible = false
-        case .hideSupportShare:
-            supportShareSheetVisible = false
+            drawerVisibility = .supportShareSheetVisible
+        case .showParticipants:
+            drawerVisibility = .participantsVisible
+        case .showParticipantActions:
+            drawerVisibility = .participantActionsVisible
+
         case .localUserAction(.audioDeviceChangeRequested):
-            audioSelectionVisible = false
+            drawerVisibility = .hidden
+
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -82,20 +56,44 @@ extension Reducer where State == NavigationState,
                 .remoteParticipantsAction,
                 .permissionAction,
                 .visibilityAction,
-                .showParticipants,
-                .hideParticipants,
-                .showParticipantActions,
-                .hideParticipantActions,
                 .callDiagnosticAction,
                 .toastNotificationAction,
                 .setTotalParticipantCount:
             return state
         }
         return NavigationState(status: navigationStatus,
-                               supportFormVisible: supportFormVisible,
-                               endCallConfirmationVisible: endCallConfirmationVisible,
-                               audioSelectionVisible: audioSelectionVisible,
-                               moreOptionsVisible: moreOptionsVisible,
-                               supportShareSheetVisible: supportShareSheetVisible)
+                               supportFormVisible: drawerVisibility.isSupportFormVisible,
+                               endCallConfirmationVisible: drawerVisibility.isEndCallConfirmationVisible,
+                               audioSelectionVisible: drawerVisibility.isAudioSelectionVisible,
+                               moreOptionsVisible: drawerVisibility.isMoreOptionsVisible,
+                               supportShareSheetVisible: drawerVisibility.isSupportShareSheetVisible)
+    }
+
+    // Helper to track only an individual visible drawer at a time
+    enum DrawerVisibility {
+        case hidden
+        case supportFormVisible
+        case supportShareSheetVisible
+        case endCallConfirmationVisible
+        case audioSelectionVisible
+        case moreOptionsVisible
+        case participantsVisible
+        case participantActionsVisible
+
+        var isSupportFormVisible: Bool { self == .supportFormVisible }
+        var isSupportShareSheetVisible: Bool { self == .supportShareSheetVisible }
+        var isEndCallConfirmationVisible: Bool { self == .endCallConfirmationVisible }
+        var isAudioSelectionVisible: Bool { self == .audioSelectionVisible }
+        var isMoreOptionsVisible: Bool { self == .moreOptionsVisible }
+        var isParticipantsVisible: Bool { self == .participantsVisible }
+        var isParticipantActionsVisible: Bool { self == .participantActionsVisible }
+    }
+
+    static func getDrawerVisibility(state: NavigationState) -> DrawerVisibility {
+        return state.supportFormVisible ? .supportFormVisible :
+        state.supportShareSheetVisible ? .supportShareSheetVisible :
+        state.endCallConfirmationVisible ? .endCallConfirmationVisible :
+        state.audioSelectionVisible ? .audioSelectionVisible :
+        state.moreOptionsVisible ? .moreOptionsVisible : .hidden
     }
 }

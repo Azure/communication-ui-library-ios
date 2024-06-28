@@ -51,26 +51,22 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                 // The keys can be grouped to throttle related actions
                     .throttleMiddleware {action in
                     switch action {
-                        case .showSupportForm, .hideSupportForm:
+                        case .showSupportForm:
                             return "SupportFormDrawer"
-                        case .showMoreOptions, .hideMoreOptions:
+                        case .showMoreOptions:
                             return "MoreOptionsDrawer"
-                        case .showAudioSelection, .hideAudioSelection:
+                        case .showAudioSelection:
                             return "AudioSelectionDrawer"
-                        case .showEndCallConfirmation, .hideEndCallConfirmation:
+                        case .showEndCallConfirmation:
                             return "EndCallDrawer"
-                        case .showSupportShare, .hideSupportShare:
+                        case .showSupportShare:
                             return "SupportShareDrawer"
+                        case .hideDrawer:
+                            return "HideDrawer"
                         default:
                             return nil
                         }
                     }
-//                .throttleMiddleware(actions: [.showSupportForm,
-//                                              .showMoreOptions,
-//                                              .showAudioSelection,
-//                                              .showEndCallConfirmation,
-//                                              .showSupportShare])
-
             ],
             state: AppState(callingState: callingState,
                             localUserState: localUserState,

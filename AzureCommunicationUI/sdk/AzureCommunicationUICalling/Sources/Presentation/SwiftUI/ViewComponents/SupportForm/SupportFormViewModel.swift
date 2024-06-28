@@ -73,11 +73,11 @@ internal class SupportFormViewModel: ObservableObject {
         callback(CallCompositeUserReportedIssue(userMessage: self.messageText,
                                                 debugInfo: self.getDebugInfo()))
         messageText = ""
-        dispatchAction(.hideSupportForm)
+        dispatchAction(.hideDrawer)
     }
 
     func hideForm() {
-        dispatchAction(.hideSupportForm)
+        dispatchAction(.hideDrawer)
     }
 }
 

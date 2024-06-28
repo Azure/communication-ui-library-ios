@@ -58,17 +58,22 @@ struct CallingView: View {
                 }
 
                 BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
+                             hideDrawer: viewModel.dismissDrawer) {
                     LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
                 }
 
                 BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissMoreCallOptionsDrawerList) {
+                             hideDrawer: viewModel.dismissDrawer) {
                     MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel)
                 }
 
                 BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissAudioDevicesDrawer) {
+                             hideDrawer: viewModel.dismissDrawer) {
+                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                }
+
+                BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissDrawer) {
                     AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
                 }
             }

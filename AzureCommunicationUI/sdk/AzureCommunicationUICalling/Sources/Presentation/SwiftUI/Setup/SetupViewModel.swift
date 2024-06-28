@@ -193,7 +193,7 @@ class SetupViewModel: ObservableObject {
     }
 
     func dismissAudioDevicesDrawer() {
-        store.dispatch(action: .hideAudioSelection)
+        store.dispatch(action: .hideDrawer)
     }
 
     private func handleOffline() {

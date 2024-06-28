@@ -31,6 +31,8 @@ class CallingViewModel: ObservableObject {
     let lobbyOverlayViewModel: LobbyOverlayViewModel
     let loadingOverlayViewModel: LoadingOverlayViewModel
     let leaveCallConfirmationViewModel: LeaveCallConfirmationViewModel
+    let participantListViewModel: ParticipantsListViewModel
+    let participantActionViewModel: ParticipantMenuViewModel
     var onHoldOverlayViewModel: OnHoldOverlayViewModel!
     let isRightToLeft: Bool
 
@@ -106,9 +108,21 @@ class CallingViewModel: ObservableObject {
             endCall: {
                 store.dispatch(action: .callingAction(.callEndRequested))
             }, dismissConfirmation: {
-                store.dispatch(action: .hideEndCallConfirmation)
+                store.dispatch(action: .hideDrawer)
             }
         )
+
+        participantListViewModel = compositeViewModelFactory
+            .makeParticipantsListViewModel(
+                localUserState: store.state.localUserState,
+                isDisplayed: store.state.navigationState.participantsVisible,
+                dispatchAction: store.dispatch)
+
+        participantActionViewModel = compositeViewModelFactory
+            .makeParticipantMenuViewModel(
+                localUserState: store.state.localUserState,
+                isDisplayed: store.state.navigationState.participantActionsVisible,
+                dispatchAction: store.dispatch)
 
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
@@ -171,16 +185,9 @@ class CallingViewModel: ObservableObject {
         store.dispatch(action: .callingAction(.resumeRequested))
     }
 
-    func dismissConfirmLeaveDrawerList() {
-        store.dispatch(action: .hideEndCallConfirmation)
-    }
-
-    func dismissMoreCallOptionsDrawerList() {
-        store.dispatch(action: .hideMoreOptions)
-    }
-
-    func dismissAudioDevicesDrawer() {
-        store.dispatch(action: .hideAudioSelection)
+    // TADO: Can be moved into the VM's for these items
+    func dismissDrawer() {
+        store.dispatch(action: .hideDrawer)
     }
 
     func receive(_ state: AppState) {

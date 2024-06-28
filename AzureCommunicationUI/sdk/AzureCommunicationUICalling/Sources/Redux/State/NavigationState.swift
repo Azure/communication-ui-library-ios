@@ -14,18 +14,25 @@ enum NavigationStatus {
 struct NavigationState: Equatable {
 
     let status: NavigationStatus
+
     let supportFormVisible: Bool
     let endCallConfirmationVisible: Bool
     let audioSelectionVisible: Bool
     let moreOptionsVisible: Bool
     let supportShareSheetVisible: Bool
+    let participantsVisible: Bool
+    let participantActionsVisible: Bool
+    // TADO: we need a selected Participant somewhere, but NavState isn't right for it.
+    // Maybe LocalUserState, as in the LocalUser has selected another User
 
     init(status: NavigationStatus = .setup,
          supportFormVisible: Bool = false,
          endCallConfirmationVisible: Bool = false,
          audioSelectionVisible: Bool = false,
          moreOptionsVisible: Bool = false,
-         supportShareSheetVisible: Bool = false
+         supportShareSheetVisible: Bool = false,
+         participantsVisible: Bool = false,
+         participantActionsVisible: Bool = false
 ) {
         self.status = status
         self.supportFormVisible = supportFormVisible
@@ -33,6 +40,8 @@ struct NavigationState: Equatable {
         self.audioSelectionVisible = audioSelectionVisible
         self.moreOptionsVisible = moreOptionsVisible
         self.supportShareSheetVisible = supportShareSheetVisible
+        self.participantsVisible = participantsVisible
+        self.participantActionsVisible = participantActionsVisible
     }
 
     static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {
@@ -42,5 +51,7 @@ struct NavigationState: Equatable {
             && lhs.audioSelectionVisible == rhs.audioSelectionVisible
             && lhs.moreOptionsVisible == rhs.moreOptionsVisible
             && lhs.supportShareSheetVisible == rhs.supportShareSheetVisible
+            && lhs.participantsVisible == rhs.participantsVisible
+            && lhs.participantActionsVisible == rhs.participantActionsVisible
     }
 }
