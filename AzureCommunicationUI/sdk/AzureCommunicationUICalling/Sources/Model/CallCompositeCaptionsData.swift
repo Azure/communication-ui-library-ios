@@ -30,7 +30,7 @@ enum CallCompositeCaptionsErrors: Int {
     case setCaptionLanguageTeamsPremiumLicenseNeeded
 }
 
-struct CallCompositeCaptionsData: Identifiable {
+struct CallCompositeCaptionsData: Identifiable, Equatable {
     var id: Date { timestamp }
 
     let resultType: CaptionsResultType
@@ -41,6 +41,18 @@ struct CallCompositeCaptionsData: Identifiable {
     let timestamp: Date
     let captionLanguage: String?
     let captionText: String?
+
+    static func == (lhs: CallCompositeCaptionsData, rhs: CallCompositeCaptionsData) -> Bool {
+        // Define what makes two instances of CallCompositeCaptionsData equal
+        return lhs.timestamp == rhs.timestamp &&
+               lhs.speakerRawId == rhs.speakerRawId &&
+               lhs.resultType == rhs.resultType &&
+               lhs.speakerName == rhs.speakerName &&
+               lhs.spokenLanguage == rhs.spokenLanguage &&
+               lhs.spokenText == rhs.spokenText &&
+               lhs.captionLanguage == rhs.captionLanguage &&
+               lhs.captionText == rhs.captionText
+    }
 }
 
 extension AzureCommunicationCalling.TeamsCaptionsReceivedEventArgs {
