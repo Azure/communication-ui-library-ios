@@ -20,16 +20,20 @@ struct CaptionsInfoCellView: View {
 
     var body: some View {
         VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
-            HStack {
+            HStack(alignment: .top) {
                 avatarView
-                Text(caption.speakerName)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
+                    Text(caption.speakerName)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+
+                    Text(caption.spokenText)
+                        .font(.callout)
+                        .foregroundColor(.primary)
+                        .multilineTextAlignment(isRTL ? .trailing : .leading)
+                }
             }
-            Text(displayText)
-                .font(.callout)
-                .foregroundColor(.primary)
-                .multilineTextAlignment(isRTL ? .trailing : .leading)
         }
         .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
         .padding(.horizontal)
@@ -43,7 +47,8 @@ struct CaptionsInfoCellView: View {
         CompositeAvatar(displayName: $displayName,
                         avatarImage: $avatarImage,
                         isSpeaking: false,
-                        avatarSize: .size32)
+                        avatarSize: .size24)
+        .frame(width: 30, height: 30)
     }
 
     // Display text based on caption availability

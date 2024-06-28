@@ -19,9 +19,14 @@ struct CaptionsInfoView: View {
                             .id(index)
                     }
                 }
+                .onAppear {
+                    scrollView.scrollTo(viewModel.captionsData.count - 1, anchor: .bottom)
+                }
                 .onChange(of: viewModel.captionsData.count) { _ in
-                    withAnimation {
-                        scrollView.scrollTo(viewModel.captionsData.count - 1, anchor: .bottom)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        withAnimation {
+                            scrollView.scrollTo(viewModel.captionsData.count - 1, anchor: .bottom)
+                        }
                     }
                 }
             }
