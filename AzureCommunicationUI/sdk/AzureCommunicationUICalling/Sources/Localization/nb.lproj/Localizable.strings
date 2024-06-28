@@ -73,7 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Gi tilgang til %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Gi tilgang";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avslå";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ more";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ til";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Bytt til kamera bak";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Bytt til kamera foran";
@@ -159,9 +159,10 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapporter et problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Send";
 
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Demp";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Meny for demping av lyd for deltaker.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Fjern fra samtalen";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Fjern deltaker fra samtalemenyen.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Anropsinnstillingene er oppdatert. Enkelte funksjoner er kanskje ikke tilgjengelige for deg.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Anropsinnstillingene er oppdatert. Noen flere handlinger kan nå være tilgjengelige for deg.";
