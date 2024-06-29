@@ -73,4 +73,47 @@ class SupportFormViewModelTests: XCTestCase {
         viewModel.messageText = ""
         XCTAssertTrue(viewModel.blockSubmission)
     }
+
+    func test_SupportFormViewModel_UpdateState() {
+        let events = CallComposite.Events()
+        let debugInfo = DebugInfo(
+            callHistoryRecords: [], callingUIVersion: "1.0", logFiles: []
+        )
+        // Initialize the viewModel with mocks
+        let viewModel = SupportFormViewModel(
+            isDisplayed: false,
+            dispatchAction: { _ in },
+            events: events,
+            localizationProvider: LocalizationProviderMocking(),
+            getDebugInfo: { debugInfo })
+        let initialState = AppState(navigationState: NavigationState(supportFormVisible: true),
+                                    visibilityState: VisibilityState(currentStatus: .visible))
+        viewModel.update(state: initialState)
+        XCTAssertTrue(viewModel.isDisplayed)
+
+        let updatedState = AppState(navigationState: NavigationState(supportFormVisible: false),
+                                    visibilityState: VisibilityState(currentStatus: .visible))
+        viewModel.update(state: updatedState)
+        XCTAssertFalse(viewModel.isDisplayed)
+    }
+
+    func test_SupportFormViewModel_HideForm() {
+        let events = CallComposite.Events()
+        var lastAction: Action?
+        let debugInfo = DebugInfo(
+            callHistoryRecords: [], callingUIVersion: "1.0", logFiles: []
+        )
+        let dispatchAction: ActionDispatch = { action in
+            lastAction = action
+        }
+        // Initialize the viewModel with mocks
+        let viewModel = SupportFormViewModel(
+            isDisplayed: true,
+            dispatchAction: dispatchAction,
+            events: events,
+            localizationProvider: LocalizationProviderMocking(),
+            getDebugInfo: { debugInfo })
+        viewModel.hideForm()
+        XCTAssertTrue(lastAction == Action.hideSupportForm)
+    }
 }

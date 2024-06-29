@@ -7,6 +7,9 @@ import Foundation
 import Combine
 
 class ParticipantsListViewModel: ObservableObject {
+    @Published var drawerListItems: [DrawerListItemViewModel] = [TitleDrawerListItemViewModel(
+        title: "Test",
+        accessibilityIdentifier: "Test")]
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
@@ -19,6 +22,7 @@ class ParticipantsListViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatch: ActionDispatch
     var displayParticipantMenu: ((_ participantId: String, _ participantDisplayName: String) -> Void)?
+    var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localUserState: LocalUserState,
@@ -30,11 +34,14 @@ class ParticipantsListViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.lastParticipantRole = localUserState.participantRole
         self.localizationProvider = localizationProvider
+        self.isDisplayed = false
     }
 
     func update(localUserState: LocalUserState,
-                remoteParticipantsState: RemoteParticipantsState) {
+                remoteParticipantsState: RemoteParticipantsState,
+                isDisplayed: Bool) {
 
+        self.isDisplayed = isDisplayed
         if localParticipantsListCellViewModel.isMuted != (localUserState.audioState.operation == .off) {
             localParticipantsListCellViewModel =
             compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
@@ -54,6 +61,10 @@ class ParticipantsListViewModel: ObservableObject {
                 .map {
                     compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)
                 }
+            // TADO: We need to interface this properly
+            drawerListItems = participantsList.map {
+                TitleDrawerListItemViewModel(title: $0.participantId ?? "N/A", accessibilityIdentifier: "")
+            }
 
             let plusMoreCount =
             remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count

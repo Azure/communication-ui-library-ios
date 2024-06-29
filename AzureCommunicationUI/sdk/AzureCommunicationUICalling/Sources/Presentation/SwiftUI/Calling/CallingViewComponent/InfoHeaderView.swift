@@ -43,6 +43,7 @@ struct InfoHeaderView: View {
         .onAppear(perform: {
             viewModel.isPad = UIDevice.current.userInterfaceIdiom == .pad
         })
+        /*
         .modifier(PopupModalView(isPresented:
                                     viewModel.isParticipantsListDisplayed || viewModel.isParticipantMenuDisplayed) {
             if viewModel.isParticipantsListDisplayed {
@@ -55,7 +56,7 @@ struct InfoHeaderView: View {
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
             }
-        })
+        }) */
         .accessibilityElement(children: .contain)
     }
 
@@ -101,6 +102,7 @@ struct InfoHeaderView: View {
             .accessibilityFocused($focusedOnParticipantList, equals: true)
     }
 
+    /*
     var participantsListView: some View {
         return Group {
             if let avatarManager = avatarViewManager as? AvatarViewManager {
@@ -119,7 +121,9 @@ struct InfoHeaderView: View {
             }
         }
     }
+     */
 
+    /*
     var participantMenuView: some View {
         return Group {
             if let avatarManager = avatarViewManager as? AvatarViewManager {
@@ -137,4 +141,5 @@ struct InfoHeaderView: View {
             }
         }
     }
+     */
 }

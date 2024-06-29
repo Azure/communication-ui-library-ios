@@ -2,7 +2,7 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
+// swiftlint:disable file_length
 import FluentUI
 import Foundation
 
@@ -61,6 +61,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.setupScreenOptions = setupScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+    }
+
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(
+            state: store.state,
+            localizationProvider: localizationProvider,
+            endCall: endCall,
+            dismissConfirmation: dismissConfirmation)
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
@@ -214,7 +224,7 @@ extension CompositeViewModelFactory {
                                resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
                                  capabilitiesManager: CapabilitiesManager)
@@ -223,7 +233,7 @@ extension CompositeViewModelFactory {
                             logger: logger,
                             localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
-                            endCallConfirm: endCallConfirm,
+                            onEndCallTapped: onEndCallTapped,
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
@@ -281,6 +291,7 @@ extension CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel {
         ParticipantsListViewModel(compositeViewModelFactory: self,
                                   localUserState: localUserState,
@@ -289,12 +300,14 @@ extension CompositeViewModelFactory {
     }
 
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel {
         ParticipantMenuViewModel(compositeViewModelFactory: self,
                                  localUserState: localUserState,
                                  dispatchAction: dispatchAction,
                                  localizationProvider: localizationProvider,
-                                 capabilitiesManager: capabilitiesManager)
+                                 capabilitiesManager: capabilitiesManager,
+                                 isDisplayed: isDisplayed)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -318,6 +331,7 @@ extension CompositeViewModelFactory {
     }
 
     func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
 
@@ -326,7 +340,8 @@ extension CompositeViewModelFactory {
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
-                                            isSupportFormAvailable: events.onUserReportedIssue != nil)
+                                     isSupportFormAvailable: events.onUserReportedIssue != nil,
+                                     isDisplayed: isDisplayed)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
@@ -349,7 +364,9 @@ extension CompositeViewModelFactory {
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
-                                          debugInfoManager: debugInfoManager)
+                                          debugInfoManager: debugInfoManager) {
+            self.store.dispatch(action: .hideDrawer)
+        }
     }
 
     func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,
@@ -384,3 +401,4 @@ extension CompositeViewModelFactory {
         JoiningCallActivityViewModel(title: self.localizationProvider.getLocalizedString(LocalizationKey.joiningCall))
     }
 }
+// swiftlint:enable file_length

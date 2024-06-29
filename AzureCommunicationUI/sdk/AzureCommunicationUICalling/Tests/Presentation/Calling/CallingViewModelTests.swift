@@ -43,6 +43,8 @@ class CallingViewModelTests: XCTestCase {
         factoryMocking = nil
     }
 
+<<<<<<< HEAD
+=======
     func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Verify Call End is Requested")
@@ -83,6 +85,7 @@ class CallingViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: timeout)
     }
 
+>>>>>>> develop
     func test_callingViewModel_update_when_callStatusIsInLobby_then_isLobbyOverlayDisplayed_shouldBecomeTrue() {
         let sut = makeSUT()
         let appState = AppState(callingState: CallingState(status: .inLobby))
@@ -173,7 +176,7 @@ class CallingViewModelTests: XCTestCase {
                                                                         logger: logger,
                                                                         localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                        endCallConfirm: {},
+                                                                        onEndCallTapped: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         updateState: updateControlBarViewModel,
                                                                         capabilitiesManager: capabilitiesManager)
