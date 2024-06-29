@@ -66,7 +66,9 @@ extension Reducer where State == NavigationState,
                                endCallConfirmationVisible: drawerVisibility.isEndCallConfirmationVisible,
                                audioSelectionVisible: drawerVisibility.isAudioSelectionVisible,
                                moreOptionsVisible: drawerVisibility.isMoreOptionsVisible,
-                               supportShareSheetVisible: drawerVisibility.isSupportShareSheetVisible)
+                               supportShareSheetVisible: drawerVisibility.isSupportShareSheetVisible,
+                               participantsVisible: drawerVisibility.isParticipantsVisible,
+                               participantActionsVisible: drawerVisibility.isParticipantActionsVisible)
     }
 
     // Helper to track only an individual visible drawer at a time
@@ -94,6 +96,8 @@ extension Reducer where State == NavigationState,
         state.supportShareSheetVisible ? .supportShareSheetVisible :
         state.endCallConfirmationVisible ? .endCallConfirmationVisible :
         state.audioSelectionVisible ? .audioSelectionVisible :
+        state.participantsVisible ? .participantsVisible :
+        state.participantActionsVisible ? .participantActionsVisible :
         state.moreOptionsVisible ? .moreOptionsVisible : .hidden
     }
 }
