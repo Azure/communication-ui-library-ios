@@ -74,8 +74,10 @@ struct CallingView: View {
 
                 BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                    ParticipantsListView(viewModel: viewModel.participantListViewModel)
                 }
+
+                // TODA: Actions drawer
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)

@@ -7,6 +7,9 @@ import Foundation
 import Combine
 
 class ParticipantsListViewModel: ObservableObject {
+    @Published var drawerListItems: [DrawerListItemViewModel] = [TitleDrawerListItemViewModel(
+        title: "Test",
+        accessibilityIdentifier: "Test")]
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
@@ -58,6 +61,10 @@ class ParticipantsListViewModel: ObservableObject {
                 .map {
                     compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)
                 }
+            // TADO: We need to interface this properly
+            drawerListItems = participantsList.map {
+                TitleDrawerListItemViewModel(title: $0.participantId ?? "N/A", accessibilityIdentifier: "")
+            }
 
             let plusMoreCount =
             remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
