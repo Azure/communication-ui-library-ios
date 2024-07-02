@@ -33,7 +33,7 @@ enum CallCompositeCaptionsErrors: Int {
 struct CallCompositeCaptionsData: Identifiable, Equatable {
     var id: Date { timestamp }
 
-    let resultType: CaptionsResultType
+    var resultType: CaptionsResultType
     let speakerRawId: String
     let speakerName: String
     let spokenLanguage: String

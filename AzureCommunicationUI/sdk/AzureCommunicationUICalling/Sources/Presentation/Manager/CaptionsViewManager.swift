@@ -13,6 +13,7 @@ class CaptionsViewManager: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var isTranslationEnabled = false
     private let maxCaptionsCount = 50
+    private let finalizationDelay: TimeInterval = 5 // seconds
 
     init(store: Store<AppState, Action>, callingSDKWrapper: CallingSDKWrapperProtocol) {
         self.callingSDKWrapper = callingSDKWrapper
@@ -35,7 +36,7 @@ class CaptionsViewManager: ObservableObject {
     }
 
     private func receive(state: AppState) {
-        isTranslationEnabled = !(state.captionsState.activeCaptionLanguage?.isEmpty ?? false)
+        isTranslationEnabled = state.captionsState.activeCaptionLanguage?.isEmpty == false
     }
 
     private func handleNewData(_ newData: CallCompositeCaptionsData) {
@@ -43,22 +44,35 @@ class CaptionsViewManager: ObservableObject {
             return
         }
 
-        DispatchQueue.main.async {
-            if let lastNotFinishedMessageFromThisUserIndex = self.captionData.lastIndex(where: { data in
-                data.speakerRawId == newData.speakerRawId && data.resultType == .partial
-            }) {
-                self.captionData[lastNotFinishedMessageFromThisUserIndex] = newData
-            } else {
-                self.captionData.append(newData)
-                if self.captionData.count > self.maxCaptionsCount {
-                    self.captionData.removeFirst(self.captionData.count - self.maxCaptionsCount)
-                }
-            }
-        }
+        self.processNewCaption(newCaption: newData)
     }
 
-    func clearCaptions() {
-        captionData.removeAll()
+    private func processNewCaption(newCaption: CallCompositeCaptionsData) {
+        guard !captionData.isEmpty else {
+            captionData.append(newCaption)
+            return
+        }
+
+        let lastIndex = captionData.count - 1
+        var lastCaption = captionData[lastIndex]
+
+        if lastCaption.resultType == .final {
+            captionData.append(newCaption)
+        } else if lastCaption.speakerRawId == newCaption.speakerRawId {
+            // Update the last caption if it's not finalized and from the same speaker
+            captionData[lastIndex] = newCaption
+        } else {
+            // Handle delayed finalization of the last caption
+            if Date().timeIntervalSince(lastCaption.timestamp) > finalizationDelay {
+                lastCaption.resultType = .final
+                captionData[lastIndex] = lastCaption // Commit the finalization change
+                captionData.append(newCaption)
+            }
+        }
+
+        if captionData.count > maxCaptionsCount {
+            captionData.removeFirst()
+        }
     }
 
     // Decide if a new caption should be added to the list
