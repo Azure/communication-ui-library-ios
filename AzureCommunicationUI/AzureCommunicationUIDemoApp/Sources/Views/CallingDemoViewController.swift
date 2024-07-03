@@ -294,7 +294,7 @@ class CallingDemoViewController: UIViewController {
             #else
             let callComposite = envConfigSubject.useDeprecatedLaunch ?
             CallComposite(withOptions: callCompositeOptions) :
-                CallComposite(credential: credential, withOptions: callCompositeOptions)
+                CallComposite(credential: credential, userId: userId, withOptions: callCompositeOptions)
             #endif
             subscribeToEvents(callComposite: callComposite)
             GlobalCompositeManager.callComposite = callComposite
