@@ -26,7 +26,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
-    private var captionsMode: CaptionsMode?
+    private var captionsMode: CaptionsVisibilityMode?
     private let callType: CompositeCallType
 
     init(logger: Logger,
@@ -42,7 +42,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         captionsMode: CaptionsMode,
+         captionsMode: CaptionsVisibilityMode,
          retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType) {
         self.logger = logger
@@ -112,7 +112,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
                                             != CallCompositeAudioVideoMode.audioOnly,
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
-                                             captionsMode: self.captionsMode ?? .alwaysEnabled,
+                                             captionsMode: self.captionsMode ?? .enabled,
                                              callType: callType,
                                              captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions())
             self.setupViewModel = nil

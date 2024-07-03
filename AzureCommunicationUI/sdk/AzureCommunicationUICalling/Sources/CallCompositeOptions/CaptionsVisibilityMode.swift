@@ -7,28 +7,28 @@ import Foundation
 import AzureCore
 
 /// Enum defining options for captions.
-public struct CaptionsMode: Equatable, RequestStringConvertible {
+public struct CaptionsVisibilityMode: Equatable, RequestStringConvertible {
     internal enum  CaptionsModeKV {
-        case alwaysEnabled
-        case alwaysDisabled
+        case enabled
+        case disabled
         case unknown(String)
 
         var rawValue: String {
             switch self {
-            case .alwaysEnabled:
-                return "always_enabled"
-            case .alwaysDisabled:
-                return "always_disabled"
+            case .enabled:
+                return "enabled"
+            case .disabled:
+                return "disabled"
             case .unknown(let value):
                 return value
             }
         }
         init(rawValue: String) {
             switch rawValue.lowercased() {
-            case "always_enabled":
-                self = .alwaysEnabled
-            case "always_disabled":
-                self = .alwaysDisabled
+            case "enabled":
+                self = .enabled
+            case "disabled":
+                self = .disabled
             default:
                 self = .unknown(rawValue.lowercased())
             }
@@ -45,13 +45,13 @@ public struct CaptionsMode: Equatable, RequestStringConvertible {
         self.value = CaptionsModeKV(rawValue: rawValue)
     }
 
-    public static func == (lhs: CaptionsMode, rhs: CaptionsMode) -> Bool {
+    public static func == (lhs: CaptionsVisibilityMode, rhs: CaptionsVisibilityMode) -> Bool {
         return lhs.requestString == rhs.requestString
     }
 
     /// Enables the captions.
-    public static let alwaysEnabled: CaptionsMode = .init(rawValue: "always_enabled")
+    public static let enabled: CaptionsVisibilityMode = .init(rawValue: "enabled")
 
     /// Disables the captions.
-    public static let alwaysDisabled: CaptionsMode = .init(rawValue: "always_disabled")
+    public static let disabled: CaptionsVisibilityMode = .init(rawValue: "disabled")
 }

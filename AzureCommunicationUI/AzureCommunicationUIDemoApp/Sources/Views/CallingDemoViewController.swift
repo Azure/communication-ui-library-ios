@@ -238,7 +238,7 @@ class CallingDemoViewController: UIViewController {
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled,
                                                      captionsMode: envConfigSubject.displayCaptions ?
-            .alwaysEnabled : .alwaysDisabled)
+            .enabled : .disabled)
         let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -287,14 +287,14 @@ class CallingDemoViewController: UIViewController {
                               callingSDKWrapperProtocol: callingSDKWrapperMock)
             : ( envConfigSubject.useDeprecatedLaunch ?
                 CallComposite(withOptions: callCompositeOptions) :
-                    CallComposite(credential: credential, userId: userId, withOptions: callCompositeOptions))
+                    CallComposite(credential: credential, withOptions: callCompositeOptions))
 
             callingSDKWrapperMock?.callComposite = callComposite
 
             #else
             let callComposite = envConfigSubject.useDeprecatedLaunch ?
             CallComposite(withOptions: callCompositeOptions) :
-                CallComposite(credential: credential, userId: userId, withOptions: callCompositeOptions)
+                CallComposite(credential: credential, withOptions: callCompositeOptions)
             #endif
             subscribeToEvents(callComposite: callComposite)
             GlobalCompositeManager.callComposite = callComposite

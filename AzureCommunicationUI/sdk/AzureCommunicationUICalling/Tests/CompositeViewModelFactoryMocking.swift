@@ -89,7 +89,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     isIpadInterface: false,
                                                     allowLocalCameraPreview: true,
                                                     leaveCallConfirmationMode: .alwaysEnabled,
-                                                    captionsMode: .alwaysEnabled,
+                                                    captionsMode: .enabled,
                                                     callType: .groupCall,
                                                     captionsOptions: CaptionsOptions())
     }

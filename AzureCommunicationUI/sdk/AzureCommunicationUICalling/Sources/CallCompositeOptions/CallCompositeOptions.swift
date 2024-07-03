@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import AzureCommunicationCommon
 
 /// User-configurable options for creating CallComposite.
 public struct CallCompositeOptions {
@@ -18,6 +19,7 @@ public struct CallCompositeOptions {
     private(set) var callKitOptions: CallKitOptions?
     private(set) var disableInternalPushForIncomingCall = false
     private(set) var displayName: String?
+    private(set) var userId: CommunicationIdentifier?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -44,6 +46,7 @@ public struct CallCompositeOptions {
                 callScreenOptions: CallScreenOptions? = nil,
                 callKitOptions: CallKitOptions? = nil,
                 displayName: String? = nil,
+                userId: CommunicationIdentifier? = nil,
                 disableInternalPushForIncomingCall: Bool = false) {
         self.themeOptions = theme
         self.localizationOptions = localization
@@ -55,5 +58,6 @@ public struct CallCompositeOptions {
         self.callKitOptions = callKitOptions
         self.displayName = displayName
         self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        self.userId = userId
     }
 }

@@ -27,7 +27,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState, Action>,
-         localParticipantId: CommunicationUserIdentifier,
+         localParticipantId: CommunicationIdentifier,
          localParticipantViewData: ParticipantViewData?) {
         self.store = store
         self.localParticipantViewData = localParticipantViewData

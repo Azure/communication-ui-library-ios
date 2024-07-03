@@ -6,11 +6,11 @@ import Foundation
 
 /// Configuration options for captions in a UI component.
 public struct CaptionsOptions {
-    var startCaptions: Bool
+    var captionsOn: Bool
     var spokenLanguage: String
 
-    public init(startCaptions: Bool = false, spokenLanguage: String = "en-US") {
+    public init(captionsOn: Bool = false, spokenLanguage: String = "en-us") {
         self.spokenLanguage = spokenLanguage
-        self.startCaptions = startCaptions
+        self.captionsOn = captionsOn
     }
 }

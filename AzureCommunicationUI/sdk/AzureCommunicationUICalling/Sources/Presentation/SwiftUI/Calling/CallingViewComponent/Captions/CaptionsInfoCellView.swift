@@ -28,7 +28,7 @@ struct CaptionsInfoCellView: View {
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text(caption.spokenText)
+                Text(displayText)
                     .font(.callout)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(isRTL ? .trailing : .leading)

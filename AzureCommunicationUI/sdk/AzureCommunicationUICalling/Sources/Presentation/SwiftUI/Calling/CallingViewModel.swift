@@ -27,7 +27,7 @@ class CallingViewModel: ObservableObject {
     private var callHasConnected = false
     private var callClientRequested = false
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
-    private var captionsMode: CaptionsMode?
+    private var captionsMode: CaptionsVisibilityMode?
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -60,7 +60,7 @@ class CallingViewModel: ObservableObject {
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         captionsMode: CaptionsMode,
+         captionsMode: CaptionsVisibilityMode,
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions
     ) {
@@ -162,7 +162,7 @@ class CallingViewModel: ObservableObject {
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isDisplayed: store.state.navigationState.moreOptionsVisible,
-            isCaptionsAvailable: captionsMode == .alwaysEnabled,
+            isCaptionsAvailable: captionsMode == .enabled,
             showSharingViewAction: {
                 store.dispatch(action: .showSupportShare)
             },
@@ -197,7 +197,7 @@ class CallingViewModel: ObservableObject {
     }
 
     func updateCaptionsOptions() {
-        if captionsOptions.startCaptions && !store.state.captionsState.isStarted {
+        if captionsOptions.captionsOn && !store.state.captionsState.isStarted {
             let language = captionsOptions.spokenLanguage.lowercased()
             store.dispatch(action: .captionsAction(.startRequested(language: language)))
         }

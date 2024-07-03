@@ -75,7 +75,7 @@ public class CallComposite {
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
-    private var captionsMode: CaptionsMode = .alwaysEnabled
+    private var captionsVisibilityMode: CaptionsVisibilityMode = .enabled
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
@@ -84,7 +84,7 @@ public class CallComposite {
     private var callKitOptions: CallKitOptions?
     private var callKitRemoteInfo: CallKitRemoteInfo?
     private var credential: CommunicationTokenCredential?
-    private var userId: CommunicationUserIdentifier?
+    private var userId: CommunicationIdentifier?
     private var displayName: String?
     private var disableInternalPushForIncomingCall = false
     private var callingSDKInitializer: CallingSDKInitializer?
@@ -112,6 +112,7 @@ public class CallComposite {
     public init(withOptions options: CallCompositeOptions? = nil) {
         credential = nil
         events = Events()
+        userId = options?.userId
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
@@ -122,7 +123,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
-        captionsMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .alwaysEnabled
+        captionsVisibilityMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .enabled
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -134,10 +135,9 @@ public class CallComposite {
     /// - Parameter credential: The CommunicationTokenCredential used for call.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(credential: CommunicationTokenCredential,
-                userId: CommunicationUserIdentifier,
                 withOptions options: CallCompositeOptions? = nil) {
         self.credential = credential
-        self.userId = userId
+        userId = options?.userId
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
@@ -149,7 +149,7 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
-        captionsMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .alwaysEnabled
+        captionsVisibilityMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .enabled
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -552,7 +552,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         // Construct managers
         let avatarViewManager = AvatarViewManager(
             store: store,
-            localParticipantId: userId ?? CommunicationUserIdentifier(""),
+            localParticipantId: userId ?? createCommunicationIdentifier(fromRawId: ""),
             localParticipantViewData: localOptions?.participantViewData
         )
         self.avatarViewManager = avatarViewManager
@@ -603,7 +603,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                captionsMode: captionsMode,
+                captionsMode: captionsVisibilityMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
                 callType: callConfiguration.compositeCallType
             )

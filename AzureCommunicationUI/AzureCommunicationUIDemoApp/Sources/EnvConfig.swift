@@ -67,7 +67,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var spokenLanguage = "en-US"
     @Published var setupViewOrientation: OrientationOptions = .portrait
     @Published var callingViewOrientation: OrientationOptions = .allButUpsideDown
-    @Published var startCaptions = false
+    @Published var captionsOn = false
     @Published var displayCaptions = true
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""

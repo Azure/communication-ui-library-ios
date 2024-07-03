@@ -9,13 +9,13 @@ import Foundation
 public struct CallScreenControlBarOptions {
     /// Determines whether to display leave call confirmation. Default is enabled.
     public let leaveCallConfirmationMode: LeaveCallConfirmationMode
-    public let captionsMode: CaptionsMode
+    public let captionsMode: CaptionsVisibilityMode
 
     /// Initializes an instance of CallScreenControlBarOptions.
     /// - Parameter leaveCallConfirmationMode: Whether to enable or disable the leave call confirmation.
     ///                                           Default is enabled.
     public init(leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
-                captionsMode: CaptionsMode = .alwaysEnabled) {
+                captionsMode: CaptionsVisibilityMode = .enabled) {
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.captionsMode = captionsMode
     }

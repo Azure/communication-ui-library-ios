@@ -417,7 +417,7 @@ extension CallingDemoView {
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled,
                                                      captionsMode: envConfigSubject.displayCaptions ?
-            .alwaysEnabled : .alwaysDisabled
+            .enabled : .disabled
         )
         let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
@@ -468,14 +468,14 @@ extension CallingDemoView {
                               callingSDKWrapperProtocol: callingSDKWrapperMock)
             : ( envConfigSubject.useDeprecatedLaunch ?
                 CallComposite(withOptions: callCompositeOptions) :
-                    CallComposite(credential: credential, userId: userId, withOptions: callCompositeOptions))
+                    CallComposite(credential: credential, withOptions: callCompositeOptions))
 
             callingSDKWrapperMock?.callComposite = callComposite
 
             #else
             let callComposite = envConfigSubject.useDeprecatedLaunch ?
             CallComposite(withOptions: callCompositeOptions) :
-            CallComposite(credential: credential, userId: userId, withOptions: callCompositeOptions)
+            CallComposite(credential: credential, withOptions: callCompositeOptions)
             #endif
             subscribeToEvents(callComposite: callComposite)
             GlobalCompositeManager.callComposite = callComposite
@@ -600,7 +600,7 @@ extension CallingDemoView {
         </ROOMS_SUPPORT> */
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
-        let captionsOptions = CaptionsOptions(startCaptions: envConfigSubject.startCaptions,
+        let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
