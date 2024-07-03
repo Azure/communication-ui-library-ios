@@ -7,11 +7,11 @@ import UIKit
 import Combine
 
 class CaptionsViewManager: ObservableObject {
+    var isTranslationEnabled = false
     private let callingSDKWrapper: CallingSDKWrapperProtocol
     private let store: Store<AppState, Action>
     @Published var captionData = [CallCompositeCaptionsData]()
     private var subscriptions = Set<AnyCancellable>()
-    private var isTranslationEnabled = false
     private let maxCaptionsCount = 50
     private let finalizationDelay: TimeInterval = 5 // seconds
 
@@ -39,7 +39,7 @@ class CaptionsViewManager: ObservableObject {
         isTranslationEnabled = state.captionsState.activeCaptionLanguage?.isEmpty == false
     }
 
-    private func handleNewData(_ newData: CallCompositeCaptionsData) {
+    func handleNewData(_ newData: CallCompositeCaptionsData) {
         if !shouldAddCaption(newData) {
             return
         }

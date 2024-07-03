@@ -44,12 +44,18 @@ extension CompositeViewModelFactoryTests {
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
                                          debugInfoManager: DebugInfoManagerMocking(),
+                                         captionsViewManager: CaptionsViewManager(
+                                            store: mockStoreFactory.store,
+                                            callingSDKWrapper: CallingSDKWrapperMocking()
+                                         ),
                                          enableMultitasking: true,
                                          enableSystemPipWhenMultitasking: true,
                                          eventsHandler: CallComposite.Events(),
                                          leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled,
+                                         captionsMode: .alwaysEnabled,
                                          retrieveLogFiles: { return [] },
-                                         callType: .groupCall)
+                                         callType: .groupCall
+        )
     }
 }
 

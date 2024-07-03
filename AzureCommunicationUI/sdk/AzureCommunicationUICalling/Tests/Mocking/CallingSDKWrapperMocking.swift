@@ -162,5 +162,15 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
 
     func declineLobbyParticipant(_ participantId: String) async throws {
     }
+    func startCaptions(_ language: String) async throws {
+    }
 
+    func stopCaptions() async throws {
+    }
+
+    func setCaptionsSpokenLanguage(_ language: String) async throws {
+    }
+
+    func setCaptionsCaptionLanguage(_ language: String) async throws {
+    }
 }

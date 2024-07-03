@@ -93,12 +93,14 @@ extension AvatarManagerTests {
         let mockParticipantViewData = ParticipantViewData(avatar: image, displayName: "")
         let mockLocalOptions = LocalOptions(participantViewData: mockParticipantViewData)
         return AvatarViewManager(store: mockStoreFactory.store,
+                                 localParticipantId: CommunicationUserIdentifier(""),
                                  localParticipantViewData: mockLocalOptions.participantViewData)
 
     }
 
     private func makeSUT() -> AvatarViewManager {
-        return AvatarViewManager(store: mockStoreFactory.store,
+       return AvatarViewManager(store: mockStoreFactory.store,
+                                 localParticipantId: CommunicationUserIdentifier(""),
                                  localParticipantViewData: nil)
     }
 }

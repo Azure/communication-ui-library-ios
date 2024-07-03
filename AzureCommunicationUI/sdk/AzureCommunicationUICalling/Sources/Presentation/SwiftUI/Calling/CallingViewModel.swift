@@ -62,7 +62,7 @@ class CallingViewModel: ObservableObject {
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          captionsMode: CaptionsMode,
          callType: CompositeCallType,
-         captionsCaptions: CaptionsOptions
+         captionsOptions: CaptionsOptions
     ) {
         self.logger = logger
         self.store = store
@@ -73,7 +73,7 @@ class CallingViewModel: ObservableObject {
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.callType = callType
-        self.captionsOptions = captionsCaptions
+        self.captionsOptions = captionsOptions
         self.captionsMode = captionsMode
 
         let actionDispatch: ActionDispatch = store.dispatch

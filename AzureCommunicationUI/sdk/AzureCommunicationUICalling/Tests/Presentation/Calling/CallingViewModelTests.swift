@@ -294,6 +294,8 @@ extension CallingViewModelTests {
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
                                 leaveCallConfirmationMode: .alwaysEnabled,
-                                callType: callType)
+                                captionsMode: .alwaysEnabled,
+                                callType: callType,
+                                captionsOptions: CaptionsOptions())
     }
 }

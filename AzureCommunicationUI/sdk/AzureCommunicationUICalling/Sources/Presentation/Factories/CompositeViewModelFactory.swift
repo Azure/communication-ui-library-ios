@@ -114,7 +114,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
                                              captionsMode: self.captionsMode ?? .alwaysEnabled,
                                              callType: callType,
-                                             captionsCaptions: localOptions?.captionsOptions ?? CaptionsOptions())
+                                             captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions())
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
