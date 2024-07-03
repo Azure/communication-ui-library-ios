@@ -37,6 +37,7 @@ struct CaptionsInfoCellView: View {
         }
         .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
         .padding(.horizontal)
+        .background(Color(StyleProvider.color.backgroundColor))
         .onAppear {
             updateAvatar()
             determineTextDirection()
@@ -57,8 +58,11 @@ struct CaptionsInfoCellView: View {
     }
 
     private func updateAvatar() {
-        if let participantViewData = avatarViewManager.avatarStorage.value(forKey: caption.speakerRawId) {
-            avatarImage = participantViewData.avatarImage
+        // Attempt to get the avatar image directly from the avatar storage for the given speaker's ID.
+        if let participantViewDataAvatar = avatarViewManager.avatarStorage.value(
+            forKey: caption.speakerRawId)?.avatarImage {
+            // If an avatar image exists, set it.
+            avatarImage = participantViewDataAvatar
         } else {
             avatarImage = nil
             displayName = caption.speakerName
