@@ -8,6 +8,8 @@ import SwiftUI
 struct CaptionsInfoView: View {
     @ObservedObject var viewModel: CaptionsInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
+    @State private var isLastItemVisible = true
+
     var body: some View {
         ScrollViewReader { scrollView in
             List {
@@ -17,9 +19,11 @@ struct CaptionsInfoView: View {
                         .id(viewModel.captionsData[index].id)
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear) // Explicitly setting background color
                 }
             }
             .listStyle(PlainListStyle())
+            .background(Color(StyleProvider.color.backgroundColor))
             .frame(maxWidth: 480)
             .onAppear {
                 scrollToLastItem(scrollView)

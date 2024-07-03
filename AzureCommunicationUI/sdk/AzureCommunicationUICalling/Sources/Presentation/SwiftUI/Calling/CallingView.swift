@@ -141,7 +141,7 @@ struct CallingView: View {
                     }
                     if viewModel.captionsInfoViewModel.isDisplayed &&
                         !viewModel.isInPip {
-                        captionsInfoView.frame(maxWidth: .infinity, alignment: .bottom).zIndex(1)
+                        captionsInfoView
                     }
                 }
                 topAlertAreaView
@@ -294,6 +294,8 @@ struct CallingView: View {
         return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
                                 avatarViewManager: avatarManager)
             .frame(maxWidth: .infinity, maxHeight: CaptionsInfoConstants.maxHeight, alignment: .bottom)
+            .background(Color(StyleProvider.color.backgroundColor))
+            .zIndex(1)
     }
 
     var errorInfoView: some View {
