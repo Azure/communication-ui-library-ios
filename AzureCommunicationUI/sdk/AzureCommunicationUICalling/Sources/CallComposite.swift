@@ -84,6 +84,7 @@ public class CallComposite {
     private var callKitOptions: CallKitOptions?
     private var callKitRemoteInfo: CallKitRemoteInfo?
     private var credential: CommunicationTokenCredential?
+    private var userId: CommunicationUserIdentifier?
     private var displayName: String?
     private var disableInternalPushForIncomingCall = false
     private var callingSDKInitializer: CallingSDKInitializer?
@@ -133,8 +134,10 @@ public class CallComposite {
     /// - Parameter credential: The CommunicationTokenCredential used for call.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(credential: CommunicationTokenCredential,
+                userId: CommunicationUserIdentifier,
                 withOptions options: CallCompositeOptions? = nil) {
         self.credential = credential
+        self.userId = userId
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
@@ -549,6 +552,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         // Construct managers
         let avatarViewManager = AvatarViewManager(
             store: store,
+            localParticipantId: userId ?? CommunicationUserIdentifier(""),
             localParticipantViewData: localOptions?.participantViewData
         )
         self.avatarViewManager = avatarViewManager

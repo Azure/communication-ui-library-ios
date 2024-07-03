@@ -59,6 +59,7 @@ struct CallingDemoView: View {
             Spacer()
             acsTokenSelector
             displayNameTextField
+            userIdTextField
             meetingSelector
 
             Group {
@@ -151,6 +152,14 @@ struct CallingDemoView: View {
 
     var displayNameTextField: some View {
         TextField("Display Name", text: $envConfigSubject.displayName)
+            .disableAutocorrection(true)
+            .padding(.vertical, verticalPadding)
+            .padding(.horizontal, horizontalPadding)
+            .textFieldStyle(.roundedBorder)
+    }
+
+    var userIdTextField: some View {
+        TextField("User Identifier", text: $envConfigSubject.userId)
             .disableAutocorrection(true)
             .padding(.vertical, verticalPadding)
             .padding(.horizontal, horizontalPadding)
@@ -424,6 +433,7 @@ extension CallingDemoView {
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callKitOptions = $envConfigSubject.enableCallKit.wrappedValue ? getCallKitOptions() : nil
+        let userId = CommunicationUserIdentifier(envConfigSubject.userId)
 
         let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -458,7 +468,7 @@ extension CallingDemoView {
                               callingSDKWrapperProtocol: callingSDKWrapperMock)
             : ( envConfigSubject.useDeprecatedLaunch ?
                 CallComposite(withOptions: callCompositeOptions) :
-                    CallComposite(credential: credential, withOptions: callCompositeOptions))
+                    CallComposite(credential: credential, userId: userId, withOptions: callCompositeOptions))
 
             callingSDKWrapperMock?.callComposite = callComposite
 
