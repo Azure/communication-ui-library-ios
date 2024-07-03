@@ -62,8 +62,7 @@ class CaptionsViewManager: ObservableObject {
             // Update the last caption if it's not finalized and from the same speaker
             captionData[lastIndex] = newCaption
         } else {
-            // Handle delayed finalization of the last caption
-            if Date().timeIntervalSince(lastCaption.timestamp) > finalizationDelay {
+            if shouldFinalizeLastCaption(lastCaption: lastCaption, newCaption: newCaption) {
                 lastCaption.resultType = .final
                 captionData[lastIndex] = lastCaption // Commit the finalization change
                 captionData.append(newCaption)
@@ -83,5 +82,11 @@ class CaptionsViewManager: ObservableObject {
         }
         // Always add caption if translation is not enabled
         return true
+    }
+
+    private func shouldFinalizeLastCaption(lastCaption: CallCompositeCaptionsData,
+                                           newCaption: CallCompositeCaptionsData) -> Bool {
+        let duration = newCaption.timestamp.timeIntervalSince(lastCaption.timestamp)
+        return duration > finalizationDelay
     }
 }
