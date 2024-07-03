@@ -19,23 +19,22 @@ struct CaptionsInfoCellView: View {
     }
 
     var body: some View {
-        VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
-            HStack(alignment: .top) {
-                avatarView
-                VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
-                    Text(caption.speakerName)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .lineLimit(1)
+        HStack(alignment: .top) {
+            avatarView
+            VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
+                Text(caption.speakerName)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text(caption.spokenText)
-                        .font(.callout)
-                        .foregroundColor(.primary)
-                        .multilineTextAlignment(isRTL ? .trailing : .leading)
-                }
-            }
+                Text(caption.spokenText)
+                    .font(.callout)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(isRTL ? .trailing : .leading)
+            }.frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
         }
-        .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
+        .frame(maxWidth: .infinity)
         .padding(.horizontal)
         .background(Color(StyleProvider.color.backgroundColor))
         .onAppear {
