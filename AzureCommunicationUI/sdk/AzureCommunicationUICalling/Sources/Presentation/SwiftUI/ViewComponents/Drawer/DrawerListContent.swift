@@ -23,6 +23,8 @@ internal struct DrawerListContent: View {
                     SelectableDrawerItemView(item: selectableItem)
                 } else if let titleItem = option as? TitleDrawerListItemViewModel {
                     DrawerTitleView(item: titleItem)
+                } else if let bodyItem = option as? BodyTextDrawerListItemViewModel {
+                    DrawerBodyTextView(item: bodyItem)
                 } else {
                     DrawerItemView(item: option)
                 }
@@ -101,6 +103,24 @@ internal struct DrawerTitleView: View {
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.headline)
+            Spacer()
+        }
+        .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
+        .padding(.vertical, DrawerListConstants.optionPaddingVertical)
+        .frame(maxWidth: .infinity)
+        .accessibilityIdentifier(item.accessibilityIdentifier)
+    }
+}
+
+internal struct DrawerBodyTextView: View {
+    let item: BodyTextDrawerListItemViewModel
+
+    var body: some View {
+        HStack {
+            Text(item.title)
+                .foregroundColor(.primary)
+                .padding(.leading, DrawerListConstants.textPaddingLeading)
+                .font(.body)
             Spacer()
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)

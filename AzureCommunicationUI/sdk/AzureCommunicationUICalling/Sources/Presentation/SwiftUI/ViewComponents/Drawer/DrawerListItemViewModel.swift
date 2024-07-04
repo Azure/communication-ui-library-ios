@@ -72,7 +72,7 @@ class TitleDrawerListItemViewModel: DrawerListItemViewModel {
     }
 }
 
-class SmallTextDrawerListItemViewModel: DrawerListItemViewModel {
+class BodyTextDrawerListItemViewModel: DrawerListItemViewModel {
     init(title: String, accessibilityIdentifier: String) {
         super.init(title: title,
                    accessibilityIdentifier: accessibilityIdentifier,

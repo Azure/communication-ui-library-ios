@@ -65,6 +65,9 @@ class ParticipantsListViewModel: ObservableObject {
             drawerListItems = participantsList.map {
                 TitleDrawerListItemViewModel(title: $0.participantId ?? "N/A", accessibilityIdentifier: "")
             }
+            drawerListItems.insert(BodyTextDrawerListItemViewModel(
+                title: "In the call (#)",
+                accessibilityIdentifier: "??"), at: 0)
 
             let plusMoreCount =
             remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
