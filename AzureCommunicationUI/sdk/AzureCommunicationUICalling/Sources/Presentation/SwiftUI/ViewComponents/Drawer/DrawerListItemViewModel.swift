@@ -82,12 +82,12 @@ class BodyTextDrawerListItemViewModel: DrawerListItemViewModel {
 }
 
 class ParticipantDrawerListItemViewModel: DrawerListItemViewModel {
-    let isLocal: Bool
+    let participantInfoModel: ParticipantInfoModel
 
-    init(displayName: String, isLocal: Bool, isMuted: Bool, action: (() -> Void)?) {
-        self.isLocal = isLocal
-        super.init(title: displayName,
-                   accessibilityIdentifier: displayName,
+    init(participantInfoModel: ParticipantInfoModel, action: (() -> Void)?) {
+        self.participantInfoModel = participantInfoModel
+        super.init(title: participantInfoModel.displayName,
+                   accessibilityIdentifier: participantInfoModel.displayName,
                    action: action,
                    startIcon: nil,
                    endIcon: nil)

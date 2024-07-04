@@ -137,11 +137,16 @@ internal struct DrawerParticipantView: View {
 
     var body: some View {
         HStack {
+            Text("(A)")
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.body)
+            if !item.participantInfoModel.isRemoteUser {
+                Text("(ME)")
+            }
             Spacer()
+            Icon(name: item.participantInfoModel.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)

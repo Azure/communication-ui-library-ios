@@ -10,43 +10,49 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var drawerListItems: [DrawerListItemViewModel] = [TitleDrawerListItemViewModel(
         title: "Test",
         accessibilityIdentifier: "Test")]
-    @Published var participantsList: [ParticipantsListCellViewModel] = []
+
+    // TADO, keep moving to drawerListItems, remove both of these
+    @Published var participantsList: [ParticipantInfoModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
-    private let localizationProvider: LocalizationProviderProtocol
     private var plusMoreParticipantCount: Int?
-
-    var lastUpdateTimeStamp = Date()
     private var lastParticipantRole: ParticipantRoleEnum?
-
-    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatch: ActionDispatch
-    var displayParticipantMenu: ((_ participantId: String, _ participantDisplayName: String) -> Void)?
+    private let localizationProvider: LocalizationProviderProtocol
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+
     var isDisplayed: Bool
+    var lastUpdateTimeStamp = Date()
+    var displayParticipantMenu: ((_ participantId: String, _ participantDisplayName: String) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localUserState: LocalUserState,
          dispatchAction: @escaping ActionDispatch,
          localizationProvider: LocalizationProviderProtocol) {
         self.compositeViewModelFactory = compositeViewModelFactory
-        localParticipantsListCellViewModel =
-        compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
         self.dispatch = dispatchAction
         self.lastParticipantRole = localUserState.participantRole
         self.localizationProvider = localizationProvider
         self.isDisplayed = false
+
+        // TADO: Delete,
+        localParticipantsListCellViewModel =
+        compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
     }
 
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 isDisplayed: Bool) {
-
+        // Show this list if it's not displayed.
         self.isDisplayed = isDisplayed
+
+        // Updating the local participant.
         if localParticipantsListCellViewModel.isMuted != (localUserState.audioState.operation == .off) {
             localParticipantsListCellViewModel =
             compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
         }
 
+        // If timestamp or lastRoleChanged
         if lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
            || self.lastParticipantRole != localUserState.participantRole {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
@@ -58,15 +64,29 @@ class ParticipantsListViewModel: ObservableObject {
                     participant.status != .disconnected
                     && (!shouldilterOutLobbyUsers || participant.status != .inLobby)
                 })
-                .map {
-                    compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)
-                }
-            // TADO: We need to interface this properly
+
+            // Remote participants
             drawerListItems = participantsList.map {
-                TitleDrawerListItemViewModel(title: $0.participantId ?? "N/A", accessibilityIdentifier: "")
+                ParticipantDrawerListItemViewModel(participantInfoModel: $0) {
+                    // TADO: Click actions for a participant
+                }
             }
+
+            // Local Participants
+            drawerListItems.append(ParticipantDrawerListItemViewModel(participantInfoModel: ParticipantInfoModel(
+                displayName: localUserState.displayName ?? "Unknown User", /* TADO: Look up localized*/
+                isSpeaking: false,
+                isMuted: false, /* TADO: Wire up*/
+                isRemoteUser: false,
+                userIdentifier: localUserState.displayName ?? "UU", /* TADO: Wire up properly*/
+                status: ParticipantStatus.connected, /* TADO: Safe Assumption?*/
+                screenShareVideoStreamModel: nil,
+                cameraVideoStreamModel: nil
+            )) {
+
+            })
             drawerListItems.insert(BodyTextDrawerListItemViewModel(
-                title: "In the call (#)",
+                title: "In the call (\(drawerListItems.count))", /* TADO: Is this correct Participants + 1 */
                 accessibilityIdentifier: "??"), at: 0)
 
             let plusMoreCount =
@@ -81,7 +101,8 @@ class ParticipantsListViewModel: ObservableObject {
 
     func sortedParticipants(with avatarManager: AvatarViewManager) -> [ParticipantsListCellViewModel] {
         // alphabetical order
-        return ([localParticipantsListCellViewModel] + participantsList).sorted {
+        // TADO: Need to make sure participantList inludes local user
+        return ([localParticipantsListCellViewModel] /* + participantsList */).sorted {
             let name = $0.getCellDisplayName(with: $0.getParticipantViewData(from: avatarManager))
             let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
             return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending

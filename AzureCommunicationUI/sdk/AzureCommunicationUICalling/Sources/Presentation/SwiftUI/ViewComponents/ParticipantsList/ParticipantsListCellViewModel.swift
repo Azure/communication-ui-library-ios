@@ -5,6 +5,7 @@
 
 import Foundation
 
+// TADO: Deprecate and delete
 class ParticipantsListCellViewModel {
     let participantId: String?
     let isMuted: Bool

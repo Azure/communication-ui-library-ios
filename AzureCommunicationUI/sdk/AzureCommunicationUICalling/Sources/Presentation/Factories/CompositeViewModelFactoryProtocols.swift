@@ -59,6 +59,8 @@ protocol CompositeViewModelFactoryProtocol {
 
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
+
+    // TADO: Delete this (as this will just be a normal one created)
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(
