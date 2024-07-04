@@ -28,17 +28,20 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
                 .leaveCallConfirmTitleAccessibilityID
                 .rawValue),
             DrawerListItemViewModel(
-                icon: .endCallRegular,
                 title: leaveText,
-                accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue) {
+                accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
+                action: {
                     endCall()
-            },
+                },
+                startIcon: .endCallRegular),
+
             DrawerListItemViewModel(
-                icon: .dismiss,
                 title: cancelText,
-                accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue) {
+                accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
+                action: {
                     dismissConfirmation()
-            }
+                },
+                startIcon: .dismiss)
         ]
         self.endCall = endCall
         self.dismissConfirmation = dismissConfirmation

@@ -6,31 +6,35 @@
 import Foundation
 
 class DrawerListItemViewModel: Identifiable {
-    let icon: CompositeIcon
     let title: String
+    let startIcon: CompositeIcon?
+    let endIcon: CompositeIcon?
     let accessibilityIdentifier: String
-    var action: (() -> Void)
+    var action: (() -> Void)?
     var isEnabled: Bool
 
-    init(icon: CompositeIcon,
-         title: String,
+    init(title: String,
          accessibilityIdentifier: String,
-         action: @escaping () -> Void,
+         action: (() -> Void)? = nil,
+         startIcon: CompositeIcon? = nil,
+         endIcon: CompositeIcon? = nil,
          isEnabled: Bool = true) {
-        self.icon = icon
+        self.startIcon = startIcon
+        self.endIcon = endIcon
         self.title = title
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
         self.isEnabled = isEnabled
     }
 
-    convenience init(icon: CompositeIcon,
-                     title: String,
+    convenience init(title: String,
+                     icon: CompositeIcon,
                      accessibilityIdentifier: String) {
-        self.init(icon: icon,
-                  title: title,
+        self.init(title: title,
                   accessibilityIdentifier: accessibilityIdentifier,
-                  action: {},
+                  action: nil,
+                  startIcon: icon,
+                  endIcon: nil,
                   isEnabled: true)
     }
 }
@@ -40,7 +44,9 @@ extension DrawerListItemViewModel: Equatable {
                     rhs: DrawerListItemViewModel) -> Bool {
         return lhs.title == rhs.title &&
         lhs.accessibilityIdentifier == rhs.accessibilityIdentifier &&
-        lhs.icon == rhs.icon
+        lhs.startIcon == rhs.startIcon &&
+        lhs.endIcon == rhs.endIcon &&
+        lhs.isEnabled == rhs.isEnabled
     }
 }
 
@@ -53,14 +59,24 @@ class SelectableDrawerListItemViewModel: DrawerListItemViewModel {
          isSelected: Bool,
          action: @escaping () -> Void) {
         self.isSelected = isSelected
-        super.init(icon: icon, title: title, accessibilityIdentifier: accessibilityIdentifier, action: action)
+        super.init(title: title, accessibilityIdentifier: accessibilityIdentifier, action: action, startIcon: icon)
     }
 }
 
 class TitleDrawerListItemViewModel: DrawerListItemViewModel {
     init(title: String, accessibilityIdentifier: String) {
-        super.init(icon: .addParticipant,
-                   title: title,
-                   accessibilityIdentifier: accessibilityIdentifier, action: {})
+        super.init(title: title,
+                   accessibilityIdentifier: accessibilityIdentifier,
+                   action: nil,
+                   startIcon: nil)
+    }
+}
+
+class SmallTextDrawerListItemViewModel: DrawerListItemViewModel {
+    init(title: String, accessibilityIdentifier: String) {
+        super.init(title: title,
+                   accessibilityIdentifier: accessibilityIdentifier,
+                   action: nil,
+                   startIcon: nil)
     }
 }

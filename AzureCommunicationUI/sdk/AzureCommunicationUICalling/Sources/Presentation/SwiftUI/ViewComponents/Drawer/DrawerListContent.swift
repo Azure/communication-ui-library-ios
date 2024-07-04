@@ -36,8 +36,10 @@ internal struct SelectableDrawerItemView: View {
 
     var body: some View {
         HStack {
-            Icon(name: item.icon, size: DrawerListConstants.iconSize)
-                .foregroundColor(.primary)
+            if let startIcon = item.startIcon {
+                Icon(name: startIcon, size: DrawerListConstants.iconSize)
+                    .foregroundColor(.primary)
+            }
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
@@ -52,7 +54,10 @@ internal struct SelectableDrawerItemView: View {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .onTapGesture {
-            item.action()
+            if let action = item.action {
+                action()
+            }
+
         }
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }
@@ -63,8 +68,10 @@ internal struct DrawerItemView: View {
 
     var body: some View {
         HStack {
-            Icon(name: item.icon, size: DrawerListConstants.iconSize)
-                .foregroundColor(.primary)
+            if let icon = item.startIcon {
+                Icon(name: icon, size: DrawerListConstants.iconSize)
+                    .foregroundColor(.primary)
+            }
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
@@ -76,7 +83,9 @@ internal struct DrawerItemView: View {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .onTapGesture {
-            item.action()
+            if let action = item.action {
+                action()
+            }
         }
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }

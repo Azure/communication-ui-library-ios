@@ -348,18 +348,19 @@ extension CompositeViewModelFactory {
                                      title: String,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
+        DrawerListItemViewModel(title: title,
                                 accessibilityIdentifier: accessibilityIdentifier,
-                                action: action)
+                                action: action,
+                                startIcon: icon)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
-                                accessibilityIdentifier: accessibilityIdentifier)
+        DrawerListItemViewModel(title: title,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                action: nil,
+                                startIcon: icon)
     }
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
