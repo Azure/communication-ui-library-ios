@@ -24,8 +24,6 @@ struct CaptionsInfoView: View {
                             DispatchQueue.main.async {
                                 // Update visibility state based on the geometry of the last item
                                 if index == viewModel.captionsData.indices.last {
-                                    print(geometry.frame(in: .global).maxY)
-                                    print(UIScreen.main.bounds.height - 115)
                                    isLastItemVisible = geometry.frame(in: .global).maxY <=
                                     UIScreen.main.bounds.height - 115
                                 }
