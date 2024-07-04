@@ -25,7 +25,7 @@ struct CaptionsInfoView: View {
                                 // Update visibility state based on the geometry of the last item
                                 if index == viewModel.captionsData.indices.last {
                                    isLastItemVisible = geometry.frame(in: .global).maxY <=
-                                    UIScreen.main.bounds.height - 115
+                                    UIScreen.main.bounds.height
                                 }
                             }
                             return Color.clear
