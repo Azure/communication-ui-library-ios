@@ -11,7 +11,6 @@ class CallingViewModel: ObservableObject {
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
     @Published var isInPip = false
-    @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var allowLocalCameraPreview = false
     @Published var captionsStarted = false
 
@@ -44,12 +43,14 @@ class CallingViewModel: ObservableObject {
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
+    var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
     var captionsLanguageListViewModel: CaptionsLanguageListViewModel!
     var captionsListViewModel: CaptionsListViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var audioDeviceListViewModel: AudioDevicesListViewModel!
     var captionsInfoViewModel: CaptionsInfoViewModel!
+    var capabilitiesManager: CapabilitiesManager!
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -62,7 +63,9 @@ class CallingViewModel: ObservableObject {
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          captionsMode: CaptionsVisibilityMode,
          callType: CompositeCallType,
-         captionsOptions: CaptionsOptions
+         captionsOptions: CaptionsOptions,
+         capabilitiesManager: CapabilitiesManager
+
     ) {
         self.logger = logger
         self.store = store
@@ -72,6 +75,7 @@ class CallingViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+        self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.captionsOptions = captionsOptions
         self.captionsMode = captionsMode
@@ -136,7 +140,8 @@ class CallingViewModel: ObservableObject {
                 }
 
             }, localUserState: store.state.localUserState,
-            leaveCallConfirmationMode: leaveCallConfirmationMode)
+            leaveCallConfirmationMode: leaveCallConfirmationMode,
+            capabilitiesManager: capabilitiesManager)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {
@@ -159,6 +164,8 @@ class CallingViewModel: ObservableObject {
 
         callDiagnosticsViewModel.$currentBottomToastDiagnostic
                     .assign(to: &$currentBottomToastDiagnostic)
+        bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
+            toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isDisplayed: store.state.navigationState.moreOptionsVisible,
@@ -304,6 +311,7 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
         callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
+        bottomToastViewModel.update(toastNotificationState: state.toastNotificationState)
     }
 
     private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {

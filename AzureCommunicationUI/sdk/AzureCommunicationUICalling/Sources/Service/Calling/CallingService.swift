@@ -15,6 +15,7 @@ protocol CallingServiceProtocol {
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
@@ -27,6 +28,7 @@ protocol CallingServiceProtocol {
     var activeCaptionLanguageSubject: CurrentValueSubject<String, Never> { get }
     var captionsEnabledChanged: CurrentValueSubject<Bool, Never> { get }
     var captionsTypeSubject: CurrentValueSubject<CallCompositeCaptionsType, Never> { get }
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> {get}
 
     func setupCall() async throws
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
@@ -50,6 +52,8 @@ protocol CallingServiceProtocol {
     func stopCaptions() async throws
     func setCaptionsSpokenLanguage(_ language: String) async throws
     func setCaptionsCaptionLanguage(_ language: String) async throws
+    func removeParticipant(_ participantId: String) async throws
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType>
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -65,9 +69,11 @@ class CallingService: NSObject, CallingServiceProtocol {
     var callIdSubject: PassthroughSubject<String, Never>
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never>
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never>
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never>
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never>
 
     var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never>
     var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never>
@@ -100,6 +106,8 @@ class CallingService: NSObject, CallingServiceProtocol {
         activeCaptionLanguageSubject = callingSDKWrapper.callingEventsHandler.activeCaptionLanguageChanged
         captionsEnabledChanged = callingSDKWrapper.callingEventsHandler.captionsEnabledChanged
         captionsTypeSubject = callingSDKWrapper.callingEventsHandler.captionsTypeChanged
+        capabilitiesChangedSubject = callingSDKWrapper.callingEventsHandler.capabilitiesChangedSubject
+        totalParticipantCountSubject = callingSDKWrapper.callingEventsHandler.totalParticipantCountSubject
     }
 
     func setupCall() async throws {
@@ -175,5 +183,11 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func setCaptionsCaptionLanguage(_ language: String) async throws {
         try await callingSDKWrapper.setCaptionsCaptionLanguage(language)
+    func removeParticipant(_ participantId: String) async throws {
+        try await callingSDKWrapper.removeParticipant(participantId)
+    }
+
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType> {
+        try await callingSDKWrapper.getCapabilities()
     }
 }

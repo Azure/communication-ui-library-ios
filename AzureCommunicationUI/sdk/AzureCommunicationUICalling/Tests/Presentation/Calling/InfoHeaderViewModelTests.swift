@@ -78,7 +78,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         let remoteParticipantsState = RemoteParticipantsState(
-            participantInfoList: [participantInfoModel], lastUpdateTimeStamp: Date())
+            participantInfoList: [participantInfoModel], lastUpdateTimeStamp: Date(), totalParticipantCount: 1)
 
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         sut.update(localUserState: storeFactory.store.state.localUserState,
@@ -124,7 +124,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         participantList.append(secondParticipantInfoModel)
 
         let remoteParticipantsState = RemoteParticipantsState(
-            participantInfoList: participantList, lastUpdateTimeStamp: Date())
+            participantInfoList: participantList, lastUpdateTimeStamp: Date(), totalParticipantCount: 2)
 
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         sut.update(localUserState: storeFactory.store.state.localUserState,
@@ -182,7 +182,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         participantList.append(participant3)
 
         let remoteParticipantsState = RemoteParticipantsState(
-            participantInfoList: participantList, lastUpdateTimeStamp: Date())
+            participantInfoList: participantList, lastUpdateTimeStamp: Date(), totalParticipantCount: 3)
 
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         sut.update(localUserState: storeFactory.store.state.localUserState,
@@ -228,6 +228,13 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.displayParticipantsList()
 
         XCTAssertTrue(sut.isParticipantsListDisplayed)
+    }
+
+    func test_infoHeaderViewModel_when_displayParticipantMenu_then_isParticipantMenuDisplayed() {
+        let sut = makeSUT()
+        sut.displayParticipantMenu(participantId: "participantId", participantDisplayName: "participantDisplayName")
+
+        XCTAssertTrue(sut.isParticipantMenuDisplayed)
     }
 
     func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedFalse_then_shouldBecomeTrueAndPublish() {
@@ -368,7 +375,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         participantList.append(secondParticipantInfoModel)
 
         let remoteParticipantsState = RemoteParticipantsState(
-            participantInfoList: participantList, lastUpdateTimeStamp: Date())
+            participantInfoList: participantList, lastUpdateTimeStamp: Date(), totalParticipantCount: 2)
 
         XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabel0ParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)

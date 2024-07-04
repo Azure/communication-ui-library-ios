@@ -16,14 +16,6 @@ public struct LocalOptions {
     /// Configuration for captions
     let captionsOptions: CaptionsOptions?
 
-    /* <ROOMS_SUPPORT>
-    /// Hint the role of the user when the role is not available before a Rooms call is started.
-    /// This value should be obtained using the Rooms API. This role will determine permissions in the
-    /// Setup screen of the CallComposite.
-    /// The true role of the user will be synced with ACS services when a Rooms call starts.
-    let roleHint: ParticipantRole?
-    </ROOMS_SUPPORT> */
-
     ///  The CameraOn is used when we skip the setup screen
 
     /// Determines if the microphone is enabled upon joining the call, bypassing the setup screen.
@@ -48,7 +40,6 @@ public struct LocalOptions {
     ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
     ///   - captionsOption: Configuration for captions
     ///   - audioVideoMode: The desired audio/video mode for the call.
-    ///   - roleHint:Determins user role before a Rooms call is started.
     ///   This role will determine functionality of the Setup screen. The actual role will be syncronized 
     ///   with ACS services when a Rooms call starts.
     public init(participantViewData: ParticipantViewData? = nil,
@@ -57,8 +48,7 @@ public struct LocalOptions {
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
                 captionsOptions: CaptionsOptions? = CaptionsOptions(),
-                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo /* <ROOMS_SUPPORT> ,
-                roleHint: ParticipantRole? = nil </ROOMS_SUPPORT> */) {
+                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn
@@ -66,7 +56,6 @@ public struct LocalOptions {
         self.skipSetupScreen = skipSetupScreen
         self.audioVideoMode = audioVideoMode
         self.captionsOptions = captionsOptions
-        /* <ROOMS_SUPPORT> self.roleHint = roleHint </ROOMS_SUPPORT> */
     }
 
     /// Determines the actual state of the camera

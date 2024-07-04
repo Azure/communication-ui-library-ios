@@ -47,7 +47,6 @@ extension Reducer where State == CallDiagnosticsState,
              .hideSpokenLanguageView,
              .showCaptionsLanguageView,
              .hideCaptionsLanguageView,
-             .visibilityAction,
              .captionsAction,
              .showEndCallConfirmation,
              .hideEndCallConfirmation,
@@ -56,7 +55,10 @@ extension Reducer where State == CallDiagnosticsState,
              .showAudioSelection,
              .hideAudioSelection,
              .showSupportShare,
-             .hideSupportShare:
+             .hideSupportShare,
+             .visibilityAction,
+             .toastNotificationAction,
+             .setTotalParticipantCount:
             return state
         }
 

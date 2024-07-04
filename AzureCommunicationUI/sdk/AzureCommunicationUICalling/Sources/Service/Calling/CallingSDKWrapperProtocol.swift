@@ -5,6 +5,7 @@
 import AzureCommunicationCommon
 import Combine
 import Foundation
+import AzureCommunicationCalling
 
 enum CameraDevice {
     case front
@@ -76,6 +77,9 @@ protocol CallingSDKWrapperProtocol {
     func stopCaptions() async throws
     func setCaptionsSpokenLanguage(_ language: String) async throws
     func setCaptionsCaptionLanguage(_ language: String) async throws
+    func removeParticipant(_ participantId: String) async throws
+    func getCapabilities() async throws -> Set<ParticipantCapabilityType>
+
     func getLogFiles() -> [URL]
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
@@ -97,6 +101,7 @@ protocol CallingSDKEventsHandling {
 
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
+    var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
 
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
@@ -110,4 +115,6 @@ protocol CallingSDKEventsHandling {
     var activeCaptionLanguageChanged: CurrentValueSubject<String, Never> { get }
     var captionsEnabledChanged: CurrentValueSubject<Bool, Never> { get }
     var captionsTypeChanged: CurrentValueSubject<CallCompositeCaptionsType, Never> { get }
+
+    var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
 }

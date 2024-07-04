@@ -73,7 +73,9 @@ extension Reducer where State == CallingState,
                 .hideAudioSelection,
                 .showSupportShare,
                 .hideSupportShare,
-                .visibilityAction:
+                .visibilityAction,
+                .toastNotificationAction,
+                .setTotalParticipantCount:
             return callingState
         }
         return CallingState(status: callingStatus,

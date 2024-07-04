@@ -32,6 +32,13 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var stopCaptions: ((Bool) -> Void)?
     var setCaptionsSpokenLanguage: ((Bool) -> Void)?
     var setCaptionsLangue: ((Bool) -> Void)?
+    var onNetworkQualityCallDiagnosticsUpdated: ((Bool) -> Void)?
+    var onNetworkCallDiagnosticsUpdated: ((Bool) -> Void)?
+    var onMediaCallDiagnosticsUpdated: ((Bool) -> Void)?
+    var dismissNotification: ((Bool) -> Void)?
+    var setCapabilities: ((Bool) -> Void)?
+    var removeParticipant: ((Bool) -> Void)?
+    var onCapabilitiesChanged: ((CapabilitiesChangedEvent) -> Void)?
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -185,6 +192,45 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func setCaptionsLanguage(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
         Task {
             setCaptionsLangue?(true)
+    func onNetworkQualityCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.NetworkQualityDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            onNetworkQualityCallDiagnosticsUpdated?(true)
+        }
+    }
+
+    func onNetworkCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.NetworkDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            onNetworkCallDiagnosticsUpdated?(true)
+        }
+    }
+
+    func onMediaCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.MediaDiagnosticModel) -> Task<Void, Never> {
+        Task {
+            onMediaCallDiagnosticsUpdated?(true)
+        }
+    }
+
+    func dismissNotification(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            dismissNotification?(true)
+        }
+    }
+
+    func setCapabilities(capabilities: Set<AzureCommunicationUICalling.ParticipantCapabilityType>, state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            setCapabilities?(true)
+        }
+    }
+
+    func removeParticipant(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, participantId: String) -> Task<Void, Never> {
+        Task {
+            removeParticipant?(true)
+        }
+    }
+
+    func onCapabilitiesChanged(event: AzureCommunicationUICalling.CapabilitiesChangedEvent, state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            onCapabilitiesChanged?(event)
         }
     }
 }

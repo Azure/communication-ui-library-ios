@@ -17,6 +17,8 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
+    var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
+    var capabilitiesChangedSubject = PassthroughSubject<CapabilitiesChangedEvent, Never>()
 
     var captionsSupportedSpokenLanguages = CurrentValueSubject<[String], Never>([])
     var captionsSupportedCaptionLanguages = CurrentValueSubject<[String], Never>([])
@@ -42,6 +44,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var captionsFeature: CaptionsCallFeature?
     private var teamsCaptions: TeamsCaptions?
     private var communicationCaptions: CommunicationCaptions?
+    private var capabilitiesCallFeature: CapabilitiesCallFeature?
 
     private var previousCallingStatus: CallingStatus = .none
     private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
@@ -81,6 +84,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     func assign(_ captionsFeature: CaptionsCallFeature) {
         self.captionsFeature = captionsFeature
         captionsFeature.delegate = self
+    func assign(_ capabilitiesCallFeature: CapabilitiesCallFeature) {
+        self.capabilitiesCallFeature = capabilitiesCallFeature
+        self.capabilitiesCallFeature?.delegate = self
     }
 
     func setupProperties() {
@@ -92,6 +98,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         captionsFeature = nil
         remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
         previousCallingStatus = .none
+        capabilitiesCallFeature = nil
     }
 
     private func setupRemoteParticipantEventsAdapter() {
@@ -186,7 +193,8 @@ extension CallingSDKEventsHandler: CallDelegate,
     DominantSpeakersCallFeatureDelegate,
     MediaDiagnosticsDelegate,
     NetworkDiagnosticsDelegate,
-    CaptionsCallFeatureDelegate {
+    CaptionsCallFeatureDelegate,
+    CapabilitiesCallFeatureDelegate {
     func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
     }
@@ -285,6 +293,18 @@ extension CallingSDKEventsHandler: CallDelegate,
     func call(_ call: Call, didChangeRole args: PropertyChangedEventArgs) {
         let role = call.callParticipantRole.toParticipantRole()
         participantRoleSubject.send(role)
+    }
+
+    func call(_ call: Call, didChangeTotalParticipantCount args: PropertyChangedEventArgs) {
+        // substract local participant from total participantCount
+        totalParticipantCountSubject.send(Int(call.totalParticipantCount) - 1)
+    }
+
+    // MARK: CapabilitiesDelegate
+    func capabilitiesCallFeature(_ capabilitiesCallFeature: CapabilitiesCallFeature,
+                                 didChangeCapabilities args: CapabilitiesChangedEventArgs) {
+        let capabilitiesChangedEvent = args.toCapabilitiesChangedEvent()
+        self.capabilitiesChangedSubject.send(capabilitiesChangedEvent)
     }
 
     // MARK: NetworkDiagnosticsDelegate

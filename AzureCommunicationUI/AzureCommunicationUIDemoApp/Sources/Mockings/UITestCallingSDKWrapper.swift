@@ -10,6 +10,14 @@ import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
+    func removeParticipant(_ participantId: String) async throws {
+        return
+    }
+
+    func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
+        throw CallCompositeInternalError.callJoinFailed
+    }
+
     var callComposite: CallComposite?
     let callingEventsHandler: CallingSDKEventsHandling
 

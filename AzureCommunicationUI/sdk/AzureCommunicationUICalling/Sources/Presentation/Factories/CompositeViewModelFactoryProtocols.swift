@@ -36,7 +36,6 @@ protocol CompositeViewModelFactoryProtocol {
     func makeCaptionsInfoViewModel (state: AppState) -> CaptionsInfoViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
-    func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel
@@ -44,7 +43,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode) -> ControlBarViewModel
+                                 leaveCallConfirmationMode: LeaveCallConfirmationMode,
+                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
@@ -56,6 +56,9 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
+    func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
+
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
@@ -103,6 +106,9 @@ protocol CompositeViewModelFactoryProtocol {
         isSelected: Bool,
         onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
     func makeSupportFormViewModel() -> SupportFormViewModel
+    func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
+    func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,
+                                  dispatchAction: @escaping ActionDispatch) -> BottomToastViewModel
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,

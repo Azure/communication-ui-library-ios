@@ -54,6 +54,8 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var muteLocalMicCalled = false
     var unmuteLocalMicCalled = false
     var startPreviewVideoStreamCalled = false
+    var removeParticipantCalled = false
+    var getCapabilitiesCalled = false
 
     var isMuted: Bool?
     var isCameraPreferred: Bool?
@@ -172,5 +174,12 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     }
 
     func setCaptionsCaptionLanguage(_ language: String) async throws {
+    func removeParticipant(_ participantId: String) async throws {
+        removeParticipantCalled = true
+    }
+
+    func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
+        getCapabilitiesCalled = true
+        return [.unmuteMicrophone, .turnVideoOn]
     }
 }

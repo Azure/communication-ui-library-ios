@@ -18,6 +18,7 @@ struct AppState {
     let defaultUserState: DefaultUserState
     let diagnosticsState: CallDiagnosticsState
     let captionsState: CaptionsState
+    let toastNotificationState: ToastNotificationState
 
     init(callingState: CallingState = .init(),
          permissionState: PermissionState = .init(),
@@ -30,8 +31,8 @@ struct AppState {
          defaultUserState: DefaultUserState = .init(),
          visibilityState: VisibilityState = .init(),
          diagnosticsState: CallDiagnosticsState = .init(),
-         captionsState: CaptionsState = .init()
-    ) {
+         captionsState: CaptionsState = .init(),
+         toastNotificationState: ToastNotificationState = .init()) {
         self.callingState = callingState
         self.permissionState = permissionState
         self.localUserState = localUserState
@@ -44,5 +45,6 @@ struct AppState {
         self.visibilityState = visibilityState
         self.diagnosticsState = diagnosticsState
         self.captionsState = captionsState
+        self.toastNotificationState = toastNotificationState
     }
 }

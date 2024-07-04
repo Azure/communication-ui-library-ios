@@ -65,6 +65,23 @@ struct SettingsView: View {
         }
     }
 
+    var setuScreenSettings: some View {
+        Section(header: Text("Setup screen settings")) {
+            Toggle("Camera button enabled", isOn: $envConfigSubject.setupScreenOptionsCameraButtonEnabled)
+                .onTapGesture {
+                    envConfigSubject.setupScreenOptionsCameraButtonEnabled =
+                    !envConfigSubject.setupScreenOptionsCameraButtonEnabled
+                }
+                .accessibilityIdentifier(AccessibilityId.setupScreenCameraButtonEnabledAccessibilityID.rawValue)
+            Toggle("Mic button enabled", isOn: $envConfigSubject.setupScreenOptionsMicButtonEnabled)
+                .onTapGesture {
+                    envConfigSubject.setupScreenOptionsMicButtonEnabled =
+                    !envConfigSubject.setupScreenOptionsMicButtonEnabled
+                }
+                .accessibilityIdentifier(AccessibilityId.setupScreenMicButtonEnabledAccessibilityID.rawValue)
+        }
+    }
+
     var settingsForm: some View {
         Form {
             orientationOptions
@@ -81,6 +98,7 @@ struct SettingsView: View {
                 themeSettings
                 multitaskingSettings
             }
+            setuScreenSettings
             displayLeaveCallConfirmationSettings
             exitCompositeSettings
             callKitSettings

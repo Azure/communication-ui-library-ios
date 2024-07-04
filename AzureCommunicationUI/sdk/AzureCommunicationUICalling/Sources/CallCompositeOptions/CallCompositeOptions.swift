@@ -16,10 +16,12 @@ public struct CallCompositeOptions {
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
     private(set) var callScreenOptions: CallScreenOptions?
+    private(set) var capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode?
     private(set) var callKitOptions: CallKitOptions?
     private(set) var disableInternalPushForIncomingCall = false
     private(set) var displayName: String?
     private(set) var userId: CommunicationIdentifier?
+    private(set) var setupScreenOptions: SetupScreenOptions?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -47,7 +49,10 @@ public struct CallCompositeOptions {
                 callKitOptions: CallKitOptions? = nil,
                 displayName: String? = nil,
                 userId: CommunicationIdentifier? = nil,
-                disableInternalPushForIncomingCall: Bool = false) {
+                disableInternalPushForIncomingCall: Bool = false,
+                setupScreenOptions: SetupScreenOptions? = nil,
+                capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode? = nil
+            ) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
@@ -55,8 +60,10 @@ public struct CallCompositeOptions {
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPictureInPictureWhenMultitasking
         self.callScreenOptions = callScreenOptions
+        self.capabilitiesChangedNotificationMode = capabilitiesChangedNotificationMode
         self.callKitOptions = callKitOptions
         self.displayName = displayName
+        self.setupScreenOptions = setupScreenOptions
         self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
         self.userId = userId
     }

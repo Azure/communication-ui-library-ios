@@ -14,6 +14,7 @@ class SetupControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
+    private let setupScreenOptions: SetupScreenOptions?
 
     private var isJoinRequested = false
     private var isDefaultUserStateMapped = false
@@ -30,17 +31,19 @@ class SetupControlBarViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
-         audioVideoMode: CallCompositeAudioVideoMode
+         audioVideoMode: CallCompositeAudioVideoMode,
+         setupScreenOptions: SetupScreenOptions?
     ) {
         self.logger = logger
         self.dispatch = dispatchAction
         self.localizationProvider = localizationProvider
+        self.setupScreenOptions = setupScreenOptions
 
         cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             selectedButtonState: CameraButtonState.videoOff,
             localizationProvider: self.localizationProvider,
             buttonTypeColor: .colorThemedWhite,
-            isDisabled: false) { [weak self] in
+            isDisabled: isCameraDisabled()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -55,7 +58,7 @@ class SetupControlBarViewModel: ObservableObject {
             selectedButtonState: MicButtonState.micOff,
             localizationProvider: self.localizationProvider,
             buttonTypeColor: .colorThemedWhite,
-            isDisabled: false) { [weak self] in
+            isDisabled: isAudioDisabled()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -113,11 +116,11 @@ class SetupControlBarViewModel: ObservableObject {
     }
 
     func isCameraDisabled() -> Bool {
-        return isJoinRequested || cameraPermission == .denied
+        return setupScreenOptions?.cameraButtonEnabled == false || isJoinRequested || cameraPermission == .denied
     }
 
     func isAudioDisabled() -> Bool {
-        return isJoinRequested || audioPermission == .denied
+        return setupScreenOptions?.microphoneButtonEnabled == false || isJoinRequested || audioPermission == .denied
     }
 
     func isControlBarHidden() -> Bool {
