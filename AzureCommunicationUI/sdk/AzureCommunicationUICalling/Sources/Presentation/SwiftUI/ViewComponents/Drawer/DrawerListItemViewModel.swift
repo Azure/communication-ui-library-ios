@@ -80,3 +80,16 @@ class BodyTextDrawerListItemViewModel: DrawerListItemViewModel {
                    startIcon: nil)
     }
 }
+
+class ParticipantDrawerListItemViewModel: DrawerListItemViewModel {
+    let isLocal: Bool
+
+    init(displayName: String, isLocal: Bool, isMuted: Bool, action: (() -> Void)?) {
+        self.isLocal = isLocal
+        super.init(title: displayName,
+                   accessibilityIdentifier: displayName,
+                   action: action,
+                   startIcon: nil,
+                   endIcon: nil)
+    }
+}
