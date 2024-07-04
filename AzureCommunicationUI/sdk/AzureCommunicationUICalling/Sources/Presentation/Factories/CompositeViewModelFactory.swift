@@ -429,14 +429,6 @@ extension CompositeViewModelFactory {
                                 action: action)
     }
 
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
-                                accessibilityIdentifier: accessibilityIdentifier)
-    }
-
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
                                           debugInfoManager: debugInfoManager) {

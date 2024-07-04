@@ -183,6 +183,8 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func setCaptionsCaptionLanguage(_ language: String) async throws {
         try await callingSDKWrapper.setCaptionsCaptionLanguage(language)
+    }
+
     func removeParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.removeParticipant(participantId)
     }

@@ -521,6 +521,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
     }
 
+    // swiftlint:disable function_body_length
     private func constructViewFactoryAndDependencies(
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
@@ -612,8 +613,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     }
 
     private func createDebugInfoManager(callingSDKWrapper: CallingSDKWrapperProtocol) -> DebugInfoManagerProtocol {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
-                                getLogFiles: { return callingSDKWrapper.getLogFiles() })
+       return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                               getLogFiles: { return callingSDKWrapper.getLogFiles() })
     }
 
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
@@ -705,6 +706,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         return callingSDKInitializer
     }
 }
+// swiftlint:enable function_body_length
 
 extension CallComposite {
     private func receiveStoreEvents(_ store: Store<AppState, Action>) {

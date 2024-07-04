@@ -119,8 +119,8 @@ extension AzureCommunicationCalling.CallingCommunicationErrors {
             return .getCaptionsFailedCallStateNotConnected
         case .captionsFailedToStart:
             return .captionsFailedToStart
-//        case .captionsFailedToStop:
-//            return .captionsFailedToStop
+        case .captionsFailedToStop:
+            return .captionsFailedToStop
         case .captionsFailedToSetSpokenLanguage:
             return .captionsFailedToSetSpokenLanguage
         case .failedToSetCaptionLanguage:
@@ -129,8 +129,6 @@ extension AzureCommunicationCalling.CallingCommunicationErrors {
             return .captionsPolicyDisabled
         case .captionsDisabledByConfigurations:
             return .captionsDisabledByConfigurations
-//        case .captionsSetSpokenLanguageDisabled:
-//            return .captionsSetSpokenLanguageDisabled
         case .setCaptionLanguageDisabled:
             return .setCaptionLanguageDisabled
         case .setCaptionLanguageTeamsPremiumLicenseNeeded:

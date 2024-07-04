@@ -8,6 +8,7 @@ import AzureCommunicationCalling
 import Foundation
 import Combine
 
+// swiftlint:disable file_length
 class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])
     var callInfoSubject = PassthroughSubject<CallInfoModel, Never>()
@@ -84,6 +85,8 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     func assign(_ captionsFeature: CaptionsCallFeature) {
         self.captionsFeature = captionsFeature
         captionsFeature.delegate = self
+    }
+
     func assign(_ capabilitiesCallFeature: CapabilitiesCallFeature) {
         self.capabilitiesCallFeature = capabilitiesCallFeature
         self.capabilitiesCallFeature?.delegate = self
@@ -186,7 +189,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
               previousCallingStatus == .remoteHold
     }
 }
-// swiftlint:disable file_length
+
 extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
     TranscriptionCallFeatureDelegate,

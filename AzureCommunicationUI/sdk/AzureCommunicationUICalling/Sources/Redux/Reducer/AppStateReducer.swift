@@ -18,7 +18,7 @@ extension Reducer {
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer,
         visibilityReducer: Reducer<VisibilityState, VisibilityAction> = .visibilityReducer,
         diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .liveDiagnosticsReducer,
-        captionsReducer: Reducer<CaptionsState, CaptionsAction> = .captionsReducer
+        captionsReducer: Reducer<CaptionsState, CaptionsAction> = .captionsReducer,
         toastNotificationReducer: Reducer<ToastNotificationState, ToastNotificationAction> = .toastNotificationReducer
     ) -> Reducer<AppState, Action> {
 

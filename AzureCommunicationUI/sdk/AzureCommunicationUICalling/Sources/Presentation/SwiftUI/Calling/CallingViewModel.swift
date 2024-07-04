@@ -161,9 +161,6 @@ class CallingViewModel: ObservableObject {
                                                                               subtitle: "")
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
-
-        callDiagnosticsViewModel.$currentBottomToastDiagnostic
-                    .assign(to: &$currentBottomToastDiagnostic)
         bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
 

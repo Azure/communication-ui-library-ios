@@ -639,7 +639,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 }
 
 extension CallingMiddlewareHandler {
-    // swiftlint:disable function_body_length
     private func subscription(dispatch: @escaping ActionDispatch,
                               isSkipRequested: Bool = false) {
         logger.debug("Subscribe to calling service subjects")

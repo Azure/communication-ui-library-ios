@@ -12,10 +12,10 @@ class DrawerListItemViewModel: Identifiable {
     let subtitle: String?
     let accessibilityIdentifier: String
     let titleTrailingAccessoryView: CompositeIcon?
-    let action: (() -> Void)
+    var action: (() -> Void)
     let isToggleOn: Binding<Bool>?
     let showsToggle: Bool
-    let isEnabled: Bool
+    var isEnabled: Bool
 
     init(icon: CompositeIcon,
          title: String,

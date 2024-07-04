@@ -35,7 +35,9 @@ class ParticipantMenuViewModel: ObservableObject {
         removeParticipantModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .personDelete,
             title: localizationProvider.getLocalizedString(.callingViewParticipantMenuRemove),
-            accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantMenuRemoveAccessibilityId.rawValue)
+            accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantMenuRemoveAccessibilityId.rawValue,
+            titleTrailingAccessoryView: CompositeIcon.none,
+            action: {})
 
         removeParticipantModel.isEnabled = canRemove
         removeParticipantModel.action = { [weak self] in

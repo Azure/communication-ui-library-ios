@@ -32,10 +32,9 @@ class ControlBarViewModel: ObservableObject {
                                                  transmission: .local)
     var audioState = LocalUserState.AudioState(operation: .off,
                                                device: .receiverSelected)
-    var onEndCallTapped: (() -> Void)    
+    var onEndCallTapped: (() -> Void)
     var capabilitiesManager: CapabilitiesManager
     var capabilities: Set<ParticipantCapabilityType>
-    // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
@@ -52,9 +51,6 @@ class ControlBarViewModel: ObservableObject {
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.capabilitiesManager = capabilitiesManager
         self.capabilities = localUserState.capabilities
-        audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
-            dispatchAction: dispatch,
-            localUserState: localUserState)
 
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
