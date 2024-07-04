@@ -44,8 +44,7 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
 
     static func == (lhs: CallCompositeCaptionsData, rhs: CallCompositeCaptionsData) -> Bool {
         // Define what makes two instances of CallCompositeCaptionsData equal
-        return lhs.timestamp == rhs.timestamp &&
-               lhs.speakerRawId == rhs.speakerRawId &&
+        return lhs.speakerRawId == rhs.speakerRawId &&
                lhs.resultType == rhs.resultType &&
                lhs.speakerName == rhs.speakerName &&
                lhs.spokenLanguage == rhs.spokenLanguage &&
