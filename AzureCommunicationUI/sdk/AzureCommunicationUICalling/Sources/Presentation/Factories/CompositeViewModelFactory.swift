@@ -296,7 +296,10 @@ extension CompositeViewModelFactory {
         ParticipantsListViewModel(compositeViewModelFactory: self,
                                   localUserState: localUserState,
                                   dispatchAction: dispatchAction,
-                                  localizationProvider: localizationProvider)
+                                  localizationProvider: localizationProvider,
+                                  onUserClicked: { user in
+            dispatchAction(Action.showParticipantActions(user))
+        })
     }
 
     func makeParticipantMenuViewModel(localUserState: LocalUserState,

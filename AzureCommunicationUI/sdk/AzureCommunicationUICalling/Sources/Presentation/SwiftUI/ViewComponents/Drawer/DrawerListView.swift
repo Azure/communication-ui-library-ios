@@ -163,6 +163,12 @@ internal struct DrawerParticipantView: View {
             Spacer()
             Icon(name: item.participantInfoModel.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
         }
+        .onTapGesture {
+            guard let action = item.action else {
+                return
+            }
+            action()
+        }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)

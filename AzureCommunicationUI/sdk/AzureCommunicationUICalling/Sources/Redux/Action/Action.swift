@@ -26,7 +26,7 @@ enum Action: Equatable {
     case showMoreOptions
     case showSupportShare
     case showParticipants
-    case showParticipantActions
+    case showParticipantActions(ParticipantInfoModel)
     // Since we only show one drawer at a time, we can have one hide
     case hideDrawer
 

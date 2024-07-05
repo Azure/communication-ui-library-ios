@@ -13,13 +13,14 @@ class ParticipantsListViewModel: ObservableObject {
 
     // TADO, keep moving to drawerListItems, remove both of these
     // @Published var participantsList: [ParticipantInfoModel] = []
-    @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
+    // @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
     private var plusMoreParticipantCount: Int?
     private var lastParticipantRole: ParticipantRoleEnum?
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private let onUserClicked: (ParticipantInfoModel) -> Void
 
     var isDisplayed: Bool
     var lastUpdateTimeStamp = Date()
@@ -28,16 +29,19 @@ class ParticipantsListViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localUserState: LocalUserState,
          dispatchAction: @escaping ActionDispatch,
-         localizationProvider: LocalizationProviderProtocol) {
+         localizationProvider: LocalizationProviderProtocol,
+         onUserClicked: @escaping (ParticipantInfoModel) -> Void
+    ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.dispatch = dispatchAction
         self.lastParticipantRole = localUserState.participantRole
         self.localizationProvider = localizationProvider
         self.isDisplayed = false
+        self.onUserClicked = onUserClicked
 
         // TADO: Delete,
-        localParticipantsListCellViewModel =
-        compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
+        // localParticipantsListCellViewModel =
+        // compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
     }
 
     func update(localUserState: LocalUserState,
@@ -47,10 +51,11 @@ class ParticipantsListViewModel: ObservableObject {
         self.isDisplayed = isDisplayed
 
         // Updating the local participant.
-        if localParticipantsListCellViewModel.isMuted != (localUserState.audioState.operation == .off) {
-            localParticipantsListCellViewModel =
-            compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
-        }
+//
+//        if localParticipantsListCellViewModel.isMuted != (localUserState.audioState.operation == .off) {
+//            localParticipantsListCellViewModel =
+//            compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
+//        }
 
         // If timestamp or lastRoleChanged
         if lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
@@ -88,11 +93,15 @@ class ParticipantsListViewModel: ObservableObject {
 
             // InMeeting and Yourself
             let meetingParticipants: [ParticipantInfoModel] = inMeeting + localUsers
+            // Tado: Sort this            
 
             // Remote participants in meeting
             drawerListItems = meetingParticipants.map {
-                ParticipantDrawerListItemViewModel(participantInfoModel: $0) {
-                    // TADO: Click actions for a participant
+                let user = $0
+                return ParticipantDrawerListItemViewModel(participantInfoModel: user) {
+                    if user.isRemoteUser {
+                        self.onUserClicked(user)
+                    }
                 }
             }
 
@@ -113,11 +122,12 @@ class ParticipantsListViewModel: ObservableObject {
     func sortedParticipants(with avatarManager: AvatarViewManager) -> [ParticipantsListCellViewModel] {
         // alphabetical order
         // TADO: Need to make sure participantList inludes local user
-        return ([localParticipantsListCellViewModel] /* + participantsList */).sorted {
-            let name = $0.getCellDisplayName(with: $0.getParticipantViewData(from: avatarManager))
-            let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
-            return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
-        }
+        return []
+//        return ([localParticipantsListCellViewModel] /* + participantsList */).sorted {
+//            let name = $0.getCellDisplayName(with: $0.getParticipantViewData(from: avatarManager))
+//            let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
+//            return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
+//        }
     }
 
     func plusMoreMenuItem() -> ParticipantsListCellViewModel? {

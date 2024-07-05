@@ -96,8 +96,9 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     // TADO: This probably should be dispatched from participant list VM
+    // Delete actually
     func displayParticipantMenu(participantId: String, participantDisplayName: String) {
-        dispatch(.showParticipantActions)
+//        dispatch(.showParticipantActions)
 //  participantMenuViewModel.showMenu(participantId: participantId, participantDisplayName: participantDisplayName)
 //        self.isParticipantMenuDisplayed = true
     }
