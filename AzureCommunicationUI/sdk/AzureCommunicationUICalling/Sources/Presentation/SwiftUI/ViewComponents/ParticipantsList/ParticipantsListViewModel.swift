@@ -12,7 +12,7 @@ class ParticipantsListViewModel: ObservableObject {
         accessibilityIdentifier: "Test")]
 
     // TADO, keep moving to drawerListItems, remove both of these
-    @Published var participantsList: [ParticipantInfoModel] = []
+    // @Published var participantsList: [ParticipantInfoModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
     private var plusMoreParticipantCount: Int?
@@ -59,21 +59,8 @@ class ParticipantsListViewModel: ObservableObject {
             self.lastParticipantRole = localUserState.participantRole
 
             let shouldilterOutLobbyUsers = shouldFilterOutLobbyUsers(participantRole: localUserState.participantRole)
-            participantsList = remoteParticipantsState.participantInfoList
-                .filter({ participant in
-                    participant.status != .disconnected
-                    && (!shouldilterOutLobbyUsers || participant.status != .inLobby)
-                })
 
-            // Remote participants
-            drawerListItems = participantsList.map {
-                ParticipantDrawerListItemViewModel(participantInfoModel: $0) {
-                    // TADO: Click actions for a participant
-                }
-            }
-
-            // Local Participants
-            drawerListItems.append(ParticipantDrawerListItemViewModel(participantInfoModel: ParticipantInfoModel(
+            let localUsers = [ParticipantInfoModel(
                 displayName: localUserState.displayName ?? "Unknown User", /* TADO: Look up localized*/
                 isSpeaking: false,
                 isMuted: false, /* TADO: Wire up*/
@@ -82,9 +69,33 @@ class ParticipantsListViewModel: ObservableObject {
                 status: ParticipantStatus.connected, /* TADO: Safe Assumption?*/
                 screenShareVideoStreamModel: nil,
                 cameraVideoStreamModel: nil
-            )) {
+            )]
 
-            })
+            let notDisconnected = remoteParticipantsState.participantInfoList
+                .filter { participant in
+                    participant.status != .disconnected
+                }
+
+            let inMeeting = remoteParticipantsState.participantInfoList
+                .filter { participant in
+                    participant.status == .connected
+                }
+
+            let inLobby = remoteParticipantsState.participantInfoList
+                .filter { participant in
+                    participant.status == .inLobby
+                }
+
+            // InMeeting and Yourself
+            let meetingParticipants: [ParticipantInfoModel] = inMeeting + localUsers
+
+            // Remote participants in meeting
+            drawerListItems = meetingParticipants.map {
+                ParticipantDrawerListItemViewModel(participantInfoModel: $0) {
+                    // TADO: Click actions for a participant
+                }
+            }
+
             drawerListItems.insert(BodyTextDrawerListItemViewModel(
                 title: "In the call (\(drawerListItems.count))", /* TADO: Is this correct Participants + 1 */
                 accessibilityIdentifier: "??"), at: 0)

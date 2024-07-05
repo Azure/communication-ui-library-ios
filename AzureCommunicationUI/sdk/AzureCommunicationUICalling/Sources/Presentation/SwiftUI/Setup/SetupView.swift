@@ -58,7 +58,8 @@ struct SetupView: View {
             }
             BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
                          hideDrawer: viewModel.dismissAudioDevicesDrawer) {
-                AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel,
+                avatarManager: avatarManager)
             }
         }
     }

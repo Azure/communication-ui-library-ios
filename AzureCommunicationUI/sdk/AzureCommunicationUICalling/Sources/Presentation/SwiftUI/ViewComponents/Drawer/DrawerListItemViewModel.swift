@@ -5,6 +5,8 @@
 
 import Foundation
 
+// This class contains all the View Models for List based Drawers (Participants, Audio Devices, Leave Call Confirm)
+// It is not for form-based drawers (I.e. Support Form) or other custom swift UI views
 class DrawerListItemViewModel: Identifiable {
     let title: String
     let startIcon: CompositeIcon?

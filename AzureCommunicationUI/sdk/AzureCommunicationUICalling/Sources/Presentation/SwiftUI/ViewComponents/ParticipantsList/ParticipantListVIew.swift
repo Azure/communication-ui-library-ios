@@ -9,12 +9,15 @@ import FluentUI
 
 internal struct ParticipantsListView: View {
     @ObservedObject var viewModel: ParticipantsListViewModel
-
-    init(viewModel: ParticipantsListViewModel) {
+    let avatarManager: AvatarViewManagerProtocol
+    init(viewModel: ParticipantsListViewModel,
+         avatarManager: AvatarViewManagerProtocol) {
         self.viewModel = viewModel
+        self.avatarManager = avatarManager
     }
 
     var body: some View {
-        DrawerListContent(items: viewModel.drawerListItems)
+        DrawerListView(items: viewModel.drawerListItems,
+                       avatarManager: avatarManager)
     }
 }

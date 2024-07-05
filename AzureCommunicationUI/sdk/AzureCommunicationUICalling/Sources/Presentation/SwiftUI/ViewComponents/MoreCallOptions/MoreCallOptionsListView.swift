@@ -9,12 +9,14 @@ import FluentUI
 
 internal struct MoreCallOptionsListView: View {
     @ObservedObject var viewModel: MoreCallOptionsListViewModel
-
-    init(viewModel: MoreCallOptionsListViewModel) {
+    let avatarManager: AvatarViewManagerProtocol
+    init(viewModel: MoreCallOptionsListViewModel, avatarManager: AvatarViewManagerProtocol) {
         self.viewModel = viewModel
+        self.avatarManager = avatarManager
     }
 
     var body: some View {
-        DrawerListContent(items: viewModel.items)
+        DrawerListView(items: viewModel.items,
+        avatarManager: avatarManager)
     }
 }

@@ -9,12 +9,14 @@ import FluentUI
 
 internal struct LeaveCallConfirmationView: View {
     @ObservedObject var viewModel: LeaveCallConfirmationViewModel
-
-    init(viewModel: LeaveCallConfirmationViewModel) {
+    let avatarManager: AvatarViewManagerProtocol
+    init(viewModel: LeaveCallConfirmationViewModel,
+         avatarManager: AvatarViewManagerProtocol) {
         self.viewModel = viewModel
+        self.avatarManager = avatarManager
     }
 
     var body: some View {
-        DrawerListContent(items: viewModel.options)
+        DrawerListView(items: viewModel.options, avatarManager: avatarManager)
     }
 }

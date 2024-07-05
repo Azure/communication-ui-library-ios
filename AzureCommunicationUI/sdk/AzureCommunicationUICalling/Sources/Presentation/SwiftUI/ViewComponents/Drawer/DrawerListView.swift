@@ -14,8 +14,13 @@ import SwiftUI
 // I.e. List[VM] -> Swift UI List View, for use with a drawer
 //
 //
-internal struct DrawerListContent: View {
+internal struct DrawerListView: View {
     let items: [DrawerListItemViewModel]
+
+    // We don't always need this, but we do for Participants or whenever we show an Avatar
+    // Provides just in case
+    let avatarManager: AvatarViewManagerProtocol
+
     var body: some View {
         VStack {
             ForEach(items) { option in
@@ -26,7 +31,7 @@ internal struct DrawerListContent: View {
                 } else if let bodyItem = option as? BodyTextDrawerListItemViewModel {
                     DrawerBodyTextView(item: bodyItem)
                 } else if let participantItem = option as? ParticipantDrawerListItemViewModel {
-                    DrawerParticipantView(item: participantItem)
+                    DrawerParticipantView(item: participantItem, avatarManager: avatarManager)
                 } else {
                     DrawerItemView(item: option)
                 }
@@ -134,6 +139,7 @@ internal struct DrawerBodyTextView: View {
 
 internal struct DrawerParticipantView: View {
     let item: ParticipantDrawerListItemViewModel
+    let avatarManager: AvatarViewManagerProtocol
 
     var body: some View {
         HStack {

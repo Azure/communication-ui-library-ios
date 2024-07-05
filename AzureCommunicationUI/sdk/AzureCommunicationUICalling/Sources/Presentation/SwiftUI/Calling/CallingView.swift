@@ -59,22 +59,27 @@ struct CallingView: View {
 
                 BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
+                    LeaveCallConfirmationView(
+                        viewModel: viewModel.leaveCallConfirmationViewModel,
+                        avatarManager: avatarManager)
                 }
 
                 BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel)
+                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel,
+                    avatarManager: avatarManager)
                 }
 
                 BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel,
+                    avatarManager: avatarManager)
                 }
 
                 BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    ParticipantsListView(viewModel: viewModel.participantListViewModel)
+                    ParticipantsListView(viewModel: viewModel.participantListViewModel,
+                    avatarManager: avatarManager)
                 }
 
                 // TODA: Actions drawer

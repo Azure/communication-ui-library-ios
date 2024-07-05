@@ -9,12 +9,16 @@ import FluentUI
 
 internal struct AudioDevicesListView: View {
     @ObservedObject var viewModel: AudioDevicesListViewModel
+    let avatarManager: AvatarViewManagerProtocol
 
-    init(viewModel: AudioDevicesListViewModel) {
+    init(viewModel: AudioDevicesListViewModel,
+         avatarManager: AvatarViewManagerProtocol) {
         self.viewModel = viewModel
+        self.avatarManager = avatarManager
     }
 
     var body: some View {
-        DrawerListContent(items: viewModel.audioDevicesList)
+        DrawerListView(items: viewModel.audioDevicesList,
+                       avatarManager: avatarManager)
     }
 }
