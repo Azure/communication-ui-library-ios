@@ -84,7 +84,8 @@ struct CallingView: View {
 
                 BottomDrawer(isPresented: viewModel.participantActionViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    Text("Hello")
+                    ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
+                                        avatarManager: avatarManager)
                 }
 
                 // TODA: Actions drawer

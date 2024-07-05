@@ -22,6 +22,10 @@ struct NavigationState: Equatable {
     let supportShareSheetVisible: Bool
     let participantsVisible: Bool
     let participantActionsVisible: Bool
+
+    // When showing Participant Actions, we need this
+    let selectedParticipant: ParticipantInfoModel?
+
     // TADO: we need a selected Participant somewhere, but NavState isn't right for it.
     // Maybe LocalUserState, as in the LocalUser has selected another User
 
@@ -32,7 +36,8 @@ struct NavigationState: Equatable {
          moreOptionsVisible: Bool = false,
          supportShareSheetVisible: Bool = false,
          participantsVisible: Bool = false,
-         participantActionsVisible: Bool = false
+         participantActionsVisible: Bool = false,
+         selectedParticipant: ParticipantInfoModel? = nil
 ) {
         self.status = status
         self.supportFormVisible = supportFormVisible
@@ -42,6 +47,7 @@ struct NavigationState: Equatable {
         self.supportShareSheetVisible = supportShareSheetVisible
         self.participantsVisible = participantsVisible
         self.participantActionsVisible = participantActionsVisible
+        self.selectedParticipant = selectedParticipant
     }
 
     static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {
@@ -53,5 +59,6 @@ struct NavigationState: Equatable {
             && lhs.supportShareSheetVisible == rhs.supportShareSheetVisible
             && lhs.participantsVisible == rhs.participantsVisible
             && lhs.participantActionsVisible == rhs.participantActionsVisible
+            && lhs.selectedParticipant == rhs.selectedParticipant
     }
 }
