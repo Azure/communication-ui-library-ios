@@ -136,14 +136,23 @@ internal struct DrawerBodyTextView: View {
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }
 }
-
 internal struct DrawerParticipantView: View {
     let item: ParticipantDrawerListItemViewModel
     let avatarManager: AvatarViewManagerProtocol
 
     var body: some View {
         HStack {
-            Text("(A)")
+            // Placeholder replaced with actual avatar view
+            CompositeAvatar(
+                displayName: Binding.constant(item.participantInfoModel.displayName),
+                avatarImage: Binding.constant(
+                    item.participantInfoModel.isRemoteUser ?
+                    avatarManager.avatarStorage.value(forKey: item.participantInfoModel.userIdentifier)?.avatarImage :
+                        avatarManager.localParticipantViewData?.avatarImage
+                ),
+                isSpeaking: false,
+                avatarSize: .size40
+            )
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
