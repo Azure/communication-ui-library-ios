@@ -23,7 +23,7 @@ class ParticipantMenuViewModel: ObservableObject {
     private var removeParticipantModel: DrawerListItemViewModel
 
     // Should display?
-    private var isDisplayed: Bool
+    var isDisplayed: Bool
 
     var items: [DrawerListItemViewModel] {
         return [removeParticipantModel]

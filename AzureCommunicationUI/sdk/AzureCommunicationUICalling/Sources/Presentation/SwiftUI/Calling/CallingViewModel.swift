@@ -204,6 +204,8 @@ class CallingViewModel: ObservableObject {
                                         remoteParticipantsState: state.remoteParticipantsState,
                                         isDisplayed: state.navigationState.participantsVisible)
 
+        participantActionViewModel.update(localUserState: state.localUserState,
+                                          isDisplayed: state.navigationState.participantActionsVisible)
         audioDeviceListViewModel.update(
             audioDeviceStatus: state.localUserState.audioState.device,
             navigationState: state.navigationState,

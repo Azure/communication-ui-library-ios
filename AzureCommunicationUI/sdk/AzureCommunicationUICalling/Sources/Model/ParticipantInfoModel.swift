@@ -27,5 +27,19 @@ struct ParticipantInfoModel: Hashable, Equatable {
 
     let screenShareVideoStreamModel: VideoStreamInfoModel?
     let cameraVideoStreamModel: VideoStreamInfoModel?
+}
 
+extension ParticipantInfoModel {
+    static func from(localUserState: LocalUserState) -> ParticipantInfoModel {
+        return ParticipantInfoModel(
+            displayName: localUserState.displayName ?? "Unknown User", /* TADO: Look up localized*/
+            isSpeaking: false,
+            isMuted: false, /* TADO: Wire up*/
+            isRemoteUser: false,
+            userIdentifier: localUserState.displayName ?? "UU", /* TADO: Wire up properly*/
+            status: ParticipantStatus.connected, /* TADO: Safe Assumption?*/
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil
+        )
+    }
 }

@@ -63,18 +63,10 @@ class ParticipantsListViewModel: ObservableObject {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
             self.lastParticipantRole = localUserState.participantRole
 
-            let shouldilterOutLobbyUsers = shouldFilterOutLobbyUsers(participantRole: localUserState.participantRole)
+            let shouldilterOutLobbyUsers = shouldFilterOutLobbyUsers(
+                participantRole: localUserState.participantRole)
 
-            let localUsers = [ParticipantInfoModel(
-                displayName: localUserState.displayName ?? "Unknown User", /* TADO: Look up localized*/
-                isSpeaking: false,
-                isMuted: false, /* TADO: Wire up*/
-                isRemoteUser: false,
-                userIdentifier: localUserState.displayName ?? "UU", /* TADO: Wire up properly*/
-                status: ParticipantStatus.connected, /* TADO: Safe Assumption?*/
-                screenShareVideoStreamModel: nil,
-                cameraVideoStreamModel: nil
-            )]
+            let localUsers = [ParticipantInfoModel.from(localUserState: localUserState)]
 
             let notDisconnected = remoteParticipantsState.participantInfoList
                 .filter { participant in
@@ -93,7 +85,7 @@ class ParticipantsListViewModel: ObservableObject {
 
             // InMeeting and Yourself
             let meetingParticipants: [ParticipantInfoModel] = inMeeting + localUsers
-            // Tado: Sort this            
+            // Tado: Sort this
 
             // Remote participants in meeting
             drawerListItems = meetingParticipants.map {

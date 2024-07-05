@@ -35,7 +35,6 @@ extension Reducer where State == NavigationState,
             drawerVisibility = .participantsVisible
         case .showParticipantActions:
             drawerVisibility = .participantActionsVisible
-
         case .localUserAction(.audioDeviceChangeRequested):
             drawerVisibility = .hidden
 
