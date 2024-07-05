@@ -297,8 +297,8 @@ extension CompositeViewModelFactory {
                                   localUserState: localUserState,
                                   dispatchAction: dispatchAction,
                                   localizationProvider: localizationProvider,
-                                  onUserClicked: { user in
-            dispatchAction(Action.showParticipantActions(user))
+                                  onUserClicked: { participant in
+            dispatchAction(Action.showParticipantActions(participant))
         })
     }
 
@@ -307,9 +307,16 @@ extension CompositeViewModelFactory {
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel {
         ParticipantMenuViewModel(compositeViewModelFactory: self,
                                  localUserState: localUserState,
-                                 dispatchAction: dispatchAction,
                                  localizationProvider: localizationProvider,
                                  capabilitiesManager: capabilitiesManager,
+                                 onRemoveUser: { user in
+            dispatchAction(.remoteParticipantsAction(.remove(participantId: user.userIdentifier)))
+            dispatchAction(.hideDrawer)
+        },
+                                 onMuteUser: { _ in
+            // TADO: Can we do this yet?
+            // dispatchAction(.remoteParticipantsAction(.(participantId: user.userIdentifier)))
+        },
                                  isDisplayed: isDisplayed)
     }
 

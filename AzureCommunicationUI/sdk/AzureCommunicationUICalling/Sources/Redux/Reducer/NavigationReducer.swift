@@ -10,7 +10,7 @@ extension Reducer where State == NavigationState,
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
         var drawerVisibility = getDrawerVisibility(state: state)
-
+        var selectedParticipant = state.selectedParticipant
         switch action {
         case .callingViewLaunched:
             navigationStatus = .inCall
@@ -20,6 +20,7 @@ extension Reducer where State == NavigationState,
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
         case .hideDrawer:
+            selectedParticipant = nil
             drawerVisibility = .hidden
         case .showSupportForm:
             drawerVisibility = .supportFormVisible
@@ -33,11 +34,11 @@ extension Reducer where State == NavigationState,
             drawerVisibility = .supportShareSheetVisible
         case .showParticipants:
             drawerVisibility = .participantsVisible
-        case .showParticipantActions:
+        case .showParticipantActions(let participant):
             drawerVisibility = .participantActionsVisible
+            selectedParticipant = participant
         case .localUserAction(.audioDeviceChangeRequested):
             drawerVisibility = .hidden
-
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -67,7 +68,8 @@ extension Reducer where State == NavigationState,
                                moreOptionsVisible: drawerVisibility.isMoreOptionsVisible,
                                supportShareSheetVisible: drawerVisibility.isSupportShareSheetVisible,
                                participantsVisible: drawerVisibility.isParticipantsVisible,
-                               participantActionsVisible: drawerVisibility.isParticipantActionsVisible)
+                               participantActionsVisible: drawerVisibility.isParticipantActionsVisible,
+                               selectedParticipant: selectedParticipant)
     }
 
     // Helper to track only an individual visible drawer at a time
