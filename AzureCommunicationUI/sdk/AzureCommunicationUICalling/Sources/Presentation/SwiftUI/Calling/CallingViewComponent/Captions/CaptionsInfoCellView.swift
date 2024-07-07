@@ -34,11 +34,10 @@ struct CaptionsInfoCellView: View {
                     .multilineTextAlignment(isRTL ? .trailing : .leading)
             }
             .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
-            .background(Color(StyleProvider.color.backgroundColor))
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal)
-        .background(Color(StyleProvider.color.backgroundColor))
+        .background(Color(StyleProvider.color.drawerColor))
         .onAppear {
             updateAvatar()
             determineTextDirection()

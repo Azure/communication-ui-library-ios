@@ -176,6 +176,7 @@ struct CallingView: View {
                     .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
             })
             .accessibilityElement(children: .contain)
+            .background(Color(StyleProvider.color.drawerColor))
         }
     }
 
@@ -290,7 +291,6 @@ struct CallingView: View {
         return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
                                 avatarViewManager: avatarManager)
             .frame(maxWidth: .infinity, maxHeight: CaptionsInfoConstants.maxHeight, alignment: .bottom)
-            .background(Color(StyleProvider.color.backgroundColor))
             .zIndex(1)
     }
 
