@@ -21,22 +21,37 @@ internal struct DrawerListView: View {
     // Provides just in case
     let avatarManager: AvatarViewManagerProtocol
 
+    @State
+    private var scrollViewContentSize: CGSize = .zero
+
     var body: some View {
-        VStack {
-            ForEach(items) { option in
-                if let selectableItem = option as? SelectableDrawerListItemViewModel {
-                    SelectableDrawerItemView(item: selectableItem)
-                } else if let titleItem = option as? TitleDrawerListItemViewModel {
-                    DrawerTitleView(item: titleItem)
-                } else if let bodyItem = option as? BodyTextDrawerListItemViewModel {
-                    DrawerBodyTextView(item: bodyItem)
-                } else if let participantItem = option as? ParticipantDrawerListItemViewModel {
-                    DrawerParticipantView(item: participantItem, avatarManager: avatarManager)
-                } else {
-                    DrawerItemView(item: option)
+        ScrollView {
+            VStack {
+                ForEach(items) { option in
+                    if let selectableItem = option as? SelectableDrawerListItemViewModel {
+                        SelectableDrawerItemView(item: selectableItem)
+                    } else if let titleItem = option as? TitleDrawerListItemViewModel {
+                        DrawerTitleView(item: titleItem)
+                    } else if let bodyItem = option as? BodyTextDrawerListItemViewModel {
+                        DrawerBodyTextView(item: bodyItem)
+                    } else if let participantItem = option as? ParticipantDrawerListItemViewModel {
+                        DrawerParticipantView(item: participantItem, avatarManager: avatarManager)
+                    } else {
+                        DrawerItemView(item: option)
+                    }
                 }
             }
-        }.padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
+            .padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
+            .background(
+                GeometryReader { geometry in
+                    DispatchQueue.main.async {
+                        scrollViewContentSize = geometry.size
+                    }
+                    return Color.clear
+                }
+            )
+        }
+        .frame(maxHeight: min(scrollViewContentSize.height, 400))
     }
 }
 
