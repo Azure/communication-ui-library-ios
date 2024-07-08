@@ -26,7 +26,6 @@ class CallingViewModel: ObservableObject {
     private var callHasConnected = false
     private var callClientRequested = false
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
-    private var captionsMode: CaptionsVisibilityMode?
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -61,7 +60,6 @@ class CallingViewModel: ObservableObject {
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         captionsMode: CaptionsVisibilityMode,
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions,
          capabilitiesManager: CapabilitiesManager
@@ -78,7 +76,6 @@ class CallingViewModel: ObservableObject {
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.captionsOptions = captionsOptions
-        self.captionsMode = captionsMode
 
         let actionDispatch: ActionDispatch = store.dispatch
 
@@ -166,7 +163,7 @@ class CallingViewModel: ObservableObject {
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isDisplayed: store.state.navigationState.moreOptionsVisible,
-            isCaptionsAvailable: captionsMode == .enabled,
+            isCaptionsAvailable: true,
             showSharingViewAction: {
                 store.dispatch(action: .showSupportShare)
             },

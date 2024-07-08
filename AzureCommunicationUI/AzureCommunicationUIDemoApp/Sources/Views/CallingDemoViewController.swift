@@ -225,9 +225,7 @@ class CallingDemoViewController: UIViewController {
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled,
-                                                     captionsMode: envConfigSubject.displayCaptions ?
-            .enabled : .disabled)
+            .alwaysEnabled : .alwaysDisabled)
         let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)

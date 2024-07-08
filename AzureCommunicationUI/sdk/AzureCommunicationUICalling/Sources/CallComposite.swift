@@ -75,7 +75,6 @@ public class CallComposite {
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
-    private var captionsVisibilityMode: CaptionsVisibilityMode = .enabled
     private var setupScreenOptions: SetupScreenOptions?
 
     private var viewFactory: CompositeViewFactoryProtocol?
@@ -124,7 +123,6 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
-        captionsVisibilityMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .enabled
         setupScreenOptions = options?.setupScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
@@ -151,7 +149,6 @@ public class CallComposite {
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
-        captionsVisibilityMode = options?.callScreenOptions?.controlBarOptions?.captionsMode ?? .enabled
         setupScreenOptions = options?.setupScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
@@ -521,7 +518,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
     }
 
-    // swiftlint:disable function_body_length
     private func constructViewFactoryAndDependencies(
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
@@ -603,7 +599,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                captionsMode: captionsVisibilityMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
                 callType: callConfiguration.compositeCallType,
                 setupScreenOptions: setupScreenOptions,
@@ -706,7 +701,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         return callingSDKInitializer
     }
 }
-// swiftlint:enable function_body_length
 
 extension CallComposite {
     private func receiveStoreEvents(_ store: Store<AppState, Action>) {

@@ -27,7 +27,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
-    private var captionsMode: CaptionsVisibilityMode?
     private let setupScreenOptions: SetupScreenOptions?
     private let callType: CompositeCallType
 
@@ -44,7 +43,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         captionsMode: CaptionsVisibilityMode,
          retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType,
          setupScreenOptions: SetupScreenOptions?,
@@ -65,7 +63,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.retrieveLogFiles = retrieveLogFiles
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
-        self.captionsMode = captionsMode
         self.setupScreenOptions = setupScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
@@ -120,7 +117,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
                                             != CallCompositeAudioVideoMode.audioOnly,
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
-                                            captionsMode: self.captionsMode ?? .enabled,
                                             callType: callType,
                                             captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions(),
                                             capabilitiesManager: self.capabilitiesManager)

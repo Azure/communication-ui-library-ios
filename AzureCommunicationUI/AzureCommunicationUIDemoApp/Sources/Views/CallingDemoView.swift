@@ -391,10 +391,7 @@ extension CallingDemoView {
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled,
-                                                     captionsMode: envConfigSubject.displayCaptions ?
-            .enabled : .disabled
-        )
+            .alwaysEnabled : .alwaysDisabled)
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
@@ -577,8 +574,8 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        captionsOptions: captionsOptions,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                            captionsOptions: captionsOptions
         )
     }
 

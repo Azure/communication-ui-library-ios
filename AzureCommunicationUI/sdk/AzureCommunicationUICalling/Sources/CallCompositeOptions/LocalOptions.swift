@@ -47,8 +47,8 @@ public struct LocalOptions {
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
-                captionsOptions: CaptionsOptions? = CaptionsOptions(),
-                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) {
+                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
+                captionsOptions: CaptionsOptions? = CaptionsOptions()) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn

@@ -45,7 +45,6 @@
 		11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */; };
 		1115A0002A1D50EC00C0E3B8 /* OrientationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */; };
 		113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113738FE29D638BB00D48EAB /* DefaultUserState.swift */; };
-		114187662C2E19740089C05B /* CaptionsVisibilityMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114187652C2E19740089C05B /* CaptionsVisibilityMode.swift */; };
 		114187682C35C2E50089C05B /* CaptionsViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */; };
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
 		114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */; };
@@ -414,7 +413,6 @@
 		11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationOptions.swift; sourceTree = "<group>"; };
 		11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationProvider.swift; sourceTree = "<group>"; };
 		113738FE29D638BB00D48EAB /* DefaultUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserState.swift; sourceTree = "<group>"; };
-		114187652C2E19740089C05B /* CaptionsVisibilityMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsVisibilityMode.swift; sourceTree = "<group>"; };
 		114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsViewManagerTests.swift; sourceTree = "<group>"; };
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
 		114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsReducer.swift; sourceTree = "<group>"; };
@@ -1512,14 +1510,12 @@
 				532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
 				A46B90982BF593C50096788C /* Caller.swift */,
-				A4F5F8F32C180A0100A74513 /* CallError.swift */,
 				05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */,
 				A46B90942BF5937A0096788C /* CallKitOptions.swift */,
 				A46B90962BF5939D0096788C /* CallKitRemoteInfo.swift */,
 				5A1F4BCC2BD9756C00EA7B2D /* CallScreenControlBarOptions.swift */,
 				5A1F4BCB2BD9756C00EA7B2D /* CallScreenOptions.swift */,
 				051F739B2C10DA64006E097F /* CapabilitiesChangedNotificationMode.swift */,
-				A47792952C02E96100F38FFC /* CommunicationTokenCredentialError.swift */,
 				FA538277292FE86200963FFC /* DebugInfo.swift */,
 				1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */,
 				A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */,
@@ -1527,7 +1523,6 @@
 				A48D18012BFD84D600FD994E /* IncomingCallError.swift */,
 				A47792952C02E96100F38FFC /* CommunicationTokenCredentialError.swift */,
 				A4F5F8F32C180A0100A74513 /* CallError.swift */,
-				114187652C2E19740089C05B /* CaptionsVisibilityMode.swift */,
 				5A1F4BCA2BD9756C00EA7B2D /* LeaveCallConfirmationMode.swift */,
 				7529F5E129679513002F7CE1 /* LocalizationOptions.swift */,
 				881D8F7127FB6992008EC897 /* LocalOptions.swift */,
@@ -2159,7 +2154,6 @@
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */,
 				114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */,
-				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				051F73CB2C175BB9006E097F /* ParticipantMenuViewController.swift in Sources */,
 				A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
@@ -2194,7 +2188,6 @@
 				11E792B12BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift in Sources */,
 				05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */,
 				7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */,
-				B2C2FFDF2AB8E674002F0763 /* BottomToastDiagnosticViewModel.swift in Sources */,
 				53D734D82C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift in Sources */,
 				1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
@@ -2227,7 +2220,6 @@
 				1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */,
 				985DF374269D096000CFDA55 /* SetupControlBarView.swift in Sources */,
 				C8E50E972BFFD83200AB507E /* CapabilitiesChangedEvent.swift in Sources */,
-				FAACEE3828FA0E4C003F7D7C /* MoreCallOptionsList.swift in Sources */,
 				A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */,
 				A4DBCEB72BFAE8F500332E7B /* IncomingCall.swift in Sources */,
 				88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */,
@@ -2325,12 +2317,10 @@
 				1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */,
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,
 				A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */,
-				114187662C2E19740089C05B /* CaptionsVisibilityMode.swift in Sources */,
 				88D8DD7628EF9A93006A4AC4 /* DebugInfoManager.swift in Sources */,
 				B2E5B1802AA14CC600D54A3A /* CallDiagnosticsState.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
 				051F739A2C0F68FE006E097F /* BottomToastViewModel.swift in Sources */,
-				1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */,
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,
 				5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */,
 				1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */,
