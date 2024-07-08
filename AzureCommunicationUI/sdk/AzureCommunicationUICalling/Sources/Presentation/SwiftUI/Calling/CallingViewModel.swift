@@ -205,7 +205,9 @@ class CallingViewModel: ObservableObject {
             !captionsStarted {
             print("touched")
             let language = self.captionsOptions.spokenLanguage.lowercased()
-            self.store.dispatch(action: .captionsAction(.startRequested(language: language)))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.store.dispatch(action: .captionsAction(.startRequested(language: language)))
+            }
             self.captionsStarted = true
         }
     }
