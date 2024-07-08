@@ -228,6 +228,17 @@ struct CallingView: View {
                     } else {
                         EmptyView()
                     }
+                    captionsErrorView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
                     topMessageBarDiagnosticsView
                         .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
@@ -252,6 +263,10 @@ struct CallingView: View {
     var lobbyActionErrorView: some View {
         LobbyErrorHeaderView(viewModel: viewModel.lobbyActionErrorViewModel,
                        avatarViewManager: avatarManager)
+    }
+
+    var captionsErrorView: some View {
+        CaptionsErrorHeaderView(viewModel: viewModel.captionsErrorViewModel)
     }
 
     var bannerView: some View {

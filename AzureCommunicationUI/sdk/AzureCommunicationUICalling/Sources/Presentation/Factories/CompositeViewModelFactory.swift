@@ -206,6 +206,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
         return CaptionsInfoViewModel(state: state, captionsManager: captionsViewManager)
     }
+
+    func makeCaptionsErrorViewModel(dispatchAction: @escaping ActionDispatch)
+    -> CaptionsErrorHeaderViewModel {
+        CaptionsErrorHeaderViewModel(compositeViewModelFactory: self,
+                                  logger: logger,
+                                  localizationProvider: localizationProvider,
+                                  accessibilityProvider: accessibilityProvider,
+                                  dispatchAction: dispatchAction)
+    }
+
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
                                                title: String,
                                                isSelected: Bool,

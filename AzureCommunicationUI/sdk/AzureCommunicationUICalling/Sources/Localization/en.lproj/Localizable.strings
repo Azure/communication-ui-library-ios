@@ -167,3 +167,7 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live Captions";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Unable to start captions";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Unable to stop captions";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Unable to change captions language";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Unable to change spoken language";

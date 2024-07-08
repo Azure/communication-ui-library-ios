@@ -18,16 +18,10 @@ enum CaptionsResultType {
 
 enum CallCompositeCaptionsErrors: Int {
     case none
-    case captionsNotActive
-    case getCaptionsFailedCallStateNotConnected
     case captionsFailedToStart
     case captionsFailedToStop
     case captionsFailedToSetSpokenLanguage
-    case failedToSetCaptionLanguage
-    case captionsPolicyDisabled
-    case captionsDisabledByConfigurations
-    case setCaptionLanguageDisabled
-    case setCaptionLanguageTeamsPremiumLicenseNeeded
+    case captionsFailedToSetCaptionLanguage
 }
 
 struct CallCompositeCaptionsData: Identifiable, Equatable {
@@ -104,37 +98,6 @@ extension AzureCommunicationCalling.CaptionsType {
             return .teams
         case .communicationCaptions:
             return .communication
-        default:
-            return .none
-        }
-    }
-}
-
-extension AzureCommunicationCalling.CallingCommunicationErrors {
-    func toCallCompositeCaptionsErrors() -> CallCompositeCaptionsErrors {
-        switch self {
-        case .captionsNotActive:
-            return .captionsNotActive
-        case .getCaptionsFailedCallStateNotConnected:
-            return .getCaptionsFailedCallStateNotConnected
-        case .captionsFailedToStart:
-            return .captionsFailedToStart
-//        case .captionsFailedToStop:
-//            return .captionsFailedToStop
-        case .captionsFailedToSetSpokenLanguage:
-            return .captionsFailedToSetSpokenLanguage
-        case .failedToSetCaptionLanguage:
-            return .failedToSetCaptionLanguage
-        case .captionsPolicyDisabled:
-            return .captionsPolicyDisabled
-        case .captionsDisabledByConfigurations:
-            return .captionsDisabledByConfigurations
-//        case .captionsSetSpokenLanguageDisabled:
-//            return .captionsSetSpokenLanguageDisabled
-        case .setCaptionLanguageDisabled:
-            return .setCaptionLanguageDisabled
-        case .setCaptionLanguageTeamsPremiumLicenseNeeded:
-            return .setCaptionLanguageTeamsPremiumLicenseNeeded
         default:
             return .none
         }

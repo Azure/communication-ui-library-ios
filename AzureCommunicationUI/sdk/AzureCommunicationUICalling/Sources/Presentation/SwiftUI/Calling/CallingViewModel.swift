@@ -50,6 +50,7 @@ class CallingViewModel: ObservableObject {
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var audioDeviceListViewModel: AudioDevicesListViewModel!
     var captionsInfoViewModel: CaptionsInfoViewModel!
+    var captionsErrorViewModel: CaptionsErrorHeaderViewModel!
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -89,6 +90,7 @@ class CallingViewModel: ObservableObject {
 
         captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
             state: store.state)
+        captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
@@ -251,6 +253,7 @@ class CallingViewModel: ObservableObject {
         captionsListViewModel.update(state: state)
         captionsInfoViewModel.update(state: state)
         captionsLanguageListViewModel.update(state: state)
+        captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
