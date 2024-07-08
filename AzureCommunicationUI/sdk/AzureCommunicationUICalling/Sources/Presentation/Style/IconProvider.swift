@@ -41,6 +41,7 @@ enum CompositeIcon: String {
     case localLanguage = "ic_fluent_local_language_24_regular"
     case personVoice = "ic_fluent_person_voice_24_regular"
     case personDelete = "ic_fluent_person_delete_24_regular"
+    case captionsError = "ic_fluent_error_circle_16_regular"
 }
 
 struct IconProvider {

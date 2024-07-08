@@ -44,6 +44,8 @@
 		110DBE412C0998070080DBE1 /* CaptionsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110DBE402C0998070080DBE1 /* CaptionsAction.swift */; };
 		11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */; };
 		1115A0002A1D50EC00C0E3B8 /* OrientationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */; };
+		111FBD382C3C6976008178BF /* CaptionsErrorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111FBD372C3C6976008178BF /* CaptionsErrorHeaderView.swift */; };
+		11293D012C3B6D1E0006539D /* CaptionsErrorHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11293D002C3B6D1E0006539D /* CaptionsErrorHeaderViewModel.swift */; };
 		113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113738FE29D638BB00D48EAB /* DefaultUserState.swift */; };
 		114187682C35C2E50089C05B /* CaptionsViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */; };
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
@@ -412,6 +414,8 @@
 		110DBE402C0998070080DBE1 /* CaptionsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAction.swift; sourceTree = "<group>"; };
 		11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationOptions.swift; sourceTree = "<group>"; };
 		11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationProvider.swift; sourceTree = "<group>"; };
+		111FBD372C3C6976008178BF /* CaptionsErrorHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsErrorHeaderView.swift; sourceTree = "<group>"; };
+		11293D002C3B6D1E0006539D /* CaptionsErrorHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsErrorHeaderViewModel.swift; sourceTree = "<group>"; };
 		113738FE29D638BB00D48EAB /* DefaultUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserState.swift; sourceTree = "<group>"; };
 		114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsViewManagerTests.swift; sourceTree = "<group>"; };
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
@@ -836,6 +840,8 @@
 				116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */,
 				116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */,
 				116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */,
+				11293D002C3B6D1E0006539D /* CaptionsErrorHeaderViewModel.swift */,
+				111FBD372C3C6976008178BF /* CaptionsErrorHeaderView.swift */,
 			);
 			path = Captions;
 			sourceTree = "<group>";
@@ -2081,6 +2087,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5347C1D72C13B4FE0084AE56 /* DrawerListContent.swift in Sources */,
+				11293D012C3B6D1E0006539D /* CaptionsErrorHeaderViewModel.swift in Sources */,
 				50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */,
 				A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */,
 				1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */,
@@ -2319,6 +2326,7 @@
 				A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */,
 				88D8DD7628EF9A93006A4AC4 /* DebugInfoManager.swift in Sources */,
 				B2E5B1802AA14CC600D54A3A /* CallDiagnosticsState.swift in Sources */,
+				111FBD382C3C6976008178BF /* CaptionsErrorHeaderView.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
 				051F739A2C0F68FE006E097F /* BottomToastViewModel.swift in Sources */,
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,

@@ -548,7 +548,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 try await callingService.setCaptionsCaptionLanguage(language)
                 dispatch(.captionsAction(.captionLanguageChanged(language: language)))
             } catch {
-                dispatch(.captionsAction(.error(errors: .failedToSetCaptionLanguage)))
+                dispatch(.captionsAction(.error(errors: .captionsFailedToSetCaptionLanguage)))
             }
         }
     }

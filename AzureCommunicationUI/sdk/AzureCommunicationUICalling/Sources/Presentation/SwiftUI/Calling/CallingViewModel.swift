@@ -50,6 +50,7 @@ class CallingViewModel: ObservableObject {
     var audioDeviceListViewModel: AudioDevicesListViewModel!
     var captionsInfoViewModel: CaptionsInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
+    var captionsErrorViewModel: CaptionsErrorHeaderViewModel!
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -90,6 +91,7 @@ class CallingViewModel: ObservableObject {
 
         captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
             state: store.state)
+        captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
@@ -204,7 +206,9 @@ class CallingViewModel: ObservableObject {
             !captionsStarted {
             print("touched")
             let language = self.captionsOptions.spokenLanguage.lowercased()
-            self.store.dispatch(action: .captionsAction(.startRequested(language: language)))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.store.dispatch(action: .captionsAction(.startRequested(language: language)))
+            }
             self.captionsStarted = true
         }
     }
@@ -252,6 +256,7 @@ class CallingViewModel: ObservableObject {
         captionsListViewModel.update(state: state)
         captionsInfoViewModel.update(state: state)
         captionsLanguageListViewModel.update(state: state)
+        captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,

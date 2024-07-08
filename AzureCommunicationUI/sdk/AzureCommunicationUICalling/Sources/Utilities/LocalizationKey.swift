@@ -201,6 +201,11 @@ enum LocalizationKey: String {
     case captionsListTitile = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
     case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
     case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
+    case captionsStartCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"
+    case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
+    case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"
+    case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
+    
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"
     case callingViewParticipantMenuMuteAccessibilityLabel =
@@ -210,4 +215,5 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"
     case callingViewToastFeaturesLost = "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"
     case callingViewToastFeaturesGained = "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"
+
 }

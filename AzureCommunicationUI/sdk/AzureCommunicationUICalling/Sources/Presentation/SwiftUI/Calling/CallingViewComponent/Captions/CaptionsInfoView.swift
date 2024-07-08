@@ -33,7 +33,7 @@ struct CaptionsInfoView: View {
                 }
             }
             .listStyle(PlainListStyle())
-            .background(Color(StyleProvider.color.backgroundColor))
+            .background(Color(StyleProvider.color.drawerColor))
             .frame(maxWidth: 480)
             .onAppear {
                 scrollToLastItem(scrollView)
