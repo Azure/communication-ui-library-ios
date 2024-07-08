@@ -205,7 +205,7 @@ enum LocalizationKey: String {
     case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
     case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"
     case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
-    
+
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"
     case callingViewParticipantMenuMuteAccessibilityLabel =
