@@ -149,6 +149,7 @@ internal struct DrawerTitleView: View {
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.accessibilityIdentifier)
+        .background(Color(StyleProvider.color.surface))
     }
 }
 
@@ -167,6 +168,7 @@ internal struct DrawerBodyTextView: View {
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.accessibilityIdentifier)
+        .background(Color(StyleProvider.color.surface))
     }
 }
 internal struct DrawerParticipantView: View {
