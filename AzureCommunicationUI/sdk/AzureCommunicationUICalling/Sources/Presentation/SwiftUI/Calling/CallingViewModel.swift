@@ -59,7 +59,6 @@ class CallingViewModel: ObservableObject {
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          callType: CompositeCallType,
          capabilitiesManager: CapabilitiesManager
-
     ) {
         self.logger = logger
         self.store = store

@@ -19,7 +19,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
     private let capabilitiesManager: CapabilitiesManager
-
+    private let avatarManager: AvatarViewManagerProtocol
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -42,7 +42,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType,
          setupScreenOptions: SetupScreenOptions?,
-         capabilitiesManager: CapabilitiesManager
+         capabilitiesManager: CapabilitiesManager,
+         avatarManager: AvatarViewManagerProtocol
     ) {
 
         self.logger = logger
@@ -61,6 +62,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.setupScreenOptions = setupScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+        self.avatarManager = avatarManager
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -299,7 +301,8 @@ extension CompositeViewModelFactory {
                                   localizationProvider: localizationProvider,
                                   onUserClicked: { participant in
             dispatchAction(Action.showParticipantActions(participant))
-        })
+        },
+        avatarManager: avatarManager)
     }
 
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
