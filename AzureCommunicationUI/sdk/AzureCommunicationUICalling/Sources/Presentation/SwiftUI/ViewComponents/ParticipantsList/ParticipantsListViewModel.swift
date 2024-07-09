@@ -7,15 +7,8 @@ import Foundation
 import Combine
 
 class ParticipantsListViewModel: ObservableObject {
-    @Published var drawerListItems: [DrawerListItemViewModel] = [TitleDrawerListItemViewModel(
-        title: "Test",
-        accessibilityIdentifier: "Test")]
+    @Published var drawerListItems: [BaseDrawerItemViewModel] = []
 
-    // TADO, keep moving to drawerListItems, remove both of these
-    // @Published var participantsList: [ParticipantInfoModel] = []
-    // @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
-
-    private var plusMoreParticipantCount: Int?
     private var lastParticipantRole: ParticipantRoleEnum?
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
@@ -63,50 +56,43 @@ class ParticipantsListViewModel: ObservableObject {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
             self.lastParticipantRole = localUserState.participantRole
 
-            let shouldilterOutLobbyUsers = shouldFilterOutLobbyUsers(
+            let shouldFilterOutLobbyUsers = shouldFilterOutLobbyUsers(
                 participantRole: localUserState.participantRole)
 
-            let localUsers = [ParticipantInfoModel.from(localUserState: localUserState)]
+            let localParticipant = [ParticipantsListCellViewModel(localUserState: localUserState,
+                                                                 localizationProvider: localizationProvider)]
 
-            let notDisconnected = remoteParticipantsState.participantInfoList
-                .filter { participant in
-                    participant.status != .disconnected
-                }
-
-            let inMeeting = remoteParticipantsState.participantInfoList
+            let remoteParticipants = remoteParticipantsState.participantInfoList
                 .filter { participant in
                     participant.status == .connected
+                }.map {
+                    ParticipantsListCellViewModel(participantInfoModel: $0,
+                                                  localizationProvider: localizationProvider)
                 }
 
-            let inLobby = remoteParticipantsState.participantInfoList
+            let lobbyParticipants = remoteParticipantsState.participantInfoList
                 .filter { participant in
-                    participant.status == .inLobby
+                    participant.status == .inLobby && !shouldFilterOutLobbyUsers
+                }.map {
+                    ParticipantsListCellViewModel(participantInfoModel: $0,
+                                                  localizationProvider: localizationProvider)
                 }
 
-            // InMeeting and Yourself
-            let meetingParticipants: [ParticipantInfoModel] = inMeeting + localUsers
-            // Tado: Sort this
+            drawerListItems = localParticipant + remoteParticipants + lobbyParticipants
 
-            // Remote participants in meeting
-            drawerListItems = meetingParticipants.map {
-                let user = $0
-                return ParticipantDrawerListItemViewModel(participantInfoModel: user) {
-                    if user.isRemoteUser {
-                        self.onUserClicked(user)
-                    }
-                }
-            }
-
+            // Header
             drawerListItems.insert(BodyTextDrawerListItemViewModel(
                 title: "In the call (\(drawerListItems.count))", /* TADO: Is this correct Participants + 1 */
                 accessibilityIdentifier: "??"), at: 0)
 
+            // Append + More item
             let plusMoreCount =
             remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
             if plusMoreCount > 0 {
-                self.plusMoreParticipantCount = plusMoreCount
-            } else {
-                self.plusMoreParticipantCount = nil
+                drawerListItems.append(BodyTextDrawerListItemViewModel(
+                    title: "Plus More \(plusMoreCount)",
+                    accessibilityIdentifier: "PlusMore"
+                ))
             }
         }
     }
@@ -120,15 +106,6 @@ class ParticipantsListViewModel: ObservableObject {
 //            let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
 //            return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
 //        }
-    }
-
-    func plusMoreMenuItem() -> ParticipantsListCellViewModel? {
-        if let plusMoreParticipantCount = self.plusMoreParticipantCount {
-            return ParticipantsListCellViewModel(plusMoreCount: plusMoreParticipantCount,
-                                                 localizationProvider: self.localizationProvider)
-        }
-
-        return nil
     }
 
     func admitAll() {

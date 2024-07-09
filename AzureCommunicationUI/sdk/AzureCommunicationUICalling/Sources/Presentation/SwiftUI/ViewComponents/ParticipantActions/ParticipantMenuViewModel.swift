@@ -21,7 +21,7 @@ class ParticipantMenuViewModel: ObservableObject {
     var isDisplayed: Bool
     var canRemove: Bool
 
-    var items: [DrawerListItemViewModel] {
+    var items: [BaseDrawerItemViewModel] {
         guard let participantInfoModel = self.participantInfoModel else {
             return [
                 BodyTextDrawerListItemViewModel(title: "N/A", accessibilityIdentifier: "N/A")

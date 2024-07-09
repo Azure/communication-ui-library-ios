@@ -5,16 +5,13 @@
 
 import Foundation
 
-// TADO: Deprecate and delete
-class ParticipantsListCellViewModel {
+class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
     let participantId: String?
     let isMuted: Bool
     let isHold: Bool
     let isLocalParticipant: Bool
-    let isPlusMoreMenuItem: Bool
     let localizationProvider: LocalizationProviderProtocol
     let isInLobby: Bool
-    let plusMoreCount: Int?
     private let displayName: String
 
     init(localUserState: LocalUserState,
@@ -26,8 +23,7 @@ class ParticipantsListCellViewModel {
         self.isLocalParticipant = true
         self.isHold = false
         self.isInLobby = false
-        self.plusMoreCount = nil
-        self.isPlusMoreMenuItem = false
+        super.init(title: self.displayName)
     }
 
     init(participantInfoModel: ParticipantInfoModel,
@@ -39,24 +35,10 @@ class ParticipantsListCellViewModel {
         self.isHold = participantInfoModel.status == .hold
         self.isLocalParticipant = false
         self.isInLobby = participantInfoModel.status == .inLobby
-        self.plusMoreCount = nil
-        self.isPlusMoreMenuItem = false
+        super.init(title: self.displayName)
     }
 
-    init(plusMoreCount: Int,
-         localizationProvider: LocalizationProviderProtocol) {
-        participantId = nil
-        self.localizationProvider = localizationProvider
-        self.displayName = ""
-        self.isMuted = false
-        self.isLocalParticipant = false
-        self.isHold = false
-        self.isInLobby = false
-        self.isPlusMoreMenuItem = true
-        self.plusMoreCount = plusMoreCount
-    }
-
-    func getParticipantViewData(from avatarViewManager: AvatarViewManager) -> ParticipantViewData? {
+    func getParticipantViewData(from avatarViewManager: AvatarViewManagerProtocol) -> ParticipantViewData? {
         var participantViewData: ParticipantViewData?
         if isLocalParticipant {
             participantViewData = avatarViewManager.localParticipantViewData
@@ -100,7 +82,7 @@ class ParticipantsListCellViewModel {
     }
 }
 
-extension ParticipantsListCellViewModel: Equatable {
+extension ParticipantsListCellViewModel {
      static func == (lhs: ParticipantsListCellViewModel,
                      rhs: ParticipantsListCellViewModel) -> Bool {
          lhs.participantId == rhs.participantId &&

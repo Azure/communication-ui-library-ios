@@ -7,7 +7,7 @@ import Foundation
 
 internal class LeaveCallConfirmationViewModel: ObservableObject {
     @Published var isDisplayed = false
-    @Published var options: [DrawerListItemViewModel]
+    @Published var options: [BaseDrawerItemViewModel]
 
     let endCall: () -> Void
     let dismissConfirmation: () -> Void

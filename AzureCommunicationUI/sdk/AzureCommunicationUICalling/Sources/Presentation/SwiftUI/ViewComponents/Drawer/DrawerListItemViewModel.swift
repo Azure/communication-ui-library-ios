@@ -6,11 +6,25 @@
 import Foundation
 
 // This class contains all the View Models for List based Drawers (Participants, Audio Devices, Leave Call Confirm)
-// It is not for form-based drawers (I.e. Support Form) or other custom swift UI views
-class DrawerListItemViewModel: Identifiable {
+// Each ViewModel represents a line-item supported on one of these lits
+class BaseDrawerItemViewModel: Identifiable {
     let title: String
+
+    init (title: String) {
+        self.title = title
+    }
+}
+
+extension BaseDrawerItemViewModel: Equatable {
+    static func == (lhs: BaseDrawerItemViewModel,
+                    rhs: BaseDrawerItemViewModel) -> Bool {
+        return lhs.title == rhs.title
+    }
+}
+
+class DrawerListItemViewModel: BaseDrawerItemViewModel {
+
     let startIcon: CompositeIcon?
-    let endIcon: CompositeIcon?
     let accessibilityIdentifier: String
     var action: (() -> Void)?
     var isEnabled: Bool
@@ -22,11 +36,10 @@ class DrawerListItemViewModel: Identifiable {
          endIcon: CompositeIcon? = nil,
          isEnabled: Bool = true) {
         self.startIcon = startIcon
-        self.endIcon = endIcon
-        self.title = title
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
         self.isEnabled = isEnabled
+        super.init(title: title)
     }
 
     convenience init(title: String,
@@ -41,19 +54,21 @@ class DrawerListItemViewModel: Identifiable {
     }
 }
 
-extension DrawerListItemViewModel: Equatable {
+extension DrawerListItemViewModel {
     static func == (lhs: DrawerListItemViewModel,
                     rhs: DrawerListItemViewModel) -> Bool {
         return lhs.title == rhs.title &&
         lhs.accessibilityIdentifier == rhs.accessibilityIdentifier &&
         lhs.startIcon == rhs.startIcon &&
-        lhs.endIcon == rhs.endIcon &&
         lhs.isEnabled == rhs.isEnabled
     }
 }
 
-class SelectableDrawerListItemViewModel: DrawerListItemViewModel {
+class SelectableDrawerListItemViewModel: BaseDrawerItemViewModel {
     let isSelected: Bool
+    let accessibilityIdentifier: String
+    let icon: CompositeIcon
+    let action: () -> Void
 
     init(icon: CompositeIcon,
          title: String,
@@ -61,37 +76,27 @@ class SelectableDrawerListItemViewModel: DrawerListItemViewModel {
          isSelected: Bool,
          action: @escaping () -> Void) {
         self.isSelected = isSelected
-        super.init(title: title, accessibilityIdentifier: accessibilityIdentifier, action: action, startIcon: icon)
+        self.action = action
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.icon = icon
+        super.init(title: title)
     }
 }
 
-class TitleDrawerListItemViewModel: DrawerListItemViewModel {
+class TitleDrawerListItemViewModel: BaseDrawerItemViewModel {
+    let accessibilityIdentifier: String
+
     init(title: String, accessibilityIdentifier: String) {
-        super.init(title: title,
-                   accessibilityIdentifier: accessibilityIdentifier,
-                   action: nil,
-                   startIcon: nil)
+        self.accessibilityIdentifier = accessibilityIdentifier
+        super.init(title: title)
     }
 }
 
-class BodyTextDrawerListItemViewModel: DrawerListItemViewModel {
+class BodyTextDrawerListItemViewModel: BaseDrawerItemViewModel {
+    let accessibilityIdentifier: String
+
     init(title: String, accessibilityIdentifier: String) {
-        super.init(title: title,
-                   accessibilityIdentifier: accessibilityIdentifier,
-                   action: nil,
-                   startIcon: nil)
-    }
-}
-
-class ParticipantDrawerListItemViewModel: DrawerListItemViewModel {
-    let participantInfoModel: ParticipantInfoModel
-
-    init(participantInfoModel: ParticipantInfoModel, action: (() -> Void)?) {
-        self.participantInfoModel = participantInfoModel
-        super.init(title: participantInfoModel.displayName,
-                   accessibilityIdentifier: participantInfoModel.displayName,
-                   action: action,
-                   startIcon: nil,
-                   endIcon: nil)
+        self.accessibilityIdentifier = accessibilityIdentifier
+        super.init(title: title)
     }
 }

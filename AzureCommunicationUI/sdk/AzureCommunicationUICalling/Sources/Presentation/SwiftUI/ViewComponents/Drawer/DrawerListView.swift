@@ -15,7 +15,7 @@ import SwiftUI
 //
 //
 internal struct DrawerListView: View {
-    let items: [DrawerListItemViewModel]
+    let items: [BaseDrawerItemViewModel]
 
     // We don't always need this, but we do for Participants or whenever we show an Avatar
     // Provides just in case
@@ -34,10 +34,10 @@ internal struct DrawerListView: View {
                         DrawerTitleView(item: titleItem)
                     } else if let bodyItem = option as? BodyTextDrawerListItemViewModel {
                         DrawerBodyTextView(item: bodyItem)
-                    } else if let participantItem = option as? ParticipantDrawerListItemViewModel {
+                    } else if let participantItem = option as? ParticipantsListCellViewModel {
                         DrawerParticipantView(item: participantItem, avatarManager: avatarManager)
-                    } else {
-                        DrawerItemView(item: option)
+                    } else if let drawerItem = option as? DrawerListItemViewModel {
+                        DrawerItemView(item: drawerItem)
                     }
                 }
             }
@@ -60,10 +60,7 @@ internal struct SelectableDrawerItemView: View {
 
     var body: some View {
         HStack {
-            if let startIcon = item.startIcon {
-                Icon(name: startIcon, size: DrawerListConstants.iconSize)
-                    .foregroundColor(.primary)
-            }
+            let startIcon = item.icon
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
@@ -78,10 +75,7 @@ internal struct SelectableDrawerItemView: View {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .onTapGesture {
-            if let action = item.action {
-                action()
-            }
-
+            item.action()
         }
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }
@@ -152,42 +146,42 @@ internal struct DrawerBodyTextView: View {
     }
 }
 internal struct DrawerParticipantView: View {
-    let item: ParticipantDrawerListItemViewModel
+    let item: ParticipantsListCellViewModel
     let avatarManager: AvatarViewManagerProtocol
 
     var body: some View {
+        let participantViewData = item.getParticipantViewData(from: avatarManager)
+        let displayName = item.getCellDisplayName(with: participantViewData)
         HStack {
             // Placeholder replaced with actual avatar view
             CompositeAvatar(
-                displayName: Binding.constant(item.participantInfoModel.displayName),
+                displayName: Binding.constant(displayName),
                 avatarImage: Binding.constant(
-                    item.participantInfoModel.isRemoteUser ?
-                    avatarManager.avatarStorage.value(forKey: item.participantInfoModel.userIdentifier)?.avatarImage :
-                        avatarManager.localParticipantViewData?.avatarImage
+                    item.isLocalParticipant ?
+                    avatarManager.localParticipantViewData?.avatarImage :
+                        avatarManager.avatarStorage.value(forKey: item.participantId ?? "")?.avatarImage
                 ),
                 isSpeaking: false,
                 avatarSize: .size40
             )
-            Text(item.title)
+            Text(displayName)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.body)
-            if !item.participantInfoModel.isRemoteUser {
-                Text("(ME)")
-            }
             Spacer()
-            Icon(name: item.participantInfoModel.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
+            Icon(name: item.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
         }
         .onTapGesture {
-            guard let action = item.action else {
-                return
-            }
-            action()
+            // TADO: Do I need an on-tap to bridge? I think I do
+//            guard let action = item.action else {
+//                return
+//            }
+//            action()
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
-        .accessibilityIdentifier(item.accessibilityIdentifier)
+        .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
     }
 }
 
