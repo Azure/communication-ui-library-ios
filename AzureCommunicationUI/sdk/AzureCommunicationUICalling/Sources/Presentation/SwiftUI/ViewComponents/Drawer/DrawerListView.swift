@@ -26,7 +26,7 @@ internal struct DrawerListView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
+            LazyVStack(pinnedViews: .sectionHeaders) {
                 ForEach(0..<sections.count, id: \.self) { sectionIndex in
                     let section = sections[sectionIndex]
 

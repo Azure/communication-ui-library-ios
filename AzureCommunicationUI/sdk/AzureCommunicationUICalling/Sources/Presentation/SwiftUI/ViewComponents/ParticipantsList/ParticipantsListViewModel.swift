@@ -7,7 +7,10 @@ import Foundation
 import Combine
 
 class ParticipantsListViewModel: ObservableObject {
-    @Published var drawerListItems: [BaseDrawerItemViewModel] = []
+    @Published var meetingParticipants: [BaseDrawerItemViewModel] = []
+    @Published var lobbyParticipants: [BaseDrawerItemViewModel] = []
+    @Published var meetingParticipantsTitle: BaseDrawerItemViewModel?
+    @Published var lobbyParticipantsTitle: BaseDrawerItemViewModel?
 
     private var lastParticipantRole: ParticipantRoleEnum?
     private let dispatch: ActionDispatch
@@ -72,25 +75,19 @@ class ParticipantsListViewModel: ObservableObject {
                                                   localizationProvider: localizationProvider)
                 }
 
-            var participants = localParticipant + remoteParticipants
+            meetingParticipants = sortedParticipants(participants: localParticipant + remoteParticipants,
+                                                     avatarManager: avatarManager)
 
-            participants = sortedParticipants(participants: participants, avatarManager: avatarManager)
-
-            var updatedDrawerListItems: [BaseDrawerItemViewModel]
-                = participants
-
-            // Header
-            updatedDrawerListItems.insert(BodyTextDrawerListItemViewModel(
-                title: "In the call (\(drawerListItems.count))", /* TADO: Is this correct Participants + 1 */
-                accessibilityIdentifier: "??"), at: 0)
-
-            drawerListItems = updatedDrawerListItems
+            // TADO: Use localized string inflation
+            meetingParticipantsTitle = BodyTextDrawerListItemViewModel(
+                title: "In the call (\(meetingParticipants.count))", /* TADO: Is this correct Participants + 1 */
+                accessibilityIdentifier: "??")
 
             // Append + More item
             let plusMoreCount =
             remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
             if plusMoreCount > 0 {
-                drawerListItems.append(BodyTextDrawerListItemViewModel(
+                meetingParticipants.append(BodyTextDrawerListItemViewModel(
                     title: "Plus More \(plusMoreCount)",
                     accessibilityIdentifier: "PlusMore"
                 ))

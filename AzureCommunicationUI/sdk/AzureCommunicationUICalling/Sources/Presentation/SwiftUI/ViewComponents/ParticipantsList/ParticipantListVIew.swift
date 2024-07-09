@@ -17,7 +17,9 @@ internal struct ParticipantsListView: View {
     }
 
     var body: some View {
-        DrawerListView(sections: [DrawerListSection(header: nil, items: viewModel.drawerListItems)],
+        DrawerListView(sections: [DrawerListSection(
+            header: viewModel.meetingParticipantsTitle,
+            items: viewModel.meetingParticipants)],
                        avatarManager: avatarManager)
     }
 }
