@@ -628,7 +628,7 @@ extension ControlBarViewModelTests {
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    onEndCallTapped: {},
-                                   localUserState: storeFactory.store.state.localUserState,
+                                   localUserState: localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysEnabled,
                                    capabilitiesManager: capabilitiesManager)
