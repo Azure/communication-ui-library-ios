@@ -174,6 +174,8 @@ internal struct DrawerBodyTextView: View {
 internal struct DrawerParticipantView: View {
     let item: ParticipantsListCellViewModel
     let avatarManager: AvatarViewManagerProtocol
+    @State
+    var isConfirming = false
 
     var body: some View {
         let participantViewData = item.getParticipantViewData(from: avatarManager)
@@ -201,12 +203,19 @@ internal struct DrawerParticipantView: View {
             guard let action = item.action else {
                 return
             }
-            action()
+
+            // TADO: We should first check VM if it has a confirmation message
+            // If it does, show the confirm before the action
+            isConfirming = true
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
+        .alert(isPresented: $isConfirming) {
+            Alert(title: Text("Confirm"))
+        }
+
     }
 }
 

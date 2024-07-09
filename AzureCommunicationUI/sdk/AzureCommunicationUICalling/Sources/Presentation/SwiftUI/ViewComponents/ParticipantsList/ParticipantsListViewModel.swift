@@ -82,7 +82,7 @@ class ParticipantsListViewModel: ObservableObject {
                     }
                 }
 
-            meetingParticipants = sortedParticipants(participants: localParticipantVM + remoteParticipantVMs,
+            meetingParticipants = sortParticipants(participants: localParticipantVM + remoteParticipantVMs,
                                                      avatarManager: avatarManager)
 
             // TADO: Use localized string inflation
@@ -91,7 +91,7 @@ class ParticipantsListViewModel: ObservableObject {
                 accessibilityIdentifier: "??")
 
             // TADO: Switch to lobbyParticipantVMs
-            lobbyParticipants = sortedParticipants(participants: lobbyParticipantVMs,
+            lobbyParticipants = sortParticipants(participants: lobbyParticipantVMs,
                                                       avatarManager: avatarManager)
 
             lobbyParticipantsTitle = BodyTextDrawerListItemViewModel(
@@ -110,7 +110,7 @@ class ParticipantsListViewModel: ObservableObject {
         }
     }
 
-    func sortedParticipants(
+    func sortParticipants(
         participants: [ParticipantsListCellViewModel],
         avatarManager: AvatarViewManagerProtocol) -> [ParticipantsListCellViewModel] {
         return participants.sorted {
