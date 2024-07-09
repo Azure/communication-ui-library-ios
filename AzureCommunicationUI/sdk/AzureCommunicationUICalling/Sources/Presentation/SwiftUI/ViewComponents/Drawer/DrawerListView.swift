@@ -187,7 +187,8 @@ internal struct DrawerBodyWithActionTextView: View {
             Spacer()
             Text(item.actionText)
                 .onTapGesture {
-                    item.action()
+                    // TADO Should be a sheet here
+                    item.accept()
                 }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
@@ -230,42 +231,70 @@ internal struct DrawerParticipantView: View {
             if item.confirmTitle != nil && item.confirmAccept != nil && item.confirmDeny != nil {
                 isConfirming = true
             } else {
-                guard let action = item.action else {
+                guard let action = item.accept else {
                     return
                 }
                 action()
             }
         }
-        .onDisappear {
-            isConfirming = false
-        }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.participantOptionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
-        .sheet(isPresented: $isConfirming, content: {
-            Text("Presenting")
-        })
-//        .alert(isPresented: $isConfirming) {
-//            // Safe to unbox, because isConfirming is guarded on these values
-//            let title = item.confirmTitle ?? ""
-//            let accept = item.confirmAccept ?? ""
-//            let deny = item.confirmDeny ?? ""
-//            return Alert(
-//                title: Text(title),
-//                primaryButton: .default(Text(accept)) {
-//                    isConfirming = false
-//                    guard let action = item.action else {
-//                        return
-//                    }
-//                    action()
-//                },
-//                secondaryButton: .default(Text(deny)) {
-//                    isConfirming = false
-//                }
-//            )
-//        }
+        .sheet(isPresented: $isConfirming) {
+            ConfirmationSheet(
+                title: item.confirmTitle ?? "",
+                accept: item.confirmAccept ?? "",
+                deny: item.confirmDeny ?? "",
+                onAccept: {
+                    isConfirming = false
+                    guard let action = item.accept else {
+                        return
+                    }
+                    action()
+                },
+                onDeny: {
+                    isConfirming = false
+                    guard let action = item.deny else {
+                        return
+                    }
+                    action()
+                }
+            )
+        }
+    }
+}
 
+struct ConfirmationSheet: View {
+    let title: String
+    let accept: String
+    let deny: String
+    let onAccept: () -> Void
+    let onDeny: () -> Void
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Text(title)
+                .font(.headline)
+            HStack {
+                Button(action: onDeny) {
+                    Text(deny)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
+                Button(action: onAccept) {
+                    Text(accept)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+            }
+        }
+        .padding()
     }
 }
 
@@ -273,7 +302,7 @@ internal class DrawerListConstants {
     static let iconSize: CGFloat = 24
     static let textPaddingLeading: CGFloat = 8
     static let optionPaddingVertical: CGFloat = 12
-    static let participantOptionPaddingVertical: CGFloat = 6
+    static let participantOptionPaddingVertical: CGFloat = 4
     static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
 }

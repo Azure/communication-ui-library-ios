@@ -15,7 +15,8 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
     let confirmTitle: String?
     let confirmAccept: String?
     let confirmDeny: String?
-    let action: (() -> Void)?
+    let accept: (() -> Void)?
+    let deny: (() -> Void)?
     private let displayName: String
 
     init(localUserState: LocalUserState,
@@ -27,10 +28,11 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
         self.isLocalParticipant = true
         self.isHold = false
         self.isInLobby = false
-        self.action = nil
+        self.accept = nil
         self.confirmDeny = nil
         self.confirmTitle = nil
         self.confirmAccept = nil
+        self.deny = nil
     }
 
     init(participantInfoModel: ParticipantInfoModel,
@@ -38,7 +40,8 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
          confirmTitle: String?,
          confirmAccept: String?,
          confirmDeny: String?,
-         action: (() -> Void)?
+         onAccept: (() -> Void)?,
+         onDeny: (() -> Void)?
     ) {
         participantId = participantInfoModel.userIdentifier
         self.localizationProvider = localizationProvider
@@ -47,7 +50,8 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
         self.isHold = participantInfoModel.status == .hold
         self.isLocalParticipant = false
         self.isInLobby = participantInfoModel.status == .inLobby
-        self.action = action
+        self.accept = onAccept
+        self.deny = onDeny
         self.confirmTitle = confirmTitle
         self.confirmDeny = confirmDeny
         self.confirmAccept = confirmAccept

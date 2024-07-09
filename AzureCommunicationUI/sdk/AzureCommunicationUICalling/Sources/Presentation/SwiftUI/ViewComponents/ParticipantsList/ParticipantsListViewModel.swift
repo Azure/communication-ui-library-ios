@@ -66,12 +66,13 @@ class ParticipantsListViewModel: ObservableObject {
                 }.map {
                     let participant = $0
                     return ParticipantsListCellViewModel(participantInfoModel: participant,
-                                                  localizationProvider: localizationProvider,
-                    confirmTitle: nil,
-                    confirmAccept: nil,
-                    confirmDeny: nil) {
+                                                         localizationProvider: localizationProvider,
+                                                         confirmTitle: nil,
+                                                         confirmAccept: nil,
+                                                         confirmDeny: nil,
+                                                         onAccept: {
                         self.onUserClicked(participant)
-                    }
+                    }, onDeny: {})
                 }
 
             let lobbyParticipantVMs = remoteParticipantsState.participantInfoList
@@ -85,10 +86,12 @@ class ParticipantsListViewModel: ObservableObject {
                                                             format: getConfirmTitleAdmitParticipant(),
                                                             $0.displayName),
                                                          confirmAccept: getConfirmAdmit(),
-                                                         confirmDeny: getConfirmDecline()
-                    ) {
+                                                         confirmDeny: getConfirmDecline(),
+                                                         onAccept: {
                         self.admitParticipant(participant.userIdentifier)
-                    }
+                    }, onDeny: {
+                        self.declineParticipant(participant.userIdentifier)
+                    })
                 }
 
             meetingParticipants = sortParticipants(participants: localParticipantVM + remoteParticipantVMs,
@@ -106,10 +109,13 @@ class ParticipantsListViewModel: ObservableObject {
             lobbyParticipantsTitle = BodyTextWithActionDrawerListItemViewModel(
                 title: String(format: getWaitingInLobby(), lobbyParticipants.count),
                 accessibilityIdentifier: "??",
-                action: {
-                    self.admitAll()
-                },
-                actionText: getAdmitAllButtonText())
+                actionText: getAdmitAllButtonText(),
+                confirmTitle: getConfirmTitleAdmitAll(),
+                confirmAccept: getConfirmAdmit(),
+                confirmDeny: getConfirmDecline(),
+                accept: { self.admitAll() },
+                deny: { self.declineAll() }
+            )
 
             // Append + More item
             let plusMoreCount =

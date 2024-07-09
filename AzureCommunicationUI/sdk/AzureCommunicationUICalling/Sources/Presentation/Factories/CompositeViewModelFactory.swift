@@ -346,7 +346,9 @@ extension CompositeViewModelFactory {
                                       confirmTitle: nil,
                                       confirmAccept: nil,
                                       confirmDeny: nil,
-                                      action: nil)
+                                      onAccept: nil,
+                                      onDeny: nil
+        )
     }
 
     func makeMoreCallOptionsListViewModel(

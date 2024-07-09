@@ -63,6 +63,10 @@ struct BodyTextDrawerListItemViewModel: BaseDrawerItemViewModel {
 struct BodyTextWithActionDrawerListItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let accessibilityIdentifier: String
-    let action: () -> Void
     let actionText: String
+    let confirmTitle: String
+    let confirmAccept: String
+    let confirmDeny: String
+    let accept: (() -> Void)
+    let deny: (() -> Void)
 }
