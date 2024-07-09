@@ -16,7 +16,9 @@ class MoreCallOptionsListViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          showSharingViewAction: @escaping () -> Void,
          showSupportFormAction: @escaping () -> Void,
-         isSupportFormAvailable: Bool
+         isSupportFormAvailable: Bool,
+         chatButtonClick:( () -> Void)? = nil,
+         listButtonClick:( () -> Void)? = nil
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
@@ -28,16 +30,34 @@ class MoreCallOptionsListViewModel: ObservableObject {
             action: showSharingViewAction)
 
         var items = [shareDebugInfoModel]
-
-        if isSupportFormAvailable {
-            let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-                icon: .personFeedback,
-                title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
-                accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
-                action: showSupportFormAction)
-
-            items.append(reportErrorInfoModel)
+        func chatButtonClickLocal(){
+            chatButtonClick?()
         }
+        func listButtonClickLocal(){
+            listButtonClick?()
+        }
+let chatItem=compositeViewModelFactory.makeDrawerListItemViewModel(
+    icon: .personFeedback,
+    title: "Chat",
+    accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantChatID.rawValue,
+    action: chatButtonClickLocal)
+        let waitingList=compositeViewModelFactory.makeDrawerListItemViewModel(
+            icon: .personFeedback,
+            title: "Waiting List",
+            accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantChatID.rawValue,
+            action: listButtonClickLocal)
+        
+//        if isSupportFormAvailable {
+//            let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
+//                icon: .personFeedback,
+//                title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
+//                accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
+//                action: showSupportFormAction)
+//
+//            items.append(reportErrorInfoModel)
+//        }
+        items.append(chatItem)
+        items.append(waitingList)
         self.items = items
     }
 }

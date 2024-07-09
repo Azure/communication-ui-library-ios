@@ -15,15 +15,19 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let avatarManager: AvatarViewManagerProtocol
     private let videoViewManager: VideoViewManager
+    private let chatButtonClick:(() -> Void)?
+    private let listButtonClick:(() -> Void)?
 
     init(logger: Logger,
          avatarManager: AvatarViewManagerProtocol,
          videoViewManager: VideoViewManager,
-         compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
+         compositeViewModelFactory: CompositeViewModelFactoryProtocol,chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil) {
         self.logger = logger
         self.avatarManager = avatarManager
         self.videoViewManager = videoViewManager
         self.compositeViewModelFactory = compositeViewModelFactory
+        self.chatButtonClick=chatButtonClick
+        self.listButtonClick=listButtonClick
     }
 
     func makeSetupView() -> SetupView {
@@ -33,7 +37,7 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
     }
 
     func makeCallingView() -> CallingView {
-        return CallingView(viewModel: compositeViewModelFactory.getCallingViewModel(),
+        return CallingView(viewModel: compositeViewModelFactory.getCallingViewModel(chatButtonClick: chatButtonClick, listButtonClick: listButtonClick),
                            avatarManager: avatarManager,
                            viewManager: videoViewManager)
     }

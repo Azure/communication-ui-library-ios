@@ -43,7 +43,8 @@ class CallingViewModel: ObservableObject {
     var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
     var capabilitiesManager: CapabilitiesManager!
-
+    var chatButtonClick:(() -> Void)? = nil
+    var listButtonClick:(() -> Void)? = nil
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState, Action>,
@@ -53,8 +54,8 @@ class CallingViewModel: ObservableObject {
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          callType: CompositeCallType,
-         capabilitiesManager: CapabilitiesManager
-
+         capabilitiesManager: CapabilitiesManager,
+         chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil
     ) {
         self.logger = logger
         self.store = store
@@ -67,6 +68,8 @@ class CallingViewModel: ObservableObject {
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         let actionDispatch: ActionDispatch = store.dispatch
+        self.chatButtonClick=chatButtonClick
+        self.listButtonClick=listButtonClick
 
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
@@ -102,7 +105,7 @@ class CallingViewModel: ObservableObject {
                 self.endCall()
             }, localUserState: store.state.localUserState,
             leaveCallConfirmationMode: leaveCallConfirmationMode,
-            capabilitiesManager: capabilitiesManager)
+            capabilitiesManager: capabilitiesManager,chatButtonClick:chatButtonClick,listButtonClick: listButtonClick )
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {

@@ -303,13 +303,13 @@ public class CallComposite {
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
-                        localOptions: LocalOptions?) {
+                        localOptions: LocalOptions?,chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil) {
         logger.debug("CallComposite launch composite experience")
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
             callCompositeEventsHandler: events,
-            withCallingSDKWrapper: self.customCallingSdkWrapper
+            withCallingSDKWrapper: self.customCallingSdkWrapper,chatButtonClick: chatButtonClick,listButtonClick: listButtonClick
         )
         self.viewFactory = viewFactory
 
@@ -348,14 +348,14 @@ Use CallComposite init with CommunicationTokenCredential
 and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,
-                       localOptions: LocalOptions? = nil) {
+                       localOptions: LocalOptions? = nil,chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil) {
         let configuration = CallConfiguration(locator: remoteOptions.locator,
                                                   participants: nil,
                                                   callId: nil)
         self.credential = remoteOptions.credential
         self.displayName = remoteOptions.displayName
         self.callConfiguration = configuration
-        launch(configuration, localOptions: localOptions)
+        launch(configuration, localOptions: localOptions,chatButtonClick: chatButtonClick,listButtonClick: listButtonClick)
     }
 
     /// Start Call Composite experience with joining an existing call.
@@ -519,7 +519,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
         callCompositeEventsHandler: CallComposite.Events,
-        withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil
+        withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil,chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil
     ) -> CompositeViewFactoryProtocol {
         let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
         self.callingSDKEventsHandler = callingSDKEventsHandler
@@ -593,7 +593,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 callType: callConfiguration.compositeCallType,
                 setupScreenOptions: setupScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType)
-            )
+                
+              
+                
+                
+            ),
+            chatButtonClick:chatButtonClick,
+            listButtonClick:listButtonClick
         )
     }
 

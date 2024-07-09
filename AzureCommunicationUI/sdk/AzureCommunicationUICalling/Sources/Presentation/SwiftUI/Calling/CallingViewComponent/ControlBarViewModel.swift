@@ -50,7 +50,9 @@ class ControlBarViewModel: ObservableObject {
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         capabilitiesManager: CapabilitiesManager) {
+         capabilitiesManager: CapabilitiesManager,
+         chatButtonClick:(() -> Void)? = nil,
+         listButtonClick:(() -> Void)? = nil) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
@@ -143,7 +145,8 @@ class ControlBarViewModel: ObservableObject {
                     return
                 }
                 self.dispatch(.showSupportForm)
-            }
+            },chatButtonClick: chatButtonClick,
+            listButtonClick: listButtonClick
         )
 
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()

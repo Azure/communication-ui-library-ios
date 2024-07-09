@@ -9,7 +9,7 @@ import Foundation
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
     func getSetupViewModel() -> SetupViewModel
-    func getCallingViewModel() -> CallingViewModel
+    func getCallingViewModel(chatButtonClick:(() -> Void)?  ,listButtonClick:(() -> Void)? ) -> CallingViewModel
     // MARK: ComponentViewModels
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
@@ -40,7 +40,10 @@ protocol CompositeViewModelFactoryProtocol {
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode,
-                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
+                                 capabilitiesManager: CapabilitiesManager,
+                                 chatButtonClick:(() -> Void)? ,
+                                 listButtonClick:(() -> Void)?
+    ) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
@@ -60,12 +63,14 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+                                          showSupportFormAction: @escaping () -> Void, 
+                                          chatButtonClick:( () -> Void)? ,
+                                          listButtonClick:( () -> Void)? ) -> MoreCallOptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
+                                     action:@escaping (() -> Void)) -> DrawerListItemViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String) -> DrawerListItemViewModel

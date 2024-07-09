@@ -7,6 +7,8 @@ import FluentUI
 import Foundation
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
+   
+  
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let networkManager: NetworkManager
@@ -43,6 +45,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callType: CompositeCallType,
          setupScreenOptions: SetupScreenOptions?,
          capabilitiesManager: CapabilitiesManager
+         
     ) {
 
         self.logger = logger
@@ -91,7 +94,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         return viewModel
     }
 
-    func getCallingViewModel() -> CallingViewModel {
+    func getCallingViewModel(chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil) -> CallingViewModel {
         guard let viewModel = self.callingViewModel else {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
@@ -103,7 +106,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                             != CallCompositeAudioVideoMode.audioOnly,
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
                                             callType: callType,
-                                            capabilitiesManager: self.capabilitiesManager)
+                                            capabilitiesManager: self.capabilitiesManager,
+            chatButtonClick: chatButtonClick,
+            listButtonClick: listButtonClick)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -217,7 +222,9 @@ extension CompositeViewModelFactory {
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
-                                 capabilitiesManager: CapabilitiesManager)
+                                 capabilitiesManager: CapabilitiesManager,
+                                 chatButtonClick:(() -> Void)? = nil,
+                                 listButtonClick:(() -> Void)? = nil)
     -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -227,7 +234,7 @@ extension CompositeViewModelFactory {
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
-                            capabilitiesManager: capabilitiesManager)
+                            capabilitiesManager: capabilitiesManager,chatButtonClick: chatButtonClick,listButtonClick: listButtonClick)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -319,14 +326,17 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        showSupportFormAction: @escaping () -> Void,
+        chatButtonClick:(() -> Void)? ,
+        listButtonClick:(() -> Void)? ) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
-                                            isSupportFormAvailable: events.onUserReportedIssue != nil)
+                                            isSupportFormAvailable: events.onUserReportedIssue != nil,
+        chatButtonClick: chatButtonClick,listButtonClick: listButtonClick)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
