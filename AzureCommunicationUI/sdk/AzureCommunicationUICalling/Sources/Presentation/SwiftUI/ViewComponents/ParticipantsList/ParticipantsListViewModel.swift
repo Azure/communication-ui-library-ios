@@ -84,7 +84,7 @@ class ParticipantsListViewModel: ObservableObject {
                 accessibilityIdentifier: "??")
 
             // TADO: Switch to lobbyParticipantVMs
-            lobbyParticipants = sortedParticipants(participants: localParticipantVM + remoteParticipantVMs,
+            lobbyParticipants = sortedParticipants(participants: lobbyParticipantVMs,
                                                       avatarManager: avatarManager)
 
             lobbyParticipantsTitle = BodyTextDrawerListItemViewModel(
