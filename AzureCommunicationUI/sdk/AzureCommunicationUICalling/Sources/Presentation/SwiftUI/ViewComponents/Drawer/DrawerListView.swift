@@ -48,10 +48,12 @@ internal struct DrawerListView: View {
             .padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
             .background(
                 GeometryReader { geometry in
-                    DispatchQueue.main.async {
-                        scrollViewContentSize = geometry.size
-                    }
-                    return Color.clear
+                    Color.clear
+                        .onAppear {
+                            DispatchQueue.main.async {
+                                scrollViewContentSize = geometry.size
+                            }
+                        }
                 }
             )
         }
