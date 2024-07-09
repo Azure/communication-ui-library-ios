@@ -198,11 +198,10 @@ internal struct DrawerParticipantView: View {
             Icon(name: item.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
         }
         .onTapGesture {
-            // TADO: Do I need an on-tap to bridge? I think I do
-//            guard let action = item.action else {
-//                return
-//            }
-//            action()
+            guard let action = item.action else {
+                return
+            }
+            action()
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)

@@ -332,6 +332,7 @@ extension CompositeViewModelFactory {
                             localizationProvider: localizationProvider)
     }
 
+    // TADO: Deprecated I think?
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
         ParticipantsListCellViewModel(localUserState: localUserState,
                                       localizationProvider: localizationProvider)
@@ -340,7 +341,8 @@ extension CompositeViewModelFactory {
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
     -> ParticipantsListCellViewModel {
         ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
-                                      localizationProvider: localizationProvider)
+                                      localizationProvider: localizationProvider,
+        action: nil)
     }
 
     func makeMoreCallOptionsListViewModel(

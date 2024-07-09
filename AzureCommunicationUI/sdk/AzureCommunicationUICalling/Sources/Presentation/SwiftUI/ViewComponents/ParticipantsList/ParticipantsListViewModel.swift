@@ -16,6 +16,7 @@ class ParticipantsListViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+
     private let onUserClicked: (ParticipantInfoModel) -> Void
     private let avatarManager: AvatarViewManagerProtocol
 
@@ -63,16 +64,22 @@ class ParticipantsListViewModel: ObservableObject {
                 .filter { participant in
                     participant.status == .connected
                 }.map {
-                    ParticipantsListCellViewModel(participantInfoModel: $0,
-                                                  localizationProvider: localizationProvider)
+                    let participant = $0
+                    return ParticipantsListCellViewModel(participantInfoModel: participant,
+                                                  localizationProvider: localizationProvider) {
+                        self.onUserClicked(participant)
+                    }
                 }
 
             let lobbyParticipantVMs = remoteParticipantsState.participantInfoList
                 .filter { participant in
                     participant.status == .inLobby && !shouldFilterOutLobbyUsers
                 }.map {
-                    ParticipantsListCellViewModel(participantInfoModel: $0,
-                                                  localizationProvider: localizationProvider)
+                    let participant = $0
+                    return ParticipantsListCellViewModel(participantInfoModel: participant,
+                                                  localizationProvider: localizationProvider) {
+                        self.admitParticipant(participant.userIdentifier)
+                    }
                 }
 
             meetingParticipants = sortedParticipants(participants: localParticipantVM + remoteParticipantVMs,

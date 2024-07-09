@@ -10,7 +10,6 @@ class ParticipantMenuViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let onRemoveUser: (ParticipantInfoModel) -> Void
-    private let onMuteUser: (ParticipantInfoModel) -> Void
 
     // TADO: Should be a function (capability) -> Bool
     // Or the specific capability for the VM even better
@@ -67,7 +66,6 @@ class ParticipantMenuViewModel: ObservableObject {
         // TADO: We need to pass this via redux/init
         self.isDisplayed = false
         self.onRemoveUser = onRemoveUser
-        self.onMuteUser = onMuteUser
     }
 
     func update(localUserState: LocalUserState, isDisplayed: Bool, participantInfoModel: ParticipantInfoModel?) {
