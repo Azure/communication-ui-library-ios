@@ -55,11 +55,11 @@ class ParticipantsListViewModel: ObservableObject {
                 participantRole: localUserState.participantRole)
 
             // Build the Local Participant "List"
-            let localParticipant = [ParticipantsListCellViewModel(localUserState: localUserState,
+            let localParticipantVM = [ParticipantsListCellViewModel(localUserState: localUserState,
                                                                  localizationProvider: localizationProvider)]
 
             // Grab the Remote Participants
-            let remoteParticipants = remoteParticipantsState.participantInfoList
+            let remoteParticipantVMs = remoteParticipantsState.participantInfoList
                 .filter { participant in
                     participant.status == .connected
                 }.map {
@@ -67,7 +67,7 @@ class ParticipantsListViewModel: ObservableObject {
                                                   localizationProvider: localizationProvider)
                 }
 
-            let lobbyParticipants = remoteParticipantsState.participantInfoList
+            let lobbyParticipantVMs = remoteParticipantsState.participantInfoList
                 .filter { participant in
                     participant.status == .inLobby && !shouldFilterOutLobbyUsers
                 }.map {
@@ -75,12 +75,20 @@ class ParticipantsListViewModel: ObservableObject {
                                                   localizationProvider: localizationProvider)
                 }
 
-            meetingParticipants = sortedParticipants(participants: localParticipant + remoteParticipants,
+            meetingParticipants = sortedParticipants(participants: localParticipantVM + remoteParticipantVMs,
                                                      avatarManager: avatarManager)
 
             // TADO: Use localized string inflation
             meetingParticipantsTitle = BodyTextDrawerListItemViewModel(
                 title: "In the call (\(meetingParticipants.count))", /* TADO: Is this correct Participants + 1 */
+                accessibilityIdentifier: "??")
+
+            // TADO: Switch to lobbyParticipantVMs
+            lobbyParticipants = sortedParticipants(participants: localParticipantVM + remoteParticipantVMs,
+                                                      avatarManager: avatarManager)
+
+            lobbyParticipantsTitle = BodyTextDrawerListItemViewModel(
+                title: "In the lobby (\(lobbyParticipants.count))", /* TADO: Is this correct Participants + 1 */
                 accessibilityIdentifier: "??")
 
             // Append + More item

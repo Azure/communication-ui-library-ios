@@ -84,7 +84,6 @@ internal struct SelectableDrawerItemView: View {
 
     var body: some View {
         HStack {
-            let startIcon = item.icon
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
@@ -171,6 +170,7 @@ internal struct DrawerBodyTextView: View {
         .background(Color(StyleProvider.color.surface))
     }
 }
+
 internal struct DrawerParticipantView: View {
     let item: ParticipantsListCellViewModel
     let avatarManager: AvatarViewManagerProtocol
