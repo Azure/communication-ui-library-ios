@@ -9,13 +9,6 @@ import FluentUI
 import SwiftUI
 
 struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
-    func makeDrawerListItemViewModel(icon: AzureCommunicationUICalling.CompositeIcon, title: String, accessibilityIdentifier: String, titleTrailingAccessoryView: AzureCommunicationUICalling.CompositeIcon?, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerListItemViewModel {
-        return DrawerListItemViewModel(
-            icon: CompositeIcon.addParticipant,
-            title: "",
-            accessibilityIdentifier: "",
-            action: {})
-    }
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -94,7 +87,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     isIpadInterface: false,
                                                     allowLocalCameraPreview: true,
                                                     leaveCallConfirmationMode: .alwaysEnabled,
-                                                    captionsMode: .enabled,
                                                     callType: .groupCall,
                                                     captionsOptions: CaptionsOptions(),
                                                     capabilitiesManager: capabilitiesManager)
@@ -111,33 +103,33 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
-                                 selectedButtonState: ButtonStateType,
-                                 localizationProvider: LocalizationProviderProtocol,
-                                 buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
-                                 isDisabled: Bool,
-                                 action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
-        if let cameraStateClosure = createCameraIconWithLabelButtonViewModel,
-            let cameraState = selectedButtonState as? CameraButtonState,
-            let vm = cameraStateClosure(cameraState) as? IconWithLabelButtonViewModel<ButtonStateType> {
-            return vm
+        selectedButtonState: ButtonStateType,
+        localizationProvider: LocalizationProviderProtocol,
+        buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+        isDisabled: Bool,
+        action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
+            if let cameraStateClosure = createCameraIconWithLabelButtonViewModel,
+               let cameraState = selectedButtonState as? CameraButtonState,
+               let vm = cameraStateClosure(cameraState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+                return vm
+            }
+            if let micStateClosure = createMicIconWithLabelButtonViewModel,
+               let micState = selectedButtonState as? MicButtonState,
+               let vm = micStateClosure(micState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+                return vm
+            }
+            if let audioStateClosure = createAudioIconWithLabelButtonViewModel,
+               let audioState = selectedButtonState as? AudioButtonState,
+               let vm = audioStateClosure(audioState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+                return vm
+            }
+            return IconWithLabelButtonViewModel(
+                selectedButtonState: selectedButtonState,
+                localizationProvider: localizationProvider,
+                buttonTypeColor: buttonTypeColor,
+                isDisabled: isDisabled,
+                action: action)
         }
-        if let micStateClosure = createMicIconWithLabelButtonViewModel,
-            let micState = selectedButtonState as? MicButtonState,
-            let vm = micStateClosure(micState) as? IconWithLabelButtonViewModel<ButtonStateType> {
-            return vm
-        }
-        if let audioStateClosure = createAudioIconWithLabelButtonViewModel,
-            let audioState = selectedButtonState as? AudioButtonState,
-            let vm = audioStateClosure(audioState) as? IconWithLabelButtonViewModel<ButtonStateType> {
-            return vm
-        }
-        return IconWithLabelButtonViewModel(
-                                selectedButtonState: selectedButtonState,
-                                localizationProvider: localizationProvider,
-                                buttonTypeColor: buttonTypeColor,
-                                isDisabled: isDisabled,
-                                action: action)
-    }
 
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         return localVideoViewModel ?? LocalVideoViewModel(compositeViewModelFactory: self,
@@ -187,17 +179,17 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return audioDevicesListCellViewModel ?? SelectableDrawerListItemViewModel(icon: icon,
                                                                                   title: title,
                                                                                   accessibilityIdentifier: "",
-                                                                              isSelected: isSelected,
-                                                                              action: onSelectedAction)
+                                                                                  isSelected: isSelected,
+                                                                                  action: onSelectedAction)
     }
 
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),
         dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
             leaveCallConfirmationViewModel ?? LeaveCallConfirmationViewModel(state: store.state,
-                                                  localizationProvider: localizationProvider,
-                                                  endCall: {}, dismissConfirmation: {})
-    }
+                                                                             localizationProvider: localizationProvider,
+                                                                             endCall: {}, dismissConfirmation: {})
+        }
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
@@ -207,7 +199,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel {
         return loadingOverlayViewModel ?? LoadingOverlayViewModel(localizationProvider: localizationProvider,
-                                                              accessibilityProvider: accessibilityProvider,
+                                                                  accessibilityProvider: accessibilityProvider,
                                                                   networkManager: NetworkManager(),
                                                                   audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
                                                                   store: store,
@@ -269,10 +261,27 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             action: {})
     }
 
+    func makeCaptionsErrorViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
+    -> AzureCommunicationUICalling.CaptionsErrorHeaderViewModel {
+        return CaptionsErrorHeaderViewModel(compositeViewModelFactory: self,
+                                            logger: logger,
+                                            localizationProvider: localizationProvider,
+                                            accessibilityProvider: accessibilityProvider,
+                                            dispatchAction: dispatchAction)
+    }
+
+    func makeDrawerListItemViewModel(icon: AzureCommunicationUICalling.CompositeIcon, title: String, accessibilityIdentifier: String, titleTrailingAccessoryView: AzureCommunicationUICalling.CompositeIcon?, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerListItemViewModel {
+        return DrawerListItemViewModel(
+            icon: CompositeIcon.addParticipant,
+            title: "",
+            accessibilityIdentifier: "",
+            action: {})
+    }
+
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self,
                                                                     localizationProvider: localizationProvider,
-																	accessibilityProvider: accessibilityProvider,
+                                                                    accessibilityProvider: accessibilityProvider,
                                                                     isIpadInterface: isIpadInterface,
                                                                     callType: .groupCall)
     }
@@ -322,17 +331,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel {
         moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
-                                                                             title: title,
-                                                                             accessibilityIdentifier: accessibilityIdentifier,
-                                                                             action: action)
-    }
-
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String) -> DrawerListItemViewModel {
-        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
-                                                                             title: title,
-                                                                             accessibilityIdentifier: accessibilityIdentifier)
+                                                                    title: title,
+                                                                    accessibilityIdentifier: accessibilityIdentifier,
+                                                                    action: action)
     }
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
@@ -374,11 +375,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         return onHoldOverlayViewModel ?? OnHoldOverlayViewModel(localizationProvider: localizationProvider,
-                                      compositeViewModelFactory: self,
-                                      logger: logger,
-                                      accessibilityProvider: accessibilityProvider,
-                                      audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
-                                      resumeAction: {})
+                                                                compositeViewModelFactory: self,
+                                                                logger: logger,
+                                                                accessibilityProvider: accessibilityProvider,
+                                                                audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
+                                                                resumeAction: {})
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
@@ -395,17 +396,17 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                        dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
     -> LobbyErrorHeaderViewModel {
         return lobbyErrorHeaderViewModel ?? LobbyErrorHeaderViewModel(compositeViewModelFactory: self,
-                                                                          logger: logger,
-                                                                          localUserState: localUserState,
-                                                                          localizationProvider: localizationProvider,
-                                                                          accessibilityProvider: accessibilityProvider,
-                                                                          dispatchAction: dispatchAction)
+                                                                      logger: logger,
+                                                                      localUserState: localUserState,
+                                                                      localizationProvider: localizationProvider,
+                                                                      accessibilityProvider: accessibilityProvider,
+                                                                      dispatchAction: dispatchAction)
     }
 
     func makeCaptionsInfoViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.CaptionsInfoViewModel {
         return CaptionsInfoViewModel(state: store.state, captionsManager: CaptionsViewManager(
-        store: store,
-        callingSDKWrapper: CallingSDKWrapperMocking()))
+            store: store,
+            callingSDKWrapper: CallingSDKWrapperMocking()), localizationProvider: localizationProvider)
     }
 
     func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void,
@@ -434,7 +435,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return CaptionsInfoViewModel(state: state,
                                      captionsManager: CaptionsViewManager(
                                         store: store,
-                                        callingSDKWrapper: CallingSDKWrapperMocking()))
+                                        callingSDKWrapper: CallingSDKWrapperMocking()),
+                                     localizationProvider: localizationProvider)
     }
 
     func makeMoreCallOptionsListViewModel(isDisplayed: Bool, isCaptionsAvailable: Bool, showSharingViewAction: @escaping () -> Void, showSupportFormAction: @escaping () -> Void, showCaptionsViewAction: @escaping () -> Void) -> AzureCommunicationUICalling.MoreCallOptionsListViewModel {
@@ -464,6 +466,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             showSpokenLanguage: showSpokenLanguage,
             showCaptionsLanguage: showCaptionsLanguage,
             isDisplayed: true)
+    }
     func makeBottomToastViewModel(toastNotificationState: AzureCommunicationUICalling.ToastNotificationState,
                                   dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
     -> AzureCommunicationUICalling.BottomToastViewModel {

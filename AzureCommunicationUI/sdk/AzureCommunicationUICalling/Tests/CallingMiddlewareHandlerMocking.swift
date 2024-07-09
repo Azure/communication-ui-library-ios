@@ -192,6 +192,9 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func setCaptionsLanguage(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
         Task {
             setCaptionsLangue?(true)
+        }
+    }
+
     func onNetworkQualityCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.NetworkQualityDiagnosticModel) -> Task<Void, Never> {
         Task {
             onNetworkQualityCallDiagnosticsUpdated?(true)

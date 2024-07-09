@@ -52,7 +52,6 @@ extension CompositeViewModelFactoryTests {
                                          enableSystemPipWhenMultitasking: true,
                                          eventsHandler: CallComposite.Events(),
                                          leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled,
-                                         captionsMode: .enabled,
                                          retrieveLogFiles: { return [] },
                                          callType: .groupCall,
                                          setupScreenOptions: nil,

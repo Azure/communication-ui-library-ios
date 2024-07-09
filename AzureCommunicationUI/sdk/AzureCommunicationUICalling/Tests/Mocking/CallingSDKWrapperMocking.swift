@@ -173,7 +173,7 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     func setCaptionsSpokenLanguage(_ language: String) async throws {
     }
 
-    func setCaptionsCaptionLanguage(_ language: String) async throws {
+    func setCaptionsCaptionLanguage(_ language: String) async throws {}
     func removeParticipant(_ participantId: String) async throws {
         removeParticipantCalled = true
     }
