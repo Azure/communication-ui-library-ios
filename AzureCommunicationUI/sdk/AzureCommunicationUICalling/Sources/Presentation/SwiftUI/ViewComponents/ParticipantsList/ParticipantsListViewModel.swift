@@ -78,12 +78,15 @@ class ParticipantsListViewModel: ObservableObject {
                                                   localizationProvider: localizationProvider)
                 }
 
-            drawerListItems = localParticipant + remoteParticipants + lobbyParticipants
+            var updatedDrawerListItems: [BaseDrawerItemViewModel]
+                = localParticipant + remoteParticipants + lobbyParticipants
 
             // Header
-            drawerListItems.insert(BodyTextDrawerListItemViewModel(
+            updatedDrawerListItems.insert(BodyTextDrawerListItemViewModel(
                 title: "In the call (\(drawerListItems.count))", /* TADO: Is this correct Participants + 1 */
                 accessibilityIdentifier: "??"), at: 0)
+
+            drawerListItems = updatedDrawerListItems
 
             // Append + More item
             let plusMoreCount =
