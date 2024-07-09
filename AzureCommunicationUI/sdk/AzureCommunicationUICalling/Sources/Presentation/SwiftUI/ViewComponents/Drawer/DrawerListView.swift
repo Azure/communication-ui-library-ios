@@ -27,7 +27,8 @@ internal struct DrawerListView: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(items) { option in
+                ForEach(0..<items.count, id: \.self) { index in
+                    let option = items[index]
                     if let selectableItem = option as? SelectableDrawerListItemViewModel {
                         SelectableDrawerItemView(item: selectableItem)
                     } else if let titleItem = option as? TitleDrawerListItemViewModel {

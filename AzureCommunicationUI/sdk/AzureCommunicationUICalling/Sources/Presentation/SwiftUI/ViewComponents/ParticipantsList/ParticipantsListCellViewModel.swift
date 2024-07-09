@@ -23,7 +23,6 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
         self.isLocalParticipant = true
         self.isHold = false
         self.isInLobby = false
-        super.init(title: self.displayName)
     }
 
     init(participantInfoModel: ParticipantInfoModel,
@@ -35,7 +34,6 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
         self.isHold = participantInfoModel.status == .hold
         self.isLocalParticipant = false
         self.isInLobby = participantInfoModel.status == .inLobby
-        super.init(title: self.displayName)
     }
 
     func getParticipantViewData(from avatarViewManager: AvatarViewManagerProtocol) -> ParticipantViewData? {

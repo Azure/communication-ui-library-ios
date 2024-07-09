@@ -7,27 +7,14 @@ import Foundation
 
 // This class contains all the View Models for List based Drawers (Participants, Audio Devices, Leave Call Confirm)
 // Each ViewModel represents a line-item supported on one of these lits
-class BaseDrawerItemViewModel: Identifiable {
+protocol BaseDrawerItemViewModel {}
+
+struct DrawerListItemViewModel: BaseDrawerItemViewModel {
     let title: String
-
-    init (title: String) {
-        self.title = title
-    }
-}
-
-extension BaseDrawerItemViewModel: Equatable {
-    static func == (lhs: BaseDrawerItemViewModel,
-                    rhs: BaseDrawerItemViewModel) -> Bool {
-        return lhs.title == rhs.title
-    }
-}
-
-class DrawerListItemViewModel: BaseDrawerItemViewModel {
-
     let startIcon: CompositeIcon?
     let accessibilityIdentifier: String
-    var action: (() -> Void)?
-    var isEnabled: Bool
+    let action: (() -> Void)?
+    let isEnabled: Bool
 
     init(title: String,
          accessibilityIdentifier: String,
@@ -39,32 +26,12 @@ class DrawerListItemViewModel: BaseDrawerItemViewModel {
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
         self.isEnabled = isEnabled
-        super.init(title: title)
-    }
-
-    convenience init(title: String,
-                     icon: CompositeIcon,
-                     accessibilityIdentifier: String) {
-        self.init(title: title,
-                  accessibilityIdentifier: accessibilityIdentifier,
-                  action: nil,
-                  startIcon: icon,
-                  endIcon: nil,
-                  isEnabled: true)
+        self.title = title
     }
 }
 
-extension DrawerListItemViewModel {
-    static func == (lhs: DrawerListItemViewModel,
-                    rhs: DrawerListItemViewModel) -> Bool {
-        return lhs.title == rhs.title &&
-        lhs.accessibilityIdentifier == rhs.accessibilityIdentifier &&
-        lhs.startIcon == rhs.startIcon &&
-        lhs.isEnabled == rhs.isEnabled
-    }
-}
-
-class SelectableDrawerListItemViewModel: BaseDrawerItemViewModel {
+struct SelectableDrawerListItemViewModel: BaseDrawerItemViewModel {
+    let title: String
     let isSelected: Bool
     let accessibilityIdentifier: String
     let icon: CompositeIcon
@@ -79,24 +46,16 @@ class SelectableDrawerListItemViewModel: BaseDrawerItemViewModel {
         self.action = action
         self.accessibilityIdentifier = accessibilityIdentifier
         self.icon = icon
-        super.init(title: title)
+        self.title = title
     }
 }
 
-class TitleDrawerListItemViewModel: BaseDrawerItemViewModel {
+struct TitleDrawerListItemViewModel: BaseDrawerItemViewModel {
+    let title: String
     let accessibilityIdentifier: String
-
-    init(title: String, accessibilityIdentifier: String) {
-        self.accessibilityIdentifier = accessibilityIdentifier
-        super.init(title: title)
-    }
 }
 
-class BodyTextDrawerListItemViewModel: BaseDrawerItemViewModel {
+struct BodyTextDrawerListItemViewModel: BaseDrawerItemViewModel {
+    let title: String
     let accessibilityIdentifier: String
-
-    init(title: String, accessibilityIdentifier: String) {
-        self.accessibilityIdentifier = accessibilityIdentifier
-        super.init(title: title)
-    }
 }
