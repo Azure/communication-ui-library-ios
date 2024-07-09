@@ -59,3 +59,10 @@ struct BodyTextDrawerListItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let accessibilityIdentifier: String
 }
+
+struct BodyTextWithActionDrawerListItemViewModel: BaseDrawerItemViewModel {
+    let title: String
+    let accessibilityIdentifier: String
+    let action: () -> Void
+    let actionText: String
+}
