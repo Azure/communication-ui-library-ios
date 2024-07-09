@@ -18,7 +18,7 @@ internal struct AudioDevicesListView: View {
     }
 
     var body: some View {
-        DrawerListView(items: viewModel.audioDevicesList,
+        DrawerListView(sections: [DrawerListSection(header: nil, items: viewModel.audioDevicesList)],
                        avatarManager: avatarManager)
     }
 }

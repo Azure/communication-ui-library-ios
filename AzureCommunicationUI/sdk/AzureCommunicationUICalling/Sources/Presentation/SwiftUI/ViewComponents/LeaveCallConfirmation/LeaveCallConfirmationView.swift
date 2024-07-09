@@ -17,6 +17,7 @@ internal struct LeaveCallConfirmationView: View {
     }
 
     var body: some View {
-        DrawerListView(items: viewModel.options, avatarManager: avatarManager)
+        DrawerListView(sections: [DrawerListSection(header: nil, items: viewModel.options)],
+                       avatarManager: avatarManager)
     }
 }

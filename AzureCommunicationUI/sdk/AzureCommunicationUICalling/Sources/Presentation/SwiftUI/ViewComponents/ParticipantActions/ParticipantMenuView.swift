@@ -18,7 +18,7 @@ internal struct ParticipantMenuView: View {
     }
 
     var body: some View {
-        DrawerListView(items: viewModel.items,
+        DrawerListView(sections: [DrawerListSection(header: nil, items: viewModel.items)],
                        avatarManager: avatarManager)
     }
 }

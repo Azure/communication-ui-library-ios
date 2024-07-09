@@ -15,7 +15,7 @@ import SwiftUI
 //
 //
 internal struct DrawerListView: View {
-    let items: [BaseDrawerItemViewModel]
+    let sections: [DrawerListSection]
 
     // We don't always need this, but we do for Participants or whenever we show an Avatar
     // Provides just in case
@@ -27,18 +27,21 @@ internal struct DrawerListView: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(0..<items.count, id: \.self) { index in
-                    let option = items[index]
-                    if let selectableItem = option as? SelectableDrawerListItemViewModel {
-                        SelectableDrawerItemView(item: selectableItem)
-                    } else if let titleItem = option as? TitleDrawerListItemViewModel {
-                        DrawerTitleView(item: titleItem)
-                    } else if let bodyItem = option as? BodyTextDrawerListItemViewModel {
-                        DrawerBodyTextView(item: bodyItem)
-                    } else if let participantItem = option as? ParticipantsListCellViewModel {
-                        DrawerParticipantView(item: participantItem, avatarManager: avatarManager)
-                    } else if let drawerItem = option as? DrawerListItemViewModel {
-                        DrawerItemView(item: drawerItem)
+                ForEach(0..<sections.count, id: \.self) { sectionIndex in
+                    let section = sections[sectionIndex]
+
+                    if let header = section.header {
+                        Section(header: inflateView(for: header, avatarManager: avatarManager)) {
+                            ForEach(0..<section.items.count, id: \.self) { itemIndex in
+                                let item = section.items[itemIndex]
+                                inflateView(for: item, avatarManager: avatarManager)
+                            }
+                        }
+                    } else {
+                        ForEach(0..<section.items.count, id: \.self) { itemIndex in
+                            let item = section.items[itemIndex]
+                            inflateView(for: item, avatarManager: avatarManager)
+                        }
                     }
                 }
             }
@@ -54,6 +57,26 @@ internal struct DrawerListView: View {
         }
         .frame(maxHeight: min(scrollViewContentSize.height, 400))
     }
+
+    func inflateView(for item: BaseDrawerItemViewModel, avatarManager: AvatarViewManagerProtocol) -> some View {
+        if let selectableItem = item as? SelectableDrawerListItemViewModel {
+            return AnyView(SelectableDrawerItemView(item: selectableItem))
+        } else if let titleItem = item as? TitleDrawerListItemViewModel {
+            return AnyView(DrawerTitleView(item: titleItem))
+        } else if let bodyItem = item as? BodyTextDrawerListItemViewModel {
+            return AnyView(DrawerBodyTextView(item: bodyItem))
+        } else if let participantItem = item as? ParticipantsListCellViewModel {
+            return AnyView(DrawerParticipantView(item: participantItem, avatarManager: avatarManager))
+        } else if let drawerItem = item as? DrawerListItemViewModel {
+            return AnyView(DrawerItemView(item: drawerItem))
+        }
+        return AnyView(EmptyView())
+    }
+}
+
+internal struct DrawerListSection {
+    let header: BaseDrawerItemViewModel?
+    let items: [BaseDrawerItemViewModel]
 }
 
 internal struct SelectableDrawerItemView: View {
