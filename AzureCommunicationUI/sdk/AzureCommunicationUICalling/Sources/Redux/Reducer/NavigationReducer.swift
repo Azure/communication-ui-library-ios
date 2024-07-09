@@ -12,6 +12,8 @@ extension Reducer where State == NavigationState,
         var drawerVisibility = getDrawerVisibility(state: state)
         var selectedParticipant = state.selectedParticipant
         switch action {
+        case .visibilityAction(.pipModeEntered):
+            drawerVisibility = .hidden
         case .callingViewLaunched:
             navigationStatus = .inCall
         case .errorAction(.fatalErrorUpdated),

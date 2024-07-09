@@ -113,7 +113,7 @@ class ParticipantsListViewModel: ObservableObject {
             remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
             if plusMoreCount > 0 {
                 meetingParticipants.append(BodyTextDrawerListItemViewModel(
-                    title: String(format: getPlusMoreText(), "(\(plusMoreCount))"),
+                    title: String(format: getPlusMoreText(), "\(plusMoreCount)"),
                     accessibilityIdentifier: "PlusMore"
                 ))
             }
