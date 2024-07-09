@@ -200,6 +200,7 @@ enum LocalizationKey: String {
     case captionsListTitile = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
     case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
     case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
+    case captionsStartingCaptions = "AzureCommunicationUICalling.Captions.Text.StartingCaptions"
     case captionsStartCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"
     case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
     case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"

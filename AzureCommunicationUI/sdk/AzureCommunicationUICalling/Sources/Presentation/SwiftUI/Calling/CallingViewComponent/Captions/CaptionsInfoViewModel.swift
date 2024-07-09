@@ -9,10 +9,17 @@ import Foundation
 class CaptionsInfoViewModel: ObservableObject {
     @Published var captionsData = [CallCompositeCaptionsData]()
     @Published var isDisplayed = false
+    @Published var isLoading = false
+    var loadingMessage = ""
     private var captionsManager: CaptionsViewManager
+    private let localizationProvider: LocalizationProviderProtocol
 
-    init(state: AppState, captionsManager: CaptionsViewManager) {
+    init(state: AppState,
+         captionsManager: CaptionsViewManager,
+         localizationProvider: LocalizationProviderProtocol) {
         self.captionsManager = captionsManager
+        self.localizationProvider = localizationProvider
+        loadingMessage = localizationProvider.getLocalizedString(LocalizationKey.captionsStartingCaptions)
         bindCaptionsUpdates()
     }
 
@@ -23,6 +30,7 @@ class CaptionsInfoViewModel: ObservableObject {
     }
 
     func update(state: AppState) {
-        self.isDisplayed = state.captionsState.isStarted
+        self.isDisplayed = state.captionsState.isEnabled
+        self.isLoading = isDisplayed && !state.captionsState.isStarted
     }
 }

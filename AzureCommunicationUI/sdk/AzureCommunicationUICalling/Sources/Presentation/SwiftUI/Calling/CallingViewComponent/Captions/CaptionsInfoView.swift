@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import FluentUI
 
 struct CaptionsInfoView: View {
     @ObservedObject var viewModel: CaptionsInfoViewModel
@@ -12,10 +13,13 @@ struct CaptionsInfoView: View {
 
     var body: some View {
         ScrollViewReader { scrollView in
-            List {
-                ForEach(viewModel.captionsData.indices, id: \.self) { index in
-                    CaptionsInfoCellView(caption: viewModel.captionsData[index],
-                                         avatarViewManager: avatarViewManager)
+            if viewModel.isLoading {
+                loadingView
+            } else {
+                List {
+                    ForEach(viewModel.captionsData.indices, id: \.self) { index in
+                        CaptionsInfoCellView(caption: viewModel.captionsData[index],
+                                             avatarViewManager: avatarViewManager)
                         .id(viewModel.captionsData[index].id)
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
@@ -24,23 +28,24 @@ struct CaptionsInfoView: View {
                             DispatchQueue.main.async {
                                 // Update visibility state based on the geometry of the last item
                                 if index == viewModel.captionsData.indices.last {
-                                   isLastItemVisible = geometry.frame(in: .global).maxY <=
+                                    isLastItemVisible = geometry.frame(in: .global).maxY <=
                                     UIScreen.main.bounds.height
                                 }
                             }
                             return Color.clear
                         })
+                    }
                 }
-            }
-            .listStyle(PlainListStyle())
-            .background(Color(StyleProvider.color.drawerColor))
-            .frame(maxWidth: 480)
-            .onAppear {
-                scrollToLastItem(scrollView)
-            }
-            .onChange(of: viewModel.captionsData) { _ in
-                if isLastItemVisible {
+                .listStyle(PlainListStyle())
+                .background(Color(StyleProvider.color.drawerColor))
+                .frame(maxWidth: 480)
+                .onAppear {
                     scrollToLastItem(scrollView)
+                }
+                .onChange(of: viewModel.captionsData) { _ in
+                    if isLastItemVisible {
+                        scrollToLastItem(scrollView)
+                    }
                 }
             }
         }
@@ -52,5 +57,22 @@ struct CaptionsInfoView: View {
                 scrollView.scrollTo(lastID, anchor: .bottom)
             }
         }
+    }
+
+    private var loadingView: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                ActivityIndicator(size: .small)
+                    .isAnimating(true)
+                Text(viewModel.loadingMessage)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Spacer()
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
