@@ -209,7 +209,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
-        return CaptionsInfoViewModel(state: state, captionsManager: captionsViewManager)
+        return CaptionsInfoViewModel(state: state,
+                                     captionsManager: captionsViewManager,
+                                     localizationProvider: localizationProvider)
     }
 
     func makeCaptionsErrorViewModel(dispatchAction: @escaping ActionDispatch)
