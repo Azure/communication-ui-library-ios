@@ -66,7 +66,10 @@ class ParticipantsListViewModel: ObservableObject {
                 }.map {
                     let participant = $0
                     return ParticipantsListCellViewModel(participantInfoModel: participant,
-                                                  localizationProvider: localizationProvider) {
+                                                  localizationProvider: localizationProvider,
+                    confirmTitle: nil,
+                    confirmAccept: nil,
+                    confirmDeny: nil) {
                         self.onUserClicked(participant)
                     }
                 }
@@ -76,8 +79,15 @@ class ParticipantsListViewModel: ObservableObject {
                     participant.status == .inLobby && !shouldFilterOutLobbyUsers
                 }.map {
                     let participant = $0
+                    // TADO: Localize
                     return ParticipantsListCellViewModel(participantInfoModel: participant,
-                                                  localizationProvider: localizationProvider) {
+                                                  localizationProvider: localizationProvider,
+                                                         confirmTitle: String(
+                                                            format: getConfirmTitleAdmitParticipant(),
+                                                            $0.displayName),
+                                                         confirmAccept: getConfirmAdmit(),
+                                                         confirmDeny: getConfirmDecline()
+                    ) {
                         self.admitParticipant(participant.userIdentifier)
                     }
                 }
@@ -87,7 +97,7 @@ class ParticipantsListViewModel: ObservableObject {
 
             // TADO: Use localized string inflation
             meetingParticipantsTitle = BodyTextDrawerListItemViewModel(
-                title: "In the call (\(meetingParticipants.count))", /* TADO: Is this correct Participants + 1 */
+                title: String(format: getInTheCall(), meetingParticipants.count),
                 accessibilityIdentifier: "??")
 
             // TADO: Switch to lobbyParticipantVMs
@@ -95,7 +105,7 @@ class ParticipantsListViewModel: ObservableObject {
                                                       avatarManager: avatarManager)
 
             lobbyParticipantsTitle = BodyTextDrawerListItemViewModel(
-                title: "In the lobby (\(lobbyParticipants.count))", /* TADO: Is this correct Participants + 1 */
+                title: String(format: getWaitingInLobby(), lobbyParticipants.count),
                 accessibilityIdentifier: "??")
 
             // Append + More item
@@ -103,7 +113,7 @@ class ParticipantsListViewModel: ObservableObject {
             remoteParticipantsState.totalParticipantCount - remoteParticipantsState.participantInfoList.count
             if plusMoreCount > 0 {
                 meetingParticipants.append(BodyTextDrawerListItemViewModel(
-                    title: "Plus More \(plusMoreCount)",
+                    title: String(format: getPlusMoreText(), "(\(plusMoreCount))"),
                     accessibilityIdentifier: "PlusMore"
                 ))
             }

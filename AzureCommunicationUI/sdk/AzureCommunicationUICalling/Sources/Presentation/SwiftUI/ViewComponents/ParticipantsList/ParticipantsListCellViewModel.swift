@@ -12,6 +12,9 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
     let isLocalParticipant: Bool
     let localizationProvider: LocalizationProviderProtocol
     let isInLobby: Bool
+    let confirmTitle: String?
+    let confirmAccept: String?
+    let confirmDeny: String?
     let action: (() -> Void)?
     private let displayName: String
 
@@ -25,10 +28,16 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
         self.isHold = false
         self.isInLobby = false
         self.action = nil
+        self.confirmDeny = nil
+        self.confirmTitle = nil
+        self.confirmAccept = nil
     }
 
     init(participantInfoModel: ParticipantInfoModel,
          localizationProvider: LocalizationProviderProtocol,
+         confirmTitle: String?,
+         confirmAccept: String?,
+         confirmDeny: String?,
          action: (() -> Void)?
     ) {
         participantId = participantInfoModel.userIdentifier
@@ -39,6 +48,9 @@ class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
         self.isLocalParticipant = false
         self.isInLobby = participantInfoModel.status == .inLobby
         self.action = action
+        self.confirmTitle = confirmTitle
+        self.confirmDeny = confirmDeny
+        self.confirmAccept = confirmAccept
     }
 
     func getParticipantViewData(from avatarViewManager: AvatarViewManagerProtocol) -> ParticipantViewData? {

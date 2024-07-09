@@ -17,11 +17,7 @@ internal struct ParticipantsListView: View {
     }
 
     var body: some View {
-        var sections = [
-            DrawerListSection(
-                header: viewModel.meetingParticipantsTitle,
-                items: viewModel.meetingParticipants)
-        ]
+        var sections: [DrawerListSection] = []
 
         // Include Lobby Participants if in VM
         if viewModel.lobbyParticipants.count > 0 {
@@ -30,6 +26,10 @@ internal struct ParticipantsListView: View {
                 items: viewModel.lobbyParticipants))
 
         }
+
+        sections.append(DrawerListSection(
+                header: viewModel.meetingParticipantsTitle,
+                items: viewModel.meetingParticipants))
 
         return DrawerListView(sections: sections,
                        avatarManager: avatarManager)

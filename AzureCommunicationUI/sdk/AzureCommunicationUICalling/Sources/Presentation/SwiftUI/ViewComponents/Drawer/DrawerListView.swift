@@ -200,26 +200,37 @@ internal struct DrawerParticipantView: View {
             Icon(name: item.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
         }
         .onTapGesture {
-            // TADO: We should first check VM if it has a confirmation message
-            // If it does, show the confirm before the action
-            isConfirming = true
+            if item.confirmTitle != nil && item.confirmAccept != nil && item.confirmDeny != nil {
+                isConfirming = true
+            } else {
+                guard let action = item.action else {
+                    return
+                }
+                action()
+            }
+        }
+        .onDisappear {
+            isConfirming = false
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
         .alert(isPresented: $isConfirming) {
-            Alert(
-                title: Text("Confirm"),
-                message: Text("Are you sure"),
-                primaryButton: .default(Text("Yes")) {
+            // Safe to unbox, because isConfirming is guarded on these values
+            let title = item.confirmTitle ?? ""
+            let accept = item.confirmAccept ?? ""
+            let deny = item.confirmDeny ?? ""
+            return Alert(
+                title: Text(title),
+                primaryButton: .default(Text(accept)) {
                     isConfirming = false
                     guard let action = item.action else {
                         return
                     }
                     action()
                 },
-                secondaryButton: .default(Text("No")) {
+                secondaryButton: .default(Text(deny)) {
                     isConfirming = false
                 }
             )

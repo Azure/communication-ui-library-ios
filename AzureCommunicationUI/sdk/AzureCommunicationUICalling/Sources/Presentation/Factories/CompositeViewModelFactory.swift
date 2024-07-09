@@ -338,11 +338,15 @@ extension CompositeViewModelFactory {
                                       localizationProvider: localizationProvider)
     }
 
+    // TADO: Deprecated also
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
     -> ParticipantsListCellViewModel {
         ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
                                       localizationProvider: localizationProvider,
-        action: nil)
+                                      confirmTitle: nil,
+                                      confirmAccept: nil,
+                                      confirmDeny: nil,
+                                      action: nil)
     }
 
     func makeMoreCallOptionsListViewModel(
