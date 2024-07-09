@@ -79,7 +79,6 @@ class ParticipantsListViewModel: ObservableObject {
                     participant.status == .inLobby && !shouldFilterOutLobbyUsers
                 }.map {
                     let participant = $0
-                    // TADO: Localize
                     return ParticipantsListCellViewModel(participantInfoModel: participant,
                                                   localizationProvider: localizationProvider,
                                                          confirmTitle: String(
@@ -104,9 +103,13 @@ class ParticipantsListViewModel: ObservableObject {
             lobbyParticipants = sortParticipants(participants: lobbyParticipantVMs,
                                                       avatarManager: avatarManager)
 
-            lobbyParticipantsTitle = BodyTextDrawerListItemViewModel(
+            lobbyParticipantsTitle = BodyTextWithActionDrawerListItemViewModel(
                 title: String(format: getWaitingInLobby(), lobbyParticipants.count),
-                accessibilityIdentifier: "??")
+                accessibilityIdentifier: "??",
+                action: {
+                    self.admitAll()
+                },
+                actionText: getAdmitAllButtonText())
 
             // Append + More item
             let plusMoreCount =

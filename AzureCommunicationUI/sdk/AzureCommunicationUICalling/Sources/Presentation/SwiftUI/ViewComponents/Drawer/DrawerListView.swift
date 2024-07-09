@@ -71,6 +71,8 @@ internal struct DrawerListView: View {
             return AnyView(DrawerParticipantView(item: participantItem, avatarManager: avatarManager))
         } else if let drawerItem = item as? DrawerListItemViewModel {
             return AnyView(DrawerItemView(item: drawerItem))
+        } else if let drawerItem = item as? BodyTextWithActionDrawerListItemViewModel {
+            return AnyView(DrawerBodyWithActionTextView(item: drawerItem))
         }
         return AnyView(EmptyView())
     }
@@ -173,6 +175,29 @@ internal struct DrawerBodyTextView: View {
     }
 }
 
+internal struct DrawerBodyWithActionTextView: View {
+    let item: BodyTextWithActionDrawerListItemViewModel
+
+    var body: some View {
+        HStack {
+            Text(item.title)
+                .foregroundColor(.primary)
+                .padding(.leading, DrawerListConstants.textPaddingLeading)
+                .font(.body)
+            Spacer()
+            Text(item.actionText)
+                .onTapGesture {
+                    item.action()
+                }
+        }
+        .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
+        .padding(.vertical, DrawerListConstants.optionPaddingVertical)
+        .frame(maxWidth: .infinity)
+        .accessibilityIdentifier(item.accessibilityIdentifier)
+        .background(Color(StyleProvider.color.surface))
+    }
+}
+
 internal struct DrawerParticipantView: View {
     let item: ParticipantsListCellViewModel
     let avatarManager: AvatarViewManagerProtocol
@@ -215,28 +240,31 @@ internal struct DrawerParticipantView: View {
             isConfirming = false
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
-        .padding(.vertical, DrawerListConstants.optionPaddingVertical)
+        .padding(.vertical, DrawerListConstants.participantOptionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
-        .alert(isPresented: $isConfirming) {
-            // Safe to unbox, because isConfirming is guarded on these values
-            let title = item.confirmTitle ?? ""
-            let accept = item.confirmAccept ?? ""
-            let deny = item.confirmDeny ?? ""
-            return Alert(
-                title: Text(title),
-                primaryButton: .default(Text(accept)) {
-                    isConfirming = false
-                    guard let action = item.action else {
-                        return
-                    }
-                    action()
-                },
-                secondaryButton: .default(Text(deny)) {
-                    isConfirming = false
-                }
-            )
-        }
+        .sheet(isPresented: $isConfirming, content: {
+            Text("Presenting")
+        })
+//        .alert(isPresented: $isConfirming) {
+//            // Safe to unbox, because isConfirming is guarded on these values
+//            let title = item.confirmTitle ?? ""
+//            let accept = item.confirmAccept ?? ""
+//            let deny = item.confirmDeny ?? ""
+//            return Alert(
+//                title: Text(title),
+//                primaryButton: .default(Text(accept)) {
+//                    isConfirming = false
+//                    guard let action = item.action else {
+//                        return
+//                    }
+//                    action()
+//                },
+//                secondaryButton: .default(Text(deny)) {
+//                    isConfirming = false
+//                }
+//            )
+//        }
 
     }
 }
@@ -245,6 +273,7 @@ internal class DrawerListConstants {
     static let iconSize: CGFloat = 24
     static let textPaddingLeading: CGFloat = 8
     static let optionPaddingVertical: CGFloat = 12
+    static let participantOptionPaddingVertical: CGFloat = 6
     static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
 }
