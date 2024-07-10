@@ -25,6 +25,8 @@ internal struct DrawerListView: View {
     private var scrollViewContentSize: CGSize = .zero
 
     var body: some View {
+        let halfScreenHeight = UIScreen.main.bounds.height * 0.5
+
         ScrollView {
             LazyVStack(pinnedViews: .sectionHeaders) {
                 ForEach(0..<sections.count, id: \.self) { sectionIndex in
@@ -48,7 +50,7 @@ internal struct DrawerListView: View {
             .padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
             .background(
                 GeometryReader { geometry in
-                    Color.clear
+                    Color.clear                        
                         .onAppear {
                             DispatchQueue.main.async {
                                 scrollViewContentSize = geometry.size
@@ -57,7 +59,7 @@ internal struct DrawerListView: View {
                 }
             )
         }
-        .frame(maxHeight: min(scrollViewContentSize.height, 400))
+        .frame(maxHeight: min(scrollViewContentSize.height, halfScreenHeight))
     }
 
     func inflateView(for item: BaseDrawerItemViewModel, avatarManager: AvatarViewManagerProtocol) -> some View {
