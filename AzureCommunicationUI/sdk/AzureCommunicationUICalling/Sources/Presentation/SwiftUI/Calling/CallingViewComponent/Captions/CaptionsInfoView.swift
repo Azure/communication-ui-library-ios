@@ -10,12 +10,13 @@ struct CaptionsInfoView: View {
     @ObservedObject var viewModel: CaptionsInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
     @State private var isLastItemVisible = true
+    @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var body: some View {
-        ScrollViewReader { scrollView in
-            if viewModel.isLoading {
-                loadingView
-            } else {
+        if viewModel.isLoading {
+            loadingView
+        } else {
+            ScrollViewReader { scrollView in
                 List {
                     ForEach(viewModel.captionsData.indices, id: \.self) { index in
                         CaptionsInfoCellView(caption: viewModel.captionsData[index],
@@ -28,8 +29,13 @@ struct CaptionsInfoView: View {
                             DispatchQueue.main.async {
                                 // Update visibility state based on the geometry of the last item
                                 if index == viewModel.captionsData.indices.last {
-                                    isLastItemVisible = geometry.frame(in: .global).maxY <=
-                                    UIScreen.main.bounds.height
+                                    if verticalSizeClass == .compact {
+                                        isLastItemVisible = geometry.frame(in: .global).maxY <=
+                                        UIScreen.main.bounds.height
+                                    } else {
+                                        isLastItemVisible = geometry.frame(in: .global).maxY <=
+                                        UIScreen.main.bounds.height - 115
+                                    }
                                 }
                             }
                             return Color.clear
@@ -73,6 +79,5 @@ struct CaptionsInfoView: View {
             }
             Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

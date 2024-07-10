@@ -16,6 +16,8 @@ import SwiftUI
 //
 internal struct DrawerListContent: View {
     let items: [DrawerListItemViewModel]
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
     var body: some View {
         ScrollView {
             VStack {
@@ -30,8 +32,12 @@ internal struct DrawerListContent: View {
                 }
             }.padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
         }
-        .frame(maxHeight: DrawerListConstants.maxHeight)
+        .frame(maxHeight: maxHeight())
         .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private func maxHeight() -> CGFloat {
+        verticalSizeClass == .compact ? UIScreen.main.bounds.height / 2 : DrawerListConstants.maxHeight
     }
 }
 
