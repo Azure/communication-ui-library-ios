@@ -177,6 +177,8 @@ internal struct DrawerBodyTextView: View {
 
 internal struct DrawerBodyWithActionTextView: View {
     let item: BodyTextWithActionDrawerListItemViewModel
+    @State
+    var isConfirming = false
 
     var body: some View {
         HStack {
@@ -187,15 +189,28 @@ internal struct DrawerBodyWithActionTextView: View {
             Spacer()
             Text(item.actionText)
                 .onTapGesture {
-                    // TADO Should be a sheet here
-                    item.accept()
+                   isConfirming = true
                 }
+                .foregroundColor(Color(StyleProvider.color.primaryColor))
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.accessibilityIdentifier)
         .background(Color(StyleProvider.color.surface))
+        .alert(isPresented: $isConfirming) {
+            return Alert(
+                title: Text(item.confirmAccept),
+                primaryButton: .default(Text(item.actionText)) {
+                    isConfirming = false
+                    item.accept()
+                },
+                secondaryButton: .default(Text(item.confirmDeny)) {
+                    isConfirming = false
+                    item.deny()
+                }
+            )
+        }
     }
 }
 
@@ -228,9 +243,11 @@ internal struct DrawerParticipantView: View {
             Icon(name: item.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
         }
         .onTapGesture {
+            // Is this participant is set up to confirm, lets toggle that
             if item.confirmTitle != nil && item.confirmAccept != nil && item.confirmDeny != nil {
                 isConfirming = true
             } else {
+                // Else, we are going to just do the "accept()" action by default
                 guard let action = item.accept else {
                     return
                 }
