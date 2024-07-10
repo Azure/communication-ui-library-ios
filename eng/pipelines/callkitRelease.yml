@@ -448,7 +448,7 @@ extends:
         - task: AppCenterDistribute@3
           displayName: Deploy **/*.ipa to Visual Studio App Center
           inputs:
-            serverEndpoint: ae07945f-5fbf-4973-92c9-d00a5f696121
+            serverEndpoint: $(appCenterEndpoint)
             appSlug: Azure-Communication-Services/Azure-Communication-Services-Call-UI-Library-Sample-iOS-Internal
             app: '**/*.ipa'
             dsymPath: '**/*.dSYM/**'
