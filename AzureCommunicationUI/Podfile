@@ -1,3 +1,4 @@
+source 'git@github.com:iaulakh/calling_native_ios_private_drop.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '14.0'
@@ -12,7 +13,7 @@ target 'AzureCommunicationUICalling' do
   project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
   use_frameworks!
   pod 'AzureCore', '1.0.0-beta.15'
-  pod 'AzureCommunicationCalling', '2.11.0'
+  pod 'AzureCommunicationCalling', '2.12.0-beta.1.0710'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
@@ -49,7 +50,7 @@ end
 target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.11.0'
+  pod 'AzureCommunicationCalling', '2.12.0-beta.1.0710'
   pod 'AzureCommunicationChat', '1.3.3'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'

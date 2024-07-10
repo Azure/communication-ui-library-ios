@@ -131,7 +131,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     func outgoingCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
         logger.debug( "Starting outgoing call")
         let startCallOptions = StartCallOptions()
-
+        if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+            startCallOptions.callDelegate = callingEventsHandler
+        }
         // to fix iOS 15 issue
         // by default on iOS 15 calling SDK incoming type is raw video
         // because of this on iOS 15 remote video start event is not received
@@ -161,9 +163,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             if let participants = callConfiguration.participants {
                 let joinedCall = try await callAgent.startCall(participants: participants,
                                                                options: startCallOptions)
-                if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
-                    joinedCall.delegate = callingEventsHandler
-                }
                 call = joinedCall
                 setupFeatures()
             } else {

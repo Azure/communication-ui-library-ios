@@ -2,13 +2,13 @@ PODS:
   - AppCenter/Core (4.4.1)
   - AppCenter/Crashes (4.4.1):
     - AppCenter/Core
-  - AzureCommunicationCalling (2.11.0):
-    - AzureCommunicationCommon (~> 1.0)
+  - AzureCommunicationCalling (2.12.0-beta.1.0710):
+    - AzureCommunicationCommon (= 1.1.1)
   - AzureCommunicationChat (1.3.3):
     - AzureCommunicationCommon (~> 1.0)
     - AzureCore (= 1.0.0-beta.15)
     - Trouter (= 0.2.0)
-  - AzureCommunicationCommon (1.2.0)
+  - AzureCommunicationCommon (1.1.1)
   - AzureCore (1.0.0-beta.15)
   - MicrosoftFluentUI/ActivityIndicator_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
@@ -50,7 +50,7 @@ PODS:
 
 DEPENDENCIES:
   - AppCenter/Crashes (= 4.4.1)
-  - AzureCommunicationCalling (= 2.11.0)
+  - AzureCommunicationCalling (= 2.12.0-beta.1.0710)
   - AzureCommunicationChat (= 1.3.3)
   - AzureCore (= 1.0.0-beta.15)
   - MicrosoftFluentUI/ActivityIndicator_ios (= 0.10.0)
@@ -62,9 +62,10 @@ DEPENDENCIES:
   - SwiftLint (= 0.53.0)
 
 SPEC REPOS:
+  "git@github.com:iaulakh/calling_native_ios_private_drop.git":
+    - AzureCommunicationCalling
   https://github.com/CocoaPods/Specs.git:
     - AppCenter
-    - AzureCommunicationCalling
     - AzureCommunicationChat
     - AzureCommunicationCommon
     - AzureCore
@@ -74,14 +75,14 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
-  AzureCommunicationCalling: 35bebb366c5d423bacdd43550df35c9d89d25235
+  AzureCommunicationCalling: a8a4c3eb7a884977130142f858f9ec7676053199
   AzureCommunicationChat: 79fb67f0d6160754817d77d307565a015a5eb9b2
-  AzureCommunicationCommon: 130a21be2be889f83dc4adbf994af6285f962de8
+  AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
   MicrosoftFluentUI: f6db695718efb93f4ca9bdc366c00b80a1f91dba
   SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   Trouter: 7eab36954ad740e32db3ff9f6025b0dff92193d7
 
-PODFILE CHECKSUM: bf31a86f604b35a762d4c5be3987d02c960f24f3
+PODFILE CHECKSUM: 1c5e61dd51d434103c00c5b26c92dcb315bf0707
 
-COCOAPODS: 1.15.0
+COCOAPODS: 1.15.2
