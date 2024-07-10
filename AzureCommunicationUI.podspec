@@ -8,8 +8,8 @@ Pod::Spec.new do |s|
     s.author       = { 'Your Name' => 'your.email@example.com' }
     s.source       = { :git => 'https://github.com/souvickcse/communication-ui-library-ios.git',:branch => "main", :tag => s.version.to_s }
     s.ios.deployment_target = '15.0'
- 
-  spec.swift_version        = '5.8'
+    s.module_name          = 'AzureCommunicationUI'
+  s.swift_version        = '5.8'
     s.source_files = 'AzureCommunicationUI/sdk/**/*'
    
   end
