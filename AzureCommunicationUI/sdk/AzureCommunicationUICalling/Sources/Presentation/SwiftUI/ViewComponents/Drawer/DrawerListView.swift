@@ -50,7 +50,7 @@ internal struct DrawerListView: View {
             .padding([.bottom, .top], DrawerListConstants.listVerticalPadding)
             .background(
                 GeometryReader { geometry in
-                    Color.clear                        
+                    Color.clear
                         .onAppear {
                             DispatchQueue.main.async {
                                 scrollViewContentSize = geometry.size
@@ -227,11 +227,13 @@ internal struct DrawerParticipantView: View {
 
     var body: some View {
         let participantViewData = item.getParticipantViewData(from: avatarManager)
+        let name = item.getParticipantName(with: participantViewData)
         let displayName = item.getCellDisplayName(with: participantViewData)
+
         HStack {
             // Placeholder replaced with actual avatar view
             CompositeAvatar(
-                displayName: Binding.constant(displayName),
+                displayName: Binding.constant(name),
                 avatarImage: Binding.constant(
                     item.isLocalParticipant ?
                     avatarManager.localParticipantViewData?.avatarImage :
