@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '15.0'
     s.module_name          = 'AzureCommunicationUI'
   s.swift_version        = '5.8'
-    s.source_files = 'AzureCommunicationUI/sdk/**/*'
+    s.source_files = 'AzureCommunicationUI/**/*'
    
   end
   
