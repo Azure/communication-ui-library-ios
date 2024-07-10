@@ -5,7 +5,7 @@ Pod::Spec.new do |spec|
   spec.homepage             = "https://github.com/Azure/communication-ui-library-ios"
   spec.license              = { :type => 'MIT' }
   spec.author               = 'Microsoft'
-  spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios.git', :tag => 'AzureCommunicationUICalling_1.9.0' }
+  spec.source               = { :git => 'https://github.com/souvickcse/communication-ui-library-ios.git', :tag => 'AzureCommunicationUICalling_1.9.0' }
   spec.module_name          = 'AzureCommunicationUICalling'
   spec.swift_version        = '5.8'
 
