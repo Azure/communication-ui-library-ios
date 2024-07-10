@@ -12,6 +12,7 @@
 		058371E52C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		058371E62C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
 		058371E72C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		116E65F82C3F3D9F00707DC3 /* AzureCommunicationUIDemoAppExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A40EE6F82C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
 		1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */; };
@@ -68,6 +69,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		116E65F92C3F3D9F00707DC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A8C69FA82728AE1A00143DB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40EE6F72C01524B0089EA7B;
+			remoteInfo = AzureCommunicationUIDemoAppExtension;
+		};
 		1F8881C027909E08001427F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A8C69FA82728AE1A00143DB7 /* Project object */;
@@ -183,6 +191,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		116E65FB2C3F3D9F00707DC3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				116E65F82C3F3D9F00707DC3 /* AzureCommunicationUIDemoAppExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A40EE6A62C011A240089EA7B /* Embed ExtensionKit Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -592,10 +611,12 @@
 				4CA6E42B5D6299A63290DA44 /* [CP] Embed Pods Frameworks */,
 				FAA448A2282585F700BD0DC0 /* Embed Frameworks */,
 				A40EE6A62C011A240089EA7B /* Embed ExtensionKit Extensions */,
+				116E65FB2C3F3D9F00707DC3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				116E65FA2C3F3D9F00707DC3 /* PBXTargetDependency */,
 			);
 			name = AzureCommunicationUIDemoApp;
 			productName = AzureCommunicationUIDemoApp;
@@ -1054,6 +1075,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		116E65FA2C3F3D9F00707DC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40EE6F72C01524B0089EA7B /* AzureCommunicationUIDemoAppExtension */;
+			targetProxy = 116E65F92C3F3D9F00707DC3 /* PBXContainerItemProxy */;
+		};
 		1F8881C127909E08001427F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A8C69FAF2728AE1A00143DB7 /* AzureCommunicationUIDemoApp */;
@@ -1162,10 +1188,12 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = UBF8T346G9;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9KBH5RKYEW;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1180,9 +1208,10 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp.CallingExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.CallingExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App DF Calling Ext dev";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1197,9 +1226,11 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UBF8T346G9;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9KBH5RKYEW;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1214,9 +1245,10 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp.CallingExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.CallingExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App DF Calling Ext dev";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1349,15 +1381,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = .dev;
 				CODE_SIGN_ENTITLEMENTS = AzureCommunicationUIDemoAppDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UBF8T346G9;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9KBH5RKYEW;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -1376,9 +1411,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App Dogfood Dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1389,15 +1425,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EA3EA0A623669E62A5E601F /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = AzureCommunicationUIDemoApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UBF8T346G9;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9KBH5RKYEW;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -1416,9 +1455,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App Dogfood Dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

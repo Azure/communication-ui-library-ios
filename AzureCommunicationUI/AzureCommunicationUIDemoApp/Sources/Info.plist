@@ -60,15 +60,15 @@
 	<string>${groupCallId}</string>
 	<key>participantMRIs</key>
 	<string>$(participantMRIs)</string>
+	<key>roomId</key>
+	<string>${roomId}</string>
+	<key>skipTo</key>
+	<string>${skipTo}</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
 	<key>threadId</key>
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>${userId}</string>
-	<key>skipTo</key>
-	<string>${skipTo}</string>
-	<key>roomId</key>
-	<string>${roomId}</string>
 </dict>
 </plist>
