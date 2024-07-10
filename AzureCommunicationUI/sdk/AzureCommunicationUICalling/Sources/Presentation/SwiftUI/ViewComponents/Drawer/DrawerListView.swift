@@ -241,19 +241,27 @@ internal struct DrawerParticipantView: View {
         .padding(.vertical, DrawerListConstants.participantOptionPaddingVertical)
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
-        .sheet(isPresented: $isConfirming) {
-            ConfirmationSheet(
-                title: item.confirmTitle ?? "",
-                accept: item.confirmAccept ?? "",
-                deny: item.confirmDeny ?? "",
-                onAccept: {
+        .alert(isPresented: $isConfirming) {
+            // Safe to unbox, because isConfirming is guarded on these values
+            let title = item.confirmTitle ?? ""
+            let accept = item.confirmAccept ?? ""
+            let deny = item.confirmDeny ?? ""
+
+            if title.isEmpty {
+                DispatchQueue.main.async {
+                    isConfirming = false
+                }
+            }
+            return Alert(
+                title: Text(title),
+                primaryButton: .default(Text(accept)) {
                     isConfirming = false
                     guard let action = item.accept else {
                         return
                     }
                     action()
                 },
-                onDeny: {
+                secondaryButton: .default(Text(deny)) {
                     isConfirming = false
                     guard let action = item.deny else {
                         return
@@ -262,39 +270,6 @@ internal struct DrawerParticipantView: View {
                 }
             )
         }
-    }
-}
-
-struct ConfirmationSheet: View {
-    let title: String
-    let accept: String
-    let deny: String
-    let onAccept: () -> Void
-    let onDeny: () -> Void
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Text(title)
-                .font(.headline)
-            HStack {
-                Button(action: onDeny) {
-                    Text(deny)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                }
-                Button(action: onAccept) {
-                    Text(accept)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
-        }
-        .padding()
     }
 }
 
