@@ -76,7 +76,6 @@
 		1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C64283E853800C66054 /* AudioSessionAction.swift */; };
 		1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C66283E858600C66054 /* AudioSessionState.swift */; };
 		1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */; };
-		1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */; };
 		1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */; };
 		1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */; };
 		1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */; };
@@ -426,7 +425,6 @@
 		1F3F0C64283E853800C66054 /* AudioSessionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionAction.swift; sourceTree = "<group>"; };
 		1F3F0C66283E858600C66054 /* AudioSessionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSessionState.swift; sourceTree = "<group>"; };
 		1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducer.swift; sourceTree = "<group>"; };
-		1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerContainerViewController.swift; sourceTree = "<group>"; };
 		1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticConfig.swift; sourceTree = "<group>"; };
 		1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticConfigTests.swift; sourceTree = "<group>"; };
 		1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKWrapperProtocol.swift; sourceTree = "<group>"; };
@@ -1372,7 +1370,6 @@
 				988799902745EABE00AA3759 /* SourceViewSpace.swift */,
 				982C2834267D15AF00427246 /* CompositeAvatar.swift */,
 				982C2832267D0C4500427246 /* CompositeButton.swift */,
-				1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -2134,7 +2131,6 @@
 				05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */,
 				7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */,
 				53D734D82C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift in Sources */,
-				1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
 				1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */,
