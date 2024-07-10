@@ -240,7 +240,13 @@ internal struct DrawerParticipantView: View {
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.body)
             Spacer()
-            Icon(name: item.isMuted ? .micOff : .micOn, size: DrawerListConstants.iconSize)
+            if item.isHold {
+                Text("On Hold")
+            } else {
+                Icon(name: item.isMuted ? .micOff : .micOn,
+                     size: DrawerListConstants.iconSize)
+                .opacity(DrawerListConstants.micIconOpacity)
+            }
         }
         .onTapGesture {
             // Is this participant is set up to confirm, lets toggle that
@@ -297,4 +303,5 @@ internal class DrawerListConstants {
     static let participantOptionPaddingVertical: CGFloat = 4
     static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
+    static let micIconOpacity: CGFloat = 0.5
 }
