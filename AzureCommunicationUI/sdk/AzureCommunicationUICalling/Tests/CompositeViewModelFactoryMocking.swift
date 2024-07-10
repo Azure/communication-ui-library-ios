@@ -253,6 +253,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> ParticipantsListViewModel {
+        init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+             localUserState: LocalUserState,
+             dispatchAction: @escaping ActionDispatch,
+             localizationProvider: LocalizationProviderProtocol,
+             onUserClicked: @escaping (ParticipantInfoModel) -> Void,
+             avatarManager: AvatarViewManagerProtocol
+        ) {
         return participantsListViewModel ?? ParticipantsListViewModel(compositeViewModelFactory: self,
                                                                       localUserState: localUserState,
                                                                       dispatchAction: dispatchAction,

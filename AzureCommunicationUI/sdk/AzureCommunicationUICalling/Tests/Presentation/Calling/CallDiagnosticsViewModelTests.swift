@@ -53,22 +53,16 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .compositeExitAction,
                  .callingViewLaunched,
                  .showSupportForm,
-                 .hideSupportForm,
-<<<<<<< HEAD
                  .showMoreOptions,
-                 .hideMoreOptions,
                  .showSupportShare,
-                 .hideSupportShare,
                  .showAudioSelection,
-                 .hideAudioSelection,
                  .showEndCallConfirmation,
-                 .hideEndCallConfirmation,
-                 .visibilityAction:
-=======
+                 .showParticipants,
+                 .showParticipantActions,
+                 .hideDrawer,
                  .visibilityAction,
                  .toastNotificationAction,
                  .setTotalParticipantCount:
->>>>>>> develop
                 break
             }
         }

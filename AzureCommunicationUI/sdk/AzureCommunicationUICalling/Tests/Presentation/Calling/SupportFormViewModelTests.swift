@@ -55,7 +55,7 @@ class SupportFormViewModelTests: XCTestCase {
         viewModel.sendReport()
         XCTAssertTrue(lastIssue != nil)
         XCTAssertEqual(lastIssue?.userMessage, "TEST MESSAGE")
-        XCTAssertTrue(lastAction == Action.hideSupportForm)
+        XCTAssertTrue(lastAction == Action.hideDrawer)
     }
 
     func test_SupportFormViewModel_ValidateSendFormTriggersEventNoText() {
@@ -114,6 +114,6 @@ class SupportFormViewModelTests: XCTestCase {
             localizationProvider: LocalizationProviderMocking(),
             getDebugInfo: { debugInfo })
         viewModel.hideForm()
-        XCTAssertTrue(lastAction == Action.hideSupportForm)
+        XCTAssertTrue(lastAction == Action.hideDrawer)
     }
 }

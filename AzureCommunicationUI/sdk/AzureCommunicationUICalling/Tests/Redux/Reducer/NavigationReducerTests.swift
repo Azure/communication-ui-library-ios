@@ -66,7 +66,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_hideSupportForm_then_supportFormNotVisible() {
         let expectedState = NavigationState(supportFormVisible: false)
         let state = NavigationState(supportFormVisible: true)
-        let action = Action.hideSupportForm
+        let action = Action.hideDrawer
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
@@ -90,7 +90,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_hideEndCallConfirmation_then_endCallConfirmationNotVisible() {
         let expectedState = NavigationState(endCallConfirmationVisible: false)
         let state = NavigationState(endCallConfirmationVisible: true)
-        let action = Action.hideEndCallConfirmation
+        let action = Action.hideDrawer
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
@@ -114,7 +114,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_hideMoreOptions_then_moreOptionsNotVisible() {
         let expectedState = NavigationState(moreOptionsVisible: false)
         let state = NavigationState(moreOptionsVisible: true)
-        let action = Action.hideMoreOptions
+        let action = Action.hideDrawer
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
@@ -138,7 +138,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_hideAudioSelection_then_audioSelectionNotVisible() {
         let expectedState = NavigationState(audioSelectionVisible: false)
         let state = NavigationState(audioSelectionVisible: true)
-        let action = Action.hideAudioSelection
+        let action = Action.hideDrawer
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
@@ -162,7 +162,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_hideSupportShare_then_supportShareSheetNotVisible() {
         let expectedState = NavigationState(supportShareSheetVisible: false)
         let state = NavigationState(supportShareSheetVisible: true)
-        let action = Action.hideSupportShare
+        let action = Action.hideDrawer
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
