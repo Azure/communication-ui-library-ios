@@ -151,6 +151,7 @@ internal struct DrawerTitleView: View {
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
         .accessibilityIdentifier(item.accessibilityIdentifier)
         .background(Color(StyleProvider.color.surface))
     }
@@ -170,6 +171,7 @@ internal struct DrawerBodyTextView: View {
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
         .accessibilityIdentifier(item.accessibilityIdentifier)
         .background(Color(StyleProvider.color.surface))
     }
@@ -196,6 +198,7 @@ internal struct DrawerBodyWithActionTextView: View {
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
         .accessibilityIdentifier(item.accessibilityIdentifier)
         .background(Color(StyleProvider.color.surface))
         .alert(isPresented: $isConfirming) {
@@ -248,6 +251,11 @@ internal struct DrawerParticipantView: View {
                 .opacity(DrawerListConstants.micIconOpacity)
             }
         }
+        .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
+        .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
+        .padding(.vertical, DrawerListConstants.participantOptionPaddingVertical)
+        .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
         .onTapGesture {
             // Is this participant is set up to confirm, lets toggle that
             if item.confirmTitle != nil && item.confirmAccept != nil && item.confirmDeny != nil {
@@ -260,10 +268,6 @@ internal struct DrawerParticipantView: View {
                 action()
             }
         }
-        .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
-        .padding(.vertical, DrawerListConstants.participantOptionPaddingVertical)
-        .frame(maxWidth: .infinity)
-        .accessibilityIdentifier(item.getCellAccessibilityLabel(with: participantViewData))
         .alert(isPresented: $isConfirming) {
             // Safe to unbox, because isConfirming is guarded on these values
             let title = item.confirmTitle ?? ""
