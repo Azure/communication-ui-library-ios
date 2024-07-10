@@ -461,6 +461,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Start captions successfully")
         } catch {
             logger.error("ERROR: It was not possible to start captions \(error)")
+            throw error
         }
     }
 
@@ -492,7 +493,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Stop captions successfully")
         } catch {
             logger.error("ERROR: It was not possible to stop captions \(error)")
-
+            throw error
         }
     }
 

@@ -30,7 +30,7 @@ class CaptionsInfoViewModel: ObservableObject {
     }
 
     func update(state: AppState) {
-        self.isDisplayed = state.captionsState.isEnabled
+        self.isDisplayed = state.captionsState.isEnabled && state.captionsState.errors != .captionsFailedToStart
         self.isLoading = isDisplayed && !state.captionsState.isStarted
     }
 }

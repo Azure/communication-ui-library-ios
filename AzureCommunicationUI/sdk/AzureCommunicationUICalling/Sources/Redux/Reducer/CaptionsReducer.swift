@@ -24,6 +24,9 @@ extension Reducer where State == CaptionsState, Actions == CaptionsAction {
             newState.isTranslationSupported = isSupported
         case .error(let errors):
             newState.errors = errors
+            if newState.errors == .captionsFailedToStart {
+                newState.isEnabled = false
+            }
         case .supportedSpokenLanguagesChanged(let languages):
             newState.supportedSpokenLanguages = languages.map(formatLocaleIdentifier)
         case .supportedCaptionLanguagesChanged(let languages):
