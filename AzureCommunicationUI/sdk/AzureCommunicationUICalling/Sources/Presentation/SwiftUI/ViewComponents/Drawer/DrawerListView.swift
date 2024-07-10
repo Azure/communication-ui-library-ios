@@ -58,7 +58,9 @@ internal struct DrawerListView: View {
                         }
                         .onChange(of: geometry.size) { _ in
                             DispatchQueue.main.async {
-                                scrollViewContentSize = geometry.size
+                                withAnimation {
+                                    scrollViewContentSize = geometry.size
+                                }
                             }
                         }
                 }
