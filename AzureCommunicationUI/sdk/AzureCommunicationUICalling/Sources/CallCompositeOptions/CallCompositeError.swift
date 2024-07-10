@@ -25,15 +25,15 @@ public struct CallCompositeErrorCode {
     /// Error when internet is unavailable and call join fails
     public static let networkConnectionNotAvailable: String = "networkConnectionNotAvailable"
 
+    /// Captions not active. To change spoken, captions language, captions must be active.
+    public static let captionsNotActive: String = "captionsNotActive"
+
     /// Error when captions start failed because spoken language is not supported.
     public static let captionsStartFailedSpokenLanguageNotSupported: String =
     "captionsStartFailedSpokenLanguageNotSupported"
 
-    /// Captions not active. To change spoken, captions language, captions must be active.
-    public static let captionsNotActive: String = "captionsNotActive"
-
-    /// Call is not connected.
-    public static let callNotConnected: String = "callNotConnected"
+    /// Error when failed to start captions. Call state is not connected.
+    public static let captionsStartFailedCallNotConnected: String = "captionsStartFailedCallNotConnected"
 
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"

@@ -48,10 +48,10 @@ public struct CallCompositeOptions {
                 callScreenOptions: CallScreenOptions? = nil,
                 callKitOptions: CallKitOptions? = nil,
                 displayName: String? = nil,
-                userId: CommunicationIdentifier? = nil,
                 disableInternalPushForIncomingCall: Bool = false,
                 setupScreenOptions: SetupScreenOptions? = nil,
-                capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode? = nil
+                capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode? = nil,
+                userId: CommunicationIdentifier? = nil
             ) {
         self.themeOptions = theme
         self.localizationOptions = localization

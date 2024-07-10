@@ -9,7 +9,7 @@ public struct CaptionsOptions {
     var captionsOn: Bool
     var spokenLanguage: String
 
-    public init(captionsOn: Bool = false, spokenLanguage: String = "en-US") {
+    public init(captionsOn: Bool = false, spokenLanguage: String = "") {
         self.spokenLanguage = spokenLanguage
         self.captionsOn = captionsOn
     }
