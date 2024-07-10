@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Настройка";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Назад";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Присоединиться к звонку";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Позвонить";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Начало звонка…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Присоединение к звонку отключено";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Начало звонка отключено";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
@@ -98,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Дополнительно";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Поделиться диагностическими сведениями";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Выполняется вызов...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
@@ -165,9 +165,19 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
 "AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
 
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live Captions";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starting Captions...";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Unable to start captions";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Unable to stop captions";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Unable to change captions language";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Unable to change spoken language";
+
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Отключить звук";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Меню отключения звука участника.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Удалить из звонка";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Меню удаления участника из звонка.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Параметры звонка обновлены. Некоторые функции могут быть недоступны вам.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Параметры звонка обновлены. Некоторые дополнительные действия теперь могут быть доступны вам.";
+

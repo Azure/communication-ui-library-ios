@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="設定";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="上一步";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通話";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="開始通話";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="開始通話...";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "加入通話已停用";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "啟動通話已停用";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="視訊關閉";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="關閉視訊";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="視訊開啟";
@@ -78,7 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="准許 %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="准許";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒絕";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ 更多";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ 其他 %@ 個";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切換到後相機";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切換到前相機";
@@ -98,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "其他";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "分享診斷資訊";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="通話中...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
@@ -165,9 +165,19 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="回報問題";
 "AzureCommunicationUICalling.SendFeedback.Text"="傳送";
 
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live Captions";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starting Captions...";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Unable to start captions";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Unable to stop captions";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Unable to change captions language";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Unable to change spoken language";
+
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="將參與者靜音功能表。";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="從通話移除";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="將參與者從通話移除功能表。";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="通話設定已更新。某些功能可能無法供您使用。";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="通話設定已更新。您現在可以使用一些其他動作。";
+

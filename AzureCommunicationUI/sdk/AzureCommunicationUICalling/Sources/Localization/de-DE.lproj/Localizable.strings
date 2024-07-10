@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Einrichten";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Zurück";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="An Anruf teilnehmen";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Anruf starten";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Anruf wird beigetreten…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Anruf wird gestartet…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anruf beitreten deaktiviert";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Anruf starten deaktiviert";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video aus";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video Aus";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video ein";
@@ -78,7 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ zulassen?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Zulassen";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Ablehnen";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ weitere";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ mehr";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Zur Rückkamera wechseln";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Zur Frontkamera wechseln";
@@ -98,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mehr";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnoseinformationen freigeben";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Anrufen...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
@@ -165,9 +165,19 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ein Problem melden";
 "AzureCommunicationUICalling.SendFeedback.Text"="Senden";
 
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live Captions";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starting Captions...";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Unable to start captions";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Unable to stop captions";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Unable to change captions language";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Unable to change spoken language";
+
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Stummschalten";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Schalten Sie das Teilnehmermenü stumm.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Aus Anruf entfernen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Entfernen Sie den Teilnehmer aus dem Anrufmenü.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Anrufeinstellungen aktualisiert. Einige Features stehen Ihnen möglicherweise nicht zur Verfügung.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Anrufeinstellungen aktualisiert. Einige zusätzliche Aktionen stehen Ihnen jetzt möglicherweise zur Verfügung.";
+

@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configuratie";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Terug";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Gesprek starten";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Oproep starten…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Deelnemen aan gesprek uitgeschakeld";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Oproep starten uitgeschakeld";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video aan";
@@ -78,7 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ toelaten?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Toelaten";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Weigeren";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ nog %@";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ meer";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Overschakelen naar de camera op de achterzijde";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Overschakelen naar de camera op de voorzijde";
@@ -98,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Meer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnostische gegevens delen";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Bellen...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
@@ -165,9 +165,19 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Een probleem melden";
 "AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";
 
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live Captions";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starting Captions...";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Unable to start captions";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Unable to stop captions";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Unable to change captions language";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Unable to change spoken language";
+
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Dempen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Deelnemersmenu dempen.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Uit gesprek verwijderen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Verwijder de deelnemer uit het menu Bellen.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Oproepinstellingen bijgewerkt. Sommige functies zijn mogelijk niet beschikbaar voor u.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Oproepinstellingen bijgewerkt. Sommige aanvullende acties zijn mogelijk nu beschikbaar voor u.";
+
