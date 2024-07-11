@@ -166,6 +166,7 @@
 		5347C1D72C13B4FE0084AE56 /* DrawerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1D62C13B4FE0084AE56 /* DrawerListView.swift */; };
 		5347C1D92C179C730084AE56 /* ThrottleMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */; };
 		5347C1DF2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */; };
+		534A5DD42C40A2C9002EB508 /* DrawerParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534A5DD32C40A2C9002EB508 /* DrawerParticipantView.swift */; };
 		534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */; };
 		53535A132C0E667F000BF96B /* MoreCallOptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */; };
 		53535A152C10FE5B000BF96B /* AudioDeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53535A142C10FE5B000BF96B /* AudioDeviceListView.swift */; };
@@ -555,6 +556,7 @@
 		5347C1D62C13B4FE0084AE56 /* DrawerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerListView.swift; sourceTree = "<group>"; };
 		5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddleware.swift; sourceTree = "<group>"; };
 		5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddlewareTests.swift; sourceTree = "<group>"; };
+		534A5DD32C40A2C9002EB508 /* DrawerParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerParticipantView.swift; sourceTree = "<group>"; };
 		534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAudioVideoMode.swift; sourceTree = "<group>"; };
 		53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsListView.swift; sourceTree = "<group>"; };
 		53535A142C10FE5B000BF96B /* AudioDeviceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceListView.swift; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 		1F04A650273491780028AAC8 /* Drawer */ = {
 			isa = PBXGroup;
 			children = (
+				534A5DD22C40A2B3002EB508 /* Views */,
 				5318F62E2BEDFB0C00CAFA12 /* BottomDrawer.swift */,
 				885F3F99291DCDF500B86C9B /* DrawerListItemViewModel.swift */,
 				5347C1D62C13B4FE0084AE56 /* DrawerListView.swift */,
@@ -1229,6 +1232,14 @@
 				533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */,
 			);
 			path = SupportForm;
+			sourceTree = "<group>";
+		};
+		534A5DD22C40A2B3002EB508 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				534A5DD32C40A2C9002EB508 /* DrawerParticipantView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		53535A102C0E4DA4000BF96B /* AudioSelection */ = {
@@ -2209,6 +2220,7 @@
 				FA6B61A1290C89EC004B8188 /* DrawerViewControllerProtocol.swift in Sources */,
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,
 				051F739C2C10DA64006E097F /* CapabilitiesChangedNotificationMode.swift in Sources */,
+				534A5DD42C40A2C9002EB508 /* DrawerParticipantView.swift in Sources */,
 				1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */,
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
