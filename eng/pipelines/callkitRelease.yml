@@ -439,12 +439,12 @@ extends:
             SourceFolder: $(signedExtractedPath)
             Contents: '**/*.ipa'
             TargetFolder: $(build.sourcesdirectory)
-        - task: CopyFiles@2
-          displayName: 'Copy Signed Files to: $(build.artifactstagingdirectory) for artifact'
-          inputs:
-            SourceFolder: $(signedExtractedPath)
-            Contents: '**/*.ipa'
-            TargetFolder: $(build.artifactstagingdirectory)
+        # - task: CopyFiles@2
+        #   displayName: 'Copy Signed Files to: $(build.artifactstagingdirectory) for artifact'
+        #   inputs:
+        #     SourceFolder: $(signedExtractedPath)
+        #     Contents: '**/*.ipa'
+        #     TargetFolder: $(build.artifactstagingdirectory)
         - task: AppCenterDistribute@3
           displayName: Deploy **/*.ipa to Visual Studio App Center
           inputs:
