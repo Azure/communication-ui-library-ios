@@ -299,7 +299,7 @@ class CallingDemoViewController: UIViewController {
 
         let customButton = CustomButtonOptions(image: UIImage(),
                                                title: "Troubleshooting tips",
-                                               placement: ButtonPlacement.overflow) {
+                                               placement: ButtonPlacement.overflow) {_ in
             // hide call composite and display Troubleshooting tips
             callComposite.isHidden = true
             // ...
