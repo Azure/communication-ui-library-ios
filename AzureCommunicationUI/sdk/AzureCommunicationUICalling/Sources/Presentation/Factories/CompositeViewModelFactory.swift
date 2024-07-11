@@ -215,8 +215,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsErrorViewModel(dispatchAction: @escaping ActionDispatch)
-    -> CaptionsErrorHeaderViewModel {
-        CaptionsErrorHeaderViewModel(compositeViewModelFactory: self,
+    -> CaptionsErrorViewModel {
+        CaptionsErrorViewModel(compositeViewModelFactory: self,
                                   logger: logger,
                                   localizationProvider: localizationProvider,
                                   accessibilityProvider: accessibilityProvider,

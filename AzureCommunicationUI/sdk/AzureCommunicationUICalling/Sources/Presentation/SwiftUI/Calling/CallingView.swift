@@ -6,6 +6,7 @@
 import SwiftUI
 
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
 struct CallingView: View {
     enum InfoHeaderViewConstants {
         static let horizontalPadding: CGFloat = 8.0
@@ -137,6 +138,9 @@ struct CallingView: View {
                                 .accessibilityIdentifier(
                                     AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                             }
+                            bottomToastDiagnosticsView
+                                .accessibilityElement(children: .contain)
+                            captionsErrorView.accessibilityElement(children: .contain)
                         }.zIndex(2)
                     }
                     if viewModel.captionsInfoViewModel.isDisplayed &&
@@ -151,8 +155,6 @@ struct CallingView: View {
                                          || viewModel.onHoldOverlayViewModel.isDisplayed
                                          || viewModel.loadingOverlayViewModel.isDisplayed)
 
-                bottomToastDiagnosticsView
-                    .accessibilityElement(children: .contain)
             }
             .contentShape(Rectangle())
             .animation(.linear(duration: 0.167))
@@ -228,17 +230,6 @@ struct CallingView: View {
                     } else {
                         EmptyView()
                     }
-                    captionsErrorView
-                        .frame(width: infoHeaderViewWidth, alignment: .leading)
-                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
-                    Spacer()
-                }
-                HStack {
-                    if isIpad {
-                        Spacer()
-                    } else {
-                        EmptyView()
-                    }
                     topMessageBarDiagnosticsView
                         .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
@@ -263,10 +254,6 @@ struct CallingView: View {
     var lobbyActionErrorView: some View {
         LobbyErrorHeaderView(viewModel: viewModel.lobbyActionErrorViewModel,
                        avatarViewManager: avatarManager)
-    }
-
-    var captionsErrorView: some View {
-        CaptionsErrorHeaderView(viewModel: viewModel.captionsErrorViewModel)
     }
 
     var bannerView: some View {
@@ -341,6 +328,24 @@ struct CallingView: View {
         }.frame(maxWidth: .infinity, alignment: .center)
     }
 
+    var captionsErrorView: some View {
+        VStack {
+            Spacer()
+            CaptionsErrorView(viewModel: viewModel.captionsErrorViewModel)
+                .padding(
+                    EdgeInsets(top: 0,
+                               leading: 0,
+                               bottom:
+                                 getSizeClass() == .iphoneLandscapeScreenSize
+                                    ? DiagnosticToastInfoConstants.bottomPaddingLandscape
+                                    : DiagnosticToastInfoConstants.bottomPaddingPortrait,
+                               trailing: 0)
+                )
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isStaticText)
+        }.frame(maxWidth: .infinity, alignment: .center)
+    }
+
     var topMessageBarDiagnosticsView: some View {
         VStack {
             ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
@@ -395,3 +400,4 @@ extension CallingView {
         UIViewController.attemptRotationToDeviceOrientation()
     }
 }
+// swiftlint:enable file_length
