@@ -13,7 +13,7 @@ import SwiftUI
 // This will inflate the list to a SwiftUI view, to show in a drawer
 // I.e. List[VM] -> Swift UI List View, for use with a drawer
 //
-//
+
 internal struct DrawerListView: View {
     let sections: [DrawerListSection]
 
@@ -213,18 +213,21 @@ internal struct DrawerBodyWithActionTextView: View {
         .contentShape(Rectangle())
         .accessibilityIdentifier(item.accessibilityIdentifier)
         .background(Color(StyleProvider.color.surface))
-        .alert(isPresented: $isConfirming) {
-            return Alert(
-                title: Text(item.confirmAccept),
-                primaryButton: .default(Text(item.actionText)) {
-                    isConfirming = false
-                    item.accept()
-                },
-                secondaryButton: .default(Text(item.confirmDeny)) {
-                    isConfirming = false
-                    item.deny()
-                }
-            )
+        .confirmationDialog(
+            Text(item.confirmAccept),
+            isPresented: $isConfirming,
+            titleVisibility: .automatic) {
+            Button(item.actionText) {
+                isConfirming = false
+                item.accept()
+            }.foregroundColor(Color(StyleProvider.color.primaryColor))
+            Button(item.confirmDeny, role: .destructive) {
+                isConfirming = false
+                item.deny()
+            }
+            Button("Cancel", role: .cancel) {
+                isConfirming = false
+            }.foregroundColor(Color(StyleProvider.color.primaryColor))
         }
     }
 }
@@ -282,35 +285,78 @@ internal struct DrawerParticipantView: View {
                 action()
             }
         }
-        .alert(isPresented: $isConfirming) {
-            // Safe to unbox, because isConfirming is guarded on these values
-            let title = item.confirmTitle ?? ""
-            let accept = item.confirmAccept ?? ""
-            let deny = item.confirmDeny ?? ""
-
-            if title.isEmpty {
-                DispatchQueue.main.async {
+        .fullScreenCover(isPresented: $isConfirming) {
+            CustomAlert(
+                title: "Confirmation",
+                message: "Are you sure you want to proceed?",
+                dismiss: {
                     isConfirming = false
+                },
+                content: {
+                    Text("Test")
+                })
+            .background(BackgroundCleanerView())
+
+        }
+        .transaction { transaction in
+            transaction.disablesAnimations = true
+            transaction.animation = .linear(duration: 1)
+        }
+    }
+}
+
+struct BackgroundCleanerView: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            view.superview?.superview?.backgroundColor = .clear
+        }
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+
+struct CustomAlert<Content: View>: View {
+    let title: String
+    let message: String
+    let dismiss: () -> Void
+    let content: Content
+
+    init(title: String, message: String, dismiss: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.message = message
+        self.content = content()
+        self.dismiss = dismiss
+    }
+
+    var body: some View {
+            ZStack {
+                Color.black.opacity(0.5)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onTapGesture {
+                        dismiss()
+                    }
+                HStack {
+                    Spacer()
+                    VStack {
+                        Spacer()
+                        VStack {
+                            Text(title).font(.headline)
+                            Text(message).padding(.vertical)
+                            HStack {
+                                content
+                            }
+                        }.padding()
+                        .background(Color(StyleProvider.color.surface))
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+
+                        Spacer()
+                    }
+                    Spacer()
                 }
             }
-            return Alert(
-                title: Text(title),
-                primaryButton: .default(Text(accept)) {
-                    isConfirming = false
-                    guard let action = item.accept else {
-                        return
-                    }
-                    action()
-                },
-                secondaryButton: .default(Text(deny)) {
-                    isConfirming = false
-                    guard let action = item.deny else {
-                        return
-                    }
-                    action()
-                }
-            )
-        }
     }
 }
 
