@@ -290,6 +290,29 @@ class CallingDemoViewController: UIViewController {
         return nil
     }
 
+    func apiDemo() {
+
+        let credential = (try? CommunicationTokenCredential(token: acsTokenTextField.text!))!
+
+        let callCompositeOptions = CallCompositeOptions()
+        let callComposite = CallComposite(credential: credential)
+
+        let customButton = CustomButtonOptions(image: UIImage(),
+                                               title: "Troubleshooting tips",
+                                               placement: ButtonPlacement.overflow) {
+            // hide call composite and display Troubleshooting tips
+            callComposite.isHidden = true
+            // ...
+        }
+        let callScreenControlBarOptions = CallScreenControlBarOptions(cameraButton: ButtonOptions(enabled: false),
+                                                                      customButtons: [customButton])
+
+        let callScreenOptions = CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+        let localOptions = LocalOptions(callScreenOptions: callScreenOptions)
+
+        callComposite.launch(locator: .roomCall(roomId: "..."), localOptions: localOptions)
+    }
+
     func subscribeToEvents(callComposite: CallComposite) {
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {

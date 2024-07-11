@@ -50,7 +50,8 @@ class ControlBarViewModel: ObservableObject {
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         capabilitiesManager: CapabilitiesManager) {
+         capabilitiesManager: CapabilitiesManager,
+         customButtons: [CustomButtonOptions]) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction

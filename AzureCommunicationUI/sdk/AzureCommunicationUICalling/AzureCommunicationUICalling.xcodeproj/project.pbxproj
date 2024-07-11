@@ -29,6 +29,9 @@
 		0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */; };
 		0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */; };
 		054F2B532A2679160017985B /* CallPipVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054F2B522A2679160017985B /* CallPipVideoViewController.swift */; };
+		0556B2052C35F3EF00865091 /* CustomButtonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0556B2042C35F3EF00865091 /* CustomButtonOptions.swift */; };
+		058359B62C403E9900587C34 /* ButtonOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058359B52C403E9900587C34 /* ButtonOptions.swift */; };
+		058359B82C403F4B00587C34 /* ButtonPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058359B72C403F4B00587C34 /* ButtonPlacement.swift */; };
 		058371FD2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */; };
 		058371FF2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */; };
 		058372012C1C3456008D9A20 /* SetupScreenOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058372002C1C3456008D9A20 /* SetupScreenOptionsTests.swift */; };
@@ -385,6 +388,9 @@
 		0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderView.swift; sourceTree = "<group>"; };
 		0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderViewModel.swift; sourceTree = "<group>"; };
 		054F2B522A2679160017985B /* CallPipVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPipVideoViewController.swift; sourceTree = "<group>"; };
+		0556B2042C35F3EF00865091 /* CustomButtonOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonOptions.swift; sourceTree = "<group>"; };
+		058359B52C403E9900587C34 /* ButtonOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOptions.swift; sourceTree = "<group>"; };
+		058359B72C403F4B00587C34 /* ButtonPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPlacement.swift; sourceTree = "<group>"; };
 		058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesManagerTests.swift; sourceTree = "<group>"; };
 		058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantMenuViewModelTests.swift; sourceTree = "<group>"; };
 		058372002C1C3456008D9A20 /* SetupScreenOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScreenOptionsTests.swift; sourceTree = "<group>"; };
@@ -1442,6 +1448,8 @@
 			isa = PBXGroup;
 			children = (
 				7529F5DD29661888002F7CE1 /* BaseLocalizationProvider.swift */,
+				058359B52C403E9900587C34 /* ButtonOptions.swift */,
+				058359B72C403F4B00587C34 /* ButtonPlacement.swift */,
 				534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */,
 				A464810329F3353B001B80A3 /* CallCompositeCallState.swift */,
 				A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */,
@@ -1458,6 +1466,7 @@
 				5A1F4BCB2BD9756C00EA7B2D /* CallScreenOptions.swift */,
 				051F739B2C10DA64006E097F /* CapabilitiesChangedNotificationMode.swift */,
 				A47792952C02E96100F38FFC /* CommunicationTokenCredentialError.swift */,
+				0556B2042C35F3EF00865091 /* CustomButtonOptions.swift */,
 				FA538277292FE86200963FFC /* DebugInfo.swift */,
 				1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */,
 				A4DBCEB62BFAE8F500332E7B /* IncomingCall.swift */,
@@ -2035,6 +2044,7 @@
 				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
 				05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
+				058359B62C403E9900587C34 /* ButtonOptions.swift in Sources */,
 				75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */,
 				A46B90972BF5939D0096788C /* CallKitRemoteInfo.swift in Sources */,
 				7589CE1A297765E30092AE38 /* ViewExtension.swift in Sources */,
@@ -2208,6 +2218,7 @@
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
 				28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */,
+				0556B2052C35F3EF00865091 /* CustomButtonOptions.swift in Sources */,
 				051F73C52C1756CC006E097F /* CompositeParticipantMenu.swift in Sources */,
 				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
@@ -2238,6 +2249,7 @@
 				A4DBCEBB2BFB9C4000332E7B /* PushNotificationEventType.swift in Sources */,
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
+				058359B82C403F4B00587C34 /* ButtonPlacement.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
 				1FC30846266949E8007EC537 /* ColorExtension.swift in Sources */,
 				1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */,

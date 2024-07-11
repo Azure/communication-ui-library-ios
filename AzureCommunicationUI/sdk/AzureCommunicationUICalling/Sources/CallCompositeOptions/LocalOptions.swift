@@ -25,6 +25,9 @@ public struct LocalOptions {
     /// Specifies the audio/video mode for the call, affecting available functionalities.
     let audioVideoMode: CallCompositeAudioVideoMode
 
+    let setupScreenOptions: SetupScreenOptions?
+    let callScreenOptions: CallScreenOptions?
+
     /// Internal storage for the camera state, not directly exposed to the initializer.
     private let cameraOnInternal: Bool?
 
@@ -44,13 +47,18 @@ public struct LocalOptions {
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
-                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) {
+                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
+                setupScreenOptions: SetupScreenOptions? = nil,
+                callScreenOptions: CallScreenOptions? = nil
+    ) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
         self.audioVideoMode = audioVideoMode
+        self.setupScreenOptions = setupScreenOptions
+        self.callScreenOptions = callScreenOptions
     }
 
     /// Determines the actual state of the camera

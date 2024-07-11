@@ -227,7 +227,8 @@ extension CompositeViewModelFactory {
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
-                            capabilitiesManager: capabilitiesManager)
+                            capabilitiesManager: capabilitiesManager,
+        customButtons: [])
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
