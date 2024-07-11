@@ -177,18 +177,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   localizationProvider: localizationProvider)
     }
 
-    func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
-                                               title: String,
-                                               isSelected: Bool,
-                                               onSelectedAction: @escaping (() -> Void)) ->
-    SelectableDrawerListItemViewModel {
-        SelectableDrawerListItemViewModel(icon: icon,
-                                          title: title,
-                                          accessibilityIdentifier: "",
-                                          isSelected: isSelected,
-                                          action: onSelectedAction)
-    }
-
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel {
         ErrorInfoViewModel(localizationProvider: localizationProvider,

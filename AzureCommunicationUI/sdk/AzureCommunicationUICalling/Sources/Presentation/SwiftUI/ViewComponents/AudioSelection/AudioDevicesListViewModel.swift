@@ -79,11 +79,12 @@ class AudioDevicesListViewModel: ObservableObject {
     private func getAudioDeviceOption(for audioDeviceType: AudioDeviceType) -> SelectableDrawerListItemViewModel {
         let isSelected = isAudioDeviceSelected(audioDeviceType, selectedDevice: audioDeviceStatus)
         let action = LocalUserAction.audioDeviceChangeRequested(device: audioDeviceType)
-        let audioDeviceOption = compositeViewModelFactory.makeSelectableDrawerListItemViewModel(
+        let audioDeviceOption = SelectableDrawerListItemViewModel(
             icon: getAudioDeviceIcon(audioDeviceType),
             title: getAudioDeviceTitle(audioDeviceType),
+            accessibilityIdentifier: "",
             isSelected: isSelected,
-            onSelectedAction: { [weak self] in self?.dispatch(.localUserAction(action)) })
+            action: { [weak self] in self?.dispatch(.localUserAction(action)) })
         return audioDeviceOption
     }
 

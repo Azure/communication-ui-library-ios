@@ -47,12 +47,15 @@ protocol CompositeViewModelFactoryProtocol {
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
                                       lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
+
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
                                       isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
@@ -60,29 +63,18 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
 
-    // TADO: Delete this (as this will just be a normal one created)
-    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
-    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
 
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),
         dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
 
-    func makeSelectableDrawerListItemViewModel(
-        icon: CompositeIcon,
-        title: String,
-        isSelected: Bool,
-        onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
-    func makeSupportFormViewModel() -> SupportFormViewModel
+   func makeSupportFormViewModel() -> SupportFormViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
     func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,
                                   dispatchAction: @escaping ActionDispatch) -> BottomToastViewModel

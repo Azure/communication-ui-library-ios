@@ -24,20 +24,21 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isDisplayed = isDisplayed
 
-        let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-            icon: .share,
+        let shareDebugInfoModel = DrawerListItemViewModel(
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-            action: showSharingViewAction)
+            action: showSharingViewAction,
+            startIcon: .share
+        )
 
         var items = [shareDebugInfoModel]
 
         if isSupportFormAvailable {
-            let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-                icon: .personFeedback,
+            let reportErrorInfoModel = DrawerListItemViewModel(
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
-                action: showSupportFormAction)
+                action: showSupportFormAction,
+                startIcon: .personFeedback)
 
             items.append(reportErrorInfoModel)
         }
