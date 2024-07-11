@@ -14,6 +14,7 @@ import SwiftUI
 // I.e. List[VM] -> Swift UI List View, for use with a drawer
 //
 
+// swiftlint:disable file_length
 internal struct DrawerListView: View {
     let sections: [DrawerListSection]
 
@@ -288,7 +289,6 @@ internal struct DrawerParticipantView: View {
         .fullScreenCover(isPresented: $isConfirming) {
             CustomAlert(
                 title: item.confirmTitle ?? "",
-                message: "Are you sure you want to proceed?",
                 dismiss: {
                     isConfirming = false
                 },
@@ -301,7 +301,13 @@ internal struct DrawerParticipantView: View {
                         isConfirming = false
                     }, label: {
                         Text(item.confirmAccept ?? "")
+                            .frame(width: DrawerListConstants.confirmationButtonWidth,
+                                   height: DrawerListConstants.confirmationButtonHeight,
+                                   alignment: .center
+                            )
+                            .foregroundColor(Color(StyleProvider.color.primaryColor))
                     })
+                    Divider().frame(maxHeight: DrawerListConstants.confirmationButtonHeight)
                     Button(action: {
                         guard let deny = item.deny else {
                             return
@@ -310,12 +316,15 @@ internal struct DrawerParticipantView: View {
                         isConfirming = false
                     }, label: {
                         Text(item.confirmDeny ?? "")
+                            .frame(width: DrawerListConstants.confirmationButtonWidth,
+                                   height: DrawerListConstants.confirmationButtonHeight,
+                                   alignment: .center)
+                            .foregroundColor(Color(StyleProvider.color.primaryColor))
                     }).onChange(of: item.confirmAccept) { _ in
                         if item.confirmAccept == "" {
                             isConfirming = false
                         }
-                    }
-
+                            }
                 })
             .background(BackgroundCleanerView())
 
@@ -341,13 +350,13 @@ struct BackgroundCleanerView: UIViewRepresentable {
 
 struct CustomAlert<Content: View>: View {
     let title: String
-    let message: String
     let dismiss: () -> Void
     let content: Content
 
-    init(title: String, message: String, dismiss: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+    init(title: String,
+         dismiss: @escaping () -> Void,
+         @ViewBuilder content: () -> Content) {
         self.title = title
-        self.message = message
         self.content = content()
         self.dismiss = dismiss
     }
@@ -365,7 +374,6 @@ struct CustomAlert<Content: View>: View {
                         Spacer()
                         VStack {
                             Text(title).font(.headline)
-                            Text(message).padding(.vertical)
                             HStack {
                                 content
                             }
@@ -390,4 +398,7 @@ internal class DrawerListConstants {
     static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
     static let micIconOpacity: CGFloat = 0.5
+    static let confirmationButtonWidth: CGFloat = 100
+    static let confirmationButtonHeight: CGFloat = 48
 }
+// swiftlint:enable file_length
