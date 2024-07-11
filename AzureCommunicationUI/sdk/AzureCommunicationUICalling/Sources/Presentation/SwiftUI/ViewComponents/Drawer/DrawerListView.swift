@@ -287,20 +287,42 @@ internal struct DrawerParticipantView: View {
         }
         .fullScreenCover(isPresented: $isConfirming) {
             CustomAlert(
-                title: "Confirmation",
+                title: item.confirmTitle ?? "",
                 message: "Are you sure you want to proceed?",
                 dismiss: {
                     isConfirming = false
                 },
                 content: {
-                    Text("Test")
+                    Button(action: {
+                        guard let accept = item.accept else {
+                            return
+                        }
+                        accept()
+                        isConfirming = false
+                    }, label: {
+                        Text(item.confirmAccept ?? "")
+                    })
+                    Button(action: {
+                        guard let deny = item.deny else {
+                            return
+                        }
+                        deny()
+                        isConfirming = false
+                    }, label: {
+                        Text(item.confirmDeny ?? "")
+                    }).onChange(of: item.confirmAccept) { _ in
+                        if item.confirmAccept == "" {
+                            isConfirming = false
+                        }
+                    }
+
                 })
             .background(BackgroundCleanerView())
 
         }
         .transaction { transaction in
             transaction.disablesAnimations = true
-            transaction.animation = .linear(duration: 1)
+            // transaction.animation = .linear(duration: 1)
         }
     }
 }
