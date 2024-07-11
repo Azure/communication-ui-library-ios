@@ -50,7 +50,7 @@ class CallingViewModel: ObservableObject {
     var audioDeviceListViewModel: AudioDevicesListViewModel!
     var captionsInfoViewModel: CaptionsInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
-    var captionsErrorViewModel: CaptionsErrorHeaderViewModel!
+    var captionsErrorViewModel: CaptionsErrorViewModel!
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,

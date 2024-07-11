@@ -262,8 +262,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsErrorViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
-    -> AzureCommunicationUICalling.CaptionsErrorHeaderViewModel {
-        return CaptionsErrorHeaderViewModel(compositeViewModelFactory: self,
+    -> AzureCommunicationUICalling.CaptionsErrorViewModel {
+        return CaptionsErrorViewModel(compositeViewModelFactory: self,
                                             logger: logger,
                                             localizationProvider: localizationProvider,
                                             accessibilityProvider: accessibilityProvider,
