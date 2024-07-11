@@ -7,11 +7,11 @@ import Foundation
 
 /// User-configurable options for creating setup screen.
 public struct SetupScreenOptions {
-    public let cameraButtonEnabled: Bool
-    public let microphoneButtonEnabled: Bool
+    private(set) var cameraButtonEnabled: Bool
+    private(set) var microphoneButtonEnabled: Bool
 
-    public let cameraButton: ButtonOptions?
-    public let microphoneButton: ButtonOptions?
+    private(set) var cameraButton: ButtonOptions?
+    private(set) var microphoneButton: ButtonOptions?
 
     /// Creates an instance of SetupScreenOptions with related options.
     /// - Parameter cameraButtonEnabled: enables camera button on the setup screen.

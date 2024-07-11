@@ -48,9 +48,9 @@ public struct ButtonPlacement: Equatable, RequestStringConvertible {
         return lhs.requestString == rhs.requestString
     }
 
-    /// Alwayd display notification.
+    /// Button is palced to the primary section.
     public static let primaty: ButtonPlacement = .init(rawValue: "primaty")
 
-    /// Never display notification.
-    public static let overflow: ButtonPlacement = .init(rawValue: "never")
+    /// Button is palced to the overflow section.
+    public static let overflow: ButtonPlacement = .init(rawValue: "overflow")
 }
