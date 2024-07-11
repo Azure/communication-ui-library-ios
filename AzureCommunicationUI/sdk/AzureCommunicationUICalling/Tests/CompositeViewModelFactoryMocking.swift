@@ -171,12 +171,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                  onRemoveUser: { user in
             dispatchAction(.remoteParticipantsAction(.remove(participantId: user.userIdentifier)))
             dispatchAction(.hideDrawer)
-        }, onMuteUser: { _ in
-
         }, isDisplayed: isDisplayed)
     }
-
-
 
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel {

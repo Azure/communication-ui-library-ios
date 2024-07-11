@@ -304,10 +304,6 @@ extension CompositeViewModelFactory {
             dispatchAction(.remoteParticipantsAction(.remove(participantId: user.userIdentifier)))
             dispatchAction(.hideDrawer)
         },
-                                 onMuteUser: { _ in
-            // TADO: Can we do this yet?
-            // dispatchAction(.remoteParticipantsAction(.(participantId: user.userIdentifier)))
-        },
                                  isDisplayed: isDisplayed)
     }
 

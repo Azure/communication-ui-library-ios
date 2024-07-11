@@ -6,13 +6,9 @@
 import Foundation
 
 class ParticipantMenuViewModel: ObservableObject {
-    // Odd this would come into a VM, probably should be the function it needs
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let onRemoveUser: (ParticipantInfoModel) -> Void
-
-    // TADO: Should be a function (capability) -> Bool
-    // Or the specific capability for the VM even better
     private let capabilitiesManager: CapabilitiesManager
 
     private var participantInfoModel: ParticipantInfoModel?
@@ -43,7 +39,6 @@ class ParticipantMenuViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          capabilitiesManager: CapabilitiesManager,
          onRemoveUser: @escaping (ParticipantInfoModel) -> Void,
-         onMuteUser: @escaping (ParticipantInfoModel) -> Void,
          isDisplayed: Bool) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
@@ -51,19 +46,6 @@ class ParticipantMenuViewModel: ObservableObject {
         self.canRemove = capabilitiesManager.hasCapability(
             capabilities: localUserState.capabilities,
             capability: ParticipantCapabilityType.removeParticipant)
-
-        // TADO: action should be in the lambda above4
-        // and isEnabled should also be via the makeDrawerListItemViewModel()
-//        removeParticipantModel.isEnabled = canRemove
-//        removeParticipantModel.action = { [weak self] in
-//            guard let self = self,
-//                  let participantId = self.participantId else {
-//                return
-//            }
-//            self.dispatch(.remoteParticipantsAction(.remove(participantId: participantId)))
-//        }
-
-        // TADO: We need to pass this via redux/init
         self.isDisplayed = false
         self.onRemoveUser = onRemoveUser
     }
