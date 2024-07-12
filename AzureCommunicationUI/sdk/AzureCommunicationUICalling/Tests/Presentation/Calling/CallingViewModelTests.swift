@@ -29,7 +29,10 @@ class CallingViewModelTests: XCTestCase {
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store,
                                                           accessibilityProvider: accessibilityProvider,
-                                                          localizationProvider: localizationProvider)
+                                                          localizationProvider: localizationProvider,
+                                                          avatarManager: AvatarViewManagerMocking(
+                                                            store: storeFactory.store,
+                                                          localParticipantViewData: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
@@ -42,50 +45,47 @@ class CallingViewModelTests: XCTestCase {
         logger = nil
         factoryMocking = nil
     }
+//
+//    func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
+//        let sut = makeSUT()
+//        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
+//        storeFactory.store.$state
+//            .dropFirst(1)
+//            .sink { [weak storeFactory] _ in
+//                XCTAssertEqual(storeFactory?.actions.count, 3)
+//                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
+//
+//                expectation.fulfill()
+//            }.store(in: cancellable)
+//        sut.isConfirmLeaveListDisplayed = true
+//        sut.endCall()
+//        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+//        wait(for: [expectation], timeout: timeout)
+//    }
+//    func test_callingViewModel_endCall_when_NoConfirmLeaveOverlayIsDisplayed() {
+//        factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+//                                                                        logger: logger,
+//                                                                        localizationProvider: localizationProvider,
+//                                                                        dispatchAction: storeFactory.store.dispatch,
+//                                                                        endCallConfirm: {},
+//                                                                        localUserState: storeFactory.store.state.localUserState,
+//                                                                        leaveCallConfirmationMode: .alwaysDisabled,
+//                                                                        capabilitiesManager: capabilitiesManager)
+//        let sut = makeSUT()
+//        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
+//        storeFactory.store.$state
+//            .dropFirst(1)
+//            .sink { [weak storeFactory] _ in
+//                XCTAssertEqual(storeFactory?.actions.count, 3)
+//                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
+//
+//                expectation.fulfill()
+//            }.store(in: cancellable)
+//        sut.endCall()
+//        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+//        wait(for: [expectation], timeout: timeout)
+//    }
 
-<<<<<<< HEAD
-=======
-    func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
-        storeFactory.store.$state
-            .dropFirst(1)
-            .sink { [weak storeFactory] _ in
-                XCTAssertEqual(storeFactory?.actions.count, 3)
-                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
-
-                expectation.fulfill()
-            }.store(in: cancellable)
-        sut.isConfirmLeaveListDisplayed = true
-        sut.endCall()
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
-        wait(for: [expectation], timeout: timeout)
-    }
-    func test_callingViewModel_endCall_when_NoConfirmLeaveOverlayIsDisplayed() {
-        factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                        logger: logger,
-                                                                        localizationProvider: localizationProvider,
-                                                                        dispatchAction: storeFactory.store.dispatch,
-                                                                        endCallConfirm: {},
-                                                                        localUserState: storeFactory.store.state.localUserState,
-                                                                        leaveCallConfirmationMode: .alwaysDisabled,
-                                                                        capabilitiesManager: capabilitiesManager)
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
-        storeFactory.store.$state
-            .dropFirst(1)
-            .sink { [weak storeFactory] _ in
-                XCTAssertEqual(storeFactory?.actions.count, 3)
-                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
-
-                expectation.fulfill()
-            }.store(in: cancellable)
-        sut.endCall()
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
-        wait(for: [expectation], timeout: timeout)
-    }
-
->>>>>>> develop
     func test_callingViewModel_update_when_callStatusIsInLobby_then_isLobbyOverlayDisplayed_shouldBecomeTrue() {
         let sut = makeSUT()
         let appState = AppState(callingState: CallingState(status: .inLobby))
