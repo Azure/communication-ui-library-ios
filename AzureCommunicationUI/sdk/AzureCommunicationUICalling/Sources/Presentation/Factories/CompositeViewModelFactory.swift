@@ -2,7 +2,7 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-// swiftlint:disable file_length
+
 import FluentUI
 import Foundation
 
@@ -316,25 +316,6 @@ extension CompositeViewModelFactory {
                             localizationProvider: localizationProvider)
     }
 
-    // TADO: Deprecated I think?
-    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
-        ParticipantsListCellViewModel(localUserState: localUserState,
-                                      localizationProvider: localizationProvider)
-    }
-
-    // TADO: Deprecated also
-    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
-    -> ParticipantsListCellViewModel {
-        ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
-                                      localizationProvider: localizationProvider,
-                                      confirmTitle: nil,
-                                      confirmAccept: nil,
-                                      confirmDeny: nil,
-                                      onAccept: nil,
-                                      onDeny: nil
-        )
-    }
-
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
@@ -352,8 +333,8 @@ extension CompositeViewModelFactory {
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(title: title,
+                                     action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
                                 accessibilityIdentifier: accessibilityIdentifier,
                                 action: action,
                                 startIcon: icon)
@@ -361,8 +342,8 @@ extension CompositeViewModelFactory {
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
-                                     accessibilityIdentifier: String) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(title: title,
+                                     accessibilityIdentifier: String) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
                                 accessibilityIdentifier: accessibilityIdentifier,
                                 action: nil,
                                 startIcon: icon)
@@ -407,4 +388,3 @@ extension CompositeViewModelFactory {
         JoiningCallActivityViewModel(title: self.localizationProvider.getLocalizedString(LocalizationKey.joiningCall))
     }
 }
-// swiftlint:enable file_length

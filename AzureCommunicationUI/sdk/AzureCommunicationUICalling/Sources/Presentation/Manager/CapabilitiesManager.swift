@@ -22,10 +22,3 @@ internal class CapabilitiesManager {
         }
     }
 }
-
-extension AppState {
-    func hasCapability(capability: ParticipantCapability) -> Bool {
-        // TADO:
-        return true
-    }
-}

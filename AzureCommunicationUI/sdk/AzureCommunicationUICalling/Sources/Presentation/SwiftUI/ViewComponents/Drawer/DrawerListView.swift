@@ -72,16 +72,16 @@ internal struct DrawerListView: View {
     }
 
     func inflateView(for item: BaseDrawerItemViewModel, avatarManager: AvatarViewManagerProtocol) -> some View {
-        if let selectableItem = item as? SelectableDrawerListItemViewModel {
-            return AnyView(SelectableDrawerItemView(item: selectableItem))
+        if let selectableItem = item as? DrawerSelectableItemViewModel {
+            return AnyView(DrawerSelectableItemView(item: selectableItem))
         } else if let titleItem = item as? TitleDrawerListItemViewModel {
             return AnyView(DrawerTitleView(item: titleItem))
         } else if let bodyItem = item as? BodyTextDrawerListItemViewModel {
             return AnyView(DrawerBodyTextView(item: bodyItem))
         } else if let participantItem = item as? ParticipantsListCellViewModel {
             return AnyView(DrawerParticipantView(item: participantItem, avatarManager: avatarManager))
-        } else if let drawerItem = item as? DrawerListItemViewModel {
-            return AnyView(DrawerItemView(item: drawerItem))
+        } else if let drawerItem = item as? DrawerGenericItemViewModel {
+            return AnyView(DrawerGenericItemView(item: drawerItem))
         } else if let drawerItem = item as? BodyTextWithActionDrawerListItemViewModel {
             return AnyView(DrawerBodyWithActionTextView(item: drawerItem))
         }
@@ -102,4 +102,5 @@ internal class DrawerListConstants {
     static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
     static let micIconOpacity: CGFloat = 0.5
+    static let disabledOpacity: CGFloat = 0.5
 }

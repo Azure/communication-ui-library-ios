@@ -9,7 +9,7 @@ import Foundation
 // Each ViewModel represents a line-item supported on one of these lits
 protocol BaseDrawerItemViewModel {}
 
-struct DrawerListItemViewModel: BaseDrawerItemViewModel {
+struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let startIcon: CompositeIcon?
     let accessibilityIdentifier: String
@@ -30,7 +30,7 @@ struct DrawerListItemViewModel: BaseDrawerItemViewModel {
     }
 }
 
-struct SelectableDrawerListItemViewModel: BaseDrawerItemViewModel {
+struct DrawerSelectableItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let isSelected: Bool
     let accessibilityIdentifier: String

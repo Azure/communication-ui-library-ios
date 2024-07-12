@@ -10,7 +10,7 @@ import Combine
 class MoreCallOptionsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    let items: [DrawerListItemViewModel]
+    let items: [DrawerGenericItemViewModel]
     var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -24,7 +24,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isDisplayed = isDisplayed
 
-        let shareDebugInfoModel = DrawerListItemViewModel(
+        let shareDebugInfoModel = DrawerGenericItemViewModel(
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             action: showSharingViewAction,
@@ -34,7 +34,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
         var items = [shareDebugInfoModel]
 
         if isSupportFormAvailable {
-            let reportErrorInfoModel = DrawerListItemViewModel(
+            let reportErrorInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
                 action: showSupportFormAction,

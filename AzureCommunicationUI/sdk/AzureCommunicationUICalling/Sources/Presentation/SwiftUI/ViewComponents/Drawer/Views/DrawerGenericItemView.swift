@@ -6,29 +6,32 @@
 import Foundation
 import SwiftUI
 
-internal struct SelectableDrawerItemView: View {
-    let item: SelectableDrawerListItemViewModel
+internal struct DrawerGenericItemView: View {
+    let item: DrawerGenericItemViewModel
 
     var body: some View {
         HStack {
-            Icon(name: item.icon, size: DrawerListConstants.iconSize)
-                .foregroundColor(.primary)
-
+            if let icon = item.startIcon {
+                Icon(name: icon, size: DrawerListConstants.iconSize)
+                    .foregroundColor(.primary)
+            }
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.body)
             Spacer()
-            if item.isSelected {
-                Icon(name: .checkmark, size: DrawerListConstants.iconSize)
-            }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
+        .opacity(item.isEnabled ? 1.0 : DrawerListConstants.disabledOpacity)
         .onTapGesture {
-            item.action()
+            if item.isEnabled {
+                if let action = item.action {
+                    action()
+                }
+            }
         }
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }

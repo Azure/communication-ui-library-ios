@@ -7,7 +7,7 @@ import Foundation
 import AVFoundation
 
 class AudioDevicesListViewModel: ObservableObject {
-    @Published var audioDevicesList: [SelectableDrawerListItemViewModel] = []
+    @Published var audioDevicesList: [DrawerSelectableItemViewModel] = []
     @Published var isDisplayed = false
 
     private var audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus
@@ -38,7 +38,7 @@ class AudioDevicesListViewModel: ObservableObject {
     }
 
     private func getAvailableAudioDevices(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus)
-    -> [SelectableDrawerListItemViewModel] {
+    -> [DrawerSelectableItemViewModel] {
         let systemDefaultAudio: AudioDeviceType
         switch audioDeviceStatus {
         case .bluetoothSelected:
@@ -70,16 +70,16 @@ class AudioDevicesListViewModel: ObservableObject {
         }
         previousConnectedDevice = systemDefaultAudio
 
-        var audioDeviceOptions = [SelectableDrawerListItemViewModel]()
+        var audioDeviceOptions = [DrawerSelectableItemViewModel]()
         audioDeviceOptions.append(getAudioDeviceOption(for: systemDefaultAudio))
         audioDeviceOptions.append(getAudioDeviceOption(for: .speaker))
         return audioDeviceOptions
     }
 
-    private func getAudioDeviceOption(for audioDeviceType: AudioDeviceType) -> SelectableDrawerListItemViewModel {
+    private func getAudioDeviceOption(for audioDeviceType: AudioDeviceType) -> DrawerSelectableItemViewModel {
         let isSelected = isAudioDeviceSelected(audioDeviceType, selectedDevice: audioDeviceStatus)
         let action = LocalUserAction.audioDeviceChangeRequested(device: audioDeviceType)
-        let audioDeviceOption = SelectableDrawerListItemViewModel(
+        let audioDeviceOption = DrawerSelectableItemViewModel(
             icon: getAudioDeviceIcon(audioDeviceType),
             title: getAudioDeviceTitle(audioDeviceType),
             accessibilityIdentifier: "",
