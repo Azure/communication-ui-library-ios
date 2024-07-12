@@ -69,15 +69,27 @@ internal struct BottomDrawer<Content: View>: View {
         ZStack(alignment: .bottom) {
             if drawerState != .gone {
                 Group {
-                    BottomDrawerBackground(drawerState: drawerState,
-                                           onTapBackground: hideDrawer)
+                    Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            hideDrawer()
+                        }
+                        .accessibilityHidden(true)
+
                     VStack {
                         Spacer()
                         VStack {
-                            content
-                                .onAppear {
-                                    UIAccessibility.post(notification: .layoutChanged, argument: nil)
+                            Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
+                                .accessibilityHidden(drawerState != .visible)
+                                .accessibilityLabel(Text("Close Drawer"))
+                                .accessibilityAction {
+                                    hideDrawer()
                                 }
+                                .accessibility(hidden: drawerState != .visible)
+                                .allowsHitTesting(drawerState == .visible)
+
+                            content
+
                             Spacer().frame(height: DrawerConstants.bottomFillY)
                         }
                         .frame(maxWidth: .infinity)
@@ -89,7 +101,11 @@ internal struct BottomDrawer<Content: View>: View {
                     .transition(.move(edge: .bottom))
                     .animation(.easeInOut, value: drawerState == .visible)
                     .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : 0)
-                }.accessibilityAddTraits(.isModal)
+                    .accessibilityAddTraits(.isModal)
+                    .onAppear {
+                        UIAccessibility.post(notification: .screenChanged, argument: nil)
+                    }
+                }
             }
 
         }
@@ -109,27 +125,5 @@ internal struct BottomDrawer<Content: View>: View {
                 }
             }
         }
-    }
-}
-
-internal struct BottomDrawerBackground: View {
-    let drawerState: DrawerState
-    let onTapBackground: () -> Void
-
-    init(drawerState: DrawerState, onTapBackground: @escaping () -> Void) {
-        self.drawerState = drawerState
-        self.onTapBackground = onTapBackground
-    }
-
-    var body: some View {
-        Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
-            .ignoresSafeArea()
-            .accessibilityHidden(drawerState != .visible)
-            .accessibilityLabel(Text("Close Drawer"))
-            .accessibilityAction {
-                onTapBackground()
-            }
-            .accessibility(hidden: drawerState != .visible)
-            .allowsHitTesting(drawerState == .visible)
     }
 }

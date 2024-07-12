@@ -107,6 +107,26 @@ struct CallingDemoView: View {
                     envConfigSubject.useMockCallingSDKHandler = true
                     envConfigSubject.skipSetupScreen = false
                     await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "TeamsCallScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .teamsMeeting
+                    envConfigSubject.skipSetupScreen = true
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "TeamsSetupScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .teamsMeeting
+                    envConfigSubject.skipSetupScreen = false
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "GroupCallScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .groupCall
+                    envConfigSubject.skipSetupScreen = true
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "GroupSetupScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .groupCall
+                    envConfigSubject.skipSetupScreen = false
+                    await startCallComposite()
                 }
             }
         })
