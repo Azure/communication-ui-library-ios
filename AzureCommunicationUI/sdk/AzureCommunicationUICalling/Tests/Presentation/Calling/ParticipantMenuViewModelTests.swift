@@ -38,30 +38,40 @@ class ParticipantMenuViewModelTests: XCTestCase {
 
     func test_participantMenuViewModel_showMenu_then_getParticipantName() {
         let sut = createSut()
-//        let id = "participantId"
-//        let participantDisplayName = "participantDisplayName"
-//
-//        sut.showMenu(participantId: id, participantDisplayName: participantDisplayName)
-//
-//        XCTAssertEqual(participantDisplayName, sut.getParticipantName())
-        XCTAssertTrue(false, "We need to know we call show")
+        let id = "participantId"
+        let participantDisplayName = "participantDisplayName"
+
+        sut.update(localUserState: LocalUserState(capabilities: []),
+                   isDisplayed: true,
+                   participantInfoModel: ParticipantInfoModel(
+                    displayName: participantDisplayName,
+                    isSpeaking: false,
+                    isMuted: false,
+                    isRemoteUser: true,
+                    userIdentifier: "",
+                    status: .connected,
+                    screenShareVideoStreamModel: nil,
+                    cameraVideoStreamModel: nil))
+
+        XCTAssertEqual(participantDisplayName, sut.getParticipantName())
     }
 
     func test_participantMenuViewModel_items_then_getParticipantName() {
         let sut = createSut()
-//        let id = "participantId"
-//        let participantDisplayName = "participantDisplayName"
-//
-//        XCTAssertEqual(1, sut.items.count)
-//
-//        let removeMenu = sut.items[0]
-//        XCTAssertEqual(false, removeMenu.isEnabled)
-//
-//        sut.update(localUserState: LocalUserState(capabilities: [.removeParticipant]))
-//        XCTAssertEqual(true, removeMenu.isEnabled)
+        let id = "participantId"
+        let participantDisplayName = "participantDisplayName"
 
-        // We need to delete
-        XCTAssertTrue(false, "We need to know we call show")
+        XCTAssertEqual(1, sut.items.count)
+
+        var removeMenu = sut.items[0]
+        XCTAssertEqual(false, removeMenu.isEnabled)
+
+        sut.update(localUserState: LocalUserState(capabilities: [.removeParticipant]),
+                   isDisplayed: true,
+                   participantInfoModel: nil)
+        removeMenu = sut.items[0]
+        XCTAssertEqual(true, removeMenu.isEnabled)
+
     }
 }
 
