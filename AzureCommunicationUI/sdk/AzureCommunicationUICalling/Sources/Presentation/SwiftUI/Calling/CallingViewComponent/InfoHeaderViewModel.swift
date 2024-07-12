@@ -82,15 +82,6 @@ class InfoHeaderViewModel: ObservableObject {
 
     func displayParticipantsList() {
         dispatch(.showParticipants)
-        // self.isParticipantsListDisplayed = true
-    }
-
-    // TADO: This probably should be dispatched from participant list VM
-    // Delete actually
-    func displayParticipantMenu(participantId: String, participantDisplayName: String) {
-//        dispatch(.showParticipantActions)
-//  participantMenuViewModel.showMenu(participantId: participantId, participantDisplayName: participantDisplayName)
-//        self.isParticipantMenuDisplayed = true
     }
 
     func toggleDisplayInfoHeaderIfNeeded() {
@@ -156,10 +147,6 @@ class InfoHeaderViewModel: ObservableObject {
         if isInfoHeaderDisplayed {
             isInfoHeaderDisplayed = false
         }
-        // TADO: This should be handled in redux and VM generation for participant list
-//        if isParticipantsListDisplayed {
-//            isParticipantsListDisplayed = false
-//        }
     }
 
     private func updateInfoLabel() {

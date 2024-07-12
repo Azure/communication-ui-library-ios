@@ -97,14 +97,13 @@ class ParticipantsListViewModel: ObservableObject {
             meetingParticipants = sortParticipants(participants: localParticipantVM + remoteParticipantVMs,
                                                      avatarManager: avatarManager)
 
-            // TADO: Use localized string inflation
             meetingParticipantsTitle = BodyTextDrawerListItemViewModel(
                 title: String(format: getInTheCall(), meetingParticipants.count),
                 accessibilityIdentifier: "??")
 
-            // TADO: Switch to lobbyParticipantVMs
-            lobbyParticipants = sortParticipants(participants: lobbyParticipantVMs,
-                                                      avatarManager: avatarManager)
+            lobbyParticipants = sortParticipants(
+                participants: lobbyParticipantVMs,
+                avatarManager: avatarManager)
 
             lobbyParticipantsTitle = BodyTextWithActionDrawerListItemViewModel(
                 title: String(format: getWaitingInLobby(), lobbyParticipants.count),

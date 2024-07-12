@@ -15,6 +15,7 @@ struct NavigationState: Equatable {
 
     let status: NavigationStatus
 
+    // Various overlays/drawer visibilities
     let supportFormVisible: Bool
     let endCallConfirmationVisible: Bool
     let audioSelectionVisible: Bool
@@ -23,11 +24,9 @@ struct NavigationState: Equatable {
     let participantsVisible: Bool
     let participantActionsVisible: Bool
 
-    // When showing Participant Actions, we need this
+    // When showing Participant Menu, this provides
+    // context on who we are shoing it for
     let selectedParticipant: ParticipantInfoModel?
-
-    // TADO: we need a selected Participant somewhere, but NavState isn't right for it.
-    // Maybe LocalUserState, as in the LocalUser has selected another User
 
     init(status: NavigationStatus = .setup,
          supportFormVisible: Bool = false,

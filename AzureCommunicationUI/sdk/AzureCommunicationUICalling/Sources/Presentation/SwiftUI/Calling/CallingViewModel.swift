@@ -157,7 +157,7 @@ class CallingViewModel: ObservableObject {
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
 
-        // TADO: What?
+        // This appears to be broken?
         // callDiagnosticsViewModel.$currentBottomToastDiagnostic
         //            .assign(to: &$currentBottomToastDiagnostic)
 
@@ -184,7 +184,6 @@ class CallingViewModel: ObservableObject {
         store.dispatch(action: .callingAction(.resumeRequested))
     }
 
-    // TADO: Can be moved into the VM's for these items
     func dismissDrawer() {
         store.dispatch(action: .hideDrawer)
     }
