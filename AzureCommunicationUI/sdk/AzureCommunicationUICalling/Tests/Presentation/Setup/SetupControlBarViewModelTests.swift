@@ -23,7 +23,9 @@ class SetupControlBarViewModelTests: XCTestCase {
         logger = LoggerMocking()
         localizationProvider = LocalizationProviderMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
+                                                          store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantViewData: nil))
     }
 
     override func tearDown() {

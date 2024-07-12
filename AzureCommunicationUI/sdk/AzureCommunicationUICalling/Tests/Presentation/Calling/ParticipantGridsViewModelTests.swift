@@ -683,7 +683,10 @@ extension ParticipantGridViewModelTests {
         let accessibilityProvider = AccessibilityProvider()
         var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
-                                                              accessibilityProvider: accessibilityProvider)
+                                                              accessibilityProvider: accessibilityProvider,
+                                                              avatarManager: AvatarViewManagerMocking(
+                                                                store: storeFactory.store,
+                                                                localParticipantViewData: nil))
         factoryMocking.createMockParticipantGridCellViewModel = { infoModel in
             if let completion = participantGridCellViewUpdateCompletion {
                 return ParticipantGridCellViewModelMocking(participantModel: infoModel,
@@ -704,7 +707,10 @@ extension ParticipantGridViewModelTests {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
-                                                              accessibilityProvider: accessibilityProvider)
+                                                              accessibilityProvider: accessibilityProvider,
+                                                              avatarManager: AvatarViewManagerMocking(
+                                                                store: storeFactory.store,
+                                                                localParticipantViewData: nil))
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
                                         localizationProvider: localizationProvider,
                                         accessibilityProvider: accessibilityProvider,

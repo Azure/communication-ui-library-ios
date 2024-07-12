@@ -55,7 +55,7 @@ extension OnHoldOverlayViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderProtocol? = nil) -> OnHoldOverlayViewModel {
         let logger = LoggerMocking()
         let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, 
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                               store: storeFactory.store,
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
@@ -79,7 +79,7 @@ extension OnHoldOverlayViewModelTests {
     func makeSUT(withAction action: @escaping (() -> Void)) -> OnHoldOverlayViewModelMocking {
         let logger = LoggerMocking()
         let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, 
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                               store: storeFactory.store,
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
