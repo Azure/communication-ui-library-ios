@@ -32,16 +32,19 @@ internal struct DrawerListView: View {
                     let section = sections[sectionIndex]
 
                     if let header = section.header {
-                        Section(header: inflateView(for: header, avatarManager: avatarManager)) {
+                        Section(header: inflateView(for: header, avatarManager: avatarManager)
+                            .accessibilityElement(children: .combine)) {
                             ForEach(0..<section.items.count, id: \.self) { itemIndex in
                                 let item = section.items[itemIndex]
                                 inflateView(for: item, avatarManager: avatarManager)
+                                    .accessibilityElement(children: .combine)
                             }
                         }
                     } else {
                         ForEach(0..<section.items.count, id: \.self) { itemIndex in
                             let item = section.items[itemIndex]
                             inflateView(for: item, avatarManager: avatarManager)
+                                .accessibilityElement(children: .combine)
                         }
                     }
                 }

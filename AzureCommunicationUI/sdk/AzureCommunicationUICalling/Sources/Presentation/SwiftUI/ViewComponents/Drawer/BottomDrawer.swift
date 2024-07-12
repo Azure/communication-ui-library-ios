@@ -68,41 +68,30 @@ internal struct BottomDrawer<Content: View>: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             if drawerState != .gone {
-                Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        withAnimation {
-                            hideDrawer()
-                        }
-                    }
-                    .allowsHitTesting(drawerState == .visible)
-
-                VStack {
-                    Spacer()
-
+                Group {
+                    BottomDrawerBackground(drawerState: drawerState,
+                                           onTapBackground: hideDrawer)
                     VStack {
-                        // Should be a place for A11Y User to dismiss
-                        Color.red.frame(maxWidth: .infinity,
-                                          maxHeight: 1)
-                        .accessibilityAction(action: {
-                            hideDrawer()
-                        }, label: {
-                            Text("Hide Drawer")
-                        })                        
-                        content
-                        Spacer().frame(height: DrawerConstants.bottomFillY)
+                        Spacer()
+                        VStack {
+                            content
+                                .onAppear {
+                                    UIAccessibility.post(notification: .layoutChanged, argument: nil)
+                                }
+                            Spacer().frame(height: DrawerConstants.bottomFillY)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(Color(StyleProvider.color.surface))
+                        .cornerRadius(DrawerConstants.drawerCornerRadius)
+                        .shadow(radius: DrawerConstants.drawerShadowRadius)
+                        .padding(.bottom, -DrawerConstants.bottomFillY)
                     }
-                    .accessibilityAddTraits(.isModal)
-                    .frame(maxWidth: .infinity)
-                    .background(Color(StyleProvider.color.surface))
-                    .cornerRadius(DrawerConstants.drawerCornerRadius)
-                    .shadow(radius: DrawerConstants.drawerShadowRadius)
-                    .padding(.bottom, -DrawerConstants.bottomFillY)
-                }
-                .transition(.move(edge: .bottom))
-                .animation(.easeInOut, value: drawerState == .visible)
-                .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : 0)
+                    .transition(.move(edge: .bottom))
+                    .animation(.easeInOut, value: drawerState == .visible)
+                    .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : 0)
+                }.accessibilityAddTraits(.isModal)
             }
+
         }
 
         .onChange(of: isPresented) { newValue in
@@ -120,5 +109,27 @@ internal struct BottomDrawer<Content: View>: View {
                 }
             }
         }
+    }
+}
+
+internal struct BottomDrawerBackground: View {
+    let drawerState: DrawerState
+    let onTapBackground: () -> Void
+
+    init(drawerState: DrawerState, onTapBackground: @escaping () -> Void) {
+        self.drawerState = drawerState
+        self.onTapBackground = onTapBackground
+    }
+
+    var body: some View {
+        Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
+            .ignoresSafeArea()
+            .accessibilityHidden(drawerState != .visible)
+            .accessibilityLabel(Text("Close Drawer"))
+            .accessibilityAction {
+                onTapBackground()
+            }
+            .accessibility(hidden: drawerState != .visible)
+            .allowsHitTesting(drawerState == .visible)
     }
 }

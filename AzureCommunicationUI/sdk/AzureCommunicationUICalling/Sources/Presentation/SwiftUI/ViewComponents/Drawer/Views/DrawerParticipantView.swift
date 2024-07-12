@@ -88,6 +88,6 @@ internal struct DrawerParticipantView: View {
             // transaction.animation = .linear(duration: 1)
         }.onChange(of: item.confirmTitle) { _ in
             isConfirming = false
-        }.accessibilityElement(children: .combine)
+        }
     }
 }
