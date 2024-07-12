@@ -167,6 +167,11 @@
 		5347C1D92C179C730084AE56 /* ThrottleMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */; };
 		5347C1DF2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */; };
 		534A5DD42C40A2C9002EB508 /* DrawerParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534A5DD32C40A2C9002EB508 /* DrawerParticipantView.swift */; };
+		534A5DD62C40ADFC002EB508 /* DrawerTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534A5DD52C40ADFC002EB508 /* DrawerTitleView.swift */; };
+		534A5DD82C40AE0B002EB508 /* DrawerBodyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534A5DD72C40AE0B002EB508 /* DrawerBodyTextView.swift */; };
+		534A5DDB2C40AE80002EB508 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534A5DDA2C40AE80002EB508 /* CustomAlert.swift */; };
+		534A5DDD2C40AECF002EB508 /* SelectableDrawerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534A5DDC2C40AECF002EB508 /* SelectableDrawerItemView.swift */; };
+		534A5DDF2C40AEF1002EB508 /* DrawerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534A5DDE2C40AEF1002EB508 /* DrawerItemView.swift */; };
 		534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */; };
 		53535A132C0E667F000BF96B /* MoreCallOptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */; };
 		53535A152C10FE5B000BF96B /* AudioDeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53535A142C10FE5B000BF96B /* AudioDeviceListView.swift */; };
@@ -557,6 +562,11 @@
 		5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddleware.swift; sourceTree = "<group>"; };
 		5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddlewareTests.swift; sourceTree = "<group>"; };
 		534A5DD32C40A2C9002EB508 /* DrawerParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerParticipantView.swift; sourceTree = "<group>"; };
+		534A5DD52C40ADFC002EB508 /* DrawerTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTitleView.swift; sourceTree = "<group>"; };
+		534A5DD72C40AE0B002EB508 /* DrawerBodyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerBodyTextView.swift; sourceTree = "<group>"; };
+		534A5DDA2C40AE80002EB508 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		534A5DDC2C40AECF002EB508 /* SelectableDrawerItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableDrawerItemView.swift; sourceTree = "<group>"; };
+		534A5DDE2C40AEF1002EB508 /* DrawerItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerItemView.swift; sourceTree = "<group>"; };
 		534B2CF32B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAudioVideoMode.swift; sourceTree = "<group>"; };
 		53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsListView.swift; sourceTree = "<group>"; };
 		53535A142C10FE5B000BF96B /* AudioDeviceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceListView.swift; sourceTree = "<group>"; };
@@ -1206,6 +1216,7 @@
 		50FA46192698BC01001844AC /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				534A5DD92C40AE60002EB508 /* CustomAlert */,
 				53C1B7F52C2F883D00E6DB4C /* ParticipantActions */,
 				53C1B7F42C2F882F00E6DB4C /* ParticipantsList */,
 				53535A112C0E4DAC000BF96B /* MoreCallOptions */,
@@ -1238,8 +1249,20 @@
 			isa = PBXGroup;
 			children = (
 				534A5DD32C40A2C9002EB508 /* DrawerParticipantView.swift */,
+				534A5DD52C40ADFC002EB508 /* DrawerTitleView.swift */,
+				534A5DD72C40AE0B002EB508 /* DrawerBodyTextView.swift */,
+				534A5DDC2C40AECF002EB508 /* SelectableDrawerItemView.swift */,
+				534A5DDE2C40AEF1002EB508 /* DrawerItemView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		534A5DD92C40AE60002EB508 /* CustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				534A5DDA2C40AE80002EB508 /* CustomAlert.swift */,
+			);
+			path = CustomAlert;
 			sourceTree = "<group>";
 		};
 		53535A102C0E4DA4000BF96B /* AudioSelection */ = {
@@ -2086,6 +2109,8 @@
 				1FBCB6D72654765D00F57EEA /* LocalUserState.swift in Sources */,
 				A46B90992BF593C50096788C /* Caller.swift in Sources */,
 				05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */,
+				534A5DDF2C40AEF1002EB508 /* DrawerItemView.swift in Sources */,
+				534A5DDD2C40AECF002EB508 /* SelectableDrawerItemView.swift in Sources */,
 				05E28FF62AD60E5900FF7020 /* ParticipantRoleEnum.swift in Sources */,
 				B2B1DB3D2ABE35B0003B00DB /* MessageBarDiagnosticView.swift in Sources */,
 				FA6DF038290339430088A945 /* SharingActivityView.swift in Sources */,
@@ -2115,6 +2140,7 @@
 				A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
+				534A5DD82C40AE0B002EB508 /* DrawerBodyTextView.swift in Sources */,
 				051F73962C0E1164006E097F /* ToastNotificationReducer.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
@@ -2174,6 +2200,7 @@
 				50FA45F8267D466D001844AC /* InfoHeaderView.swift in Sources */,
 				1F13D37026AB293700E31666 /* NavigationReducer.swift in Sources */,
 				FA6B619F290C5987004B8188 /* SharingActivityContainerController.swift in Sources */,
+				534A5DD62C40ADFC002EB508 /* DrawerTitleView.swift in Sources */,
 				50FA45F5267D3BD3001844AC /* ControlBarView.swift in Sources */,
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
@@ -2261,6 +2288,7 @@
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,
 				A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */,
 				88D8DD7628EF9A93006A4AC4 /* DebugInfoManager.swift in Sources */,
+				534A5DDB2C40AE80002EB508 /* CustomAlert.swift in Sources */,
 				B2E5B1802AA14CC600D54A3A /* CallDiagnosticsState.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
 				051F739A2C0F68FE006E097F /* BottomToastViewModel.swift in Sources */,
