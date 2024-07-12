@@ -87,8 +87,6 @@ struct CallingView: View {
                     ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
                                         avatarManager: avatarManager)
                 }
-
-                // TODA: Actions drawer
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)

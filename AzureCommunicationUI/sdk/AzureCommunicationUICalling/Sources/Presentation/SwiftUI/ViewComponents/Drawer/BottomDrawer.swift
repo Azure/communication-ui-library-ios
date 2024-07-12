@@ -81,9 +81,18 @@ internal struct BottomDrawer<Content: View>: View {
                     Spacer()
 
                     VStack {
+                        // Should be a place for A11Y User to dismiss
+                        Color.red.frame(maxWidth: .infinity,
+                                          maxHeight: 1)
+                        .accessibilityAction(action: {
+                            hideDrawer()
+                        }, label: {
+                            Text("Hide Drawer")
+                        })                        
                         content
                         Spacer().frame(height: DrawerConstants.bottomFillY)
                     }
+                    .accessibilityAddTraits(.isModal)
                     .frame(maxWidth: .infinity)
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(DrawerConstants.drawerCornerRadius)
@@ -95,6 +104,7 @@ internal struct BottomDrawer<Content: View>: View {
                 .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : 0)
             }
         }
+
         .onChange(of: isPresented) { newValue in
             if newValue {
                 drawerState = .hidden
