@@ -62,39 +62,24 @@ internal struct DrawerParticipantView: View {
         .fullScreenCover(isPresented: $isConfirming) {
             CustomAlert(
                 title: item.confirmTitle ?? "",
+                agreeText: item.confirmAccept ?? "",
+                denyText: item.confirmDeny ?? "",
                 dismiss: {
                     isConfirming = false
                 },
-                content: {
-                    Button(action: {
-                        guard let accept = item.accept else {
-                            return
-                        }
-                        accept()
-                        isConfirming = false
-                    }, label: {
-                        Text(item.confirmAccept ?? "")
-                            .frame(width: DrawerListConstants.confirmationButtonWidth,
-                                   height: DrawerListConstants.confirmationButtonHeight,
-                                   alignment: .center
-                            )
-                            .foregroundColor(Color(StyleProvider.color.primaryColor))
-                    })
-                    Divider().frame(maxHeight: DrawerListConstants.confirmationButtonHeight)
-                    Button(action: {
-                        guard let deny = item.deny else {
-                            return
-                        }
-                        deny()
-                        isConfirming = false
-                    }, label: {
-                        Text(item.confirmDeny ?? "")
-                            .frame(width: DrawerListConstants.confirmationButtonWidth,
-                                   height: DrawerListConstants.confirmationButtonHeight,
-                                   alignment: .center)
-                            .foregroundColor(Color(StyleProvider.color.primaryColor))
-                    })
-                })
+                agreeAction: {
+                    guard let accept = item.accept else {
+                        return
+                    }
+                    accept()
+                },
+                denyAction: {
+                    guard let deny = item.deny else {
+                        return
+                    }
+                    deny()
+                }
+            )
             .background(BackgroundCleanerView())
 
         }

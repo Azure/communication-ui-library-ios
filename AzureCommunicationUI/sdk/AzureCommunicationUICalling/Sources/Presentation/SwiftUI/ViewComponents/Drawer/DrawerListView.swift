@@ -99,6 +99,4 @@ internal class DrawerListConstants {
     static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
     static let micIconOpacity: CGFloat = 0.5
-    static let confirmationButtonWidth: CGFloat = 100
-    static let confirmationButtonHeight: CGFloat = 48
 }
