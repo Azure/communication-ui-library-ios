@@ -118,7 +118,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
 
-    func test_update_withLobbyParticipants_shouldUpdateLobbyParticipants() {
+    func test_update_withLobbyParticipants_shouldUpdateLobbyParticipants_WhenOrganizer() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish View Models for the lobby participants")
 
@@ -147,6 +147,40 @@ class ParticipantsListViewModelTests: XCTestCase {
                 } else {
                     XCTFail("Expected participant to be of type ParticipantsListCellViewModel")
                 }
+                expectation.fulfill()
+            }
+            .store(in: cancellable)
+
+        sut.update(localUserState: localUserState,
+                   remoteParticipantsState: remoteParticipantsState,
+                   isDisplayed: true)
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    func test_update_withLobbyParticipants_shouldNotUpdateLobbyParticipants_WhenAttendee() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish View Models for the lobby participants")
+
+        let audioStateOn = LocalUserState.AudioState(operation: .on, device: .receiverSelected)
+        let localUserState = LocalUserState(audioState: audioStateOn, participantRole: .attendee)
+        let lobbyParticipant = ParticipantInfoModel(
+            displayName: "John Doe",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "123",
+            status: .inLobby,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: [lobbyParticipant],
+            lastUpdateTimeStamp: Date())
+
+        sut.$lobbyParticipants
+            .dropFirst()
+            .sink { participants in
+                XCTAssertEqual(participants.count, 0)
                 expectation.fulfill()
             }
             .store(in: cancellable)
