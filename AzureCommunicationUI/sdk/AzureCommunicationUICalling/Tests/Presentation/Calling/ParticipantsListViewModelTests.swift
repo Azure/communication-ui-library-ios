@@ -216,40 +216,32 @@ class ParticipantsListViewModelTests: XCTestCase {
             }.store(in: cancellable)
         wait(for: [expectation], timeout: 1.0)
     }
-//
-//    func test_admitParticipant_shouldDispatchAdmitParticipantAction() {
-//        let sut = makeSUT()
-//        let expectation = XCTestExpectation(description: "Should dispatch admit participant action")
-//
-//        var actionDispatched: Action?
-//        let dispatchAction: ActionDispatch = { action in
-//            actionDispatched = action
-//            expectation.fulfill()
-//        }
-//
-//        sut.dispatch = dispatchAction
-//        sut.admitParticipant("123")
-//
-//        wait(for: [expectation], timeout: 1.0)
-//        XCTAssertEqual(actionDispatched, .remoteParticipantsAction(.admit(participantId: "123")))
-//    }
-//
-//    func test_declineParticipant_shouldDispatchDeclineParticipantAction() {
-//        let sut = makeSUT()
-//        let expectation = XCTestExpectation(description: "Should dispatch decline participant action")
-//
-//        var actionDispatched: Action?
-//        let dispatchAction: ActionDispatch = { action in
-//            actionDispatched = action
-//            expectation.fulfill()
-//        }
-//
-//        sut.dispatch = dispatchAction
-//        sut.declineParticipant("123")
-//
-//        wait(for: [expectation], timeout: 1.0)
-//        XCTAssertEqual(actionDispatched, .remoteParticipantsAction(.decline(participantId: "123")))
-//    }
+
+    func test_admitParticipant_shouldDispatchAdmitParticipantAction() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should dispatch admitAll action")
+        sut.admitParticipant("test")
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertTrue(self?.storeFactory.actions.first == .remoteParticipantsAction(.admit(participantId: "test")))
+                expectation.fulfill()
+            }.store(in: cancellable)
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    func test_declineParticipant_shouldDispatchDeclineParticipantAction() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should dispatch admitAll action")
+        sut.declineParticipant("test")
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertTrue(self?.storeFactory.actions.first == .remoteParticipantsAction(.decline(participantId: "test")))
+                expectation.fulfill()
+            }.store(in: cancellable)
+        wait(for: [expectation], timeout: 1.0)
+    }
 }
 
 // Mock implementations for dependencies
