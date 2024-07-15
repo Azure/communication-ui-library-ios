@@ -191,64 +191,31 @@ class ParticipantsListViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
 
-//    func test_update_withRoleChange_shouldUpdateParticipants() {
-//        let sut = makeSUT()
-//        let expectation = XCTestExpectation(description: "Should publish updated View Models when the role changes")
-//
-//        let audioStateOn = LocalUserState.AudioState(operation: .on, device: .receiverSelected)
-//        let localUserState = LocalUserState(audioState: audioStateOn, participantRole: .presenter)
-//        let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [], lastUpdateTimeStamp: Date())
-//
-//        sut.$meetingParticipants
-//            .dropFirst()
-//            .sink { participants in
-//                XCTAssertEqual(participants.count, 1)
-//                if let firstParticipant = participants.first as? ParticipantsListCellViewModel {
-//                    XCTAssertFalse(firstParticipant.isMuted)
-//                } else {
-//                    XCTFail("Expected participant to be of type ParticipantsListCellViewModel")
-//                }
-//                expectation.fulfill()
-//            }
-//            .store(in: &cancellable)
-//
-//        sut.update(localUserState: localUserState, remoteParticipantsState: remoteParticipantsState, isDisplayed: true)
-//        wait(for: [expectation], timeout: 1.0)
-//    }
-//
-//    func test_admitAll_shouldDispatchAdmitAllAction() {
-//        let sut = makeSUT()
-//        let expectation = XCTestExpectation(description: "Should dispatch admitAll action")
-//
-//        var actionDispatched: Action?
-//        let dispatchAction: ActionDispatch = { action in
-//            actionDispatched = action
-//            expectation.fulfill()
-//        }
-//
-//        sut.dispatch = dispatchAction
-//        sut.admitAll()
-//
-//        wait(for: [expectation], timeout: 1.0)
-//        XCTAssertEqual(actionDispatched, .remoteParticipantsAction(.admitAll))
-//    }
-//
-//    func test_declineAll_shouldDispatchDeclineAllAction() {
-//        let sut = makeSUT()
-//        let expectation = XCTestExpectation(description: "Should dispatch declineAll action")
-//
-//        var actionDispatched: Action?
-//        let dispatchAction: ActionDispatch = { action in
-//            actionDispatched = action
-//            expectation.fulfill()
-//        }
-//
-//        sut.dispatch = dispatchAction
-//        sut.declineAll()
-//
-//        wait(for: [expectation], timeout: 1.0)
-//        XCTAssertEqual(actionDispatched, .remoteParticipantsAction(.declineAll))
-//    }
+    func test_admitAll_shouldDispatchAdmitAllAction() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should dispatch admitAll action")
+        sut.admitAll()
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertTrue(self?.storeFactory.actions.first == .remoteParticipantsAction(.admitAll))
+                expectation.fulfill()
+            }.store(in: cancellable)
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    func test_declineAll_shouldDispatchDeclineAllAction() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should dispatch declineAll action")
+        sut.declineAll()
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertTrue(self?.storeFactory.actions.first == .remoteParticipantsAction(.declineAll))
+                expectation.fulfill()
+            }.store(in: cancellable)
+        wait(for: [expectation], timeout: 1.0)
+    }
 //
 //    func test_admitParticipant_shouldDispatchAdmitParticipantAction() {
 //        let sut = makeSUT()
