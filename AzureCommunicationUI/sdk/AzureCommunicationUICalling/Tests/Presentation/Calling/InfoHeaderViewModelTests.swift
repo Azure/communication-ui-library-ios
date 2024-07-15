@@ -197,56 +197,6 @@ class InfoHeaderViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    // TADO: This can be deleted, but a similar test in CallingView which owns ParticipantListViewModel now could be implemented
-//    func test_infoHeaderViewModel_update_when_statesUpdated_then_participantsListViewModelUpdated() {
-//        let expectation = XCTestExpectation(description: "Should update participantsListViewModel")
-//        let participantList = ParticipantInfoModelBuilder.getArray(count: 2)
-//        let remoteParticipantsStateValue = RemoteParticipantsState(participantInfoList: participantList,
-//                                                                   lastUpdateTimeStamp: Date())
-//        let localUserStateValue = LocalUserState(displayName: "Updated Name")
-//        let updateStates: ParticipantsListViewModelUpdateStates = { localUserState, remoteParticipantsState, _ in
-//            XCTAssertEqual(localUserState.displayName, localUserStateValue.displayName)
-//            XCTAssertEqual(remoteParticipantsStateValue.participantInfoList,
-//                           remoteParticipantsState.participantInfoList)
-//            expectation.fulfill()
-//        }
-//
-//        let participantsListViewModel = ParticipantsListViewModelMocking(
-//                                                            compositeViewModelFactory: factoryMocking,
-//                                                            localUserState: LocalUserState(),
-//                                                            dispatchAction: storeFactory.store.dispatch,
-//                                                            localizationProvider: localizationProvider,
-//                                                            onUserClicked: { _ in },
-//                                                            avatarManager: AvatarViewManagerMocking(
-//                                                                store: storeFactory.store,
-//                                                                localParticipantViewData: nil))
-//        participantsListViewModel.updateStates = updateStates
-//        factoryMocking.participantsListViewModel = participantsListViewModel
-//
-//        let sut = makeSUT()
-//        sut.update(localUserState: localUserStateValue,
-//                   remoteParticipantsState: remoteParticipantsStateValue,
-//                   callingState: CallingState(),
-//                   visibilityState: VisibilityState(currentStatus: .visible))
-//        wait(for: [expectation], timeout: 1)
-//    }
-
-    // TADO: Write where this test is now.
-    // We need a test for dispatchAction for the showParticipantsAction
-//    func test_infoHeaderViewModel_when_displayParticipantsList_then_participantsListDisplayed() {
-//        let sut = makeSUT()
-//        sut.displayParticipantsList()
-//
-//        XCTAssertTrue(sut.isParticipantsListDisplayed)
-//    }
-//
-//    func test_infoHeaderViewModel_when_displayParticipantMenu_then_isParticipantMenuDisplayed() {
-//        let sut = makeSUT()
-//        sut.displayParticipantMenu(participantId: "participantId", participantDisplayName: "participantDisplayName")
-//
-//        XCTAssertTrue(sut.isParticipantMenuDisplayed)
-//    }
-
     func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedFalse_then_shouldBecomeTrueAndPublish() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish isInfoHeaderDisplayed true")
