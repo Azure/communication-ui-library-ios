@@ -343,9 +343,6 @@ extension CallingView {
     }
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
-//        guard !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
-//                return
-//            }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all
         if newOrientation != orientation
             && newOrientation != .unknown
