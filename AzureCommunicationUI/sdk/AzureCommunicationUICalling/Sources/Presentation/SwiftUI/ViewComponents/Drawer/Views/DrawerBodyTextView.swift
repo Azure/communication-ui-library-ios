@@ -50,21 +50,22 @@ internal struct DrawerBodyWithActionTextView: View {
         .contentShape(Rectangle())
         .accessibilityIdentifier(item.accessibilityIdentifier)
         .background(Color(StyleProvider.color.surface))
-        .confirmationDialog(
-            Text(item.confirmAccept),
-            isPresented: $isConfirming,
-            titleVisibility: .automatic) {
-                Button(item.actionText) {
+        .fullScreenCover(isPresented: $isConfirming) {
+            CustomAlert(
+                title: item.confirmTitle,
+                agreeText: item.confirmAccept,
+                denyText: item.confirmDeny,
+                dismiss: {
                     isConfirming = false
-                    item.accept()
-                }.foregroundColor(Color(StyleProvider.color.primaryColor))
-                Button(item.confirmDeny, role: .destructive) {
-                    isConfirming = false
-                    item.deny()
-                }
-                Button("Cancel", role: .cancel) {
-                    isConfirming = false
-                }.foregroundColor(Color(StyleProvider.color.primaryColor))
+                },
+                agreeAction: item.accept,
+                denyAction: item.deny
+            )
+            .background(BackgroundCleanerView())
+        }
+        .transaction { transaction in
+            transaction.disablesAnimations = true
+            // transaction.animation = .linear(duration: 1)
         }
     }
 }

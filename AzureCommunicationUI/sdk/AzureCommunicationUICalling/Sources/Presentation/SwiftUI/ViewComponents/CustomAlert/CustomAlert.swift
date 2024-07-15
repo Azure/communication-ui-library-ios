@@ -76,7 +76,7 @@ internal struct CustomAlert: View {
                 }
                 Spacer()
             }
-        }
+        }.accessibilityAddTraits(.isModal)
     }
 }
 
