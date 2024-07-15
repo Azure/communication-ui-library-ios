@@ -56,8 +56,9 @@ class ParticipantsListViewModel: ObservableObject {
                 participantRole: localUserState.participantRole)
 
             // Build the Local Participant "List"
-            let localParticipantVM = [ParticipantsListCellViewModel(localUserState: localUserState,
-                                                                 localizationProvider: localizationProvider)]
+            let localParticipantVM = [ParticipantsListCellViewModel(
+                localUserState: localUserState,
+                localizationProvider: localizationProvider)]
 
             // Grab the Remote Participants
             let remoteParticipantVMs = remoteParticipantsState.participantInfoList
@@ -94,8 +95,9 @@ class ParticipantsListViewModel: ObservableObject {
                     })
                 }
 
-            meetingParticipants = sortParticipants(participants: localParticipantVM + remoteParticipantVMs,
-                                                     avatarManager: avatarManager)
+            meetingParticipants = sortParticipants(
+                participants: localParticipantVM + remoteParticipantVMs,
+                avatarManager: avatarManager)
 
             meetingParticipantsTitle = BodyTextDrawerListItemViewModel(
                 title: String(format: getInTheCall(), meetingParticipants.count),
