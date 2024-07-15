@@ -7,10 +7,6 @@ import Foundation
 import SwiftUI
 
 /// Custom Alert
-///
-/// Instructions
-///
-/// 1.
 internal struct CustomAlert: View {
     let title: String
     let dismiss: () -> Void

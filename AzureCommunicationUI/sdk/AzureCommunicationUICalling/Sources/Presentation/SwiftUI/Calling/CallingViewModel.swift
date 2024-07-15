@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 
-class CallingViewModel: ObservableObject {
+internal class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
@@ -156,10 +156,6 @@ class CallingViewModel: ObservableObject {
                                                                               subtitle: "")
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
-
-        // This appears to be broken?
-        // callDiagnosticsViewModel.$currentBottomToastDiagnostic
-        //            .assign(to: &$currentBottomToastDiagnostic)
 
         bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)

@@ -5,7 +5,7 @@
 
 import Foundation
 
-class LobbyWaitingHeaderViewModel: ObservableObject {
+internal class LobbyWaitingHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var title: String
     @Published var isDisplayed = false
@@ -16,7 +16,6 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private var lobbyParticipantCount: Int = 0
 
-    // let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: PrimaryButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 

@@ -51,7 +51,7 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
-//        self.participantsListViewModel.displayParticipantMenu = self.displayParticipantMenu
+
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
 
@@ -113,17 +113,10 @@ class InfoHeaderViewModel: ObservableObject {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
-//        participantsListViewModel.update(localUserState: localUserState,
-//                                         remoteParticipantsState: remoteParticipantsState)
-//        participantMenuViewModel.update(localUserState: localUserState)
 
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
         }
-
-//        if visibilityState.currentStatus != .visible {
-//            isParticipantsListDisplayed = false
-//        }
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {

@@ -6,7 +6,7 @@
 import SwiftUI
 import FluentUI
 
-struct LobbyWaitingHeaderView: View {
+internal struct LobbyWaitingHeaderView: View {
     @ObservedObject var viewModel: LobbyWaitingHeaderViewModel
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
@@ -41,13 +41,6 @@ struct LobbyWaitingHeaderView: View {
         .onAppear(perform: {
             viewModel.isPad = UIDevice.current.userInterfaceIdiom == .pad
         })
-        /*
-        .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
-            participantsListView
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
-         */
     }
 
     var lobbyHeader: some View {
@@ -93,20 +86,4 @@ struct LobbyWaitingHeaderView: View {
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
             .accessibilityIdentifier(AccessibilityIdentifier.lobbyWaitingDismissID.rawValue)
     }
-
-    /*
-    var participantsListView: some View {
-        return Group {
-            if let avatarManager = avatarViewManager as? AvatarViewManager {
-                CompositeParticipantsList(isPresented: $viewModel.isParticipantsListDisplayed,
-                                          viewModel: viewModel.participantsListViewModel,
-                                          avatarViewManager: avatarManager,
-                                          sourceView: participantsListButtonSourceView)
-                .modifier(LockPhoneOrientation())
-            } else {
-                EmptyView()
-            }
-        }
-    }
-     */
 }

@@ -6,7 +6,7 @@
 import Foundation
 import AVFoundation
 
-class AudioDevicesListViewModel: ObservableObject {
+internal class AudioDevicesListViewModel: ObservableObject {
     @Published var audioDevicesList: [DrawerSelectableItemViewModel] = []
     @Published var isDisplayed = false
 
