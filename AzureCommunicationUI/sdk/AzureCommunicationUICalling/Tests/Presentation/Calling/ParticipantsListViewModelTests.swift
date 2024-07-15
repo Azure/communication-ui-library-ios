@@ -77,6 +77,61 @@ class ParticipantsListViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
 
+    func test_update_withRemoteParticipants_shouldStaySorted() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish View Models for the remote participants")
+
+        let audioStateOn = LocalUserState.AudioState(operation: .on, device: .receiverSelected)
+        let localUserState = LocalUserState(audioState: audioStateOn, displayName: "DEF")
+        let remoteParticipant1 = ParticipantInfoModel(
+            displayName: "ABC",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: false,
+            userIdentifier: "123",
+            status: .connected,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+
+        let remoteParticipant2 = ParticipantInfoModel(
+            displayName: "GHI",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: false,
+            userIdentifier: "323",
+            status: .connected,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: [
+                remoteParticipant1,
+                remoteParticipant2
+            ],
+            lastUpdateTimeStamp: Date())
+
+        sut.$meetingParticipants
+            .dropFirst(1)
+            .sink { participants in
+                XCTAssertEqual(participants.count, 3)
+                if let first = participants[0] as? ParticipantsListCellViewModel,
+                   let second = participants[1] as? ParticipantsListCellViewModel,
+                   let third = participants[2] as? ParticipantsListCellViewModel {
+                    XCTAssertEqual("ABC", first.getParticipantName(with: nil))
+                    XCTAssertEqual("DEF", second.getParticipantName(with: nil))
+                    XCTAssertEqual("GHI", third.getParticipantName(with: nil))
+                } else {
+                    XCTFail("Expected participant to be of type ParticipantsListCellViewModel")
+                }
+
+                expectation.fulfill()
+            }
+            .store(in: cancellable)
+
+        sut.update(localUserState: localUserState, remoteParticipantsState: remoteParticipantsState, isDisplayed: true)
+        wait(for: [expectation], timeout: 1.0)
+    }
+
     func test_update_withRemoteParticipants_shouldUpdateMeetingParticipants() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish View Models for the remote participants")
@@ -242,6 +297,13 @@ class ParticipantsListViewModelTests: XCTestCase {
             }.store(in: cancellable)
         wait(for: [expectation], timeout: 1.0)
     }
+
+    // More tests to add eventually
+    // 1) If regular participant row clicked, dispatch show participant details
+    // 2) If own user tapped, no dispatch to show details/menu
+    // 3) On Lobby Participant View model, can admit
+    // 4) + More label
+    // 5) Verify header and counts for lobby and regular
 }
 
 // Mock implementations for dependencies
