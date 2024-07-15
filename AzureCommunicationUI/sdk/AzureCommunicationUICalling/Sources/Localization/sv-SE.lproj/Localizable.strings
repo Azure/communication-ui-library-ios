@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Konfigurera";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tillbaka";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Anslut till samtal";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Starta samtal";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Startar samtal…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anslut till samtal inaktiverat";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Starta samtal inaktiverat";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
@@ -98,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Dela diagnostikinformation";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Ringer...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
@@ -165,9 +165,19 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapportera ett problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Skicka";
 
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Liveundertexter";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talat språk";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk för undertext";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Startar undertexter...";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Det går inte att starta undertexter";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Det går inte att stoppa undertexter";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Det går inte att ändra språket för undertexter";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Det gör inte att ändra talat språk";
+
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Stäng av ljudet";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Stäng av deltagarmenyn.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Ta bort från samtal";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Ta bort deltagare från samtalsmenyn.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Samtalsinställningarna har uppdaterats. Vissa funktioner kanske inte är tillgängliga för dig.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Samtalsinställningarna har uppdaterats. Några ytterligare åtgärder kan nu vara tillgängliga för dig.";
+
