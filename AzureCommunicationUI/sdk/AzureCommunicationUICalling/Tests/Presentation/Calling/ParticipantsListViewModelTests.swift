@@ -117,33 +117,46 @@ class ParticipantsListViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState, remoteParticipantsState: remoteParticipantsState, isDisplayed: true)
         wait(for: [expectation], timeout: 1.0)
     }
-//
-//    func test_update_withLobbyParticipants_shouldUpdateLobbyParticipants() {
-//        let sut = makeSUT()
-//        let expectation = XCTestExpectation(description: "Should publish View Models for the lobby participants")
-//
-//        let audioStateOn = LocalUserState.AudioState(operation: .on, device: .receiverSelected)
-//        let localUserState = LocalUserState(audioState: audioStateOn)
-//        let lobbyParticipant = ParticipantInfoModel(userIdentifier: "123", displayName: "John Doe", isMuted: false, status: .inLobby)
-//        let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [lobbyParticipant], lastUpdateTimeStamp: Date())
-//
-//        sut.$lobbyParticipants
-//            .dropFirst()
-//            .sink { participants in
-//                XCTAssertEqual(participants.count, 1)
-//                if let firstParticipant = participants.first as? ParticipantsListCellViewModel {
-//                    XCTAssertEqual(firstParticipant.participantId, "123")
-//                } else {
-//                    XCTFail("Expected participant to be of type ParticipantsListCellViewModel")
-//                }
-//                expectation.fulfill()
-//            }
-//            .store(in: &cancellable)
-//
-//        sut.update(localUserState: localUserState, remoteParticipantsState: remoteParticipantsState, isDisplayed: true)
-//        wait(for: [expectation], timeout: 1.0)
-//    }
-//
+
+    func test_update_withLobbyParticipants_shouldUpdateLobbyParticipants() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish View Models for the lobby participants")
+
+        let audioStateOn = LocalUserState.AudioState(operation: .on, device: .receiverSelected)
+        let localUserState = LocalUserState(audioState: audioStateOn, participantRole: .organizer)
+        let lobbyParticipant = ParticipantInfoModel(
+            displayName: "John Doe",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "123",
+            status: .inLobby,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: [lobbyParticipant],
+            lastUpdateTimeStamp: Date())
+
+        sut.$lobbyParticipants
+            .dropFirst()
+            .sink { participants in
+                XCTAssertEqual(participants.count, 1)
+                if let firstParticipant = participants.first as? ParticipantsListCellViewModel {
+                    XCTAssertEqual(firstParticipant.participantId, "123")
+                } else {
+                    XCTFail("Expected participant to be of type ParticipantsListCellViewModel")
+                }
+                expectation.fulfill()
+            }
+            .store(in: cancellable)
+
+        sut.update(localUserState: localUserState,
+                   remoteParticipantsState: remoteParticipantsState,
+                   isDisplayed: true)
+        wait(for: [expectation], timeout: 1.0)
+    }
+
 //    func test_update_withRoleChange_shouldUpdateParticipants() {
 //        let sut = makeSUT()
 //        let expectation = XCTestExpectation(description: "Should publish updated View Models when the role changes")
