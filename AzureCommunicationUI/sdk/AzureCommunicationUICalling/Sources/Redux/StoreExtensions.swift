@@ -44,7 +44,29 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                         callType: callType,
                         capabilitiesManager: CapabilitiesManager(callType: callType)
                     )
-                )
+                ),
+                // Throttle filters commands that a user might dispatch frequently. I.e. to prevent smashing buttons
+                // This can help ensure animations can play fully before the user triggers it again
+                // The default delay
+                // The keys can be grouped to throttle related actions
+                    .throttleMiddleware {action in
+                    switch action {
+                        case .showSupportForm:
+                            return "SupportFormDrawer"
+                        case .showMoreOptions:
+                            return "MoreOptionsDrawer"
+                        case .showAudioSelection:
+                            return "AudioSelectionDrawer"
+                        case .showEndCallConfirmation:
+                            return "EndCallDrawer"
+                        case .showSupportShare:
+                            return "SupportShareDrawer"
+                        case .hideDrawer:
+                            return "HideDrawer"
+                        default:
+                            return nil
+                        }
+                    }
             ],
             state: AppState(callingState: callingState,
                             localUserState: localUserState,

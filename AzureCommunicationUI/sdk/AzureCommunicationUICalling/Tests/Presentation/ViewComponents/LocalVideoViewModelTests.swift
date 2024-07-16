@@ -66,7 +66,9 @@ extension LocalVideoViewModelTests {
             storeFactory.store.dispatch(action: action)
         }
         let logger = LoggerMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
+                                                              avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                      localParticipantViewData: nil))
 
         return LocalVideoViewModel(compositeViewModelFactory: factoryMocking,
                                                   logger: logger,

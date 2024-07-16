@@ -18,7 +18,14 @@ class ParticipantMenuViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(
+            logger: logger,
+            store: storeFactory.store,
+            avatarManager: AvatarViewManagerMocking(
+                store: storeFactory.store,
+                localParticipantViewData: nil
+            )
+        )
     }
 
     override func tearDown() {
@@ -34,7 +41,17 @@ class ParticipantMenuViewModelTests: XCTestCase {
         let id = "participantId"
         let participantDisplayName = "participantDisplayName"
 
-        sut.showMenu(participantId: id, participantDisplayName: participantDisplayName)
+        sut.update(localUserState: LocalUserState(capabilities: []),
+                   isDisplayed: true,
+                   participantInfoModel: ParticipantInfoModel(
+                    displayName: participantDisplayName,
+                    isSpeaking: false,
+                    isMuted: false,
+                    isRemoteUser: true,
+                    userIdentifier: "",
+                    status: .connected,
+                    screenShareVideoStreamModel: nil,
+                    cameraVideoStreamModel: nil))
 
         XCTAssertEqual(participantDisplayName, sut.getParticipantName())
     }
@@ -46,20 +63,27 @@ class ParticipantMenuViewModelTests: XCTestCase {
 
         XCTAssertEqual(1, sut.items.count)
 
-        let removeMenu = sut.items[0]
+        var removeMenu = sut.items[0]
         XCTAssertEqual(false, removeMenu.isEnabled)
 
-        sut.update(localUserState: LocalUserState(capabilities: [.removeParticipant]))
+        sut.update(localUserState: LocalUserState(capabilities: [.removeParticipant]),
+                   isDisplayed: true,
+                   participantInfoModel: nil)
+        removeMenu = sut.items[0]
         XCTAssertEqual(true, removeMenu.isEnabled)
+
     }
 }
 
 extension ParticipantMenuViewModelTests {
     private func createSut() -> ParticipantMenuViewModel {
-        return ParticipantMenuViewModel(compositeViewModelFactory: factoryMocking,
-                                        localUserState: LocalUserState(),
-                                        dispatchAction: storeFactory.store.dispatch,
-                                        localizationProvider: localizationProvider,
-                                        capabilitiesManager: CapabilitiesManager(callType: .roomsCall))
+        return ParticipantMenuViewModel(
+            compositeViewModelFactory: factoryMocking,
+            localUserState: LocalUserState(),
+            localizationProvider: localizationProvider,
+            capabilitiesManager: CapabilitiesManager(callType: .roomsCall),
+            onRemoveUser: { _ in},
+            isDisplayed: false
+        )
     }
 }

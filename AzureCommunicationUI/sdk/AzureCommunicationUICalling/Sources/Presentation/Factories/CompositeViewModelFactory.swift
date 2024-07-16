@@ -19,7 +19,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
     private let capabilitiesManager: CapabilitiesManager
-
+    private let avatarManager: AvatarViewManagerProtocol
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -42,7 +42,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType,
          setupScreenOptions: SetupScreenOptions?,
-         capabilitiesManager: CapabilitiesManager
+         capabilitiesManager: CapabilitiesManager,
+         avatarManager: AvatarViewManagerProtocol
     ) {
 
         self.logger = logger
@@ -61,6 +62,17 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.setupScreenOptions = setupScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+        self.avatarManager = avatarManager
+    }
+
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(
+            state: store.state,
+            localizationProvider: localizationProvider,
+            endCall: endCall,
+            dismissConfirmation: dismissConfirmation)
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
@@ -165,18 +177,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   localizationProvider: localizationProvider)
     }
 
-    func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
-                                               title: String,
-                                               isSelected: Bool,
-                                               onSelectedAction: @escaping (() -> Void)) ->
-    SelectableDrawerListItemViewModel {
-        SelectableDrawerListItemViewModel(icon: icon,
-                                          title: title,
-                                          accessibilityIdentifier: "",
-                                          isSelected: isSelected,
-                                          action: onSelectedAction)
-    }
-
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel {
         ErrorInfoViewModel(localizationProvider: localizationProvider,
@@ -214,7 +214,7 @@ extension CompositeViewModelFactory {
                                resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
                                  capabilitiesManager: CapabilitiesManager)
@@ -223,7 +223,7 @@ extension CompositeViewModelFactory {
                             logger: logger,
                             localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
-                            endCallConfirm: endCallConfirm,
+                            onEndCallTapped: onEndCallTapped,
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
@@ -281,20 +281,30 @@ extension CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel {
         ParticipantsListViewModel(compositeViewModelFactory: self,
                                   localUserState: localUserState,
                                   dispatchAction: dispatchAction,
-                                  localizationProvider: localizationProvider)
+                                  localizationProvider: localizationProvider,
+                                  onUserClicked: { participant in
+            dispatchAction(Action.showParticipantActions(participant))
+        },
+        avatarManager: avatarManager)
     }
 
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel {
         ParticipantMenuViewModel(compositeViewModelFactory: self,
                                  localUserState: localUserState,
-                                 dispatchAction: dispatchAction,
                                  localizationProvider: localizationProvider,
-                                 capabilitiesManager: capabilitiesManager)
+                                 capabilitiesManager: capabilitiesManager,
+                                 onRemoveUser: { user in
+            dispatchAction(.remoteParticipantsAction(.remove(participantId: user.userIdentifier)))
+            dispatchAction(.hideDrawer)
+        },
+                                 isDisplayed: isDisplayed)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -306,18 +316,8 @@ extension CompositeViewModelFactory {
                             localizationProvider: localizationProvider)
     }
 
-    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
-        ParticipantsListCellViewModel(localUserState: localUserState,
-                                      localizationProvider: localizationProvider)
-    }
-
-    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
-    -> ParticipantsListCellViewModel {
-        ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
-                                      localizationProvider: localizationProvider)
-    }
-
     func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
 
@@ -326,30 +326,34 @@ extension CompositeViewModelFactory {
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
-                                            isSupportFormAvailable: events.onUserReportedIssue != nil)
+                                     isSupportFormAvailable: events.onUserReportedIssue != nil,
+                                     isDisplayed: isDisplayed)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
+                                     action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
                                 accessibilityIdentifier: accessibilityIdentifier,
-                                action: action)
+                                action: action,
+                                startIcon: icon)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
-                                     accessibilityIdentifier: String) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
-                                accessibilityIdentifier: accessibilityIdentifier)
+                                     accessibilityIdentifier: String) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                action: nil,
+                                startIcon: icon)
     }
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
-                                          debugInfoManager: debugInfoManager)
+                                          debugInfoManager: debugInfoManager) {
+            self.store.dispatch(action: .hideDrawer)
+        }
     }
 
     func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,
