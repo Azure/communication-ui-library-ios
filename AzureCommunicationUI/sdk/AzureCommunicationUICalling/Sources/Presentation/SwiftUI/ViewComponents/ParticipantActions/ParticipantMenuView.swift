@@ -7,16 +7,18 @@ import Foundation
 import SwiftUI
 import FluentUI
 
-internal struct MoreCallOptionsListView: View {
-    @ObservedObject var viewModel: MoreCallOptionsListViewModel
+internal struct ParticipantMenuView: View {
+    @ObservedObject var viewModel: ParticipantMenuViewModel
     let avatarManager: AvatarViewManagerProtocol
-    init(viewModel: MoreCallOptionsListViewModel, avatarManager: AvatarViewManagerProtocol) {
+
+    init(viewModel: ParticipantMenuViewModel,
+         avatarManager: AvatarViewManagerProtocol) {
         self.viewModel = viewModel
         self.avatarManager = avatarManager
     }
 
     var body: some View {
         DrawerListView(sections: [DrawerListSection(header: nil, items: viewModel.items)],
-        avatarManager: avatarManager)
+                       avatarManager: avatarManager)
     }
 }

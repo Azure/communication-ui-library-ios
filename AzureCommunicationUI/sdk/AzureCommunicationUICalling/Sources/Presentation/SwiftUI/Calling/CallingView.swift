@@ -87,6 +87,37 @@ struct CallingView: View {
                              hideDrawer: viewModel.dismissCaptionsListDrawer) {
                     CaptionsListView(viewModel: viewModel.captionsListViewModel)
                 }
+
+                                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissDrawer) {
+                    LeaveCallConfirmationView(
+                        viewModel: viewModel.leaveCallConfirmationViewModel,
+                        avatarManager: avatarManager)
+                }
+
+                BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissDrawer) {
+                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel,
+                    avatarManager: avatarManager)
+                }
+
+                BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissDrawer) {
+                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel,
+                    avatarManager: avatarManager)
+                }
+
+                BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissDrawer) {
+                    ParticipantsListView(viewModel: viewModel.participantListViewModel,
+                                         avatarManager: avatarManager)
+                }
+
+                BottomDrawer(isPresented: viewModel.participantActionViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissDrawer) {
+                    ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
+                                        avatarManager: avatarManager)
+                }
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
         }
@@ -378,9 +409,6 @@ extension CallingView {
     }
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
-        guard !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
-                return
-            }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all
         if newOrientation != orientation
             && newOrientation != .unknown

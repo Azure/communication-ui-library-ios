@@ -22,7 +22,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
     private let capabilitiesManager: CapabilitiesManager
-
+    private let avatarManager: AvatarViewManagerProtocol
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -46,7 +46,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType,
          setupScreenOptions: SetupScreenOptions?,
-         capabilitiesManager: CapabilitiesManager
+         capabilitiesManager: CapabilitiesManager,
+         avatarManager: AvatarViewManagerProtocol
     ) {
 
         self.logger = logger
@@ -66,6 +67,17 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.setupScreenOptions = setupScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+        self.avatarManager = avatarManager
+    }
+
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(
+            state: store.state,
+            localizationProvider: localizationProvider,
+            endCall: endCall,
+            dismissConfirmation: dismissConfirmation)
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -339,20 +351,30 @@ extension CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel {
         ParticipantsListViewModel(compositeViewModelFactory: self,
                                   localUserState: localUserState,
                                   dispatchAction: dispatchAction,
-                                  localizationProvider: localizationProvider)
+                                  localizationProvider: localizationProvider,
+                                  onUserClicked: { participant in
+            dispatchAction(Action.showParticipantActions(participant))
+        },
+        avatarManager: avatarManager)
     }
 
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel {
         ParticipantMenuViewModel(compositeViewModelFactory: self,
                                  localUserState: localUserState,
-                                 dispatchAction: dispatchAction,
                                  localizationProvider: localizationProvider,
-                                 capabilitiesManager: capabilitiesManager)
+                                 capabilitiesManager: capabilitiesManager,
+                                 onRemoveUser: { user in
+            dispatchAction(.remoteParticipantsAction(.remove(participantId: user.userIdentifier)))
+            dispatchAction(.hideDrawer)
+        },
+                                 isDisplayed: isDisplayed)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -362,17 +384,6 @@ extension CompositeViewModelFactory {
     func makeBannerTextViewModel() -> BannerTextViewModel {
         BannerTextViewModel(accessibilityProvider: accessibilityProvider,
                             localizationProvider: localizationProvider)
-    }
-
-    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
-        ParticipantsListCellViewModel(localUserState: localUserState,
-                                      localizationProvider: localizationProvider)
-    }
-
-    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
-    -> ParticipantsListCellViewModel {
-        ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
-                                      localizationProvider: localizationProvider)
     }
 
     func makeMoreCallOptionsListViewModel(
@@ -435,12 +446,26 @@ extension CompositeViewModelFactory {
                                 isToggleOn: isToggleOn,
                                 showToggle: showToggle,
                                 action: action)
+                                     action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                action: action,
+                                startIcon: icon)
+    }
+
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                action: nil,
+                                startIcon: icon)
     }
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
                                           debugInfoManager: debugInfoManager) {
-            self.store.dispatch(action: .hideSupportShare)
+            self.store.dispatch(action: .hideDrawer)
         }
     }
 

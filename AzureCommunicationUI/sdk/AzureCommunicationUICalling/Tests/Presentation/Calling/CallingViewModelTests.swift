@@ -29,7 +29,10 @@ class CallingViewModelTests: XCTestCase {
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store,
                                                           accessibilityProvider: accessibilityProvider,
-                                                          localizationProvider: localizationProvider)
+                                                          localizationProvider: localizationProvider,
+                                                          avatarManager: AvatarViewManagerMocking(
+                                                            store: storeFactory.store,
+                                                          localParticipantViewData: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 

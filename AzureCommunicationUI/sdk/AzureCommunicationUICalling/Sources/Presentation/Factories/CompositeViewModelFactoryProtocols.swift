@@ -52,12 +52,17 @@ protocol CompositeViewModelFactoryProtocol {
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
                                       lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
+
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
 
     func makeBannerViewModel() -> BannerViewModel
@@ -97,6 +102,14 @@ protocol CompositeViewModelFactoryProtocol {
                                        titleTrailingAccessoryView: CompositeIcon?,
                                        isEnabled: Bool?,
                                        action: @escaping (() -> Void)) -> DrawerListItemViewModel
+
+    func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
+        showSharingViewAction: @escaping () -> Void,
+        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+
+    func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
+
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),
         dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel

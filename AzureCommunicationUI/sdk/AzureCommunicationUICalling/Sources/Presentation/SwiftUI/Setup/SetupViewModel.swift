@@ -38,6 +38,7 @@ class SetupViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil,
          callType: CompositeCallType) {
+        let actionDispatch: ActionDispatch = store.dispatch
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -76,6 +77,7 @@ class SetupViewModel: ObservableObject {
         if self.callType == .oneToNOutgoing {
             callButtonLocalization = LocalizationKey.startCall
         }
+
         joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider
@@ -192,7 +194,7 @@ class SetupViewModel: ObservableObject {
     }
 
     func dismissAudioDevicesDrawer() {
-        store.dispatch(action: .hideAudioSelection)
+        store.dispatch(action: .hideDrawer)
     }
 
     private func handleOffline() {

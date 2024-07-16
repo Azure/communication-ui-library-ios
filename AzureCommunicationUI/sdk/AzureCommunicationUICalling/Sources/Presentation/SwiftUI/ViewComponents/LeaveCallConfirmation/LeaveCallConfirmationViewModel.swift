@@ -7,7 +7,7 @@ import Foundation
 
 internal class LeaveCallConfirmationViewModel: ObservableObject {
     @Published var isDisplayed = false
-    @Published var options: [DrawerListItemViewModel]
+    @Published var options: [BaseDrawerItemViewModel]
 
     let endCall: () -> Void
     let dismissConfirmation: () -> Void
@@ -27,18 +27,21 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
                                          accessibilityIdentifier: AccessibilityIdentifier
                 .leaveCallConfirmTitleAccessibilityID
                 .rawValue),
-            DrawerListItemViewModel(
-                icon: .endCallRegular,
+            DrawerGenericItemViewModel(
                 title: leaveText,
-                accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue) {
+                accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
+                action: {
                     endCall()
-            },
-            DrawerListItemViewModel(
-                icon: .dismiss,
+                },
+                startIcon: .endCallRegular),
+
+            DrawerGenericItemViewModel(
                 title: cancelText,
-                accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue) {
+                accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
+                action: {
                     dismissConfirmation()
-            }
+                },
+                startIcon: .dismiss)
         ]
         self.endCall = endCall
         self.dismissConfirmation = dismissConfirmation

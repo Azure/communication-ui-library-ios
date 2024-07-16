@@ -33,8 +33,11 @@ class ControlBarViewModel: ObservableObject {
     var audioState = LocalUserState.AudioState(operation: .off,
                                                device: .receiverSelected)
     var onEndCallTapped: (() -> Void)
+
     var capabilitiesManager: CapabilitiesManager
     var capabilities: Set<ParticipantCapabilityType>
+
+    // swaftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
@@ -49,6 +52,7 @@ class ControlBarViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.onEndCallTapped = onEndCallTapped
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
+
         self.capabilitiesManager = capabilitiesManager
         self.capabilities = localUserState.capabilities
 
@@ -196,10 +200,10 @@ class ControlBarViewModel: ObservableObject {
         )
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceState.getLabel(localizationProvider: localizationProvider))
-//        audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
 
         moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
 
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
     }
+    // swaftlint:enable function_body_length
 }

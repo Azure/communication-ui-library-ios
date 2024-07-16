@@ -22,6 +22,12 @@ struct NavigationState: Equatable {
     let audioSelectionVisible: Bool
     let moreOptionsVisible: Bool
     let supportShareSheetVisible: Bool
+    let participantsVisible: Bool
+    let participantActionsVisible: Bool
+
+    // When showing Participant Menu, this provides
+    // context on who we are shoing it for
+    let selectedParticipant: ParticipantInfoModel?
     init(status: NavigationStatus = .setup,
          supportFormVisible: Bool = false,
          captionsViewVisible: Bool = false,
@@ -30,7 +36,10 @@ struct NavigationState: Equatable {
          endCallConfirmationVisible: Bool = false,
          audioSelectionVisible: Bool = false,
          moreOptionsVisible: Bool = false,
-         supportShareSheetVisible: Bool = false
+         supportShareSheetVisible: Bool = false,        
+         participantsVisible: Bool = false,
+         participantActionsVisible: Bool = false,
+         selectedParticipant: ParticipantInfoModel? = nil
     ) {
         self.status = status
         self.supportFormVisible = supportFormVisible
@@ -41,6 +50,9 @@ struct NavigationState: Equatable {
         self.audioSelectionVisible = audioSelectionVisible
         self.moreOptionsVisible = moreOptionsVisible
         self.supportShareSheetVisible = supportShareSheetVisible
+        self.participantsVisible = participantsVisible
+        self.participantActionsVisible = participantActionsVisible
+        self.selectedParticipant = selectedParticipant
     }
 
     static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {
@@ -53,5 +65,8 @@ struct NavigationState: Equatable {
             && lhs.audioSelectionVisible == rhs.audioSelectionVisible
             && lhs.moreOptionsVisible == rhs.moreOptionsVisible
             && lhs.supportShareSheetVisible == rhs.supportShareSheetVisible
+            && lhs.participantsVisible == rhs.participantsVisible
+            && lhs.participantActionsVisible == rhs.participantActionsVisible
+            && lhs.selectedParticipant == rhs.selectedParticipant
     }
 }

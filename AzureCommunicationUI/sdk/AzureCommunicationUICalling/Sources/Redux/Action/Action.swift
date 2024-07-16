@@ -23,20 +23,19 @@ enum Action: Equatable {
     case showSupportForm
     case hideSupportForm
     case showCaptionsListView
-    case hideCaptionsListView
     case showSpokenLanguageView
-    case hideSpokenLanguageView
     case showCaptionsLanguageView
-    case hideCaptionsLanguageView
     case captionsAction(CaptionsAction)
     case showEndCallConfirmation
-    case hideEndCallConfirmation
     case showAudioSelection
-    case hideAudioSelection
     case showMoreOptions
-    case hideMoreOptions
     case showSupportShare
-    case hideSupportShare
+    case showParticipants
+    case showParticipantActions(ParticipantInfoModel)
+    // Since we only show one drawer at a time, we can have one hide
+    case hideDrawer
+
     case toastNotificationAction(ToastNotificationAction)
     case setTotalParticipantCount(Int)
+
 }

@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 // swiftlint:disable type_body_length
-class CallingViewModel: ObservableObject {
+internal class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
@@ -33,6 +33,8 @@ class CallingViewModel: ObservableObject {
     let lobbyOverlayViewModel: LobbyOverlayViewModel
     let loadingOverlayViewModel: LoadingOverlayViewModel
     let leaveCallConfirmationViewModel: LeaveCallConfirmationViewModel
+    let participantListViewModel: ParticipantsListViewModel
+    let participantActionViewModel: ParticipantMenuViewModel
     var onHoldOverlayViewModel: OnHoldOverlayViewModel!
     let isRightToLeft: Bool
 
@@ -64,7 +66,6 @@ class CallingViewModel: ObservableObject {
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions,
          capabilitiesManager: CapabilitiesManager
-
     ) {
         self.logger = logger
         self.store = store
@@ -127,6 +128,18 @@ class CallingViewModel: ObservableObject {
             }
         )
 
+        participantListViewModel = compositeViewModelFactory
+            .makeParticipantsListViewModel(
+                localUserState: store.state.localUserState,
+                isDisplayed: store.state.navigationState.participantsVisible,
+                dispatchAction: store.dispatch)
+
+        participantActionViewModel = compositeViewModelFactory
+            .makeParticipantMenuViewModel(
+                localUserState: store.state.localUserState,
+                isDisplayed: store.state.navigationState.participantActionsVisible,
+                dispatchAction: store.dispatch)
+                
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
                 guard let self = self else {
@@ -212,30 +225,10 @@ class CallingViewModel: ObservableObject {
             self.captionsStarted = true
         }
     }
-
-    func dismissConfirmLeaveDrawerList() {
-        store.dispatch(action: .hideEndCallConfirmation)
+    func dismissDrawer() {
+        store.dispatch(action: .hideDrawer)
     }
 
-    func dismissMoreCallOptionsDrawerList() {
-        store.dispatch(action: .hideMoreOptions)
-    }
-
-    func dismissAudioDevicesDrawer() {
-        store.dispatch(action: .hideAudioSelection)
-    }
-
-    func dismissCaptionLanguageDrawer() {
-        store.dispatch(action: .hideCaptionsLanguageView)
-    }
-
-    func dismissSpokenLanguageDrawer() {
-        store.dispatch(action: .hideCaptionsLanguageView)
-    }
-
-    func dismissCaptionsListDrawer() {
-        store.dispatch(action: .hideCaptionsListView)
-    }
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
@@ -246,6 +239,13 @@ class CallingViewModel: ObservableObject {
             return
         }
 
+        participantListViewModel.update(localUserState: state.localUserState,
+                                        remoteParticipantsState: state.remoteParticipantsState,
+                                        isDisplayed: state.navigationState.participantsVisible)
+
+        participantActionViewModel.update(localUserState: state.localUserState,
+                                          isDisplayed: state.navigationState.participantActionsVisible,
+                                          participantInfoModel: state.navigationState.selectedParticipant)
         audioDeviceListViewModel.update(
             audioDeviceStatus: state.localUserState.audioState.device,
             navigationState: state.navigationState,

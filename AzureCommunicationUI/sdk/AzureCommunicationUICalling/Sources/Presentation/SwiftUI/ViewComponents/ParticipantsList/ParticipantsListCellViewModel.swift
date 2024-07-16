@@ -5,15 +5,18 @@
 
 import Foundation
 
-class ParticipantsListCellViewModel {
+class ParticipantsListCellViewModel: BaseDrawerItemViewModel {
     let participantId: String?
     let isMuted: Bool
     let isHold: Bool
     let isLocalParticipant: Bool
-    let isPlusMoreMenuItem: Bool
     let localizationProvider: LocalizationProviderProtocol
     let isInLobby: Bool
-    let plusMoreCount: Int?
+    let confirmTitle: String?
+    let confirmAccept: String?
+    let confirmDeny: String?
+    let accept: (() -> Void)?
+    let deny: (() -> Void)?
     private let displayName: String
 
     init(localUserState: LocalUserState,
@@ -25,12 +28,21 @@ class ParticipantsListCellViewModel {
         self.isLocalParticipant = true
         self.isHold = false
         self.isInLobby = false
-        self.plusMoreCount = nil
-        self.isPlusMoreMenuItem = false
+        self.accept = nil
+        self.confirmDeny = nil
+        self.confirmTitle = nil
+        self.confirmAccept = nil
+        self.deny = nil
     }
 
     init(participantInfoModel: ParticipantInfoModel,
-         localizationProvider: LocalizationProviderProtocol) {
+         localizationProvider: LocalizationProviderProtocol,
+         confirmTitle: String?,
+         confirmAccept: String?,
+         confirmDeny: String?,
+         onAccept: (() -> Void)?,
+         onDeny: (() -> Void)?
+    ) {
         participantId = participantInfoModel.userIdentifier
         self.localizationProvider = localizationProvider
         self.displayName = participantInfoModel.displayName
@@ -38,24 +50,14 @@ class ParticipantsListCellViewModel {
         self.isHold = participantInfoModel.status == .hold
         self.isLocalParticipant = false
         self.isInLobby = participantInfoModel.status == .inLobby
-        self.plusMoreCount = nil
-        self.isPlusMoreMenuItem = false
+        self.accept = onAccept
+        self.deny = onDeny
+        self.confirmTitle = confirmTitle
+        self.confirmDeny = confirmDeny
+        self.confirmAccept = confirmAccept
     }
 
-    init(plusMoreCount: Int,
-         localizationProvider: LocalizationProviderProtocol) {
-        participantId = nil
-        self.localizationProvider = localizationProvider
-        self.displayName = ""
-        self.isMuted = false
-        self.isLocalParticipant = false
-        self.isHold = false
-        self.isInLobby = false
-        self.isPlusMoreMenuItem = true
-        self.plusMoreCount = plusMoreCount
-    }
-
-    func getParticipantViewData(from avatarViewManager: AvatarViewManager) -> ParticipantViewData? {
+    func getParticipantViewData(from avatarViewManager: AvatarViewManagerProtocol) -> ParticipantViewData? {
         var participantViewData: ParticipantViewData?
         if isLocalParticipant {
             participantViewData = avatarViewManager.localParticipantViewData
@@ -99,7 +101,7 @@ class ParticipantsListCellViewModel {
     }
 }
 
-extension ParticipantsListCellViewModel: Equatable {
+extension ParticipantsListCellViewModel {
      static func == (lhs: ParticipantsListCellViewModel,
                      rhs: ParticipantsListCellViewModel) -> Bool {
          lhs.participantId == rhs.participantId &&

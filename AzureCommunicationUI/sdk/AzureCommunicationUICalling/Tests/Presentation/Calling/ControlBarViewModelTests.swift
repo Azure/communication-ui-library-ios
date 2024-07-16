@@ -24,7 +24,10 @@ class ControlBarViewModelTests: XCTestCase {
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(
+                                                            store: storeFactory.store,
+                                                            localParticipantViewData: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 

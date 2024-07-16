@@ -19,7 +19,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantViewData: nil))
     }
 
     override func tearDown() {

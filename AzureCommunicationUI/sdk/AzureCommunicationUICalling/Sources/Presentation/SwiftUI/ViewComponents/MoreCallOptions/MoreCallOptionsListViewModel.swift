@@ -10,7 +10,7 @@ import Combine
 class MoreCallOptionsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    let items: [DrawerListItemViewModel]
+    let items: [DrawerGenericItemViewModel]
     var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -29,7 +29,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
 
         if isCaptionsAvailable {
             let captionsInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-                icon: .closeCaptions,
+                startIcon: .closeCaptions,
                 title: localizationProvider.getLocalizedString(.captionsListTitile),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                 titleTrailingAccessoryView: .rightChevron,
@@ -37,22 +37,23 @@ class MoreCallOptionsListViewModel: ObservableObject {
             items = [captionsInfoModel]
         }
 
-        let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-            icon: .share,
+        let shareDebugInfoModel = DrawerGenericItemViewModel(
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             titleTrailingAccessoryView: nil,
-            action: showSharingViewAction)
+            action: showSharingViewAction,
+            startIcon: .share
+        )
 
         items.append(shareDebugInfoModel)
 
         if isSupportFormAvailable {
-            let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-                icon: .personFeedback,
+            let reportErrorInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
                 titleTrailingAccessoryView: nil,
-                action: showSupportFormAction)
+                action: showSupportFormAction,
+                startIcon: .personFeedback)
 
             items.append(reportErrorInfoModel)
         }

@@ -21,7 +21,9 @@ class AudioDevicesListViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                           store: storeFactory.store,
-                                                          localizationProvider: localizationProvider)
+                                                          localizationProvider: localizationProvider,
+                                                          avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantViewData: nil))
     }
 
     override func tearDown() {

@@ -55,7 +55,11 @@ extension OnHoldOverlayViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderProtocol? = nil) -> OnHoldOverlayViewModel {
         let logger = LoggerMocking()
         let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                              store: storeFactory.store,
+                                                              avatarManager: AvatarViewManagerMocking(
+                                                                store: storeFactory.store,
+                                                                localParticipantViewData: nil))
         let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModel(
                                       localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
@@ -75,7 +79,11 @@ extension OnHoldOverlayViewModelTests {
     func makeSUT(withAction action: @escaping (() -> Void)) -> OnHoldOverlayViewModelMocking {
         let logger = LoggerMocking()
         let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                              store: storeFactory.store,
+                                                              avatarManager: AvatarViewManagerMocking(
+                                                                store: storeFactory.store,
+                                                                localParticipantViewData: nil))
         let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProvider(logger: logger),
                                                   compositeViewModelFactory: factoryMocking,
