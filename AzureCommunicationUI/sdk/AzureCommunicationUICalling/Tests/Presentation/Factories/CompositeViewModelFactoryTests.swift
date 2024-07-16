@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 
 @testable import AzureCommunicationUICalling
 
@@ -58,6 +59,7 @@ extension CompositeViewModelFactoryTests {
                                          capabilitiesManager: CapabilitiesManager(callType: .groupCall),
                                          avatarManager: AvatarViewManagerMocking(
                                             store: mockStoreFactory.store,
+                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                             localParticipantViewData: nil))
     }
 }

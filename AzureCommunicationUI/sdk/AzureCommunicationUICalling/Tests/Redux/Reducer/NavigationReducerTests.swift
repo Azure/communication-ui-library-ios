@@ -178,6 +178,78 @@ class NavigationReducerTests: XCTestCase {
 
         XCTAssertEqual(resultState.audioSelectionVisible, expectedState.audioSelectionVisible)
     }
+
+    func test_navigationReducer_reduce_when_showCaptionsList_then_captionsListVisible() {
+        let expectedState = NavigationState(captionsViewVisible: true)
+        let state = NavigationState()
+        let action = Action.showCaptionsListView
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.captionsViewVisible, expectedState.captionsViewVisible)
+        XCTAssertFalse(resultState.supportFormVisible)
+        XCTAssertFalse(resultState.supportShareSheetVisible)
+        XCTAssertFalse(resultState.audioSelectionVisible)
+        XCTAssertFalse(resultState.endCallConfirmationVisible)
+    }
+
+    func test_navigationReducer_reduce_when_hideCaptionsList_then_CaptionsListNotVisible() {
+        let expectedState = NavigationState(captionsViewVisible: false)
+        let state = NavigationState(captionsViewVisible: true)
+        let action = Action.hideDrawer
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.captionsViewVisible, expectedState.captionsViewVisible)
+    }
+
+    func test_navigationReducer_reduce_when_showCaptionsLanguageList_then_captionsLanguageListVisible() {
+        let expectedState = NavigationState(captionsLanguageViewVisible: true)
+        let state = NavigationState()
+        let action = Action.showCaptionsLanguageView
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.captionsLanguageViewVisible, expectedState.captionsLanguageViewVisible)
+        XCTAssertFalse(resultState.supportFormVisible)
+        XCTAssertFalse(resultState.supportShareSheetVisible)
+        XCTAssertFalse(resultState.audioSelectionVisible)
+        XCTAssertFalse(resultState.endCallConfirmationVisible)
+    }
+
+    func test_navigationReducer_reduce_when_hideCaptionsLanguageList_then_captionsLanguageListNotVisible() {
+        let expectedState = NavigationState(captionsLanguageViewVisible: false)
+        let state = NavigationState(captionsLanguageViewVisible: true)
+        let action = Action.hideDrawer
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.captionsLanguageViewVisible, expectedState.captionsLanguageViewVisible)
+    }
+
+    func test_navigationReducer_reduce_when_showSpokenLanguageList_then_spokenLanguageListVisible() {
+        let expectedState = NavigationState(spokenLanguageViewVisible: true)
+        let state = NavigationState()
+        let action = Action.showSpokenLanguageView
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.spokenLanguageViewVisible, expectedState.spokenLanguageViewVisible)
+        XCTAssertFalse(resultState.supportFormVisible)
+        XCTAssertFalse(resultState.supportShareSheetVisible)
+        XCTAssertFalse(resultState.audioSelectionVisible)
+        XCTAssertFalse(resultState.endCallConfirmationVisible)
+    }
+
+    func test_navigationReducer_reduce_when_hideSpokenLanguageList_then_spokenLanguageListNotVisible() {
+        let expectedState = NavigationState(spokenLanguageViewVisible: false)
+        let state = NavigationState(spokenLanguageViewVisible: true)
+        let action = Action.hideDrawer
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.spokenLanguageViewVisible, expectedState.spokenLanguageViewVisible)
+    }
 }
 
 extension NavigationReducerTests {

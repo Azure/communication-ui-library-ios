@@ -5,6 +5,8 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
+
 @testable import AzureCommunicationUICalling
 
 class CallingViewModelTests: XCTestCase {
@@ -32,6 +34,7 @@ class CallingViewModelTests: XCTestCase {
                                                           localizationProvider: localizationProvider,
                                                           avatarManager: AvatarViewManagerMocking(
                                                             store: storeFactory.store,
+                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                           localParticipantViewData: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
