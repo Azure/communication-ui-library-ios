@@ -271,17 +271,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                             dispatchAction: dispatchAction)
     }
 
-    func makeCaptionsLangaugeCellViewModel(icon: AzureCommunicationUICalling.CompositeIcon, title: String, isSelected: Bool, onSelectedAction: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerSelectableItemViewModel {
-        return DrawerSelectableItemViewModel(
-            icon: .none,
-            title: "",
-            accessibilityIdentifier: "",
-            isSelected: true,
-            action: {})
-    }
-
     func makeToggleListItemViewModel(title: String, isToggleOn: Binding<Bool>, showToggle: Bool, accessibilityIdentifier: String, startIcon: AzureCommunicationUICalling.CompositeIcon, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerGenericItemViewModel {
-        return DrawerGenericItemViewModel (
+        return DrawerGenericItemViewModel(
             title: "",
             subtitle: "",
             accessibilityIdentifier: "",
@@ -289,10 +280,19 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeLanguageListItemViewModel(title: String, subtitle: String?, accessibilityIdentifier: String, startIcon: AzureCommunicationUICalling.CompositeIcon, endIcon: AzureCommunicationUICalling.CompositeIcon?, isEnabled: Bool, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerGenericItemViewModel {
-        return DrawerGenericItemViewModel (
+        return DrawerGenericItemViewModel(
             title: "",
             subtitle: "",
             accessibilityIdentifier: "",
+            action: {})
+    }
+
+    func makeCaptionsLangaugeCellViewModel(title: String, isSelected: Bool, onSelectedAction: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerSelectableItemViewModel {
+        return DrawerSelectableItemViewModel(
+            icon: .none,
+            title: "",
+            accessibilityIdentifier: "",
+            isSelected: true,
             action: {})
     }
 
