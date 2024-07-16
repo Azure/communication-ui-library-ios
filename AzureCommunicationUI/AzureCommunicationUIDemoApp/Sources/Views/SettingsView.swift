@@ -223,10 +223,6 @@ struct SettingsView: View {
         Section(header: Text("Captions")) {
             CaptionsLocaleTextField(selection: $envConfigSubject.spokenLanguage)
             Toggle("Start Captions", isOn: $envConfigSubject.captionsOn)
-//            Toggle("Display Captions", isOn: $envConfigSubject.displayCaptions)
-//                .onTapGesture {
-//                    envConfigSubject.displayCaptions = !envConfigSubject.displayCaptions
-//                }
         }
     }
 
