@@ -46,10 +46,10 @@ struct DrawerSelectableItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let isSelected: Bool
     let accessibilityIdentifier: String
-    let icon: CompositeIcon
+    let icon: CompositeIcon?
     let action: () -> Void
 
-    init(icon: CompositeIcon,
+    init(icon: CompositeIcon?,
          title: String,
          accessibilityIdentifier: String,
          isSelected: Bool,

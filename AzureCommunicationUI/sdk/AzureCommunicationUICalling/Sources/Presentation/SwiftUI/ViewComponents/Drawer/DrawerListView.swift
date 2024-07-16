@@ -103,4 +103,5 @@ internal class DrawerListConstants {
     static let listVerticalPadding: CGFloat = 12
     static let micIconOpacity: CGFloat = 0.5
     static let disabledOpacity: CGFloat = 0.5
+    static let trailingIconSize: CGFloat = 20
 }

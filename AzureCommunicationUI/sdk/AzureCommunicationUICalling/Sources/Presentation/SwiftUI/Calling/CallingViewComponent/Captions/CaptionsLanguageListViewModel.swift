@@ -65,7 +65,6 @@ class CaptionsLanguageListViewModel: ObservableObject {
 
         let isSelected = (language.identifier == currentSelectedIdentifier)
         return compositeViewModelFactory.makeCaptionsLangaugeCellViewModel(
-            icon: .none,
             title: languageName,
             isSelected: isSelected,
             onSelectedAction: { [weak self] in

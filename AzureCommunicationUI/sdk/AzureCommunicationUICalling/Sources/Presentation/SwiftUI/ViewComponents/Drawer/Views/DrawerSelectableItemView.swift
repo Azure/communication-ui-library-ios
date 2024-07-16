@@ -11,9 +11,10 @@ internal struct DrawerSelectableItemView: View {
 
     var body: some View {
         HStack {
-            Icon(name: item.icon, size: DrawerListConstants.iconSize)
-                .foregroundColor(.primary)
-
+            if let icon = item.icon {
+                Icon(name: icon, size: DrawerListConstants.iconSize)
+                    .foregroundColor(.primary)
+            }
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)

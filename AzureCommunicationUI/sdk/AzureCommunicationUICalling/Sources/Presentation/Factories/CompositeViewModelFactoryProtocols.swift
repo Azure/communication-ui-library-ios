@@ -95,8 +95,7 @@ protocol CompositeViewModelFactoryProtocol {
                                        endIcon: CompositeIcon?,
                                        isEnabled: Bool,
                                        action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
-    func makeCaptionsLangaugeCellViewModel(icon: CompositeIcon,
-                                           title: String,
+    func makeCaptionsLangaugeCellViewModel(title: String,
                                            isSelected: Bool,
                                            onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel
     func makeLeaveCallConfirmationViewModel(

@@ -225,11 +225,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   dispatchAction: dispatchAction)
     }
 
-    func makeCaptionsLangaugeCellViewModel(icon: CompositeIcon,
-                                           title: String,
+    func makeCaptionsLangaugeCellViewModel(title: String,
                                            isSelected: Bool,
                                            onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel {
-        return DrawerSelectableItemViewModel(icon: icon,
+        return DrawerSelectableItemViewModel(icon: nil,
                                       title: title,
                                       accessibilityIdentifier: "",
                                       isSelected: isSelected,
