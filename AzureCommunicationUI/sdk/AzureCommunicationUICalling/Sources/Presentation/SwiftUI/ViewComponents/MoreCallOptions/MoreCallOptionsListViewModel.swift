@@ -25,22 +25,21 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isDisplayed = isDisplayed
-        var items: [DrawerListItemViewModel] = []
+        var items: [DrawerGenericItemViewModel] = []
 
         if isCaptionsAvailable {
-            let captionsInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-                startIcon: .closeCaptions,
+            let captionsInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.captionsListTitile),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-                titleTrailingAccessoryView: .rightChevron,
-                action: showCaptionsViewAction)
+                action: showCaptionsViewAction,
+                startIcon: .closeCaptions,
+                endIcon: .rightChevron)
             items = [captionsInfoModel]
         }
 
         let shareDebugInfoModel = DrawerGenericItemViewModel(
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-            titleTrailingAccessoryView: nil,
             action: showSharingViewAction,
             startIcon: .share
         )
@@ -51,7 +50,6 @@ class MoreCallOptionsListViewModel: ObservableObject {
             let reportErrorInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
-                titleTrailingAccessoryView: nil,
                 action: showSupportFormAction,
                 startIcon: .personFeedback)
 

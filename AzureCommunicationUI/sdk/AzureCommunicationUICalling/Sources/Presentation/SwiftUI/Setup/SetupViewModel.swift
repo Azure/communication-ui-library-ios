@@ -48,7 +48,6 @@ class SetupViewModel: ObservableObject {
         self.logger = logger
         self.callType = callType
 
-        let actionDispatch: ActionDispatch = store.dispatch
         if let title = setupScreenViewData?.title, !title.isEmpty {
             // if title is not nil/empty, use given title and optional subtitle
             self.title = title

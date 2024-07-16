@@ -80,16 +80,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
             dismissConfirmation: dismissConfirmation)
     }
 
-    func makeLeaveCallConfirmationViewModel(
-        endCall: @escaping (() -> Void),
-        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(
-            state: store.state,
-            localizationProvider: localizationProvider,
-            endCall: endCall,
-            dismissConfirmation: dismissConfirmation)
-    }
-
     func makeSupportFormViewModel() -> SupportFormViewModel {
         return SupportFormViewModel(
             isDisplayed: store.state.navigationState.supportFormVisible
@@ -228,23 +218,22 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     func makeCaptionsErrorViewModel(dispatchAction: @escaping ActionDispatch)
     -> CaptionsErrorViewModel {
-        CaptionsErrorViewModel(compositeViewModelFactory: self,
+        return CaptionsErrorViewModel(compositeViewModelFactory: self,
                                   logger: logger,
                                   localizationProvider: localizationProvider,
                                   accessibilityProvider: accessibilityProvider,
                                   dispatchAction: dispatchAction)
     }
 
-    func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
-                                               title: String,
-                                               isSelected: Bool,
-                                               onSelectedAction: @escaping (() -> Void)) ->
-    SelectableDrawerListItemViewModel {
-        SelectableDrawerListItemViewModel(icon: icon,
-                                          title: title,
-                                          accessibilityIdentifier: "",
-                                          isSelected: isSelected,
-                                          action: onSelectedAction)
+    func makeCaptionsLangaugeCellViewModel(icon: CompositeIcon,
+                                           title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel {
+        return DrawerSelectableItemViewModel(icon: icon,
+                                      title: title,
+                                      accessibilityIdentifier: "",
+                                      isSelected: isSelected,
+                                      action: onSelectedAction)
     }
 
     func makeErrorInfoViewModel(title: String,
@@ -404,53 +393,34 @@ extension CompositeViewModelFactory {
                                      isDisplayed: isDisplayed)
     }
 
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String,
-                                     titleTrailingAccessoryView: CompositeIcon? =
-        .rightChevron,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
-                                accessibilityIdentifier: accessibilityIdentifier,
-                                titleTrailingAccessoryView: titleTrailingAccessoryView,
-                                action: action)
-    }
-
-    func makeLanguageListItemViewModel(icon: CompositeIcon,
-                                       title: String,
+    func makeLanguageListItemViewModel(title: String,
                                        subtitle: String?,
                                        accessibilityIdentifier: String,
-                                       titleTrailingAccessoryView: CompositeIcon?,
-                                       isEnabled: Bool?,
-                                       action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
+                                       startIcon: CompositeIcon,
+                                       endIcon: CompositeIcon?,
+                                       isEnabled: Bool,
+                                       action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
                                 subtitle: subtitle,
                                 accessibilityIdentifier: accessibilityIdentifier,
-                                titleTrailingAccessoryView: titleTrailingAccessoryView,
-                                isEnabled: isEnabled,
-                                action: action)
-
+                                   action: action,
+                                   startIcon: startIcon,
+                                   endIcon: endIcon,
+                                   isEnabled: isEnabled)
     }
 
-    func makeToggleListItemViewModel(icon: CompositeIcon,
-                                     title: String,
+    func makeToggleListItemViewModel(title: String,
                                      isToggleOn: Binding<Bool>,
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        DrawerListItemViewModel(icon: icon,
-                                title: title,
-                                accessibilityIdentifier: accessibilityIdentifier,
-                                isToggleOn: isToggleOn,
-                                showToggle: showToggle,
-                                action: action)
+                                     startIcon: CompositeIcon,
                                      action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
         DrawerGenericItemViewModel(title: title,
-                                accessibilityIdentifier: accessibilityIdentifier,
-                                action: action,
-                                startIcon: icon)
+                                   accessibilityIdentifier: accessibilityIdentifier,
+                                   action: action,
+                                   startIcon: startIcon,
+                                   showToggle: showToggle,
+                                   isToggleOn: isToggleOn)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,

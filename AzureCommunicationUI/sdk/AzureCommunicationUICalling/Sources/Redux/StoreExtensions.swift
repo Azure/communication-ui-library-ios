@@ -63,7 +63,6 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                             return "SupportShareDrawer"
                         case .hideDrawer:
                             return "HideDrawer"
-                            case .
                         default:
                             return nil
                         }

@@ -10,7 +10,7 @@ import SwiftUI
 
 class CaptionsListViewModel: ObservableObject {
     @Published private var isToggleEnabled = false
-    @Published var items: [DrawerListItemViewModel] = []
+    @Published var items: [DrawerGenericItemViewModel] = []
 
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
@@ -47,28 +47,28 @@ class CaptionsListViewModel: ObservableObject {
         items.removeAll()
 
         let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
-            icon: .closeCaptions,
             title: localizationProvider.getLocalizedString(.captionsListTitile),
             isToggleOn: Binding(get: { self.isToggleEnabled }, set: toggleCaptions),
             showToggle: true,
             accessibilityIdentifier: "",
+            startIcon: .closeCaptions,
             action: {})
 
         let spokenLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
-            icon: .personVoice,
             title: localizationProvider.getLocalizedString(.captionsSpokenLanguage),
             subtitle: languageDisplayName(for: state.captionsState.activeSpokenLanguage ?? "en-US"),
             accessibilityIdentifier: "",
-            titleTrailingAccessoryView: .rightChevron,
+            startIcon: .personVoice,
+            endIcon: .rightChevron,
             isEnabled: self.isToggleEnabled,
             action: self.isToggleEnabled ? showSpokenLanguage : {})
 
         let captionsLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
-            icon: .localLanguage,
             title: localizationProvider.getLocalizedString(.captionsCaptionLanguage),
             subtitle: languageDisplayName(for: state.captionsState.activeCaptionLanguage ?? "en"),
             accessibilityIdentifier: "",
-            titleTrailingAccessoryView: .rightChevron,
+            startIcon: .localLanguage,
+            endIcon: .rightChevron,
             isEnabled: self.isToggleEnabled,
             action: self.isToggleEnabled ? showCaptionsLanguage : {})
         if state.captionsState.activeType == .teams {

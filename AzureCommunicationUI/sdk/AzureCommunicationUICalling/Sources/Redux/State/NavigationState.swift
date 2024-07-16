@@ -36,7 +36,7 @@ struct NavigationState: Equatable {
          endCallConfirmationVisible: Bool = false,
          audioSelectionVisible: Bool = false,
          moreOptionsVisible: Bool = false,
-         supportShareSheetVisible: Bool = false,        
+         supportShareSheetVisible: Bool = false,
          participantsVisible: Bool = false,
          participantActionsVisible: Bool = false,
          selectedParticipant: ParticipantInfoModel? = nil

@@ -61,34 +61,23 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
                 }
-                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissConfirmLeaveDrawerList) {
-                    LeaveCallConfirmationView(viewModel: viewModel.leaveCallConfirmationViewModel)
-                }
-
-                BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissMoreCallOptionsDrawerList) {
-                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel)
-                }
-
-                BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissAudioDevicesDrawer) {
-                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel)
+                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                             hideDrawer: viewModel.dismissDrawer) {
+                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
+                                             avatarManager: avatarManager)
                 }
                 BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissCaptionLanguageDrawer) {
-                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel)
-                }
-                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissSpokenLanguageDrawer) {
-                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel)
+                             hideDrawer: viewModel.dismissDrawer) {
+                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
+                                             avatarManager: avatarManager)
                 }
                 BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissCaptionsListDrawer) {
-                    CaptionsListView(viewModel: viewModel.captionsListViewModel)
+                             hideDrawer: viewModel.dismissDrawer) {
+                    CaptionsListView(viewModel: viewModel.captionsListViewModel,
+                                     avatarManager: avatarManager)
                 }
 
-                                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
+                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
                     LeaveCallConfirmationView(
                         viewModel: viewModel.leaveCallConfirmationViewModel,

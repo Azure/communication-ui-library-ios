@@ -7,7 +7,7 @@ import Foundation
 import Combine
 
 class CaptionsLanguageListViewModel: ObservableObject {
-    @Published var items: [DrawerListItemViewModel] = []
+    @Published var items: [BaseDrawerItemViewModel] = []
     @Published var isDisplayed = false
 
     private var captionsState: CaptionsState
@@ -40,7 +40,7 @@ class CaptionsLanguageListViewModel: ObservableObject {
     }
 
     private func loadLanguages() {
-        var newItems: [DrawerListItemViewModel] = []
+        var newItems: [BaseDrawerItemViewModel ] = []
         newItems.append(createTitleItem())
         let languageIdentifiers = (isSpokenLanguage ?
                                    captionsState.supportedSpokenLanguages :
@@ -60,11 +60,11 @@ class CaptionsLanguageListViewModel: ObservableObject {
                                             accessibilityIdentifier: "")
     }
 
-    private func createLanguageOption(language: Locale) -> SelectableDrawerListItemViewModel {
+    private func createLanguageOption(language: Locale) -> DrawerSelectableItemViewModel {
         let languageName = Locale.current.localizedString(forIdentifier: language.identifier) ?? "Unknown"
 
         let isSelected = (language.identifier == currentSelectedIdentifier)
-        return compositeViewModelFactory.makeSelectableDrawerListItemViewModel(
+        return compositeViewModelFactory.makeCaptionsLangaugeCellViewModel(
             icon: .none,
             title: languageName,
             isSelected: isSelected,

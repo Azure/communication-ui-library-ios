@@ -67,8 +67,6 @@ protocol CompositeViewModelFactoryProtocol {
 
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
-    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
-    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
         isCaptionsAvailable: Bool,
@@ -82,43 +80,29 @@ protocol CompositeViewModelFactoryProtocol {
                                    showCaptionsLanguage: @escaping () -> Void,
                                    isDisplayed: Bool) -> CaptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String,
-                                     titleTrailingAccessoryView: CompositeIcon?,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
 
-    func makeToggleListItemViewModel(icon: CompositeIcon,
-                                     title: String,
+    func makeToggleListItemViewModel(title: String,
                                      isToggleOn: Binding<Bool>,
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
+                                     startIcon: CompositeIcon,
+                                     action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
 
-    func makeLanguageListItemViewModel(icon: CompositeIcon,
-                                       title: String,
+    func makeLanguageListItemViewModel(title: String,
                                        subtitle: String?,
                                        accessibilityIdentifier: String,
-                                       titleTrailingAccessoryView: CompositeIcon?,
-                                       isEnabled: Bool?,
-                                       action: @escaping (() -> Void)) -> DrawerListItemViewModel
-
-    func makeMoreCallOptionsListViewModel(
-        isDisplayed: Bool,
-        showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
-
-    func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
-
+                                       startIcon: CompositeIcon,
+                                       endIcon: CompositeIcon?,
+                                       isEnabled: Bool,
+                                       action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
+    func makeCaptionsLangaugeCellViewModel(icon: CompositeIcon,
+                                           title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),
         dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
 
-    func makeSelectableDrawerListItemViewModel(
-        icon: CompositeIcon,
-        title: String,
-        isSelected: Bool,
-        onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
     func makeSupportFormViewModel() -> SupportFormViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
     func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,

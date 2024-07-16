@@ -262,22 +262,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             callType: .groupCall)
     }
 
-    func makeToggleListItemViewModel(icon: AzureCommunicationUICalling.CompositeIcon, title: String, isToggleOn: Binding<Bool>, showToggle: Bool, accessibilityIdentifier: String, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerListItemViewModel {
-        return DrawerListItemViewModel(
-            icon: CompositeIcon.addParticipant,
-            title: "",
-            accessibilityIdentifier: "",
-            action: {})
-    }
-
-    func makeLanguageListItemViewModel(icon: AzureCommunicationUICalling.CompositeIcon, title: String, subtitle: String?, accessibilityIdentifier: String, titleTrailingAccessoryView: AzureCommunicationUICalling.CompositeIcon?, isEnabled: Bool?, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerListItemViewModel {
-        return DrawerListItemViewModel(
-            icon: CompositeIcon.addParticipant,
-            title: "",
-            accessibilityIdentifier: "",
-            action: {})
-    }
-
     func makeCaptionsErrorViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
     -> AzureCommunicationUICalling.CaptionsErrorViewModel {
         return CaptionsErrorViewModel(compositeViewModelFactory: self,
@@ -287,10 +271,27 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                             dispatchAction: dispatchAction)
     }
 
-    func makeDrawerListItemViewModel(icon: AzureCommunicationUICalling.CompositeIcon, title: String, accessibilityIdentifier: String, titleTrailingAccessoryView: AzureCommunicationUICalling.CompositeIcon?, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerListItemViewModel {
-        return DrawerListItemViewModel(
-            icon: CompositeIcon.addParticipant,
+    func makeCaptionsLangaugeCellViewModel(icon: AzureCommunicationUICalling.CompositeIcon, title: String, isSelected: Bool, onSelectedAction: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerSelectableItemViewModel {
+        return DrawerSelectableItemViewModel(
+            icon: .none,
             title: "",
+            accessibilityIdentifier: "",
+            isSelected: true,
+            action: {})
+    }
+
+    func makeToggleListItemViewModel(title: String, isToggleOn: Binding<Bool>, showToggle: Bool, accessibilityIdentifier: String, startIcon: AzureCommunicationUICalling.CompositeIcon, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerGenericItemViewModel {
+        return DrawerGenericItemViewModel (
+            title: "",
+            subtitle: "",
+            accessibilityIdentifier: "",
+            action: {})
+    }
+
+    func makeLanguageListItemViewModel(title: String, subtitle: String?, accessibilityIdentifier: String, startIcon: AzureCommunicationUICalling.CompositeIcon, endIcon: AzureCommunicationUICalling.CompositeIcon?, isEnabled: Bool, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerGenericItemViewModel {
+        return DrawerGenericItemViewModel (
+            title: "",
+            subtitle: "",
             accessibilityIdentifier: "",
             action: {})
     }
@@ -336,16 +337,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                      showSupportFormAction: showSupportFormAction, showCaptionsViewAction: showCaptionsViewAction, isCaptionsAvailable: true,
                                                                      isSupportFormAvailable: false,
                                                                      isDisplayed: isDisplayed)
-    }
-
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
-                                                                    title: title,
-                                                                    accessibilityIdentifier: accessibilityIdentifier,
-                                                                    action: action)
     }
 
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {

@@ -18,7 +18,7 @@ class AzureCommunicationUIDemoAppCallDiagnosticsTests: XCUITestBase {
         tapButton(accessibilityIdentifier: "emitNetworkDiagnosticBad-AID")
 
         let bottomToastView = app.staticTexts[
-            AccessibilityIdentifier.callBottomToastAccessibilityID .rawValue]
+            AccessibilityIdentifier.callBottomToastAccessibilityID.rawValue]
         wait(for: bottomToastView)
 
         XCTAssertTrue(bottomToastView.exists)
@@ -61,7 +61,7 @@ class AzureCommunicationUIDemoAppCallDiagnosticsTests: XCUITestBase {
         tapButton(accessibilityIdentifier: "emitMediaDiagnosticBad-AID")
 
         let bottomToastView = app.staticTexts[
-            AccessibilityIdentifier.callBottomToastAccessibilityID .rawValue]
+            AccessibilityIdentifier.callBottomToastAccessibilityID.rawValue]
         wait(for: bottomToastView)
 
         XCTAssertTrue(bottomToastView.exists)

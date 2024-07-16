@@ -517,7 +517,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             store?.dispatch(action: .visibilityAction(.pipModeRequested))
         }
     }
-
+    // swiftlint:disable function_body_length
     private func constructViewFactoryAndDependencies(
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
@@ -702,7 +702,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         return callingSDKInitializer
     }
 }
-
+// swiftlint:enable function_body_length
 extension CallComposite {
     private func receiveStoreEvents(_ store: Store<AppState, Action>) {
         store.$state
