@@ -19,6 +19,14 @@ protocol CallingMiddlewareHandling {
     @discardableResult
     func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func recordingStateUpdated(state: AppState,
+                               dispatch: @escaping ActionDispatch,
+                               isRecordingActive: Bool) -> Task<Void, Never>
+    @discardableResult
+    func transcriptionStateUpdated(state: AppState,
+                                   dispatch: @escaping ActionDispatch,
+                                   isTranscriptionActive: Bool) -> Task<Void, Never>
+    @discardableResult
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -182,6 +190,59 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 }
             } catch {
                 handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
+            }
+        }
+    }
+
+    func recordingStateUpdated(state: AppState,
+                               dispatch: @escaping ActionDispatch,
+                               isRecordingActive: Bool) -> Task<Void, Never> {
+        Task {
+            var recordingState: RecordingStatus = .off
+            if isRecordingActive {
+                recordingState = .on
+            } else {
+                if state.callingState.recordingStatus == .on {
+                    recordingState = .stopped
+                }
+            }
+
+            dispatch(.callingAction(.recordingUpdated(recordingStatus: recordingState)))
+            if isRecordingActive {
+                dispatch(.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)))
+            }
+
+            if isRecordingActive && !state.callingState.isTranscriptionActive {
+                if state.callingState.transcriptionStatus != .off {
+                    dispatch(.callingAction(.transcriptionUpdated(transcriptionStatus: .off)))
+                }
+            }
+        }
+    }
+
+    func transcriptionStateUpdated(state: AppState,
+                                   dispatch: @escaping ActionDispatch,
+                                   isTranscriptionActive: Bool) -> Task<Void, Never> {
+        Task {
+            var transcriptiongState: RecordingStatus = .off
+            if isTranscriptionActive {
+                transcriptiongState = .on
+            } else {
+                if state.callingState.transcriptionStatus == .on {
+                    transcriptiongState = .stopped
+                }
+            }
+
+            dispatch(.callingAction(.transcriptionUpdated(transcriptionStatus: transcriptiongState)))
+
+            if isTranscriptionActive {
+                dispatch(.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)))
+            }
+
+            if isTranscriptionActive && !state.callingState.isRecordingActive {
+                if state.callingState.recordingStatus != .off {
+                    dispatch(.callingAction(.recordingUpdated(recordingStatus: .off)))
+                }
             }
         }
     }

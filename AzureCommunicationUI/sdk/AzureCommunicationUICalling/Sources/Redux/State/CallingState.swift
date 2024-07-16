@@ -25,12 +25,21 @@ enum OperationStatus: Int {
     case callEnded
 }
 
+enum RecordingStatus: Equatable {
+    case on
+    case off
+    case stopped
+}
+
 struct CallingState: Equatable {
     let status: CallingStatus
     let operationStatus: OperationStatus
     let callId: String?
     let isRecordingActive: Bool
     let isTranscriptionActive: Bool
+    let recordingStatus: RecordingStatus
+    let transcriptionStatus: RecordingStatus
+    let isRecorcingTranscriptionBannedDismissed: Bool
     let callStartDate: Date?
     let callEndReasonCode: Int?
     let callEndReasonSubCode: Int?
@@ -42,7 +51,10 @@ struct CallingState: Equatable {
          isTranscriptionActive: Bool = false,
          callStartDate: Date? = nil,
          callEndReasonCode: Int? = nil,
-         callEndReasonSubCode: Int? = nil) {
+         callEndReasonSubCode: Int? = nil,
+         recordingStatus: RecordingStatus = RecordingStatus.off,
+         transcriptionStatus: RecordingStatus = RecordingStatus.off,
+         isRecorcingTranscriptionBannedDismissed: Bool = false) {
         self.status = status
         self.operationStatus = operationStatus
         self.callId = callId
@@ -51,6 +63,9 @@ struct CallingState: Equatable {
         self.callStartDate = callStartDate
         self.callEndReasonCode = callEndReasonCode
         self.callEndReasonSubCode = callEndReasonSubCode
+        self.recordingStatus = recordingStatus
+        self.transcriptionStatus = transcriptionStatus
+        self.isRecorcingTranscriptionBannedDismissed = isRecorcingTranscriptionBannedDismissed
     }
 
     static func == (lhs: CallingState, rhs: CallingState) -> Bool {

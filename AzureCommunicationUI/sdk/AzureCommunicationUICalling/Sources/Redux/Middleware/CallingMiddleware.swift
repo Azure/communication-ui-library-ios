@@ -63,6 +63,14 @@ private func handleCallingAction(_ action: CallingAction,
         actionHandler.holdCall(state: getState(), dispatch: dispatch)
     case .resumeRequested:
         actionHandler.resumeCall(state: getState(), dispatch: dispatch)
+    case .recordingStateUpdated(let isRecordingActive):
+        actionHandler.recordingStateUpdated(state: getState(),
+                                            dispatch: dispatch,
+                                            isRecordingActive: isRecordingActive)
+    case .transcriptionStateUpdated(let isTranscriptionActive):
+        actionHandler.transcriptionStateUpdated(state: getState(),
+                                                dispatch: dispatch,
+                                                isTranscriptionActive: isTranscriptionActive)
     default:
         break
     }

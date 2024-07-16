@@ -55,7 +55,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
 
-    func makeBannerViewModel() -> BannerViewModel
+    func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel

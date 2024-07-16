@@ -73,7 +73,7 @@ class CallingViewModel: ObservableObject {
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
                                                                                                 isIpadInterface)
-        bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
+        bannerViewModel = compositeViewModelFactory.makeBannerViewModel(dispatchAction: store.dispatch)
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
         infoHeaderViewModel = compositeViewModelFactory
@@ -171,7 +171,8 @@ class CallingViewModel: ObservableObject {
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          visibilityState: state.visibilityState, lifeCycleState: state.lifeCycleState)
-        bannerViewModel.update(callingState: state.callingState)
+        bannerViewModel.update(callingState: state.callingState,
+                               visibilityState: state.visibilityState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)

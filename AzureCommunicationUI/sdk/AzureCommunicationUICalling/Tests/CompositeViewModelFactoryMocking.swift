@@ -250,8 +250,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                       localizationProvider: localizationProvider)
     }
 
-    func makeBannerViewModel() -> BannerViewModel {
-        return bannerViewModel ?? BannerViewModel(compositeViewModelFactory: self)
+    func makeBannerViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> BannerViewModel {
+        return bannerViewModel ?? BannerViewModel(compositeViewModelFactory: self, dispatchAction: dispatchAction)
     }
 
     func makeBannerTextViewModel() -> BannerTextViewModel {
