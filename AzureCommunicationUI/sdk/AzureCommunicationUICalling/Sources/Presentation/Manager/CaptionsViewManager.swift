@@ -5,6 +5,7 @@
 
 import UIKit
 import Combine
+import SwiftUI
 
 class CaptionsViewManager: ObservableObject {
     var isTranslationEnabled = false
@@ -70,7 +71,9 @@ class CaptionsViewManager: ObservableObject {
         }
 
         if captionData.count > maxCaptionsCount {
-            captionData.removeFirst()
+            withAnimation {
+                captionData.removeFirst()
+            }
         }
     }
 
