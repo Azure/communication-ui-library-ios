@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct ContainerView: View {
+internal struct ContainerView: View {
 
     @ObservedObject var router: NavigationRouter
 

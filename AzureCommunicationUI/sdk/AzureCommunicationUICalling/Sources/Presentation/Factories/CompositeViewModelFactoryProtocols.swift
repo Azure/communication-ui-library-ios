@@ -37,7 +37,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode,
                                  capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
@@ -47,34 +47,34 @@ protocol CompositeViewModelFactoryProtocol {
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
                                       lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
+
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
 
     func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
-    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
-    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+
+    func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
+        showSharingViewAction: @escaping () -> Void,
+        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String) -> DrawerListItemViewModel
-    func makeSelectableDrawerListItemViewModel(
-        icon: CompositeIcon,
-        title: String,
-        isSelected: Bool,
-        onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
-    func makeSupportFormViewModel() -> SupportFormViewModel
+
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
+
+   func makeSupportFormViewModel() -> SupportFormViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
     func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,
                                   dispatchAction: @escaping ActionDispatch) -> BottomToastViewModel

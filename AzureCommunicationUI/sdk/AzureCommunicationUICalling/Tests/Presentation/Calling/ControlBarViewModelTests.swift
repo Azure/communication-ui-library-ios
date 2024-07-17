@@ -24,7 +24,10 @@ class ControlBarViewModelTests: XCTestCase {
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(
+                                                            store: storeFactory.store,
+                                                            localParticipantViewData: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
@@ -36,62 +39,6 @@ class ControlBarViewModelTests: XCTestCase {
         logger = nil
         factoryMocking = nil
         capabilitiesManager = nil
-    }
-
-    // MARK: Leave Call / Cancel test
-    func test_controlBarViewModel_getLeaveCallButtonViewModel_shouldReturnLeaveCallButtonViewModel() {
-        let sut = makeSUT()
-        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
-        let expectedButtonLabel = "Leave"
-
-        XCTAssertEqual(leaveCallButtonViewModel.title, expectedButtonLabel)
-    }
-
-    func test_controlBarViewModel_getLeaveCallButtonViewModel_shouldReturnCancelButtonViewModel() {
-        let sut = makeSUT()
-        let leaveCallButtonViewModel = sut.getCancelButtonViewModel()
-        let expectedButtonLabel = "Cancel"
-
-        XCTAssertEqual(leaveCallButtonViewModel.title, expectedButtonLabel)
-    }
-
-    func test_controlBarViewModel_CancellButtonLabel_from_LocalizationMocking() {
-        let sut = makeSUTLocalizationMocking()
-        let cancelButtonViewModel = sut.getCancelButtonViewModel()
-        let expectedButtonLabelKey = "AzureCommunicationUICalling.CallingView.Overlay.Cancel"
-
-        XCTAssertEqual(cancelButtonViewModel.title, expectedButtonLabelKey)
-        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
-    }
-
-    func test_controlBarViewModel_leaveCallButtonLabel_from_LocalizationMocking() {
-        let sut = makeSUTLocalizationMocking()
-        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
-        let expectedButtonLabelKey = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"
-
-        XCTAssertEqual(leaveCallButtonViewModel.title, expectedButtonLabelKey)
-        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
-    }
-
-    func test_controlBarViewModel_dismissConfirmLeaveOverlay_when_isConfirmLeaveListDisplayedTrue_shouldBecomeFalse() {
-        let sut = makeSUT()
-        sut.isConfirmLeaveListDisplayed = true
-        sut.dismissConfirmLeaveDrawerList()
-
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
-    }
-
-    func test_controlBarViewModel_endCall_when_confirmLeaveListIsDisplayed_shouldBecomeTrue() {
-        let sut = makeSUT()
-        sut.isConfirmLeaveListDisplayed = false
-        sut.endCallButtonTapped()
-        XCTAssertTrue(sut.isConfirmLeaveListDisplayed)
-    }
-    func test_controlBarViewModel_endCall_when_No_confirmLeaveListIsDisplayed_ShouldRemainFalse() {
-        let sut = makeSUTWhenDisplayLeaveDiabled()
-        sut.isConfirmLeaveListDisplayed = false
-        sut.endCallButtonTapped()
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
     }
 
     // MARK: Microphone tests
@@ -147,7 +94,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOff)
         wait(for: [expectation], timeout: 1)
@@ -171,7 +119,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .pending)
         XCTAssertEqual(sut.isMicDisabled(), true)
         wait(for: [expectation], timeout: 1)
@@ -199,7 +148,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .pending)
         XCTAssertEqual(sut.isMicDisabled(), true)
         wait(for: [expectation], timeout: 1)
@@ -228,7 +178,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         wait(for: [expectation], timeout: 1)
@@ -256,7 +207,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.isMicDisabled(), false)
         wait(for: [expectation], timeout: 1)
@@ -279,7 +231,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOn)
@@ -307,7 +260,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOn)
@@ -334,7 +288,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOff)
@@ -372,16 +327,10 @@ class ControlBarViewModelTests: XCTestCase {
                                                                                           transmission: .local)),
                    permissionState: PermissionState(),
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         sut.cameraButtonTapped()
         wait(for: [expectation], timeout: 1)
-    }
-
-    func test_controlBarViewModel_when_selectAudioDeviceButtonTapped_then_audioDeviceSelectionDisplayed() {
-        let sut = makeSUT()
-        sut.selectAudioDeviceButtonTapped()
-
-        XCTAssertTrue(sut.isAudioDeviceSelectionDisplayed)
     }
 
     func test_controlBarViewModel_update_when_cameraStatusOffAndUpdateWithCameraOff_then_shouldNotBePublished() {
@@ -408,7 +357,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.cameraState.operation, .off)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOff)
         wait(for: [expectation], timeout: 1)
@@ -438,7 +388,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.cameraState.operation, .on)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOn)
         wait(for: [expectation], timeout: 1)
@@ -469,7 +420,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.cameraState.operation, .on)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOn)
         wait(for: [expectation], timeout: 1)
@@ -499,7 +451,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         XCTAssertEqual(sut.cameraState.operation, .off)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOff)
         wait(for: [expectation], timeout: 1)
@@ -528,7 +481,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -551,7 +505,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: LocalUserState(),
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -576,7 +531,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -633,7 +589,8 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: LocalUserState(),
                    permissionState: permissionState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -658,28 +615,9 @@ class ControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState())
         wait(for: [expectation], timeout: 1)
-    }
-
-    func test_controlBarViewModel_update_when_statesUpdated_then_audioDeviceListViewModelUpdated() {
-        let expectation = XCTestExpectation(description: "AudioDevicesListViewModel should be updated")
-        let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
-        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                         localUserState: localUserState,
-                                                                         localizationProvider: LocalizationProviderMocking())
-        audioDevicesListViewModel.updateState = { status in
-            XCTAssertEqual(status, localUserState.audioState.device)
-            expectation.fulfill()
-        }
-        factoryMocking.audioDevicesListViewModel = audioDevicesListViewModel
-        let sut = makeSUT()
-        sut.update(localUserState: localUserState,
-                   permissionState: PermissionState(),
-                   callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
-        wait(for: [expectation], timeout: 1.0)
     }
 }
 
@@ -692,7 +630,7 @@ extension ControlBarViewModelTests {
                                    logger: logger,
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
+                                   onEndCallTapped: {},
                                    localUserState: localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysEnabled,
@@ -703,7 +641,7 @@ extension ControlBarViewModelTests {
                                    logger: logger,
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
+                                   onEndCallTapped: {},
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysDisabled,

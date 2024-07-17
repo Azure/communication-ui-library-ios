@@ -17,7 +17,10 @@ class BannerViewModelTests: XCTestCase {
         cancellable = CancelBag()
         storeFactory = StoreFactoryMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
-                                                              store: storeFactory.store)
+                                                          store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(
+                                                            store: storeFactory.store,
+                                                            localParticipantViewData: nil))
     }
 
     override func tearDown() {

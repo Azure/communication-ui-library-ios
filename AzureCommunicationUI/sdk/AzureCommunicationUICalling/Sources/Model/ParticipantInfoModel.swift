@@ -27,5 +27,4 @@ struct ParticipantInfoModel: Hashable, Equatable {
 
     let screenShareVideoStreamModel: VideoStreamInfoModel?
     let cameraVideoStreamModel: VideoStreamInfoModel?
-
 }

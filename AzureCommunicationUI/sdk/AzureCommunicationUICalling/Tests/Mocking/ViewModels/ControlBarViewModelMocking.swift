@@ -13,7 +13,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
-         endCallConfirm: @escaping (() -> Void),
+         onEndCallTapped: @escaping (() -> Void),
          localUserState: LocalUserState,
          updateState: ((LocalUserState, PermissionState, VisibilityState) -> Void)? = nil,
          leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
@@ -23,7 +23,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    logger: logger,
                    localizationProvider: localizationProvider,
                    dispatchAction: dispatchAction,
-                   endCallConfirm: endCallConfirm,
+                   onEndCallTapped: onEndCallTapped,
                    localUserState: localUserState,
                    audioVideoMode: .audioAndVideo,
                    leaveCallConfirmationMode: leaveCallConfirmationMode,
@@ -33,7 +33,8 @@ class ControlBarViewModelMocking: ControlBarViewModel {
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
                          callingState: CallingState,
-                         visibilityState: VisibilityState) {
+                         visibilityState: VisibilityState,
+                         navigationState: NavigationState) {
         updateState?(localUserState, permissionState, visibilityState)
     }
 }
