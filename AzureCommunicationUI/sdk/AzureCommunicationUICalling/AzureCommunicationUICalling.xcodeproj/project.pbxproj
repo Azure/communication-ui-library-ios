@@ -178,9 +178,6 @@
 		532DF40B2AF9948F00E63301 /* CallCompositeUserReportedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */; };
 		533D7AFC2B1965BC0021767F /* SupportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFB2B1965BC0021767F /* SupportFormView.swift */; };
 		533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */; };
-		5347C1D72C13B4FE0084AE56 /* DrawerListContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1D62C13B4FE0084AE56 /* DrawerListContent.swift */; };
-		5347C1D92C179C730084AE56 /* ThrottleMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */; };
-		5347C1DF2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */; };
 		5347C1D72C13B4FE0084AE56 /* DrawerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1D62C13B4FE0084AE56 /* DrawerListView.swift */; };
 		5347C1D92C179C730084AE56 /* ThrottleMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */; };
 		5347C1DF2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */; };
@@ -592,9 +589,6 @@
 		532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeUserReportedError.swift; sourceTree = "<group>"; };
 		533D7AFB2B1965BC0021767F /* SupportFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormView.swift; sourceTree = "<group>"; };
 		533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormViewModel.swift; sourceTree = "<group>"; };
-		5347C1D62C13B4FE0084AE56 /* DrawerListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerListContent.swift; sourceTree = "<group>"; };
-		5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddleware.swift; sourceTree = "<group>"; };
-		5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddlewareTests.swift; sourceTree = "<group>"; };
 		5347C1D62C13B4FE0084AE56 /* DrawerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerListView.swift; sourceTree = "<group>"; };
 		5347C1D82C179C730084AE56 /* ThrottleMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddleware.swift; sourceTree = "<group>"; };
 		5347C1DE2C17DBE90084AE56 /* ThrottleMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -2127,7 +2121,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5347C1D72C13B4FE0084AE56 /* DrawerListContent.swift in Sources */,
+				5347C1D72C13B4FE0084AE56 /* DrawerListView.swift in Sources */,
 				11293D012C3B6D1E0006539D /* CaptionsErrorViewModel.swift in Sources */,
 				50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */,
 				A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */,
