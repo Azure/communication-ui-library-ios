@@ -986,6 +986,239 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
         XCTAssertTrue(mockCallingService.declineLobbyParticipantCalled)
     }
+
+    func test_callingMiddlewareHandler_recordingStateUpdated_on_then_recordingStatusOnDismissedFalse() async {
+
+        let callingState = CallingState(status: .connected)
+
+        var recordingUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .on)) {
+                recordingUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.recordingStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isRecordingActive: true
+        ).value
+
+        XCTAssertTrue(recordingUpdatedCalled)
+        XCTAssertTrue(dismissCalled)
+        XCTAssertFalse(offCalled)
+    }
+
+    func test_callingMiddlewareHandler_recordingStateUpdated_on_then_recordingStatusOnTransactionOff() async {
+
+        let callingState = CallingState(status: .connected, transcriptionStatus: .on)
+
+        var recordingUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .on)) {
+                recordingUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.recordingStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isRecordingActive: true
+        ).value
+
+        XCTAssertTrue(recordingUpdatedCalled)
+        XCTAssertTrue(dismissCalled)
+        XCTAssertTrue(offCalled)
+    }
+
+    func test_callingMiddlewareHandler_recordingStateUpdated_off_then_recordingStatusOffDismissedFalse() async {
+
+        let callingState = CallingState(status: .connected)
+
+        var recordingUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .off)) {
+                recordingUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.recordingStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isRecordingActive: false
+        ).value
+
+        XCTAssertTrue(recordingUpdatedCalled)
+        XCTAssertFalse(dismissCalled)
+        XCTAssertFalse(offCalled)
+    }
+
+    func test_callingMiddlewareHandler_recordingStateUpdated_off_then_recordingStatusStopedDismissedFalse() async {
+
+        let callingState = CallingState(status: .connected, recordingStatus: .on)
+
+        var recordingUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .stopped)) {
+                recordingUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.recordingStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isRecordingActive: false
+        ).value
+
+        XCTAssertTrue(recordingUpdatedCalled)
+        XCTAssertFalse(dismissCalled)
+        XCTAssertFalse(offCalled)
+    }
+
+    func test_callingMiddlewareHandler_transcriptionStateUpdated_on_then_transcriptionStatusOnDismissedFalse() async {
+
+        let callingState = CallingState(status: .connected)
+
+        var transcriptionUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .on)) {
+                transcriptionUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.transcriptionStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isTranscriptionActive: true
+        ).value
+
+        XCTAssertTrue(transcriptionUpdatedCalled)
+        XCTAssertTrue(dismissCalled)
+        XCTAssertFalse(offCalled)
+    }
+
+    func test_callingMiddlewareHandler_transcriptionStateUpdated_on_then_transcriptionStatusOnRecordingOff() async {
+
+        let callingState = CallingState(status: .connected, recordingStatus: .on)
+
+        var transcriptionUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .on)) {
+                transcriptionUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.transcriptionStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isTranscriptionActive: true
+        ).value
+
+        XCTAssertTrue(transcriptionUpdatedCalled)
+        XCTAssertTrue(dismissCalled)
+        XCTAssertTrue(offCalled)
+    }
+
+    func test_callingMiddlewareHandler_transcriptionStateUpdated_off_then_transcriptionStatusOffDismissedFalse() async {
+
+        let callingState = CallingState(status: .connected)
+
+        var transcriptionUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .off)) {
+                transcriptionUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.transcriptionStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isTranscriptionActive: false
+        ).value
+
+        XCTAssertTrue(transcriptionUpdatedCalled)
+        XCTAssertFalse(dismissCalled)
+        XCTAssertFalse(offCalled)
+    }
+
+    func test_callingMiddlewareHandler_transcriptionStateUpdated_off_then_transcriptionStatusStopedDismissedFalse() async {
+
+        let callingState = CallingState(status: .connected, transcriptionStatus: .on)
+
+        var transcriptionUpdatedCalled = false
+        var dismissCalled = false
+        var offCalled = false
+        func dispatch(action: Action) {
+            if action == Action.callingAction(.transcriptionUpdated(transcriptionStatus: .stopped)) {
+                transcriptionUpdatedCalled = true
+            }
+            if action == Action.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: false)) {
+                dismissCalled = true
+            }
+            if action == Action.callingAction(.recordingUpdated(recordingStatus: .off)) {
+                offCalled = true
+            }
+        }
+
+        let sut = makeSUT()
+        await sut.transcriptionStateUpdated(
+            state: getState(callingState: callingState), dispatch: dispatch, isTranscriptionActive: false
+        ).value
+
+        XCTAssertTrue(transcriptionUpdatedCalled)
+        XCTAssertFalse(dismissCalled)
+        XCTAssertFalse(offCalled)
+    }
+
 }
 
 extension CallingMiddlewareHandlerTests {
@@ -1012,6 +1245,26 @@ extension CallingMiddlewareHandlerTests {
                           audioStatus: LocalUserState.AudioOperationalStatus = .on,
                           diagnosticsState: CallDiagnosticsState = .init()) -> AppState {
         let callState = CallingState(status: callingState)
+        return getState(callingState: callState,
+                        cameraStatus: cameraStatus,
+                        cameraDeviceStatus: cameraDeviceStatus,
+                        cameraPermission: cameraPermission,
+                        cameraTransmissionStatus: cameraTransmissionStatus,
+                        internalError: internalError,
+                        lifecycleStatus: lifecycleStatus,
+                        audioStatus: audioStatus,
+                        diagnosticsState: diagnosticsState)
+    }
+
+    private func getState(callingState: CallingState,
+                          cameraStatus: LocalUserState.CameraOperationalStatus = .on,
+                          cameraDeviceStatus: LocalUserState.CameraDeviceSelectionStatus = .front,
+                          cameraPermission: AppPermission.Status = .unknown,
+                          cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local,
+                          internalError: CallCompositeInternalError? = nil,
+                          lifecycleStatus: AppStatus = .foreground,
+                          audioStatus: LocalUserState.AudioOperationalStatus = .on,
+                          diagnosticsState: CallDiagnosticsState = .init()) -> AppState {
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
                                                      transmission: cameraTransmissionStatus)
@@ -1025,7 +1278,7 @@ extension CallingMiddlewareHandlerTests {
                                               cameraPermission: cameraPermission)
         let lifeCycleState = LifeCycleState(currentStatus: lifecycleStatus)
         let errorState = ErrorState(internalError: internalError)
-        return AppState(callingState: callState,
+        return AppState(callingState: callingState,
                         permissionState: permissionState,
                         localUserState: localState,
                         lifeCycleState: lifeCycleState,

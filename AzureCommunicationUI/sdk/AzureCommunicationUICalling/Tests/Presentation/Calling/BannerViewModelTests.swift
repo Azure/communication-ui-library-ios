@@ -40,252 +40,57 @@ class BannerViewModelTests: XCTestCase {
                 expectation.fulfill()
             }).store(in: cancellable)
 
-        let callingState = CallingState(status: .connected, isRecordingActive: true, isTranscriptionActive: true)
-        bannerViewModel.update(callingState: callingState)
+        let callingState = makeCallingState(.on, .on)
+        bannerViewModel.update(callingState: callingState, visibilityState: VisibilityState.init(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_bannerViewModel_update_when_withRecordingActiveTrueAndTranscriptionActiveTrue_shouldUpdateRecordingAndTranscriptionStartedgBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.on, .on),
-            (.on, .off),
-            (.on, .stopped),
-            (.off, .on),
-            (.off, .off),
-            (.off, .stopped),
-            (.stopped, .on),
-            (.stopped, .off),
-            (.stopped, .stopped)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = true
-            let isTranscriptionActiveToUpdate = true
-            let expectedType = BannerInfoType.recordingAndTranscriptionStarted
+    func test_bannerViewModel_isBannerDisplayedPublished_when_visibilityInPip_then_shouldBecomeFalseAndPublish() {
+        let bannerViewModel = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish isBannerDisplayed")
+        bannerViewModel.$isBannerDisplayed
+            .dropFirst()
+            .sink(receiveValue: { isBannerDisplayed in
+                if !isBannerDisplayed {
+                    expectation.fulfill()
+                }
+            }).store(in: cancellable)
 
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
+        let callingState = makeCallingState(.on, .on)
+        bannerViewModel.update(callingState: callingState, visibilityState: VisibilityState.init(currentStatus: .visible))
 
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
+        bannerViewModel.update(callingState: callingState, visibilityState: VisibilityState.init(currentStatus: .pipModeEntered))
+
+        wait(for: [expectation], timeout: 1)
     }
 
-    func test_bannerViewModel_update_when_withRecordingActiveTrueAndTranscriptionActiveFalse_shouldUpdateRecordingStartedBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.on, .off),
-            (.off, .off),
-            (.stopped, .off),
-            (.stopped, .stopped)
+    func test_bannerViewModel_update_shouldUpdateRecordingAndTranscriptionStartedgBanner() {
+        let parameters: [((RecordingStatus, RecordingStatus), BannerInfoType?)] = [
+            ((.on, .on), BannerInfoType.recordingAndTranscriptionStarted),
+            ((.on, .off), BannerInfoType.recordingStarted),
+            ((.on, .stopped), BannerInfoType.transcriptionStoppedStillRecording),
+            ((.off, .on), BannerInfoType.transcriptionStarted),
+            ((.off, .off), nil),
+            ((.off, .stopped), BannerInfoType.transcriptionStoppedAndSaved),
+            ((.stopped, .on), BannerInfoType.recordingStoppedStillTranscribing),
+            ((.stopped, .off), BannerInfoType.recordingStopped),
+            ((.stopped, .stopped), BannerInfoType.recordingAndTranscriptionStopped)
         ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = true
-            let isTranscriptionActiveToUpdate = false
-            let expectedType = BannerInfoType.recordingStarted
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
+        for (stateTuple, expectedType) in parameters {
+            let recordingState = stateTuple.0
+            let transcriptionState = stateTuple.1
             let mockingBannerViewModel = BannerTextViewModelMocking()
             factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
+            let callingState = makeCallingState()
+            let bannerViewModel = makeSut(callingState: callingState, visibilitySataus: .visible)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
             }
             mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
-    }
+            let callingStateToUpdate = makeCallingState(recordingState, transcriptionState)
 
-    func test_bannerViewModel_update_when_withRecordingActiveTrueAndTranscriptionActiveFalse_shouldUpdateTranscriptionStoppedStillRecordingBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.on, .on),
-            (.on, .stopped),
-            (.off, .on),
-            (.off, .stopped),
-            (.stopped, .on)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = true
-            let isTranscriptionActiveToUpdate = false
-            let expectedType = BannerInfoType.transcriptionStoppedStillRecording
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
-
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
-    }
-
-    func test_bannerViewModel_update_when_withRecordingActiveFalseAndTranscriptionActiveTrue_shouldUpdateTranscriptionStartedBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.off, .on),
-            (.off, .off),
-            (.off, .stopped),
-            (.stopped, .stopped)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = false
-            let isTranscriptionActiveToUpdate = true
-            let expectedType = BannerInfoType.transcriptionStarted
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
-
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
-    }
-
-    func test_bannerViewModel_update_when_withRecordingActiveFalseAndTranscriptionActiveFalse_shouldNotUpdateBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.off, .off),
-            (.stopped, .stopped)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = false
-            let isTranscriptionActiveToUpdate = false
-            let expectedType: BannerInfoType? = nil
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
-
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
-    }
-
-    func test_bannerViewModel_update_when_withRecordingActiveFalseAndTranscriptionActiveFalse_shouldUpdateTranscriptionStoppedAndSavedBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.off, .on),
-            (.off, .stopped)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = false
-            let isTranscriptionActiveToUpdate = false
-            let expectedType = BannerInfoType.transcriptionStoppedAndSaved
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
-
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
-    }
-
-    func test_bannerViewModel_update_when_withRecordingActiveFalseAndTranscriptionActiveTrue_shouldUpdateRecordingStoppedStillTranscribingBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.on, .on),
-            (.on, .off),
-            (.on, .stopped),
-            (.stopped, .on),
-            (.stopped, .off)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = false
-            let isTranscriptionActiveToUpdate = true
-            let expectedType = BannerInfoType.recordingStoppedStillTranscribing
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
-
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
-    }
-
-    func test_bannerViewModel_update_when_withRecordingActiveFalseAndTranscriptionActiveFalse_shouldUpdateRecordingStoppedBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.on, .off),
-            (.stopped, .off)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = false
-            let isTranscriptionActiveToUpdate = false
-            let expectedType = BannerInfoType.recordingStopped
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
-
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
-        }
-    }
-
-    func test_bannerViewModel_update_when_withRecordingActiveFalseAndTranscriptionActiveFalse_shouldUpdateRecordingAndTranscriptionStoppedBanner() {
-        let parameters: [(BannerViewModel.FeatureStatus, BannerViewModel.FeatureStatus)] = [
-            (.on, .on),
-            (.on, .stopped),
-            (.stopped, .on),
-            (.stopped, .stopped)
-        ]
-        for (initialRecordingState, initialTranscriptionState) in parameters {
-            let isRecordingActiveToUpdate = false
-            let isTranscriptionActiveToUpdate = false
-            let expectedType = BannerInfoType.recordingAndTranscriptionStopped
-
-            let callStatesArr = createCallStates(recordingState: initialRecordingState,
-                                                 transcriptionState: initialTranscriptionState)
-            let mockingBannerViewModel = BannerTextViewModelMocking()
-            factoryMocking.bannerTextViewModel = mockingBannerViewModel
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
-
-            let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
-                XCTAssertEqual(bannerInfoType, expectedType)
-            }
-            mockingBannerViewModel.updateBannerInfoType = expectationClosure
-            let callingStateToUpdate = makeCallingState(isRecordingActiveToUpdate, isTranscriptionActiveToUpdate)
-            bannerViewModel.update(callingState: callingStateToUpdate)
+            bannerViewModel.update(callingState: callingStateToUpdate, visibilityState: VisibilityState.init(currentStatus: .visible))
         }
     }
 }
@@ -293,44 +98,25 @@ class BannerViewModelTests: XCTestCase {
 extension BannerViewModelTests {
 
     func makeSUT() -> BannerViewModel {
-        return BannerViewModel(compositeViewModelFactory: factoryMocking)
+        return BannerViewModel(compositeViewModelFactory: factoryMocking) { _ in
+        }
     }
 
-    func makeSut(callingStateArray: [CallingState]) -> BannerViewModel {
+    func makeSut(callingState: CallingState, visibilitySataus: VisibilityStatus = .visible) -> BannerViewModel {
         let sut = makeSUT()
-        for callState in callingStateArray {
-            sut.update(callingState: callState)
-        }
+        sut.update(callingState: callingState, visibilityState: VisibilityState.init(currentStatus: visibilitySataus))
         return sut
     }
 
-    func createCallStates(recordingState: BannerViewModel.FeatureStatus,
-                          transcriptionState: BannerViewModel.FeatureStatus) -> [CallingState] {
-        switch (recordingState, transcriptionState) {
-        case (.on, .on):
-            return [makeCallingState(true, true)]
-        case (.on, .off):
-            return [makeCallingState(true, false)]
-        case (.on, .stopped):
-            return [makeCallingState(true, true), makeCallingState(true, false)]
-        case (.off, .on):
-            return [makeCallingState(false, true)]
-        case (.off, .off):
-            return []
-        case (.off, .stopped):
-            return [makeCallingState(false, true), makeCallingState(false, false)]
-        case (.stopped, .on):
-            return [makeCallingState(true, true), makeCallingState(false, true)]
-        case (.stopped, .off):
-            return [makeCallingState(true, false), makeCallingState(false, false)]
-        case (.stopped, .stopped):
-            return [makeCallingState(true, true), makeCallingState(false, false)]
-        }
+    func makeCallingState(_ recordingStatus: RecordingStatus, _ transcriptionStatus: RecordingStatus) -> CallingState {
+        return CallingState(status: .connected,
+                            isRecordingActive: true,
+                            isTranscriptionActive: true,
+                            recordingStatus: recordingStatus,
+                            transcriptionStatus: transcriptionStatus)
     }
 
-    func makeCallingState(_ recording: Bool, _ transcription: Bool) -> CallingState {
-        return CallingState(status: .connected,
-                            isRecordingActive: recording,
-                            isTranscriptionActive: transcription)
+    func makeCallingState() -> CallingState {
+        return CallingState(status: .connected)
     }
 }

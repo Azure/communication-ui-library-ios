@@ -208,4 +208,12 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
             onCapabilitiesChanged?(event)
         }
     }
+
+    func recordingStateUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, isRecordingActive: Bool) -> Task<Void, Never> {
+        Task {}
+    }
+
+    func transcriptionStateUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, isTranscriptionActive: Bool) -> Task<Void, Never> {
+        Task {}
+    }
 }

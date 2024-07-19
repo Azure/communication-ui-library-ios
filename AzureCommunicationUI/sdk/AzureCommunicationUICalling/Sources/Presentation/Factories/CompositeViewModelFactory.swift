@@ -307,8 +307,8 @@ extension CompositeViewModelFactory {
                                  isDisplayed: isDisplayed)
     }
 
-    func makeBannerViewModel() -> BannerViewModel {
-        BannerViewModel(compositeViewModelFactory: self)
+    func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel {
+        BannerViewModel(compositeViewModelFactory: self, dispatchAction: dispatchAction)
     }
 
     func makeBannerTextViewModel() -> BannerTextViewModel {
