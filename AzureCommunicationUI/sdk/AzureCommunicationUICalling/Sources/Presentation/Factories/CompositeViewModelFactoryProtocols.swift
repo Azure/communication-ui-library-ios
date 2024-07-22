@@ -65,7 +65,7 @@ protocol CompositeViewModelFactoryProtocol {
                                       isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
 
-    func makeBannerViewModel() -> BannerViewModel
+    func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,

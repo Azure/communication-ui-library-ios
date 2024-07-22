@@ -15,6 +15,9 @@ extension Reducer where State == CallingState,
         var callIdValue = callingState.callId
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
+        var recordingStatus = callingState.recordingStatus
+        var transcriptionStatus = callingState.transcriptionStatus
+        var isRecorcingTranscriptionBannedDismissed = callingState.isRecorcingTranscriptionBannedDismissed
         var callStartDate = callingState.callStartDate
         var callEndReasonCode: Int?
         var callEndReasonSubCode: Int?
@@ -28,8 +31,10 @@ extension Reducer where State == CallingState,
             callIdValue = callId
         case .callingAction(.recordingStateUpdated(let newValue)):
             isRecordingActive = newValue
+            isRecorcingTranscriptionBannedDismissed = false
         case .callingAction(.transcriptionStateUpdated(let newValue)):
             isTranscriptionActive = newValue
+            isRecorcingTranscriptionBannedDismissed = false
         case .callingAction(.callEndRequested):
             operationStatus = .callEndRequested
         case .callingAction(.callEnded):
@@ -43,6 +48,12 @@ extension Reducer where State == CallingState,
             isTranscriptionActive = false
         case .callingAction(.callStartRequested):
             callStartDate = Date()
+        case .callingAction(.recordingUpdated(let status)):
+            recordingStatus = status
+        case .callingAction(.transcriptionUpdated(let status)):
+            transcriptionStatus = status
+        case .callingAction(.dismissRecordingTranscriptionBannedUpdated(let isDismissed)):
+            isRecorcingTranscriptionBannedDismissed = isDismissed
         // Exhaustive un-implemented actions
         case .audioSessionAction,
                 .callingAction(.setupCall),
@@ -80,6 +91,9 @@ extension Reducer where State == CallingState,
                             isTranscriptionActive: isTranscriptionActive,
                             callStartDate: callStartDate,
                             callEndReasonCode: callEndReasonCode,
-                            callEndReasonSubCode: callEndReasonSubCode)
+                            callEndReasonSubCode: callEndReasonSubCode,
+                            recordingStatus: recordingStatus,
+                            transcriptionStatus: transcriptionStatus,
+                            isRecorcingTranscriptionBannedDismissed: isRecorcingTranscriptionBannedDismissed)
     }
 }

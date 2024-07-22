@@ -217,11 +217,12 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_bannerViewModelUpdated() {
         let expectation = XCTestExpectation(description: "BannerViewModel is updated")
         let appState = AppState(callingState: CallingState(status: .connected))
-        let updateBannerViewModel: (CallingState) -> Void = { callingState in
+        let updateBannerViewModel: (CallingState, VisibilityState) -> Void = { callingState, _ in
             XCTAssertEqual(appState.callingState.status, callingState.status)
             expectation.fulfill()
         }
         factoryMocking.bannerViewModel = BannerViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                dispatchAction: storeFactory.store.dispatch,
                                                                 updateState: updateBannerViewModel)
         let sut = makeSUT()
         sut.receive(appState)

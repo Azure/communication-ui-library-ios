@@ -20,6 +20,10 @@ enum CallingAction: Equatable {
 
     case transcriptionStateUpdated(isTranscriptionActive: Bool)
 
+    case recordingUpdated(recordingStatus: RecordingStatus)
+    case transcriptionUpdated(transcriptionStatus: RecordingStatus)
+    case dismissRecordingTranscriptionBannedUpdated(isDismissed: Bool)
+
     case resumeRequested
     case holdRequested
     case requestFailed
