@@ -211,14 +211,13 @@ internal class CallingViewModel: ObservableObject {
         store.dispatch(action: .callingAction(.resumeRequested))
     }
 
-    private func updateCaptionsOptions() {
+    func updateCaptionsOptions() {
         if captionsOptions.captionsOn &&
             !store.state.captionsState.isStarted &&
             store.state.callingState.status == .connected &&
             !captionsStarted {
-            print("touched")
             let language = self.captionsOptions.spokenLanguage.lowercased()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.store.dispatch(action: .captionsAction(.startRequested(language: language)))
             }
             self.captionsStarted = true
@@ -306,7 +305,6 @@ internal class CallingViewModel: ObservableObject {
         }
 
         updateIsLocalCameraOn(with: state)
-        updateCaptionsOptions()
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
         callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
