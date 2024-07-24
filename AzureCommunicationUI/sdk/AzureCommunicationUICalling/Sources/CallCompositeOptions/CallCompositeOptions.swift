@@ -39,6 +39,7 @@ public struct CallCompositeOptions {
     /// - Parameter callKitOptions: CallKitOptions for specifying CallKit customization. Default value is `nil`.
     /// - Parameter displayName: Display name for the user. Default value is `nil`.
     /// - Parameter disableInternalPushForIncomingCall: Disables internal push for incoming call.
+    /// - Parameter userId: User Identifier is used for local avatar injection. Default value is `nil`
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,

@@ -38,9 +38,9 @@ public struct LocalOptions {
     ///   - cameraOn: Determines if the camera is enabled by default.
     ///   - microphoneOn: Determines if the microphone is enabled by default.
     ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
-    ///   - captionsOption: Configuration for captions
     ///   - audioVideoMode: The desired audio/video mode for the call.
-    ///   This role will determine functionality of the Setup screen. The actual role will be syncronized 
+    ///   - captionsOptions: Configuration for captions
+    ///   This role will determine functionality of the Setup screen. The actual role will be syncronized
     ///   with ACS services when a Rooms call starts.
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,

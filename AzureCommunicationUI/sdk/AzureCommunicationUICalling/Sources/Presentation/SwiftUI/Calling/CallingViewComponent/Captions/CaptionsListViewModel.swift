@@ -87,7 +87,7 @@ class CaptionsListViewModel: ObservableObject {
 
     private func toggleCaptions(newValue: Bool) {
         isToggleEnabled = newValue
-        let language = captionsOptions.spokenLanguage.lowercased()
+        let language = captionsOptions.spokenLanguage?.lowercased() ?? ""
         if isToggleEnabled {
             dispatch(.captionsAction(.startRequested(language: language)))
         } else {

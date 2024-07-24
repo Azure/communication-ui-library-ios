@@ -25,7 +25,7 @@ public struct CallCompositeErrorCode {
     /// Error when internet is unavailable and call join fails
     public static let networkConnectionNotAvailable: String = "networkConnectionNotAvailable"
 
-    /// Captions not active. To change spoken, captions language, captions must be active.
+    /// Captions not active. To change caption language, captions must be active.
     public static let captionsNotActive: String = "captionsNotActive"
 
     /// Error when captions start failed because spoken language is not supported.
