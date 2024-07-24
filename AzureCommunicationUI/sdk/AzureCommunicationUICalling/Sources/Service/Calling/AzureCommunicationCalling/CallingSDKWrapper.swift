@@ -463,6 +463,12 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             try await captions.startCaptions(options: options)
             logger.debug("Start captions successfully")
         } catch {
+            if error.localizedDescription == CallCompositeErrorCode.captionsStartFailedSpokenLanguageNotSupported {
+                throw CallCompositeInternalError.captionsStartFailedSpokenLanguageNotSupported
+            }
+            if error.localizedDescription == CallCompositeErrorCode.captionsStartFailedCallNotConnected {
+                throw CallCompositeInternalError.captionsStartFailedCallNotConnected
+            }
             logger.error("ERROR: It was not possible to start captions \(error)")
             throw error
         }
@@ -532,6 +538,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
             logger.debug("Set captions caption language successfully")
         } catch {
+            if error.localizedDescription == CallCompositeErrorCode.captionsNotActive {
+                throw CallCompositeInternalError.captionsNotActive
+            }
             logger.error("ERROR: It was not possible to set captions caption language \(error)")
             throw error
         }

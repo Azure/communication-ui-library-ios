@@ -20,6 +20,9 @@ enum CallCompositeInternalError: Error, Equatable {
     case cameraOnFailed
     case networkConnectionNotAvailable
     case micNotAvailable
+    case captionsNotActive
+    case captionsStartFailedSpokenLanguageNotSupported
+    case captionsStartFailedCallNotConnected
 
     func toCallCompositeErrorCode() -> String? {
         switch self {
@@ -41,6 +44,9 @@ enum CallCompositeInternalError: Error, Equatable {
                 .callResumeFailed,
                 .callEvicted,
                 .callDenied,
+                .captionsNotActive,
+                .captionsStartFailedCallNotConnected,
+                .captionsStartFailedSpokenLanguageNotSupported,
                 .micNotAvailable,
                 .cameraSwitchFailed:
             return nil
@@ -63,6 +69,9 @@ enum CallCompositeInternalError: Error, Equatable {
                 .cameraSwitchFailed,
                 .cameraOnFailed,
                 .micNotAvailable,
+                .captionsNotActive,
+                .captionsStartFailedCallNotConnected,
+                .captionsStartFailedSpokenLanguageNotSupported,
                 .callJoinConnectionFailed:
             return false
         }
@@ -84,7 +93,10 @@ extension CallCompositeInternalError {
             (.cameraSwitchFailed, .cameraSwitchFailed),
             (.networkConnectionNotAvailable, .networkConnectionNotAvailable),
             (.cameraOnFailed, .cameraOnFailed),
-            (.micNotAvailable, .micNotAvailable):
+            (.micNotAvailable, .micNotAvailable),
+            (.captionsNotActive, .captionsNotActive),
+            (.captionsStartFailedSpokenLanguageNotSupported, .captionsStartFailedSpokenLanguageNotSupported),
+            (.captionsStartFailedCallNotConnected, .captionsStartFailedCallNotConnected):
             return true
         default:
             return false
