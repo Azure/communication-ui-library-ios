@@ -17,9 +17,9 @@ extension Reducer where State == CaptionsState, Actions == CaptionsAction {
             newState.isStarted = false
             newState.isEnabled = false
         case .spokenLanguageChanged(let language):
-            newState.activeSpokenLanguage = formatLocaleIdentifier(language)
+            newState.spokenLanguage = formatLocaleIdentifier(language)
         case .captionLanguageChanged(let language):
-            newState.activeCaptionLanguage = formatLocaleIdentifier(language)
+            newState.captionLanguage = formatLocaleIdentifier(language)
         case .isTranslationSupportedChanged(let isSupported):
             newState.isTranslationSupported = isSupported
         case .error(let errors):

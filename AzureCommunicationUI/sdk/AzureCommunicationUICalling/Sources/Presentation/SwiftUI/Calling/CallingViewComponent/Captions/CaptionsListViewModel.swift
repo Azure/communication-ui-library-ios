@@ -56,7 +56,7 @@ class CaptionsListViewModel: ObservableObject {
 
         let spokenLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
             title: localizationProvider.getLocalizedString(.captionsSpokenLanguage),
-            subtitle: languageDisplayName(for: state.captionsState.activeSpokenLanguage ?? "en-US"),
+            subtitle: languageDisplayName(for: state.captionsState.spokenLanguage ?? "en-US"),
             accessibilityIdentifier: "",
             startIcon: .personVoice,
             endIcon: .rightChevron,
@@ -65,7 +65,7 @@ class CaptionsListViewModel: ObservableObject {
 
         let captionsLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
             title: localizationProvider.getLocalizedString(.captionsCaptionLanguage),
-            subtitle: languageDisplayName(for: state.captionsState.activeCaptionLanguage ?? "en"),
+            subtitle: languageDisplayName(for: state.captionsState.captionLanguage ?? "en"),
             accessibilityIdentifier: "",
             startIcon: .localLanguage,
             endIcon: .rightChevron,

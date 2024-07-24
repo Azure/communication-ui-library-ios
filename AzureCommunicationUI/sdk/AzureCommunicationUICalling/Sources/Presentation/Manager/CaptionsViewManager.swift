@@ -37,7 +37,7 @@ class CaptionsViewManager: ObservableObject {
     }
 
     private func receive(state: AppState) {
-        isTranslationEnabled = state.captionsState.activeCaptionLanguage?.isEmpty == false
+        isTranslationEnabled = state.captionsState.captionLanguage?.isEmpty == false
     }
 
     func handleNewData(_ newData: CallCompositeCaptionsData) {

@@ -74,8 +74,8 @@ class CaptionsLanguageListViewModel: ObservableObject {
     }
 
     private var currentSelectedIdentifier: String? {
-        isSpokenLanguage ? captionsState.activeSpokenLanguage :
-        captionsState.activeCaptionLanguage
+        isSpokenLanguage ? captionsState.spokenLanguage :
+        captionsState.captionLanguage
     }
 
     private func selectLanguage(_ languageIdentifier: String) {

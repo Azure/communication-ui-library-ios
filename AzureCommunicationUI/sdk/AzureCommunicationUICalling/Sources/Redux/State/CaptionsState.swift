@@ -8,9 +8,9 @@ struct CaptionsState: Equatable {
     var isEnabled: Bool
     var isStarted: Bool
     var supportedSpokenLanguages: [String]?
-    var activeSpokenLanguage: String?
+    var spokenLanguage: String?
     var supportedCaptionLanguages: [String]?
-    var activeCaptionLanguage: String?
+    var captionLanguage: String?
     var isTranslationSupported: Bool?
     var activeType: CallCompositeCaptionsType = .none
     var errors: CallCompositeCaptionsErrors = .none
@@ -27,9 +27,9 @@ struct CaptionsState: Equatable {
            self.isEnabled = isEnabled
            self.isStarted = isStarted
            self.supportedSpokenLanguages = supportedSpokenLanguages
-           self.activeSpokenLanguage = activeSpokenLanguage
+           self.spokenLanguage = activeSpokenLanguage
            self.supportedCaptionLanguages = supportedCaptionLanguages
-           self.activeCaptionLanguage = activeCaptionLanguage
+           self.captionLanguage = activeCaptionLanguage
            self.isTranslationSupported = isTranslationSupported
            self.activeType = activeType
            self.errors = errors
