@@ -460,15 +460,29 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         do {
             let captions = try await captionsFeature.getCaptions()
-            try await captions.startCaptions(options: options)
+                return try await withCheckedThrowingContinuation { continuation in
+                    captions.startCaptions(options: options) { error in
+                        if let error = error as NSError? {
+                            switch error.localizedDescription {
+                            case CallCompositeCaptionsErrorsDescription.captionsStartFailedCallNotConnected.rawValue:
+                                continuation.resume(throwing:
+                                                        CallCompositeInternalError.captionsStartFailedCallNotConnected)
+                            case CallCompositeCaptionsErrorsDescription
+                                    .captionsStartFailedSpokenLanguageNotSupported.rawValue:
+                                continuation.resume(throwing:
+                                                        CallCompositeInternalError
+                                    .captionsStartFailedSpokenLanguageNotSupported)
+                            default:
+                                continuation.resume(throwing:
+                                                        CallCompositeInternalError.captionsStartFailedCallNotConnected)
+                            }
+                        } else {
+                            continuation.resume()
+                        }
+                    }
+                }
             logger.debug("Start captions successfully")
         } catch {
-            if error.localizedDescription == CallCompositeErrorCode.captionsStartFailedSpokenLanguageNotSupported {
-                throw CallCompositeInternalError.captionsStartFailedSpokenLanguageNotSupported
-            }
-            if error.localizedDescription == CallCompositeErrorCode.captionsStartFailedCallNotConnected {
-                throw CallCompositeInternalError.captionsStartFailedCallNotConnected
-            }
             logger.error("ERROR: It was not possible to start captions \(error)")
             throw error
         }
@@ -533,14 +547,23 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
             let captions = try await captionsFeature.getCaptions()
             if let teamsCaptions = captions as? TeamsCaptions {
-                try await teamsCaptions.set(captionLanguage: language)
+                return try await withCheckedThrowingContinuation { continuation in
+                    teamsCaptions.set(captionLanguage: language) { error in
+                        if let error = error as NSError? {
+                           if error.localizedDescription ==
+                                CallCompositeCaptionsErrorsDescription.captionsNotActive.rawValue {
+                                continuation.resume(throwing:
+                                                        CallCompositeInternalError.captionsNotActive)
+                            }
+                        } else {
+                            continuation.resume()
+                        }
+                    }
+                }
             }
 
             logger.debug("Set captions caption language successfully")
         } catch {
-            if error.localizedDescription == CallCompositeErrorCode.captionsNotActive {
-                throw CallCompositeInternalError.captionsNotActive
-            }
             logger.error("ERROR: It was not possible to set captions caption language \(error)")
             throw error
         }

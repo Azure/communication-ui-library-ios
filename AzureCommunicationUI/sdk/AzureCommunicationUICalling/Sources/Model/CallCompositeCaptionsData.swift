@@ -24,6 +24,13 @@ enum CallCompositeCaptionsErrors: Int {
     case captionsFailedToSetCaptionLanguage
 }
 
+/// TODO need to remove when Native SDK has the new error feature
+enum CallCompositeCaptionsErrorsDescription: String {
+    case captionsStartFailedCallNotConnected = "Get captions failed, call should be connected"
+    case captionsStartFailedSpokenLanguageNotSupported = "The requested language is not supported"
+    case captionsNotActive = " Captions are not active"
+}
+
 struct CallCompositeCaptionsData: Identifiable, Equatable {
     var id: Date { timestamp }
 
