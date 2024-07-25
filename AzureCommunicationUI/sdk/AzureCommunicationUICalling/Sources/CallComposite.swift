@@ -76,6 +76,7 @@ public class CallComposite {
         userDefaults: UserDefaults.standard)
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
     private var setupScreenOptions: SetupScreenOptions?
+    private var callScreenOptions: CallScreenOptions?
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
@@ -122,6 +123,7 @@ public class CallComposite {
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
+        callScreenOptions = options?.callScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -147,6 +149,7 @@ public class CallComposite {
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
+        callScreenOptions = options?.callScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -305,6 +308,9 @@ public class CallComposite {
     private func launch(_ callConfiguration: CallConfiguration,
                         localOptions: LocalOptions?) {
         logger.debug("CallComposite launch composite experience")
+        setupScreenOptions = localOptions?.setupScreenOptions ?? setupScreenOptions
+        callScreenOptions = localOptions?.callScreenOptions ?? callScreenOptions
+
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
