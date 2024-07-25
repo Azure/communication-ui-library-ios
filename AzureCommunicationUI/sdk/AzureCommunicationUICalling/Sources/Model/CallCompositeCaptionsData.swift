@@ -24,7 +24,7 @@ enum CallCompositeCaptionsErrors: Int {
     case captionsFailedToSetCaptionLanguage
 }
 
-/// TODO need to remove when Native SDK has the new error feature
+/// Todo need to remove when Native SDK has the new error feature
 enum CallCompositeCaptionsErrorsDescription: String {
     case captionsStartFailedCallNotConnected = "Get captions failed, call should be connected"
     case captionsStartFailedSpokenLanguageNotSupported = "The requested language is not supported"
