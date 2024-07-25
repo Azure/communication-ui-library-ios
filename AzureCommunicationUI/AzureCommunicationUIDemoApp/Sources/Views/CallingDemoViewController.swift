@@ -298,8 +298,7 @@ class CallingDemoViewController: UIViewController {
         let callComposite = CallComposite(credential: credential)
 
         let customButton = CustomButtonOptions(image: UIImage(),
-                                               title: "Troubleshooting tips",
-                                               placement: ButtonPlacement.overflow) {_ in
+                                               title: "Troubleshooting tips") {_ in
             // hide call composite and display Troubleshooting tips
             callComposite.isHidden = true
             // ...
