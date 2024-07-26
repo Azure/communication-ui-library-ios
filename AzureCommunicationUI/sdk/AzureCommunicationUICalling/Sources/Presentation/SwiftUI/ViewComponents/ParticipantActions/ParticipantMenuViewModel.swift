@@ -13,7 +13,7 @@ internal class ParticipantMenuViewModel: ObservableObject {
     private var participantInfoModel: ParticipantInfoModel?
     private var canRemove: Bool
 
-    @Published var isDisplayed: Bool
+    var isDisplayed: Bool
     @Published var items: [DrawerGenericItemViewModel] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
