@@ -9,19 +9,21 @@ import Foundation
 internal class ParticipantsChangedHook: AccessibilityAnnouncementHookProtocol {
     func shouldAnnounce(oldState: AppState, newState: AppState) -> Bool {
         let callingState = newState.callingState
-        if !(callingState.status == .connected
-            || callingState.status == .remoteHold
-             || (callingState.callType == .oneToNOutgoing
-                 && ( callingState.status == .connecting || callingState.status == .ringing))) {
-            return false
-        }
-
+        let isConnecting = callingState.status == .connecting
+        let isRinging = callingState.status == .ringing
+        let isConnected = callingState.status == .connected
+        let isRemoteHold = callingState.status == .remoteHold
+        let isOneToNOutgoing = callingState.callType == .oneToNOutgoing
+        let isConnectingOrRinging = isRinging || isConnecting
         let oldParticipants = oldState.remoteParticipantsState.participantInfoList
         let newParticipants = newState.remoteParticipantsState.participantInfoList
         let oldParticipantIDs = Set(oldParticipants.map { $0.userIdentifier })
         let newParticipantIDs = Set(newParticipants.map { $0.userIdentifier })
 
-        return oldParticipantIDs != newParticipantIDs
+        return (isConnected ||
+           isRemoteHold ||
+           (isOneToNOutgoing && isConnectingOrRinging))
+        && oldParticipantIDs != newParticipantIDs
     }
 
     func announcement(oldState: AppState,
@@ -41,6 +43,7 @@ internal class ParticipantsChangedHook: AccessibilityAnnouncementHookProtocol {
 
         var announcements = [String]()
 
+        // 4 Branches. Add/Remove x Single/Multiple
         if !removedParticipants.isEmpty {
             if removedParticipants.count == 1 {
                 let removedParticipant = removedParticipants.first!
