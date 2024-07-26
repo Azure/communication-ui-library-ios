@@ -303,8 +303,18 @@ class CallingDemoViewController: UIViewController {
             callComposite.isHidden = true
             // ...
         }
-        let callScreenControlBarOptions = CallScreenControlBarOptions(cameraButton: ButtonOptions(enabled: false),
-                                                                      customButtons: [customButton])
+
+        let cameraButton = ButtonOptions(onClick: { _ in
+                                                // default camera button clicked
+                                            }
+                                         )
+        let micButton = ButtonOptions(enabled: false)
+
+        let callScreenControlBarOptions = CallScreenControlBarOptions(
+            cameraButton: cameraButton,
+            microphoneButton: micButton,
+            customButtons: [customButton]
+        )
 
         let callScreenOptions = CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
         let localOptions = LocalOptions(callScreenOptions: callScreenOptions)

@@ -14,7 +14,6 @@ public struct CustomButtonOptions {
 
     public init(image: UIImage,
                 title: String,
-                visible: Bool = true,
                 enabled: Bool = true,
                 onClick: @escaping (CustomButtonOptions) -> Void) {
         self.image = image
