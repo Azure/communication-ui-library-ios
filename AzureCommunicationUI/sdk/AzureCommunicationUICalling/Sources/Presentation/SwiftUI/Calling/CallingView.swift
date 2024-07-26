@@ -101,12 +101,6 @@ struct CallingView: View {
                     ParticipantsListView(viewModel: viewModel.participantListViewModel,
                                          avatarManager: avatarManager)
                 }
-
-                BottomDrawer(isPresented: viewModel.participantActionViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
-                                        avatarManager: avatarManager)
-                }
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
         }
