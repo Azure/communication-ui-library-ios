@@ -96,16 +96,16 @@ struct CallingView: View {
                     avatarManager: avatarManager)
                 }
 
-                BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
+                BottomDrawer(isPresented: viewModel.participantActionViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    ParticipantsListView(viewModel: viewModel.participantListViewModel,
-                                         avatarManager: avatarManager)
+                    ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
+                                        avatarManager: avatarManager)
                 }
 
                 BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
-                    ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
-                                        avatarManager: avatarManager)
+                    ParticipantsListView(viewModel: viewModel.participantListViewModel,
+                                         avatarManager: avatarManager)
                 }
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
