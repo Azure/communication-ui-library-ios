@@ -14,7 +14,6 @@ class CaptionsListViewModel: ObservableObject {
 
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    private var state: AppState
     private let showCaptionsLanguage: () -> Void
     private let showSpokenLanguage: () -> Void
     private let dispatch: ActionDispatch
@@ -32,7 +31,6 @@ class CaptionsListViewModel: ObservableObject {
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
-        self.state = state
         self.dispatch = dispatchAction
         self.showSpokenLanguage = showSpokenLanguage
         self.showCaptionsLanguage = showCaptionsLanguage
@@ -40,10 +38,10 @@ class CaptionsListViewModel: ObservableObject {
         self.isToggleEnabled = state.captionsState.isStarted
         self.captionsOptions = captionsOptions
 
-        setupItems()
+        setupItems(state: state)
     }
 
-    private func setupItems() {
+    private func setupItems(state: AppState) {
         items.removeAll()
 
         let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
@@ -79,21 +77,19 @@ class CaptionsListViewModel: ObservableObject {
 
     }
     func update(state: AppState) {
-        self.state = state
         isDisplayed = state.navigationState.captionsViewVisible
         isToggleEnabled = state.captionsState.isStarted
-        setupItems()
+        setupItems(state: state)
     }
 
     private func toggleCaptions(newValue: Bool) {
         isToggleEnabled = newValue
         let language = captionsOptions.spokenLanguage?.lowercased() ?? ""
         if isToggleEnabled {
-            dispatch(.captionsAction(.startRequested(language: language)))
+            dispatch(.captionsAction(.turnOnCaptions(language: language)))
         } else {
-            dispatch(.captionsAction(.stopRequested))
+            dispatch(.captionsAction(.turnOffCaptions))
         }
-        setupItems()
     }
 
     private func languageDisplayName(for code: String) -> String {

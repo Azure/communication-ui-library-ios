@@ -6,9 +6,9 @@
 import Foundation
 
 enum CaptionsAction: Equatable {
-    case startRequested(language: String)
+    case turnOnCaptions(language: String)
     case started
-    case stopRequested
+    case turnOffCaptions
     case stopped
     case setSpokenLanguageRequested(language: String)
     case spokenLanguageChanged(language: String)

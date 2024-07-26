@@ -218,7 +218,7 @@ internal class CallingViewModel: ObservableObject {
             !captionsStarted {
             let language = self.captionsOptions.spokenLanguage?.lowercased() ?? ""
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.store.dispatch(action: .captionsAction(.startRequested(language: language)))
+                self.store.dispatch(action: .captionsAction(.turnOnCaptions(language: language)))
             }
             self.captionsStarted = true
         }

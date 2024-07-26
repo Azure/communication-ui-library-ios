@@ -499,6 +499,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.captionsAction(.started))
             } catch {
                 dispatch(.captionsAction(.error(errors: .captionsFailedToStart)))
+                dispatch(.captionsAction(.stopped))
             }
         }
     }

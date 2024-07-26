@@ -5,7 +5,7 @@
 import Foundation
 
 struct CaptionsState: Equatable {
-    var isEnabled: Bool
+    var isCaptionsOn: Bool
     var isStarted: Bool
     var supportedSpokenLanguages: [String]?
     var spokenLanguage: String?
@@ -24,7 +24,7 @@ struct CaptionsState: Equatable {
          isTranslationSupported: Bool = false,
          activeType: CallCompositeCaptionsType = .none,
          errors: CallCompositeCaptionsErrors = .none) {
-           self.isEnabled = isEnabled
+           self.isCaptionsOn = isEnabled
            self.isStarted = isStarted
            self.supportedSpokenLanguages = supportedSpokenLanguages
            self.spokenLanguage = activeSpokenLanguage

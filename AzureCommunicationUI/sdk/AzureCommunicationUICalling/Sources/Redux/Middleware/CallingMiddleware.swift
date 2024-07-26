@@ -223,9 +223,9 @@ private func handleCaptionsAction(_ action: CaptionsAction,
                                   _ getState: () -> AppState,
                                   _ dispatch: @escaping ActionDispatch) {
     switch action {
-    case .startRequested(language: let language):
+    case .turnOnCaptions(language: let language):
         actionHandler.startCaptions(state: getState(), dispatch: dispatch, language: language)
-    case .stopRequested:
+    case .turnOffCaptions:
         actionHandler.stopCaptions(state: getState(), dispatch: dispatch)
     case .setSpokenLanguageRequested(language: let language):
         actionHandler.setCaptionsSpokenLanguage(state: getState(), dispatch: dispatch, language: language)

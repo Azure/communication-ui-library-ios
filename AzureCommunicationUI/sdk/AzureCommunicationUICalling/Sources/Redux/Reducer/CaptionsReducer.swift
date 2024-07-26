@@ -9,13 +9,14 @@ extension Reducer where State == CaptionsState, Actions == CaptionsAction {
     static var captionsReducer: Self = Reducer { currentState, action in
         var newState = currentState
         switch action {
-        case .startRequested(let language):
-            newState.isEnabled = true
+        case .turnOnCaptions(let language):
+            newState.isCaptionsOn = true
         case .started:
             newState.isStarted = true
+        case .turnOffCaptions:
+            newState.isCaptionsOn = false
         case .stopped:
             newState.isStarted = false
-            newState.isEnabled = false
         case .spokenLanguageChanged(let language):
             newState.spokenLanguage = formatLocaleIdentifier(language)
         case .captionLanguageChanged(let language):
@@ -24,9 +25,6 @@ extension Reducer where State == CaptionsState, Actions == CaptionsAction {
             newState.isTranslationSupported = isSupported
         case .error(let errors):
             newState.errors = errors
-            if newState.errors == .captionsFailedToStart {
-                newState.isEnabled = false
-            }
         case .supportedSpokenLanguagesChanged(let languages):
             newState.supportedSpokenLanguages = languages.map(formatLocaleIdentifier)
         case .supportedCaptionLanguagesChanged(let languages):
