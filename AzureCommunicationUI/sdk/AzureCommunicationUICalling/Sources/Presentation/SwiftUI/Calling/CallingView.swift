@@ -76,32 +76,27 @@ struct CallingView: View {
                     CaptionsListView(viewModel: viewModel.captionsListViewModel,
                                      avatarManager: avatarManager)
                 }
-
                 BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
                     LeaveCallConfirmationView(
                         viewModel: viewModel.leaveCallConfirmationViewModel,
                         avatarManager: avatarManager)
                 }
-
                 BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
                     MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel,
                     avatarManager: avatarManager)
                 }
-
                 BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
                     AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel,
                     avatarManager: avatarManager)
                 }
-
                 BottomDrawer(isPresented: viewModel.participantActionViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
                     ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
                                         avatarManager: avatarManager)
                 }
-
                 BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
                              hideDrawer: viewModel.dismissDrawer) {
                     ParticipantsListView(viewModel: viewModel.participantListViewModel,
