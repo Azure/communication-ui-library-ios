@@ -31,7 +31,9 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         let localUserState = LocalUserState(displayName: displayName)
 
         let callingState = skipSetupScreen ?? false ?
-                CallingState(operationStatus: .skipSetupRequested) : CallingState()
+                CallingState(
+                    callType: callType,
+                    operationStatus: .skipSetupRequested) : CallingState(callType: callType)
         let navigationStatus: NavigationStatus = skipSetupScreen ?? false ? .inCall : .setup
         let navigationState = NavigationState(status: navigationStatus)
         return .init(

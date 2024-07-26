@@ -32,6 +32,7 @@ enum RecordingStatus: Equatable {
 }
 
 struct CallingState: Equatable {
+    let callType: CompositeCallType
     let status: CallingStatus
     let operationStatus: OperationStatus
     let callId: String?
@@ -44,7 +45,8 @@ struct CallingState: Equatable {
     let callEndReasonCode: Int?
     let callEndReasonSubCode: Int?
 
-    init(status: CallingStatus = .none,
+    init(callType: CompositeCallType = .groupCall,
+         status: CallingStatus = .none,
          operationStatus: OperationStatus = .none,
          callId: String? = nil,
          isRecordingActive: Bool = false,
@@ -55,6 +57,7 @@ struct CallingState: Equatable {
          recordingStatus: RecordingStatus = RecordingStatus.off,
          transcriptionStatus: RecordingStatus = RecordingStatus.off,
          isRecorcingTranscriptionBannedDismissed: Bool = false) {
+        self.callType = callType
         self.status = status
         self.operationStatus = operationStatus
         self.callId = callId

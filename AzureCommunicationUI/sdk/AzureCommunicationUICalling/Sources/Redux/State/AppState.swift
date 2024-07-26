@@ -6,6 +6,7 @@
 import Foundation
 
 struct AppState {
+
     let callingState: CallingState
     let permissionState: PermissionState
     let localUserState: LocalUserState
