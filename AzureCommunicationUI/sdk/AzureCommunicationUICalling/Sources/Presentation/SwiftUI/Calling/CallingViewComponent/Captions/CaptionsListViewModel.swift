@@ -39,6 +39,18 @@ class CaptionsListViewModel: ObservableObject {
         self.captionsOptions = captionsOptions
 
         setupItems(state: state)
+        updateCaptionsOptions(state: state)
+    }
+
+    private func updateCaptionsOptions(state: AppState) {
+        if captionsOptions.captionsOn &&
+            !state.captionsState.isStarted &&
+            state.callingState.status == .connected &&
+            !isToggleEnabled {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.toggleCaptions(newValue: true)
+            }
+        }
     }
 
     private func setupItems(state: AppState) {

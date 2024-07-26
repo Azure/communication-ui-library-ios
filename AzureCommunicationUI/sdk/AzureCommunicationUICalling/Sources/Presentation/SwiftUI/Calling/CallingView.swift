@@ -117,7 +117,6 @@ struct CallingView: View {
             updateChildViewIfNeededWith(newOrientation: newOrientation)
         }.onAppear {
             resetOrientation()
-            viewModel.updateCaptionsOptions()
         }
     }
 

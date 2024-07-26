@@ -211,18 +211,6 @@ internal class CallingViewModel: ObservableObject {
         store.dispatch(action: .callingAction(.resumeRequested))
     }
 
-    func updateCaptionsOptions() {
-        if captionsOptions.captionsOn &&
-            !store.state.captionsState.isStarted &&
-            store.state.callingState.status == .connected &&
-            !captionsStarted {
-            let language = self.captionsOptions.spokenLanguage?.lowercased() ?? ""
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.store.dispatch(action: .captionsAction(.turnOnCaptions(language: language)))
-            }
-            self.captionsStarted = true
-        }
-    }
     func dismissDrawer() {
         store.dispatch(action: .hideDrawer)
     }
