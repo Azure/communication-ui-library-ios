@@ -68,6 +68,7 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var accessibilityAnnouncementManager: AccessibilityAnnouncementManager?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var pipManager: PipManagerProtocol?
@@ -548,6 +549,12 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             localParticipantViewData: localOptions?.participantViewData
         )
         self.avatarViewManager = avatarViewManager
+
+        self.accessibilityAnnouncementManager = AccessibilityAnnouncementManager(
+            store: store,
+            accessibilityProvider: accessibilityProvider,
+            localizationProvider: localizationProvider)
+
         let audioSessionManager = AudioSessionManager(store: store,
                                                       logger: logger,
                                                       isCallKitEnabled: callKitOptions != nil)
@@ -622,6 +629,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
+        self.accessibilityAnnouncementManager = nil
     }
 
     private func disposeSDKWrappers() {

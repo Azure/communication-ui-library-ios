@@ -75,14 +75,6 @@ class ParticipantGridViewModel: ObservableObject {
         updateCellViewModel(for: orderedInfoModelArr, lifeCycleState: lifeCycleState)
 
         displayedParticipantInfoModelArr = orderedInfoModelArr
-        if callingState.status == .connected
-            || callingState.status == .remoteHold
-            || (callType == .oneToNOutgoing
-        && ( callingState.status == .connecting || callingState.status == .ringing)) {
-            // announce participants list changes only if the user is already connected to the call
-            postParticipantsListUpdateAccessibilityAnnouncements(removedModels: removedModels,
-                                                                 addedModels: addedModels)
-        }
         if gridsCount != displayedParticipantInfoModelArr.count {
             gridsCount = displayedParticipantInfoModelArr.count
         }
@@ -213,27 +205,5 @@ class ParticipantGridViewModel: ObservableObject {
         }
 
         participantsCellViewModelArr = newCellViewModelArr
-    }
-
-    private func postParticipantsListUpdateAccessibilityAnnouncements(removedModels: [ParticipantInfoModel],
-                                                                      addedModels: [ParticipantInfoModel]) {
-        if !removedModels.isEmpty {
-            if removedModels.count == 1 {
-                accessibilityProvider.postQueuedAnnouncement(
-                    localizationProvider.getLocalizedString(.onePersonLeft, removedModels.first!.displayName))
-            } else {
-                accessibilityProvider.postQueuedAnnouncement(
-                    localizationProvider.getLocalizedString(.multiplePeopleLeft, removedModels.count))
-            }
-        }
-        if !addedModels.isEmpty {
-            if addedModels.count == 1 {
-                accessibilityProvider.postQueuedAnnouncement(
-                    localizationProvider.getLocalizedString(.onePersonJoined, addedModels.first!.displayName))
-            } else {
-                accessibilityProvider.postQueuedAnnouncement(
-                    localizationProvider.getLocalizedString(.multiplePeopleJoined, addedModels.count))
-            }
-        }
     }
 }
