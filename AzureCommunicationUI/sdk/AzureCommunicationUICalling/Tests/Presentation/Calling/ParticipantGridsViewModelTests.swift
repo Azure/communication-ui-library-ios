@@ -362,7 +362,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
     }
-	
+
     // MARK: GridsViewType
     func test_participantGridsViewModel_init_then_gridsCountZero() {
         let expectation = XCTestExpectation(description: "subscription expection")
