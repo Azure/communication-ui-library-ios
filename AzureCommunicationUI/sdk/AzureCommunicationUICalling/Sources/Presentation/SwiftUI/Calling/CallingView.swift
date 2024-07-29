@@ -54,54 +54,7 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-
-                BottomDrawer(isPresented: viewModel.supportFormViewModel.isDisplayed,
-                             hideDrawer: viewModel.supportFormViewModel.hideForm) {
-                    reportErrorView
-                        .accessibilityElement(children: .contain)
-                        .accessibilityAddTraits(.isModal)
-                }
-                BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel,
-                    avatarManager: avatarManager)
-                }
-                BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel,
-                    avatarManager: avatarManager)
-                }
-                BottomDrawer(isPresented: viewModel.participantActionViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
-                                        avatarManager: avatarManager)
-                }
-                BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    ParticipantsListView(viewModel: viewModel.participantListViewModel,
-                                         avatarManager: avatarManager)
-                }
-                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
-                                             avatarManager: avatarManager)
-                }
-                BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
-                                             avatarManager: avatarManager)
-                }
-                BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    CaptionsListView(viewModel: viewModel.captionsListViewModel,
-                                     avatarManager: avatarManager)
-                }
-                BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
-                             hideDrawer: viewModel.dismissDrawer) {
-                    LeaveCallConfirmationView(
-                        viewModel: viewModel.leaveCallConfirmationViewModel,
-                        avatarManager: avatarManager)
-                }
+                bottomDrawer
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
         }
@@ -112,6 +65,58 @@ struct CallingView: View {
             updateChildViewIfNeededWith(newOrientation: newOrientation)
         }.onAppear {
             resetOrientation()
+        }
+    }
+
+    var bottomDrawer: some View {
+        ZStack {
+            BottomDrawer(isPresented: viewModel.supportFormViewModel.isDisplayed,
+                         hideDrawer: viewModel.supportFormViewModel.hideForm) {
+                reportErrorView
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
+            }
+            BottomDrawer(isPresented: viewModel.moreCallOptionsListViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                MoreCallOptionsListView(viewModel: viewModel.moreCallOptionsListViewModel,
+                avatarManager: avatarManager)
+            }
+            BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                AudioDevicesListView(viewModel: viewModel.audioDeviceListViewModel,
+                avatarManager: avatarManager)
+            }
+            BottomDrawer(isPresented: viewModel.participantActionViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                ParticipantMenuView(viewModel: viewModel.participantActionViewModel,
+                                    avatarManager: avatarManager)
+            }
+            BottomDrawer(isPresented: viewModel.participantListViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                ParticipantsListView(viewModel: viewModel.participantListViewModel,
+                                     avatarManager: avatarManager)
+            }
+            BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
+                                         avatarManager: avatarManager)
+            }
+            BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
+                                         avatarManager: avatarManager)
+            }
+            BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                CaptionsListView(viewModel: viewModel.captionsListViewModel,
+                                 avatarManager: avatarManager)
+            }
+            BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,
+                         hideDrawer: viewModel.dismissDrawer) {
+                LeaveCallConfirmationView(
+                    viewModel: viewModel.leaveCallConfirmationViewModel,
+                    avatarManager: avatarManager)
+            }
         }
     }
 
