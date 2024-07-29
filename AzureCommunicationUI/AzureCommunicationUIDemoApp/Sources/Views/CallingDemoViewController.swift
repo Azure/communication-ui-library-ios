@@ -410,12 +410,30 @@ class CallingDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
+
+        let cameraButton = ButtonOptions(onClick: { _ in
+
+        })
+
+        let micButton = ButtonOptions(onClick: { _ in
+
+        })
+
+        let audioDeviceButton = ButtonOptions(onClick: { _ in
+
+        })
+
+        let setupScreenOptions = SetupScreenOptions(cameraButton: cameraButton,
+                                                    microphoneButton: micButton,
+                                                    audioDeviceButton: audioDeviceButton)
+
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                            setupScreenOptions: setupScreenOptions
         )
     }
 

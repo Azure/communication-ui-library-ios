@@ -696,7 +696,8 @@ extension ControlBarViewModelTests {
                                    localUserState: localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysEnabled,
-                                   capabilitiesManager: capabilitiesManager)
+                                   capabilitiesManager: capabilitiesManager,
+                                   customButtons: [])
     }
     func makeSUTWhenDisplayLeaveDiabled(localizationProvider: LocalizationProviderMocking? = nil, audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
@@ -707,7 +708,8 @@ extension ControlBarViewModelTests {
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
                                    leaveCallConfirmationMode: .alwaysDisabled,
-                                   capabilitiesManager: capabilitiesManager)
+                                   capabilitiesManager: capabilitiesManager,
+                                   customButtons: [])
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {

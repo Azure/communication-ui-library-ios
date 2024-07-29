@@ -209,7 +209,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           localUserState: localUserState,
                                                           audioVideoMode: .audioAndVideo,
                                                           leaveCallConfirmationMode: leaveCallConfirmationMode,
-                                                          capabilitiesManager: capabilitiesManager)
+                                                          capabilitiesManager: capabilitiesManager,
+                                                          customButtons: [])
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,

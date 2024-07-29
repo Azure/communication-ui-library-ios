@@ -12,6 +12,7 @@ public struct SetupScreenOptions {
 
     private(set) var cameraButton: ButtonOptions?
     private(set) var microphoneButton: ButtonOptions?
+    private(set) var audioDeviceButton: ButtonOptions?
 
     /// Creates an instance of SetupScreenOptions with related options.
     /// - Parameter cameraButtonEnabled: enables camera button on the setup screen.
@@ -22,15 +23,20 @@ public struct SetupScreenOptions {
         self.microphoneButtonEnabled = microphoneButtonEnabled
         self.cameraButton = nil
         self.microphoneButton = nil
+        self.audioDeviceButton = nil
     }
 
     /// Creates an instance of SetupScreenOptions with related options.
     /// - Parameter cameraButton: camera button options.
     /// - Parameter microphoneButton: microphone button options.
-    public init(cameraButton: ButtonOptions? = nil, microphoneButton: ButtonOptions? = nil) {
+    /// - Parameter audioDeviceButton: audio device button options.
+    public init(cameraButton: ButtonOptions? = nil,
+                microphoneButton: ButtonOptions? = nil,
+                audioDeviceButton: ButtonOptions? = nil) {
         self.cameraButtonEnabled = true
         self.microphoneButtonEnabled = true
         self.cameraButton = cameraButton
         self.microphoneButton = microphoneButton
+        self.audioDeviceButton = audioDeviceButton
     }
 }

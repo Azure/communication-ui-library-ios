@@ -20,7 +20,7 @@ struct SetupControlBarView: View {
             VStack(alignment: .center) {
                 Spacer()
                 HStack(alignment: .center, spacing: layoutSpacing) {
-                    if viewModel.isCameraDisplayed {
+                    if viewModel.isCameraButtonVisible {
                         Spacer()
                         cameraButton
                     }
@@ -44,12 +44,13 @@ struct SetupControlBarView: View {
     var cameraButton: some View {
         IconWithLabelButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
-            .hidden(!viewModel.isCameraDisplayed)
+            .hidden(!viewModel.isCameraButtonVisible)
     }
 
     var micButton: some View {
         IconWithLabelButton(viewModel: viewModel.micButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.toggleMicAccessibilityID.rawValue)
+            .hidden(!viewModel.isMicButtonVisible)
     }
 
     var audioDeviceButton: some View {
@@ -57,6 +58,7 @@ struct SetupControlBarView: View {
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
             .accessibility(identifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue)
             .accessibilityFocused($focusedOnAudioButton, equals: true)
+            .hidden(!viewModel.isAudioDeviceButtonVisible)
     }
 
     var audioDeviceSelectionListView: some View {
