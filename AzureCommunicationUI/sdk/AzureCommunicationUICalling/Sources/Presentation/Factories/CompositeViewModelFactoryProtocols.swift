@@ -116,7 +116,7 @@ protocol CompositeViewModelFactoryProtocol {
 extension CompositeViewModelFactoryProtocol {
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
-                                    iconName: CompositeIcon? = CompositeIcon.none,
+                                    iconName: CompositeIcon? = .none,
                                     isDisabled: Bool = false,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         return makePrimaryButtonViewModel(buttonStyle: buttonStyle,
