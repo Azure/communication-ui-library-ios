@@ -182,6 +182,7 @@
 		53C1B7F72C2F88CA00E6DB4C /* ParticipantListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C1B7F62C2F88CA00E6DB4C /* ParticipantListVIew.swift */; };
 		53D734D62C0AAD4700017EFB /* LeaveCallConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D734D52C0AAD4700017EFB /* LeaveCallConfirmationView.swift */; };
 		53D734D82C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D734D72C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift */; };
+		53F961562C583E5400D13050 /* AccessibilityAnnouncementManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F961552C583E5400D13050 /* AccessibilityAnnouncementManagerTests.swift */; };
 		53F9FB872C387F8E009941FA /* ParticipantMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F9FB862C387F8E009941FA /* ParticipantMenuView.swift */; };
 		5A1F4BCD2BD9756D00EA7B2D /* LeaveCallConfirmationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1F4BCA2BD9756C00EA7B2D /* LeaveCallConfirmationMode.swift */; };
 		5A1F4BCE2BD9756D00EA7B2D /* CallScreenOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1F4BCB2BD9756C00EA7B2D /* CallScreenOptions.swift */; };
@@ -579,6 +580,7 @@
 		53C1B7F62C2F88CA00E6DB4C /* ParticipantListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantListVIew.swift; sourceTree = "<group>"; };
 		53D734D52C0AAD4700017EFB /* LeaveCallConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationView.swift; sourceTree = "<group>"; };
 		53D734D72C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationViewModel.swift; sourceTree = "<group>"; };
+		53F961552C583E5400D13050 /* AccessibilityAnnouncementManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityAnnouncementManagerTests.swift; sourceTree = "<group>"; };
 		53F9FB862C387F8E009941FA /* ParticipantMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantMenuView.swift; sourceTree = "<group>"; };
 		5A1F4BCA2BD9756C00EA7B2D /* LeaveCallConfirmationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationMode.swift; sourceTree = "<group>"; };
 		5A1F4BCB2BD9756C00EA7B2D /* CallScreenOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallScreenOptions.swift; sourceTree = "<group>"; };
@@ -1297,6 +1299,14 @@
 			path = MoreCallOptions;
 			sourceTree = "<group>";
 		};
+		53797AEB2C583B1200EE12DF /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				53F961552C583E5400D13050 /* AccessibilityAnnouncementManagerTests.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		53C1B7F42C2F882F00E6DB4C /* ParticipantsList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1478,6 +1488,7 @@
 		A830C310264D815E00766E3D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				53797AEB2C583B1200EE12DF /* Manager */,
 				50B390D427D915AB0010A2ED /* Provider */,
 				503E361A26CC2CFE00158CB4 /* Factories */,
 				1F09A10B26BA484000BACED7 /* Calling */,
@@ -1989,6 +2000,7 @@
 				A48BE79129FB424F009B2A46 /* CallStateManagerTests.swift in Sources */,
 				FAD845422819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift in Sources */,
 				A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */,
+				53F961562C583E5400D13050 /* AccessibilityAnnouncementManagerTests.swift in Sources */,
 				88BC24C12832D29D00818446 /* AvatarManagerTests.swift in Sources */,
 				B26F4B092ABA2F6B00753B6C /* BottomToastViewModelTests.swift in Sources */,
 				05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */,
