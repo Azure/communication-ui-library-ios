@@ -594,10 +594,10 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
-                leaveCallConfirmationMode: leaveCallConfirmationMode,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
                 callType: callConfiguration.compositeCallType,
                 setupScreenOptions: setupScreenOptions,
+                callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType)
             )
         )

@@ -23,8 +23,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
-    private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
     private let setupScreenOptions: SetupScreenOptions?
+    private let callScreenOptions: CallScreenOptions?
     private let callType: CompositeCallType
 
     init(logger: Logger,
@@ -38,10 +38,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode,
          retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType,
          setupScreenOptions: SetupScreenOptions?,
+         callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager
     ) {
 
@@ -57,8 +57,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.retrieveLogFiles = retrieveLogFiles
-        self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.setupScreenOptions = setupScreenOptions
+        self.callScreenOptions = callScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
     }
@@ -100,10 +100,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              accessibilityProvider: accessibilityProvider,
                                              isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
-                                            != CallCompositeAudioVideoMode.audioOnly,
-                                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
-                                            callType: callType,
-                                            capabilitiesManager: self.capabilitiesManager)
+                                                                        != CallCompositeAudioVideoMode.audioOnly,
+                                             callType: callType,
+                                             callScreenOptions: callScreenOptions,
+                                             capabilitiesManager: self.capabilitiesManager)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -119,6 +119,18 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         IconButtonViewModel(iconName: iconName,
                             buttonType: buttonType,
                             isDisabled: isDisabled,
+                            action: action)
+    }
+
+    func makeIconButtonViewModel(iconName: CompositeIcon,
+                                 buttonType: IconButtonViewModel.ButtonType = .controlButton,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel {
+        IconButtonViewModel(iconName: iconName,
+                            buttonType: buttonType,
+                            isDisabled: isDisabled,
+                            isVisible: isVisible,
                             action: action)
     }
 
@@ -216,8 +228,8 @@ extension CompositeViewModelFactory {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
-                                 capabilitiesManager: CapabilitiesManager)
+                                 capabilitiesManager: CapabilitiesManager,
+                                 controlBarOptions: CallScreenControlBarOptions?)
     -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -226,9 +238,8 @@ extension CompositeViewModelFactory {
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
-                            leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
                             capabilitiesManager: capabilitiesManager,
-        customButtons: [])
+                            controlBarOptions: controlBarOptions)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,

@@ -180,7 +180,6 @@
 		5A1F4BCD2BD9756D00EA7B2D /* LeaveCallConfirmationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1F4BCA2BD9756C00EA7B2D /* LeaveCallConfirmationMode.swift */; };
 		5A1F4BCE2BD9756D00EA7B2D /* CallScreenOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1F4BCB2BD9756C00EA7B2D /* CallScreenOptions.swift */; };
 		5A1F4BCF2BD9756D00EA7B2D /* CallScreenControlBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1F4BCC2BD9756C00EA7B2D /* CallScreenControlBarOptions.swift */; };
-		5A1F4BD12BDA08D200EA7B2D /* ControlBarViewModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1F4BD02BDA08D200EA7B2D /* ControlBarViewModelExtension.swift */; };
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
 		5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */; };
@@ -578,7 +577,6 @@
 		5A1F4BCA2BD9756C00EA7B2D /* LeaveCallConfirmationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationMode.swift; sourceTree = "<group>"; };
 		5A1F4BCB2BD9756C00EA7B2D /* CallScreenOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallScreenOptions.swift; sourceTree = "<group>"; };
 		5A1F4BCC2BD9756C00EA7B2D /* CallScreenControlBarOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallScreenControlBarOptions.swift; sourceTree = "<group>"; };
-		5A1F4BD02BDA08D200EA7B2D /* ControlBarViewModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarViewModelExtension.swift; sourceTree = "<group>"; };
 		5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelTests.swift; sourceTree = "<group>"; };
 		5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModel.swift; sourceTree = "<group>"; };
 		5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACSCameraFacingExtension.swift; sourceTree = "<group>"; };
@@ -1210,7 +1208,6 @@
 				50FA460D26829345001844AC /* InfoHeaderViewModel.swift */,
 				50FA45F4267D3BD3001844AC /* ControlBarView.swift */,
 				50FA460F26829B7A001844AC /* ControlBarViewModel.swift */,
-				5A1F4BD02BDA08D200EA7B2D /* ControlBarViewModelExtension.swift */,
 				50E2D69426EACB74006B0EF4 /* ParticipantsListViewModel.swift */,
 				50E2D69826F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift */,
 				051F73C82C175A9E006E097F /* ParticipantMenuViewModel.swift */,
@@ -2169,7 +2166,6 @@
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,
 				051F73942C0E10BB006E097F /* ToastNotificationAction.swift in Sources */,
 				05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */,
-				5A1F4BD12BDA08D200EA7B2D /* ControlBarViewModelExtension.swift in Sources */,
 				9823AB4926A13F220006266D /* PreviewAreaView.swift in Sources */,
 				50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */,
 				11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */,
