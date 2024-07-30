@@ -51,7 +51,7 @@ class ControlBarViewModel: ObservableObject {
          audioVideoMode: CallCompositeAudioVideoMode,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          capabilitiesManager: CapabilitiesManager,
-         chatButtonClick:(() -> Void)? = nil,
+         eventButtonClick:((_ event:String) -> Void)? = nil,
          listButtonClick:(() -> Void)? = nil) {
         self.logger = logger
         self.localizationProvider = localizationProvider
@@ -145,7 +145,7 @@ class ControlBarViewModel: ObservableObject {
                     return
                 }
                 self.dispatch(.showSupportForm)
-            },chatButtonClick: chatButtonClick,
+            },eventButtonClick: eventButtonClick,
             listButtonClick: listButtonClick
         )
 

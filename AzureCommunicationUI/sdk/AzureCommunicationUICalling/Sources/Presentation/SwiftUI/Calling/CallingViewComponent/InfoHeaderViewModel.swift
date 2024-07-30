@@ -9,6 +9,7 @@ import Foundation
 class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
+    @Published var isRecording: Bool=false
     @Published var isInfoHeaderDisplayed = true
     @Published var isParticipantsListDisplayed = false
     @Published var isParticipantMenuDisplayed = false
@@ -60,6 +61,9 @@ class InfoHeaderViewModel: ObservableObject {
                     return
                 }
                 self.showParticipantListButtonTapped()
+                
+                
+              
         }
         self.participantsListViewModel.displayParticipantMenu = self.displayParticipantMenu
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
@@ -80,8 +84,18 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRecording(_: )), name: NSNotification.Name(rawValue: "updateRecording"), object: nil)
     }
 
+    
+    @objc private func updateRecording(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let value = userInfo["value"] as? Bool {
+           
+            self.isRecording = value
+         
+        }
+    }
     func showParticipantListButtonTapped() {
         logger.debug("Show participant list button tapped")
         if isPad {
@@ -221,6 +235,10 @@ class InfoHeaderViewModel: ObservableObject {
             dispatch(.visibilityAction(.hideRequested))
         }
     }
+    deinit {
+           // Remove observer when ViewModel is deallocated
+           NotificationCenter.default.removeObserver(self)
+       }
 }
 
 extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {

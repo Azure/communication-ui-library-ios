@@ -10,37 +10,68 @@ import Combine
 class MoreCallOptionsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    let items: [DrawerListItemViewModel]
+    var items: [DrawerListItemViewModel]
 
+var eventButtonClick:((_ event:String) -> Void)? = nil
+    @Published var recordingTitle: String="Start Recording"
+  
+
+    @objc private func updateRecording(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let value = userInfo["value"] as? Bool {
+           
+           
+            self.recordingTitle=value ? "Stop Recording" : "Start Recording"
+            if let index = items.firstIndex(where: { $0.accessibilityIdentifier == AccessibilityIdentifier.callingViewRecordID.rawValue }) {
+                items.remove(at: index)
+                let record=compositeViewModelFactory.makeDrawerListItemViewModel(
+                    icon: .personFeedback,
+                    title: self.recordingTitle ,
+                    accessibilityIdentifier: AccessibilityIdentifier.callingViewRecordID.rawValue,
+                    action: recordButtonClickLocal)
+                items.insert(record, at: index)
+                }
+            
+         
+        }
+    }
+    func recordButtonClickLocal(){
+        eventButtonClick?("recordButtonClick")
+    }
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          showSharingViewAction: @escaping () -> Void,
          showSupportFormAction: @escaping () -> Void,
          isSupportFormAvailable: Bool,
-         chatButtonClick:( () -> Void)? = nil,
+         eventButtonClick:((_ event:String) -> Void)? = nil,
          listButtonClick:( () -> Void)? = nil
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
 
-        let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-            icon: .share,
-            title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
-            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-            action: showSharingViewAction)
-
-        var items = [shareDebugInfoModel]
+        self.recordingTitle="Start Recording"
+        self.eventButtonClick=eventButtonClick;
         func chatButtonClickLocal(){
-            chatButtonClick?()
+            eventButtonClick?("ChatButtonClick")
+        }
+       
+        func screenShareButtonClickLocal(){
+            eventButtonClick?("screenShareButtonClick")
         }
         func listButtonClickLocal(){
-            listButtonClick?()
+            eventButtonClick?("listButtonClick")
+        }
+        func recordButtonClickLocal(){
+            eventButtonClick?("recordButtonClick")
         }
 let chatItem=compositeViewModelFactory.makeDrawerListItemViewModel(
     icon: .personFeedback,
     title: "Chat",
     accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantChatID.rawValue,
     action: chatButtonClickLocal)
+        
+        var items = [chatItem]
+     
         let waitingList=compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .personFeedback,
             title: "Waiting List",
@@ -56,8 +87,21 @@ let chatItem=compositeViewModelFactory.makeDrawerListItemViewModel(
 //
 //            items.append(reportErrorInfoModel)
 //        }
-        items.append(chatItem)
+        let record=compositeViewModelFactory.makeDrawerListItemViewModel(
+            icon: .personFeedback,
+            title: "Start Recording" ,
+            accessibilityIdentifier: AccessibilityIdentifier.callingViewRecordID.rawValue,
+            action: recordButtonClickLocal)
+        items.append(record)
         items.append(waitingList)
+       
+
         self.items = items
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRecording(_: )), name: NSNotification.Name(rawValue: "updateRecording"), object: nil)
     }
+    
+    deinit {
+           // Remove observer when ViewModel is deallocated
+           NotificationCenter.default.removeObserver(self)
+       }
 }

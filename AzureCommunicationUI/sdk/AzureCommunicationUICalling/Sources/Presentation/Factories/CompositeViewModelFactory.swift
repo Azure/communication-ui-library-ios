@@ -94,7 +94,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         return viewModel
     }
 
-    func getCallingViewModel(chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil) -> CallingViewModel {
+    func getCallingViewModel(eventButtonClick:((_ event:String) -> Void)? = nil,listButtonClick:(() -> Void)? = nil) -> CallingViewModel {
         guard let viewModel = self.callingViewModel else {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
@@ -107,7 +107,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
                                             callType: callType,
                                             capabilitiesManager: self.capabilitiesManager,
-            chatButtonClick: chatButtonClick,
+            eventButtonClick: eventButtonClick,
             listButtonClick: listButtonClick)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
@@ -223,7 +223,7 @@ extension CompositeViewModelFactory {
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
                                  capabilitiesManager: CapabilitiesManager,
-                                 chatButtonClick:(() -> Void)? = nil,
+                                 eventButtonClick:((_ event:String) -> Void)? = nil,
                                  listButtonClick:(() -> Void)? = nil)
     -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
@@ -234,7 +234,7 @@ extension CompositeViewModelFactory {
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
-                            capabilitiesManager: capabilitiesManager,chatButtonClick: chatButtonClick,listButtonClick: listButtonClick)
+                            capabilitiesManager: capabilitiesManager,eventButtonClick: eventButtonClick,listButtonClick: listButtonClick)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -327,7 +327,7 @@ extension CompositeViewModelFactory {
     func makeMoreCallOptionsListViewModel(
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
-        chatButtonClick:(() -> Void)? ,
+        eventButtonClick:((_ event:String) -> Void)? = nil ,
         listButtonClick:(() -> Void)? ) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
@@ -336,7 +336,7 @@ extension CompositeViewModelFactory {
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
                                             isSupportFormAvailable: events.onUserReportedIssue != nil,
-        chatButtonClick: chatButtonClick,listButtonClick: listButtonClick)
+        eventButtonClick: eventButtonClick,listButtonClick: listButtonClick)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,

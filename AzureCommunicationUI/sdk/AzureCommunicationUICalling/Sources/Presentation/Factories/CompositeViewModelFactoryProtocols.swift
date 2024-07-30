@@ -9,7 +9,7 @@ import Foundation
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
     func getSetupViewModel() -> SetupViewModel
-    func getCallingViewModel(chatButtonClick:(() -> Void)?  ,listButtonClick:(() -> Void)? ) -> CallingViewModel
+    func getCallingViewModel(eventButtonClick:((_ event:String) -> Void)?   ,listButtonClick:(() -> Void)? ) -> CallingViewModel
     // MARK: ComponentViewModels
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
@@ -41,7 +41,7 @@ protocol CompositeViewModelFactoryProtocol {
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode,
                                  capabilitiesManager: CapabilitiesManager,
-                                 chatButtonClick:(() -> Void)? ,
+                                 eventButtonClick:((_ event:String) -> Void)? ,
                                  listButtonClick:(() -> Void)?
     ) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -64,7 +64,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
                                           showSupportFormAction: @escaping () -> Void, 
-                                          chatButtonClick:( () -> Void)? ,
+                                          eventButtonClick:((_ event:String) -> Void)?  ,
                                           listButtonClick:( () -> Void)? ) -> MoreCallOptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,

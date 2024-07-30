@@ -67,6 +67,9 @@ struct InfoHeaderView: View {
                     .flipsForRightToLeftLayoutDirection(true)
                     .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
             }
+            if viewModel.isRecording {
+                recordButton
+            }
 
             Text(viewModel.infoLabel)
                 .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
@@ -99,6 +102,10 @@ struct InfoHeaderView: View {
         IconButton(viewModel: viewModel.participantListButtonViewModel)
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
             .accessibilityFocused($focusedOnParticipantList, equals: true)
+    }
+    var recordButton: some View {
+        IconButton(viewModel: IconButtonViewModel.init(iconName: .showParticipant ))
+          
     }
 
     var participantsListView: some View {

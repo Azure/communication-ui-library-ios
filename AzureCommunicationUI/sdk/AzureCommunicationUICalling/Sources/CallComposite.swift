@@ -303,13 +303,13 @@ public class CallComposite {
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
-                        localOptions: LocalOptions?,chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil) {
+                        localOptions: LocalOptions?,eventButtonClick:((_ event:String) -> Void)? = nil,listButtonClick:(() -> Void)? = nil) {
         logger.debug("CallComposite launch composite experience")
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
             callCompositeEventsHandler: events,
-            withCallingSDKWrapper: self.customCallingSdkWrapper,chatButtonClick: chatButtonClick,listButtonClick: listButtonClick
+            withCallingSDKWrapper: self.customCallingSdkWrapper,eventButtonClick: eventButtonClick,listButtonClick: listButtonClick
         )
         self.viewFactory = viewFactory
 
@@ -348,14 +348,14 @@ Use CallComposite init with CommunicationTokenCredential
 and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
 """)
     public func launch(remoteOptions: RemoteOptions,
-                       localOptions: LocalOptions? = nil,chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil) {
+                       localOptions: LocalOptions? = nil,eventButtonClick:((_ event:String) -> Void)? = nil,listButtonClick:(() -> Void)? = nil) {
         let configuration = CallConfiguration(locator: remoteOptions.locator,
                                                   participants: nil,
                                                   callId: nil)
         self.credential = remoteOptions.credential
         self.displayName = remoteOptions.displayName
         self.callConfiguration = configuration
-        launch(configuration, localOptions: localOptions,chatButtonClick: chatButtonClick,listButtonClick: listButtonClick)
+        launch(configuration, localOptions: localOptions,eventButtonClick: eventButtonClick,listButtonClick: listButtonClick)
     }
 
     /// Start Call Composite experience with joining an existing call.
@@ -507,7 +507,22 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
     }
 
-    private func hide() {
+    public func hideUI(){
+        store?.dispatch(action: .visibilityAction(.hideRequested))
+    }
+    public func showUI(){
+        if Thread.isMainThread {
+            // If already on the main thread, perform the task directly
+            self.displayCallCompositeIfWasHidden()
+        } else {
+            // If not on main thread, dispatch to main queue
+            DispatchQueue.main.async {
+                self.displayCallCompositeIfWasHidden()
+            }
+        }
+    
+    }
+    public func hide() {
         self.viewController?.dismissSelf()
         self.viewController = nil
         if self.enableSystemPipWhenMultitasking && store?.state.navigationState.status == .inCall {
@@ -519,7 +534,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
         callCompositeEventsHandler: CallComposite.Events,
-        withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil,chatButtonClick:(() -> Void)? = nil,listButtonClick:(() -> Void)? = nil
+        withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil,eventButtonClick:((_ event:String) -> Void)? = nil,listButtonClick:(() -> Void)? = nil
     ) -> CompositeViewFactoryProtocol {
         let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
         self.callingSDKEventsHandler = callingSDKEventsHandler
@@ -598,7 +613,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 
                 
             ),
-            chatButtonClick:chatButtonClick,
+            eventButtonClick: eventButtonClick,
             listButtonClick:listButtonClick
         )
     }
