@@ -489,21 +489,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func startCaptions(state: AppState, dispatch: @escaping ActionDispatch, language: String) -> Task<Void, Never> {
-        Task {
-            guard state.captionsState.isStarted == false else {
-                return
-            }
-            do {
-                try await callingService.startCaptions(language)
-                dispatch(.captionsAction(.started))
-            } catch {
-                dispatch(.captionsAction(.error(errors: .captionsFailedToStart)))
-                dispatch(.captionsAction(.stopped))
-            }
-        }
-    }
-
     func setCapabilities(capabilities: Set<ParticipantCapabilityType>,
                          state: AppState,
                          dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -528,6 +513,33 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
+    func startCaptions(state: AppState, dispatch: @escaping ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            guard state.captionsState.isStarted == false else {
+                return
+            }
+            do {
+                try await callingService.startCaptions(language)
+                dispatch(.captionsAction(.started))
+            } catch {
+                dispatch(.captionsAction(.error(errors: .captionsFailedToStart)))
+                dispatch(.captionsAction(.stopped))
+                if let errorCode = error as NSError? {
+                    switch error.localizedDescription {
+                    case CallCompositeCaptionsErrorsDescription.captionsStartFailedCallNotConnected.rawValue:
+                        dispatch(.errorAction(
+                            .fatalErrorUpdated(internalError: .micNotAvailable, error: nil)))
+                    case CallCompositeCaptionsErrorsDescription.captionsStartFailedSpokenLanguageNotSupported.rawValue:
+                        dispatch(.errorAction(.fatalErrorUpdated(internalError:
+                                    .captionsStartFailedSpokenLanguageNotSupported, error: nil)))
+                    default:
+                        return
+                    }
+                }
+            }
+        }
+    }
+
     func stopCaptions(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
@@ -535,6 +547,38 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.captionsAction(.stopped))
             } catch {
                 dispatch(.captionsAction(.error(errors: .captionsFailedToStop)))
+            }
+        }
+    }
+
+    func setCaptionsSpokenLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
+    -> Task<Void, Never> {
+        Task {
+            do {
+                try await callingService.setCaptionsSpokenLanguage(language)
+                dispatch(.captionsAction(.spokenLanguageChanged(language: language)))
+            } catch {
+                dispatch(.captionsAction(.error(errors: .captionsFailedToSetSpokenLanguage)))
+            }
+        }
+    }
+
+    func setCaptionsLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
+    -> Task<Void, Never> {
+        Task {
+            do {
+                try await callingService.setCaptionsCaptionLanguage(language)
+                dispatch(.captionsAction(.captionLanguageChanged(language: language)))
+            } catch {
+                dispatch(.captionsAction(.error(errors: .captionsFailedToSetCaptionLanguage)))
+                if let errorCode = error as NSError? {
+                    switch error.localizedDescription {
+                    case CallCompositeCaptionsErrorsDescription.captionsStartFailedCallNotConnected.rawValue:
+                        handle(error: error, errorType: .captionsStartFailedCallNotConnected, dispatch: dispatch)
+                    default:
+                        return
+                    }
+                }
             }
         }
     }
@@ -572,18 +616,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func setCaptionsSpokenLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
-    -> Task<Void, Never> {
-        Task {
-            do {
-                try await callingService.setCaptionsSpokenLanguage(language)
-                dispatch(.captionsAction(.spokenLanguageChanged(language: language)))
-            } catch {
-                dispatch(.captionsAction(.error(errors: .captionsFailedToSetSpokenLanguage)))
-            }
-        }
-    }
-
     func onNetworkQualityCallDiagnosticsUpdated(state: AppState,
                                                 dispatch: @escaping ActionDispatch,
                                                 diagnisticModel: NetworkQualityDiagnosticModel) -> Task<Void, Never> {
@@ -599,18 +631,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 }
             } else {
                 dispatch(.toastNotificationAction(.dismissNotification))
-            }
-        }
-    }
-
-    func setCaptionsLanguage(state: AppState, dispatch: @escaping ActionDispatch, language: String)
-    -> Task<Void, Never> {
-        Task {
-            do {
-                try await callingService.setCaptionsCaptionLanguage(language)
-                dispatch(.captionsAction(.captionLanguageChanged(language: language)))
-            } catch {
-                dispatch(.captionsAction(.error(errors: .captionsFailedToSetCaptionLanguage)))
             }
         }
     }

@@ -40,13 +40,16 @@ enum CallCompositeInternalError: Error, Equatable {
             return CallCompositeErrorCode.microphonePermissionNotGranted
         case .networkConnectionNotAvailable:
             return CallCompositeErrorCode.networkConnectionNotAvailable
+        case .captionsNotActive:
+            return CallCompositeErrorCode.captionsNotActive
+        case .captionsStartFailedCallNotConnected:
+            return CallCompositeErrorCode.captionsStartFailedCallNotConnected
+        case .captionsStartFailedSpokenLanguageNotSupported:
+            return CallCompositeErrorCode.captionsStartFailedSpokenLanguageNotSupported
         case .callHoldFailed,
                 .callResumeFailed,
                 .callEvicted,
                 .callDenied,
-                .captionsNotActive,
-                .captionsStartFailedCallNotConnected,
-                .captionsStartFailedSpokenLanguageNotSupported,
                 .micNotAvailable,
                 .cameraSwitchFailed:
             return nil

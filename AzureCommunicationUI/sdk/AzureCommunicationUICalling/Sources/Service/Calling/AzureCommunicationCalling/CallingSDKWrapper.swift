@@ -457,30 +457,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         if !language.isEmpty {
             options.spokenLanguage = language
         }
-
         do {
             let captions = try await captionsFeature.getCaptions()
-                return try await withCheckedThrowingContinuation { continuation in
-                    captions.startCaptions(options: options) { error in
-                        if let error = error as NSError? {
-                            switch error.localizedDescription {
-                            case CallCompositeCaptionsErrorsDescription.captionsStartFailedCallNotConnected.rawValue:
-                                continuation.resume(throwing:
-                                                        CallCompositeInternalError.captionsStartFailedCallNotConnected)
-                            case CallCompositeCaptionsErrorsDescription
-                                    .captionsStartFailedSpokenLanguageNotSupported.rawValue:
-                                continuation.resume(throwing:
-                                                        CallCompositeInternalError
-                                    .captionsStartFailedSpokenLanguageNotSupported)
-                            default:
-                                continuation.resume(throwing:
-                                                        CallCompositeInternalError.captionsStartFailedCallNotConnected)
-                            }
-                        } else {
-                            continuation.resume()
-                        }
-                    }
-                }
+            try await captions.startCaptions(options: options)
             logger.debug("Start captions successfully")
         } catch {
             logger.error("ERROR: It was not possible to start captions \(error)")
@@ -547,19 +526,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
             let captions = try await captionsFeature.getCaptions()
             if let teamsCaptions = captions as? TeamsCaptions {
-                return try await withCheckedThrowingContinuation { continuation in
-                    teamsCaptions.set(captionLanguage: language) { error in
-                        if let error = error as NSError? {
-                           if error.localizedDescription ==
-                                CallCompositeCaptionsErrorsDescription.captionsNotActive.rawValue {
-                                continuation.resume(throwing:
-                                                        CallCompositeInternalError.captionsNotActive)
-                            }
-                        } else {
-                            continuation.resume()
-                        }
-                    }
-                }
+                try await teamsCaptions.set(captionLanguage: language)
             }
 
             logger.debug("Set captions caption language successfully")

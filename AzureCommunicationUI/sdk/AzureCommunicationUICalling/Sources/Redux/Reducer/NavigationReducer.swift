@@ -18,8 +18,9 @@ extension Reducer where State == NavigationState,
         case .callingViewLaunched:
             navigationStatus = .inCall
             drawerVisibility = .hidden
-        case .errorAction(.fatalErrorUpdated),
-             .compositeExitAction:
+        case .errorAction(.fatalErrorUpdated):
+            navigationStatus = .inCall
+        case .compositeExitAction:
             navigationStatus = .exit
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
