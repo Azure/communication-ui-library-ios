@@ -468,11 +468,11 @@ callComposite.launch(locator: .roomCall(roomId: "..."), localOptions: localOptio
             print("::::UIKitDemoView::CallScreen::captionsLanguageButton::onClick")
         }
 
-        let shareDiagnosticsButton = ButtonOptions(visible: false, enabled: false) { _ in
+        let shareDiagnosticsButton = ButtonOptions(visible: true, enabled: true) { _ in
             print("::::UIKitDemoView::CallScreen::shareDiagnosticsButton::onClick")
         }
 
-        let reportIssueButton = ButtonOptions(visible: false, enabled: false) { _ in
+        let reportIssueButton = ButtonOptions(visible: true, enabled: true) { _ in
             print("::::UIKitDemoView::CallScreen::reportIssueButton::onClick")
         }
 
@@ -492,7 +492,7 @@ callComposite.launch(locator: .roomCall(roomId: "..."), localOptions: localOptio
             captionsLanguageButtonOptions: captionsLanguageButton,
             shareDiagnosticsButtonOptions: shareDiagnosticsButton,
             reportIssueButtonOptions: reportIssueButton,
-            customButtons: []
+            customButtons: [customButton1]
         )
 
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)

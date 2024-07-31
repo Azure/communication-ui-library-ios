@@ -5,7 +5,7 @@
 
 import FluentUI
 import Foundation
-
+// swiftlint:disable file_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -102,7 +102,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
                                                                         != CallCompositeAudioVideoMode.audioOnly,
                                              callType: callType,
-                                             callScreenOptions: callScreenOptions,
                                              capabilitiesManager: self.capabilitiesManager)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
@@ -228,8 +227,7 @@ extension CompositeViewModelFactory {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 capabilitiesManager: CapabilitiesManager,
-                                 controlBarOptions: CallScreenControlBarOptions?)
+                                 capabilitiesManager: CapabilitiesManager)
     -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -239,7 +237,7 @@ extension CompositeViewModelFactory {
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             capabilitiesManager: capabilitiesManager,
-                            controlBarOptions: controlBarOptions)
+                            controlBarOptions: callScreenOptions?.controlBarOptions)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -333,12 +331,24 @@ extension CompositeViewModelFactory {
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
 
-        // events.onUserReportedIssue
-        return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
-                                     localizationProvider: localizationProvider,
-                                     showSharingViewAction: showSharingViewAction,
-                                     showSupportFormAction: showSupportFormAction,
-                                            isSupportFormAvailable: events.onUserReportedIssue != nil)
+            return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+                                                localizationProvider: localizationProvider,
+                                                showSharingViewAction: showSharingViewAction,
+                                                showSupportFormAction: showSupportFormAction,
+                                                onUserReportedIssue: events.onUserReportedIssue,
+                                                controlBarOptions: callScreenOptions?.controlBarOptions)
+        }
+
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     isEnabled: Bool,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
+        DrawerListItemViewModel(icon: icon,
+                                title: title,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                action: action,
+                                isEnabled: isEnabled)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
@@ -396,3 +406,4 @@ extension CompositeViewModelFactory {
         JoiningCallActivityViewModel(title: self.localizationProvider.getLocalizedString(LocalizationKey.joiningCall))
     }
 }
+// swiftlint:enable file_length

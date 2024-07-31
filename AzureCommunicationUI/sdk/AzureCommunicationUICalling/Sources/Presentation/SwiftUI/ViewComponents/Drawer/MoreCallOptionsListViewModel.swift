@@ -16,25 +16,58 @@ class MoreCallOptionsListViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          showSharingViewAction: @escaping () -> Void,
          showSupportFormAction: @escaping () -> Void,
-         isSupportFormAvailable: Bool
+         onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?,
+         controlBarOptions: CallScreenControlBarOptions?
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
 
-        let shareDebugInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-            icon: .share,
-            title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
-            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-            action: showSharingViewAction)
+        var items: [DrawerListItemViewModel] = []
 
-        var items = [shareDebugInfoModel]
+        if controlBarOptions?.shareDiagnosticsButtonOptions?.visible ?? true {
 
-        if isSupportFormAvailable {
-            let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-                icon: .personFeedback,
-                title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
-                accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
-                action: showSupportFormAction)
+            let shareDebugInfoModel =
+            if let shareDiagnosticsButtonOptions = controlBarOptions?.shareDiagnosticsButtonOptions {
+                compositeViewModelFactory.makeDrawerListItemViewModel(
+                    icon: .share,
+                    title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
+                    isEnabled: shareDiagnosticsButtonOptions.enabled,
+                    accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+                    action: {
+                        shareDiagnosticsButtonOptions.onClick?(shareDiagnosticsButtonOptions)
+                        showSharingViewAction()
+                    })
+
+            } else {
+                compositeViewModelFactory.makeDrawerListItemViewModel(
+                    icon: .share,
+                    title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
+                    accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+                    action: showSharingViewAction)
+            }
+
+            items.append(shareDebugInfoModel)
+        }
+
+        if onUserReportedIssue != nil &&
+            controlBarOptions?.reportIssueButtonOptions?.visible ?? true {
+            let reportErrorInfoModel = if let reportIssueButtonOptions = controlBarOptions?.reportIssueButtonOptions {
+                compositeViewModelFactory.makeDrawerListItemViewModel(
+                    icon: .personFeedback,
+                    title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
+                    isEnabled: reportIssueButtonOptions.enabled,
+                    accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
+                    action: {
+                        reportIssueButtonOptions.onClick?(reportIssueButtonOptions)
+                        showSupportFormAction()
+                    })
+            } else {
+                compositeViewModelFactory.makeDrawerListItemViewModel(
+                    icon: .personFeedback,
+                    title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
+                    accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
+                    action: showSupportFormAction)
+            }
 
             items.append(reportErrorInfoModel)
         }

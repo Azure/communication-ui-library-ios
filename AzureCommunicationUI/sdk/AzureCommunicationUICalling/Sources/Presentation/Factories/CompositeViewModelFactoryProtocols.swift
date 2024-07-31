@@ -44,8 +44,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 capabilitiesManager: CapabilitiesManager,
-                                 controlBarOptions: CallScreenControlBarOptions?) -> ControlBarViewModel
+                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
@@ -69,6 +68,11 @@ protocol CompositeViewModelFactoryProtocol {
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     isEnabled: Bool,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,

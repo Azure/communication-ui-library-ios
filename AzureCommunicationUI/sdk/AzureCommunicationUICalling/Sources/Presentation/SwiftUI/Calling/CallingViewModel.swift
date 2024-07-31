@@ -51,7 +51,6 @@ class CallingViewModel: ObservableObject {
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
          callType: CompositeCallType,
-         callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager
     ) {
         self.logger = logger
@@ -98,8 +97,7 @@ class CallingViewModel: ObservableObject {
                 }
                 self.endCall()
             }, localUserState: store.state.localUserState,
-            capabilitiesManager: capabilitiesManager,
-            controlBarOptions: callScreenOptions?.controlBarOptions)
+            capabilitiesManager: capabilitiesManager)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {
