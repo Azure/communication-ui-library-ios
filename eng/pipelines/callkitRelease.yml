@@ -44,6 +44,15 @@ extends:
         templateContext:
           outputs:
           - output: pipelineArtifact
+            targetPath: $(rootPath)/Framework/Release-universal
+            artifactName: xcframeworks_unsigned
+          - output: pipelineArtifact
+            targetPath: $(rootPath)/Symbols
+            artifactName: Symbols
+          - output: pipelineArtifact
+            targetPath: $(zipToSign)
+          - output: pipelineArtifact
+            artifactName: artifact output
             targetPath: $(build.artifactstagingdirectory)
         pool:
           os: macos
@@ -443,7 +452,7 @@ extends:
             serverEndpoint: $(appCenterEndpoint)
             appSlug: Azure-Communication-Services/Azure-Communication-Services-Call-UI-Library-Sample-iOS-Internal
             app: '**/*.ipa'
-            dsymPath: '**/*.dSYM/**'
+            dsymPath:  '$(Build.ArtifactStagingDirectory)/**/*.dSYM/**'
             packParentFolder: false
             releaseNotesInput: >-
               CI pipeline release
