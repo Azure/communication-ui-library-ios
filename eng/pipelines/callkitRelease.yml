@@ -50,8 +50,6 @@ extends:
             targetPath: $(rootPath)/Symbols
             artifactName: Symbols
           - output: pipelineArtifact
-            targetPath: $(zipToSign)
-          - output: pipelineArtifact
             targetPath: $(build.artifactstagingdirectory)
         pool:
           os: macos
