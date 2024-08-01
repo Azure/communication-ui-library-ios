@@ -52,7 +52,6 @@ extends:
           - output: pipelineArtifact
             targetPath: $(zipToSign)
           - output: pipelineArtifact
-            artifactName: artifact output
             targetPath: $(build.artifactstagingdirectory)
         pool:
           os: macos
