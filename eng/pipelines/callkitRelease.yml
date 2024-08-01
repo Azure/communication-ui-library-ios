@@ -450,7 +450,7 @@ extends:
           inputs:
             serverEndpoint: $(appCenterEndpoint)
             appSlug: Azure-Communication-Services/Azure-Communication-Services-Call-UI-Library-Sample-iOS-Internal
-            app: '**/*.ipa'
+            app: '$(build.sourcesdirectory)/*.ipa'
             dsymPath:  '$(Build.ArtifactStagingDirectory)/**/*.dSYM/**'
             packParentFolder: false
             releaseNotesInput: >-
