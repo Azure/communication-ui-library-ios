@@ -66,20 +66,24 @@ protocol CompositeViewModelFactoryProtocol {
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
                                           showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
+    func makeDrawerListItemViewModel(compositeIcon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
+    func makeDrawerListItemViewModel(compositeIcon: CompositeIcon,
                                      title: String,
                                      isEnabled: Bool,
                                      accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
+    func makeDrawerListItemViewModel(icon: UIImage,
+                                     title: String,
+                                     isEnabled: Bool,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String) -> DrawerListItemViewModel
     func makeSelectableDrawerListItemViewModel(
-        icon: CompositeIcon,
+        compositeIcon: CompositeIcon,
         title: String,
         isSelected: Bool,
         onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel

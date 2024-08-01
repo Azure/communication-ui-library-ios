@@ -4,34 +4,50 @@
 //
 
 import Foundation
+import UIKit
 
 class DrawerListItemViewModel {
-    let icon: CompositeIcon
+    let compositIcon: CompositeIcon?
+    var icon: UIImage?
     let title: String
     let accessibilityIdentifier: String
     var action: (() -> Void)
     var isEnabled: Bool
 
-    init(icon: CompositeIcon,
+    init(compositeIcon: CompositeIcon?,
          title: String,
          accessibilityIdentifier: String,
          action: @escaping () -> Void,
          isEnabled: Bool = true) {
-        self.icon = icon
+        self.compositIcon = compositeIcon
         self.title = title
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
         self.isEnabled = isEnabled
     }
 
-    convenience init(icon: CompositeIcon,
+    convenience init(compositeIcon: CompositeIcon,
                      title: String,
                      accessibilityIdentifier: String) {
-        self.init(icon: icon,
+        self.init(compositeIcon: compositeIcon,
                   title: title,
                   accessibilityIdentifier: accessibilityIdentifier,
                   action: {},
                   isEnabled: true)
+    }
+
+    convenience init(icon: UIImage,
+                     title: String,
+                     action: @escaping () -> Void,
+                     isEnabled: Bool = true) {
+
+        self.init(compositeIcon: nil,
+                  title: title,
+                  accessibilityIdentifier: "",
+                  action: action,
+                  isEnabled: isEnabled)
+
+        self.icon = icon
     }
 }
 
@@ -40,6 +56,7 @@ extension DrawerListItemViewModel: Equatable {
                     rhs: DrawerListItemViewModel) -> Bool {
         return lhs.title == rhs.title &&
         lhs.accessibilityIdentifier == rhs.accessibilityIdentifier &&
+        lhs.compositIcon == rhs.compositIcon &&
         lhs.icon == rhs.icon
     }
 }
@@ -47,12 +64,15 @@ extension DrawerListItemViewModel: Equatable {
 class SelectableDrawerListItemViewModel: DrawerListItemViewModel {
     let isSelected: Bool
 
-    init(icon: CompositeIcon,
+    init(compositeIcon: CompositeIcon,
          title: String,
          accessibilityIdentifier: String,
          isSelected: Bool,
          action: @escaping () -> Void) {
         self.isSelected = isSelected
-        super.init(icon: icon, title: title, accessibilityIdentifier: accessibilityIdentifier, action: action)
+        super.init(compositeIcon: compositeIcon,
+                   title: title,
+                   accessibilityIdentifier: accessibilityIdentifier,
+                   action: action)
     }
 }

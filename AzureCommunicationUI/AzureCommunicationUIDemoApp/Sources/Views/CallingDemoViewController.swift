@@ -218,10 +218,8 @@ class CallingDemoViewController: UIViewController {
         print("CallingDemoView:::: createCallComposite creating")
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
-        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
-                                                        envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled)
-        let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
+
+        let callScreenOptions = createCallScreenOptions(callComposite: nil)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -297,7 +295,7 @@ class CallingDemoViewController: UIViewController {
 let callComposite = CallComposite(credential: credential)
 
 let customButton = CustomButtonOptions(image: UIImage(),
-                                       title: "Troubleshooting tips") {_ in
+                                       title: "Hide composite") {_ in
     // hide call composite and display Troubleshooting tips
     callComposite.isHidden = true
     // ...
@@ -476,13 +474,14 @@ callComposite.launch(locator: .roomCall(roomId: "..."), localOptions: localOptio
             print("::::UIKitDemoView::CallScreen::reportIssueButton::onClick")
         }
 
-        let customButton1 = CustomButtonOptions(image: UIImage(),
-                                                title: "Troubleshooting tips") {_ in
+        let customButton1 = CustomButtonOptions(image: UIImage(named: "ic_fluent_chevron_right_24_filled")!,
+                                                title: "Hide composite") {_ in
             print("::::UIKitDemoView::CallScreen::customButton1::onClick")
             callComposite?.isHidden = true
         }
 
         let callScreenControlBarOptions = CallScreenControlBarOptions(
+            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
             cameraButton: cameraButton,
             microphoneButton: micButton,
             audioDeviceButton: audioDeviceButton,

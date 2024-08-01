@@ -257,7 +257,7 @@ class ControlBarViewModel: ObservableObject {
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
         return DrawerListItemViewModel(
-            icon: .endCallRegular,
+            compositeIcon: .endCallRegular,
             title: localizationProvider.getLocalizedString(.leaveCall),
             accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
             action: { [weak self] in
@@ -271,7 +271,7 @@ class ControlBarViewModel: ObservableObject {
 
     func getCancelButtonViewModel() -> DrawerListItemViewModel {
         return DrawerListItemViewModel(
-            icon: .dismiss,
+            compositeIcon: .dismiss,
             title: localizationProvider.getLocalizedString(.cancel),
             accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
             action: { [weak self] in

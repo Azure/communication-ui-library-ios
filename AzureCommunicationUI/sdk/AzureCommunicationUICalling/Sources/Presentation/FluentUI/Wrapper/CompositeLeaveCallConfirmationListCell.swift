@@ -12,10 +12,15 @@ class CompositeLeaveCallConfirmationListCell: TableViewCell {
     /// Set up the participant list item  in the participant list
     func setup(viewModel: DrawerListItemViewModel) {
         let isNameEmpty = viewModel.title.trimmingCharacters(in: .whitespaces).isEmpty
-        var micImageView: UIImageView?
-        let micImage = StyleProvider.icon.getUIImage(for: viewModel.icon)?
-            .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
-        micImageView = UIImageView(image: micImage)
+        var micImage = if let compositIcon = viewModel.compositIcon {
+            StyleProvider.icon.getUIImage(for: compositIcon)
+        } else if let icon = viewModel.icon {
+            viewModel.icon
+        } else {
+            nil as UIImage?
+        }
+        micImage = micImage?.withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
+        let micImageView = UIImageView(image: micImage)
 
         selectionStyle = .none
         backgroundStyleType = .custom

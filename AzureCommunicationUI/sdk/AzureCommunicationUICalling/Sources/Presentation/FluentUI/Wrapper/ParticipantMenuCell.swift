@@ -9,8 +9,14 @@ import FluentUI
 class ParticipantMenuCell: TableViewCell {
     /// Set up the more call options list item  in the more call options list
     func setup(viewModel: DrawerListItemViewModel) {
-        let iconImage = StyleProvider.icon.getUIImage(for: viewModel.icon)?
-            .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
+        var iconImage = if let compositIcon = viewModel.compositIcon {
+            StyleProvider.icon.getUIImage(for: compositIcon)
+        } else if let icon = viewModel.icon {
+            viewModel.icon
+        } else {
+            nil as UIImage?
+        }
+        iconImage = iconImage?.withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
         let iconImageView = UIImageView(image: iconImage)
 
         selectionStyle = .none

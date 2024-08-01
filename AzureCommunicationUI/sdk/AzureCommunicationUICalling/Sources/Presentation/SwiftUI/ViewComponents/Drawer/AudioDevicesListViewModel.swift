@@ -76,7 +76,7 @@ class AudioDevicesListViewModel: ObservableObject {
         let isSelected = isAudioDeviceSelected(audioDeviceType, selectedDevice: audioDeviceStatus)
         let action = LocalUserAction.audioDeviceChangeRequested(device: audioDeviceType)
         let audioDeviceOption = compositeViewModelFactory.makeSelectableDrawerListItemViewModel(
-            icon: getAudioDeviceIcon(audioDeviceType),
+            compositeIcon: getAudioDeviceIcon(audioDeviceType),
             title: getAudioDeviceTitle(audioDeviceType),
             isSelected: isSelected,
             onSelectedAction: { [weak self] in self?.dispatch(.localUserAction(action)) })

@@ -12,8 +12,14 @@ class CompositeAudioDevicesListCell: TableViewCell {
     /// Set up the audio device list item in the audio device list
     /// - Parameter viewModel: the audio device view model needed to set up audio device list cell
     func setup(viewModel: SelectableDrawerListItemViewModel) {
-        let speakerImage = StyleProvider.icon.getUIImage(for: viewModel.icon)?
-            .withTintColor(StyleProvider.color.onSurface, renderingMode: .alwaysOriginal)
+        var speakerImage = if let compositIcon = viewModel.compositIcon {
+            StyleProvider.icon.getUIImage(for: compositIcon)
+        } else if let icon = viewModel.icon {
+            viewModel.icon
+        } else {
+            nil as UIImage?
+        }
+        speakerImage = speakerImage?.withTintColor(StyleProvider.color.onSurface, renderingMode: .alwaysOriginal)
         let speakerImageView = UIImageView(image: speakerImage)
 
         var checkmarkImageView: UIImageView?

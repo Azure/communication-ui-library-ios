@@ -29,7 +29,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             let shareDebugInfoModel =
             if let shareDiagnosticsButtonOptions = controlBarOptions?.shareDiagnosticsButtonOptions {
                 compositeViewModelFactory.makeDrawerListItemViewModel(
-                    icon: .share,
+                    compositeIcon: .share,
                     title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
                     isEnabled: shareDiagnosticsButtonOptions.enabled,
                     accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
@@ -40,7 +40,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
 
             } else {
                 compositeViewModelFactory.makeDrawerListItemViewModel(
-                    icon: .share,
+                    compositeIcon: .share,
                     title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
                     accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                     action: showSharingViewAction)
@@ -53,7 +53,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             controlBarOptions?.reportIssueButtonOptions?.visible ?? true {
             let reportErrorInfoModel = if let reportIssueButtonOptions = controlBarOptions?.reportIssueButtonOptions {
                 compositeViewModelFactory.makeDrawerListItemViewModel(
-                    icon: .personFeedback,
+                    compositeIcon: .personFeedback,
                     title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                     isEnabled: reportIssueButtonOptions.enabled,
                     accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
@@ -63,7 +63,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
                     })
             } else {
                 compositeViewModelFactory.makeDrawerListItemViewModel(
-                    icon: .personFeedback,
+                    compositeIcon: .personFeedback,
                     title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                     accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
                     action: showSupportFormAction)
@@ -71,6 +71,18 @@ class MoreCallOptionsListViewModel: ObservableObject {
 
             items.append(reportErrorInfoModel)
         }
+
+        controlBarOptions?.customButtons.forEach({ customButton in
+            let customButtonModel = compositeViewModelFactory.makeDrawerListItemViewModel(
+                icon: customButton.image,
+                title: customButton.title,
+                isEnabled: customButton.enabled,
+                action: {
+                    customButton.onClick(customButton)
+                })
+
+            items.append(customButtonModel)
+        })
         self.items = items
     }
 }

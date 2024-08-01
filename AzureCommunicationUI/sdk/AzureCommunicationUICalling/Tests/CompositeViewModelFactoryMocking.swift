@@ -173,7 +173,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                title: String,
                                                isSelected: Bool,
                                                onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel {
-        return audioDevicesListCellViewModel ?? SelectableDrawerListItemViewModel(icon: icon,
+        return audioDevicesListCellViewModel ?? SelectableDrawerListItemViewModel(compositeIcon: icon,
                                                                                   title: title,
                                                                                   accessibilityIdentifier: "",
                                                                               isSelected: isSelected,
@@ -282,7 +282,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                      title: String,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel {
-        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
+        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(compositeIcon: icon,
                                                                              title: title,
                                                                              accessibilityIdentifier: accessibilityIdentifier,
                                                                              action: action)
@@ -291,7 +291,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String) -> DrawerListItemViewModel {
-        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
+        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(compositeIcon: icon,
                                                                              title: title,
                                                                              accessibilityIdentifier: accessibilityIdentifier)
     }
