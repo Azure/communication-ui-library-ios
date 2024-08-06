@@ -27,6 +27,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState, Action>,
+         localParticipantId: CommunicationIdentifier,
          localParticipantViewData: ParticipantViewData?) {
         self.store = store
         self.localParticipantViewData = localParticipantViewData
@@ -35,6 +36,11 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
             .sink { [weak self] state in
                 self?.receive(state: state)
             }.store(in: &cancellables)
+        guard let participantViewData = localParticipantViewData else {
+            return
+        }
+        avatarStorage.append(forKey: localParticipantId.rawId,
+                             value: participantViewData)
     }
 
     private func receive(state: AppState) {

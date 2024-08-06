@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // This class contains all the View Models for List based Drawers (Participants, Audio Devices, Leave Call Confirm)
 // Each ViewModel represents a line-item supported on one of these lits
@@ -11,22 +12,33 @@ protocol BaseDrawerItemViewModel {}
 
 struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
     let title: String
+    let subtitle: String?
     let startIcon: CompositeIcon?
+    let endIcon: CompositeIcon?
     let accessibilityIdentifier: String
     let action: (() -> Void)?
     let isEnabled: Bool
+    let isToggleOn: Binding<Bool>?
+    let showsToggle: Bool
 
     init(title: String,
+         subtitle: String? = "",
          accessibilityIdentifier: String,
          action: (() -> Void)? = nil,
          startIcon: CompositeIcon? = nil,
          endIcon: CompositeIcon? = nil,
+         showToggle: Bool = false,
+         isToggleOn: Binding<Bool>? = nil,
          isEnabled: Bool = true) {
         self.startIcon = startIcon
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
         self.isEnabled = isEnabled
         self.title = title
+        self.isToggleOn = isToggleOn
+        self.showsToggle = showToggle
+        self.subtitle = subtitle
+        self.endIcon = endIcon
     }
 }
 
@@ -34,10 +46,10 @@ struct DrawerSelectableItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let isSelected: Bool
     let accessibilityIdentifier: String
-    let icon: CompositeIcon
+    let icon: CompositeIcon?
     let action: () -> Void
 
-    init(icon: CompositeIcon,
+    init(icon: CompositeIcon?,
          title: String,
          accessibilityIdentifier: String,
          isSelected: Bool,

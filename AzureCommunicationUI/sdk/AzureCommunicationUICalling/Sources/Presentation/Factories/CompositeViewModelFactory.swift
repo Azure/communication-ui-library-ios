@@ -5,7 +5,9 @@
 
 import FluentUI
 import Foundation
+import SwiftUI
 
+// swiftlint:disable file_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -14,6 +16,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
+    private let captionsViewManager: CaptionsViewManager
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
@@ -34,6 +37,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
+         captionsViewManager: CaptionsViewManager,
          localOptions: LocalOptions? = nil,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
@@ -53,6 +57,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
+        self.captionsViewManager = captionsViewManager
         self.events = eventsHandler
         self.localOptions = localOptions
         self.enableMultitasking = enableMultitasking
@@ -115,6 +120,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                             != CallCompositeAudioVideoMode.audioOnly,
                                             leaveCallConfirmationMode: self.leaveCallConfirmationMode ?? .alwaysEnabled,
                                             callType: callType,
+                                            captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions(),
                                             capabilitiesManager: self.capabilitiesManager)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
@@ -175,6 +181,58 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   dispatchAction: dispatchAction,
                                   localUserState: localUserState,
                                   localizationProvider: localizationProvider)
+    }
+
+    func makeCaptionsLanguageListViewModel(dispatchAction: @escaping ActionDispatch,
+                                           state: AppState
+    ) -> CaptionsLanguageListViewModel {
+        CaptionsLanguageListViewModel(compositeViewModelFactory: self,
+                                      dispatchAction: dispatchAction,
+                                      state: state,
+                                      localizationProvider: localizationProvider)
+    }
+
+    func makeCaptionsListViewModel(state: AppState,
+                                   captionsOptions: CaptionsOptions,
+                                   dispatchAction: @escaping ActionDispatch,
+                                   showSpokenLanguage: @escaping () -> Void,
+                                   showCaptionsLanguage: @escaping () -> Void,
+                                   isDisplayed: Bool) -> CaptionsListViewModel {
+
+        return CaptionsListViewModel(compositeViewModelFactory: self,
+                                     localizationProvider: localizationProvider,
+                                     captionsOptions: captionsOptions,
+                                     state: state,
+                                     dispatchAction: dispatchAction,
+                                     showSpokenLanguage: showSpokenLanguage,
+                                     showCaptionsLanguage: showCaptionsLanguage,
+                                     isDisplayed: store.state.navigationState.captionsViewVisible
+                                     && store.state.visibilityState.currentStatus == .visible)
+    }
+
+    func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
+        return CaptionsInfoViewModel(state: state,
+                                     captionsManager: captionsViewManager,
+                                     localizationProvider: localizationProvider)
+    }
+
+    func makeCaptionsErrorViewModel(dispatchAction: @escaping ActionDispatch)
+    -> CaptionsErrorViewModel {
+        return CaptionsErrorViewModel(compositeViewModelFactory: self,
+                                  logger: logger,
+                                  localizationProvider: localizationProvider,
+                                  accessibilityProvider: accessibilityProvider,
+                                  dispatchAction: dispatchAction)
+    }
+
+    func makeCaptionsLangaugeCellViewModel(title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel {
+        return DrawerSelectableItemViewModel(icon: nil,
+                                      title: title,
+                                      accessibilityIdentifier: "",
+                                      isSelected: isSelected,
+                                      action: onSelectedAction)
     }
 
     func makeErrorInfoViewModel(title: String,
@@ -318,26 +376,50 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
+        isCaptionsAvailable: Bool,
         showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        showSupportFormAction: @escaping () -> Void,
+        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
+                                     showCaptionsViewAction: showCaptionsViewAction,
+                                     isCaptionsAvailable: isCaptionsAvailable,
                                      isSupportFormAvailable: events.onUserReportedIssue != nil,
                                      isDisplayed: isDisplayed)
     }
 
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
+    func makeLanguageListItemViewModel(title: String,
+                                       subtitle: String?,
+                                       accessibilityIdentifier: String,
+                                       startIcon: CompositeIcon,
+                                       endIcon: CompositeIcon?,
+                                       isEnabled: Bool,
+                                       action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
+        DrawerGenericItemViewModel(title: title,
+                                subtitle: subtitle,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                   action: action,
+                                   startIcon: startIcon,
+                                   endIcon: endIcon,
+                                   isEnabled: isEnabled)
+    }
+
+    func makeToggleListItemViewModel(title: String,
+                                     isToggleOn: Binding<Bool>,
+                                     showToggle: Bool,
                                      accessibilityIdentifier: String,
+                                     startIcon: CompositeIcon,
                                      action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
         DrawerGenericItemViewModel(title: title,
-                                accessibilityIdentifier: accessibilityIdentifier,
-                                action: action,
-                                startIcon: icon)
+                                   accessibilityIdentifier: accessibilityIdentifier,
+                                   action: action,
+                                   startIcon: startIcon,
+                                   showToggle: showToggle,
+                                   isToggleOn: isToggleOn)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,

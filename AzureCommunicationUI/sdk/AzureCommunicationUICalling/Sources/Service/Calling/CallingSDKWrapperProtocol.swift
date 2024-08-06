@@ -73,6 +73,10 @@ protocol CallingSDKWrapperProtocol {
     func admitAllLobbyParticipants() async throws
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws
+    func startCaptions(_ language: String) async throws
+    func stopCaptions() async throws
+    func setCaptionsSpokenLanguage(_ language: String) async throws
+    func setCaptionsCaptionLanguage(_ language: String) async throws
     func removeParticipant(_ participantId: String) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
 
@@ -103,6 +107,14 @@ protocol CallingSDKEventsHandling {
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
 
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
+    var captionsSupportedSpokenLanguages: CurrentValueSubject<[String], Never> { get }
+    var captionsSupportedCaptionLanguages: CurrentValueSubject<[String], Never> { get }
+    var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never> { get }
+    var captionsReceived: PassthroughSubject<CallCompositeCaptionsData, Never> { get }
+    var activeSpokenLanguageChanged: CurrentValueSubject<String, Never> { get }
+    var activeCaptionLanguageChanged: CurrentValueSubject<String, Never> { get }
+    var captionsEnabledChanged: CurrentValueSubject<Bool, Never> { get }
+    var captionsTypeChanged: CurrentValueSubject<CallCompositeCaptionsType, Never> { get }
 
     var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
 }

@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 import Combine
 @testable import AzureCommunicationUICalling
 
@@ -24,6 +25,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
                                                           avatarManager: AvatarViewManagerMocking(
                                                             store: storeFactory.store,
+                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                             localParticipantViewData: nil))
     }
 
@@ -314,6 +316,8 @@ extension ParticipantsListViewModelTests {
                                          dispatchAction: storeFactory.store.dispatch,
                                          localizationProvider: localizationProvider,
                                          onUserClicked: { _ in },
-                                         avatarManager: AvatarViewManagerMocking(store: storeFactory.store, localParticipantViewData: nil))
+                                         avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                 localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                                                 localParticipantViewData: nil))
     }
 }

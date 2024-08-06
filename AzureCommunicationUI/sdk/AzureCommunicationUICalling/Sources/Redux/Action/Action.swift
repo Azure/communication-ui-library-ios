@@ -21,6 +21,10 @@ enum Action: Equatable {
     case compositeExitAction
     case callingViewLaunched
     case showSupportForm
+    case showCaptionsListView
+    case showSpokenLanguageView
+    case showCaptionsLanguageView
+    case captionsAction(CaptionsAction)
     case showEndCallConfirmation
     case showAudioSelection
     case showMoreOptions

@@ -5,13 +5,14 @@
 
 import Combine
 import Foundation
-
+// swiftlint:disable type_body_length
 internal class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
     @Published var isInPip = false
     @Published var allowLocalCameraPreview = false
+    @Published var captionsStarted = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -19,6 +20,7 @@ internal class CallingViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let callType: CompositeCallType
+    private let captionsOptions: CaptionsOptions
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
@@ -44,9 +46,13 @@ internal class CallingViewModel: ObservableObject {
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
     var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
+    var captionsLanguageListViewModel: CaptionsLanguageListViewModel!
+    var captionsListViewModel: CaptionsListViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var audioDeviceListViewModel: AudioDevicesListViewModel!
+    var captionsInfoViewModel: CaptionsInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
+    var captionsErrorViewModel: CaptionsErrorViewModel!
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -58,6 +64,7 @@ internal class CallingViewModel: ObservableObject {
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          callType: CompositeCallType,
+         captionsOptions: CaptionsOptions,
          capabilitiesManager: CapabilitiesManager
     ) {
         self.logger = logger
@@ -70,12 +77,22 @@ internal class CallingViewModel: ObservableObject {
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+        self.captionsOptions = captionsOptions
+
         let actionDispatch: ActionDispatch = store.dispatch
 
         audioDeviceListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
                 dispatchAction: actionDispatch,
                 localUserState: store.state.localUserState)
 
+        captionsLanguageListViewModel = compositeViewModelFactory.makeCaptionsLanguageListViewModel(
+            dispatchAction: actionDispatch,
+            state: store.state
+        )
+
+        captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
+            state: store.state)
+        captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
@@ -122,7 +139,6 @@ internal class CallingViewModel: ObservableObject {
                 localUserState: store.state.localUserState,
                 isDisplayed: store.state.navigationState.participantActionsVisible,
                 dispatchAction: store.dispatch)
-
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
                 guard let self = self else {
@@ -156,19 +172,34 @@ internal class CallingViewModel: ObservableObject {
                                                                               subtitle: "")
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
-
         bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isDisplayed: store.state.navigationState.moreOptionsVisible,
+            isCaptionsAvailable: true,
             showSharingViewAction: {
                 store.dispatch(action: .showSupportShare)
             },
             showSupportFormAction: {
                 store.dispatch(action: .showSupportForm)
+            },
+            showCaptionsViewAction: {
+                store.dispatch(action: .showCaptionsListView)
             }
         )
+
+        captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
+            state: store.state,
+            captionsOptions: captionsOptions,
+            dispatchAction: store.dispatch,
+            showSpokenLanguage: {
+                store.dispatch(action: .showSpokenLanguageView)
+            },
+            showCaptionsLanguage: {
+                store.dispatch(action: .showCaptionsLanguageView)
+            },
+            isDisplayed: store.state.navigationState.captionsViewVisible)
     }
     // swiftlint:enable function_body_length
 
@@ -208,6 +239,10 @@ internal class CallingViewModel: ObservableObject {
 
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
+        captionsListViewModel.update(state: state)
+        captionsInfoViewModel.update(state: state)
+        captionsLanguageListViewModel.update(state: state)
+        captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
@@ -288,3 +323,4 @@ internal class CallingViewModel: ObservableObject {
         return isOutgoingCall
     }
 }
+// swiftlint:enable type_body_length

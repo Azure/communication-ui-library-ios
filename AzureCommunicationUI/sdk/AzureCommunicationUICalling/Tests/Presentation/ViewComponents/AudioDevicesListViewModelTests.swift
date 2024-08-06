@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class AudioDevicesListViewModelTests: XCTestCase {
@@ -23,6 +24,7 @@ class AudioDevicesListViewModelTests: XCTestCase {
                                                           store: storeFactory.store,
                                                           localizationProvider: localizationProvider,
                                                           avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                                                                   localParticipantViewData: nil))
     }
 

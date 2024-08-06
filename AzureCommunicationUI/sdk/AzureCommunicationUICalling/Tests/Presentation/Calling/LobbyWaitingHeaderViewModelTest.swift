@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class LobbyWaitingHeaderViewModelTests: XCTestCase {
@@ -24,6 +25,7 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
         logger = LoggerMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
                                                           avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                                                                   localParticipantViewData: nil))
     }
 

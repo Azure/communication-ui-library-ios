@@ -50,7 +50,7 @@ internal enum DrawerConstants {
 ///         .accessibilityAddTraits(.isModal)
 ///    }
 ///
-///  Typically used (if presenting a list) with DrawerListContent
+///  Typically used (if presenting a list) with DrawerListView
 ///
 internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone

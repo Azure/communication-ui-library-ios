@@ -8,6 +8,14 @@ import Combine
 @testable import AzureCommunicationUICalling
 
 class CallingServiceMocking: CallingServiceProtocol {
+    var supportedSpokenLanguagesSubject = CurrentValueSubject<[String], Never>([])
+    var supportedCaptionLanguagesSubject = CurrentValueSubject<[String], Never>([])
+    var isCaptionsTranslationSupported = CurrentValueSubject<Bool, Never>(false)
+    var captionsDataSubject = PassthroughSubject<CallCompositeCaptionsData, Never>()
+    var activeSpokenLanguageSubject = CurrentValueSubject<String, Never>("")
+    var activeCaptionLanguageSubject = CurrentValueSubject<String, Never>("")
+    var captionsEnabledChanged = CurrentValueSubject<Bool, Never>(false)
+    var captionsTypeSubject = CurrentValueSubject<CallCompositeCaptionsType, Never>(.none)
     var error: Error?
     var videoStreamId: String?
     var cameraDevice: CameraDevice = .front
@@ -143,6 +151,10 @@ class CallingServiceMocking: CallingServiceProtocol {
         declineLobbyParticipantCalled = true
         try await possibleErrorTask().value
     }
+    func startCaptions(_ language: String) async throws {}
+    func stopCaptions() async throws {}
+    func setCaptionsSpokenLanguage(_ language: String) async throws {}
+    func setCaptionsCaptionLanguage(_ language: String) async throws {}
 
     func removeParticipant(_ participantId: String) async throws {
         remoteParticipantCalled = true

@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class BannerViewModelTests: XCTestCase {
@@ -20,6 +21,7 @@ class BannerViewModelTests: XCTestCase {
                                                           store: storeFactory.store,
                                                           avatarManager: AvatarViewManagerMocking(
                                                             store: storeFactory.store,
+                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                             localParticipantViewData: nil))
     }
 

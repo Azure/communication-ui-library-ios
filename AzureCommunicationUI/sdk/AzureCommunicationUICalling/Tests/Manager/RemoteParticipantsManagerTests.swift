@@ -14,6 +14,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
     var eventsHandler: CallComposite.Events!
     var remoteParticipantsJoinedExpectation: XCTestExpectation!
     var expectedIds: [String]!
+    var localParticipantId = CommunicationUserIdentifier("")
 
     override func setUp() {
         super.setUp()
@@ -21,6 +22,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         mockStoreFactory = StoreFactoryMocking()
         eventsHandler = CallComposite.Events()
         avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
+                                                     localParticipantId: localParticipantId,
                                                      localParticipantViewData: nil)
     }
 

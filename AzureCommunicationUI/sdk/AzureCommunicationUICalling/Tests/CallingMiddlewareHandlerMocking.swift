@@ -28,6 +28,10 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var declineAllLobbyParticipants: ((Bool) -> Void)?
     var admitLobbyParticipant: ((Bool) -> Void)?
     var declineLobbyParticipant: ((Bool) -> Void)?
+    var startCaptions: ((Bool) -> Void)?
+    var stopCaptions: ((Bool) -> Void)?
+    var setCaptionsSpokenLanguage: ((Bool) -> Void)?
+    var setCaptionsLangue: ((Bool) -> Void)?
     var onNetworkQualityCallDiagnosticsUpdated: ((Bool) -> Void)?
     var onNetworkCallDiagnosticsUpdated: ((Bool) -> Void)?
     var onMediaCallDiagnosticsUpdated: ((Bool) -> Void)?
@@ -164,6 +168,30 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func declineLobbyParticipant(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, participantId: String) -> Task<Void, Never> {
         Task {
             declineLobbyParticipant?(true)
+        }
+    }
+
+    func startCaptions(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            startCaptions?(true)
+        }
+    }
+
+    func stopCaptions(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            stopCaptions?(true)
+        }
+    }
+
+    func setCaptionsSpokenLanguage(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            setCaptionsSpokenLanguage?(true)
+        }
+    }
+
+    func setCaptionsLanguage(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            setCaptionsLangue?(true)
         }
     }
 

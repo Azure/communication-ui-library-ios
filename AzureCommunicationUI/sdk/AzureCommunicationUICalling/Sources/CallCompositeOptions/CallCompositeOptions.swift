@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import AzureCommunicationCommon
 
 /// User-configurable options for creating CallComposite.
 public struct CallCompositeOptions {
@@ -19,6 +20,7 @@ public struct CallCompositeOptions {
     private(set) var callKitOptions: CallKitOptions?
     private(set) var disableInternalPushForIncomingCall = false
     private(set) var displayName: String?
+    private(set) var userId: CommunicationIdentifier?
     private(set) var setupScreenOptions: SetupScreenOptions?
 
     /// Creates an instance of CallCompositeOptions with related options.
@@ -37,6 +39,7 @@ public struct CallCompositeOptions {
     /// - Parameter callKitOptions: CallKitOptions for specifying CallKit customization. Default value is `nil`.
     /// - Parameter displayName: Display name for the user. Default value is `nil`.
     /// - Parameter disableInternalPushForIncomingCall: Disables internal push for incoming call.
+    /// - Parameter userId: User Identifier is used for local avatar injection. Default value is `nil`
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
@@ -48,7 +51,8 @@ public struct CallCompositeOptions {
                 displayName: String? = nil,
                 disableInternalPushForIncomingCall: Bool = false,
                 setupScreenOptions: SetupScreenOptions? = nil,
-                capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode? = nil
+                capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode? = nil,
+                userId: CommunicationIdentifier? = nil
             ) {
         self.themeOptions = theme
         self.localizationOptions = localization
@@ -62,5 +66,6 @@ public struct CallCompositeOptions {
         self.displayName = displayName
         self.setupScreenOptions = setupScreenOptions
         self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        self.userId = userId
     }
 }

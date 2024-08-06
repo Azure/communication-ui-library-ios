@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class ControlBarViewModelTests: XCTestCase {
@@ -27,6 +28,7 @@ class ControlBarViewModelTests: XCTestCase {
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
                                                           avatarManager: AvatarViewManagerMocking(
                                                             store: storeFactory.store,
+                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                             localParticipantViewData: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }

@@ -13,13 +13,29 @@ internal struct DrawerGenericItemView: View {
         HStack {
             if let icon = item.startIcon {
                 Icon(name: icon, size: DrawerListConstants.iconSize)
-                    .foregroundColor(.primary)
+                    .foregroundColor(item.isEnabled ? .primary : .gray)
             }
-            Text(item.title)
-                .foregroundColor(.primary)
-                .padding(.leading, DrawerListConstants.textPaddingLeading)
-                .font(.body)
+            VStack(alignment: .leading) {
+                Text(item.title)
+                    .foregroundColor(item.isEnabled ? .primary : .gray)
+                    .padding(.leading, DrawerListConstants.textPaddingLeading)
+                    .font(.body)
+                if let subtitle = item.subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .padding(.leading, DrawerListConstants.textPaddingLeading)
+                }
+            }
             Spacer()
+            if item.showsToggle, let isToggleOn = item.isToggleOn {
+                Toggle("", isOn: isToggleOn)
+                    .labelsHidden()
+                    .toggleStyle(SwitchToggleStyle(tint: .blue))
+            } else if let accessoryView = item.endIcon,
+                      accessoryView != .none {
+                Icon(name: item.endIcon ?? .rightChevron, size: DrawerListConstants.trailingIconSize)
+            }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
@@ -33,6 +49,8 @@ internal struct DrawerGenericItemView: View {
                 }
             }
         }
+        .disabled(!item.isEnabled)
+        .foregroundColor(item.isEnabled ? .primary : .gray)
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }
 }

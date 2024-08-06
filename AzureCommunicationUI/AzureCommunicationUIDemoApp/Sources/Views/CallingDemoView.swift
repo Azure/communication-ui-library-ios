@@ -56,6 +56,7 @@ struct CallingDemoView: View {
             Spacer()
             acsTokenSelector
             displayNameTextField
+            userIdTextField
             meetingSelector
 
             Group {
@@ -161,6 +162,14 @@ struct CallingDemoView: View {
 
     var displayNameTextField: some View {
         TextField("Display Name", text: $envConfigSubject.displayName)
+            .disableAutocorrection(true)
+            .padding(.vertical, verticalPadding)
+            .padding(.horizontal, horizontalPadding)
+            .textFieldStyle(.roundedBorder)
+    }
+
+    var userIdTextField: some View {
+        TextField("User Identifier", text: $envConfigSubject.userId)
             .disableAutocorrection(true)
             .padding(.vertical, verticalPadding)
             .padding(.horizontal, horizontalPadding)
@@ -420,6 +429,7 @@ extension CallingDemoView {
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callKitOptions = $envConfigSubject.enableCallKit.wrappedValue ? getCallKitOptions() : nil
+        let userId = CommunicationUserIdentifier(envConfigSubject.userId)
 
         let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -463,7 +473,7 @@ extension CallingDemoView {
             #else
             let callComposite = envConfigSubject.useDeprecatedLaunch ?
             CallComposite(withOptions: callCompositeOptions) :
-                CallComposite(credential: credential, withOptions: callCompositeOptions)
+            CallComposite(credential: credential, withOptions: callCompositeOptions)
             #endif
             subscribeToEvents(callComposite: callComposite)
             GlobalCompositeManager.callComposite = callComposite
@@ -577,12 +587,15 @@ extension CallingDemoView {
                                                       displayName: renderDisplayName)
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
+        let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
+                                              spokenLanguage: envConfigSubject.spokenLanguage)
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                            captionsOptions: captionsOptions
         )
     }
 

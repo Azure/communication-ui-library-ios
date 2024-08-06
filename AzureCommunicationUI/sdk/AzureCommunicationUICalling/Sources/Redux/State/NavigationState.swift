@@ -14,9 +14,10 @@ enum NavigationStatus {
 struct NavigationState: Equatable {
 
     let status: NavigationStatus
-
-    // Various overlays/drawer visibilities
     let supportFormVisible: Bool
+    let captionsViewVisible: Bool
+    let captionsLanguageViewVisible: Bool
+    let spokenLanguageViewVisible: Bool
     let endCallConfirmationVisible: Bool
     let audioSelectionVisible: Bool
     let moreOptionsVisible: Bool
@@ -27,9 +28,11 @@ struct NavigationState: Equatable {
     // When showing Participant Menu, this provides
     // context on who we are shoing it for
     let selectedParticipant: ParticipantInfoModel?
-
     init(status: NavigationStatus = .setup,
          supportFormVisible: Bool = false,
+         captionsViewVisible: Bool = false,
+         captionsLanguageViewVisible: Bool = false,
+         spokenLanguageViewVisible: Bool = false,
          endCallConfirmationVisible: Bool = false,
          audioSelectionVisible: Bool = false,
          moreOptionsVisible: Bool = false,
@@ -37,9 +40,12 @@ struct NavigationState: Equatable {
          participantsVisible: Bool = false,
          participantActionsVisible: Bool = false,
          selectedParticipant: ParticipantInfoModel? = nil
-) {
+    ) {
         self.status = status
         self.supportFormVisible = supportFormVisible
+        self.captionsViewVisible = captionsViewVisible
+        self.captionsLanguageViewVisible = captionsLanguageViewVisible
+        self.spokenLanguageViewVisible = spokenLanguageViewVisible
         self.endCallConfirmationVisible = endCallConfirmationVisible
         self.audioSelectionVisible = audioSelectionVisible
         self.moreOptionsVisible = moreOptionsVisible
@@ -52,6 +58,9 @@ struct NavigationState: Equatable {
     static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {
         return lhs.status == rhs.status
             && lhs.supportFormVisible == rhs.supportFormVisible
+            && lhs.captionsLanguageViewVisible == rhs.captionsLanguageViewVisible
+            && lhs.spokenLanguageViewVisible == rhs.spokenLanguageViewVisible
+            && lhs.captionsViewVisible == rhs.captionsViewVisible
             && lhs.endCallConfirmationVisible == rhs.endCallConfirmationVisible
             && lhs.audioSelectionVisible == rhs.audioSelectionVisible
             && lhs.moreOptionsVisible == rhs.moreOptionsVisible

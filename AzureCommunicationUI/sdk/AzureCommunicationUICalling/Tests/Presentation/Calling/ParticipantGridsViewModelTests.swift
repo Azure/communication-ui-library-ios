@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class ParticipantGridViewModelTests: XCTestCase {
@@ -686,6 +687,7 @@ extension ParticipantGridViewModelTests {
                                                               accessibilityProvider: accessibilityProvider,
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
+                                                                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                                 localParticipantViewData: nil))
         factoryMocking.createMockParticipantGridCellViewModel = { infoModel in
             if let completion = participantGridCellViewUpdateCompletion {
@@ -710,6 +712,7 @@ extension ParticipantGridViewModelTests {
                                                               accessibilityProvider: accessibilityProvider,
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
+                                                                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                                 localParticipantViewData: nil))
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
                                         localizationProvider: localizationProvider,

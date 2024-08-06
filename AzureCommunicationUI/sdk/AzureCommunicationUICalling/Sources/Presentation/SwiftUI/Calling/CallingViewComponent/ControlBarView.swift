@@ -34,6 +34,7 @@ struct ControlBarView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
+            .frame(height: 105)
         }
     }
 

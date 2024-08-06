@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="Konfiguruj";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Wstecz";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Dołącz do rozmowy";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Zadzwoń";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Trwa dołączanie do rozmowy…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Rozpoczynanie połączenia…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Wyłączono dołączanie do rozmowy";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Rozpoczęcie rozmowy wyłączone";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Wideo wyłączone";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Wideo wyłączone";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Wideo włączone";
@@ -98,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Więcej";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Udostępnij informacje diagnostyczne";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Trwa łączenie...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
@@ -165,9 +165,19 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Zgłoś problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Wyślij";
 
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Napisy na żywo";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Język mówiony";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Język napisów";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Trwa uruchamianie napisów...";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Nie można uruchomić napisów";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Nie można zatrzymać napisów";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Nie można zmienić języka napisów";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Nie można zmienić języka mówionego";
+
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Wycisz";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Menu wyciszania uczestnika.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Usuń z rozmowy";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Menu usuwania uczestnika z rozmowy.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Zaktualizowano ustawienia połączeń. Niektóre funkcje mogą być niedostępne dla Ciebie.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Zaktualizowano ustawienia połączeń. Niektóre dodatkowe akcje mogą być teraz dostępne dla Ciebie.";
+

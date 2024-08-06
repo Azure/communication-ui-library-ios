@@ -197,6 +197,16 @@ enum LocalizationKey: String {
     case supportFormReportAProblemText = "AzureCommunicationUICalling.ReportAProblem.Text"
     case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
 
+    /* Captions */
+    case captionsListTitile = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
+    case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
+    case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
+    case captionsStartingCaptions = "AzureCommunicationUICalling.Captions.Text.StartingCaptions"
+    case captionsStartCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"
+    case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
+    case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"
+    case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
+
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"
     case callingViewParticipantMenuMuteAccessibilityLabel =

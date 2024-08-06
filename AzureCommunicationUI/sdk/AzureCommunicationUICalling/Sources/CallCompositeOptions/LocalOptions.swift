@@ -13,6 +13,8 @@ public struct LocalOptions {
 
     /// Configuration for the call setup screen, including titles and subtitles.
     let setupScreenViewData: SetupScreenViewData?
+    /// Configuration for captions
+    let captionsOptions: CaptionsOptions?
 
     ///  The CameraOn is used when we skip the setup screen
 
@@ -37,20 +39,23 @@ public struct LocalOptions {
     ///   - microphoneOn: Determines if the microphone is enabled by default.
     ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
     ///   - audioVideoMode: The desired audio/video mode for the call.
-    ///   This role will determine functionality of the Setup screen. The actual role will be syncronized 
+    ///   - captionsOptions: Configuration for captions
+    ///   This role will determine functionality of the Setup screen. The actual role will be syncronized
     ///   with ACS services when a Rooms call starts.
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
-                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) {
+                audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
+                captionsOptions: CaptionsOptions? = nil) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
         self.audioVideoMode = audioVideoMode
+        self.captionsOptions = captionsOptions
     }
 
     /// Determines the actual state of the camera

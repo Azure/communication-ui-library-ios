@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class OnHoldOverlayViewModelTests: XCTestCase {
@@ -59,6 +60,7 @@ extension OnHoldOverlayViewModelTests {
                                                               store: storeFactory.store,
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
+                                                                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                                 localParticipantViewData: nil))
         let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModel(
@@ -83,6 +85,7 @@ extension OnHoldOverlayViewModelTests {
                                                               store: storeFactory.store,
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
+                                                                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                                                 localParticipantViewData: nil))
         let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProvider(logger: logger),

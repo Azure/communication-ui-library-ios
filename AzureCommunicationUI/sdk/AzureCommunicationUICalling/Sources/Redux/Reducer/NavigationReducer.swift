@@ -18,8 +18,9 @@ extension Reducer where State == NavigationState,
         case .callingViewLaunched:
             navigationStatus = .inCall
             drawerVisibility = .hidden
-        case .errorAction(.fatalErrorUpdated),
-             .compositeExitAction:
+        case .errorAction(.fatalErrorUpdated):
+            navigationStatus = .inCall
+        case .compositeExitAction:
             navigationStatus = .exit
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
@@ -41,7 +42,16 @@ extension Reducer where State == NavigationState,
         case .showParticipantActions(let participant):
             drawerVisibility = .participantActionsVisible
             selectedParticipant = participant
+        case .showCaptionsListView:
+            drawerVisibility = .captionsViewVisible
+        case .showSpokenLanguageView:
+            drawerVisibility = .spokenLanguageViewVisible
+        case .showCaptionsLanguageView:
+            drawerVisibility = .captionsLangaugeViewVisible
         case .localUserAction(.audioDeviceChangeRequested):
+            drawerVisibility = .hidden
+        case .captionsAction(.setSpokenLanguageRequested(language: let language)),
+                .captionsAction(.setCaptionLanguageRequested(language: let language)):
             drawerVisibility = .hidden
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
@@ -58,6 +68,7 @@ extension Reducer where State == NavigationState,
                 .callingAction(.recordingUpdated),
                 .callingAction(.transcriptionUpdated),
                 .callingAction(.dismissRecordingTranscriptionBannedUpdated),
+                .captionsAction,
                 .lifecycleAction,
                 .localUserAction,
                 .remoteParticipantsAction,
@@ -70,6 +81,9 @@ extension Reducer where State == NavigationState,
         }
         return NavigationState(status: navigationStatus,
                                supportFormVisible: drawerVisibility.isSupportFormVisible,
+                               captionsViewVisible: drawerVisibility.isCaptionsViewVisible,
+                               captionsLanguageViewVisible: drawerVisibility.isCaptionsLangauageViewVisible,
+                               spokenLanguageViewVisible: drawerVisibility.isSpokenLanguageViewVisible,
                                endCallConfirmationVisible: drawerVisibility.isEndCallConfirmationVisible,
                                audioSelectionVisible: drawerVisibility.isAudioSelectionVisible,
                                moreOptionsVisible: drawerVisibility.isMoreOptionsVisible,
@@ -78,8 +92,6 @@ extension Reducer where State == NavigationState,
                                participantActionsVisible: drawerVisibility.isParticipantActionsVisible,
                                selectedParticipant: selectedParticipant)
     }
-
-    // Helper to track only an individual visible drawer at a time
     enum DrawerVisibility {
         case hidden
         case supportFormVisible
@@ -89,6 +101,9 @@ extension Reducer where State == NavigationState,
         case moreOptionsVisible
         case participantsVisible
         case participantActionsVisible
+        case captionsViewVisible
+        case captionsLangaugeViewVisible
+        case spokenLanguageViewVisible
 
         var isSupportFormVisible: Bool { self == .supportFormVisible }
         var isSupportShareSheetVisible: Bool { self == .supportShareSheetVisible }
@@ -97,6 +112,9 @@ extension Reducer where State == NavigationState,
         var isMoreOptionsVisible: Bool { self == .moreOptionsVisible }
         var isParticipantsVisible: Bool { self == .participantsVisible }
         var isParticipantActionsVisible: Bool { self == .participantActionsVisible }
+        var isCaptionsViewVisible: Bool { self == .captionsViewVisible }
+        var isCaptionsLangauageViewVisible: Bool { self == .captionsLangaugeViewVisible }
+        var isSpokenLanguageViewVisible: Bool { self == .spokenLanguageViewVisible}
     }
 
     static func getDrawerVisibility(state: NavigationState) -> DrawerVisibility {
@@ -106,6 +124,10 @@ extension Reducer where State == NavigationState,
         state.audioSelectionVisible ? .audioSelectionVisible :
         state.participantsVisible ? .participantsVisible :
         state.participantActionsVisible ? .participantActionsVisible :
+        state.captionsViewVisible ? .captionsViewVisible :
+        state.captionsLanguageViewVisible ? .captionsLangaugeViewVisible :
+        state.spokenLanguageViewVisible ? .spokenLanguageViewVisible :
         state.moreOptionsVisible ? .moreOptionsVisible : .hidden
     }
+
 }

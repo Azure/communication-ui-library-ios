@@ -43,6 +43,11 @@ class ErrorInfoViewModel: ObservableObject {
     func update(errorState: ErrorState) {
         let errorType = errorState.internalError
 
+        if  errorType == .captionsNotActive ||
+                errorType == .captionsStartFailedCallNotConnected ||
+                errorType == .captionsStartFailedSpokenLanguageNotSupported {
+            return
+        }
         guard let errorType = errorType else {
             // if no error, hide banner
             isDisplayed = false
