@@ -13,25 +13,28 @@ class ControlBarViewModelMocking: ControlBarViewModel {
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
-         endCallConfirm: @escaping (() -> Void),
+         onEndCallTapped: @escaping (() -> Void),
          localUserState: LocalUserState,
          updateState: ((LocalUserState, PermissionState, VisibilityState) -> Void)? = nil,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled) {
+         leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
+         capabilitiesManager: CapabilitiesManager) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
                    localizationProvider: localizationProvider,
                    dispatchAction: dispatchAction,
-                   endCallConfirm: endCallConfirm,
+                   onEndCallTapped: onEndCallTapped,
                    localUserState: localUserState,
                    audioVideoMode: .audioAndVideo,
-                   leaveCallConfirmationMode: leaveCallConfirmationMode)
+                   leaveCallConfirmationMode: leaveCallConfirmationMode,
+                   capabilitiesManager: capabilitiesManager)
     }
 
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
                          callingState: CallingState,
-                         visibilityState: VisibilityState) {
+                         visibilityState: VisibilityState,
+                         navigationState: NavigationState) {
         updateState?(localUserState, permissionState, visibilityState)
     }
 }

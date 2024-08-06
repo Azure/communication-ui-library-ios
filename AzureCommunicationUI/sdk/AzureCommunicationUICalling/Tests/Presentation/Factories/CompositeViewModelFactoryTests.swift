@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 
 @testable import AzureCommunicationUICalling
 
@@ -44,12 +45,22 @@ extension CompositeViewModelFactoryTests {
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
                                          debugInfoManager: DebugInfoManagerMocking(),
+                                         captionsViewManager: CaptionsViewManager(
+                                            store: mockStoreFactory.store,
+                                            callingSDKWrapper: CallingSDKWrapperMocking()
+                                         ),
                                          enableMultitasking: true,
                                          enableSystemPipWhenMultitasking: true,
                                          eventsHandler: CallComposite.Events(),
                                          leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled,
                                          retrieveLogFiles: { return [] },
-                                         callType: .groupCall)
+                                         callType: .groupCall,
+                                         setupScreenOptions: nil,
+                                         capabilitiesManager: CapabilitiesManager(callType: .groupCall),
+                                         avatarManager: AvatarViewManagerMocking(
+                                            store: mockStoreFactory.store,
+                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                            localParticipantViewData: nil))
     }
 }
 

@@ -30,10 +30,7 @@ struct CallingDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
-    /* <ROOMS_SUPPORT> */
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let roomRoleChoices: [String] = ["Presenter", "Attendee"]
-    /* </ROOMS_SUPPORT> */
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
@@ -59,16 +56,10 @@ struct CallingDemoView: View {
             Spacer()
             acsTokenSelector
             displayNameTextField
+            userIdTextField
             meetingSelector
 
             Group {
-                /* <ROOMS_SUPPORT> */
-                if envConfigSubject.selectedMeetingType == .roomCall {
-                    roomRoleSelector
-                } else {
-                    roomRoleSelector.hidden()
-                }
-                /* </ROOMS_SUPPORT> */
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
@@ -117,6 +108,26 @@ struct CallingDemoView: View {
                     envConfigSubject.useMockCallingSDKHandler = true
                     envConfigSubject.skipSetupScreen = false
                     await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "TeamsCallScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .teamsMeeting
+                    envConfigSubject.skipSetupScreen = true
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "TeamsSetupScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .teamsMeeting
+                    envConfigSubject.skipSetupScreen = false
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "GroupCallScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .groupCall
+                    envConfigSubject.skipSetupScreen = true
+                    await startCallComposite()
+                } else if EnvConfig.skipTo.value() == "GroupSetupScreen" {
+                    envConfigSubject.enableCallKit = false
+                    envConfigSubject.selectedMeetingType = .groupCall
+                    envConfigSubject.skipSetupScreen = false
+                    await startCallComposite()
                 }
             }
         })
@@ -157,13 +168,21 @@ struct CallingDemoView: View {
             .textFieldStyle(.roundedBorder)
     }
 
+    var userIdTextField: some View {
+        TextField("User Identifier", text: $envConfigSubject.userId)
+            .disableAutocorrection(true)
+            .padding(.vertical, verticalPadding)
+            .padding(.horizontal, horizontalPadding)
+            .textFieldStyle(.roundedBorder)
+    }
+
     var meetingSelector: some View {
         Group {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
                 Text("1:N Call").tag(MeetingType.oneToNCall)
-                /* <ROOMS_SUPPORT> */ Text("Room Call").tag(MeetingType.roomCall) /* </ROOMS_SUPPORT> */
+                Text("Room Call").tag(MeetingType.roomCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -180,7 +199,6 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* <MEETING_ID_LOCATOR> */
                 TextField(
                     "Team Meeting Id",
                     text: $envConfigSubject.teamsMeetingId)
@@ -193,7 +211,6 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* </MEETING_ID_LOCATOR> */
             case .oneToNCall:
                 TextField(
                     "participant MRIs(, separated)",
@@ -201,7 +218,6 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* <ROOMS_SUPPORT> */
             case .roomCall:
                 TextField(
                     "Room Id",
@@ -209,24 +225,11 @@ struct CallingDemoView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
-                /* </ROOMS_SUPPORT> */
             }
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
     }
-
-    /* <ROOMS_SUPPORT> */
-    var roomRoleSelector: some View {
-
-        Section {
-            Picker("Room Role Type", selection: $envConfigSubject.selectedRoomRoleType) {
-                Text("Presenter").tag(RoomRoleType.presenter)
-                Text("Attendee").tag(RoomRoleType.attendee)
-            }.pickerStyle(.segmented)
-        }
-    }
-    /* </ROOMS_SUPPORT> */
 
     var settingButton: some View {
         Button("Settings") {
@@ -310,12 +313,10 @@ struct CallingDemoView: View {
         } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
             // Check if teamsMeetingLink is not empty or both meetingId and passcode are not empty
             let isTeamsMeetingLinkValid = !envConfigSubject.teamsMeetingLink.isEmpty
-            /* <MEETING_ID_LOCATOR> */
             let isTeamsMeetingIdAndPasscodeValid = !envConfigSubject.teamsMeetingId.isEmpty
             && !envConfigSubject.teamsMeetingPasscode.isEmpty
-            /* </MEETING_ID_LOCATOR> */
             return !isTeamsMeetingLinkValid
-            /* <MEETING_ID_LOCATOR> */ && !isTeamsMeetingIdAndPasscodeValid /* </MEETING_ID_LOCATOR> */
+            && !isTeamsMeetingIdAndPasscodeValid
         }
         return false
     }
@@ -411,6 +412,9 @@ extension CallingDemoView {
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
+        let setupScreenOptions = SetupScreenOptions(
+            cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
+            microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
         let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -425,6 +429,7 @@ extension CallingDemoView {
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callKitOptions = $envConfigSubject.enableCallKit.wrappedValue ? getCallKitOptions() : nil
+        let userId = CommunicationUserIdentifier(envConfigSubject.userId)
 
         let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -436,7 +441,8 @@ extension CallingDemoView {
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
             callScreenOptions: callScreenOptions,
-            callKitOptions: callKitOptions) :
+            callKitOptions: callKitOptions,
+            setupScreenOptions: setupScreenOptions) :
         CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
@@ -449,7 +455,8 @@ extension CallingDemoView {
             callScreenOptions: callScreenOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
-            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall)
+            disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall,
+            setupScreenOptions: setupScreenOptions)
 
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         if let credential = try? await getTokenCredential() {
@@ -466,7 +473,7 @@ extension CallingDemoView {
             #else
             let callComposite = envConfigSubject.useDeprecatedLaunch ?
             CallComposite(withOptions: callCompositeOptions) :
-                CallComposite(credential: credential, withOptions: callCompositeOptions)
+            CallComposite(credential: credential, withOptions: callCompositeOptions)
             #endif
             subscribeToEvents(callComposite: callComposite)
             GlobalCompositeManager.callComposite = callComposite
@@ -578,28 +585,17 @@ extension CallingDemoView {
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        /* <ROOMS_SUPPORT> */
-        let roomRole = envConfigSubject.selectedRoomRoleType
-        var roomRoleData: ParticipantRole?
-        if envConfigSubject.selectedMeetingType == .roomCall {
-            if roomRole == .presenter {
-                roomRoleData = ParticipantRole.presenter
-            } else if roomRole == .attendee {
-                roomRoleData = ParticipantRole.attendee
-            }
-        }
-        /* </ROOMS_SUPPORT> */
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
+        let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
+                                              spokenLanguage: envConfigSubject.spokenLanguage)
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                                        /* <ROOMS_SUPPORT> */
-                                         roleHint: roomRoleData
-                                        /* </ROOMS_SUPPORT> */
+                            captionsOptions: captionsOptions
         )
     }
 
@@ -648,8 +644,7 @@ extension CallingDemoView {
                             localOptions: localOptions
                         )
                     }
-                } /* <MEETING_ID_LOCATOR> */ 
-                else if !envConfigSubject.teamsMeetingId.isEmpty && !envConfigSubject.teamsMeetingPasscode.isEmpty {
+                } else if !envConfigSubject.teamsMeetingId.isEmpty && !envConfigSubject.teamsMeetingPasscode.isEmpty {
                     if envConfigSubject.displayName.isEmpty {
                         callComposite.launch(
                             remoteOptions: RemoteOptions(for: .teamsMeetingId(meetingId:
@@ -670,7 +665,7 @@ extension CallingDemoView {
                             localOptions: localOptions
                         )
                     }
-                } /* </MEETING_ID_LOCATOR> */
+                }
             case .oneToNCall:
                 let ids: [String] = link.split(separator: ",").map {
                     String($0).trimmingCharacters(in: .whitespacesAndNewlines)
@@ -679,7 +674,6 @@ extension CallingDemoView {
                 ids.map { createCommunicationIdentifier(fromRawId: $0) }
                 callComposite.launch(participants: communicationIdentifiers,
                                      localOptions: localOptions)
-            /* <ROOMS_SUPPORT> */
             case .roomCall:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions:
@@ -694,7 +688,6 @@ extension CallingDemoView {
                                                      displayName: envConfigSubject.displayName),
                         localOptions: localOptions)
                 }
-                /* </ROOMS_SUPPORT> */
             }
         }
     }
@@ -744,13 +737,11 @@ extension CallingDemoView {
                     callComposite.launch(participants: communicationIdentifiers,
                                          callKitRemoteInfo: callKitRemoteInfo,
                                          localOptions: localOptions)
-                    /* <ROOMS_SUPPORT> */
                 case .roomCall:
                     callComposite.launch(
                         locator: .roomCall(roomId: link),
                         callKitRemoteInfo: callKitRemoteInfo,
                         localOptions: localOptions)
-                    /* </ROOMS_SUPPORT> */
                 }
             }
             callingViewModel.callComposite = callComposite
@@ -853,10 +844,8 @@ extension CallingDemoView {
             return envConfigSubject.teamsMeetingLink
         case .oneToNCall:
             return envConfigSubject.participantMRIs
-        /* <ROOMS_SUPPORT> */
         case .roomCall:
             return envConfigSubject.roomId
-        /* </ROOMS_SUPPORT> */
         }
     }
 

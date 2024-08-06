@@ -5,11 +5,10 @@
 
 import Foundation
 
-class LobbyWaitingHeaderViewModel: ObservableObject {
+internal class LobbyWaitingHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var title: String
     @Published var isDisplayed = false
-    @Published var isParticipantsListDisplayed = false
     @Published var isVoiceOverEnabled = false
 
     private let logger: Logger
@@ -17,7 +16,6 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private var lobbyParticipantCount: Int = 0
 
-    let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: PrimaryButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -35,9 +33,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         let title = localizationProvider.getLocalizedString(.lobbyWaitingToJoin)
         self.title = title
         self.accessibilityLabel = title
-        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState,
-            dispatchAction: dispatchAction)
+
         self.participantListButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: localizationProvider.getLocalizedString(.lobbyWaitingHeaderViewButton),
@@ -47,7 +43,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.showParticipantListButtonTapped()
+                dispatchAction(.showParticipants)
         }
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .lobbyWaitingHeaderViewButtonAccessibilityLabel)
@@ -63,14 +59,6 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         }
         self.dismissButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .lobbyWaitingHeaderDismissButtonAccessibilityLabel)
-    }
-
-    func showParticipantListButtonTapped() {
-        self.displayParticipantsList()
-    }
-
-    func displayParticipantsList() {
-        self.isParticipantsListDisplayed = true
     }
 
     func update(localUserState: LocalUserState,
@@ -91,9 +79,6 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         }
 
         self.lobbyParticipantCount = canShow ? newLobbyParticipantCount : 0
-
-        participantsListViewModel.update(localUserState: localUserState,
-                                         remoteParticipantsState: remoteParticipantsState)
     }
 
     private func lobbyUsersCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {

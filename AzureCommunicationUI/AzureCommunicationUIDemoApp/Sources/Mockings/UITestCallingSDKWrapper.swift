@@ -10,6 +10,14 @@ import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
+    func removeParticipant(_ participantId: String) async throws {
+        return
+    }
+
+    func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
+        throw CallCompositeInternalError.callJoinFailed
+    }
+
     var callComposite: CallComposite?
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -141,6 +149,18 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func startPreviewVideoStream() async throws -> String {
         return ""
+    }
+
+    func startCaptions(_ language: String) async throws {
+    }
+
+    func stopCaptions() async throws {
+    }
+
+    func setCaptionsSpokenLanguage(_ language: String) async throws {
+    }
+
+    func setCaptionsCaptionLanguage(_ language: String) async throws {
     }
 
     func muteLocalMic() async throws {

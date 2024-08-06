@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import AzureCommunicationCommon
 
 /// User-configurable options for creating CallComposite.
 public struct CallCompositeOptions {
@@ -15,9 +16,12 @@ public struct CallCompositeOptions {
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
     private(set) var callScreenOptions: CallScreenOptions?
+    private(set) var capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode?
     private(set) var callKitOptions: CallKitOptions?
     private(set) var disableInternalPushForIncomingCall = false
     private(set) var displayName: String?
+    private(set) var userId: CommunicationIdentifier?
+    private(set) var setupScreenOptions: SetupScreenOptions?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -35,6 +39,7 @@ public struct CallCompositeOptions {
     /// - Parameter callKitOptions: CallKitOptions for specifying CallKit customization. Default value is `nil`.
     /// - Parameter displayName: Display name for the user. Default value is `nil`.
     /// - Parameter disableInternalPushForIncomingCall: Disables internal push for incoming call.
+    /// - Parameter userId: User Identifier is used for local avatar injection. Default value is `nil`
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
@@ -44,7 +49,11 @@ public struct CallCompositeOptions {
                 callScreenOptions: CallScreenOptions? = nil,
                 callKitOptions: CallKitOptions? = nil,
                 displayName: String? = nil,
-                disableInternalPushForIncomingCall: Bool = false) {
+                disableInternalPushForIncomingCall: Bool = false,
+                setupScreenOptions: SetupScreenOptions? = nil,
+                capabilitiesChangedNotificationMode: CapabilitiesChangedNotificationMode? = nil,
+                userId: CommunicationIdentifier? = nil
+            ) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
@@ -52,8 +61,11 @@ public struct CallCompositeOptions {
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPictureInPictureWhenMultitasking
         self.callScreenOptions = callScreenOptions
+        self.capabilitiesChangedNotificationMode = capabilitiesChangedNotificationMode
         self.callKitOptions = callKitOptions
         self.displayName = displayName
+        self.setupScreenOptions = setupScreenOptions
         self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        self.userId = userId
     }
 }

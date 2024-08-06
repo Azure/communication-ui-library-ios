@@ -7,22 +7,16 @@ import Foundation
 import Combine
 
 class BannerViewModel: ObservableObject {
-    enum FeatureStatus: Equatable {
-        case on
-        case off
-        case stopped
-    }
 
     @Published var isBannerDisplayed = false
     var bannerTextViewModel: BannerTextViewModel
 
-    private var callingState = CallingState()
-    private var recordingState: FeatureStatus = .off
-    private var transcriptionState: FeatureStatus = .off
+    private let dispatch: ActionDispatch
 
     var dismissButtonViewModel: IconButtonViewModel!
 
-    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol, dispatchAction: @escaping ActionDispatch) {
+        self.dispatch = dispatchAction
         self.bannerTextViewModel = compositeViewModelFactory.makeBannerTextViewModel()
         self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .dismiss,
@@ -37,35 +31,10 @@ class BannerViewModel: ObservableObject {
         self.dismissButtonViewModel.update(accessibilityHint: "Dismisses this notification")
     }
 
-    func update(callingState: CallingState) {
-        if self.callingState.isRecordingActive != callingState.isRecordingActive ||
-            self.callingState.isTranscriptionActive != callingState.isTranscriptionActive {
-            self.updateBanner(callingState: callingState)
-            self.callingState = callingState
-        }
-    }
+    func update(callingState: CallingState, visibilityState: VisibilityState) {
+        let recordingState = callingState.recordingStatus
+        let transcriptionState = callingState.transcriptionStatus
 
-    private func updateBanner(callingState: CallingState) {
-        if callingState.isRecordingActive {
-            recordingState = .on
-        } else {
-            recordingState = recordingState == .on ? .stopped : recordingState
-        }
-        if callingState.isTranscriptionActive {
-            transcriptionState = .on
-        } else {
-            transcriptionState = transcriptionState == .on ? .stopped : transcriptionState
-        }
-        displayBanner(recordingState: recordingState, transcriptionState: transcriptionState)
-        if recordingState == .stopped,
-           transcriptionState == .stopped {
-            recordingState = .off
-            transcriptionState = .off
-        }
-    }
-
-    private func displayBanner(recordingState: FeatureStatus,
-                               transcriptionState: FeatureStatus) {
         var toDisplayBanner = true
         switch(recordingState, transcriptionState) {
         case (.on, .on):
@@ -89,16 +58,11 @@ class BannerViewModel: ObservableObject {
             bannerTextViewModel.update(bannerInfoType: .recordingAndTranscriptionStopped)
         }
         isBannerDisplayed = toDisplayBanner
+        && !callingState.isRecorcingTranscriptionBannedDismissed
+        && visibilityState.currentStatus == VisibilityStatus.visible
     }
 
     private func dismissBanner() {
-        isBannerDisplayed = false
-        if recordingState == .stopped {
-            recordingState = .off
-        }
-        if transcriptionState == .stopped {
-            transcriptionState = .off
-        }
-        bannerTextViewModel.update(bannerInfoType: nil)
+        dispatch(.callingAction(.dismissRecordingTranscriptionBannedUpdated(isDismissed: true)))
     }
 }

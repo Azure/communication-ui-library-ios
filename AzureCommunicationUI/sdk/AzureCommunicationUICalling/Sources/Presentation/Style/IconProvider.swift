@@ -7,6 +7,7 @@ import UIKit
 import SwiftUI
 
 enum CompositeIcon: String {
+    case none = ""
     case cameraSwitch = "ic_fluent_camera_switch_24_regular"
     case meetNow = "ic_fluent_meet_now_20_regular"
     case micOff = "ic_fluent_mic_off_24_filled"
@@ -35,6 +36,12 @@ enum CompositeIcon: String {
     case speakerMute = "ic_fluent_speaker_mute_24_regular"
     case micProhibited = "ic_fluent_mic_prohibited_24_regular"
     case personFeedback = "ic_fluent_person_feedback_24_regular"
+    case rightChevron = "ic_fluent_chevron_right_20_regular"
+    case closeCaptions = "ic_fluent_closed_caption_24_regular"
+    case localLanguage = "ic_fluent_local_language_24_regular"
+    case personVoice = "ic_fluent_person_voice_24_regular"
+    case personDelete = "ic_fluent_person_delete_24_regular"
+    case captionsError = "ic_fluent_error_circle_16_regular"
 }
 
 struct IconProvider {

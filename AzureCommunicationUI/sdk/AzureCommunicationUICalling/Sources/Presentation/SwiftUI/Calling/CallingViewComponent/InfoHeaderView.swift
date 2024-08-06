@@ -10,6 +10,7 @@ struct InfoHeaderView: View {
     @ObservedObject var viewModel: InfoHeaderViewModel
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
+    @State var participantMenuSourceView = UIView()
     @AccessibilityFocusState var focusedOnParticipantList: Bool
     let avatarViewManager: AvatarViewManagerProtocol
 
@@ -42,11 +43,20 @@ struct InfoHeaderView: View {
         .onAppear(perform: {
             viewModel.isPad = UIDevice.current.userInterfaceIdiom == .pad
         })
-        .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
-            participantsListView
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
+        /*
+        .modifier(PopupModalView(isPresented:
+                                    viewModel.isParticipantsListDisplayed || viewModel.isParticipantMenuDisplayed) {
+            if viewModel.isParticipantsListDisplayed {
+                participantsListView
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
+            }
+            if viewModel.isParticipantMenuDisplayed {
+                participantMenuView
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
+            }
+        }) */
         .accessibilityElement(children: .contain)
     }
 
@@ -90,24 +100,5 @@ struct InfoHeaderView: View {
         IconButton(viewModel: viewModel.participantListButtonViewModel)
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
             .accessibilityFocused($focusedOnParticipantList, equals: true)
-    }
-
-    var participantsListView: some View {
-        return Group {
-            if let avatarManager = avatarViewManager as? AvatarViewManager {
-                CompositeParticipantsList(isPresented: $viewModel.isParticipantsListDisplayed,
-                                          viewModel: viewModel.participantsListViewModel,
-                                          avatarViewManager: avatarManager,
-                                          sourceView: participantsListButtonSourceView)
-                .modifier(LockPhoneOrientation())
-                .onDisappear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                        focusedOnParticipantList = true
-                    }
-                }
-            } else {
-                EmptyView()
-            }
-        }
     }
 }

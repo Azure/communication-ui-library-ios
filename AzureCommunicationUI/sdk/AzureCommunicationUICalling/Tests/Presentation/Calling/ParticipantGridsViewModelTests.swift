@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class ParticipantGridViewModelTests: XCTestCase {
@@ -683,7 +684,11 @@ extension ParticipantGridViewModelTests {
         let accessibilityProvider = AccessibilityProvider()
         var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
-                                                              accessibilityProvider: accessibilityProvider)
+                                                              accessibilityProvider: accessibilityProvider,
+                                                              avatarManager: AvatarViewManagerMocking(
+                                                                store: storeFactory.store,
+                                                                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                                localParticipantViewData: nil))
         factoryMocking.createMockParticipantGridCellViewModel = { infoModel in
             if let completion = participantGridCellViewUpdateCompletion {
                 return ParticipantGridCellViewModelMocking(participantModel: infoModel,
@@ -704,7 +709,11 @@ extension ParticipantGridViewModelTests {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
-                                                              accessibilityProvider: accessibilityProvider)
+                                                              accessibilityProvider: accessibilityProvider,
+                                                              avatarManager: AvatarViewManagerMocking(
+                                                                store: storeFactory.store,
+                                                                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                                localParticipantViewData: nil))
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
                                         localizationProvider: localizationProvider,
                                         accessibilityProvider: accessibilityProvider,

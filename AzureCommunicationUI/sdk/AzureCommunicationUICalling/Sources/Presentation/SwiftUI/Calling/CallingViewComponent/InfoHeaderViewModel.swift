@@ -10,7 +10,6 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed = true
-    @Published var isParticipantsListDisplayed = false
     @Published var isVoiceOverEnabled = false
     private let logger: Logger
     private let dispatch: ActionDispatch
@@ -19,10 +18,8 @@ class InfoHeaderViewModel: ObservableObject {
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
-    let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
-
-    let participantsListViewModel: ParticipantsListViewModel
+    let enableMultitasking: Bool
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -36,17 +33,15 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool) {
+        let title = localizationProvider.getLocalizedString(.callWith0Person)
+        self.infoLabel = title
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        let title = localizationProvider.getLocalizedString(.callWith0Person)
-        self.infoLabel = title
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
-        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState, dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
             buttonType: .infoButton,
@@ -56,6 +51,7 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
+
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
 
@@ -85,7 +81,7 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     func displayParticipantsList() {
-        self.isParticipantsListDisplayed = true
+        dispatch(.showParticipants)
     }
 
     func toggleDisplayInfoHeaderIfNeeded() {
@@ -111,26 +107,29 @@ class InfoHeaderViewModel: ObservableObject {
             updateInfoHeaderAvailability()
         }
 
-        let updatedRemoteparticipantCount = remoteParticipantsState.participantInfoList
-            .filter({ participantInfoModel in
-                participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
-            })
-            .count
+        let updatedRemoteparticipantCount = getParticipantCount(remoteParticipantsState)
 
         if participantsCount != updatedRemoteparticipantCount {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
-        participantsListViewModel.update(localUserState: localUserState,
-                                         remoteParticipantsState: remoteParticipantsState)
 
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
         }
+    }
 
-        if visibilityState.currentStatus != .visible {
-            isParticipantsListDisplayed = false
-        }
+    private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
+        let remoteParticipantCountForGridView = remoteParticipantsState.participantInfoList
+            .filter({ participantInfoModel in
+                participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
+            })
+            .count
+
+        let filteredOutRemoteParticipantsCount =
+        remoteParticipantsState.participantInfoList.count - remoteParticipantCountForGridView
+
+        return remoteParticipantsState.totalParticipantCount - filteredOutRemoteParticipantsCount
     }
 
     private func isHoldingCall(callingState: CallingState) {
@@ -140,9 +139,6 @@ class InfoHeaderViewModel: ObservableObject {
         }
         if isInfoHeaderDisplayed {
             isInfoHeaderDisplayed = false
-        }
-        if isParticipantsListDisplayed {
-            isParticipantsListDisplayed = false
         }
     }
 

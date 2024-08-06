@@ -21,7 +21,8 @@ class SetupControlBarViewModelMocking: SetupControlBarViewModel {
                    dispatchAction: dispatchAction,
                    localUserState: localUserState,
                    localizationProvider: LocalizationProviderMocking(),
-                   audioVideoMode: .audioAndVideo)
+                   audioVideoMode: .audioAndVideo,
+                   setupScreenOptions: nil)
     }
 
     override func update(localUserState: LocalUserState,

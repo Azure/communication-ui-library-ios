@@ -15,11 +15,11 @@
 "AzureCommunicationUICalling.SetupView.Title"="إعداد";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="رجوع";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="انضمام إلى مكالمة";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="بدء مكالمة";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="جاري الانضمام إلى المكالمة…";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="يتم الآن بدء المكالمة…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "تم تعطيل الانضمام إلى المكالمة";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "بدء مكالمة معطّل";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="الفيديو قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="الفيديو قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="الفيديو قيد التشغيل";
@@ -78,6 +78,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="السماح لـ %@؟";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="سماح";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="رفض";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ إضافية";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="تبديل إلى الكاميرا الخلفية";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="تبديل إلى الكاميرا الأمامية";
@@ -97,7 +98,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "المزيد";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "مشاركة معلومات التشخيص";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="يتم الآن الاتصال...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
 
 
 /* ComplianceBanner title */
@@ -163,4 +164,20 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="إرفاق لقطة الشاشة";
 "AzureCommunicationUICalling.ReportAProblem.Text"="الإبلاغ عن مشكلة";
 "AzureCommunicationUICalling.SendFeedback.Text"="إرسال";
+
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="التسميات التوضيحية المباشرة";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="اللغة المنطوقة";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="لغة التسمية التوضيحية";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="يتم الآن بدء تشغيل التسميات التوضيحية...";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="يتعذّر بدء تشغيل التسميات التوضيحية";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="يتعذّر إيقاف التسميات التوضيحية";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="يتعذر تغيير لغة التسميات التوضيحية";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="يتعذّر تغيير اللغة المنطوقة";
+
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="كتم الصوت";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="قائمة كتم صوت المشارك.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="إزالة من المكالمة";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="إزالة مشارك من قائمة المكالمات.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="تم تحديث إعدادات المكالمة. قد لا تتوفر بعض الميزات لك.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="تم تحديث إعدادات المكالمة. قد تتوفر الآن بعض الإجراءات الإضافية لك.";
 

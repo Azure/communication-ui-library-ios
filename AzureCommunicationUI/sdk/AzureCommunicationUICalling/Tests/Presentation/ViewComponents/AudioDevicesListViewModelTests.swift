@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class AudioDevicesListViewModelTests: XCTestCase {
@@ -21,7 +22,10 @@ class AudioDevicesListViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                           store: storeFactory.store,
-                                                          localizationProvider: localizationProvider)
+                                                          localizationProvider: localizationProvider,
+                                                          avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                                                                  localParticipantViewData: nil))
     }
 
     override func tearDown() {
@@ -43,7 +47,9 @@ class AudioDevicesListViewModelTests: XCTestCase {
             }).store(in: cancellable)
 
         XCTAssertTrue(sut.audioDevicesList.isEmpty)
-        sut.update(audioDeviceStatus: .headphonesSelected)
+        sut.update(audioDeviceStatus: .headphonesSelected,
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         XCTAssertFalse(sut.audioDevicesList.isEmpty)
         wait(for: [expectation], timeout: 1)
     }
@@ -59,13 +65,17 @@ class AudioDevicesListViewModelTests: XCTestCase {
                 XCTFail("audio device is in the process of switching so audioDeviceStatus should not publish")
             }).store(in: cancellable)
 
-        sut.update(audioDeviceStatus: .receiverSelected)
+        sut.update(audioDeviceStatus: .receiverSelected,
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let initialSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertEqual(initialSelection?.title, self.localizationProvider
                         .getLocalizedString(AudioDeviceType.receiver.name))
         XCTAssertEqual(initialSelection?.icon, .speakerRegular)
 
-        sut.update(audioDeviceStatus: .speakerRequested)
+        sut.update(audioDeviceStatus: .speakerRequested,
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let requestedSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertEqual(requestedSelection?.title, self.localizationProvider
                         .getLocalizedString(AudioDeviceType.receiver.name))
@@ -89,13 +99,17 @@ class AudioDevicesListViewModelTests: XCTestCase {
                 expectation.fulfill()
             }).store(in: cancellable)
 
-        sut.update(audioDeviceStatus: .bluetoothRequested)
+        sut.update(audioDeviceStatus: .bluetoothRequested,
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let requestedSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertNotEqual(requestedSelection?.title, self.localizationProvider
                             .getLocalizedString(AudioDeviceType.bluetooth.name))
         XCTAssertNotEqual(requestedSelection?.icon, .speakerBluetooth)
 
-        sut.update(audioDeviceStatus: .bluetoothSelected)
+        sut.update(audioDeviceStatus: .bluetoothSelected,
+                   navigationState: NavigationState(),
+                   visibilityState: VisibilityState())
         let updatedSelection = sut.audioDevicesList.first(where: { $0.isSelected })
         XCTAssertEqual(updatedSelection?.title, self.localizationProvider
                         .getLocalizedString(AudioDeviceType.bluetooth.name))

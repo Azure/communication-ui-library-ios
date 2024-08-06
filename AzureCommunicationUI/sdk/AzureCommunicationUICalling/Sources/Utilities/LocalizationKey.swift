@@ -98,6 +98,7 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"
     case participantListConfirmAdmit = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"
     case participantListConfirmDecline = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"
+    case participantListPlusMore = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"
 
     case frontCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"
@@ -121,7 +122,6 @@ enum LocalizationKey: String {
 
     case moreAccessibilityLabel = "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel"
     case shareDiagnosticsInfo = "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo"
-
     /* ComplianceBanner title */
     case bannerTitleRecordingAndTranscriptionStarted =
             "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"
@@ -196,4 +196,24 @@ enum LocalizationKey: String {
     case supportFormAttachScreenshot = "AzureCommunicationUICalling.Attach.Screenshot"
     case supportFormReportAProblemText = "AzureCommunicationUICalling.ReportAProblem.Text"
     case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
+
+    /* Captions */
+    case captionsListTitile = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
+    case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
+    case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
+    case captionsStartingCaptions = "AzureCommunicationUICalling.Captions.Text.StartingCaptions"
+    case captionsStartCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"
+    case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
+    case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"
+    case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
+
+    /* Remote participant menu */
+    case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"
+    case callingViewParticipantMenuMuteAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"
+    case callingViewParticipantMenuRemove = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"
+    case callingViewParticipantMenuRemoveAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"
+    case callingViewToastFeaturesLost = "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"
+    case callingViewToastFeaturesGained = "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"
 }

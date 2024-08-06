@@ -7,15 +7,16 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class BannerViewModelMocking: BannerViewModel {
-    private let updateState: ((CallingState) -> Void)?
+    private let updateState: ((CallingState, VisibilityState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         updateState: ((CallingState) -> Void)? = nil) {
+         dispatchAction: @escaping ActionDispatch,
+         updateState: ((CallingState, VisibilityState) -> Void)? = nil) {
         self.updateState = updateState
-        super.init(compositeViewModelFactory: compositeViewModelFactory)
+        super.init(compositeViewModelFactory: compositeViewModelFactory, dispatchAction: dispatchAction)
     }
 
-    override func update(callingState: CallingState) {
-        updateState?(callingState)
+    override func update(callingState: CallingState, visibilityState: VisibilityState) {
+        updateState?(callingState, visibilityState)
     }
 }

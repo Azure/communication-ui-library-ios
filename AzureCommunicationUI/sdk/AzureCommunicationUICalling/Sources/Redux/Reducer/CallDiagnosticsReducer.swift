@@ -40,8 +40,20 @@ extension Reducer where State == CallDiagnosticsState,
              .compositeExitAction,
              .callingViewLaunched,
              .showSupportForm,
-             .hideSupportForm,
-             .visibilityAction:
+             .showCaptionsListView,
+             .showSpokenLanguageView,
+             .showCaptionsLanguageView,
+             .captionsAction,
+             .showEndCallConfirmation,
+             .showMoreOptions,
+             .showAudioSelection,
+             .showSupportShare,
+             .showParticipants,
+             .showParticipantActions,
+             .hideDrawer,
+             .visibilityAction,
+             .toastNotificationAction,
+             .setTotalParticipantCount:
             return state
         }
 

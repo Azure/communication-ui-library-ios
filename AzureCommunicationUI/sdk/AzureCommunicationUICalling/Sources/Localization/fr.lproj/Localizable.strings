@@ -73,6 +73,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Autoriser %@ ?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Autoriser";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Refuser";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ de plus";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Basculer vers la caméra arrière";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Basculer vers la caméra avant";
@@ -157,3 +158,10 @@
 "AzureCommunicationUICalling.Attach.Screenshot"="Joindre une capture d’écran";
 "AzureCommunicationUICalling.ReportAProblem.Text"="Signaler un problème";
 "AzureCommunicationUICalling.SendFeedback.Text"="Envoyer";
+
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Désactiver le micro / muet";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Désactivez le son du participant.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Supprimer de l'appel";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Supprimez le participant du menu de l’appel.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Paramètres d’appel mis à jour. Certaines fonctionnalités peuvent ne pas être disponibles pour vous.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Paramètres d’appel mis à jour. Certaines actions supplémentaires peuvent maintenant être disponibles.";
