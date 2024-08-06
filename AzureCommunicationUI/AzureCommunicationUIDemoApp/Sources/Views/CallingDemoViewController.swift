@@ -292,28 +292,28 @@ class CallingDemoViewController: UIViewController {
 
         let credential = (try? CommunicationTokenCredential(token: acsTokenTextField.text!))!
 
-let callComposite = CallComposite(credential: credential)
+        let callComposite = CallComposite(credential: credential)
 
-let customButton = CustomButtonOptions(image: UIImage(),
-                                       title: "Hide composite") {_ in
-    // hide call composite and display Troubleshooting tips
-    callComposite.isHidden = true
-    // ...
-}
+        let customButton = CustomButtonOptions(image: UIImage(),
+                                               title: "Hide composite") {_ in
+            // hide call composite and display Troubleshooting tips
+            callComposite.isHidden = true
+            // ...
+        }
 
-let cameraButton = ButtonOptions(visible: false)
-let micButton = ButtonOptions(enabled: false)
+        let cameraButton = ButtonOptions(visible: false)
+        let micButton = ButtonOptions(enabled: false)
 
-let callScreenControlBarOptions = CallScreenControlBarOptions(
-    cameraButton: cameraButton,
-    microphoneButton: micButton,
-    customButtons: [customButton]
-)
+        let callScreenControlBarOptions = CallScreenControlBarOptions(
+            cameraButton: cameraButton,
+            microphoneButton: micButton,
+            customButtons: [customButton]
+        )
 
-let callScreenOptions = CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
-let localOptions = LocalOptions(callScreenOptions: callScreenOptions)
+        let callScreenOptions = CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+        let localOptions = LocalOptions(callScreenOptions: callScreenOptions)
 
-callComposite.launch(locator: .roomCall(roomId: "..."), localOptions: localOptions)
+        callComposite.launch(locator: .roomCall(roomId: "..."), localOptions: localOptions)
     }
 
     func subscribeToEvents(callComposite: CallComposite) {
