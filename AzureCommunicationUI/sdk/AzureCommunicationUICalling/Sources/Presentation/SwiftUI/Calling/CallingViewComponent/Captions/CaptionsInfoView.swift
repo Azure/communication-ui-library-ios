@@ -81,4 +81,3 @@ struct CaptionsInfoView: View {
         }
     }
 }
-
