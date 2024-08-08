@@ -25,10 +25,20 @@ struct CaptionsInfoView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear) // Explicitly setting background color
-                        .background(GeometryReader { geometry in
-                            Color.clear.onAppear {
-                                updateVisibilityState(geometry: geometry, index: index)
+                        .background(GeometryReader { geometry -> Color in
+                            DispatchQueue.main.async {
+                                // Update visibility state based on the geometry of the last item
+                                if index == viewModel.captionsData.indices.last {
+                                    if verticalSizeClass == .compact {
+                                        isLastItemVisible = geometry.frame(in: .global).maxY <=
+                                        UIScreen.main.bounds.height + 105
+                                    } else {
+                                        isLastItemVisible = geometry.frame(in: .global).maxY <=
+                                        UIScreen.main.bounds.height - 100
+                                    }
+                                }
                             }
+                            return Color.clear
                         })
                     }
                 }
