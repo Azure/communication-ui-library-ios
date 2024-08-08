@@ -539,8 +539,8 @@ class ControlBarViewModelTests: XCTestCase {
     }
 
     func test_controlBarViewModel_audioVideoModeAudioOnlyHidesCameraButton() {
-        let sut = makeSUT(audioVideoMode: .a udioOnly)
-        XCTAssertFalse(sut.isAudioDeviceVisible())
+        let sut = makeSUT(audioVideoMode: .audioOnly)
+        XCTAssertFalse(sut.isCameraDisabled())
     }
 
     func test_controlBarViewModel_audioVideoModeNormalShowsCameraButton() {
