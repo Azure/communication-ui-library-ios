@@ -539,13 +539,13 @@ class ControlBarViewModelTests: XCTestCase {
     }
 
     func test_controlBarViewModel_audioVideoModeAudioOnlyHidesCameraButton() {
-        let sut = makeSUT(audioVideoMode: .audioOnly)
-        XCTAssertFalse(sut.isCameraDisplayed)
+        let sut = makeSUT(audioVideoMode: .a udioOnly)
+        XCTAssertFalse(sut.isAudioDeviceVisible())
     }
 
     func test_controlBarViewModel_audioVideoModeNormalShowsCameraButton() {
         let sut = makeSUT(audioVideoMode: .audioAndVideo)
-        XCTAssertTrue(sut.isCameraDisplayed)
+        XCTAssertTrue(sut.isAudioDeviceVisible())
     }
 
     func test_controlBarViewModel_capabilities_turnVideoOn_isCameraDisabledFalse() {
@@ -635,8 +635,8 @@ extension ControlBarViewModelTests {
                                    onEndCallTapped: {},
                                    localUserState: localUserState,
                                    audioVideoMode: audioVideoMode,
-                                   leaveCallConfirmationMode: .alwaysEnabled,
-                                   capabilitiesManager: capabilitiesManager)
+                                   capabilitiesManager: capabilitiesManager,
+                                   controlBarOptions: CallScreenControlBarOptions())
     }
     func makeSUTWhenDisplayLeaveDiabled(localizationProvider: LocalizationProviderMocking? = nil, audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
@@ -646,8 +646,8 @@ extension ControlBarViewModelTests {
                                    onEndCallTapped: {},
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
-                                   leaveCallConfirmationMode: .alwaysDisabled,
-                                   capabilitiesManager: capabilitiesManager)
+                                   capabilitiesManager: capabilitiesManager,
+                                   controlBarOptions: nil)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {

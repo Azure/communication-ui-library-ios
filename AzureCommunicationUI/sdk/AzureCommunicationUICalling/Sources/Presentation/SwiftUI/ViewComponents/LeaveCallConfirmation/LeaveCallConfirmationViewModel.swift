@@ -33,7 +33,7 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
                 action: {
                     endCall()
                 },
-                startIcon: .endCallRegular),
+                startCompositeIcon: .endCallRegular),
 
             DrawerGenericItemViewModel(
                 title: cancelText,
@@ -41,7 +41,7 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
                 action: {
                     dismissConfirmation()
                 },
-                startIcon: .dismiss)
+                startCompositeIcon: .dismiss)
         ]
         self.endCall = endCall
         self.dismissConfirmation = dismissConfirmation

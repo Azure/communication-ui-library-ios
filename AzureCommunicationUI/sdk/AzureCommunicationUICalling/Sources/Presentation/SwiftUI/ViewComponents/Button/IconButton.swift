@@ -111,31 +111,33 @@ struct IconButton: View {
     }
 
     var body: some View {
-        Group {
-            Button(action: viewModel.action) {
-                Icon(name: viewModel.iconName, size: iconImageSize)
-                    .contentShape(Rectangle())
+        if viewModel.isVisible {
+            Group {
+                Button(action: viewModel.action) {
+                    Icon(name: viewModel.iconName, size: iconImageSize)
+                        .contentShape(Rectangle())
+                }
+                .disabled(viewModel.isDisabled)
+                .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
+                .frame(width: width, height: height, alignment: .center)
+                .background(buttonBackgroundColor)
+                .clipShape(RoundedCornersShape(radius: shapeCornerRadius, corners: roundedCorners))
+                .accessibilityLabel(Text(viewModel.accessibilityLabel ?? ""))
+                .accessibilityValue(Text(viewModel.accessibilityValue ?? ""))
+                .accessibilityHint(Text(viewModel.accessibilityHint ?? ""))
             }
-            .disabled(viewModel.isDisabled)
-            .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
-            .frame(width: width, height: height, alignment: .center)
-            .background(buttonBackgroundColor)
-            .clipShape(RoundedCornersShape(radius: shapeCornerRadius, corners: roundedCorners))
-            .accessibilityLabel(Text(viewModel.accessibilityLabel ?? ""))
-            .accessibilityValue(Text(viewModel.accessibilityValue ?? ""))
-            .accessibilityHint(Text(viewModel.accessibilityHint ?? ""))
-        }
-        .frame(width: tappableWidth,
-               height: tappableHeight,
-               alignment: .center)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            // ignore action in case if button is disabled
-            // .disabled(_) is not used because tap is passed to superview when it shouldn't
-            guard !viewModel.isDisabled else {
-                return
+            .frame(width: tappableWidth,
+                   height: tappableHeight,
+                   alignment: .center)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                // ignore action in case if button is disabled
+                // .disabled(_) is not used because tap is passed to superview when it shouldn't
+                guard !viewModel.isDisabled else {
+                    return
+                }
+                viewModel.action()
             }
-            viewModel.action()
         }
     }
 }

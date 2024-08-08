@@ -13,7 +13,8 @@ protocol BaseDrawerItemViewModel {}
 struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let subtitle: String?
-    let startIcon: CompositeIcon?
+    let startCompositeIcon: CompositeIcon?
+    let startIcon: UIImage?
     let endIcon: CompositeIcon?
     let accessibilityIdentifier: String
     let action: (() -> Void)?
@@ -25,11 +26,13 @@ struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
          subtitle: String? = "",
          accessibilityIdentifier: String,
          action: (() -> Void)? = nil,
-         startIcon: CompositeIcon? = nil,
+         startCompositeIcon: CompositeIcon? = nil,
+         startIcon: UIImage? = nil,
          endIcon: CompositeIcon? = nil,
          showToggle: Bool = false,
          isToggleOn: Binding<Bool>? = nil,
          isEnabled: Bool = true) {
+        self.startCompositeIcon = startCompositeIcon
         self.startIcon = startIcon
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action

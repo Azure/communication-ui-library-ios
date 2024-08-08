@@ -303,9 +303,9 @@ extension CallingViewModelTests {
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false,
                                 allowLocalCameraPreview: true,
-                                leaveCallConfirmationMode: .alwaysEnabled,
                                 callType: callType,
                                 captionsOptions: CaptionsOptions(),
-                                capabilitiesManager: capabilitiesManager)
+                                capabilitiesManager: capabilitiesManager,
+                                callScreenOptions: CallScreenOptions())
     }
 }

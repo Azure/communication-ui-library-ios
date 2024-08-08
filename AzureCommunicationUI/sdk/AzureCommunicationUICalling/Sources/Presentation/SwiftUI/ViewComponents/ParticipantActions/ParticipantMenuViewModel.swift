@@ -35,7 +35,7 @@ internal class ParticipantMenuViewModel: ObservableObject {
         items = [DrawerGenericItemViewModel(title: "Remove",
                                             accessibilityIdentifier: "Remove",
                                             action: rowTapped,
-                                            startIcon: .personDelete,
+                                            startCompositeIcon: .personDelete,
                                             isEnabled: canRemove)]
     }
 
@@ -56,7 +56,7 @@ internal class ParticipantMenuViewModel: ObservableObject {
         items = [DrawerGenericItemViewModel(title: "Remove",
                                             accessibilityIdentifier: "Remove",
                                             action: rowTapped,
-                                            startIcon: .personDelete,
+                                            startCompositeIcon: .personDelete,
                                             isEnabled: canRemove)]
     }
 
