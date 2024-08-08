@@ -34,7 +34,7 @@ struct CaptionsInfoView: View {
                                         UIScreen.main.bounds.height + 105
                                     } else {
                                         isLastItemVisible = geometry.frame(in: .global).maxY <=
-                                        UIScreen.main.bounds.height - 100
+                                        UIScreen.main.bounds.height - 105
                                     }
                                 }
                             }
