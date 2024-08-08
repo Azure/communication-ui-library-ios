@@ -25,20 +25,10 @@ struct CaptionsInfoView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear) // Explicitly setting background color
-                        .background(GeometryReader { geometry -> Color in
-                            DispatchQueue.main.async {
-                                // Update visibility state based on the geometry of the last item
-                                if index == viewModel.captionsData.indices.last {
-                                    if verticalSizeClass == .compact {
-                                        isLastItemVisible = geometry.frame(in: .global).maxY <=
-                                        UIScreen.main.bounds.height
-                                    } else {
-                                        isLastItemVisible = geometry.frame(in: .global).maxY <=
-                                        UIScreen.main.bounds.height - 105
-                                    }
-                                }
+                        .background(GeometryReader { geometry in
+                            Color.clear.onAppear {
+                                updateVisibilityState(geometry: geometry, index: index)
                             }
-                            return Color.clear
                         })
                     }
                 }
@@ -61,6 +51,16 @@ struct CaptionsInfoView: View {
         if let lastID = viewModel.captionsData.last?.id {
             withAnimation {
                 scrollView.scrollTo(lastID, anchor: .bottom)
+            }
+        }
+    }
+
+    private func updateVisibilityState(geometry: GeometryProxy, index: Int) {
+        DispatchQueue.main.async {
+            if index == viewModel.captionsData.indices.last {
+                isLastItemVisible = geometry.frame(in: .global).maxY <= UIScreen.main.bounds.height
+            } else {
+                isLastItemVisible = false
             }
         }
     }
