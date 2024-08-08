@@ -42,6 +42,8 @@ public struct LocalOptions {
     ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
     ///   - audioVideoMode: The desired audio/video mode for the call.
     ///   - captionsOptions: Configuration for captions
+    ///   - setupScreenOptions: Configuration for setup screen
+    ///   - callScreenOptions: Configuration for calling screen
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
                 cameraOn: Bool? = false,

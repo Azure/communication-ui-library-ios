@@ -22,8 +22,22 @@ public struct CallScreenControlBarOptions {
     public let customButtons: [CustomButtonOptions]
 
     /// Initializes an instance of CallScreenControlBarOptions.
-    /// - Parameter leaveCallConfirmationMode: Whether to enable or disable the leave call confirmation.
-    ///                                           Default is enabled.
+    /// - Parameters:
+    ///   - leaveCallConfirmationMode: Whether to enable or disable the leave call confirmation.
+    ///    Default is `.alwaysEnabled`.
+    ///   - cameraButton: Configuration options for the camera button. Default is `nil`.
+    ///   - microphoneButton: Configuration options for the microphone button. Default is `nil`.
+    ///   - audioDeviceButton: Configuration options for the audio device button. Default is `nil`.
+    ///   - liveCaptionsButtonOptions: Configuration options for the live captions button. Default is `nil`.
+    ///   - liveCaptionsToggleButtonOptions: Configuration options for the live captions toggle button. 
+    ///   Default is `nil`.
+    ///   - spokenLanguageButtonOptions: Configuration options for the spoken language button. Default is `nil`.
+    ///   - captionsLanguageButtonOptions: Configuration options for the captions language button. Default is `nil`.
+    ///   - shareDiagnosticsButtonOptions: Configuration options for the share diagnostics button. Default is `nil`.
+    ///   - reportIssueButtonOptions: Configuration options for the report issue button. Default is `nil`.
+    ///   - customButtons: An array of custom button options. Default is an empty array.
+    ///   - recordingButtonOptions: Configuration options for the recording button. Default is `nil`.
+    ///   - endCallButtonOptions: Configuration options for the end call button. Default is `nil`.
     public init(leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
                 cameraButton: ButtonOptions? = nil,
                 microphoneButton: ButtonOptions? = nil,

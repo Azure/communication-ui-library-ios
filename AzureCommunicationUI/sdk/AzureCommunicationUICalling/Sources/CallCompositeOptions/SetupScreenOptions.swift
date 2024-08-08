@@ -22,14 +22,14 @@ public struct SetupScreenOptions {
         self.microphoneButtonEnabled = microphoneButtonEnabled
     }
     /// Creates an instance of SetupScreenOptions with related options.
-    /// - Parameter cameraButton: camera button options.c
+    /// - Parameter cameraButton: camera button options.
     /// - Parameter microphoneButton: microphone button options.
     /// - Parameter audioDeviceButton: audio device button options.
     public init(cameraButton: ButtonOptions? = nil,
                 microphoneButton: ButtonOptions? = nil,
                 audioDeviceButton: ButtonOptions? = nil) {
-        self.cameraButtonEnabled = true
-        self.microphoneButtonEnabled = true
+        self.cameraButtonEnabled = cameraButton?.enabled ?? true
+        self.microphoneButtonEnabled = microphoneButton?.enabled ?? true
         self.cameraButton = cameraButton
         self.microphoneButton = microphoneButton
         self.audioDeviceButton = audioDeviceButton
