@@ -25,11 +25,13 @@ struct CaptionsInfoView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear) // Explicitly setting background color
-                        .background(GeometryReader { geometry in
-                            Color.clear.onAppear {
-                                updateVisibilityState(geometry: geometry, index: index)
+                        .onAppear {
+                            if index == viewModel.captionsData.indices.last {
+                                isLastItemVisible = true
+                            } else {
+                                isLastItemVisible = false
                             }
-                        })
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())
@@ -51,16 +53,6 @@ struct CaptionsInfoView: View {
         if let lastID = viewModel.captionsData.last?.id {
             withAnimation {
                 scrollView.scrollTo(lastID, anchor: .bottom)
-            }
-        }
-    }
-
-    private func updateVisibilityState(geometry: GeometryProxy, index: Int) {
-        DispatchQueue.main.async {
-            if index == viewModel.captionsData.indices.last {
-                isLastItemVisible = geometry.frame(in: .global).maxY <= UIScreen.main.bounds.height
-            } else {
-                isLastItemVisible = false
             }
         }
     }
