@@ -57,16 +57,6 @@ struct CaptionsInfoView: View {
         }
     }
 
-    private func updateVisibilityState(geometry: GeometryProxy, index: Int) {
-        DispatchQueue.main.async {
-            if index == viewModel.captionsData.indices.last {
-                isLastItemVisible = geometry.frame(in: .global).maxY <= UIScreen.main.bounds.height
-            } else {
-                isLastItemVisible = false
-            }
-        }
-    }
-
     private var loadingView: some View {
         VStack {
             Spacer()
