@@ -36,8 +36,6 @@ public struct CallScreenControlBarOptions {
     ///   - shareDiagnosticsButtonOptions: Configuration options for the share diagnostics button. Default is `nil`.
     ///   - reportIssueButtonOptions: Configuration options for the report issue button. Default is `nil`.
     ///   - customButtons: An array of custom button options. Default is an empty array.
-    ///   - recordingButtonOptions: Configuration options for the recording button. Default is `nil`.
-    ///   - endCallButtonOptions: Configuration options for the end call button. Default is `nil`.
     public init(leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
                 cameraButton: ButtonOptions? = nil,
                 microphoneButton: ButtonOptions? = nil,
