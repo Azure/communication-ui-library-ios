@@ -21,11 +21,11 @@ internal class CallingViewModel: ObservableObject {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let callType: CompositeCallType
     private let captionsOptions: CaptionsOptions
+    private let callScreenOptions: CallScreenOptions
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
     private var callClientRequested = false
-    private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -62,10 +62,10 @@ internal class CallingViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode,
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions,
-         capabilitiesManager: CapabilitiesManager
+         capabilitiesManager: CapabilitiesManager,
+         callScreenOptions: CallScreenOptions
     ) {
         self.logger = logger
         self.store = store
@@ -74,10 +74,10 @@ internal class CallingViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
-        self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.captionsOptions = captionsOptions
+        self.callScreenOptions = callScreenOptions
 
         let actionDispatch: ActionDispatch = store.dispatch
 
@@ -144,14 +144,13 @@ internal class CallingViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                if leaveCallConfirmationMode == .alwaysEnabled {
+                if callScreenOptions.controlBarOptions?.leaveCallConfirmationMode == .alwaysEnabled {
                     store.dispatch(action: .showEndCallConfirmation)
                 } else {
                     self.endCall()
                 }
 
             }, localUserState: store.state.localUserState,
-            leaveCallConfirmationMode: leaveCallConfirmationMode,
             capabilitiesManager: capabilitiesManager)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
@@ -178,6 +177,7 @@ internal class CallingViewModel: ObservableObject {
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isDisplayed: store.state.navigationState.moreOptionsVisible,
             isCaptionsAvailable: true,
+            controlBarOptions: callScreenOptions.controlBarOptions,
             showSharingViewAction: {
                 store.dispatch(action: .showSupportShare)
             },

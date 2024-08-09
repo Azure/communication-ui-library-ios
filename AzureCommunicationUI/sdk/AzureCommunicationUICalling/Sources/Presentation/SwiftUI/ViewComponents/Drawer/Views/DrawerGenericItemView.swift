@@ -11,9 +11,13 @@ internal struct DrawerGenericItemView: View {
 
     var body: some View {
         HStack {
-            if let icon = item.startIcon {
+            if let icon = item.startCompositeIcon {
                 Icon(name: icon, size: DrawerListConstants.iconSize)
                     .foregroundColor(item.isEnabled ? .primary : .gray)
+            } else if let icon = item.startIcon {
+                Image(uiImage: icon)
+                    .frame(width: DrawerListConstants.iconSize,
+                           height: DrawerListConstants.iconSize)
             }
             VStack(alignment: .leading) {
                 Text(item.title)

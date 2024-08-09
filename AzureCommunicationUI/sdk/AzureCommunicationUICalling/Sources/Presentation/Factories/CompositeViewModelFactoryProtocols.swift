@@ -16,6 +16,11 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
+    func makeIconButtonViewModel(iconName: CompositeIcon,
+                                 buttonType: IconButtonViewModel.ButtonType,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
         selectedButtonState: ButtonStateType,
         localizationProvider: LocalizationProviderProtocol,
@@ -44,7 +49,6 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode,
                                  capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState) -> InfoHeaderViewModel
@@ -70,6 +74,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeMoreCallOptionsListViewModel(
         isDisplayed: Bool,
         isCaptionsAvailable: Bool,
+        controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel

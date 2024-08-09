@@ -26,8 +26,9 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    onEndCallTapped: onEndCallTapped,
                    localUserState: localUserState,
                    audioVideoMode: .audioAndVideo,
-                   leaveCallConfirmationMode: leaveCallConfirmationMode,
-                   capabilitiesManager: capabilitiesManager)
+                   capabilitiesManager: capabilitiesManager,
+                   controlBarOptions: nil
+        )
     }
 
     override func update(localUserState: LocalUserState,

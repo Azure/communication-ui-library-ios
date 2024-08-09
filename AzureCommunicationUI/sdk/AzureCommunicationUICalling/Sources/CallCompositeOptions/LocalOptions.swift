@@ -26,6 +26,8 @@ public struct LocalOptions {
 
     /// Specifies the audio/video mode for the call, affecting available functionalities.
     let audioVideoMode: CallCompositeAudioVideoMode
+    let setupScreenOptions: SetupScreenOptions?
+    let callScreenOptions: CallScreenOptions?
 
     /// Internal storage for the camera state, not directly exposed to the initializer.
     private let cameraOnInternal: Bool?
@@ -40,15 +42,17 @@ public struct LocalOptions {
     ///   - skipSetupScreen: Indicates whether to bypass the setup screen.
     ///   - audioVideoMode: The desired audio/video mode for the call.
     ///   - captionsOptions: Configuration for captions
-    ///   This role will determine functionality of the Setup screen. The actual role will be syncronized
-    ///   with ACS services when a Rooms call starts.
+    ///   - setupScreenOptions: Configuration for setup screen
+    ///   - callScreenOptions: Configuration for calling screen
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
                 skipSetupScreen: Bool? = false,
                 audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
-                captionsOptions: CaptionsOptions? = nil) {
+                captionsOptions: CaptionsOptions? = nil,
+                setupScreenOptions: SetupScreenOptions? = nil,
+                callScreenOptions: CallScreenOptions? = nil) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.cameraOnInternal = cameraOn
@@ -56,6 +60,8 @@ public struct LocalOptions {
         self.skipSetupScreen = skipSetupScreen
         self.audioVideoMode = audioVideoMode
         self.captionsOptions = captionsOptions
+        self.setupScreenOptions = setupScreenOptions
+        self.callScreenOptions = callScreenOptions
     }
 
     /// Determines the actual state of the camera
