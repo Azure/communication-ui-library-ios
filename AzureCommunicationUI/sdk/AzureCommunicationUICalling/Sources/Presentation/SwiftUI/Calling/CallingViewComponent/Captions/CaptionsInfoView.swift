@@ -28,9 +28,12 @@ struct CaptionsInfoView: View {
                         .onAppear {
                             if index == viewModel.captionsData.indices.last {
                                 isLastItemVisible = true
-                            } else {
-                                isLastItemVisible = false
                             }
+                        }
+                        .onDisappear {
+                             if index == viewModel.captionsData.indices.last {
+                                 isLastItemVisible = false
+                             }
                         }
                     }
                 }
