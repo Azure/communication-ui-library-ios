@@ -1149,6 +1149,7 @@
 				0532548A2A27B1D100267629 /* PipManager.swift */,
 				A464810529F33A43001B80A3 /* CallStateManager.swift */,
 				A464810929F34A06001B80A3 /* CompositeExitManager.swift */,
+				C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */,
 				C868F76E2C598C9300D242B4 /* CallDurationManager.swift */,
 			);
 			path = Manager;
