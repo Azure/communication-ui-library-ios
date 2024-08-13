@@ -223,7 +223,9 @@ class CallingDemoViewController: UIViewController {
         print("CallingDemoView:::: createCallComposite creating")
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
-        let callScreenOptions = createCallScreenOptions(callComposite: nil)
+        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                        envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -233,9 +235,6 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
-        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
-                                                        envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled)
         var callDurationCustomTimer = CallCompositeCallDurationCustomTimer()
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
                                                   callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions(
