@@ -233,6 +233,13 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
+        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                        envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
+        var callDurationCustomTimer = CallCompositeCallDurationCustomTimer()
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
+                                                  callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions(
+                                                    customTimer: callDurationCustomTimer))
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,

@@ -21,6 +21,7 @@ struct InfoHeaderView: View {
         static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
         static let foregroundColor: Color = .white
+        static let verticalSpacing: CGFloat = 0
 
         // MARK: Font Minimum Scale Factor
         // Under accessibility mode, the largest size is 35
@@ -33,7 +34,7 @@ struct InfoHeaderView: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             if viewModel.isInfoHeaderDisplayed {
                 infoHeader
             } else {
@@ -68,21 +69,38 @@ struct InfoHeaderView: View {
                     .flipsForRightToLeftLayoutDirection(true)
                     .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
             }
-
-            Text(viewModel.infoLabel)
-                .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
-                                    leading: 0,
-                                    bottom: Constants.infoLabelHorizontalPadding,
-                                    trailing: 0))
-                .foregroundColor(Constants.foregroundColor)
-                .lineLimit(1)
-                .font(Fonts.caption1.font)
-                .accessibilityLabel(Text(viewModel.accessibilityLabel))
-                .accessibilitySortPriority(1)
-                .scaledToFit()
-                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
-                                    Constants.accessibilityFontScale :
-                                        Constants.defaultFontScale)
+            VStack {
+                Text(viewModel.infoLabel)
+                    .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
+                                        leading: 0,
+                                        bottom: Constants.infoLabelHorizontalPadding,
+                                        trailing: 0))
+                    .foregroundColor(Constants.foregroundColor)
+                    .lineLimit(1)
+                    .font(Fonts.caption1.font)
+                    .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                    .accessibilitySortPriority(1)
+                    .scaledToFit()
+                    .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
+                                        Constants.accessibilityFontScale :
+                                            Constants.defaultFontScale)
+                if viewModel.callDurationManager.isStarted {
+                    Text(viewModel.callDurationManager.timerTickStateFlow)
+                        .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
+                                            leading: 0,
+                                            bottom: Constants.infoLabelHorizontalPadding,
+                                            trailing: 0))
+                        .foregroundColor(Constants.foregroundColor)
+                        .lineLimit(1)
+                        .font(Fonts.caption1.font)
+                        .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                        .accessibilitySortPriority(1)
+                        .scaledToFit()
+                        .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
+                                            Constants.accessibilityFontScale :
+                                                Constants.defaultFontScale)
+                }
+            }
             Spacer()
             participantListButton
         }

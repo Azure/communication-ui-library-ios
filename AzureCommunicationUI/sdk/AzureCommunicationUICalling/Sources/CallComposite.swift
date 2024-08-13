@@ -71,6 +71,7 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var pipManager: PipManagerProtocol?
+    private var callDurationManager: CallDurationManager?
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
@@ -95,6 +96,7 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
+    private var customTimer: CallCompositeCallDurationCustomTimer?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -148,6 +150,7 @@ public class CallComposite {
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
+        customTimer = options?.callScreenOptions?.callScreenHeaderOptions?.callCompositeCallDurationCustomTimer
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
@@ -579,6 +582,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
+        self.callDurationManager = CallDurationManager()
+        self.customTimer?.callTimerAPI = callDurationManager
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
@@ -604,12 +609,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles,
                 callType: callConfiguration.compositeCallType,
                 setupScreenOptions: setupScreenOptions,
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager
+                callDurationManager: callDurationManager!,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }
@@ -638,6 +644,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
+        self.callDurationManager = nil
     }
 
     private func disposeSDKWrappers() {
