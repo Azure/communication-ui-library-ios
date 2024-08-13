@@ -32,6 +32,10 @@ struct CaptionsInfoCellView: View {
                     .font(.callout)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(isRTL ? .trailing : .leading)
+                    /// wrap to the next line instead of being truncated,
+                    /// ensuring that all content is visible without ... truncation
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
         }
