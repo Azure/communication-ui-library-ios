@@ -20,6 +20,9 @@ class InfoHeaderViewModel: ObservableObject {
     private var callingStatus: CallingStatus = .none
     private let enableSystemPipWhenMultitasking: Bool
     let enableMultitasking: Bool
+    let callDurationManager: CallDurationManager
+
+    let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -32,7 +35,8 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPipWhenMultitasking: Bool) {
+         enableSystemPipWhenMultitasking: Bool,
+         callDurationManager: CallDurationManager) {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
         self.infoLabel = title
         self.dispatch = dispatchAction
@@ -41,6 +45,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
+        self.callDurationManager = callDurationManager
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
