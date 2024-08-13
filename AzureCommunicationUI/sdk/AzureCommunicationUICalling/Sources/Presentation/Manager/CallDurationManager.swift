@@ -12,7 +12,7 @@ protocol CallTimerAPI {
     func onReset()
 }
 
-class CallDurationManager: CallTimerAPI {
+class CallDurationManager: CallTimerAPI, ObservableObject {
     private var timer: Timer?
     private var timeRemaining: TimeInterval = 60 // 1 minute in seconds
     private var isPaused = false
