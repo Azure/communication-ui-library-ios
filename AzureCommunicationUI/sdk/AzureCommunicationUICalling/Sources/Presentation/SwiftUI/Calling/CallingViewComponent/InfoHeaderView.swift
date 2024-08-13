@@ -17,6 +17,7 @@ struct InfoHeaderView: View {
     private enum Constants {
         static let shapeCornerRadius: CGFloat = 5
         static let infoLabelHorizontalPadding: CGFloat = 16.0
+        static let timerVerticalTopPadding: CGFloat = 0
         static let hStackHorizontalPadding: CGFloat = 20.0
         static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
@@ -69,12 +70,9 @@ struct InfoHeaderView: View {
                     .flipsForRightToLeftLayoutDirection(true)
                     .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
             }
-            VStack {
+            VStack(alignment: .leading) {
                 Text(viewModel.infoLabel)
-                    .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
-                                        leading: 0,
-                                        bottom: Constants.infoLabelHorizontalPadding,
-                                        trailing: 0))
+                    .alignmentGuide(.leading) { d in d[.leading] }
                     .foregroundColor(Constants.foregroundColor)
                     .lineLimit(1)
                     .font(Fonts.caption1.font)
@@ -84,17 +82,14 @@ struct InfoHeaderView: View {
                     .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
-                if viewModel.callDurationManager.isStarted {
-                    Text(viewModel.callDurationManager.timerTickStateFlow)
-                        .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
-                                            leading: 0,
-                                            bottom: Constants.infoLabelHorizontalPadding,
-                                            trailing: 0))
+                if !viewModel.timer.isEmpty {
+                    Text(viewModel.timer.trimmingCharacters(in: .whitespacesAndNewlines))
+                        .alignmentGuide(.leading) { d in d[.leading] }
                         .foregroundColor(Constants.foregroundColor)
                         .lineLimit(1)
                         .font(Fonts.caption1.font)
                         .accessibilityLabel(Text(viewModel.accessibilityLabel))
-                        .accessibilitySortPriority(1)
+                        .accessibilitySortPriority(2)
                         .scaledToFit()
                         .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                             Constants.accessibilityFontScale :
