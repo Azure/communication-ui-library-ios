@@ -43,8 +43,9 @@ struct CaptionsInfoView: View {
                 .onAppear {
                     scrollToLastItem(scrollView)
                 }
-                .onChange(of: viewModel.captionsData) { _ in
-                    if isLastItemVisible {
+                .onChange(of: viewModel.captionsData) { newCaptions in
+                    // Check if the last item has changed
+                    if let lastID = newCaptions.last?.id, isLastItemVisible {
                         scrollToLastItem(scrollView)
                     }
                 }
