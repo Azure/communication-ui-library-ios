@@ -21,8 +21,6 @@ class InfoHeaderViewModel: ObservableObject {
     private let enableSystemPipWhenMultitasking: Bool
     let enableMultitasking: Bool
     let callDurationManager: CallDurationManager
-
-    let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
