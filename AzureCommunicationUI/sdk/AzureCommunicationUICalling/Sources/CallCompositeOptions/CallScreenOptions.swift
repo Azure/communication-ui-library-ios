@@ -9,10 +9,13 @@ import Foundation
 public struct CallScreenOptions {
     /// CallScreenControlBarOptions for specifying CallScreenControlBar customization.
     public let controlBarOptions: CallScreenControlBarOptions?
+    public let callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions?
 
     /// Creates an instance of CallScreenOptions with related options.
     /// - Parameter controlBarOptions: CallScreenControlBarOptions for specifying CallScreenControlBar customization.
-    public init(controlBarOptions: CallScreenControlBarOptions? = nil) {
+    public init(controlBarOptions: CallScreenControlBarOptions? = nil,
+                callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions? = nil) {
         self.controlBarOptions = controlBarOptions
+        self.callScreenHeaderOptions = callScreenHeaderOptions
     }
 }

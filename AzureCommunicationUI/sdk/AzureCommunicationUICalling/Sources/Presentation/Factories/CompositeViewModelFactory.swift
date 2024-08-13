@@ -23,6 +23,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let enableSystemPipWhenMultitasking: Bool
     private let capabilitiesManager: CapabilitiesManager
     private let avatarManager: AvatarViewManagerProtocol
+    private let callDurationManager: CallDurationManager
+
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -43,14 +45,14 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          enableSystemPipWhenMultitasking: Bool,
          eventsHandler: CallComposite.Events,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         retrieveLogFiles: @escaping () -> [URL],
          callType: CompositeCallType,
          setupScreenOptions: SetupScreenOptions?,
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
-         avatarManager: AvatarViewManagerProtocol
-    ) {
-
+         avatarManager: AvatarViewManagerProtocol,
+         callDurationManager: CallDurationManager,
+         retrieveLogFiles: @escaping () -> [URL]
+         ) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -69,6 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.avatarManager = avatarManager
+        self.callDurationManager = callDurationManager
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -309,7 +312,8 @@ extension CompositeViewModelFactory {
                             accessibilityProvider: accessibilityProvider,
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking)
+                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
+                            callDurationManager: callDurationManager)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,

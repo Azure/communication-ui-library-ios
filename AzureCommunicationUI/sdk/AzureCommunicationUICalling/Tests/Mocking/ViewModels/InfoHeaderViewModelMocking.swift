@@ -23,7 +23,8 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    accessibilityProvider: accessibilityProvider,
                    dispatchAction: dispatchAction,
                    enableMultitasking: true,
-                   enableSystemPipWhenMultitasking: true)
+                   enableSystemPipWhenMultitasking: true,
+                   callDurationManager: CallDurationManager())
     }
 
     override func update(localUserState: LocalUserState,

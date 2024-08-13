@@ -27,6 +27,7 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
+    @State var callDurationTimer = CallCompositeCallDurationCustomTimer()
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -419,7 +420,10 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
+                                                   callScreenHeaderOptions:
+                                                     CallCompositeCallScreenHeaderOptions(
+                                                        customTimer: callDurationTimer))
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -916,6 +920,9 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
+        if callState == .connected {
+            self.callDurationTimer.start()
+        }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
