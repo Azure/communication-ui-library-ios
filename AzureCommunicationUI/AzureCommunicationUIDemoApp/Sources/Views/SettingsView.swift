@@ -85,6 +85,7 @@ struct SettingsView: View {
     var settingsForm: some View {
         Form {
             orientationOptions
+            captionsSettings
             Group {
                 localizationSettings
                 skipSetupScreenSettings
@@ -215,6 +216,13 @@ struct SettingsView: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var captionsSettings: some View {
+        Section(header: Text("Captions")) {
+            CaptionsLocaleTextField(selection: $envConfigSubject.spokenLanguage)
+            Toggle("Start Captions", isOn: $envConfigSubject.captionsOn)
         }
     }
 
@@ -389,5 +397,27 @@ struct LocalePicker: View {
                     }
                 }
             }
+    }
+}
+
+struct CaptionsLocaleTextField: View {
+    @Binding var selection: String
+    @State private var inputLanguage: String = ""
+
+    var body: some View {
+        VStack {
+            TextField("Enter Language Code (e.g., en-US)", text: $inputLanguage)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+                .onChange(of: inputLanguage) { newValue in
+                    selection = newValue // Directly update the selection
+                }
+
+            Text("Current Selection: \(selection)")
+                .padding()
+        }
+        .onAppear {
+            inputLanguage = selection
+        }
     }
 }

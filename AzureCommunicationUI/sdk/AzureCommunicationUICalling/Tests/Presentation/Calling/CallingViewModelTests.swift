@@ -5,6 +5,8 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
+
 @testable import AzureCommunicationUICalling
 
 class CallingViewModelTests: XCTestCase {
@@ -29,7 +31,11 @@ class CallingViewModelTests: XCTestCase {
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store,
                                                           accessibilityProvider: accessibilityProvider,
-                                                          localizationProvider: localizationProvider)
+                                                          localizationProvider: localizationProvider,
+                                                          avatarManager: AvatarViewManagerMocking(
+                                                            store: storeFactory.store,
+                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                          localParticipantViewData: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
@@ -41,46 +47,6 @@ class CallingViewModelTests: XCTestCase {
         accessibilityProvider = nil
         logger = nil
         factoryMocking = nil
-    }
-
-    func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
-        storeFactory.store.$state
-            .dropFirst(1)
-            .sink { [weak storeFactory] _ in
-                XCTAssertEqual(storeFactory?.actions.count, 3)
-                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
-
-                expectation.fulfill()
-            }.store(in: cancellable)
-        sut.isConfirmLeaveListDisplayed = true
-        sut.endCall()
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
-        wait(for: [expectation], timeout: timeout)
-    }
-    func test_callingViewModel_endCall_when_NoConfirmLeaveOverlayIsDisplayed() {
-        factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                        logger: logger,
-                                                                        localizationProvider: localizationProvider,
-                                                                        dispatchAction: storeFactory.store.dispatch,
-                                                                        endCallConfirm: {},
-                                                                        localUserState: storeFactory.store.state.localUserState,
-                                                                        leaveCallConfirmationMode: .alwaysDisabled,
-                                                                        capabilitiesManager: capabilitiesManager)
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Verify Call End is Requested")
-        storeFactory.store.$state
-            .dropFirst(1)
-            .sink { [weak storeFactory] _ in
-                XCTAssertEqual(storeFactory?.actions.count, 3)
-                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
-
-                expectation.fulfill()
-            }.store(in: cancellable)
-        sut.endCall()
-        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
-        wait(for: [expectation], timeout: timeout)
     }
 
     func test_callingViewModel_update_when_callStatusIsInLobby_then_isLobbyOverlayDisplayed_shouldBecomeTrue() {
@@ -173,7 +139,7 @@ class CallingViewModelTests: XCTestCase {
                                                                         logger: logger,
                                                                         localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                        endCallConfirm: {},
+                                                                        onEndCallTapped: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         updateState: updateControlBarViewModel,
                                                                         capabilitiesManager: capabilitiesManager)
@@ -251,11 +217,12 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_bannerViewModelUpdated() {
         let expectation = XCTestExpectation(description: "BannerViewModel is updated")
         let appState = AppState(callingState: CallingState(status: .connected))
-        let updateBannerViewModel: (CallingState) -> Void = { callingState in
+        let updateBannerViewModel: (CallingState, VisibilityState) -> Void = { callingState, _ in
             XCTAssertEqual(appState.callingState.status, callingState.status)
             expectation.fulfill()
         }
         factoryMocking.bannerViewModel = BannerViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                dispatchAction: storeFactory.store.dispatch,
                                                                 updateState: updateBannerViewModel)
         let sut = makeSUT()
         sut.receive(appState)
@@ -338,6 +305,7 @@ extension CallingViewModelTests {
                                 allowLocalCameraPreview: true,
                                 leaveCallConfirmationMode: .alwaysEnabled,
                                 callType: callType,
+                                captionsOptions: CaptionsOptions(),
                                 capabilitiesManager: capabilitiesManager)
     }
 }

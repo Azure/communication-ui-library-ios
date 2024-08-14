@@ -20,6 +20,14 @@ protocol CallingServiceProtocol {
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
+    var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never> { get }
+    var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never> { get }
+    var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never> { get }
+    var captionsDataSubject: PassthroughSubject<CallCompositeCaptionsData, Never> { get }
+    var activeSpokenLanguageSubject: CurrentValueSubject<String, Never> { get }
+    var activeCaptionLanguageSubject: CurrentValueSubject<String, Never> { get }
+    var captionsEnabledChanged: CurrentValueSubject<Bool, Never> { get }
+    var captionsTypeSubject: CurrentValueSubject<CallCompositeCaptionsType, Never> { get }
     var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> {get}
 
     func setupCall() async throws
@@ -40,6 +48,10 @@ protocol CallingServiceProtocol {
     func admitAllLobbyParticipants() async throws
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws
+    func startCaptions(_ language: String) async throws
+    func stopCaptions() async throws
+    func setCaptionsSpokenLanguage(_ language: String) async throws
+    func setCaptionsCaptionLanguage(_ language: String) async throws
     func removeParticipant(_ participantId: String) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
 }
@@ -63,6 +75,14 @@ class CallingService: NSObject, CallingServiceProtocol {
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
     var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never>
 
+    var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never>
+    var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never>
+    var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never>
+    var captionsDataSubject: PassthroughSubject<CallCompositeCaptionsData, Never>
+    var activeSpokenLanguageSubject: CurrentValueSubject<String, Never>
+    var activeCaptionLanguageSubject: CurrentValueSubject<String, Never>
+    var captionsEnabledChanged: CurrentValueSubject<Bool, Never>
+    var captionsTypeSubject: CurrentValueSubject<CallCompositeCaptionsType, Never>
     init(logger: Logger,
          callingSDKWrapper: CallingSDKWrapperProtocol ) {
         self.logger = logger
@@ -78,6 +98,14 @@ class CallingService: NSObject, CallingServiceProtocol {
         networkQualityDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkQualityDiagnosticsSubject
         networkDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkDiagnosticsSubject
         mediaDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.mediaDiagnosticsSubject
+        supportedSpokenLanguagesSubject = callingSDKWrapper.callingEventsHandler.captionsSupportedSpokenLanguages
+        supportedCaptionLanguagesSubject = callingSDKWrapper.callingEventsHandler.captionsSupportedCaptionLanguages
+        isCaptionsTranslationSupported = callingSDKWrapper.callingEventsHandler.isCaptionsTranslationSupported
+        captionsDataSubject = callingSDKWrapper.callingEventsHandler.captionsReceived
+        activeSpokenLanguageSubject = callingSDKWrapper.callingEventsHandler.activeSpokenLanguageChanged
+        activeCaptionLanguageSubject = callingSDKWrapper.callingEventsHandler.activeCaptionLanguageChanged
+        captionsEnabledChanged = callingSDKWrapper.callingEventsHandler.captionsEnabledChanged
+        captionsTypeSubject = callingSDKWrapper.callingEventsHandler.captionsTypeChanged
         capabilitiesChangedSubject = callingSDKWrapper.callingEventsHandler.capabilitiesChangedSubject
         totalParticipantCountSubject = callingSDKWrapper.callingEventsHandler.totalParticipantCountSubject
     }
@@ -139,6 +167,22 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func declineLobbyParticipant(_ participantId: String) async throws {
         try await callingSDKWrapper.declineLobbyParticipant(participantId)
+    }
+
+    func startCaptions(_ spokenLanguage: String) async throws {
+        try await callingSDKWrapper.startCaptions(spokenLanguage)
+    }
+
+    func stopCaptions() async throws {
+        try await callingSDKWrapper.stopCaptions()
+    }
+
+    func setCaptionsSpokenLanguage(_ language: String) async throws {
+        try await callingSDKWrapper.setCaptionsSpokenLanguage(language)
+    }
+
+    func setCaptionsCaptionLanguage(_ language: String) async throws {
+        try await callingSDKWrapper.setCaptionsCaptionLanguage(language)
     }
 
     func removeParticipant(_ participantId: String) async throws {

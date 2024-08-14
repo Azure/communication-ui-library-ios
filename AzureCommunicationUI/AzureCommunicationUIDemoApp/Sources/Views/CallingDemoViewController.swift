@@ -32,6 +32,7 @@ class CallingDemoViewController: UIViewController {
     private var acsTokenTextField: UITextField!
     private var selectedMeetingType: MeetingType = .groupCall
     private var displayNameTextField: UITextField!
+    private var userIdTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
     private var teamsMeetingIdTextField: UITextField!
@@ -155,6 +156,10 @@ class CallingDemoViewController: UIViewController {
             displayNameTextField.text = envConfigSubject.displayName
         }
 
+        if !envConfigSubject.userId.isEmpty {
+            userIdTextField.text = envConfigSubject.userId
+        }
+
         if !envConfigSubject.groupCallId.isEmpty {
             groupCallTextField.text = envConfigSubject.groupCallId
         }
@@ -237,6 +242,7 @@ class CallingDemoViewController: UIViewController {
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
         let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callKitOptions = envConfigSubject.enableCallKit ? getCallKitOptions() : nil
+        let userId = CommunicationUserIdentifier(envConfigSubject.userId)
 
         let callCompositeOptions = envConfigSubject.useDeprecatedLaunch ? CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
@@ -921,6 +927,14 @@ class CallingDemoViewController: UIViewController {
         displayNameTextField.borderStyle = .roundedRect
         displayNameTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
 
+        userIdTextField = UITextField()
+        userIdTextField.placeholder = "User Identifier"
+        userIdTextField.text = envConfigSubject.userId
+        userIdTextField.translatesAutoresizingMaskIntoConstraints = false
+        userIdTextField.delegate = self
+        userIdTextField.borderStyle = .roundedRect
+        userIdTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+
         groupCallTextField = UITextField()
         groupCallTextField.placeholder = "Group Call Id"
         groupCallTextField.text = envConfigSubject.groupCallId
@@ -1203,6 +1217,7 @@ class CallingDemoViewController: UIViewController {
                                                    acsTokenUrlTextField,
                                                    acsTokenTextField,
                                                    displayNameTextField,
+                                                   userIdTextField,
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
                                                    teamsMeetingTextField,

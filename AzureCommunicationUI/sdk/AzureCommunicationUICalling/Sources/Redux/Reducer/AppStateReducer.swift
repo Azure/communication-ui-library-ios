@@ -18,6 +18,7 @@ extension Reducer {
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer,
         visibilityReducer: Reducer<VisibilityState, VisibilityAction> = .visibilityReducer,
         diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .liveDiagnosticsReducer,
+        captionsReducer: Reducer<CaptionsState, CaptionsAction> = .captionsReducer,
         toastNotificationReducer: Reducer<ToastNotificationState, ToastNotificationAction> = .toastNotificationReducer
     ) -> Reducer<AppState, Action> {
 
@@ -34,6 +35,7 @@ extension Reducer {
             var diagnosticsState = state.diagnosticsState
             let defaultUserState = state.defaultUserState
             var visibilityState = state.visibilityState
+            var captionsState = state.captionsState
             var toastNotificationState = state.toastNotificationState
 
             switch action {
@@ -49,6 +51,8 @@ extension Reducer {
             case let .visibilityAction(visibilityAction):
                 visibilityState = visibilityReducer.reduce(state.visibilityState, visibilityAction)
 
+            case let .captionsAction(captionsAction):
+                captionsState = captionsReducer.reduce(state.captionsState, captionsAction)
             case let .toastNotificationAction(action):
                 toastNotificationState = toastNotificationReducer.reduce(state.toastNotificationState, action)
 
@@ -76,6 +80,7 @@ extension Reducer {
                             defaultUserState: defaultUserState,
                             visibilityState: visibilityState,
                             diagnosticsState: diagnosticsState,
+                            captionsState: captionsState,
                             toastNotificationState: toastNotificationState)
         }
     }

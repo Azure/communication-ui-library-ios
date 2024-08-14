@@ -29,6 +29,8 @@ extension Middleware {
                             handleAudioSessionAction(audioAction, actionHandler, getState, dispatch)
                         case .remoteParticipantsAction(let action):
                             handleRemoteParticipantAction(action, actionHandler, getState, dispatch)
+                        case .captionsAction(let action):
+                            handleCaptionsAction(action, actionHandler, getState, dispatch)
                         case .errorAction,
                                 .compositeExitAction,
                                 .callingViewLaunched:
@@ -63,6 +65,14 @@ private func handleCallingAction(_ action: CallingAction,
         actionHandler.holdCall(state: getState(), dispatch: dispatch)
     case .resumeRequested:
         actionHandler.resumeCall(state: getState(), dispatch: dispatch)
+    case .recordingStateUpdated(let isRecordingActive):
+        actionHandler.recordingStateUpdated(state: getState(),
+                                            dispatch: dispatch,
+                                            isRecordingActive: isRecordingActive)
+    case .transcriptionStateUpdated(let isTranscriptionActive):
+        actionHandler.transcriptionStateUpdated(state: getState(),
+                                                dispatch: dispatch,
+                                                isTranscriptionActive: isTranscriptionActive)
     default:
         break
     }
@@ -203,6 +213,24 @@ private func handleToastNotificationAction(_ action: ToastNotificationAction,
     switch action {
     case .dismissNotification:
         actionHandler.dismissNotification(state: getState(), dispatch: dispatch)
+    default:
+        break
+    }
+}
+
+private func handleCaptionsAction(_ action: CaptionsAction,
+                                  _ actionHandler: CallingMiddlewareHandling,
+                                  _ getState: () -> AppState,
+                                  _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .turnOnCaptions(language: let language):
+        actionHandler.startCaptions(state: getState(), dispatch: dispatch, language: language)
+    case .turnOffCaptions:
+        actionHandler.stopCaptions(state: getState(), dispatch: dispatch)
+    case .setSpokenLanguageRequested(language: let language):
+        actionHandler.setCaptionsSpokenLanguage(state: getState(), dispatch: dispatch, language: language)
+    case .setCaptionLanguageRequested(language: let language):
+        actionHandler.setCaptionsLanguage(state: getState(), dispatch: dispatch, language: language)
     default:
         break
     }

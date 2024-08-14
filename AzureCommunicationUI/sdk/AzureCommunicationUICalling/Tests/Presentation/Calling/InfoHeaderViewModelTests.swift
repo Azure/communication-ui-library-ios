@@ -5,11 +5,12 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class InfoHeaderViewModelTests: XCTestCase {
 
-    typealias ParticipantsListViewModelUpdateStates = (LocalUserState, RemoteParticipantsState) -> Void
+    typealias ParticipantsListViewModelUpdateStates = (LocalUserState, RemoteParticipantsState, Bool) -> Void
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var localizationProvider: LocalizationProviderMocking!
@@ -22,7 +23,11 @@ class InfoHeaderViewModelTests: XCTestCase {
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(
+                                                            store: storeFactory.store,
+                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                            localParticipantViewData: nil))
     }
 
     override func tearDown() {
@@ -192,49 +197,6 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertEqual(sut.infoLabel, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
-    }
-
-    func test_infoHeaderViewModel_update_when_statesUpdated_then_participantsListViewModelUpdated() {
-        let expectation = XCTestExpectation(description: "Should update participantsListViewModel")
-        let participantList = ParticipantInfoModelBuilder.getArray(count: 2)
-        let remoteParticipantsStateValue = RemoteParticipantsState(participantInfoList: participantList,
-                                                                   lastUpdateTimeStamp: Date())
-        let localUserStateValue = LocalUserState(displayName: "Updated Name")
-        let updateStates: ParticipantsListViewModelUpdateStates = { localUserState, remoteParticipantsState in
-            XCTAssertEqual(localUserState.displayName, localUserStateValue.displayName)
-            XCTAssertEqual(remoteParticipantsStateValue.participantInfoList,
-                           remoteParticipantsState.participantInfoList)
-            expectation.fulfill()
-        }
-
-        let participantsListViewModel = ParticipantsListViewModelMocking(
-                                                            compositeViewModelFactory: factoryMocking,
-                                                            localUserState: LocalUserState(),
-                                                            dispatchAction: storeFactory.store.dispatch,
-                                                            localizationProvider: localizationProvider)
-        participantsListViewModel.updateStates = updateStates
-        factoryMocking.participantsListViewModel = participantsListViewModel
-
-        let sut = makeSUT()
-        sut.update(localUserState: localUserStateValue,
-                   remoteParticipantsState: remoteParticipantsStateValue,
-                   callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
-        wait(for: [expectation], timeout: 1)
-    }
-
-    func test_infoHeaderViewModel_when_displayParticipantsList_then_participantsListDisplayed() {
-        let sut = makeSUT()
-        sut.displayParticipantsList()
-
-        XCTAssertTrue(sut.isParticipantsListDisplayed)
-    }
-
-    func test_infoHeaderViewModel_when_displayParticipantMenu_then_isParticipantMenuDisplayed() {
-        let sut = makeSUT()
-        sut.displayParticipantMenu(participantId: "participantId", participantDisplayName: "participantDisplayName")
-
-        XCTAssertTrue(sut.isParticipantMenuDisplayed)
     }
 
     func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedFalse_then_shouldBecomeTrueAndPublish() {

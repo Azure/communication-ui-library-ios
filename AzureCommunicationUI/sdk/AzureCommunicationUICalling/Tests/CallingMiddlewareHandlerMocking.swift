@@ -28,6 +28,10 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var declineAllLobbyParticipants: ((Bool) -> Void)?
     var admitLobbyParticipant: ((Bool) -> Void)?
     var declineLobbyParticipant: ((Bool) -> Void)?
+    var startCaptions: ((Bool) -> Void)?
+    var stopCaptions: ((Bool) -> Void)?
+    var setCaptionsSpokenLanguage: ((Bool) -> Void)?
+    var setCaptionsLangue: ((Bool) -> Void)?
     var onNetworkQualityCallDiagnosticsUpdated: ((Bool) -> Void)?
     var onNetworkCallDiagnosticsUpdated: ((Bool) -> Void)?
     var onMediaCallDiagnosticsUpdated: ((Bool) -> Void)?
@@ -167,6 +171,30 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
         }
     }
 
+    func startCaptions(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            startCaptions?(true)
+        }
+    }
+
+    func stopCaptions(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            stopCaptions?(true)
+        }
+    }
+
+    func setCaptionsSpokenLanguage(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            setCaptionsSpokenLanguage?(true)
+        }
+    }
+
+    func setCaptionsLanguage(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, language: String) -> Task<Void, Never> {
+        Task {
+            setCaptionsLangue?(true)
+        }
+    }
+
     func onNetworkQualityCallDiagnosticsUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, diagnisticModel: AzureCommunicationUICalling.NetworkQualityDiagnosticModel) -> Task<Void, Never> {
         Task {
             onNetworkQualityCallDiagnosticsUpdated?(true)
@@ -207,5 +235,13 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
         Task {
             onCapabilitiesChanged?(event)
         }
+    }
+
+    func recordingStateUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, isRecordingActive: Bool) -> Task<Void, Never> {
+        Task {}
+    }
+
+    func transcriptionStateUpdated(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch, isTranscriptionActive: Bool) -> Task<Void, Never> {
+        Task {}
     }
 }

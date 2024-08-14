@@ -5,14 +5,14 @@
 
 import Combine
 import Foundation
-
-class CallingViewModel: ObservableObject {
-    @Published var isConfirmLeaveListDisplayed = false
+// swiftlint:disable type_body_length
+internal class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable = false
     @Published var appState: AppStatus = .foreground
     @Published var isInPip = false
     @Published var allowLocalCameraPreview = false
+    @Published var captionsStarted = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -20,6 +20,7 @@ class CallingViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let callType: CompositeCallType
+    private let captionsOptions: CaptionsOptions
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
@@ -31,6 +32,9 @@ class CallingViewModel: ObservableObject {
     let bannerViewModel: BannerViewModel
     let lobbyOverlayViewModel: LobbyOverlayViewModel
     let loadingOverlayViewModel: LoadingOverlayViewModel
+    let leaveCallConfirmationViewModel: LeaveCallConfirmationViewModel
+    let participantListViewModel: ParticipantsListViewModel
+    let participantActionViewModel: ParticipantMenuViewModel
     var onHoldOverlayViewModel: OnHoldOverlayViewModel!
     let isRightToLeft: Bool
 
@@ -42,8 +46,15 @@ class CallingViewModel: ObservableObject {
     var callDiagnosticsViewModel: CallDiagnosticsViewModel!
     var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
+    var captionsLanguageListViewModel: CaptionsLanguageListViewModel!
+    var captionsListViewModel: CaptionsListViewModel!
+    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
+    var audioDeviceListViewModel: AudioDevicesListViewModel!
+    var captionsInfoViewModel: CaptionsInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
+    var captionsErrorViewModel: CaptionsErrorViewModel!
 
+    // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState, Action>,
@@ -53,8 +64,8 @@ class CallingViewModel: ObservableObject {
          allowLocalCameraPreview: Bool,
          leaveCallConfirmationMode: LeaveCallConfirmationMode,
          callType: CompositeCallType,
+         captionsOptions: CaptionsOptions,
          capabilitiesManager: CapabilitiesManager
-
     ) {
         self.logger = logger
         self.store = store
@@ -66,14 +77,28 @@ class CallingViewModel: ObservableObject {
         self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+        self.captionsOptions = captionsOptions
+
         let actionDispatch: ActionDispatch = store.dispatch
 
+        audioDeviceListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
+                dispatchAction: actionDispatch,
+                localUserState: store.state.localUserState)
+
+        captionsLanguageListViewModel = compositeViewModelFactory.makeCaptionsLanguageListViewModel(
+            dispatchAction: actionDispatch,
+            state: store.state
+        )
+
+        captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
+            state: store.state)
+        captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
                                                                                                 isIpadInterface)
-        bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
+        bannerViewModel = compositeViewModelFactory.makeBannerViewModel(dispatchAction: store.dispatch)
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
         infoHeaderViewModel = compositeViewModelFactory
@@ -94,12 +119,37 @@ class CallingViewModel: ObservableObject {
 
         isParticipantGridDisplayed = (isCallConnected || isOutgoingCall || isRemoteHold) &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
+
+        leaveCallConfirmationViewModel = compositeViewModelFactory.makeLeaveCallConfirmationViewModel(
+            endCall: {
+                store.dispatch(action: .callingAction(.callEndRequested))
+            }, dismissConfirmation: {
+                store.dispatch(action: .hideDrawer)
+            }
+        )
+
+        participantListViewModel = compositeViewModelFactory
+            .makeParticipantsListViewModel(
+                localUserState: store.state.localUserState,
+                isDisplayed: store.state.navigationState.participantsVisible,
+                dispatchAction: store.dispatch)
+
+        participantActionViewModel = compositeViewModelFactory
+            .makeParticipantMenuViewModel(
+                localUserState: store.state.localUserState,
+                isDisplayed: store.state.navigationState.participantActionsVisible,
+                dispatchAction: store.dispatch)
         controlBarViewModel = compositeViewModelFactory
-            .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
+            .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
                 guard let self = self else {
                     return
                 }
-                self.endCall()
+                if leaveCallConfirmationMode == .alwaysEnabled {
+                    store.dispatch(action: .showEndCallConfirmation)
+                } else {
+                    self.endCall()
+                }
+
             }, localUserState: store.state.localUserState,
             leaveCallConfirmationMode: leaveCallConfirmationMode,
             capabilitiesManager: capabilitiesManager)
@@ -122,22 +172,47 @@ class CallingViewModel: ObservableObject {
                                                                               subtitle: "")
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
-
         bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
-    }
 
-    func dismissConfirmLeaveDrawerList() {
-        self.isConfirmLeaveListDisplayed = false
+        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
+            isDisplayed: store.state.navigationState.moreOptionsVisible,
+            isCaptionsAvailable: true,
+            showSharingViewAction: {
+                store.dispatch(action: .showSupportShare)
+            },
+            showSupportFormAction: {
+                store.dispatch(action: .showSupportForm)
+            },
+            showCaptionsViewAction: {
+                store.dispatch(action: .showCaptionsListView)
+            }
+        )
+
+        captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
+            state: store.state,
+            captionsOptions: captionsOptions,
+            dispatchAction: store.dispatch,
+            showSpokenLanguage: {
+                store.dispatch(action: .showSpokenLanguageView)
+            },
+            showCaptionsLanguage: {
+                store.dispatch(action: .showCaptionsLanguageView)
+            },
+            isDisplayed: store.state.navigationState.captionsViewVisible)
     }
+    // swiftlint:enable function_body_length
 
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))
-        dismissConfirmLeaveDrawerList()
     }
 
     func resumeOnHold() {
         store.dispatch(action: .callingAction(.resumeRequested))
+    }
+
+    func dismissDrawer() {
+        store.dispatch(action: .hideDrawer)
     }
 
     func receive(_ state: AppState) {
@@ -150,11 +225,29 @@ class CallingViewModel: ObservableObject {
             return
         }
 
+        participantListViewModel.update(localUserState: state.localUserState,
+                                        remoteParticipantsState: state.remoteParticipantsState,
+                                        isDisplayed: state.navigationState.participantsVisible)
+
+        participantActionViewModel.update(localUserState: state.localUserState,
+                                          isDisplayed: state.navigationState.participantActionsVisible,
+                                          participantInfoModel: state.navigationState.selectedParticipant)
+        audioDeviceListViewModel.update(
+            audioDeviceStatus: state.localUserState.audioState.device,
+            navigationState: state.navigationState,
+            visibilityState: state.visibilityState)
+
+        leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
+        captionsListViewModel.update(state: state)
+        captionsInfoViewModel.update(state: state)
+        captionsLanguageListViewModel.update(state: state)
+        captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
-                                   visibilityState: state.visibilityState)
+                                   visibilityState: state.visibilityState,
+                                   navigationState: state.navigationState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
@@ -171,11 +264,14 @@ class CallingViewModel: ObservableObject {
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          visibilityState: state.visibilityState, lifeCycleState: state.lifeCycleState)
-        bannerViewModel.update(callingState: state.callingState)
+        bannerViewModel.update(callingState: state.callingState,
+                               visibilityState: state.visibilityState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
+        moreCallOptionsListViewModel.update(navigationState: state.navigationState,
+                                            visibilityState: state.visibilityState)
         let newIsCallConnected = state.callingState.status == .connected
         let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
                                                                               callingStatus: state.callingState.status)
@@ -227,3 +323,4 @@ class CallingViewModel: ObservableObject {
         return isOutgoingCall
     }
 }
+// swiftlint:enable type_body_length

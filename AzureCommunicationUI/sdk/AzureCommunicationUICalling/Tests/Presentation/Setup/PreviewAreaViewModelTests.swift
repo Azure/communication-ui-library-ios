@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class PreviewAreaViewModelTests: XCTestCase {
@@ -19,7 +20,10 @@ class PreviewAreaViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                                                                  localParticipantViewData: nil))
     }
 
     override func tearDown() {

@@ -5,6 +5,7 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class SetupViewModelTests: XCTestCase {
@@ -20,7 +21,10 @@ class SetupViewModelTests: XCTestCase {
         cancellable = CancelBag()
         logger = LoggerMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
+                                                          store: storeFactory.store,
+                                                          avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
+                                                                                                  localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                                                                                                  localParticipantViewData: nil))
     }
 
     override func tearDown() {

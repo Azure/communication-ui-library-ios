@@ -5,6 +5,7 @@
 
 import FluentUI
 import Foundation
+import SwiftUI
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
@@ -30,6 +31,10 @@ protocol CompositeViewModelFactoryProtocol {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
+    func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
+                                            state: AppState) -> CaptionsLanguageListViewModel
+    func makeCaptionsInfoViewModel (state: AppState) -> CaptionsInfoViewModel
+    func makeCaptionsErrorViewModel (dispatchAction: @escaping ActionDispatch) -> CaptionsErrorViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
     // MARK: CallingViewModels
@@ -37,7 +42,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                 endCallConfirm: @escaping (() -> Void),
+                                 onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
                                  leaveCallConfirmationMode: LeaveCallConfirmationMode,
                                  capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
@@ -47,33 +52,56 @@ protocol CompositeViewModelFactoryProtocol {
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
                                       lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       isDisplayed: Bool,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
+
     func makeParticipantMenuViewModel(localUserState: LocalUserState,
+                                      isDisplayed: Bool,
                                       dispatchAction: @escaping ActionDispatch) -> ParticipantMenuViewModel
 
-    func makeBannerViewModel() -> BannerViewModel
+    func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
-    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
-    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListViewModel(
+        isDisplayed: Bool,
+        isCaptionsAvailable: Bool,
+        showSharingViewAction: @escaping () -> Void,
+        showSupportFormAction: @escaping () -> Void,
+        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeCaptionsListViewModel(state: AppState,
+                                   captionsOptions: CaptionsOptions,
+                                   dispatchAction: @escaping ActionDispatch,
+                                   showSpokenLanguage: @escaping () -> Void,
+                                   showCaptionsLanguage: @escaping () -> Void,
+                                   isDisplayed: Bool) -> CaptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
+
+    func makeToggleListItemViewModel(title: String,
+                                     isToggleOn: Binding<Bool>,
+                                     showToggle: Bool,
                                      accessibilityIdentifier: String,
-                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
-    func makeDrawerListItemViewModel(icon: CompositeIcon,
-                                     title: String,
-                                     accessibilityIdentifier: String) -> DrawerListItemViewModel
-    func makeSelectableDrawerListItemViewModel(
-        icon: CompositeIcon,
-        title: String,
-        isSelected: Bool,
-        onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
+                                     startIcon: CompositeIcon,
+                                     action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
+
+    func makeLanguageListItemViewModel(title: String,
+                                       subtitle: String?,
+                                       accessibilityIdentifier: String,
+                                       startIcon: CompositeIcon,
+                                       endIcon: CompositeIcon?,
+                                       isEnabled: Bool,
+                                       action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
+    func makeCaptionsLangaugeCellViewModel(title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel
+    func makeLeaveCallConfirmationViewModel(
+        endCall: @escaping (() -> Void),
+        dismissConfirmation: @escaping (() -> Void)) -> LeaveCallConfirmationViewModel
+
     func makeSupportFormViewModel() -> SupportFormViewModel
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
     func makeBottomToastViewModel(toastNotificationState: ToastNotificationState,

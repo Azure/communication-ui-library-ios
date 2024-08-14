@@ -84,6 +84,7 @@ public class CallComposite {
     private var callKitOptions: CallKitOptions?
     private var callKitRemoteInfo: CallKitRemoteInfo?
     private var credential: CommunicationTokenCredential?
+    private var userId: CommunicationIdentifier?
     private var displayName: String?
     private var disableInternalPushForIncomingCall = false
     private var callingSDKInitializer: CallingSDKInitializer?
@@ -111,6 +112,7 @@ public class CallComposite {
     public init(withOptions options: CallCompositeOptions? = nil) {
         credential = nil
         events = Events()
+        userId = options?.userId
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
@@ -135,6 +137,7 @@ public class CallComposite {
     public init(credential: CommunicationTokenCredential,
                 withOptions options: CallCompositeOptions? = nil) {
         self.credential = credential
+        userId = options?.userId
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
@@ -514,7 +517,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             store?.dispatch(action: .visibilityAction(.pipModeRequested))
         }
     }
-
+    // swiftlint:disable function_body_length
     private func constructViewFactoryAndDependencies(
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
@@ -545,6 +548,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         // Construct managers
         let avatarViewManager = AvatarViewManager(
             store: store,
+            localParticipantId: userId ?? createCommunicationIdentifier(fromRawId: ""),
             localParticipantViewData: localOptions?.participantViewData
         )
         self.avatarViewManager = avatarViewManager
@@ -572,6 +576,11 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
+
+        let captionsViewManager = CaptionsViewManager(
+            store: store,
+            callingSDKWrapper: callingSdkWrapper
+        )
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
@@ -584,6 +593,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
+                captionsViewManager: captionsViewManager,
                 localOptions: localOptions,
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
@@ -592,14 +602,15 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 retrieveLogFiles: callingSdkWrapper.getLogFiles,
                 callType: callConfiguration.compositeCallType,
                 setupScreenOptions: setupScreenOptions,
-                capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType)
+                capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
+                avatarManager: avatarViewManager
             )
         )
     }
 
     private func createDebugInfoManager(callingSDKWrapper: CallingSDKWrapperProtocol) -> DebugInfoManagerProtocol {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
-                                getLogFiles: { return callingSDKWrapper.getLogFiles() })
+       return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                               getLogFiles: { return callingSDKWrapper.getLogFiles() })
     }
 
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
@@ -691,7 +702,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         return callingSDKInitializer
     }
 }
-
+// swiftlint:enable function_body_length
 extension CallComposite {
     private func receiveStoreEvents(_ store: Store<AppState, Action>) {
         store.$state

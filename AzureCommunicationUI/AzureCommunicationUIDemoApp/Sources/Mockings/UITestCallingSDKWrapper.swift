@@ -151,6 +151,18 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return ""
     }
 
+    func startCaptions(_ language: String) async throws {
+    }
+
+    func stopCaptions() async throws {
+    }
+
+    func setCaptionsSpokenLanguage(_ language: String) async throws {
+    }
+
+    func setCaptionsCaptionLanguage(_ language: String) async throws {
+    }
+
     func muteLocalMic() async throws {
         guard callMocking != nil else {
             return

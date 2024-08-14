@@ -10,8 +10,6 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed = true
-    @Published var isParticipantsListDisplayed = false
-    @Published var isParticipantMenuDisplayed = false
     @Published var isVoiceOverEnabled = false
     private let logger: Logger
     private let dispatch: ActionDispatch
@@ -20,11 +18,8 @@ class InfoHeaderViewModel: ObservableObject {
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
-    let enableMultitasking: Bool
     private let enableSystemPipWhenMultitasking: Bool
-
-    let participantsListViewModel: ParticipantsListViewModel
-    let participantMenuViewModel: ParticipantMenuViewModel
+    let enableMultitasking: Bool
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -38,20 +33,15 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool) {
+        let title = localizationProvider.getLocalizedString(.callWith0Person)
+        self.infoLabel = title
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        let title = localizationProvider.getLocalizedString(.callWith0Person)
-        self.infoLabel = title
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
-        self.participantMenuViewModel = compositeViewModelFactory.makeParticipantMenuViewModel(
-            localUserState: localUserState,
-            dispatchAction: dispatchAction)
-        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState, dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
             buttonType: .infoButton,
@@ -61,7 +51,7 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
-        self.participantsListViewModel.displayParticipantMenu = self.displayParticipantMenu
+
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
 
@@ -91,12 +81,7 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     func displayParticipantsList() {
-        self.isParticipantsListDisplayed = true
-    }
-
-    func displayParticipantMenu(participantId: String, participantDisplayName: String) {
-        participantMenuViewModel.showMenu(participantId: participantId, participantDisplayName: participantDisplayName)
-        self.isParticipantMenuDisplayed = true
+        dispatch(.showParticipants)
     }
 
     func toggleDisplayInfoHeaderIfNeeded() {
@@ -128,16 +113,9 @@ class InfoHeaderViewModel: ObservableObject {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
-        participantsListViewModel.update(localUserState: localUserState,
-                                         remoteParticipantsState: remoteParticipantsState)
-        participantMenuViewModel.update(localUserState: localUserState)
 
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
-        }
-
-        if visibilityState.currentStatus != .visible {
-            isParticipantsListDisplayed = false
         }
     }
 
@@ -161,9 +139,6 @@ class InfoHeaderViewModel: ObservableObject {
         }
         if isInfoHeaderDisplayed {
             isInfoHeaderDisplayed = false
-        }
-        if isParticipantsListDisplayed {
-            isParticipantsListDisplayed = false
         }
     }
 
