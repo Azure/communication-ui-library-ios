@@ -127,6 +127,7 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
+        callScreenHeaderOptions = options?.callScreenOptions?.callScreenHeaderOptions
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
@@ -585,7 +586,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
-        if(self.callScreenHeaderOptions?.callDurationTimer != nil) {
+        if self.callScreenHeaderOptions?.callDurationTimer != nil {
             self.callScreenHeaderOptions?.callDurationTimer?.callTimerAPI = CallDurationManager()
         }
 

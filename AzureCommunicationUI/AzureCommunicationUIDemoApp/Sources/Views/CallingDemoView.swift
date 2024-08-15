@@ -28,7 +28,6 @@ struct CallingDemoView: View {
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
     @State var callDurationTimer = CallDurationTimer()
-
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -423,7 +422,8 @@ extension CallingDemoView {
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
                                                    callScreenHeaderOptions:
                                                      CallScreenHeaderOptions(
-                                                        customTimer: callDurationTimer))
+                                                        callDurationTimer: callDurationTimer,
+                                                        title: "This is a custom InfoHeader"))
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,

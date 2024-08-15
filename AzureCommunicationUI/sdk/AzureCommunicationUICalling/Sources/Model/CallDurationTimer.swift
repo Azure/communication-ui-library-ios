@@ -4,9 +4,9 @@
 //
 
 public class CallDurationTimer {
-    var callTimerAPI: CallTimerAPI?
-    public var elapsedDuration: Int64? = 0
-    public init(elapsedDuration: Int64?) {
+    var callTimerAPI: CallDurationManager?
+    public var elapsedDuration: Int64?
+    public init(elapsedDuration: Int64? = 0) {
         self.elapsedDuration = elapsedDuration
     }
     public func start() {
