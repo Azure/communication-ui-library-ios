@@ -6,9 +6,9 @@
 public class CallScreenHeaderOptions {
     public var callDurationTimer: CallDurationTimer?
     public var title: String?
-    public init(customTimer: CallDurationTimer? = nil,
-                customHeaderMessage: String? = nil) {
-        self.callDurationTimer = customTimer
-        self.title = customHeaderMessage
+    public init(callDurationTimer: CallDurationTimer? = nil,
+                title: String? = nil) {
+        self.callDurationTimer = callDurationTimer
+        self.title = title
     }
 }
