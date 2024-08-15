@@ -3,9 +3,11 @@
 //  Licensed under the MIT License.
 //
 
-public class CallCompositeCallDurationCustomTimer {
+public class CallDurationTimer {
     var callTimerAPI: CallTimerAPI?
-    public init() {
+    public var elapsedDuration: Int64? = 0
+    public init(elapsedDuration: Int64?) {
+        self.elapsedDuration = elapsedDuration
     }
     public func start() {
         guard let callTimerAPI = callTimerAPI else {
@@ -19,7 +21,7 @@ public class CallCompositeCallDurationCustomTimer {
         }
         callTimerAPI.onStop()
     }
-    public func onReset() {
+    public func reset() {
         guard let callTimerAPI = callTimerAPI else {
             return
         }

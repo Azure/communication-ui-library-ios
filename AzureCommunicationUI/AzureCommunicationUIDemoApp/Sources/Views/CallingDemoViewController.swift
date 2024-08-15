@@ -235,9 +235,9 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
-        var callDurationCustomTimer = CallCompositeCallDurationCustomTimer()
+        var callDurationCustomTimer = CallDurationTimer()
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
-                                                  callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions(
+                                                  callScreenHeaderOptions: CallScreenHeaderOptions(
                                                     customTimer: callDurationCustomTimer))
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(

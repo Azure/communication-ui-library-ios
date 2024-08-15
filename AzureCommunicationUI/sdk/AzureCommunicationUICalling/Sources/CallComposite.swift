@@ -41,6 +41,8 @@ public class CallComposite {
         public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
         /// Closure to incoming call id accepted by CallKit.
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
+        /// Closure to execute when participant has left a call inside Call Composite
+        public var onRemoteParticipantLeave: (([CommunicationIdentifier]) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -96,8 +98,8 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
-    private var customTimer: CallCompositeCallDurationCustomTimer?
-    private var callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions?
+    private var customTimer: CallDurationTimer?
+    private var callScreenHeaderOptions: CallScreenHeaderOptions?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -583,8 +585,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
-        if(self.callScreenHeaderOptions?.callCompositeCallDurationCustomTimer != nil) {
-            self.callScreenHeaderOptions?.callCompositeCallDurationCustomTimer?.callTimerAPI = CallDurationManager()
+        if(self.callScreenHeaderOptions?.callDurationTimer != nil) {
+            self.callScreenHeaderOptions?.callDurationTimer?.callTimerAPI = CallDurationManager()
         }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
