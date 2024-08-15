@@ -238,7 +238,8 @@ class CallingDemoViewController: UIViewController {
         var callDurationCustomTimer = CallDurationTimer()
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
                                                   callScreenHeaderOptions: CallScreenHeaderOptions(
-                                                    customTimer: callDurationCustomTimer))
+                                                    callDurationTimer: callDurationCustomTimer,
+                                                    title: "This is a custom header"))
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
