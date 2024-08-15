@@ -97,6 +97,7 @@ public class CallComposite {
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
     private var customTimer: CallCompositeCallDurationCustomTimer?
+    private var callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -150,7 +151,7 @@ public class CallComposite {
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
-        customTimer = options?.callScreenOptions?.callScreenHeaderOptions?.callCompositeCallDurationCustomTimer
+        callScreenHeaderOptions = options?.callScreenOptions?.callScreenHeaderOptions
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
@@ -582,8 +583,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
-        self.callDurationManager = CallDurationManager()
-        self.customTimer?.callTimerAPI = callDurationManager
+        if(self.callScreenHeaderOptions?.callCompositeCallDurationCustomTimer != nil) {
+            self.callScreenHeaderOptions?.callCompositeCallDurationCustomTimer?.callTimerAPI = CallDurationManager()
+        }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
@@ -614,7 +616,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager,
-                callDurationManager: callDurationManager!,
+                callScreenHeaderOptions: callScreenHeaderOptions!,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
