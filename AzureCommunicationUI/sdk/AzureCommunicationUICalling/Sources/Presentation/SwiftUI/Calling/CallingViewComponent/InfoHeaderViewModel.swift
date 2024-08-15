@@ -23,6 +23,7 @@ class InfoHeaderViewModel: ObservableObject {
     private let enableSystemPipWhenMultitasking: Bool
     private var callDurationManager: CallDurationManager
     let enableMultitasking: Bool
+    let customTitle: String
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
@@ -37,16 +38,17 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
-         callDurationManager: CallDurationManager) {
+         callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions) {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
-        self.infoLabel = title
+        self.customTitle = callScreenHeaderOptions.customHeaderMessage ?? title
+        self.infoLabel = !customTitle.isEmpty ? customTitle: title
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
-        self.callDurationManager = callDurationManager
+        self.callDurationManager = callScreenHeaderOptions.callCompositeCallDurationCustomTimer?.callTimerAPI as! CallDurationManager
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,

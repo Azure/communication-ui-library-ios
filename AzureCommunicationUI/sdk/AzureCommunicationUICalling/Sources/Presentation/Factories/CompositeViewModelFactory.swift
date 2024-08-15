@@ -23,7 +23,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let enableSystemPipWhenMultitasking: Bool
     private let capabilitiesManager: CapabilitiesManager
     private let avatarManager: AvatarViewManagerProtocol
-    private let callDurationManager: CallDurationManager
+    private let callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions
 
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
@@ -50,7 +50,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
-         callDurationManager: CallDurationManager,
+         callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions,
          retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
@@ -71,7 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.avatarManager = avatarManager
-        self.callDurationManager = callDurationManager
+        self.callScreenHeaderOptions = callScreenHeaderOptions
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -313,7 +313,7 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
                             enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
-                            callDurationManager: callDurationManager)
+                            callScreenHeaderOptions: callScreenHeaderOptions)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
