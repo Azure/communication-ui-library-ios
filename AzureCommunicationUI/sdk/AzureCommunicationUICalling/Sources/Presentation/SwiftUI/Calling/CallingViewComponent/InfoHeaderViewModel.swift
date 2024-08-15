@@ -38,9 +38,9 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
-         callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions) {
+         callScreenHeaderOptions: CallScreenHeaderOptions) {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
-        self.customTitle = callScreenHeaderOptions.customHeaderMessage ?? title
+        self.customTitle = callScreenHeaderOptions.title ?? title
         self.infoLabel = !customTitle.isEmpty ? customTitle: title
         self.dispatch = dispatchAction
         self.logger = logger
@@ -48,7 +48,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
-        self.callDurationManager = callScreenHeaderOptions.callCompositeCallDurationCustomTimer?.callTimerAPI as! CallDurationManager
+        self.callDurationManager = callScreenHeaderOptions.callDurationTimer?.callTimerAPI as! CallDurationManager
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
