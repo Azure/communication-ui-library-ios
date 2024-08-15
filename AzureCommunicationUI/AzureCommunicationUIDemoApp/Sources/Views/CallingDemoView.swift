@@ -27,7 +27,7 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
-    @State var callDurationTimer = CallCompositeCallDurationCustomTimer()
+    @State var callDurationTimer = CallDurationTimer()
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -422,7 +422,7 @@ extension CallingDemoView {
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
                                                    callScreenHeaderOptions:
-                                                     CallCompositeCallScreenHeaderOptions(
+                                                     CallScreenHeaderOptions(
                                                         customTimer: callDurationTimer))
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)

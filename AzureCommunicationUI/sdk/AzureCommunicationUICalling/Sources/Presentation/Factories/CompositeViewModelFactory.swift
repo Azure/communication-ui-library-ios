@@ -23,7 +23,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let enableSystemPipWhenMultitasking: Bool
     private let capabilitiesManager: CapabilitiesManager
     private let avatarManager: AvatarViewManagerProtocol
-    private let callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions
+    private let callScreenHeaderOptions: CallScreenHeaderOptions
 
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
@@ -50,7 +50,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
-         callScreenHeaderOptions: CallCompositeCallScreenHeaderOptions,
+         callScreenHeaderOptions: CallScreenHeaderOptions,
          retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
