@@ -605,16 +605,27 @@ extension CallingDemoView {
     }
 
     private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenOptions {
+        // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
+        let customButtonImage: UIImage
+        if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
+            customButtonImage = image.withTintColor(UIColor(named: "chevronColor") ?? .black)
+        } else {
+            customButtonImage = UIImage().withTintColor(.black) // Fallback to a plain image with black tint
+            print("Error: Image 'ic_fluent_chevron_right_20_regular' not found")
+        }
 
-        let customButton1 = CustomButtonOptions(image: UIImage(named: "ic_fluent_chevron_right_20_regular")!,
-                                                title: "Hide composite") { _ in
+        // Create the custom button with the tinted image
+        let customButton1 = CustomButtonOptions(
+            image: customButtonImage,
+            title: "Hide composite"
+        ) { _ in
             print("::::SwiftUIDemoView::CallScreen::customButton1::onClick")
             callComposite?.isHidden = true
         }
 
+        // Create and return the CallScreenControlBarOptions
         let callScreenControlBarOptions = CallScreenControlBarOptions(
-            leaveCallConfirmationMode:
-                envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
+            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
             customButtons: [customButton1]
         )
 
