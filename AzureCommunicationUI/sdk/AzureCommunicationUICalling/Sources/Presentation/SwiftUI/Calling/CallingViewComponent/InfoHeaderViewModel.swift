@@ -13,6 +13,7 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var isInfoHeaderDisplayed = true
     @Published var isVoiceOverEnabled = false
     @Published var timer = ""
+    @Published var accessibilityLabelTimer = ""
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -50,6 +51,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.enableMultitasking = enableMultitasking
         self.callDurationManager = callScreenHeaderOptions.timer?.callTimerAPI
                                         as? CallDurationManager ?? CallDurationManager()
+        self.accessibilityLabelTimer = (callScreenHeaderOptions.callDurationTimer?.timer())!
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
