@@ -70,5 +70,4 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
             .compactMap { createCommunicationIdentifier(fromRawId: $0) }
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
-    
 }
