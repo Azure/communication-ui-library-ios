@@ -223,7 +223,6 @@ class CallingDemoViewController: UIViewController {
         print("CallingDemoView:::: createCallComposite creating")
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
-        let callScreenOptions = createCallScreenOptions(callComposite: nil)
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
