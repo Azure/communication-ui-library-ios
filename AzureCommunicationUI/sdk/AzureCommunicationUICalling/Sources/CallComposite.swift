@@ -587,7 +587,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             self.pipManager = createPipManager(store)
         }
         if self.callScreenHeaderOptions?.callDurationTimer != nil {
-            self.callScreenHeaderOptions?.callDurationTimer?.callTimerAPI = CallDurationManager()
+            self.callScreenHeaderOptions?.callDurationTimer?.callTimerAPI = CallDurationManager(
+                timeElapsed: self.callScreenHeaderOptions?.callDurationTimer?.elapsedDuration
+            )
         }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)

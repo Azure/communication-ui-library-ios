@@ -14,13 +14,13 @@ protocol CallTimerAPI {
 
 class CallDurationManager: CallTimerAPI, ObservableObject {
     private var timer: Timer?
-    private var timeRemaining: TimeInterval = 60 // 1 minute in seconds
-    private var isPaused = false
+    var timeElapsed: TimeInterval? = 0
     @Published var timerTickStateFlow: String = ""
     var isStarted = false
 
-    init() {
+    init(timeElapsed: TimeInterval? = 0) {
         // Timer is not started in init, it will be started in onStart
+        self.timeElapsed = timeElapsed ?? 0
     }
 
     func onStart() {
@@ -31,13 +31,13 @@ class CallDurationManager: CallTimerAPI, ObservableObject {
     func onStop() {
         timer?.invalidate()
         timer = nil
+        isStarted = false
     }
 
     func onReset() {
         timer?.invalidate()
-        timeRemaining = 60
+        timeElapsed = 0
         timerTickStateFlow = "00:00"
-        startTimer()
     }
 
     private func startTimer() {
@@ -45,12 +45,11 @@ class CallDurationManager: CallTimerAPI, ObservableObject {
             guard let self = self else {
                 return
             }
-            self.timeRemaining -= 1
-            let secondsElapsed = 60 - self.timeRemaining
-            self.timerTickStateFlow = String(format: "%02d:%02d", Int(secondsElapsed) / 60, Int(secondsElapsed) % 60)
-            if self.timeRemaining <= 0 {
-                self.timer?.invalidate()
-                self.timer = nil
+            timeElapsed! += 1
+            timerTickStateFlow = String(format: "%02d:%02d", Int(timeElapsed!) / 60, Int(timeElapsed!) % 60)
+            if timeElapsed! > 3600 {
+                timerTickStateFlow = String(format: "%02d:%02d:%02d", Int(timeElapsed!) / 3600, Int(timeElapsed!) / 60,
+                                            Int(timeElapsed!) % 60)
             }
         }
     }

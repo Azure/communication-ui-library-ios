@@ -3,10 +3,12 @@
 //  Licensed under the MIT License.
 //
 
+import Foundation
+
 public class CallDurationTimer {
-    var callTimerAPI: CallDurationManager?
-    public var elapsedDuration: Int64?
-    public init(elapsedDuration: Int64? = 0) {
+    var callTimerAPI: CallTimerAPI?
+    public var elapsedDuration: TimeInterval?
+    public init(elapsedDuration: TimeInterval? = 0) {
         self.elapsedDuration = elapsedDuration
     }
     public func start() {
