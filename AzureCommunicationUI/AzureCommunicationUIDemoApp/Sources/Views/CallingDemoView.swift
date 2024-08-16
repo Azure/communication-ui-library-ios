@@ -576,6 +576,13 @@ extension CallingDemoView {
             print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
             showAlert(for: "\(event.callId) cancelled")
         }
+        let onRemoteParticipantLeaveHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+            guard let composite = callComposite else {
+                return
+            }
+            self.onRemoteParticipantJoined(to: composite,
+                                           identifiers: ids)
+        }
 
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
@@ -586,6 +593,7 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
+        callComposite.events.onRemoteParticipantLeave =
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -939,5 +947,13 @@ extension CallingDemoView {
 
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
+    }
+    private func onRemoteParticipantLeave(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+        print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
+            return
+        }
+
+        
     }
 }

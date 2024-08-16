@@ -8,11 +8,12 @@ import Foundation
 /// Call Timer to control the timer in CallComposite
 public class CallDurationTimer {
     var callTimerAPI: CallTimerAPI?
-    /// Time that has already been spent after the composite has started
+    /// Time that has already been spent after the composite has started in second
     public var elapsedDuration: TimeInterval?
     /// Creates an instance of CallDurationTimer with related options.
-    /// - Parameter elapsedDuration: TimeInterval for specifying the amount of time that has already been spent in call.
-    public init(elapsedDuration: TimeInterval? = 0) {
+    /// - Parameter elapsedDuration: TimeInterval in second for specifying the
+    ///  amount of time that has already been spent in call.
+    public init(elapsedDuration: TimeInterval? = nil) {
         self.elapsedDuration = elapsedDuration
     }
     /// Starts the timer in the call.
@@ -37,3 +38,4 @@ public class CallDurationTimer {
         callTimerAPI.onReset()
     }
 }
+

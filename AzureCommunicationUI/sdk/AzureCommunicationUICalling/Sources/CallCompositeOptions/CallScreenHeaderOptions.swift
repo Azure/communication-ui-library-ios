@@ -3,9 +3,12 @@
 //  Licensed under the MIT License.
 //
 
+/// User-configurable options to customize the InfoHeader of CallScreen.
 public class CallScreenHeaderOptions {
-    public var timer: CallDurationTimer?
-    public var title: String?
+    /// CallDurationTimer has the information of elapsed duration after timer starts and
+    /// also lets the user to set elapsed duration.
+    public let timer: CallDurationTimer?
+    let title: String?
     /// Creates an instance of CallScreenHeaderOptions with related options.
     /// - Parameter timer: CallDurationTimer options to set the timer in the InfoHeader.
     /// - Parameter title: A String which replaces the default header message in the

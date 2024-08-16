@@ -1206,8 +1206,6 @@
 				C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */,
 				C8E50E9C2C00077500AB507E /* ParticipantCapabilityType.swift */,
 				C8E50E9E2C00085100AB507E /* ParticipantCapability.swift */,
-				C868F7702C5993CE00D242B4 /* CallDurationTimer.swift */,
-				C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1587,6 +1585,8 @@
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
 				11D470752C62CEFE00A54BD7 /* ButtonOptions.swift */,
 				11D470772C62CF3400A54BD7 /* CustomButtonOptions.swift */,
+				C868F7702C5993CE00D242B4 /* CallDurationTimer.swift */,
+				C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
