@@ -86,6 +86,7 @@ struct SettingsView: View {
         Form {
             orientationOptions
             captionsSettings
+            buttonSettins
             Group {
                 localizationSettings
                 skipSetupScreenSettings
@@ -223,6 +224,12 @@ struct SettingsView: View {
         Section(header: Text("Captions")) {
             CaptionsLocaleTextField(selection: $envConfigSubject.spokenLanguage)
             Toggle("Start Captions", isOn: $envConfigSubject.captionsOn)
+        }
+    }
+
+    var buttonSettins: some View {
+        Section(header: Text("Custom Button")) {
+            Toggle("Add Hide Composite Button", isOn: $envConfigSubject.addHideButton)
         }
     }
 

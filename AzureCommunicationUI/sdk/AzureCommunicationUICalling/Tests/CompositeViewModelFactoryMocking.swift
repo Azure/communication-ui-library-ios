@@ -90,16 +90,24 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     accessibilityProvider: accessibilityProvider,
                                                     isIpadInterface: false,
                                                     allowLocalCameraPreview: true,
-                                                    leaveCallConfirmationMode: .alwaysEnabled,
                                                     callType: .groupCall,
                                                     captionsOptions: CaptionsOptions(),
-                                                    capabilitiesManager: capabilitiesManager)
+                                                    capabilitiesManager: capabilitiesManager,
+                                                    callScreenOptions: CallScreenOptions()
+        )
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel {
+        return createIconButtonViewModel?(iconName) ?? IconButtonViewModel(iconName: iconName,
+                                                                           buttonType: buttonType,
+                                                                           isDisabled: isDisabled,
+                                                                           action: action)
+    }
+
+    func makeIconButtonViewModel(iconName: AzureCommunicationUICalling.CompositeIcon, buttonType: AzureCommunicationUICalling.IconButtonViewModel.ButtonType, isDisabled: Bool, isVisible: Bool, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.IconButtonViewModel {
         return createIconButtonViewModel?(iconName) ?? IconButtonViewModel(iconName: iconName,
                                                                            buttonType: buttonType,
                                                                            isDisabled: isDisabled,
@@ -227,7 +235,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode,
                                  capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
@@ -236,8 +243,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           onEndCallTapped: onEndCallTapped,
                                                           localUserState: localUserState,
                                                           audioVideoMode: .audioAndVideo,
-                                                          leaveCallConfirmationMode: leaveCallConfirmationMode,
-                                                          capabilitiesManager: capabilitiesManager)
+                                                          capabilitiesManager: capabilitiesManager, controlBarOptions: nil)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
@@ -327,14 +333,19 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         localParticipantsListCellViewModel ?? ParticipantsListCellViewModel(localUserState: localUserState,
                                                                             localizationProvider: localizationProvider)
     }
+
     func makeMoreCallOptionsListViewModel(isDisplayed: Bool,
+                                          isCaptionsAvailable: Bool,
+                                          controlBarOptions: AzureCommunicationUICalling.CallScreenControlBarOptions?,
                                           showSharingViewAction: @escaping () -> Void,
                                           showSupportFormAction: @escaping () -> Void,
                                           showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
         moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                                                      localizationProvider: localizationProvider,
                                                                      showSharingViewAction: showSharingViewAction,
-                                                                     showSupportFormAction: showSupportFormAction, showCaptionsViewAction: showCaptionsViewAction, isCaptionsAvailable: true,
+                                                                     showSupportFormAction: showSupportFormAction, showCaptionsViewAction: showCaptionsViewAction,
+                                                                     controlBarOptions: CallScreenControlBarOptions(),
+                                                                     isCaptionsAvailable: true,
                                                                      isSupportFormAvailable: false,
                                                                      isDisplayed: isDisplayed)
     }
@@ -449,6 +460,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             showSharingViewAction: showSharingViewAction,
             showSupportFormAction: showSupportFormAction,
             showCaptionsViewAction: showCaptionsViewAction,
+            controlBarOptions: nil,
             isCaptionsAvailable: true,
             isSupportFormAvailable: true,
             isDisplayed: true)

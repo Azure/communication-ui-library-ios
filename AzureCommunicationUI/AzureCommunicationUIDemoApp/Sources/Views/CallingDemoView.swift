@@ -30,6 +30,7 @@ struct CallingDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    var callComposite = CallComposite()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -583,7 +584,7 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
     }
 
-    func getLocalOptions() -> LocalOptions {
+    func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
@@ -592,21 +593,53 @@ extension CallingDemoView {
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
+        var callScreenOptions = CallScreenOptions()
+        if envConfigSubject.addHideButton {
+            callScreenOptions = createCallScreenOptions(callComposite: callComposite)
+        }
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
                                         audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                            captionsOptions: captionsOptions
+                            captionsOptions: captionsOptions, callScreenOptions: callScreenOptions
         )
+    }
+
+    private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenOptions {
+        // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
+        let customButtonImage: UIImage
+        if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
+            customButtonImage = image.withTintColor(UIColor(named: "chevronColor") ?? .black)
+        } else {
+            customButtonImage = UIImage().withTintColor(.black) // Fallback to a plain image with black tint
+            print("Error: Image 'ic_fluent_chevron_right_20_regular' not found")
+        }
+
+        // Create the custom button with the tinted image
+        let customButton1 = CustomButtonOptions(
+            image: customButtonImage,
+            title: "Hide composite"
+        ) { _ in
+            print("::::SwiftUIDemoView::CallScreen::customButton1::onClick")
+            callComposite?.isHidden = true
+        }
+
+        // Create and return the CallScreenControlBarOptions
+        let callScreenControlBarOptions = CallScreenControlBarOptions(
+            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
+            customButtons: [customButton1]
+        )
+
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
     }
 
     func startCallWithDeprecatedLaunch() async {
         if let credential = try? await getTokenCredential(),
            let callComposite = try? await createCallComposite() {
             let link = getMeetingLink()
-            var localOptions = getLocalOptions()
+            var localOptions = getLocalOptions(callComposite: callComposite)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = try? parseUUID(from: link)
@@ -698,7 +731,7 @@ extension CallingDemoView {
     func startCallComposite() async {
         let link = getMeetingLink()
         if let callComposite = try? await createCallComposite() {
-            var localOptions = getLocalOptions()
+            var localOptions = getLocalOptions(callComposite: callComposite)
             var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
             if remoteInfoDisplayName.isEmpty {
                 remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"

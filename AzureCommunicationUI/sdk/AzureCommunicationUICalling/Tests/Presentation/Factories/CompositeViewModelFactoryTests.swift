@@ -56,6 +56,7 @@ extension CompositeViewModelFactoryTests {
                                          retrieveLogFiles: { return [] },
                                          callType: .groupCall,
                                          setupScreenOptions: nil,
+                                         callScreenOptions: CallScreenOptions(),
                                          capabilitiesManager: CapabilitiesManager(callType: .groupCall),
                                          avatarManager: AvatarViewManagerMocking(
                                             store: mockStoreFactory.store,
