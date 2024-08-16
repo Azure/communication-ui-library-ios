@@ -5,12 +5,14 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed = true
     @Published var isVoiceOverEnabled = false
+    @Published var timer = ""
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -19,9 +21,12 @@ class InfoHeaderViewModel: ObservableObject {
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
     private let enableSystemPipWhenMultitasking: Bool
+    private var callDurationManager: CallDurationManager
     let enableMultitasking: Bool
+    let customTitle: String
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
+    private var cancellables = Set<AnyCancellable>()
 
     var isPad = false
 
@@ -32,15 +37,19 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPipWhenMultitasking: Bool) {
+         enableSystemPipWhenMultitasking: Bool,
+         callScreenHeaderOptions: CallScreenHeaderOptions) {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
-        self.infoLabel = title
+        self.customTitle = callScreenHeaderOptions.title ?? ""
+        self.infoLabel = customTitle.isEmpty ? title : customTitle
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
+        self.callDurationManager = callScreenHeaderOptions.timer?.callTimerAPI
+                                        as? CallDurationManager ?? CallDurationManager()
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
@@ -70,6 +79,13 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
+        if self.callDurationManager.isStarted {
+            callScreenHeaderOptions.timer?.elapsedDuration = self.callDurationManager.timeElapsed
+            self.callDurationManager.$timerTickStateFlow
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.timer, on: self)
+                .store(in: &cancellables)
+        }
     }
 
     func showParticipantListButtonTapped() {

@@ -17,10 +17,12 @@ struct InfoHeaderView: View {
     private enum Constants {
         static let shapeCornerRadius: CGFloat = 5
         static let infoLabelHorizontalPadding: CGFloat = 16.0
+        static let timerVerticalTopPadding: CGFloat = 0
         static let hStackHorizontalPadding: CGFloat = 20.0
         static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
         static let foregroundColor: Color = .white
+        static let verticalSpacing: CGFloat = 0
 
         // MARK: Font Minimum Scale Factor
         // Under accessibility mode, the largest size is 35
@@ -33,7 +35,7 @@ struct InfoHeaderView: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             if viewModel.isInfoHeaderDisplayed {
                 infoHeader
             } else {
@@ -68,21 +70,32 @@ struct InfoHeaderView: View {
                     .flipsForRightToLeftLayoutDirection(true)
                     .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
             }
-
-            Text(viewModel.infoLabel)
-                .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
-                                    leading: 0,
-                                    bottom: Constants.infoLabelHorizontalPadding,
-                                    trailing: 0))
-                .foregroundColor(Constants.foregroundColor)
-                .lineLimit(1)
-                .font(Fonts.caption1.font)
-                .accessibilityLabel(Text(viewModel.accessibilityLabel))
-                .accessibilitySortPriority(1)
-                .scaledToFit()
-                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
-                                    Constants.accessibilityFontScale :
-                                        Constants.defaultFontScale)
+            VStack(alignment: .leading) {
+                Text(viewModel.infoLabel)
+                    .alignmentGuide(.leading) { d in d[.leading] }
+                    .foregroundColor(Constants.foregroundColor)
+                    .lineLimit(1)
+                    .font(Fonts.caption1.font)
+                    .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                    .accessibilitySortPriority(1)
+                    .scaledToFit()
+                    .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
+                                        Constants.accessibilityFontScale :
+                                            Constants.defaultFontScale)
+                if !viewModel.timer.isEmpty {
+                    Text(viewModel.timer.trimmingCharacters(in: .whitespacesAndNewlines))
+                        .alignmentGuide(.leading) { d in d[.leading] }
+                        .foregroundColor(Constants.foregroundColor)
+                        .lineLimit(1)
+                        .font(Fonts.caption1.font)
+                        .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                        .accessibilitySortPriority(2)
+                        .scaledToFit()
+                        .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
+                                            Constants.accessibilityFontScale :
+                                                Constants.defaultFontScale)
+                }
+            }
             Spacer()
             participantListButton
         }

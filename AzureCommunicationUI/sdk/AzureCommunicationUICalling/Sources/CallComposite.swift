@@ -41,6 +41,8 @@ public class CallComposite {
         public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
         /// Closure to incoming call id accepted by CallKit.
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
+        /// Closure to execute when participant has left a call inside Call Composite
+        public var onRemoteParticipantLeave: (([CommunicationIdentifier]) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -71,6 +73,7 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var pipManager: PipManagerProtocol?
+    private var callDurationManager: CallDurationManager?
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
@@ -95,6 +98,8 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
+    private var customTimer: CallDurationTimer?
+    private var callScreenHeaderOptions: CallScreenHeaderOptions?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -122,6 +127,7 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
+        callScreenHeaderOptions = options?.callScreenOptions?.headerOptions
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
@@ -148,6 +154,7 @@ public class CallComposite {
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
+        callScreenHeaderOptions = options?.callScreenOptions?.headerOptions
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
@@ -579,6 +586,11 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
+        if self.callScreenHeaderOptions?.timer != nil {
+            self.callScreenHeaderOptions?.timer?.callTimerAPI = CallDurationManager(
+                timeElapsed: self.callScreenHeaderOptions?.timer?.elapsedDuration
+            )
+        }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
@@ -604,12 +616,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles,
                 callType: callConfiguration.compositeCallType,
                 setupScreenOptions: setupScreenOptions,
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
-                avatarManager: avatarViewManager
+                avatarManager: avatarViewManager,
+                callScreenHeaderOptions: callScreenHeaderOptions!,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }
@@ -638,6 +651,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
+        self.callDurationManager = nil
     }
 
     private func disposeSDKWrappers() {

@@ -27,7 +27,7 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
-
+    @State var callDurationTimer = CallDurationTimer()
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -419,7 +419,11 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
+                                                   headerOptions:
+                                                     CallScreenHeaderOptions(
+                                                        timer: callDurationTimer,
+                                                        title: "This is a custom InfoHeader"))
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -571,6 +575,13 @@ extension CallingDemoView {
             isIncomingCall = false
             print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
             showAlert(for: "\(event.callId) cancelled")
+        }
+        let onRemoteParticipantLeaveHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+            guard let composite = callComposite else {
+                return
+            }
+            self.onRemoteParticipantJoined(to: composite,
+                                           identifiers: ids)
         }
 
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
@@ -916,6 +927,15 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
+        if callState == .connected {
+            self.callDurationTimer.start()
+        }
+        if callState == .disconnecting {
+            self.callDurationTimer.stop()
+        }
+        if callState == .disconnected {
+            self.callDurationTimer.reset()
+        }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
