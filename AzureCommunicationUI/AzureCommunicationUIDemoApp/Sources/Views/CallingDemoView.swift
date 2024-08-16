@@ -420,9 +420,9 @@ extension CallingDemoView {
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
-                                                   callScreenHeaderOptions:
+                                                   headerOptions:
                                                      CallScreenHeaderOptions(
-                                                        callDurationTimer: callDurationTimer,
+                                                        timer: callDurationTimer,
                                                         title: "This is a custom InfoHeader"))
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -922,6 +922,12 @@ extension CallingDemoView {
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
         if callState == .connected {
             self.callDurationTimer.start()
+        }
+        if callState == .disconnecting {
+            self.callDurationTimer.stop()
+        }
+        if callState == .disconnected {
+            self.callDurationTimer.reset()
         }
     }
 
