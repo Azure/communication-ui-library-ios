@@ -593,7 +593,6 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
-        callComposite.events.onRemoteParticipantLeave =
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -947,13 +946,5 @@ extension CallingDemoView {
 
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
-    }
-    private func onRemoteParticipantLeave(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
-        print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantViewData else {
-            return
-        }
-
-        
     }
 }
