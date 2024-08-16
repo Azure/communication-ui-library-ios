@@ -39,9 +39,7 @@ class InfoHeaderViewModel: ObservableObject {
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
          callScreenHeaderOptions: CallScreenHeaderOptions) {
-        logger.debug(callScreenHeaderOptions.title)
         let title = localizationProvider.getLocalizedString(.callWith0Person)
-        logger.debug(title)
         self.customTitle = callScreenHeaderOptions.title ?? ""
         self.infoLabel = customTitle.isEmpty ? title : customTitle
         self.dispatch = dispatchAction
@@ -50,7 +48,8 @@ class InfoHeaderViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
-        self.callDurationManager = (callScreenHeaderOptions.callDurationTimer?.callTimerAPI!)!
+        self.callDurationManager = callScreenHeaderOptions.callDurationTimer?.callTimerAPI
+                                        as? CallDurationManager ?? CallDurationManager()
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
@@ -80,10 +79,13 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
-        self.callDurationManager.$timerTickStateFlow
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.timer, on: self)
-            .store(in: &cancellables)
+        if self.callDurationManager.isStarted {
+            callScreenHeaderOptions.callDurationTimer?.elapsedDuration = self.callDurationManager.timeElapsed
+            self.callDurationManager.$timerTickStateFlow
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.timer, on: self)
+                .store(in: &cancellables)
+        }
     }
 
     func showParticipantListButtonTapped() {
