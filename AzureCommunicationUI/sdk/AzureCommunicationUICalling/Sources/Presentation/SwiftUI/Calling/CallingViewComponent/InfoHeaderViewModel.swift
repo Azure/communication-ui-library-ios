@@ -48,7 +48,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
-        self.callDurationManager = callScreenHeaderOptions.callDurationTimer?.callTimerAPI
+        self.callDurationManager = callScreenHeaderOptions.timer?.callTimerAPI
                                         as? CallDurationManager ?? CallDurationManager()
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -80,7 +80,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
         if self.callDurationManager.isStarted {
-            callScreenHeaderOptions.callDurationTimer?.elapsedDuration = self.callDurationManager.timeElapsed
+            callScreenHeaderOptions.timer?.elapsedDuration = self.callDurationManager.timeElapsed
             self.callDurationManager.$timerTickStateFlow
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.timer, on: self)
