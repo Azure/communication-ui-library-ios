@@ -89,7 +89,10 @@ struct CallingDemoView: View {
             Alert(
                 title: Text(alertTitle),
                 message: Text(alertMessage),
-                dismissButton:
+                primaryButton: .default(Text("Copy")) {
+                    UIPasteboard.general.string = alertMessage
+                },
+                secondaryButton:
                         .default(Text("Dismiss"), action: {
                             isAlertDisplayed = false
                 }))
