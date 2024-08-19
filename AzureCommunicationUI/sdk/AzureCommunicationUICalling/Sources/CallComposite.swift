@@ -42,7 +42,7 @@ public class CallComposite {
         /// Closure to incoming call id accepted by CallKit.
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
         /// Closure to execute when participant has left a call inside Call Composite
-        public var onRemoteParticipantLeave: (([CommunicationIdentifier]) -> Void)?
+        public var onRemoteParticipantLeft: (([CommunicationIdentifier]) -> Void)?
     }
 
     /// The events handler for Call Composite
