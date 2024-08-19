@@ -37,10 +37,4 @@ public class CallDurationTimer {
         }
         callTimerAPI.onReset()
     }
-    public func timer() -> String {
-        guard let callTimerAPI = callTimerAPI else {
-            return ""
-        }
-        return callTimerAPI.timerString
-    }
 }
