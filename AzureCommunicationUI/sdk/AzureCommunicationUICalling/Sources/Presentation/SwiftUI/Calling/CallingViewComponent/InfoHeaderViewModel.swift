@@ -48,11 +48,10 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.enableMultitasking = enableMultitasking
+        self.accessibilityLabel = title
         self.callDurationManager = callScreenHeaderOptions.timer?.callTimerAPI
                                         as? CallDurationManager ?? CallDurationManager()
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
-       // let elapsedDuration = callScreenHeaderOptions.timer?.callTimerAPI?.timeElapsed
-        self.accessibilityLabel = title
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
             buttonType: .infoButton,
