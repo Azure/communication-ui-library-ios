@@ -259,7 +259,7 @@ class ControlBarViewModel: ObservableObject {
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
     }
 
-    private func callCustomOnClickHandler(_ buttonOptions: ButtonOptions?) {
+    func callCustomOnClickHandler(_ buttonOptions: ButtonOptions?) {
         guard let buttonOptions = buttonOptions else {
             return
         }
