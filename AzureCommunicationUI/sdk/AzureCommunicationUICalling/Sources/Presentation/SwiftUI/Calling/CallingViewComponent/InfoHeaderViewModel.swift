@@ -13,6 +13,7 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var isInfoHeaderDisplayed = true
     @Published var isVoiceOverEnabled = false
     @Published var timer = ""
+    @Published var accessibilityLabelTimer = ""
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -46,8 +47,8 @@ class InfoHeaderViewModel: ObservableObject {
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
+        self.accessibilityLabel = title
         self.callDurationManager = callScreenHeaderOptions.timer?.callTimerAPI
                                         as? CallDurationManager ?? CallDurationManager()
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
@@ -85,7 +86,28 @@ class InfoHeaderViewModel: ObservableObject {
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.timer, on: self)
                 .store(in: &cancellables)
+            self.callDurationManager.$timeElapsed
+                .map { self.formatTimeInterval($0) } // Convert TimeInterval to formatted String
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.accessibilityLabelTimer, on: self)
+                .store(in: &cancellables)
         }
+    }
+    func formatTimeInterval(_ interval: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        if interval >= 3600 {
+            // If the interval is 1 hour or more, show hours, minutes, and seconds
+            formatter.allowedUnits = [.hour, .minute, .second]
+        } else if interval >= 60 {
+            // If the interval is 1 minute or more, show minutes and seconds
+            formatter.allowedUnits = [.minute, .second]
+        } else {
+            // If the interval is less than 1 minute, show seconds only
+            formatter.allowedUnits = [.second]
+        }
+        return formatter.string(from: interval) ?? "00:00:00"
     }
 
     func showParticipantListButtonTapped() {
