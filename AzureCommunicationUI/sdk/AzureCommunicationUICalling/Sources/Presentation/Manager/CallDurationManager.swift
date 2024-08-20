@@ -10,7 +10,6 @@ protocol CallTimerAPI {
     func onStart()
     func onStop()
     func onReset()
-    var timeElapsed: TimeInterval {get set}
 }
 
 class CallDurationManager: CallTimerAPI, ObservableObject {
