@@ -168,7 +168,7 @@ class SetupControlBarViewModelTests: XCTestCase {
                    permissionState: storeFactory.store.state.permissionState,
                    callingState: CallingState())
 
-        XCTAssertFalse(sut.isAudioDisabled())
+        XCTAssertFalse(sut.isMicButtonDisabled())
         XCTAssertTrue(sut.isCameraDisabled())
     }
 
@@ -208,7 +208,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         sut.update(isJoinRequested: true)
 
         XCTAssertTrue(sut.isCameraDisabled())
-        XCTAssertTrue(sut.isAudioDisabled())
+        XCTAssertTrue(sut.isMicButtonDisabled())
     }
 
     func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudioAndVideoAreDenied_then_audioAndVideoAreDisabled() {
@@ -220,7 +220,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         sut.update(isJoinRequested: false)
 
         XCTAssertTrue(sut.isCameraDisabled())
-        XCTAssertTrue(sut.isAudioDisabled())
+        XCTAssertTrue(sut.isMicButtonDisabled())
     }
 
     func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudioAndVideoAreGranted_then_audioAndVideoAreDisabled() {
@@ -232,7 +232,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         sut.update(isJoinRequested: false)
 
         XCTAssertFalse(sut.isCameraDisabled())
-        XCTAssertFalse(sut.isAudioDisabled())
+        XCTAssertFalse(sut.isMicButtonDisabled())
     }
 
     func test_setupControlBarViewModel_when_microphoneDefaultState_then_defaultToOff() {
@@ -354,12 +354,12 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_SetupControlBarViewModel_audioVideoModeAudioOnlyHidesCameraButton() {
         let sut = makeSUT(audioVideoMode: .audioOnly)
-        XCTAssertFalse(sut.isCameraDisplayed)
+        XCTAssertFalse(sut.isCameraButtonVisible)
     }
 
     func test_SetupControlBarViewModel_audioVideoModeNormalShowsCameraButton() {
         let sut = makeSUT(audioVideoMode: .audioAndVideo)
-        XCTAssertTrue(sut.isCameraDisplayed)
+        XCTAssertTrue(sut.isCameraButtonVisible)
     }
 
     func test_setupControlBarViewModel_display_videoButtonLabel__from_LocalizationMocking() {

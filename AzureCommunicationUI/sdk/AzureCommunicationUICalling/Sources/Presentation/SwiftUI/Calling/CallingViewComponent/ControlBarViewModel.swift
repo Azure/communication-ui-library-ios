@@ -12,8 +12,8 @@ class ControlBarViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private var isCameraStateUpdating = false
     private var isDefaultUserStateMapped = false
-    private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
     private(set) var cameraButtonViewModel: IconButtonViewModel!
+    private let controlBarOptions: CallScreenControlBarOptions?
 
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isShareActivityDisplayed = false
@@ -45,21 +45,21 @@ class ControlBarViewModel: ObservableObject {
          onEndCallTapped: @escaping (() -> Void),
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode,
-         capabilitiesManager: CapabilitiesManager) {
+         capabilitiesManager: CapabilitiesManager,
+         controlBarOptions: CallScreenControlBarOptions?) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.onEndCallTapped = onEndCallTapped
-        self.leaveCallConfirmationMode = leaveCallConfirmationMode
 
         self.capabilitiesManager = capabilitiesManager
         self.capabilities = localUserState.capabilities
-
+        self.controlBarOptions = controlBarOptions
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
-            isDisabled: isCameraDisabled()) { [weak self] in
+            isDisabled: isCameraDisabled(),
+            isVisible: isCameraVisible(audioVideoMode)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -73,7 +73,8 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .micOff,
             buttonType: .controlButton,
-            isDisabled: isMicDisabled()) { [weak self] in
+            isDisabled: isMicDisabled(),
+            isVisible: isMicVisible()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -87,7 +88,8 @@ class ControlBarViewModel: ObservableObject {
         audioDeviceButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .speakerFilled,
             buttonType: .controlButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: false,
+            isVisible: isAudioDeviceVisible()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -101,7 +103,8 @@ class ControlBarViewModel: ObservableObject {
         hangUpButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .endCall,
             buttonType: .roundedRectButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: false,
+            isVisible: true) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -115,7 +118,8 @@ class ControlBarViewModel: ObservableObject {
         moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .more,
             buttonType: .controlButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: false,
+            isVisible: isMoreButtonVisible()) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -126,8 +130,6 @@ class ControlBarViewModel: ObservableObject {
             .moreAccessibilityLabel)
 
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
-
-        isCameraDisplayed = audioVideoMode != .audioOnly
     }
 
     func cameraButtonTapped() {
@@ -141,23 +143,74 @@ class ControlBarViewModel: ObservableObject {
         dispatch(.localUserAction(action))
     }
 
+    func isMoreButtonVisible() -> Bool {
+            controlBarOptions?.customButtons.isEmpty == false ||
+            controlBarOptions?.liveCaptionsButtonOptions?.visible ?? true ||
+            controlBarOptions?.liveCaptionsToggleButtonOptions?.visible ?? true ||
+            controlBarOptions?.captionsLanguageButtonOptions?.visible ?? true ||
+            controlBarOptions?.spokenLanguageButtonOptions?.visible ?? true ||
+            controlBarOptions?.shareDiagnosticsButtonOptions?.visible ?? true ||
+            controlBarOptions?.reportIssueButtonOptions?.visible ?? true
+    }
+
+    func isMicVisible() -> Bool {
+        controlBarOptions?.microphoneButton?.visible ?? true
+    }
+
+    func isMicDisabled() -> Bool {
+        controlBarOptions?.microphoneButton?.enabled == false ||
+        audioState.operation == .pending ||
+        callingStatus == .localHold ||
+        isBypassLoadingOverlay() ||
+        !self.capabilitiesManager.hasCapability(capabilities: self.capabilities,
+                                                capability: ParticipantCapabilityType.unmuteMicrophone)
+    }
+    func isBypassLoadingOverlay() -> Bool {
+        operationStatus == .skipSetupRequested &&
+        callingStatus != .connected &&
+        callingStatus != .inLobby
+    }
+
+    func isAudioDeviceVisible() -> Bool {
+        controlBarOptions?.audioDeviceButton?.visible ?? true
+    }
+    func isAudioDeviceDisabled() -> Bool {
+            controlBarOptions?.audioDeviceButton?.enabled == false ||
+            callingStatus == .localHold ||
+            isBypassLoadingOverlay()
+    }
+
     func microphoneButtonTapped() {
+        self.callCustomOnClickHandler(controlBarOptions?.microphoneButton)
         let action: LocalUserAction = audioState.operation == .on ?
         .microphoneOffTriggered : .microphoneOnTriggered
         dispatch(.localUserAction(action))
     }
 
     func selectAudioDeviceButtonTapped() {
+        self.callCustomOnClickHandler(controlBarOptions?.audioDeviceButton)
         dispatch(.showAudioSelection)
     }
 
     func moreButtonTapped() {
         dispatch(.showMoreOptions)
     }
+    func isMoreButtonDisabled() -> Bool {
+            isBypassLoadingOverlay()
+    }
+
+    func isCameraVisible(_ audioVideoMode: CallCompositeAudioVideoMode) -> Bool {
+        return audioVideoMode != .audioOnly &&
+        controlBarOptions?.cameraButton?.visible ?? true
+    }
 
     func isCameraDisabled() -> Bool {
-        cameraPermission == .denied || cameraState.operation == .pending ||
-        callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay() ||
+        controlBarOptions?.cameraButton?.enabled == false ||
+                cameraPermission == .denied ||
+                cameraState.operation == .pending ||
+                callingStatus == .localHold ||
+                isCameraStateUpdating ||
+                isBypassLoadingOverlay() ||
         !capabilitiesManager.hasCapability(capabilities: self.capabilities,
                                            capability: ParticipantCapabilityType.turnVideoOn)
     }
@@ -205,5 +258,11 @@ class ControlBarViewModel: ObservableObject {
 
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
     }
-    // swaftlint:enable function_body_length
+
+    func callCustomOnClickHandler(_ buttonOptions: ButtonOptions?) {
+        guard let buttonOptions = buttonOptions else {
+            return
+        }
+        buttonOptions.onClick?(buttonOptions)
+    }
 }

@@ -540,12 +540,12 @@ class ControlBarViewModelTests: XCTestCase {
 
     func test_controlBarViewModel_audioVideoModeAudioOnlyHidesCameraButton() {
         let sut = makeSUT(audioVideoMode: .audioOnly)
-        XCTAssertFalse(sut.isCameraDisplayed)
+        XCTAssertFalse(sut.isCameraDisabled())
     }
 
     func test_controlBarViewModel_audioVideoModeNormalShowsCameraButton() {
         let sut = makeSUT(audioVideoMode: .audioAndVideo)
-        XCTAssertTrue(sut.isCameraDisplayed)
+        XCTAssertTrue(sut.isAudioDeviceVisible())
     }
 
     func test_controlBarViewModel_capabilities_turnVideoOn_isCameraDisabledFalse() {
@@ -621,12 +621,69 @@ class ControlBarViewModelTests: XCTestCase {
                    navigationState: NavigationState())
         wait(for: [expectation], timeout: 1)
     }
+
+    // MARK: Custom OnClick Handler Test
+
+    func test_callCustomOnClickHandler_executesOnClick() {
+        let expectation = XCTestExpectation(description: "Custom onClick handler should be executed")
+        let buttonOptions = ButtonOptions { _ in expectation.fulfill() }
+        let sut = makeSUT()
+        sut.callCustomOnClickHandler(buttonOptions)
+        wait(for: [expectation], timeout: timeout)
+    }
+
+    // MARK: More Button Tests
+
+    func test_moreButtonTapped_dispatchesShowMoreOptionsAction() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Dispatch the showMoreOptions action")
+        storeFactory.store.$state
+            .dropFirst(1)
+            .sink { _ in
+                XCTAssertEqual(self.storeFactory.actions.first, .showMoreOptions)
+                expectation.fulfill()
+            }.store(in: cancellable)
+        sut.moreButtonTapped()
+        wait(for: [expectation], timeout: timeout)
+    }
+
+    func test_isCameraVisible_whenAudioOnlyMode_thenReturnsFalse() {
+        let sut = makeSUT(audioVideoMode: .audioOnly)
+        XCTAssertFalse(sut.isCameraVisible(.audioOnly))
+    }
+
+    func test_isCameraVisible_whenAudioAndVideoMode_thenReturnsTrue() {
+        let sut = makeSUT(audioVideoMode: .audioAndVideo)
+        XCTAssertTrue(sut.isCameraVisible(.audioAndVideo))
+    }
+
+    func test_isMoreButtonVisible_whenCustomButtonsPresent_thenReturnsTrue() {
+        let customButton = CustomButtonOptions(image: UIImage(), title: "Test") { _ in }
+        let options = CallScreenControlBarOptions(customButtons: [customButton])
+        let sut = makeSUT(controlBarOptions: options)
+        XCTAssertTrue(sut.isMoreButtonVisible())
+    }
+
+    func test_isMoreButtonVisible_whenNoCustomButtonsAndOtherButtonsInvisible_thenReturnsFalse() {
+        let options = CallScreenControlBarOptions(
+            liveCaptionsButtonOptions: ButtonOptions(visible: false),
+            liveCaptionsToggleButtonOptions: ButtonOptions(visible: false),
+            spokenLanguageButtonOptions: ButtonOptions(visible: false),
+            captionsLanguageButtonOptions: ButtonOptions(visible: false),
+            shareDiagnosticsButtonOptions: ButtonOptions(visible: false),
+            reportIssueButtonOptions: ButtonOptions(visible: false),
+            customButtons: []
+        )
+        let sut = makeSUT(controlBarOptions: options)
+        XCTAssertFalse(sut.isMoreButtonVisible())
+    }
 }
 
 extension ControlBarViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderMocking? = nil,
                  audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo,
-                 capabilities: Set<ParticipantCapabilityType> = []) -> ControlBarViewModel {
+                 capabilities: Set<ParticipantCapabilityType> = [],
+                 controlBarOptions: CallScreenControlBarOptions = CallScreenControlBarOptions()) -> ControlBarViewModel {
         var localUserState = LocalUserState(capabilities: capabilities)
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
@@ -635,8 +692,8 @@ extension ControlBarViewModelTests {
                                    onEndCallTapped: {},
                                    localUserState: localUserState,
                                    audioVideoMode: audioVideoMode,
-                                   leaveCallConfirmationMode: .alwaysEnabled,
-                                   capabilitiesManager: capabilitiesManager)
+                                   capabilitiesManager: capabilitiesManager,
+                                   controlBarOptions: controlBarOptions)
     }
     func makeSUTWhenDisplayLeaveDiabled(localizationProvider: LocalizationProviderMocking? = nil, audioVideoMode: CallCompositeAudioVideoMode = .audioAndVideo) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
@@ -646,8 +703,8 @@ extension ControlBarViewModelTests {
                                    onEndCallTapped: {},
                                    localUserState: storeFactory.store.state.localUserState,
                                    audioVideoMode: audioVideoMode,
-                                   leaveCallConfirmationMode: .alwaysDisabled,
-                                   capabilitiesManager: capabilitiesManager)
+                                   capabilitiesManager: capabilitiesManager,
+                                   controlBarOptions: nil)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {
