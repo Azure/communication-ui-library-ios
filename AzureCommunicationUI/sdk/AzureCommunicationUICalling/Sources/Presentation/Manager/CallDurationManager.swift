@@ -13,8 +13,8 @@ protocol CallTimerAPI {
 }
 
 class CallDurationManager: CallTimerAPI, ObservableObject {
+    @Published var timeElapsed: TimeInterval = 0
     private var timer: Timer?
-    var timeElapsed: TimeInterval? = 0
     @Published var timerTickStateFlow: String = ""
     var isStarted = false
 
@@ -32,6 +32,7 @@ class CallDurationManager: CallTimerAPI, ObservableObject {
         timer?.invalidate()
         timer = nil
         isStarted = false
+        timeElapsed = 0
     }
 
     func onReset() {
@@ -45,11 +46,11 @@ class CallDurationManager: CallTimerAPI, ObservableObject {
             guard let self = self else {
                 return
             }
-            timeElapsed! += 1
-            timerTickStateFlow = String(format: "%02d:%02d", Int(timeElapsed!) / 60, Int(timeElapsed!) % 60)
-            if timeElapsed! > 3600 {
-                timerTickStateFlow = String(format: "%02d:%02d:%02d", Int(timeElapsed!) / 3600, Int(timeElapsed!) / 60,
-                                            Int(timeElapsed!) % 60)
+            timeElapsed += 1
+            timerTickStateFlow = String(format: "%02d:%02d", Int(timeElapsed) / 60, Int(timeElapsed) % 60)
+            if timeElapsed > 3600 {
+                timerTickStateFlow = String(format: "%02d:%02d:%02d", Int(timeElapsed) / 3600, Int(timeElapsed) / 60,
+                                            Int(timeElapsed) % 60)
             }
         }
     }

@@ -88,7 +88,7 @@ struct InfoHeaderView: View {
                         .foregroundColor(Constants.foregroundColor)
                         .lineLimit(1)
                         .font(Fonts.caption1.font)
-                        .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                        .accessibilityLabel(Text(viewModel.accessibilityLabelTimer))
                         .accessibilitySortPriority(2)
                         .scaledToFit()
                         .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
