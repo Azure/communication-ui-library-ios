@@ -17,12 +17,10 @@ struct InfoHeaderView: View {
     private enum Constants {
         static let shapeCornerRadius: CGFloat = 5
         static let infoLabelHorizontalPadding: CGFloat = 16.0
-        static let timerVerticalTopPadding: CGFloat = 0
         static let hStackHorizontalPadding: CGFloat = 20.0
         static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
         static let foregroundColor: Color = .white
-        static let verticalSpacing: CGFloat = 0
 
         // MARK: Font Minimum Scale Factor
         // Under accessibility mode, the largest size is 35
@@ -35,7 +33,9 @@ struct InfoHeaderView: View {
     }
 
     var body: some View {
-        ZStack(alignment: .leading) {
+        ZStack(
+            alignment: .leading
+        ) {
             if viewModel.isInfoHeaderDisplayed {
                 infoHeader
             } else {
@@ -82,6 +82,7 @@ struct InfoHeaderView: View {
                     .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
+                /* <TIMER_TITLE_FEATURE>
                 if !viewModel.timer.isEmpty {
                     Text(viewModel.timer.trimmingCharacters(in: .whitespacesAndNewlines))
                         .alignmentGuide(.leading) { d in d[.leading] }
@@ -95,6 +96,7 @@ struct InfoHeaderView: View {
                                             Constants.accessibilityFontScale :
                                                 Constants.defaultFontScale)
                 }
+                </TIMER_TITLE_FEATURE> */
             }
             Spacer()
             participantListButton

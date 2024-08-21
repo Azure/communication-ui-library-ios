@@ -1,3 +1,4 @@
+/* <TIMER_TITLE_FEATURE>
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
@@ -38,3 +39,4 @@ public class CallDurationTimer {
         callTimerAPI.onReset()
     }
 }
+</TIMER_TITLE_FEATURE> */
