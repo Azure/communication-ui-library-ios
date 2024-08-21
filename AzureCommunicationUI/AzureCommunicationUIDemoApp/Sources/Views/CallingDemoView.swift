@@ -580,7 +580,7 @@ extension CallingDemoView {
             guard let composite = callComposite else {
                 return
             }
-            self.onRemoteParticipantJoined(to: composite,
+            self.onRemoteParticipantLeft(to: composite,
                                            identifiers: ids)
         }
 
