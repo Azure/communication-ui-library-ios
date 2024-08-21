@@ -24,6 +24,7 @@ struct CallingDemoView: View {
     @State var callState: String = ""
     @State var issue: CallCompositeUserReportedIssue?
     @State var issueUrl: String = ""
+    @State private var isNewViewPresented = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
@@ -99,6 +100,9 @@ struct CallingDemoView: View {
         }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
+        }
+        .fullScreenCover(isPresented: $isNewViewPresented) {
+            CustomDemoView()
         }
         #if DEBUG
         .onAppear(perform: {
@@ -594,7 +598,7 @@ extension CallingDemoView {
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
         var callScreenOptions = CallScreenOptions()
-        if envConfigSubject.addHideButton {
+        if envConfigSubject.addCustomButton {
             callScreenOptions = createCallScreenOptions(callComposite: callComposite)
         }
         return LocalOptions(participantViewData: participantViewData,
@@ -626,10 +630,18 @@ extension CallingDemoView {
             callComposite?.isHidden = true
         }
 
+        let customButton2 = CustomButtonOptions(
+            image: customButtonImage,
+            title: "Show Touble Shooting Guide"
+        ) { _ in
+            print("::::SwiftUIDemoView::CallScreen::customButton2::onClick")
+            callComposite?.isHidden = true
+            $isNewViewPresented.wrappedValue = true
+        }
         // Create and return the CallScreenControlBarOptions
         let callScreenControlBarOptions = CallScreenControlBarOptions(
             leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
-            customButtons: [customButton1]
+            customButtons: [customButton1, customButton2]
         )
 
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
@@ -926,5 +938,24 @@ extension CallingDemoView {
 
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
+    }
+}
+
+struct CustomDemoView: View {
+    @Environment(\.presentationMode) var presentationMode
+
+    var body: some View {
+        VStack {
+            Text("This is a new view presented modally.")
+                .font(.largeTitle)
+                .padding()
+
+            Button("Dismiss") {
+                presentationMode.wrappedValue.dismiss()
+            }
+            .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blue.opacity(0.1))
     }
 }

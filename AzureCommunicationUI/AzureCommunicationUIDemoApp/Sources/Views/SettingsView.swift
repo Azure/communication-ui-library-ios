@@ -65,7 +65,7 @@ struct SettingsView: View {
         }
     }
 
-    var setuScreenSettings: some View {
+    var setupScreenSettings: some View {
         Section(header: Text("Setup screen settings")) {
             Toggle("Camera button enabled", isOn: $envConfigSubject.setupScreenOptionsCameraButtonEnabled)
                 .onTapGesture {
@@ -87,6 +87,7 @@ struct SettingsView: View {
             orientationOptions
             captionsSettings
             buttonSettins
+            multitaskingSettings
             Group {
                 localizationSettings
                 skipSetupScreenSettings
@@ -97,9 +98,8 @@ struct SettingsView: View {
                 navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
-                multitaskingSettings
             }
-            setuScreenSettings
+            setupScreenSettings
             displayLeaveCallConfirmationSettings
             exitCompositeSettings
             callKitSettings
@@ -229,7 +229,7 @@ struct SettingsView: View {
 
     var buttonSettins: some View {
         Section(header: Text("Custom Button")) {
-            Toggle("Add Hide Composite Button", isOn: $envConfigSubject.addHideButton)
+            Toggle("Add Custom Buttons", isOn: $envConfigSubject.addCustomButton)
         }
     }
 
