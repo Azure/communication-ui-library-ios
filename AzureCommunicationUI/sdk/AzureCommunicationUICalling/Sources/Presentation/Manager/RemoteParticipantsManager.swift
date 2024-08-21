@@ -46,6 +46,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
 
         postRemoteParticipantsJoinedEvent(joinedParticipantsIds)
         postRemoteParticipantsRemovedEvent(removedParticipantsIds)
+        postRemoteParticipantsLeftEvent(removedParticipantsIds)
     }
 
     private func postRemoteParticipantsRemovedEvent(_ removedParticipantsIds: Set<String>) {
@@ -69,5 +70,17 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         let joinedParticipantsCommunicationIds: [CommunicationIdentifier] = joinedParticipantsIds
             .compactMap { createCommunicationIdentifier(fromRawId: $0) }
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
+    }
+
+    private func postRemoteParticipantsLeftEvent(_ leftOrRemovedParticipantIds: Set<String>) {
+        guard !leftOrRemovedParticipantIds.isEmpty else {
+            return
+        }
+        guard let didRemoteParticipantsLeft = eventsHandler.onRemoteParticipantLeft else {
+            return
+        }
+        let leftParticipantsCommunicationIds: [CommunicationIdentifier] = leftOrRemovedParticipantIds
+            .compactMap { createCommunicationIdentifier(fromRawId: $0) }
+        didRemoteParticipantsLeft(leftParticipantsCommunicationIds)
     }
 }

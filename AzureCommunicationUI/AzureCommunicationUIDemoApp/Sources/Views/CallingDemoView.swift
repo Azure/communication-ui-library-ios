@@ -580,7 +580,7 @@ extension CallingDemoView {
             print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
             showAlert(for: "\(event.callId) cancelled")
         }
-        let onRemoteParticipantLeaveHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+        let onRemoteParticipantLeftHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
             }
@@ -597,6 +597,7 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
+        callComposite.events.onRemoteParticipantLeft = onRemoteParticipantLeftHandler
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -958,6 +959,15 @@ extension CallingDemoView {
 
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
+        /// Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
+    }
+    private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+        print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
+            return
+        }
+
+        /// Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
 }
 
