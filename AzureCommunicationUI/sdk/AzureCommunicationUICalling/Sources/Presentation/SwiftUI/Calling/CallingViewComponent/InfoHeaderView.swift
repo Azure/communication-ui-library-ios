@@ -82,7 +82,7 @@ struct InfoHeaderView: View {
                     .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
-                /* <TIMER_TITLE_FEATURE>
+                /* <TIMER_TITLE_FEATURE> */
                 if !viewModel.timer.isEmpty {
                     Text(viewModel.timer.trimmingCharacters(in: .whitespacesAndNewlines))
                         .alignmentGuide(.leading) { d in d[.leading] }
@@ -96,7 +96,7 @@ struct InfoHeaderView: View {
                                             Constants.accessibilityFontScale :
                                                 Constants.defaultFontScale)
                 }
-                </TIMER_TITLE_FEATURE> */
+                /* </TIMER_TITLE_FEATURE> */
             }
             Spacer()
             participantListButton

@@ -1,4 +1,4 @@
-/* <TIMER_TITLE_FEATURE>
+/* <TIMER_TITLE_FEATURE> */
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
@@ -20,4 +20,4 @@ public class CallScreenHeaderOptions {
         self.title = title
     }
 }
-</TIMER_TITLE_FEATURE> */
+/* </TIMER_TITLE_FEATURE> */
