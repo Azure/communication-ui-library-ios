@@ -139,12 +139,13 @@ internal class CallingViewModel: ObservableObject {
                 localUserState: store.state.localUserState,
                 isDisplayed: store.state.navigationState.participantActionsVisible,
                 dispatchAction: store.dispatch)
+
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
                 guard let self = self else {
                     return
                 }
-                if callScreenOptions.controlBarOptions?.leaveCallConfirmationMode == .alwaysEnabled {
+                if callScreenOptions.controlBarOptions?.leaveCallConfirmationMode != .alwaysDisabled {
                     store.dispatch(action: .showEndCallConfirmation)
                 } else {
                     self.endCall()
