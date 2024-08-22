@@ -597,7 +597,11 @@ extension CallingDemoView {
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
-        var callScreenOptions = CallScreenOptions()
+
+        let controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                                envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
+        var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions)
         if envConfigSubject.addCustomButton {
             callScreenOptions = createCallScreenOptions(callComposite: callComposite)
         }
