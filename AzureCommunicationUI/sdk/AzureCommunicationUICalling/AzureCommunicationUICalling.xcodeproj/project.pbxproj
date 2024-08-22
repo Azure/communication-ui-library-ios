@@ -329,6 +329,7 @@
 		C868F7712C5993CE00D242B4 /* CallDurationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868F7702C5993CE00D242B4 /* CallDurationTimer.swift */; };
 		C868F7732C5AEE1800D242B4 /* CallScreenHeaderOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */; };
 		C89FCE602C0FAF5D00983444 /* CapabilitiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */; };
+		C8E10DB72C77E88D00511482 /* CallDurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DB62C77E88D00511482 /* CallDurationManagerTests.swift */; };
 		C8E50E972BFFD83200AB507E /* CapabilitiesChangedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */; };
 		C8E50E992C00056600AB507E /* CapabilitiesChangedReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */; };
 		C8E50E9B2C0006FE00AB507E /* CapabilityResolutionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */; };
@@ -749,6 +750,7 @@
 		C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenHeaderOptions.swift; sourceTree = "<group>"; };
 		C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesManager.swift; sourceTree = "<group>"; };
 		C8D232FB2BFD4AEE00EC04B4 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = ../../../../../Downloads/AzureCommunicationCalling.framework; sourceTree = "<group>"; };
+		C8E10DB62C77E88D00511482 /* CallDurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDurationManagerTests.swift; sourceTree = "<group>"; };
 		C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedEvent.swift; sourceTree = "<group>"; };
 		C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedReason.swift; sourceTree = "<group>"; };
 		C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityResolutionReason.swift; sourceTree = "<group>"; };
@@ -1085,6 +1087,7 @@
 				A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */,
 				114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */,
 				058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */,
+				C8E10DB62C77E88D00511482 /* CallDurationManagerTests.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -2126,6 +2129,7 @@
 				FAC1FEC127C94D9200D95845 /* AudioDeviceListViewModelMocking.swift in Sources */,
 				5A31489916982D3699CD756D /* LocalVideoViewModelTests.swift in Sources */,
 				114187682C35C2E50089C05B /* CaptionsViewManagerTests.swift in Sources */,
+				C8E10DB72C77E88D00511482 /* CallDurationManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

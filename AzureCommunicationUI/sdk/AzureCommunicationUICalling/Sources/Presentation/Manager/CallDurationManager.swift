@@ -15,7 +15,7 @@ protocol CallTimerAPI {
 
 class CallDurationManager: CallTimerAPI, ObservableObject {
     @Published var timeElapsed: TimeInterval = 0
-    private var timer: Timer?
+    var timer: Timer?
     @Published var timerTickStateFlow: String = ""
     var isStarted = false
 

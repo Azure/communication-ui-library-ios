@@ -24,7 +24,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let capabilitiesManager: CapabilitiesManager
     private let avatarManager: AvatarViewManagerProtocol
     /* <TIMER_TITLE_FEATURE> */
-    private let callScreenHeaderOptions: CallScreenHeaderOptions
+    private let callScreenHeaderOptions: CallScreenHeaderOptions?
     /* </TIMER_TITLE_FEATURE> */
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
@@ -52,7 +52,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
          /* <TIMER_TITLE_FEATURE> */
-         callScreenHeaderOptions: CallScreenHeaderOptions,
+         callScreenHeaderOptions: CallScreenHeaderOptions?,
          /* </TIMER_TITLE_FEATURE> */
          retrieveLogFiles: @escaping () -> [URL]
          ) {
@@ -319,7 +319,7 @@ extension CompositeViewModelFactory {
                             enableMultitasking: enableMultitasking,
                             enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking
                             /* <TIMER_TITLE_FEATURE> */ ,
-                            callScreenHeaderOptions: callScreenHeaderOptions
+                            callScreenHeaderOptions: callScreenHeaderOptions ?? CallScreenHeaderOptions()
                             /* </TIMER_TITLE_FEATURE> */
                             )
     }

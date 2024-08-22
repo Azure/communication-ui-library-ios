@@ -24,7 +24,7 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    dispatchAction: dispatchAction,
                    enableMultitasking: true,
                    enableSystemPipWhenMultitasking: true,
-                   callDurationManager: CallDurationManager())
+                   callScreenHeaderOptions: nil)
     }
 
     override func update(localUserState: LocalUserState,

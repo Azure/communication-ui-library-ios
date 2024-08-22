@@ -23,10 +23,10 @@ class InfoHeaderViewModel: ObservableObject {
     private var callingStatus: CallingStatus = .none
     private let enableSystemPipWhenMultitasking: Bool
     /* <TIMER_TITLE_FEATURE> */
-    private var callDurationManager: CallDurationManager
+    private var callDurationManager: CallDurationManager?
      /* </TIMER_TITLE_FEATURE> */
     let enableMultitasking: Bool
-    let customTitle: String
+    let customTitle: String?
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
@@ -41,14 +41,14 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool /* <TIMER_TITLE_FEATURE> */ ,
-         callScreenHeaderOptions: CallScreenHeaderOptions /* </TIMER_TITLE_FEATURE> */ ) {
+         callScreenHeaderOptions: CallScreenHeaderOptions? /* </TIMER_TITLE_FEATURE> */ ) {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
         /* <TIMER_TITLE_FEATURE> */
-        self.customTitle = callScreenHeaderOptions.title ?? ""
+        self.customTitle = callScreenHeaderOptions?.title ?? ""
          /* <|TIMER_TITLE_FEATURE>
         self.customTitle = ""
         </TIMER_TITLE_FEATURE> */
-        self.infoLabel = customTitle.isEmpty ? title : customTitle
+        self.infoLabel = (((customTitle?.isEmpty) != nil) ? title : customTitle) ?? title
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
@@ -56,7 +56,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.enableMultitasking = enableMultitasking
         self.accessibilityLabel = title
         /* <TIMER_TITLE_FEATURE> */
-        self.callDurationManager = callScreenHeaderOptions.timer?.callTimerAPI
+        self.callDurationManager = callScreenHeaderOptions?.timer?.callTimerAPI
                                         as? CallDurationManager ?? CallDurationManager()
          /* </TIMER_TITLE_FEATURE> */
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
@@ -89,13 +89,13 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
         /* <TIMER_TITLE_FEATURE> */
-        if self.callDurationManager.isStarted {
-            callScreenHeaderOptions.timer?.elapsedDuration = self.callDurationManager.timeElapsed
-            self.callDurationManager.$timerTickStateFlow
+        if (self.callDurationManager?.isStarted) != nil {
+            callScreenHeaderOptions?.timer?.elapsedDuration = self.callDurationManager?.timeElapsed
+            self.callDurationManager?.$timerTickStateFlow
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.timer, on: self)
                 .store(in: &cancellables)
-            self.callDurationManager.$timeElapsed
+            self.callDurationManager?.$timeElapsed
                 .map { self.formatTimeInterval($0) } // Convert TimeInterval to formatted String
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.accessibilityLabelTimer, on: self)

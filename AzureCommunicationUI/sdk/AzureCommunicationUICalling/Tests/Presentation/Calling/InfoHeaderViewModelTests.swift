@@ -363,7 +363,9 @@ extension InfoHeaderViewModelTests {
                                    accessibilityProvider: accessibilityProvider,
                                    dispatchAction: storeFactory.store.dispatch,
                                    enableMultitasking: true,
-                                   enableSystemPipWhenMultitasking: true)
+                                   enableSystemPipWhenMultitasking: true,
+                                   callScreenHeaderOptions: CallScreenHeaderOptions(timer: CallDurationTimer(),
+                                                                                    title: "Custom title"))
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {

@@ -255,7 +255,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           accessibilityProvider: accessibilityProvider,
                                                           dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
-                                                          enableSystemPipWhenMultitasking: true)
+                                                          enableSystemPipWhenMultitasking: true,
+                                                          callScreenHeaderOptions: nil)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
