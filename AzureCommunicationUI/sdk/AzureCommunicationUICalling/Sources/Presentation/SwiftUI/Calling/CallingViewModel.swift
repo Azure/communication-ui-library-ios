@@ -22,6 +22,7 @@ internal class CallingViewModel: ObservableObject {
     private let callType: CompositeCallType
     private let captionsOptions: CaptionsOptions
     private let callScreenOptions: CallScreenOptions
+    private let leaveCallConfirmationMode: LeaveCallConfirmationMode
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
@@ -78,6 +79,8 @@ internal class CallingViewModel: ObservableObject {
         self.callType = callType
         self.captionsOptions = captionsOptions
         self.callScreenOptions = callScreenOptions
+        self.leaveCallConfirmationMode = callScreenOptions.controlBarOptions?.leaveCallConfirmationMode ??
+            .alwaysEnabled
 
         let actionDispatch: ActionDispatch = store.dispatch
 
@@ -139,12 +142,13 @@ internal class CallingViewModel: ObservableObject {
                 localUserState: store.state.localUserState,
                 isDisplayed: store.state.navigationState.participantActionsVisible,
                 dispatchAction: store.dispatch)
+
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
                 guard let self = self else {
                     return
                 }
-                if callScreenOptions.controlBarOptions?.leaveCallConfirmationMode == .alwaysEnabled {
+                if leaveCallConfirmationMode == .alwaysEnabled {
                     store.dispatch(action: .showEndCallConfirmation)
                 } else {
                     self.endCall()
