@@ -10,6 +10,7 @@ import AzureCommunicationCommon
 struct SettingsView: View {
     @State private var setupSelectedOrientation: String = OrientationOptions.portrait.requestString
     @State private var callingSelectedOrientation: String = OrientationOptions.portrait.requestString
+    @State private var timeInterval: TimeInterval = 0
     private enum ThemeMode: String, CaseIterable, Identifiable {
         case osApp = "OS / App"
         case light = "Light Mode"
@@ -62,6 +63,28 @@ struct SettingsView: View {
                     envConfigSubject.displayLeaveCallConfirmation = !envConfigSubject.displayLeaveCallConfirmation
                 }
                 .accessibilityIdentifier(AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue)
+            TextField("Call Information Custom title", text: $envConfigSubject.callInformationCustomTitle)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var callDurationTimerSettings: some View {
+        Section(header: Text("Call Duration Timer")) {
+            TextField("Call Information Custom title",
+                      value: $envConfigSubject.callElapsedDurationInMS, formatter: NumberFormatter())
+                .keyboardType(.decimalPad)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("Start Timer for MRI Join", text: $envConfigSubject.startTimerMRIJoin)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
+            TextField("Stop Timer for MRI Join", text: $envConfigSubject.stopTimerMRIJoin)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
         }
     }
 
@@ -101,6 +124,7 @@ struct SettingsView: View {
             }
             setupScreenSettings
             displayLeaveCallConfirmationSettings
+            callDurationTimerSettings
             exitCompositeSettings
             callKitSettings
             pushNotificationsSettings

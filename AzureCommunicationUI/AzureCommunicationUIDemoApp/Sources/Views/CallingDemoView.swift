@@ -425,11 +425,14 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
+        /* <TIMER_TITLE_FEATURE> */
+        callDurationTimer.elapsedDuration = envConfigSubject.callElapsedDurationInMS
+        /* </TIMER_TITLE_FEATURE> */
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
                                                    headerOptions:
                                                      CallScreenHeaderOptions(
                                                         timer: callDurationTimer,
-                                                        title: "This is a custom InfoHeader")
+                                                        title: envConfigSubject.callInformationCustomTitle)
                                                    /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -951,37 +954,65 @@ extension CallingDemoView {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
         /* <TIMER_TITLE_FEATURE> */
-        if callState == .connected {
-            self.callDurationTimer.start()
-        }
-        if callState == .disconnecting {
-            self.callDurationTimer.stop()
-        }
-        if callState == .disconnected {
-            self.callDurationTimer.reset()
-        }
+//        if callState == .connected {
+//            self.callDurationTimer.start()
+//        }
+//        if callState == .disconnecting {
+//            self.callDurationTimer.stop()
+//        }
+//        if callState == .disconnected {
+//            self.callDurationTimer.reset()
+//        }
         /* </TIMER_TITLE_FEATURE> */
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
+        /* <TIMER_TITLE_FEATURE> */
+        if !envConfigSubject.startTimerMRIJoin.isEmpty {
+            for identifier in identifiers {
+                let id = getRemoteParticipantId(identifier)
+                if envConfigSubject.startTimerMRIJoin == id {
+                    callDurationTimer.start()
+                }
+            }
+        }
+        /* </TIMER_TITLE_FEATURE> */
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
-
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
-
-        // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
     /* <TIMER_TITLE_FEATURE> */
     private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantViewData else {
+        guard !envConfigSubject.stopTimerMRIJoin.isEmpty else {
             return
         }
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
+        for identifier in identifiers {
+            let id = getRemoteParticipantId(identifier)
+            if envConfigSubject.stopTimerMRIJoin == id {
+                callDurationTimer.stop()
+            }
+        }
+    }
+    private func getRemoteParticipantId(_ identifier: CommunicationIdentifier) -> String? {
+        switch identifier {
+        case is CommunicationUserIdentifier:
+            return (identifier as? CommunicationUserIdentifier)?.identifier
+        case is UnknownIdentifier:
+            return (identifier as? UnknownIdentifier)?.identifier
+        case is PhoneNumberIdentifier:
+            return (identifier as? PhoneNumberIdentifier)?.phoneNumber
+        case is MicrosoftTeamsUserIdentifier:
+            return (identifier as? MicrosoftTeamsUserIdentifier)?.userId
+        default:
+            return nil
+        }
     }
     /* </TIMER_TITLE_FEATURE> */
 }

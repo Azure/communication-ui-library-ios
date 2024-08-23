@@ -45,6 +45,10 @@ class EnvConfigSubject: ObservableObject {
     @Published var avatarImageName: String = ""
     @Published var renderedDisplayName: String = ""
     @Published var navigationTitle: String = ""
+    @Published var callInformationCustomTitle: String = ""
+    @Published var callElapsedDurationInMS: TimeInterval = 0
+    @Published var startTimerMRIJoin: String = ""
+    @Published var stopTimerMRIJoin: String = ""
     @Published var navigationSubtitle: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()

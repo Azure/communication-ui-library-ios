@@ -26,7 +26,7 @@ class InfoHeaderViewModel: ObservableObject {
     private var callDurationManager: CallDurationManager?
      /* </TIMER_TITLE_FEATURE> */
     let enableMultitasking: Bool
-    let customTitle: String?
+    let customTitle: String
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
@@ -48,7 +48,7 @@ class InfoHeaderViewModel: ObservableObject {
          /* <|TIMER_TITLE_FEATURE>
         self.customTitle = ""
         </TIMER_TITLE_FEATURE> */
-        self.infoLabel = (((customTitle?.isEmpty) != nil) ? title : customTitle) ?? title
+        self.infoLabel = !(self.customTitle.isEmpty) ? customTitle : title
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
