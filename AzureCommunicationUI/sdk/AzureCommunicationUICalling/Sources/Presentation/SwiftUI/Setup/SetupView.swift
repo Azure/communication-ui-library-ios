@@ -53,7 +53,6 @@ struct SetupView: View {
                             .padding(.bottom, setupViewVerticalPadding(parentSize: geometry.size))
                     }
                     .padding(.horizontal, setupViewHorizontalPadding(parentSize: geometry.size))
-                    .accessibilityElement(children: .contain)
                 }
             }
             BottomDrawer(isPresented: viewModel.audioDeviceListViewModel.isDisplayed,
