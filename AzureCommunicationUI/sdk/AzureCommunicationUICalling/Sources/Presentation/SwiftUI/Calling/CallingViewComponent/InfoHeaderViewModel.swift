@@ -5,12 +5,15 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed = true
     @Published var isVoiceOverEnabled = false
+    @Published var timer = ""
+    @Published var accessibilityLabelTimer = ""
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -19,9 +22,14 @@ class InfoHeaderViewModel: ObservableObject {
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
     private let enableSystemPipWhenMultitasking: Bool
+    /* <TIMER_TITLE_FEATURE> */
+    private var callDurationManager: CallDurationManager?
+     /* </TIMER_TITLE_FEATURE> */
     let enableMultitasking: Bool
+    let customTitle: String?
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
+    private var cancellables = Set<AnyCancellable>()
 
     var isPad = false
 
@@ -32,15 +40,25 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPipWhenMultitasking: Bool) {
+         enableSystemPipWhenMultitasking: Bool /* <TIMER_TITLE_FEATURE> */ ,
+         callScreenHeaderOptions: CallScreenHeaderOptions? /* </TIMER_TITLE_FEATURE> */ ) {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
-        self.infoLabel = title
+        /* <TIMER_TITLE_FEATURE> */
+        self.customTitle = callScreenHeaderOptions?.title ?? ""
+         /* <|TIMER_TITLE_FEATURE>
+        self.customTitle = ""
+        </TIMER_TITLE_FEATURE> */
+        self.infoLabel = (((customTitle?.isEmpty) != nil) ? title : customTitle) ?? title
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
+        self.accessibilityLabel = title
+        /* <TIMER_TITLE_FEATURE> */
+        self.callDurationManager = callScreenHeaderOptions?.timer?.callTimerAPI
+                                        as? CallDurationManager ?? CallDurationManager()
+         /* </TIMER_TITLE_FEATURE> */
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
@@ -70,6 +88,36 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
+        /* <TIMER_TITLE_FEATURE> */
+        if (self.callDurationManager?.isStarted) != nil {
+            callScreenHeaderOptions?.timer?.elapsedDuration = self.callDurationManager?.timeElapsed
+            self.callDurationManager?.$timerTickStateFlow
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.timer, on: self)
+                .store(in: &cancellables)
+            self.callDurationManager?.$timeElapsed
+                .map { self.formatTimeInterval($0) } // Convert TimeInterval to formatted String
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.accessibilityLabelTimer, on: self)
+                .store(in: &cancellables)
+        }
+        /* </TIMER_TITLE_FEATURE> */
+    }
+    func formatTimeInterval(_ interval: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        if interval >= 3600 {
+            // If the interval is 1 hour or more, show hours, minutes, and seconds
+            formatter.allowedUnits = [.hour, .minute, .second]
+        } else if interval >= 60 {
+            // If the interval is 1 minute or more, show minutes and seconds
+            formatter.allowedUnits = [.minute, .second]
+        } else {
+            // If the interval is less than 1 minute, show seconds only
+            formatter.allowedUnits = [.second]
+        }
+        return formatter.string(from: interval) ?? "00:00:00"
     }
 
     func showParticipantListButtonTapped() {

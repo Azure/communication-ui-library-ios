@@ -325,7 +325,11 @@
 		B2F079672AC6262100E9AA9E /* CallDiagnosticsReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F079662AC6262100E9AA9E /* CallDiagnosticsReducerTests.swift */; };
 		BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */; };
 		BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */; };
+		C868F76F2C598C9300D242B4 /* CallDurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868F76E2C598C9300D242B4 /* CallDurationManager.swift */; };
+		C868F7712C5993CE00D242B4 /* CallDurationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868F7702C5993CE00D242B4 /* CallDurationTimer.swift */; };
+		C868F7732C5AEE1800D242B4 /* CallScreenHeaderOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */; };
 		C89FCE602C0FAF5D00983444 /* CapabilitiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */; };
+		C8E10DB72C77E88D00511482 /* CallDurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DB62C77E88D00511482 /* CallDurationManagerTests.swift */; };
 		C8E50E972BFFD83200AB507E /* CapabilitiesChangedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */; };
 		C8E50E992C00056600AB507E /* CapabilitiesChangedReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */; };
 		C8E50E9B2C0006FE00AB507E /* CapabilityResolutionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */; };
@@ -741,8 +745,12 @@
 		BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModelProtocol.swift; sourceTree = "<group>"; };
 		BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModel.swift; sourceTree = "<group>"; };
 		C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C868F76E2C598C9300D242B4 /* CallDurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDurationManager.swift; sourceTree = "<group>"; };
+		C868F7702C5993CE00D242B4 /* CallDurationTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDurationTimer.swift; sourceTree = "<group>"; };
+		C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenHeaderOptions.swift; sourceTree = "<group>"; };
 		C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesManager.swift; sourceTree = "<group>"; };
 		C8D232FB2BFD4AEE00EC04B4 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = ../../../../../Downloads/AzureCommunicationCalling.framework; sourceTree = "<group>"; };
+		C8E10DB62C77E88D00511482 /* CallDurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDurationManagerTests.swift; sourceTree = "<group>"; };
 		C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedEvent.swift; sourceTree = "<group>"; };
 		C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedReason.swift; sourceTree = "<group>"; };
 		C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityResolutionReason.swift; sourceTree = "<group>"; };
@@ -1079,6 +1087,7 @@
 				A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */,
 				114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */,
 				058371FC2C1C1E12008D9A20 /* CapabilitiesManagerTests.swift */,
+				C8E10DB62C77E88D00511482 /* CallDurationManagerTests.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1144,6 +1153,7 @@
 				A464810529F33A43001B80A3 /* CallStateManager.swift */,
 				A464810929F34A06001B80A3 /* CompositeExitManager.swift */,
 				C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */,
+				C868F76E2C598C9300D242B4 /* CallDurationManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1578,6 +1588,8 @@
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
 				11D470752C62CEFE00A54BD7 /* ButtonOptions.swift */,
 				11D470772C62CF3400A54BD7 /* CustomButtonOptions.swift */,
+				C868F7702C5993CE00D242B4 /* CallDurationTimer.swift */,
+				C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -2117,6 +2129,7 @@
 				FAC1FEC127C94D9200D95845 /* AudioDeviceListViewModelMocking.swift in Sources */,
 				5A31489916982D3699CD756D /* LocalVideoViewModelTests.swift in Sources */,
 				114187682C35C2E50089C05B /* CaptionsViewManagerTests.swift in Sources */,
+				C8E10DB72C77E88D00511482 /* CallDurationManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2194,6 +2207,7 @@
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
 				054F2B532A2679160017985B /* CallPipVideoViewController.swift in Sources */,
 				051F73922C0E0F3C006E097F /* ToastNotificationState.swift in Sources */,
+				C868F76F2C598C9300D242B4 /* CallDurationManager.swift in Sources */,
 				FA538278292FE86200963FFC /* DebugInfo.swift in Sources */,
 				759BDEFD28FF0A81002B6853 /* SupportedLocale.swift in Sources */,
 				696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */,
@@ -2297,6 +2311,7 @@
 				11A8FC332C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift in Sources */,
 				756F596A2965E25A00BAFBF7 /* Middleware.swift in Sources */,
 				533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */,
+				C868F7732C5AEE1800D242B4 /* CallScreenHeaderOptions.swift in Sources */,
 				534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */,
 				11A8FC2F2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift in Sources */,
 				C8E50E9B2C0006FE00AB507E /* CapabilityResolutionReason.swift in Sources */,
@@ -2323,6 +2338,7 @@
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,
 				051F739C2C10DA64006E097F /* CapabilitiesChangedNotificationMode.swift in Sources */,
 				534A5DD42C40A2C9002EB508 /* DrawerParticipantView.swift in Sources */,
+				C868F7712C5993CE00D242B4 /* CallDurationTimer.swift in Sources */,
 				1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */,
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,

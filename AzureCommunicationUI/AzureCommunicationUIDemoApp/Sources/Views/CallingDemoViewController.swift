@@ -223,7 +223,9 @@ class CallingDemoViewController: UIViewController {
         print("CallingDemoView:::: createCallComposite creating")
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
-        let callScreenOptions = createCallScreenOptions(callComposite: nil)
+        let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                        envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -233,6 +235,16 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
+        /* <TIMER_TITLE_FEATURE> */
+        var callDurationCustomTimer = CallDurationTimer()
+        /* </TIMER_TITLE_FEATURE> */
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions
+                                                  /* <TIMER_TITLE_FEATURE> */
+                                                  , headerOptions: CallScreenHeaderOptions(
+                                                    timer: callDurationCustomTimer,
+                                                    title: "This is a custom header")
+                                                 /* </TIMER_TITLE_FEATURE> */
+                                                 )
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
