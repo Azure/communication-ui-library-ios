@@ -50,7 +50,8 @@ class CallDurationManager: CallTimerAPI, ObservableObject {
             self.timeElapsed += 1
             timerTickStateFlow = String(format: "%02d:%02d", Int(self.timeElapsed) / 60, Int(self.timeElapsed) % 60)
             if self.timeElapsed > 3600 {
-                timerTickStateFlow = String(format: "%02d:%02d:%02d", Int(self.timeElapsed) / 3600, Int(self.timeElapsed) / 60,
+                timerTickStateFlow = String(format: "%02d:%02d:%02d",
+                                            Int(self.timeElapsed) / 3600, Int(self.timeElapsed) / 60,
                                             Int(self.timeElapsed) % 60)
             }
         }
