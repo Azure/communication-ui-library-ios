@@ -74,7 +74,7 @@ struct InfoHeaderView: View {
                 Text(viewModel.infoLabel)
                     .alignmentGuide(.leading) { d in d[.leading] }
                     .foregroundColor(Constants.foregroundColor)
-                    .lineLimit(1)
+                    .lineLimit(nil)
                     .font(Fonts.caption1.font)
                     .accessibilityLabel(Text(viewModel.accessibilityLabel))
                     .accessibilitySortPriority(1)
@@ -82,6 +82,7 @@ struct InfoHeaderView: View {
                     .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
+                    .padding(.top, 5)
                 /* <TIMER_TITLE_FEATURE> */
                 if !viewModel.timer.isEmpty {
                     Text(viewModel.timer.trimmingCharacters(in: .whitespacesAndNewlines))
@@ -95,6 +96,7 @@ struct InfoHeaderView: View {
                         .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                             Constants.accessibilityFontScale :
                                                 Constants.defaultFontScale)
+                        .padding(.bottom, 5)
                 }
                 /* </TIMER_TITLE_FEATURE> */
             }
