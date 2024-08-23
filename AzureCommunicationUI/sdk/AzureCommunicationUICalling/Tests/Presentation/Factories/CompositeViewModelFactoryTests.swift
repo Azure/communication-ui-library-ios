@@ -61,7 +61,8 @@ extension CompositeViewModelFactoryTests {
                                             store: mockStoreFactory.store,
                                             localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                             localParticipantViewData: nil),
-                                         callScreenHeaderOptions: nil,
+                                         callScreenHeaderOptions: CallScreenHeaderOptions(timer: CallDurationTimer(),
+                                                                                          title: "Custom title"),
                                          retrieveLogFiles: { return [] })
     }
 }

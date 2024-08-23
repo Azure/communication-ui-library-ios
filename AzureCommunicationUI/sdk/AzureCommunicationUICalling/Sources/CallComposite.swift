@@ -633,7 +633,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager,
                 /* <TIMER_TITLE_FEATURE> */
-                callScreenHeaderOptions: callScreenHeaderOptions!,
+                callScreenHeaderOptions: callScreenHeaderOptions,
                 /* </TIMER_TITLE_FEATURE> */
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
