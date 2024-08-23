@@ -63,13 +63,15 @@ struct SettingsView: View {
                     envConfigSubject.displayLeaveCallConfirmation = !envConfigSubject.displayLeaveCallConfirmation
                 }
                 .accessibilityIdentifier(AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue)
+            /* <TIMER_TITLE_FEATURE> */
             TextField("Call Information Custom title", text: $envConfigSubject.callInformationCustomTitle)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textFieldStyle(.roundedBorder)
+            /* </TIMER_TITLE_FEATURE> */
         }
     }
-
+    /* <TIMER_TITLE_FEATURE> */
     var callDurationTimerSettings: some View {
         Section(header: Text("Call Duration Timer")) {
             TextField("Call Information Custom title",
@@ -87,6 +89,7 @@ struct SettingsView: View {
                 .textFieldStyle(.roundedBorder)
         }
     }
+    /* </TIMER_TITLE_FEATURE> */
 
     var setupScreenSettings: some View {
         Section(header: Text("Setup screen settings")) {
@@ -124,7 +127,9 @@ struct SettingsView: View {
             }
             setupScreenSettings
             displayLeaveCallConfirmationSettings
+            /* <TIMER_TITLE_FEATURE> */
             callDurationTimerSettings
+            /* </TIMER_TITLE_FEATURE> */
             exitCompositeSettings
             callKitSettings
             pushNotificationsSettings

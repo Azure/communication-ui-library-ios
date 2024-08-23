@@ -954,15 +954,17 @@ extension CallingDemoView {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
         /* <TIMER_TITLE_FEATURE> */
-//        if callState == .connected {
-//            self.callDurationTimer.start()
-//        }
-//        if callState == .disconnecting {
-//            self.callDurationTimer.stop()
-//        }
-//        if callState == .disconnected {
-//            self.callDurationTimer.reset()
-//        }
+        if envConfigSubject.startTimerMRIJoin.isEmpty {
+            if callState == .connected {
+                self.callDurationTimer.start()
+            }
+            if callState == .disconnecting {
+                self.callDurationTimer.stop()
+            }
+            if callState == .disconnected {
+                self.callDurationTimer.reset()
+            }
+        }
         /* </TIMER_TITLE_FEATURE> */
     }
 
