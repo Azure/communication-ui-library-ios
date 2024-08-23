@@ -47,12 +47,12 @@ struct CallingDemoView: View {
                 Button("AudioOnly") {
                     envConfigSubject.audioOnly = !envConfigSubject.audioOnly
                 }
-                .frame(width: 0, height: 0)
+                .frame(width: 1, height: 1)
                 .accessibilityIdentifier(AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue)
                 Button("MockSdk") {
                     envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
                 }
-                .frame(width: 0, height: 0)
+                .frame(width: 1, height: 1)
                 .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
             }
 #endif
