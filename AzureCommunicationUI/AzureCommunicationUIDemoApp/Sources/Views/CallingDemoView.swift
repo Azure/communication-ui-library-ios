@@ -47,12 +47,12 @@ struct CallingDemoView: View {
                 Button("AudioOnly") {
                     envConfigSubject.audioOnly = !envConfigSubject.audioOnly
                 }
-                .frame(width: 0, height: 0)
+                .frame(width: 1, height: 1)
                 .accessibilityIdentifier(AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue)
                 Button("MockSdk") {
                     envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
                 }
-                .frame(width: 0, height: 0)
+                .frame(width: 1, height: 1)
                 .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
             }
 #endif
@@ -425,14 +425,21 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
+<<<<<<< HEAD
         /* <TIMER_TITLE_FEATURE> */
         callDurationTimer.elapsedDuration = envConfigSubject.callElapsedDurationInMS
         /* </TIMER_TITLE_FEATURE> */
+=======
+>>>>>>> origin/develop
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
                                                    headerOptions:
                                                      CallScreenHeaderOptions(
                                                         timer: callDurationTimer,
+<<<<<<< HEAD
                                                         title: envConfigSubject.callInformationCustomTitle)
+=======
+                                                        title: "This is a custom InfoHeader")
+>>>>>>> origin/develop
                                                    /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -953,6 +960,17 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
+        /* <TIMER_TITLE_FEATURE> */
+        if callState == .connected {
+            self.callDurationTimer.start()
+        }
+        if callState == .disconnecting {
+            self.callDurationTimer.stop()
+        }
+        if callState == .disconnected {
+            self.callDurationTimer.reset()
+        }
+        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -973,15 +991,22 @@ extension CallingDemoView {
         }
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
+
+        // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
     /* <TIMER_TITLE_FEATURE> */
     private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
+<<<<<<< HEAD
         guard !envConfigSubject.stopTimerMRIJoin.isEmpty else {
+=======
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
+>>>>>>> origin/develop
             return
         }
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
+<<<<<<< HEAD
         for identifier in identifiers {
             let id = getRemoteParticipantId(identifier)
             if envConfigSubject.stopTimerMRIJoin == id {
@@ -1002,6 +1027,8 @@ extension CallingDemoView {
         default:
             return nil
         }
+=======
+>>>>>>> origin/develop
     }
     /* </TIMER_TITLE_FEATURE> */
 }

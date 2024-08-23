@@ -26,32 +26,34 @@ class CallDurationManager: CallTimerAPI, ObservableObject {
 
     func onStart() {
         startTimer()
-        isStarted = true
+        self.isStarted = true
     }
 
     func onStop() {
-        timer?.invalidate()
-        timer = nil
-        isStarted = false
-        timeElapsed = 0
+        self.timer?.invalidate()
+        self.timer = nil
+        self.isStarted = false
+        self.timeElapsed = 0
     }
 
     func onReset() {
-        timer?.invalidate()
-        timeElapsed = 0
-        timerTickStateFlow = "00:00"
+        self.timer?.invalidate()
+        self.timeElapsed = 0
+        self.timerTickStateFlow = "00:00"
     }
 
     private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else {
                 return
             }
-            timeElapsed += 1
-            timerTickStateFlow = String(format: "%02d:%02d", Int(timeElapsed) / 60, Int(timeElapsed) % 60)
-            if timeElapsed > 3600 {
-                timerTickStateFlow = String(format: "%02d:%02d:%02d", Int(timeElapsed) / 3600, Int(timeElapsed) / 60,
-                                            Int(timeElapsed) % 60)
+            self.timeElapsed += 1
+            self.timerTickStateFlow = String(format: "%02d:%02d",
+                                             Int(self.timeElapsed) / 60, Int(self.timeElapsed) % 60)
+            if self.timeElapsed > 3600 {
+                self.timerTickStateFlow = String(format: "%02d:%02d:%02d",
+                                            Int(self.timeElapsed) / 3600, Int(self.timeElapsed) / 60,
+                                            Int(self.timeElapsed) % 60)
             }
         }
     }
