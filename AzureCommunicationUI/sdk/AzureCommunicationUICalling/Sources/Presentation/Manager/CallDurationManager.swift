@@ -1,4 +1,4 @@
-/* <TIMER_TITLE_FEATURE> */
+/* <TIMER_TITLE_FEATURE>
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
@@ -58,4 +58,4 @@ class CallDurationManager: CallTimerAPI, ObservableObject {
         }
     }
 }
-/* </TIMER_TITLE_FEATURE> */
+</TIMER_TITLE_FEATURE> */

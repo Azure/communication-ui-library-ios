@@ -363,8 +363,12 @@ extension InfoHeaderViewModelTests {
                                    accessibilityProvider: accessibilityProvider,
                                    dispatchAction: storeFactory.store.dispatch,
                                    enableMultitasking: true,
-                                   enableSystemPipWhenMultitasking: true,
-                                   callScreenHeaderOptions: CallScreenHeaderOptions())
+                                   enableSystemPipWhenMultitasking: true
+                                   /* <TIMER_TITLE_FEATURE>
+                                   ,
+                                   callScreenHeaderOptions:
+                                     CallScreenHeaderOptions()
+                                   </TIMER_TITLE_FEATURE> */ )
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {

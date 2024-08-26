@@ -236,11 +236,11 @@ class CallingDemoViewController: UIViewController {
                 layoutDirection: layoutDirection)
         }
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions
-                                                  /* <TIMER_TITLE_FEATURE> */
+                                                  /* <TIMER_TITLE_FEATURE>
                                                   , headerOptions: CallScreenHeaderOptions(
                                                     title: "This is a custom header",
                                                     subtitle: "This is a custom subtitle")
-                                                 /* </TIMER_TITLE_FEATURE> */
+                                                 </TIMER_TITLE_FEATURE> */
                                                  )
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(

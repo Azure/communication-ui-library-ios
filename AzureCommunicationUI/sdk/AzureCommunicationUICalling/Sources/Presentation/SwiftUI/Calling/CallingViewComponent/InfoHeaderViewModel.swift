@@ -22,9 +22,9 @@ class InfoHeaderViewModel: ObservableObject {
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
     private let enableSystemPipWhenMultitasking: Bool
-    /* <TIMER_TITLE_FEATURE> */
+    /* <TIMER_TITLE_FEATURE>
     private let callScreenHeaderOptions: CallScreenHeaderOptions?
-     /* </TIMER_TITLE_FEATURE> */
+     </TIMER_TITLE_FEATURE> */
     let enableMultitasking: Bool
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
@@ -39,21 +39,21 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPipWhenMultitasking: Bool /* <TIMER_TITLE_FEATURE> */ ,
-         callScreenHeaderOptions: CallScreenHeaderOptions? /* </TIMER_TITLE_FEATURE> */ ) {
+         enableSystemPipWhenMultitasking: Bool /* <TIMER_TITLE_FEATURE> ,
+         callScreenHeaderOptions: CallScreenHeaderOptions? </TIMER_TITLE_FEATURE> */ ) {
         let infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
+        /* <TIMER_TITLE_FEATURE>
         self.callScreenHeaderOptions = callScreenHeaderOptions
-        /* <TIMER_TITLE_FEATURE> */
         self.title = callScreenHeaderOptions?.title ?? infoLabel
         self.subtitle = callScreenHeaderOptions?.subtitle ?? ""
         self.accessibilityLabelTitle = callScreenHeaderOptions?.title ?? infoLabel
         self.accessibilityLabelSubtitle = callScreenHeaderOptions?.subtitle ?? ""
-         /* <|TIMER_TITLE_FEATURE>
+         <|TIMER_TITLE_FEATURE> */
         self.title = infoLabel
         self.subtitle = ""
         self.accessibilityLabelTitle = infoLabel
         self.accessibilityLabelSubtitle = ""
-        </TIMER_TITLE_FEATURE> */
+        /* </TIMER_TITLE_FEATURE> */
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
@@ -186,8 +186,13 @@ class InfoHeaderViewModel: ObservableObject {
         default:
             content = localizationProvider.getLocalizedString(.callWithNPerson, participantsCount)
         }
+        /* <TIMER_TITLE_FEATURE>
         title = self.callScreenHeaderOptions?.title ?? content
         accessibilityLabelTitle = self.callScreenHeaderOptions?.title ?? content
+         <|TIMER_TITLE_FEATURE> */
+        title = content
+        accessibilityLabelTitle = content
+        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func displayWithTimer() {
