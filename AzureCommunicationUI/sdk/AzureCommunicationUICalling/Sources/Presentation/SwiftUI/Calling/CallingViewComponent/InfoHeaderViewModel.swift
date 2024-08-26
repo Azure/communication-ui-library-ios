@@ -8,12 +8,12 @@ import Foundation
 import SwiftUI
 
 class InfoHeaderViewModel: ObservableObject {
-    @Published var accessibilityLabel: String
-    @Published var infoLabel: String
+    @Published var accessibilityLabelTitle: String
     @Published var isInfoHeaderDisplayed = true
     @Published var isVoiceOverEnabled = false
-    @Published var timer = ""
-    @Published var accessibilityLabelTimer = ""
+    @Published var accessibilityLabelSubtitle: String
+    @Published var title = ""
+    @Published var subtitle = ""
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -23,10 +23,9 @@ class InfoHeaderViewModel: ObservableObject {
     private var callingStatus: CallingStatus = .none
     private let enableSystemPipWhenMultitasking: Bool
     /* <TIMER_TITLE_FEATURE> */
-    private var callDurationManager: CallDurationManager?
+    private let callScreenHeaderOptions: CallScreenHeaderOptions?
      /* </TIMER_TITLE_FEATURE> */
     let enableMultitasking: Bool
-    let customTitle: String?
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
@@ -42,23 +41,24 @@ class InfoHeaderViewModel: ObservableObject {
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool /* <TIMER_TITLE_FEATURE> */ ,
          callScreenHeaderOptions: CallScreenHeaderOptions? /* </TIMER_TITLE_FEATURE> */ ) {
-        let title = localizationProvider.getLocalizedString(.callWith0Person)
+        let infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
+        self.callScreenHeaderOptions = callScreenHeaderOptions
         /* <TIMER_TITLE_FEATURE> */
-        self.customTitle = callScreenHeaderOptions?.title ?? ""
+        self.title = callScreenHeaderOptions?.title ?? infoLabel
+        self.subtitle = callScreenHeaderOptions?.subtitle ?? ""
+        self.accessibilityLabelTitle = callScreenHeaderOptions?.title ?? infoLabel
+        self.accessibilityLabelSubtitle = callScreenHeaderOptions?.subtitle ?? ""
          /* <|TIMER_TITLE_FEATURE>
-        self.customTitle = ""
+        self.title = infoLabel
+        self.subtitle = ""
+        self.accessibilityLabelTitle = infoLabel
+        self.accessibilityLabelSubtitle = ""
         </TIMER_TITLE_FEATURE> */
-        self.infoLabel = (((customTitle?.isEmpty) != nil) ? title : customTitle) ?? title
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.enableMultitasking = enableMultitasking
-        self.accessibilityLabel = title
-        /* <TIMER_TITLE_FEATURE> */
-        self.callDurationManager = callScreenHeaderOptions?.timer?.callTimerAPI
-                                        as? CallDurationManager ?? CallDurationManager()
-         /* </TIMER_TITLE_FEATURE> */
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
@@ -88,20 +88,6 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
-        /* <TIMER_TITLE_FEATURE> */
-        if (self.callDurationManager?.isStarted) != nil {
-            callScreenHeaderOptions?.timer?.elapsedDuration = self.callDurationManager?.timeElapsed
-            self.callDurationManager?.$timerTickStateFlow
-                .receive(on: DispatchQueue.main)
-                .assign(to: \.timer, on: self)
-                .store(in: &cancellables)
-            self.callDurationManager?.$timeElapsed
-                .map { self.formatTimeInterval($0) } // Convert TimeInterval to formatted String
-                .receive(on: DispatchQueue.main)
-                .assign(to: \.accessibilityLabelTimer, on: self)
-                .store(in: &cancellables)
-        }
-        /* </TIMER_TITLE_FEATURE> */
     }
     func formatTimeInterval(_ interval: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
@@ -200,8 +186,8 @@ class InfoHeaderViewModel: ObservableObject {
         default:
             content = localizationProvider.getLocalizedString(.callWithNPerson, participantsCount)
         }
-        infoLabel = content
-        accessibilityLabel = content
+        title = self.callScreenHeaderOptions?.title ?? content
+        accessibilityLabelTitle = self.callScreenHeaderOptions?.title ?? content
     }
 
     private func displayWithTimer() {

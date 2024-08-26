@@ -257,8 +257,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           enableMultitasking: true,
                                                           enableSystemPipWhenMultitasking: true,
                                                           callScreenHeaderOptions:
-                                                            CallScreenHeaderOptions(timer: CallDurationTimer(),
-                                                                                    title: "Custom title"))
+                                                            CallScreenHeaderOptions())
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {

@@ -28,9 +28,6 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
-    /* <TIMER_TITLE_FEATURE> */
-    @State var callDurationTimer = CallDurationTimer()
-    /* </TIMER_TITLE_FEATURE> */
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -428,8 +425,8 @@ extension CallingDemoView {
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
                                                    headerOptions:
                                                      CallScreenHeaderOptions(
-                                                        timer: callDurationTimer,
-                                                        title: "This is a custom InfoHeader")
+                                                        title: "This is a custom InfoHeader",
+                                                        subtitle: "This is a custom subtitle")
                                                    /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -950,17 +947,6 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
-        /* <TIMER_TITLE_FEATURE> */
-        if callState == .connected {
-            self.callDurationTimer.start()
-        }
-        if callState == .disconnecting {
-            self.callDurationTimer.stop()
-        }
-        if callState == .disconnected {
-            self.callDurationTimer.reset()
-        }
-        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
