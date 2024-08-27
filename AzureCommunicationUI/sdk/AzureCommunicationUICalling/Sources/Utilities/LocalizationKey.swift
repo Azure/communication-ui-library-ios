@@ -13,6 +13,7 @@ enum LocalizationKey: String {
     case iPad = "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"
     case headphones = "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"
     case bluetooth = "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"
+    case selected = "AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"
 
     /* SetupView */
     case setupTitle = "AzureCommunicationUICalling.SetupView.Title"
