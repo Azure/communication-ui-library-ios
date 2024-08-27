@@ -428,6 +428,7 @@ extension CompositeViewModelFactory {
         DrawerGenericItemViewModel(title: title,
                                 subtitle: subtitle,
                                 accessibilityIdentifier: accessibilityIdentifier,
+                                   accessibilityTraits: .isButton,
                                    action: action,
                                    startCompositeIcon: startIcon,
                                    endIcon: endIcon,
