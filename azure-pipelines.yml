@@ -31,9 +31,12 @@ extends:
   template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
-      os: windows
-      image: windows-2022
-      name: Azure-Pipelines-1ESPT-ExDShared
+      image: MSSecurity-1ES-Ubuntu-2204
+      os: linux
+    sdl:
+      sourceAnalysisPool:
+        image: MSSecurity-1ES-Windows-2022
+        os: windows
     customBuildTags:
       - MigrationTooling-skype-SCC-12523-Tool
     stages:
