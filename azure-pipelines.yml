@@ -31,12 +31,14 @@ extends:
   template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
-      image: MSSecurity-1ES-Ubuntu-2204
+      name: Azure-Pipelines-1ESPT-ExDShared
+      image: ubuntu-2204
       os: linux
     sdl:
       sourceAnalysisPool:
-        image: MSSecurity-1ES-Windows-2022
+        image: windows-2022
         os: windows
+        name: Azure-Pipelines-1ESPT-ExDShared
     customBuildTags:
       - MigrationTooling-skype-SCC-12523-Tool
     stages:
