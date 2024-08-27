@@ -15,6 +15,7 @@ internal struct DrawerTitleView: View {
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.headline)
+                .accessibilityAddTraits(/*@START_MENU_TOKEN@*/.isHeader/*@END_MENU_TOKEN@*/)
             Spacer()
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
