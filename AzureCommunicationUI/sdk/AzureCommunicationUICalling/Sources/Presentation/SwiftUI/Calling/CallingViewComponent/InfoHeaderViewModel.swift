@@ -177,7 +177,9 @@ class InfoHeaderViewModel: ObservableObject {
         let filteredOutRemoteParticipantsCount =
         remoteParticipantsState.participantInfoList.count - remoteParticipantCountForGridView
 
-        return remoteParticipantsState.totalParticipantCount - filteredOutRemoteParticipantsCount
+        return (remoteParticipantsState.participantInfoList.count == 0 &&
+               remoteParticipantsState.totalParticipantCount == 1) ? 0 :
+               (remoteParticipantsState.totalParticipantCount - filteredOutRemoteParticipantsCount)
     }
 
     private func isHoldingCall(callingState: CallingState) {
