@@ -41,10 +41,10 @@ public class CallComposite {
         public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
         /// Closure to incoming call id accepted by CallKit.
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
-        /* <TIMER_TITLE_FEATURE> */
+        /* <TIMER_TITLE_FEATURE>
         /// Closure to execute when participant has left a call inside Call Composite
         public var onRemoteParticipantLeft: (([CommunicationIdentifier]) -> Void)?
-        /* </TIMER_TITLE_FEATURE> */
+        </TIMER_TITLE_FEATURE> */
     }
 
     /// The events handler for Call Composite
@@ -75,9 +75,6 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var pipManager: PipManagerProtocol?
-    /* <TIMER_TITLE_FEATURE> */
-    private var callDurationManager: CallDurationManager?
-    /* </TIMER_TITLE_FEATURE> */
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
@@ -102,10 +99,9 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
-    /* <TIMER_TITLE_FEATURE> */
-    private var customTimer: CallDurationTimer?
+    /* <TIMER_TITLE_FEATURE>
     private var callScreenHeaderOptions: CallScreenHeaderOptions?
-    /* </TIMER_TITLE_FEATURE> */
+    </TIMER_TITLE_FEATURE> */
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -133,9 +129,9 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
-        /* <TIMER_TITLE_FEATURE> */
+        /* <TIMER_TITLE_FEATURE>
         callScreenHeaderOptions = options?.callScreenOptions?.headerOptions
-        /* </TIMER_TITLE_FEATURE> */
+        </TIMER_TITLE_FEATURE> */
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
@@ -162,9 +158,9 @@ public class CallComposite {
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
-        /* <TIMER_TITLE_FEATURE> */
+        /* <TIMER_TITLE_FEATURE>
         callScreenHeaderOptions = options?.callScreenOptions?.headerOptions
-        /* </TIMER_TITLE_FEATURE> */
+        </TIMER_TITLE_FEATURE> */
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
@@ -596,13 +592,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
-        /* <TIMER_TITLE_FEATURE> */
-        if self.callScreenHeaderOptions?.timer != nil {
-            self.callScreenHeaderOptions?.timer?.callTimerAPI = CallDurationManager(
-                timeElapsed: self.callScreenHeaderOptions?.timer?.elapsedDuration
-            )
-        }
-        /* </TIMER_TITLE_FEATURE> */
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
         let captionsViewManager = CaptionsViewManager(
@@ -632,9 +621,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager,
-                /* <TIMER_TITLE_FEATURE> */
+                /* <TIMER_TITLE_FEATURE>
                 callScreenHeaderOptions: callScreenHeaderOptions,
-                /* </TIMER_TITLE_FEATURE> */
+                </TIMER_TITLE_FEATURE> */
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
@@ -664,9 +653,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
-        /* <TIMER_TITLE_FEATURE> */
-        self.callDurationManager = nil
-        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func disposeSDKWrappers() {

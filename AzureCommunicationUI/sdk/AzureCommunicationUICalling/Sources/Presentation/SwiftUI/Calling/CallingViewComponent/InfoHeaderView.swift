@@ -71,32 +71,32 @@ struct InfoHeaderView: View {
                     .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
             }
             VStack(alignment: .leading) {
-                Text(viewModel.infoLabel)
+                Text(viewModel.title)
                     .alignmentGuide(.leading) { d in d[.leading] }
                     .foregroundColor(Constants.foregroundColor)
                     .lineLimit(1)
                     .font(Fonts.caption1.font)
-                    .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                    .accessibilityLabel(Text(viewModel.accessibilityLabelTitle))
                     .accessibilitySortPriority(1)
                     .scaledToFit()
                     .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
-                /* <TIMER_TITLE_FEATURE> */
-                if !viewModel.timer.isEmpty {
-                    Text(viewModel.timer.trimmingCharacters(in: .whitespacesAndNewlines))
+                /* <TIMER_TITLE_FEATURE>
+                if !viewModel.subtitle.isEmpty {
+                    Text(viewModel.subtitle.trimmingCharacters(in: .whitespacesAndNewlines))
                         .alignmentGuide(.leading) { d in d[.leading] }
                         .foregroundColor(Constants.foregroundColor)
                         .lineLimit(1)
                         .font(Fonts.caption1.font)
-                        .accessibilityLabel(Text(viewModel.accessibilityLabelTimer))
+                        .accessibilityLabel(Text(viewModel.accessibilityLabelSubtitle))
                         .accessibilitySortPriority(2)
                         .scaledToFit()
                         .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                             Constants.accessibilityFontScale :
                                                 Constants.defaultFontScale)
                 }
-                /* </TIMER_TITLE_FEATURE> */
+                </TIMER_TITLE_FEATURE> */
             }
             Spacer()
             participantListButton

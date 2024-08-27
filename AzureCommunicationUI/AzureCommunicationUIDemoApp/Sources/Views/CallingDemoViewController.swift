@@ -235,15 +235,12 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
-        /* <TIMER_TITLE_FEATURE> */
-        var callDurationCustomTimer = CallDurationTimer()
-        /* </TIMER_TITLE_FEATURE> */
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions
-                                                  /* <TIMER_TITLE_FEATURE> */
+                                                  /* <TIMER_TITLE_FEATURE>
                                                   , headerOptions: CallScreenHeaderOptions(
-                                                    timer: callDurationCustomTimer,
-                                                    title: "This is a custom header")
-                                                 /* </TIMER_TITLE_FEATURE> */
+                                                    title: "This is a custom header",
+                                                    subtitle: "This is a custom subtitle")
+                                                 </TIMER_TITLE_FEATURE> */
                                                  )
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(
