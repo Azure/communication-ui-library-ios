@@ -230,6 +230,7 @@ struct SettingsView: View {
     var buttonSettins: some View {
         Section(header: Text("Custom Button")) {
             Toggle("Add Custom Buttons", isOn: $envConfigSubject.addCustomButton)
+            Toggle("Hide All Buttons in More List", isOn: $envConfigSubject.hideAllButtons)
         }
     }
 
