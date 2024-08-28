@@ -620,6 +620,9 @@ extension CallingDemoView {
         if envConfigSubject.addCustomButton {
             callScreenOptions = createCallScreenOptions(callComposite: callComposite)
         }
+        if envConfigSubject.hideAllButtons {
+            callScreenOptions = hideAllButtons()
+        }
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
@@ -634,7 +637,7 @@ extension CallingDemoView {
         // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
         let customButtonImage: UIImage
         if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
-            customButtonImage = image.withTintColor(UIColor(named: "chevronColor") ?? .black)
+            customButtonImage = image.withRenderingMode(.alwaysOriginal)
         } else {
             customButtonImage = UIImage().withTintColor(.black) // Fallback to a plain image with black tint
             print("Error: Image 'ic_fluent_chevron_right_20_regular' not found")
@@ -663,6 +666,19 @@ extension CallingDemoView {
             customButtons: [customButton1, customButton2]
         )
 
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+    }
+
+    func hideAllButtons() -> CallScreenOptions {
+        let callScreenControlBarOptions = CallScreenControlBarOptions(
+            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
+            liveCaptionsButtonOptions: ButtonOptions(visible: false),
+            liveCaptionsToggleButtonOptions: ButtonOptions(visible: false),
+            spokenLanguageButtonOptions: ButtonOptions(visible: false),
+            captionsLanguageButtonOptions: ButtonOptions(visible: false),
+            shareDiagnosticsButtonOptions: ButtonOptions(visible: false),
+            reportIssueButtonOptions: ButtonOptions(visible: false)
+        )
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
     }
 
