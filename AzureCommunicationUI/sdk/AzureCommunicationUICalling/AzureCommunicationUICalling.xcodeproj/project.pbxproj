@@ -327,6 +327,9 @@
 		BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */; };
 		C868F7732C5AEE1800D242B4 /* CallScreenHeaderOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */; };
 		C89FCE602C0FAF5D00983444 /* CapabilitiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */; };
+		C8E10DD72C7F8FA800511482 /* CallScreenInfoHeaderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DD62C7F8FA800511482 /* CallScreenInfoHeaderState.swift */; };
+		C8E10DD92C7F900B00511482 /* CallScreenInfoHeaderAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DD82C7F900B00511482 /* CallScreenInfoHeaderAction.swift */; };
+		C8E10DDB2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */; };
 		C8E50E972BFFD83200AB507E /* CapabilitiesChangedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */; };
 		C8E50E992C00056600AB507E /* CapabilitiesChangedReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */; };
 		C8E50E9B2C0006FE00AB507E /* CapabilityResolutionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */; };
@@ -745,6 +748,9 @@
 		C868F7722C5AEE1800D242B4 /* CallScreenHeaderOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenHeaderOptions.swift; sourceTree = "<group>"; };
 		C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesManager.swift; sourceTree = "<group>"; };
 		C8D232FB2BFD4AEE00EC04B4 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = ../../../../../Downloads/AzureCommunicationCalling.framework; sourceTree = "<group>"; };
+		C8E10DD62C7F8FA800511482 /* CallScreenInfoHeaderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenInfoHeaderState.swift; sourceTree = "<group>"; };
+		C8E10DD82C7F900B00511482 /* CallScreenInfoHeaderAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenInfoHeaderAction.swift; sourceTree = "<group>"; };
+		C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenInfoHeaderReducer.swift; sourceTree = "<group>"; };
 		C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedEvent.swift; sourceTree = "<group>"; };
 		C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedReason.swift; sourceTree = "<group>"; };
 		C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityResolutionReason.swift; sourceTree = "<group>"; };
@@ -1028,6 +1034,7 @@
 				B238378A2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift */,
 				114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */,
 				051F73952C0E1164006E097F /* ToastNotificationReducer.swift */,
+				C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -1049,6 +1056,7 @@
 				B2E5B17F2AA14CC600D54A3A /* CallDiagnosticsState.swift */,
 				114879C92BEB362E00B7D7FF /* CaptionsState.swift */,
 				051F73912C0E0F3C006E097F /* ToastNotificationState.swift */,
+				C8E10DD62C7F8FA800511482 /* CallScreenInfoHeaderState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -1067,6 +1075,7 @@
 				B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */,
 				110DBE402C0998070080DBE1 /* CaptionsAction.swift */,
 				051F73932C0E10BB006E097F /* ToastNotificationAction.swift */,
+				C8E10DD82C7F900B00511482 /* CallScreenInfoHeaderAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -2186,6 +2195,7 @@
 				FAD20A89292834500063D8A9 /* ArrayExtension.swift in Sources */,
 				5318F62F2BEDFB0C00CAFA12 /* BottomDrawer.swift in Sources */,
 				1F2BED68262F86F400D98266 /* SetupViewModel.swift in Sources */,
+				C8E10DDB2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift in Sources */,
 				9885BA0726A2116200CC514B /* SetupControlBarViewModel.swift in Sources */,
 				1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */,
 				1FBCB6AC2649993500F57EEA /* CallingSDKWrapper.swift in Sources */,
@@ -2227,6 +2237,7 @@
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
 				11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */,
+				C8E10DD92C7F900B00511482 /* CallScreenInfoHeaderAction.swift in Sources */,
 				1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */,
 				50B6AC7F28208C750077FC01 /* AccessibilityIdentifier.swift in Sources */,
 				985DF376269E07E700CFDA55 /* PrimaryButton.swift in Sources */,
@@ -2238,6 +2249,7 @@
 				05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */,
 				7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */,
 				53D734D82C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift in Sources */,
+				C8E10DD72C7F8FA800511482 /* CallScreenInfoHeaderState.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
 				11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */,
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
