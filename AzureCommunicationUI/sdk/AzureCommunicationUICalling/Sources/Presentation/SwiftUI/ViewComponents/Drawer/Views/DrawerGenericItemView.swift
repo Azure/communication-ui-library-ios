@@ -39,6 +39,7 @@ internal struct DrawerGenericItemView: View {
             } else if let accessoryView = item.endIcon,
                       accessoryView != .none {
                 Icon(name: item.endIcon ?? .rightChevron, size: DrawerListConstants.trailingIconSize)
+                    .foregroundColor(item.isEnabled ? .primary : .gray)
             }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
@@ -54,7 +55,6 @@ internal struct DrawerGenericItemView: View {
             }
         }
         .disabled(!item.isEnabled)
-        .foregroundColor(item.isEnabled ? .primary : .gray)
         .accessibilityIdentifier(item.accessibilityIdentifier)
     }
 }
