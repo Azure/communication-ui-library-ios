@@ -44,7 +44,6 @@ extension Reducer where State == LocalUserState,
             localVideoStreamIdentifier = nil
             cameraStatus = .off
         case .cameraOffFailed(let error):
-            cameraStatus = .on
             cameraError = error
         case .cameraPausedSucceeded:
             cameraStatus = .paused
