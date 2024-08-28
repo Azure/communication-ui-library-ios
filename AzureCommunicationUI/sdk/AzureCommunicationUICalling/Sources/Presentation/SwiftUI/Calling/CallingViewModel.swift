@@ -187,7 +187,8 @@ internal class CallingViewModel: ObservableObject {
             },
             showCaptionsViewAction: {
                 store.dispatch(action: .showCaptionsListView)
-            }
+            },
+            dispatchAction: store.dispatch
         )
 
         captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(

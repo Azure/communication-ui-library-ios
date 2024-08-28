@@ -77,7 +77,8 @@ protocol CompositeViewModelFactoryProtocol {
         controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+        showCaptionsViewAction: @escaping () -> Void,
+        dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel
     func makeCaptionsListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
