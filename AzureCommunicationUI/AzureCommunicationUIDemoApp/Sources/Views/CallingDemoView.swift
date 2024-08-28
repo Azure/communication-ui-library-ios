@@ -8,6 +8,8 @@ import AzureCommunicationCommon
 import AVFoundation
 import CallKit
 import OSLog
+import Combine
+import Foundation
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -27,10 +29,20 @@ struct CallingDemoView: View {
     @State private var isNewViewPresented = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
+    /* <TIMER_TITLE_FEATURE>
+    @ObservedObject var callScreenHeaderOptions = CallScreenHeaderOptions(
+        title: "This is a custom InfoHeader",
+        subtitle: "This is a custom subtitle")
+    </TIMER_TITLE_FEATURE> */
+    @State var callScreenOptions: CallScreenOptions?
     @State var incomingCallId = ""
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
+    @State var timeElapsed: TimeInterval = 0
+    @State var timer: Timer?
+    @State var timerTickStateFlow: String = ""
+    var isStarted = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -422,11 +434,8 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> ,
-                                                   headerOptions:
-                                                     CallScreenHeaderOptions(
-                                                        title: "This is a custom InfoHeader",
-                                                        subtitle: "This is a custom subtitle")
+        callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> ,
+                                                   headerOptions: callScreenHeaderOptions
                                                    </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -947,6 +956,15 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
+        /* <TIMER_TITLE_FEATURE>
+        if callState == .connected {
+            timerTick()
+        }
+        if callState == .disconnected {
+            timer?.invalidate()
+            timer = nil
+        }
+        </TIMER_TITLE_FEATURE> */
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -968,6 +986,20 @@ extension CallingDemoView {
         }
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
+    }
+    func timerTick() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            self.timeElapsed += 1
+            self.timerTickStateFlow = String(format: "%02d:%02d",
+                                             Int(self.timeElapsed) / 60, Int(self.timeElapsed) % 60)
+            callScreenOptions?.headerOptions?.subtitle = self.timerTickStateFlow
+            if self.timeElapsed > 3600 {
+                self.timerTickStateFlow = String(format: "%02d:%02d:%02d",
+                                                 Int(self.timeElapsed) / 3600, Int(self.timeElapsed) / 60,
+                                                 Int(self.timeElapsed) % 60)
+                callScreenOptions?.headerOptions?.subtitle = self.timerTickStateFlow
+            }
+        }
     }
     </TIMER_TITLE_FEATURE> */
 }
