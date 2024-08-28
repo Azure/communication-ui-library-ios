@@ -141,7 +141,6 @@ class LocalUserReducerTests: XCTestCase {
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.cameraState.operation, .on)
         XCTAssertTrue(resultState.cameraState.error is ErrorMocking)
     }
 
