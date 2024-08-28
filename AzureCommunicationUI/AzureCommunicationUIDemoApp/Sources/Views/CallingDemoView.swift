@@ -634,7 +634,7 @@ extension CallingDemoView {
         // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
         let customButtonImage: UIImage
         if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
-            customButtonImage = image.withTintColor(UIColor(named: "chevronColor") ?? .black)
+            customButtonImage = image.withRenderingMode(.alwaysOriginal)
         } else {
             customButtonImage = UIImage().withTintColor(.black) // Fallback to a plain image with black tint
             print("Error: Image 'ic_fluent_chevron_right_20_regular' not found")
