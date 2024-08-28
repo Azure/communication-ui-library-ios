@@ -28,12 +28,17 @@ parameters:
   - name: vsts-mac-131-xcode-142 
     os: macos
 extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
+  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
-      os: windows
-      image: windows-2022
       name: Azure-Pipelines-1ESPT-ExDShared
+      image: ubuntu-2204
+      os: linux
+    sdl:
+      sourceAnalysisPool:
+        image: windows-2022
+        os: windows
+        name: Azure-Pipelines-1ESPT-ExDShared
     customBuildTags:
       - MigrationTooling-skype-SCC-12523-Tool
     stages:

@@ -10,6 +10,7 @@ import Combine
 class MoreCallOptionsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private let dispatchAction: ActionDispatch
     let items: [DrawerGenericItemViewModel]
     var isDisplayed: Bool
 
@@ -21,8 +22,10 @@ class MoreCallOptionsListViewModel: ObservableObject {
          controlBarOptions: CallScreenControlBarOptions?,
          isCaptionsAvailable: Bool,
          isSupportFormAvailable: Bool,
-         isDisplayed: Bool
+         isDisplayed: Bool,
+         dispatchAction: @escaping ActionDispatch
     ) {
+        self.dispatchAction = dispatchAction
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isDisplayed = isDisplayed
@@ -68,6 +71,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
                 accessibilityTraits: [.isButton],
                 action: {
                     customButton.onClick(customButton)
+                    dispatchAction(.hideDrawer)
                 },
                 startIcon: customButton.image,
                 isEnabled: customButton.enabled

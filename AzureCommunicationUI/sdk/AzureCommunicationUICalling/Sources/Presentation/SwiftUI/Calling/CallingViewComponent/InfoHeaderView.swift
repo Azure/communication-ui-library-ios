@@ -83,8 +83,8 @@ struct InfoHeaderView: View {
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
                 /* <TIMER_TITLE_FEATURE>
-                if !viewModel.subtitle.isEmpty {
-                    Text(viewModel.subtitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                if !viewModel.subtitle!.isEmpty {
+                    Text(viewModel.subtitle!.trimmingCharacters(in: .whitespacesAndNewlines))
                         .alignmentGuide(.leading) { d in d[.leading] }
                         .foregroundColor(Constants.foregroundColor)
                         .lineLimit(1)

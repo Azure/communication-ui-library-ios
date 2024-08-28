@@ -13,7 +13,7 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var isVoiceOverEnabled = false
     @Published var accessibilityLabelSubtitle: String
     @Published var title = ""
-    @Published var subtitle = ""
+    @Published var subtitle: String? = ""
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -88,6 +88,12 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
+        /* <TIMER_TITLE_FEATURE>
+        callScreenHeaderOptions?.$subtitle
+           .receive(on: DispatchQueue.main)
+           .assign(to: \.subtitle, on: self)
+           .store(in: &cancellables)
+        </TIMER_TITLE_FEATURE> */
     }
     func formatTimeInterval(_ interval: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
