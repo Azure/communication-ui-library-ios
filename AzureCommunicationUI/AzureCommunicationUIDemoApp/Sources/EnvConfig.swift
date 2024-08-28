@@ -63,6 +63,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var callingViewOrientation: OrientationOptions = .allButUpsideDown
     @Published var captionsOn = false
     @Published var addCustomButton = false
+    @Published var hideAllButtons = false
     @Published var displayCaptions = true
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
