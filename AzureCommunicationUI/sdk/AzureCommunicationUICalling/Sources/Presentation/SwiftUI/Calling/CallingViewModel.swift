@@ -103,7 +103,8 @@ internal class CallingViewModel: ObservableObject {
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
-                                     localUserState: store.state.localUserState)
+                                     localUserState: store.state.localUserState,
+                                     callScreenInfoHeaderState: store.state.callScreenInfoHeaderState)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
@@ -221,12 +222,10 @@ internal class CallingViewModel: ObservableObject {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
         }
-
         guard state.lifeCycleState.currentStatus == .foreground
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
-
         participantListViewModel.update(localUserState: state.localUserState,
                                         remoteParticipantsState: state.remoteParticipantsState,
                                         isDisplayed: state.navigationState.participantsVisible)
@@ -238,7 +237,6 @@ internal class CallingViewModel: ObservableObject {
             audioDeviceStatus: state.localUserState.audioState.device,
             navigationState: state.navigationState,
             visibilityState: state.visibilityState)
-
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
         captionsListViewModel.update(state: state)
@@ -253,7 +251,8 @@ internal class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
-                                   visibilityState: state.visibilityState)
+                                   visibilityState: state.visibilityState,
+                                   callScreenInfoHeaderState: state.callScreenInfoHeaderState)
         localVideoViewModel.update(localUserState: state.localUserState,
                                    visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
@@ -293,7 +292,9 @@ internal class CallingViewModel: ObservableObject {
             }
             callHasConnected = newIsCallConnected
         }
-
+        receiveExtension(state)
+    }
+    private func receiveExtension(_ state: AppState) {
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered

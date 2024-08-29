@@ -28,6 +28,7 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
+    @State var headerOptions: CallScreenHeaderOptions?
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -422,12 +423,13 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> ,
+        headerOptions = CallScreenHeaderOptions(
+            title: "This is a custom InfoHeader",
+            subtitle: "This is a custom subtitle")
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
                                                    headerOptions:
-                                                     CallScreenHeaderOptions(
-                                                        title: "This is a custom InfoHeader",
-                                                        subtitle: "This is a custom subtitle")
-                                                   </TIMER_TITLE_FEATURE> */ )
+                                                     headerOptions
+                                                   /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -580,7 +582,7 @@ extension CallingDemoView {
             print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
             showAlert(for: "\(event.callId) cancelled")
         }
-        /* <TIMER_TITLE_FEATURE>
+        /* <TIMER_TITLE_FEATURE> */
         let onRemoteParticipantLeftHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -588,7 +590,7 @@ extension CallingDemoView {
             self.onRemoteParticipantLeft(to: composite,
                                            identifiers: ids)
         }
-        </TIMER_TITLE_FEATURE> */
+        /* </TIMER_TITLE_FEATURE> */
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
@@ -598,9 +600,9 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
-        /* <TIMER_TITLE_FEATURE>
+        /* <TIMER_TITLE_FEATURE> */
         callComposite.events.onRemoteParticipantLeft = onRemoteParticipantLeftHandler
-        </TIMER_TITLE_FEATURE> */
+        /* </TIMER_TITLE_FEATURE> */
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -963,6 +965,9 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
+        if callState == .connected {
+            headerOptions?.title = "Custom title :: connected"
+        }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -976,7 +981,7 @@ extension CallingDemoView {
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
-    /* <TIMER_TITLE_FEATURE>
+    /* <TIMER_TITLE_FEATURE> */
     private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
@@ -985,7 +990,7 @@ extension CallingDemoView {
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
-    </TIMER_TITLE_FEATURE> */
+    /* </TIMER_TITLE_FEATURE> */
 }
 
 struct CustomDemoView: View {

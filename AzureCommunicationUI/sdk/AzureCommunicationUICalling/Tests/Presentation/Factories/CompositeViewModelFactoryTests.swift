@@ -61,10 +61,10 @@ extension CompositeViewModelFactoryTests {
                                             store: mockStoreFactory.store,
                                             localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                             localParticipantViewData: nil),
-                                         /* <TIMER_TITLE_FEATURE>
+                                         /* <TIMER_TITLE_FEATURE> */
                                          callScreenHeaderOptions:
-                                           CallScreenHeaderOptions(),
-                                         </TIMER_TITLE_FEATURE> */
+                                           CallScreenInfoHeaderManager(),
+                                         /* </TIMER_TITLE_FEATURE> */
                                          retrieveLogFiles: { return [] })
     }
 }

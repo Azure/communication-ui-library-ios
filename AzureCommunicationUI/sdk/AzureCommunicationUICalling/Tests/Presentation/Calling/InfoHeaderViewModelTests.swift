@@ -364,11 +364,11 @@ extension InfoHeaderViewModelTests {
                                    dispatchAction: storeFactory.store.dispatch,
                                    enableMultitasking: true,
                                    enableSystemPipWhenMultitasking: true
-                                   /* <TIMER_TITLE_FEATURE>
+                                   /* <TIMER_TITLE_FEATURE> */
                                    ,
                                    callScreenHeaderOptions:
-                                     CallScreenHeaderOptions()
-                                   </TIMER_TITLE_FEATURE> */ )
+                                     CallScreenInfoHeaderManager()
+                                   /* </TIMER_TITLE_FEATURE> */ )
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {

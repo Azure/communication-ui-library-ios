@@ -247,7 +247,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
-                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
+                                 localUserState: LocalUserState,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
@@ -255,12 +256,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           accessibilityProvider: accessibilityProvider,
                                                           dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
-                                                          enableSystemPipWhenMultitasking: true
-                                                          /* <TIMER_TITLE_FEATURE>
-                                                          ,
-                                                          callScreenHeaderOptions:
-                                                            CallScreenHeaderOptions()
-                                                          </TIMER_TITLE_FEATURE> */ )
+                                                          enableSystemPipWhenMultitasking: true,
+                                                          callScreenInfoHeaderState: callScreenInfoHeaderState)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
