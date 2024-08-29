@@ -47,7 +47,9 @@ struct ControlBarView: View {
                     cameraButton
                     micButton
                     audioDeviceButton
-                    moreButton
+                    if viewModel.isMoreButtonVisible() {
+                        moreButton
+                    }
                     hangUpButton
                     Spacer()
                 }
@@ -55,7 +57,9 @@ struct ControlBarView: View {
                 VStack {
                     Spacer()
                     hangUpButton
-                    moreButton
+                    if viewModel.isMoreButtonVisible() {
+                        moreButton
+                    }
                     audioDeviceButton
                     micButton
                     cameraButton

@@ -29,6 +29,7 @@ struct OverlayView: View {
 
                             Text(viewModel.title)
                                 .font(Fonts.title2.font)
+                                .multilineTextAlignment(.center)
                             if let subtitle = viewModel.subtitle {
                                 Text(subtitle)
                                     .font(Fonts.subhead.font)

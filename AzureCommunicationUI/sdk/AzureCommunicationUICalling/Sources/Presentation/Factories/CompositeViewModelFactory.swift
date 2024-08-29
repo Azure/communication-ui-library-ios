@@ -406,7 +406,8 @@ extension CompositeViewModelFactory {
         controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        showCaptionsViewAction: @escaping () -> Void,
+        dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
@@ -417,7 +418,8 @@ extension CompositeViewModelFactory {
                                             controlBarOptions: controlBarOptions,
                                      isCaptionsAvailable: isCaptionsAvailable,
                                      isSupportFormAvailable: events.onUserReportedIssue != nil,
-                                     isDisplayed: isDisplayed)
+                                     isDisplayed: isDisplayed,
+                                     dispatchAction: dispatchAction)
     }
 
     func makeLanguageListItemViewModel(title: String,
