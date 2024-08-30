@@ -16,7 +16,8 @@ class ColorThemeProvider {
     let primaryColorTint30: UIColor
 
     // MARK: Text Label Colours
-    let onHoldLabel: UIColor = Colors.textSecondary
+    let textSecondary: UIColor = Colors.textSecondary
+
     lazy var onWarning: UIColor = {
         return dynamicColor(light: Colors.Palette.warningShade30.color,
                             dark: Colors.surfacePrimary)
