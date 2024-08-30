@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Dismiss Banner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Dismisses this notification";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Unable to join the call due to an error.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="You were removed from the call due to an error.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="You may have been removed from the meeting, or lost your connection. Try to join again.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="You were removed from the call.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="There was an error.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Unable to resume call";
