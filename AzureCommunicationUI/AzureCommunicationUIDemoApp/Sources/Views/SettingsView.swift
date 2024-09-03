@@ -86,9 +86,9 @@ struct SettingsView: View {
         Form {
             orientationOptions
             captionsSettings
-            buttonSettins
-            multitaskingSettings
             Group {
+                buttonSettins
+                multitaskingSettings
                 localizationSettings
                 skipSetupScreenSettings
                 micSettings
