@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="バナーを閉じる";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="この通知を閉じます";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="エラーが発生したため、通話に参加できません。";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="エラーが発生したため、通話から削除されました。";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="会議から削除されたか、接続が失われた可能性があります。もう一度参加してみてください。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="通話から削除されました。";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="エラーが発生しました。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="通話を再開できません";

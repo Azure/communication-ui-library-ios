@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Lukk banner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Lukker dette varselet";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Kan ikke bli med i samtalen på grunn av en feil.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Du ble fjernet fra samtalen på grunn av en feil.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Du kan ha blitt fjernet fra møtet eller mistet tilkoblingen. Prøv å bli med på nytt.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Du ble fjernet fra samtalen.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Det oppstod en feil.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Kan ikke fortsette samtalen";

@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Закрыть баннер";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Закрывает это уведомление";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Не удалось присоединиться к звонку из-за ошибки.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Вы были удалены из звонка из-за ошибки.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Возможно, вы были удалены из собрания или потеряли подключение. Попробуйте присоединиться еще раз.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Вас удалили из звонка.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Произошла ошибка";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Не удалось возобновить звонок";

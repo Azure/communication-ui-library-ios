@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Banner schließen";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Schließt diese Benachrichtigung.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Teilnahme am Anruf aufgrund eines Fehlers nicht möglich.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Sie wurden aufgrund eines Fehlers aus dem Anruf entfernt.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Möglicherweise wurden Sie aus der Besprechung entfernt oder Ihre Verbindung wurde unterbrochen. Versuchen Sie, erneut beizutreten.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Sie wurden aus dem Anruf entfernt.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Ein Fehler ist aufgetreten.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Anruf kann nicht fortgesetzt werden";

@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Ignorar a Faixa";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Ignorar esta notificação";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Não é possível ingressar na chamada devido a um erro.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Você foi removido da chamada devido a um erro.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Você pode ter sido removido da reunião ou perdido a conexão. Tente entrar novamente.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Você foi removido da chamada.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Ocorreu um erro.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Não é possível retomar a chamada";
