@@ -83,12 +83,16 @@ struct SettingsView: View {
     }
 
     var settingsForm: some View {
-        Form {
-            orientationOptions
-            captionsSettings
-            Group {
+        Group {
+            Section {
+                orientationOptions
+                captionsSettings
+            }
+            Section {
                 buttonSettins
                 multitaskingSettings
+            }
+            Group {
                 localizationSettings
                 skipSetupScreenSettings
                 micSettings
