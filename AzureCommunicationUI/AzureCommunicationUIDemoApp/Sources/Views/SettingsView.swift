@@ -98,8 +98,8 @@ struct SettingsView: View {
                 navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
+                setupScreenSettings
             }
-            setupScreenSettings
             displayLeaveCallConfirmationSettings
             exitCompositeSettings
             callKitSettings
