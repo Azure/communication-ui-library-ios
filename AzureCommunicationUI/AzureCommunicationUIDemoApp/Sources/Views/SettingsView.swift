@@ -83,15 +83,11 @@ struct SettingsView: View {
     }
 
     var settingsForm: some View {
-        VStack {
-            Section {
-                orientationOptions
-                captionsSettings
-            }
-            Section {
-                buttonSettins
-                multitaskingSettings
-            }
+        List {
+            orientationOptions
+            captionsSettings
+            buttonSettins
+            multitaskingSettings
             Group {
                 localizationSettings
                 skipSetupScreenSettings
