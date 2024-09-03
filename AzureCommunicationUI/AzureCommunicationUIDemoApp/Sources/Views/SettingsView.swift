@@ -83,7 +83,7 @@ struct SettingsView: View {
     }
 
     var settingsForm: some View {
-        Group {
+        VStack {
             Section {
                 orientationOptions
                 captionsSettings
