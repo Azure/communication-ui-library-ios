@@ -35,6 +35,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             let captionsInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.captionsListTitile),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: showCaptionsViewAction,
                 startCompositeIcon: .closeCaptions,
                 endIcon: .rightChevron)
@@ -44,6 +45,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             let shareDebugInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: showSharingViewAction,
                 startCompositeIcon: .share
             )
@@ -55,6 +57,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
             let reportErrorInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: showSupportFormAction,
                 startCompositeIcon: .personFeedback)
 
@@ -64,7 +67,8 @@ class MoreCallOptionsListViewModel: ObservableObject {
         controlBarOptions?.customButtons.forEach({ customButton in
             let customButtonModel = DrawerGenericItemViewModel(
                 title: customButton.title,
-                accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
+                accessibilityIdentifier: "",
+                accessibilityTraits: [.isButton],
                 action: {
                     customButton.onClick(customButton)
                     dispatchAction(.hideDrawer)
