@@ -9,9 +9,9 @@ import Foundation
 public struct SetupScreenOptions {
     private(set) var cameraButtonEnabled: Bool
     private(set) var microphoneButtonEnabled: Bool
-    private(set) var cameraButton: ButtonOptions?
-    private(set) var microphoneButton: ButtonOptions?
-    private(set) var audioDeviceButton: ButtonOptions?
+    private(set) var cameraButton: ButtonViewData?
+    private(set) var microphoneButton: ButtonViewData?
+    private(set) var audioDeviceButton: ButtonViewData?
 
     /// Creates an instance of SetupScreenOptions with related options.
     /// - Parameter cameraButtonEnabled: enables camera button on the setup screen.
@@ -25,9 +25,9 @@ public struct SetupScreenOptions {
     /// - Parameter cameraButton: camera button options.
     /// - Parameter microphoneButton: microphone button options.
     /// - Parameter audioDeviceButton: audio device button options.
-    public init(cameraButton: ButtonOptions? = nil,
-                microphoneButton: ButtonOptions? = nil,
-                audioDeviceButton: ButtonOptions? = nil) {
+    public init(cameraButton: ButtonViewData? = nil,
+                microphoneButton: ButtonViewData? = nil,
+                audioDeviceButton: ButtonViewData? = nil) {
         self.cameraButtonEnabled = cameraButton?.enabled ?? true
         self.microphoneButtonEnabled = microphoneButton?.enabled ?? true
         self.cameraButton = cameraButton

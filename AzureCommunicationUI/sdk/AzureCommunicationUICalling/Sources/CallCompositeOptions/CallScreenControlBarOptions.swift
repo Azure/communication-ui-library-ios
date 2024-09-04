@@ -10,54 +10,54 @@ public struct CallScreenControlBarOptions {
     /// Determines whether to display leave call confirmation. Default is enabled.
     public let leaveCallConfirmationMode: LeaveCallConfirmationMode
 
-    public let cameraButton: ButtonOptions?
-    public let microphoneButton: ButtonOptions?
-    public let audioDeviceButton: ButtonOptions?
-    public let liveCaptionsButtonOptions: ButtonOptions?
-    public let liveCaptionsToggleButtonOptions: ButtonOptions?
-    public let spokenLanguageButtonOptions: ButtonOptions?
-    public let captionsLanguageButtonOptions: ButtonOptions?
-    public let shareDiagnosticsButtonOptions: ButtonOptions?
-    public let reportIssueButtonOptions: ButtonOptions?
-    public let customButtons: [CustomButtonOptions]
+    public let cameraButton: ButtonViewData?
+    public let microphoneButton: ButtonViewData?
+    public let audioDeviceButton: ButtonViewData?
+    public let liveCaptionsButton: ButtonViewData?
+    public let liveCaptionsToggleButton: ButtonViewData?
+    public let spokenLanguageButton: ButtonViewData?
+    public let captionsLanguageButton: ButtonViewData?
+    public let shareDiagnosticsButton: ButtonViewData?
+    public let reportIssueButton: ButtonViewData?
+    public let customButtons: [CustomButtonViewData]
 
     /// Initializes an instance of CallScreenControlBarOptions.
     /// - Parameters:
     ///   - leaveCallConfirmationMode: Whether to enable or disable the leave call confirmation.
     ///    Default is `.alwaysEnabled`.
-    ///   - cameraButton: Configuration options for the camera button. Default is `nil`.
-    ///   - microphoneButton: Configuration options for the microphone button. Default is `nil`.
-    ///   - audioDeviceButton: Configuration options for the audio device button. Default is `nil`.
-    ///   - liveCaptionsButtonOptions: Configuration options for the live captions button. Default is `nil`.
-    ///   - liveCaptionsToggleButtonOptions: Configuration options for the live captions toggle button. 
+    ///   - cameraButton: Configuration view data for the camera button. Default is `nil`.
+    ///   - microphoneButton: Configuration view data for the microphone button. Default is `nil`.
+    ///   - audioDeviceButton: Configuration view data for the audio device button. Default is `nil`.
+    ///   - liveCaptionsButton: Configuration view data for the live captions button. Default is `nil`.
+    ///   - liveCaptionsToggleButton: Configuration view data for the live captions toggle button.
     ///   Default is `nil`.
-    ///   - spokenLanguageButtonOptions: Configuration options for the spoken language button. Default is `nil`.
-    ///   - captionsLanguageButtonOptions: Configuration options for the captions language button. Default is `nil`.
-    ///   - shareDiagnosticsButtonOptions: Configuration options for the share diagnostics button. Default is `nil`.
-    ///   - reportIssueButtonOptions: Configuration options for the report issue button. Default is `nil`.
+    ///   - spokenLanguageButton: Configuration view data for the spoken language button. Default is `nil`.
+    ///   - captionsLanguageButton: Configuration view data for the captions language button. Default is `nil`.
+    ///   - shareDiagnosticsButton: Configuration view data for the share diagnostics button. Default is `nil`.
+    ///   - reportIssueButton: Configuration view data for the report issue button. Default is `nil`.
     ///   - customButtons: An array of custom button options. Default is an empty array.
     public init(leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
-                cameraButton: ButtonOptions? = nil,
-                microphoneButton: ButtonOptions? = nil,
-                audioDeviceButton: ButtonOptions? = nil,
-                liveCaptionsButtonOptions: ButtonOptions? = nil,
-                liveCaptionsToggleButtonOptions: ButtonOptions? = nil,
-                spokenLanguageButtonOptions: ButtonOptions? = nil,
-                captionsLanguageButtonOptions: ButtonOptions? = nil,
-                shareDiagnosticsButtonOptions: ButtonOptions? = nil,
-                reportIssueButtonOptions: ButtonOptions? = nil,
-                customButtons: [CustomButtonOptions] = []
+                cameraButton: ButtonViewData? = nil,
+                microphoneButton: ButtonViewData? = nil,
+                audioDeviceButton: ButtonViewData? = nil,
+                liveCaptionsButton: ButtonViewData? = nil,
+                liveCaptionsToggleButton: ButtonViewData? = nil,
+                spokenLanguageButton: ButtonViewData? = nil,
+                captionsLanguageButton: ButtonViewData? = nil,
+                shareDiagnosticsButton: ButtonViewData? = nil,
+                reportIssueButton: ButtonViewData? = nil,
+                customButtons: [CustomButtonViewData] = []
         ) {
             self.leaveCallConfirmationMode = leaveCallConfirmationMode
             self.cameraButton = cameraButton
             self.microphoneButton = microphoneButton
             self.audioDeviceButton = audioDeviceButton
-            self.liveCaptionsButtonOptions = liveCaptionsButtonOptions
-            self.liveCaptionsToggleButtonOptions = liveCaptionsToggleButtonOptions
-            self.spokenLanguageButtonOptions = spokenLanguageButtonOptions
-            self.captionsLanguageButtonOptions = captionsLanguageButtonOptions
-            self.shareDiagnosticsButtonOptions = shareDiagnosticsButtonOptions
-            self.reportIssueButtonOptions = reportIssueButtonOptions
+            self.liveCaptionsButton = liveCaptionsButton
+            self.liveCaptionsToggleButton = liveCaptionsToggleButton
+            self.spokenLanguageButton = spokenLanguageButton
+            self.captionsLanguageButton = captionsLanguageButton
+            self.shareDiagnosticsButton = shareDiagnosticsButton
+            self.reportIssueButton = reportIssueButton
             self.customButtons = customButtons
         }
 }
