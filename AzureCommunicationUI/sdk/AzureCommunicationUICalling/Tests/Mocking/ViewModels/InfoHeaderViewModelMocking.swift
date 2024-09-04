@@ -24,11 +24,10 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    dispatchAction: dispatchAction,
                    enableMultitasking: true,
                    enableSystemPipWhenMultitasking: true
-                   /* <TIMER_TITLE_FEATURE>
+                   /* <TIMER_TITLE_FEATURE> */
                    ,
-                   callScreenHeaderOptions:
-                     CallScreenHeaderOptions()
-                   </TIMER_TITLE_FEATURE> */ )
+                   callScreenHeaderViewData: CallScreenHeaderViewData()
+                   /* </TIMER_TITLE_FEATURE> */ )
     }
 
     override func update(localUserState: LocalUserState,
