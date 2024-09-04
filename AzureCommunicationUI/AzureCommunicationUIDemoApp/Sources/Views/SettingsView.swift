@@ -83,7 +83,7 @@ struct SettingsView: View {
     }
 
     var settingsForm: some View {
-        Form {
+        List {
             orientationOptions
             captionsSettings
             buttonSettins
@@ -98,8 +98,8 @@ struct SettingsView: View {
                 navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
+                setupScreenSettings
             }
-            setupScreenSettings
             displayLeaveCallConfirmationSettings
             exitCompositeSettings
             callKitSettings
