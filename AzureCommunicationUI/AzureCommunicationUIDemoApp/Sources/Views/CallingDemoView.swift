@@ -645,7 +645,7 @@ extension CallingDemoView {
 
         // Create the custom button with the tinted image
         let customButton1 = CustomButtonViewData(
-            id: UUID(),
+            id: UUID().uuidString,
             image: customButtonImage,
             title: "Hide composite"
         ) { _ in
@@ -654,7 +654,7 @@ extension CallingDemoView {
         }
 
         let customButton2 = CustomButtonViewData(
-            id: UUID(),
+            id: UUID().uuidString,
             image: customButtonImage,
             title: "Show Touble Shooting Guide"
         ) { _ in

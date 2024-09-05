@@ -10,7 +10,7 @@ import Combine
 /// Represents the view data for a custom button.
 public class CustomButtonViewData: ObservableObject {
     /// Buttin id.
-    public var id: UUID
+    public let id: String
 
     /// The image to be displayed on the button.
     @Published public var image: UIImage
@@ -29,12 +29,12 @@ public class CustomButtonViewData: ObservableObject {
 
     /// Initializes an instance of `CustomButtonViewData`.
     /// - Parameters:
-    ///   - id: The buttin id. Each should have a unique id.
+    ///   - id: The buttin id. Each button should have a unique id.
     ///   - image: The image to be displayed on the button.
     ///   - title: The title to be displayed on the button.
     ///   - enabled: A Boolean value that determines whether the button is enabled. Default is `true`.
     ///   - onClick: A closure to be executed when the button is clicked.
-    public init(id: UUID,
+    public init(id: String,
                 image: UIImage,
                 title: String,
                 enabled: Bool = true,

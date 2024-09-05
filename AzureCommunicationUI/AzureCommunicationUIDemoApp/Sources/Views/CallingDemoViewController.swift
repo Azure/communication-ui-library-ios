@@ -308,7 +308,7 @@ class CallingDemoViewController: UIViewController {
 
         let callComposite = CallComposite(credential: credential)
 
-        let customButton = CustomButtonViewData(id: UUID(),
+        let customButton = CustomButtonViewData(id: UUID().uuidString,
                                                 image: UIImage(),
                                                 title: "Hide composite") {_ in
             // hide call composite and display Troubleshooting tips
@@ -487,7 +487,7 @@ class CallingDemoViewController: UIViewController {
                 print("::::UIKitDemoView::CallScreen::reportIssueButton::onClick")
             }
 
-            let customButton1 = CustomButtonViewData(id: UUID(),
+            let customButton1 = CustomButtonViewData(id: UUID().uuidString,
                                                      image: UIImage(named: "ic_fluent_chevron_right_20_regular")!,
                                                      title: "Hide composite") {_ in
                 print("::::UIKitDemoView::CallScreen::customButton1::onClick")
