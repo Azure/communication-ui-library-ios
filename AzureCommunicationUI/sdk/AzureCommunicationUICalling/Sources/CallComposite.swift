@@ -99,8 +99,8 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
-    /* <TIMER_TITLE_FEATURE> */
-    private let callScreenHeaderOptions: CallScreenHeaderOptions?
+    /* <TIMER_TITLE_FEATURE> */ 
+    private let callScreenHeaderViewData: CallScreenHeaderViewData?
     private var subscriptions = Set<AnyCancellable>()
     /* </TIMER_TITLE_FEATURE> */
 
@@ -131,7 +131,7 @@ public class CallComposite {
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
         /* <TIMER_TITLE_FEATURE> */
-        callScreenHeaderOptions = options?.callScreenOptions?.headerOptions
+        callScreenHeaderViewData = options?.callScreenOptions?.headerViewData
         /* </TIMER_TITLE_FEATURE> */
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
@@ -160,7 +160,7 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         /* <TIMER_TITLE_FEATURE> */
-        callScreenHeaderOptions = options?.callScreenOptions?.headerOptions
+        callScreenHeaderViewData = options?.callScreenOptions?.headerViewData
         /* </TIMER_TITLE_FEATURE> */
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
@@ -600,12 +600,12 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             callingSDKWrapper: callingSdkWrapper
         )
         let callScreenInfoHeaderManager = CallScreenInfoHeaderManager(store: store)
-        callScreenHeaderOptions?.$title
+        callScreenHeaderViewData?.$title
             .sink { [weak self] newTitle in
                 callScreenInfoHeaderManager.titleDidUpdate(title: newTitle!)
             }
             .store(in: &subscriptions)
-        callScreenHeaderOptions?.$subtitle
+        callScreenHeaderViewData?.$subtitle
             .sink { [weak self] newSubtitle in
                 callScreenInfoHeaderManager.subtitleDidUpdate(subtitle: newSubtitle!)
             }

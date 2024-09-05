@@ -28,7 +28,7 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
-    @State var headerOptions: CallScreenHeaderOptions?
+    @State var headerViewData: CallScreenHeaderViewData?
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -423,12 +423,11 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        headerOptions = CallScreenHeaderOptions(
+        headerViewData = CallScreenHeaderViewData(
             title: "This is a custom InfoHeader",
             subtitle: "This is a custom subtitle")
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
-                                                   headerOptions:
-                                                     headerOptions
+                                                   headerViewData: headerViewData
                                                    /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -646,7 +645,7 @@ extension CallingDemoView {
         }
 
         // Create the custom button with the tinted image
-        let customButton1 = CustomButtonOptions(
+        let customButton1 = CustomButtonViewData(
             image: customButtonImage,
             title: "Hide composite"
         ) { _ in
@@ -654,7 +653,7 @@ extension CallingDemoView {
             callComposite?.isHidden = true
         }
 
-        let customButton2 = CustomButtonOptions(
+        let customButton2 = CustomButtonViewData(
             image: customButtonImage,
             title: "Show Touble Shooting Guide"
         ) { _ in
@@ -674,12 +673,12 @@ extension CallingDemoView {
     func hideAllButtons() -> CallScreenOptions {
         let callScreenControlBarOptions = CallScreenControlBarOptions(
             leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
-            liveCaptionsButtonOptions: ButtonOptions(visible: false),
-            liveCaptionsToggleButtonOptions: ButtonOptions(visible: false),
-            spokenLanguageButtonOptions: ButtonOptions(visible: false),
-            captionsLanguageButtonOptions: ButtonOptions(visible: false),
-            shareDiagnosticsButtonOptions: ButtonOptions(visible: false),
-            reportIssueButtonOptions: ButtonOptions(visible: false)
+            liveCaptionsButton: ButtonViewData(visible: false),
+            liveCaptionsToggleButton: ButtonViewData(visible: false),
+            spokenLanguageButton: ButtonViewData(visible: false),
+            captionsLanguageButton: ButtonViewData(visible: false),
+            shareDiagnosticsButton: ButtonViewData(visible: false),
+            reportIssueButton: ButtonViewData(visible: false)
         )
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
     }
@@ -966,7 +965,7 @@ extension CallingDemoView {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
         if callState == .connected {
-            headerOptions?.title = "Custom title :: connected"
+            headerViewData?.title = "Custom title :: connected"
         }
     }
 

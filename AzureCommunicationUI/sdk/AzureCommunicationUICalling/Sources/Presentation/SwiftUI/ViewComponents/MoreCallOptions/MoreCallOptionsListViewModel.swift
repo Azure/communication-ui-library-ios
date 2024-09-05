@@ -31,19 +31,21 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.isDisplayed = isDisplayed
         var items: [DrawerGenericItemViewModel] = []
 
-        if isCaptionsAvailable && controlBarOptions?.spokenLanguageButtonOptions?.visible ?? true {
+        if isCaptionsAvailable && controlBarOptions?.spokenLanguageButton?.visible ?? true {
             let captionsInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.captionsListTitile),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: showCaptionsViewAction,
                 startCompositeIcon: .closeCaptions,
                 endIcon: .rightChevron)
             items = [captionsInfoModel]
         }
-        if controlBarOptions?.shareDiagnosticsButtonOptions?.visible ?? true {
+        if controlBarOptions?.shareDiagnosticsButton?.visible ?? true {
             let shareDebugInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: showSharingViewAction,
                 startCompositeIcon: .share
             )
@@ -51,10 +53,11 @@ class MoreCallOptionsListViewModel: ObservableObject {
             items.append(shareDebugInfoModel)
         }
 
-        if isSupportFormAvailable && controlBarOptions?.reportIssueButtonOptions?.visible ?? true {
+        if isSupportFormAvailable && controlBarOptions?.reportIssueButton?.visible ?? true {
             let reportErrorInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: showSupportFormAction,
                 startCompositeIcon: .personFeedback)
 
@@ -64,7 +67,8 @@ class MoreCallOptionsListViewModel: ObservableObject {
         controlBarOptions?.customButtons.forEach({ customButton in
             let customButtonModel = DrawerGenericItemViewModel(
                 title: customButton.title,
-                accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
+                accessibilityIdentifier: "",
+                accessibilityTraits: [.isButton],
                 action: {
                     customButton.onClick(customButton)
                     dispatchAction(.hideDrawer)

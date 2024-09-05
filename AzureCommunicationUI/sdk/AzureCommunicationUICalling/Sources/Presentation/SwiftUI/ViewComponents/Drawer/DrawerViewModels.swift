@@ -21,10 +21,12 @@ struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
     let isEnabled: Bool
     let isToggleOn: Binding<Bool>?
     let showsToggle: Bool
+    let accessibilityTraits: AccessibilityTraits?
 
     init(title: String,
          subtitle: String? = "",
          accessibilityIdentifier: String,
+         accessibilityTraits: AccessibilityTraits? = nil,
          action: (() -> Void)? = nil,
          startCompositeIcon: CompositeIcon? = nil,
          startIcon: UIImage? = nil,
@@ -42,6 +44,7 @@ struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
         self.showsToggle = showToggle
         self.subtitle = subtitle
         self.endIcon = endIcon
+        self.accessibilityTraits = accessibilityTraits
     }
 }
 

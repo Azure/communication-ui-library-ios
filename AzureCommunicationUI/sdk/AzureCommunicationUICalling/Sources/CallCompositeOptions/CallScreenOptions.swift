@@ -10,22 +10,22 @@ public struct CallScreenOptions {
     /// CallScreenControlBarOptions for specifying CallScreenControlBar customization.
     public let controlBarOptions: CallScreenControlBarOptions?
     /* <TIMER_TITLE_FEATURE> */
-    /// CallScreenHeaderOptions for customizing the InfoHeader title and call timer.
-    public let headerOptions: CallScreenHeaderOptions?
+    /// CallScreenHeaderViewData for customizing the InfoHeader title and call timer.
+    public let headerViewData: CallScreenHeaderViewData?
     /* </TIMER_TITLE_FEATURE> */
 
     /// Creates an instance of CallScreenOptions with related options.
     /// - Parameter controlBarOptions: CallScreenControlBarOptions for specifying CallScreenControlBar customization.
-    /// - Parameter headerOptions: CallScreenHeaderOptions for customizing the InfoHeader title and call timer.
+    /// - Parameter headerOptions: CallScreenHeaderViewData for customizing the InfoHeader title and call timer.
     public init(controlBarOptions: CallScreenControlBarOptions? = nil
                 /* <TIMER_TITLE_FEATURE> */
                 ,
-                headerOptions: CallScreenHeaderOptions? = nil
+                headerViewData: CallScreenHeaderViewData? = nil
                 /* </TIMER_TITLE_FEATURE> */
                 ) {
         self.controlBarOptions = controlBarOptions
         /* <TIMER_TITLE_FEATURE> */
-        self.headerOptions = headerOptions
+        self.headerViewData = headerViewData
         /* </TIMER_TITLE_FEATURE> */
     }
 }

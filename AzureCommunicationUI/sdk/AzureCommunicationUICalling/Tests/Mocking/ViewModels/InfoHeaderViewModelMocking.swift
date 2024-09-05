@@ -25,6 +25,7 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    enableMultitasking: true,
                    enableSystemPipWhenMultitasking: true
                    /* <TIMER_TITLE_FEATURE> */
+                   /* <TIMER_TITLE_FEATURE> */
                    ,
                    callScreenHeaderOptions:
                      CallScreenInfoHeaderManager()

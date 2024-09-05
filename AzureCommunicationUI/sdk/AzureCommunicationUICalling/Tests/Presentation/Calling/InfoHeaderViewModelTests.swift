@@ -365,6 +365,7 @@ extension InfoHeaderViewModelTests {
                                    enableMultitasking: true,
                                    enableSystemPipWhenMultitasking: true
                                    /* <TIMER_TITLE_FEATURE> */
+                                   /* <TIMER_TITLE_FEATURE> */
                                    ,
                                    callScreenHeaderOptions:
                                      CallScreenInfoHeaderManager()

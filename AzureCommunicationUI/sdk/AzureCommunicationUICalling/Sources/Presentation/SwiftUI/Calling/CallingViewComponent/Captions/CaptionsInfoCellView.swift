@@ -24,7 +24,7 @@ struct CaptionsInfoCellView: View {
             VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
                 Text(caption.speakerName)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color(StyleProvider.color.textSecondary))
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 

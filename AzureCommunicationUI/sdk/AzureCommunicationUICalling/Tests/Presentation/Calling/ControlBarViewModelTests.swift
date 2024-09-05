@@ -626,9 +626,9 @@ class ControlBarViewModelTests: XCTestCase {
 
     func test_callCustomOnClickHandler_executesOnClick() {
         let expectation = XCTestExpectation(description: "Custom onClick handler should be executed")
-        let buttonOptions = ButtonOptions { _ in expectation.fulfill() }
+        let button = ButtonViewData { _ in expectation.fulfill() }
         let sut = makeSUT()
-        sut.callCustomOnClickHandler(buttonOptions)
+        sut.callCustomOnClickHandler(button)
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -658,7 +658,7 @@ class ControlBarViewModelTests: XCTestCase {
     }
 
     func test_isMoreButtonVisible_whenCustomButtonsPresent_thenReturnsTrue() {
-        let customButton = CustomButtonOptions(image: UIImage(), title: "Test") { _ in }
+        let customButton = CustomButtonViewData(image: UIImage(), title: "Test") { _ in }
         let options = CallScreenControlBarOptions(customButtons: [customButton])
         let sut = makeSUT(controlBarOptions: options)
         XCTAssertTrue(sut.isMoreButtonVisible())
@@ -666,12 +666,12 @@ class ControlBarViewModelTests: XCTestCase {
 
     func test_isMoreButtonVisible_whenNoCustomButtonsAndOtherButtonsInvisible_thenReturnsFalse() {
         let options = CallScreenControlBarOptions(
-            liveCaptionsButtonOptions: ButtonOptions(visible: false),
-            liveCaptionsToggleButtonOptions: ButtonOptions(visible: false),
-            spokenLanguageButtonOptions: ButtonOptions(visible: false),
-            captionsLanguageButtonOptions: ButtonOptions(visible: false),
-            shareDiagnosticsButtonOptions: ButtonOptions(visible: false),
-            reportIssueButtonOptions: ButtonOptions(visible: false),
+            liveCaptionsButton: ButtonViewData(visible: false),
+            liveCaptionsToggleButton: ButtonViewData(visible: false),
+            spokenLanguageButton: ButtonViewData(visible: false),
+            captionsLanguageButton: ButtonViewData(visible: false),
+            shareDiagnosticsButton: ButtonViewData(visible: false),
+            reportIssueButton: ButtonViewData(visible: false),
             customButtons: []
         )
         let sut = makeSUT(controlBarOptions: options)

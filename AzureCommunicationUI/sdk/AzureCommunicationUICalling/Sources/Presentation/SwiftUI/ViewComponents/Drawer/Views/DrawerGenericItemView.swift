@@ -14,10 +14,12 @@ internal struct DrawerGenericItemView: View {
             if let icon = item.startCompositeIcon {
                 Icon(name: icon, size: DrawerListConstants.iconSize)
                     .foregroundColor(item.isEnabled ? .primary : .gray)
+                    .accessibilityHidden(true)
             } else if let icon = item.startIcon {
                 Image(uiImage: icon)
                     .frame(width: DrawerListConstants.iconSize,
                            height: DrawerListConstants.iconSize)
+                    .accessibilityHidden(true)
             }
             VStack(alignment: .leading) {
                 Text(item.title)
@@ -39,6 +41,7 @@ internal struct DrawerGenericItemView: View {
             } else if let accessoryView = item.endIcon,
                       accessoryView != .none {
                 Icon(name: item.endIcon ?? .rightChevron, size: DrawerListConstants.trailingIconSize)
+                    .accessibilityHidden(true)
                     .foregroundColor(item.isEnabled ? .primary : .gray)
             }
         }
@@ -55,6 +58,8 @@ internal struct DrawerGenericItemView: View {
             }
         }
         .disabled(!item.isEnabled)
+        .accessibilityElement(children: .combine)
         .accessibilityIdentifier(item.accessibilityIdentifier)
+        .accessibilityAddTraits(item.accessibilityTraits ?? .isStaticText)
     }
 }
