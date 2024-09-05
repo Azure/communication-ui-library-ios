@@ -57,8 +57,10 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   visibilityState: VisibilityState(currentStatus: .visible)
+                   /* <TIMER_TITLE_FEATURE> */ ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
+                   /* </TIMER_TITLE_FEATURE> */ )
 
         XCTAssertEqual(sut.title, "Waiting for others to join")
         wait(for: [expectation], timeout: 1)
@@ -90,8 +92,10 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   visibilityState: VisibilityState(currentStatus: .visible)
+                   /* <TIMER_TITLE_FEATURE> */ ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
+                   /* </TIMER_TITLE_FEATURE> */ )
         XCTAssertEqual(sut.title, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -137,8 +141,10 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   visibilityState: VisibilityState(currentStatus: .visible)
+                   /* <TIMER_TITLE_FEATURE> */ ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
+                   /* </TIMER_TITLE_FEATURE> */ )
         XCTAssertEqual(sut.title, "Call with 2 people")
 
         wait(for: [expectation], timeout: 1)
@@ -196,8 +202,10 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   visibilityState: VisibilityState(currentStatus: .visible)
+                   /* <TIMER_TITLE_FEATURE> */ ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
+                   /* </TIMER_TITLE_FEATURE> */ )
         XCTAssertEqual(sut.title, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -297,8 +305,10 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   visibilityState: VisibilityState(currentStatus: .visible)
+                   /* <TIMER_TITLE_FEATURE> */ ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
+                   /* </TIMER_TITLE_FEATURE> */ )
         let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.title, expectedInfoHeaderlabel0ParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
@@ -349,8 +359,10 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   visibilityState: VisibilityState(currentStatus: .visible)
+                   /* <TIMER_TITLE_FEATURE> */ ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
+                   /* </TIMER_TITLE_FEATURE> */ )
         XCTAssertEqual(sut.title, expectedInfoHeaderlabelNParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
 

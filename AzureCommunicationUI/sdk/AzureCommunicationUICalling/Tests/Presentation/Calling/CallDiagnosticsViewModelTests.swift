@@ -65,8 +65,10 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .showParticipantActions,
                  .hideDrawer,
                  .visibilityAction,
-                 .toastNotificationAction,
+                 .toastNotificationAction
+                 /* <TIMER_TITLE_FEATURE> */ ,
                  .callScreenInfoHeaderAction,
+                 /* </TIMER_TITLE_FEATURE> */
                  .setTotalParticipantCount:
                 break
             }

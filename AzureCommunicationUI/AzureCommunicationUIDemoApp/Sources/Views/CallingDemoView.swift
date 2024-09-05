@@ -28,7 +28,9 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
+    /* <TIMER_TITLE_FEATURE> */
     @State var headerViewData: CallScreenHeaderViewData?
+    /* </TIMER_TITLE_FEATURE> */
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -423,6 +425,7 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
+        /* <TIMER_TITLE_FEATURE> */
         headerViewData = CallScreenHeaderViewData()
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData?.title = envConfigSubject.callInformationTitle
@@ -430,6 +433,7 @@ extension CallingDemoView {
         if !envConfigSubject.callInformationSubtitle.isEmpty {
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
+        /* </TIMER_TITLE_FEATURE> */
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
                                                    headerViewData: headerViewData
                                                    /* </TIMER_TITLE_FEATURE> */ )
@@ -973,6 +977,7 @@ extension CallingDemoView {
     private func onRemoteParticipantJoined(to callComposite: CallComposite,
                                            identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        /* <TIMER_TITLE_FEATURE> */
         if envConfigSubject.customTitleApplyOnRemoteJoin != 0 &&
             identifiers.count >= envConfigSubject.customTitleApplyOnRemoteJoin {
             headerViewData?.title = "Custom title: change applied"
@@ -981,6 +986,7 @@ extension CallingDemoView {
             identifiers.count >= envConfigSubject.customSubtitleApplyOnRemoteJoin {
             headerViewData?.subtitle = "Custom subtitle: change applied"
         }
+        /* </TIMER_TITLE_FEATURE> */
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }

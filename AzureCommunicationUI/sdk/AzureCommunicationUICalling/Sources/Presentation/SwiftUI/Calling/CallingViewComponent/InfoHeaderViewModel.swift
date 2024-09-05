@@ -128,8 +128,9 @@ class InfoHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
-                visibilityState: VisibilityState,
-                callScreenInfoHeaderState: CallScreenInfoHeaderState) {
+                visibilityState: VisibilityState /* <TIMER_TITLE_FEATURE> */,
+                callScreenInfoHeaderState: CallScreenInfoHeaderState
+                /* </TIMER_TITLE_FEATURE> */ ) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -141,7 +142,9 @@ class InfoHeaderViewModel: ObservableObject {
         let updatedRemoteparticipantCount = getParticipantCount(remoteParticipantsState)
 
         if participantsCount != updatedRemoteparticipantCount
-            && callScreenInfoHeaderState.title == nil {
+            /* <TIMER_TITLE_FEATURE> */
+            && callScreenInfoHeaderState.title == nil
+            /* </TIMER_TITLE_FEATURE> */{
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
@@ -149,7 +152,7 @@ class InfoHeaderViewModel: ObservableObject {
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
         }
-
+        /* <TIMER_TITLE_FEATURE> */
         if callScreenInfoHeaderState.title != nil
             && callScreenInfoHeaderState.title != self.title {
             self.title = (callScreenInfoHeaderState.title)!
@@ -158,6 +161,7 @@ class InfoHeaderViewModel: ObservableObject {
             && callScreenInfoHeaderState.subtitle != self.subtitle {
             self.subtitle = callScreenInfoHeaderState.subtitle
         }
+        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {

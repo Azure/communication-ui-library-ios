@@ -101,7 +101,7 @@ public class CallComposite {
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
     /* <TIMER_TITLE_FEATURE> */ 
     private let callScreenHeaderViewData: CallScreenHeaderViewData?
-    private var subscriptions = Set<AnyCancellable>()
+    private var updatableCallScreenOptionsManager: UpdatableCallScreenOptionsManager?
     /* </TIMER_TITLE_FEATURE> */
 
     /// Get debug information for the Call Composite.
@@ -590,6 +590,10 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
         self.videoViewManager = videoViewManager
+        /* <TIMER_TITLE_FEATURE> */
+        self.updatableCallScreenOptionsManager = UpdatableCallScreenOptionsManager(store: store,
+                                                             callScreenHeaderViewData: callScreenHeaderViewData)
+        /* </TIMER_TITLE_FEATURE> */
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
@@ -599,25 +603,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             store: store,
             callingSDKWrapper: callingSdkWrapper
         )
-        let callScreenInfoHeaderManager = CallScreenInfoHeaderManager(store: store)
-        if callScreenHeaderViewData?.title != nil {
-            callScreenHeaderViewData?.$title
-                .sink { [weak self] newTitle in
-                    if newTitle != nil {
-                        callScreenInfoHeaderManager.titleDidUpdate(title: newTitle!)
-                    }
-                }
-                .store(in: &subscriptions)
-        }
-        if callScreenHeaderViewData?.subtitle != nil {
-            callScreenHeaderViewData?.$subtitle
-                .sink { [weak self] newSubtitle in
-                    if newSubtitle != nil {
-                        callScreenInfoHeaderManager.subtitleDidUpdate(subtitle: newSubtitle!)
-                    }
-                }
-                .store(in: &subscriptions)
-        }
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
@@ -670,6 +655,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
+        self.updatableCallScreenOptionsManager = nil
     }
 
     private func disposeSDKWrappers() {

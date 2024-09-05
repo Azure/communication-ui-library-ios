@@ -330,7 +330,7 @@
 		C8E10DD72C7F8FA800511482 /* CallScreenInfoHeaderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DD62C7F8FA800511482 /* CallScreenInfoHeaderState.swift */; };
 		C8E10DD92C7F900B00511482 /* CallScreenInfoHeaderAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DD82C7F900B00511482 /* CallScreenInfoHeaderAction.swift */; };
 		C8E10DDB2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */; };
-		C8E10DE32C7FFA5000511482 /* CallScreenInfoHeaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DE22C7FFA5000511482 /* CallScreenInfoHeaderManager.swift */; };
+		C8E10DE32C7FFA5000511482 /* UpdatableCallScreenOptionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E10DE22C7FFA5000511482 /* UpdatableCallScreenOptionsManager.swift */; };
 		C8E50E972BFFD83200AB507E /* CapabilitiesChangedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */; };
 		C8E50E992C00056600AB507E /* CapabilitiesChangedReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */; };
 		C8E50E9B2C0006FE00AB507E /* CapabilityResolutionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */; };
@@ -752,7 +752,7 @@
 		C8E10DD62C7F8FA800511482 /* CallScreenInfoHeaderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenInfoHeaderState.swift; sourceTree = "<group>"; };
 		C8E10DD82C7F900B00511482 /* CallScreenInfoHeaderAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenInfoHeaderAction.swift; sourceTree = "<group>"; };
 		C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenInfoHeaderReducer.swift; sourceTree = "<group>"; };
-		C8E10DE22C7FFA5000511482 /* CallScreenInfoHeaderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenInfoHeaderManager.swift; sourceTree = "<group>"; };
+		C8E10DE22C7FFA5000511482 /* UpdatableCallScreenOptionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatableCallScreenOptionsManager.swift; sourceTree = "<group>"; };
 		C8E50E962BFFD83200AB507E /* CapabilitiesChangedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedEvent.swift; sourceTree = "<group>"; };
 		C8E50E982C00056600AB507E /* CapabilitiesChangedReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesChangedReason.swift; sourceTree = "<group>"; };
 		C8E50E9A2C0006FE00AB507E /* CapabilityResolutionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityResolutionReason.swift; sourceTree = "<group>"; };
@@ -1157,7 +1157,7 @@
 				A464810529F33A43001B80A3 /* CallStateManager.swift */,
 				A464810929F34A06001B80A3 /* CompositeExitManager.swift */,
 				C89FCE5F2C0FAF5D00983444 /* CapabilitiesManager.swift */,
-				C8E10DE22C7FFA5000511482 /* CallScreenInfoHeaderManager.swift */,
+				C8E10DE22C7FFA5000511482 /* UpdatableCallScreenOptionsManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -2391,7 +2391,7 @@
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,
 				5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */,
 				1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */,
-				C8E10DE32C7FFA5000511482 /* CallScreenInfoHeaderManager.swift in Sources */,
+				C8E10DE32C7FFA5000511482 /* UpdatableCallScreenOptionsManager.swift in Sources */,
 				759BDEF928FF0851002B6853 /* StyleProvider.swift in Sources */,
 				5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */,
 				752B953C2863A40F001C52E8 /* Action.swift in Sources */,

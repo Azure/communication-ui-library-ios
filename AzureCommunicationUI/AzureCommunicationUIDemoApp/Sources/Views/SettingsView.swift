@@ -115,7 +115,9 @@ struct SettingsView: View {
             Group {
                 localizationSettings
                 skipSetupScreenSettings
+                /* <TIMER_TITLE_FEATURE> */
                 callScreenHeaderSettings
+                /* </TIMER_TITLE_FEATURE> */
                 micSettings
                 localParticipantSettings
                 avatarSettings

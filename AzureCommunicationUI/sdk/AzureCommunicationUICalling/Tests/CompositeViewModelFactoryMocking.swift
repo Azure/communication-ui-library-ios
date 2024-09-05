@@ -247,8 +247,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
-                                 localUserState: LocalUserState,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState) -> InfoHeaderViewModel {
+                                 localUserState: LocalUserState /* </TIMER_TITLE_FEATURE> */ ,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
+                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
@@ -256,8 +257,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           accessibilityProvider: accessibilityProvider,
                                                           dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
-                                                          enableSystemPipWhenMultitasking: true,
-                                                          callScreenInfoHeaderState: callScreenInfoHeaderState)
+                                                          enableSystemPipWhenMultitasking: true
+                                                          /* </TIMER_TITLE_FEATURE> */ ,
+                                                          callScreenInfoHeaderState: callScreenInfoHeaderState
+                                                          /* </TIMER_TITLE_FEATURE> */ )
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {

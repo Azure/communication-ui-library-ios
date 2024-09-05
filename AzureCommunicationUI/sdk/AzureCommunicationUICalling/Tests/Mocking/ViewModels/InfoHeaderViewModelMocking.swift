@@ -34,8 +34,10 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
     override func update(localUserState: LocalUserState,
                          remoteParticipantsState: RemoteParticipantsState,
                          callingState: CallingState,
-                         visibilityState: VisibilityState,
-                         callScreenInfoHeaderState: CallScreenInfoHeaderState?) {
+                         visibilityState: VisibilityState
+                         /* <TIMER_TITLE_FEATURE> */ ,
+                         callScreenInfoHeaderState: CallScreenInfoHeaderState?
+                         /* </TIMER_TITLE_FEATURE> */ ) {
         updateState?(localUserState, remoteParticipantsState, callingState, visibilityState)
     }
 }
