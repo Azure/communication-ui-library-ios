@@ -62,14 +62,6 @@ protocol CallingMiddlewareHandling {
     func declineLobbyParticipant(state: AppState,
                                  dispatch: @escaping ActionDispatch,
                                  participantId: String) -> Task<Void, Never>
-//    @discardableResult
-//    func updateCallScreenHeaderTitle(state: AppState,
-//                                     dispatch: @escaping ActionDispatch,
-//                                     title: String) -> Task<Void, Never>
-//    @discardableResult
-//    func updateCallScreenHeaderSubtitle(state: AppState,
-//                                        dispatch: @escaping ActionDispatch,
-//                                        subtitle: String) -> Task<Void, Never>
     @discardableResult
     func startCaptions(state: AppState,
                        dispatch: @escaping ActionDispatch,
@@ -119,17 +111,6 @@ protocol CallingMiddlewareHandling {
 
 // swiftlint:disable type_body_length
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
-//    func updateCallScreenHeaderTitle(state: AppState,
-//                                     dispatch: @escaping ActionDispatch,
-//                                     title: String) -> Task<Void, Never> {
-//        <#code#>
-//    }
-//    
-//    func updateCallScreenHeaderSubtitle(state: AppState,
-//                                        dispatch: @escaping ActionDispatch,
-//                                        subtitle: String) -> Task<Void, Never> {
-//        <#code#>
-//    }
     private let callingService: CallingServiceProtocol
     private let logger: Logger
     private let cancelBag = CancelBag()

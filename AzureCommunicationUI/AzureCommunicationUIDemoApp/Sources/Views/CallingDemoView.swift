@@ -971,7 +971,6 @@ extension CallingDemoView {
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
-        // headerOptions?.title = "Custom title :: connected"
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
