@@ -50,6 +50,10 @@ class EnvConfigSubject: ObservableObject {
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var teamsMeetingId: String = EnvConfig.teamsMeetingId.value()
     @Published var teamsMeetingPasscode: String = EnvConfig.teamsMeetingPasscode.value()
+    @Published var callInformationTitle: String = ""
+    @Published var customTitleApplyOnRemoteJoin: Int = 0
+    @Published var callInformationSubtitle: String = ""
+    @Published var customSubtitleApplyOnRemoteJoin: Int = 0
     @Published var participantMRIs: String = EnvConfig.participantMRIs.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()

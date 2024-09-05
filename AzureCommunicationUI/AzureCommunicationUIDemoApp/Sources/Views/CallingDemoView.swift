@@ -423,9 +423,13 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        headerViewData = CallScreenHeaderViewData(
-            title: "This is a custom InfoHeader",
-            subtitle: "This is a custom subtitle")
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
                                                    headerViewData: headerViewData
                                                    /* </TIMER_TITLE_FEATURE> */ )
@@ -964,13 +968,19 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
-        if callState == .connected {
-            headerViewData?.title = "Custom title :: connected"
-        }
     }
 
-    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite,
+                                           identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        if envConfigSubject.customTitleApplyOnRemoteJoin != 0 &&
+            identifiers.count >= envConfigSubject.customTitleApplyOnRemoteJoin {
+            headerViewData?.title = "Custom title: change applied"
+        }
+        if envConfigSubject.customSubtitleApplyOnRemoteJoin != 0 &&
+            identifiers.count >= envConfigSubject.customSubtitleApplyOnRemoteJoin {
+            headerViewData?.subtitle = "Custom subtitle: change applied"
+        }
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }

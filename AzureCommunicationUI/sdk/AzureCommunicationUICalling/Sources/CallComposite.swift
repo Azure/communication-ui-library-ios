@@ -600,16 +600,24 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             callingSDKWrapper: callingSdkWrapper
         )
         let callScreenInfoHeaderManager = CallScreenInfoHeaderManager(store: store)
-        callScreenHeaderViewData?.$title
-            .sink { [weak self] newTitle in
-                callScreenInfoHeaderManager.titleDidUpdate(title: newTitle!)
-            }
-            .store(in: &subscriptions)
-        callScreenHeaderViewData?.$subtitle
-            .sink { [weak self] newSubtitle in
-                callScreenInfoHeaderManager.subtitleDidUpdate(subtitle: newSubtitle!)
-            }
-            .store(in: &subscriptions)
+        if callScreenHeaderViewData?.title != nil {
+            callScreenHeaderViewData?.$title
+                .sink { [weak self] newTitle in
+                    if newTitle != nil {
+                        callScreenInfoHeaderManager.titleDidUpdate(title: newTitle!)
+                    }
+                }
+                .store(in: &subscriptions)
+        }
+        if callScreenHeaderViewData?.subtitle != nil {
+            callScreenHeaderViewData?.$subtitle
+                .sink { [weak self] newSubtitle in
+                    if newSubtitle != nil {
+                        callScreenInfoHeaderManager.subtitleDidUpdate(subtitle: newSubtitle!)
+                    }
+                }
+                .store(in: &subscriptions)
+        }
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
