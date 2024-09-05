@@ -129,7 +129,7 @@ class InfoHeaderViewModel: ObservableObject {
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
                 visibilityState: VisibilityState,
-                callScreenInfoHeaderState: CallScreenInfoHeaderState?) {
+                callScreenInfoHeaderState: CallScreenInfoHeaderState) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -141,7 +141,7 @@ class InfoHeaderViewModel: ObservableObject {
         let updatedRemoteparticipantCount = getParticipantCount(remoteParticipantsState)
 
         if participantsCount != updatedRemoteparticipantCount
-            && callScreenInfoHeaderState?.title == nil {
+            && callScreenInfoHeaderState.title == nil {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
@@ -150,13 +150,13 @@ class InfoHeaderViewModel: ObservableObject {
             hideInfoHeader()
         }
 
-        if callScreenInfoHeaderState?.title != nil
-            && callScreenInfoHeaderState?.title != self.title {
-            self.title = (callScreenInfoHeaderState?.title)!
+        if callScreenInfoHeaderState.title != nil
+            && callScreenInfoHeaderState.title != self.title {
+            self.title = (callScreenInfoHeaderState.title)!
         }
-        if callScreenInfoHeaderState?.subtitle != nil
-            && callScreenInfoHeaderState?.subtitle != self.subtitle {
-            self.subtitle = callScreenInfoHeaderState?.subtitle
+        if callScreenInfoHeaderState.subtitle != nil
+            && callScreenInfoHeaderState.subtitle != self.subtitle {
+            self.subtitle = callScreenInfoHeaderState.subtitle
         }
     }
 

@@ -7,8 +7,8 @@
 import Foundation
 
 struct CallScreenInfoHeaderState {
-    var title: String?
-    var subtitle: String?
+    let title: String?
+    let subtitle: String?
     init(title: String? = nil, subtitle: String? = nil) {
         self.title = title
         self.subtitle = subtitle

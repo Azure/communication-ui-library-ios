@@ -12,9 +12,11 @@ extension Reducer where State == CallScreenInfoHeaderState,
         var newState = currentState
         switch action {
         case .updateTitle(let title):
-            newState.title = title
+            newState = CallScreenInfoHeaderState(title: title,
+                                                 subtitle: currentState.subtitle)
         case .updateSubtitle(let subtitle):
-            newState.subtitle = subtitle
+            newState = CallScreenInfoHeaderState(title: currentState.title,
+                                                 subtitle: subtitle)
         default:
             return newState
         }
