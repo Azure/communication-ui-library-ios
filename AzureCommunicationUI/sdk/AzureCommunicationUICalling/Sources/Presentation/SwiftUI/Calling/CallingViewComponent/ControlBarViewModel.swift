@@ -145,12 +145,12 @@ class ControlBarViewModel: ObservableObject {
 
     func isMoreButtonVisible() -> Bool {
             controlBarOptions?.customButtons.isEmpty == false ||
-            controlBarOptions?.liveCaptionsButtonOptions?.visible ?? true ||
-            controlBarOptions?.liveCaptionsToggleButtonOptions?.visible ?? true ||
-            controlBarOptions?.captionsLanguageButtonOptions?.visible ?? true ||
-            controlBarOptions?.spokenLanguageButtonOptions?.visible ?? true ||
-            controlBarOptions?.shareDiagnosticsButtonOptions?.visible ?? true ||
-            controlBarOptions?.reportIssueButtonOptions?.visible ?? true
+            controlBarOptions?.liveCaptionsButton?.visible ?? true ||
+            controlBarOptions?.liveCaptionsToggleButton?.visible ?? true ||
+            controlBarOptions?.captionsLanguageButton?.visible ?? true ||
+            controlBarOptions?.spokenLanguageButton?.visible ?? true ||
+            controlBarOptions?.shareDiagnosticsButton?.visible ?? true ||
+            controlBarOptions?.reportIssueButton?.visible ?? true
     }
 
     func isMicVisible() -> Bool {
@@ -259,10 +259,10 @@ class ControlBarViewModel: ObservableObject {
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
     }
 
-    func callCustomOnClickHandler(_ buttonOptions: ButtonOptions?) {
-        guard let buttonOptions = buttonOptions else {
+    func callCustomOnClickHandler(_ button: ButtonViewData?) {
+        guard let button = button else {
             return
         }
-        buttonOptions.onClick?(buttonOptions)
+        button.onClick?(button)
     }
 }

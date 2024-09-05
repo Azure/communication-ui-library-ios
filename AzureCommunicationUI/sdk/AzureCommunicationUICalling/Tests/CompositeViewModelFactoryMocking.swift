@@ -256,11 +256,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
                                                           enableSystemPipWhenMultitasking: true
-                                                          /* <TIMER_TITLE_FEATURE>
+                                                          /* <TIMER_TITLE_FEATURE> */
                                                           ,
-                                                          callScreenHeaderOptions:
-                                                            CallScreenHeaderOptions()
-                                                          </TIMER_TITLE_FEATURE> */ )
+                                                          callScreenHeaderViewData:
+                                                            CallScreenHeaderViewData()
+                                                          /* </TIMER_TITLE_FEATURE> */ )
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {

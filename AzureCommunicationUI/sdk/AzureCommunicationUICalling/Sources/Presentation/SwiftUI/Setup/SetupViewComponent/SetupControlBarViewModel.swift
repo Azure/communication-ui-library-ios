@@ -92,11 +92,11 @@ class SetupControlBarViewModel: ObservableObject {
         isAudioDeviceButtonVisible = setupScreenOptions?.audioDeviceButton?.visible ?? true
     }
 
-    private func callCustomOnClickHandler(_ buttonOptions: ButtonOptions?) {
-        guard let buttonOptions = buttonOptions else {
+    private func callCustomOnClickHandler(_ button: ButtonViewData?) {
+        guard let button = button else {
             return
         }
-        buttonOptions.onClick?(buttonOptions)
+        button.onClick?(button)
     }
 
     func videoButtonTapped() {

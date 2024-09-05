@@ -236,11 +236,11 @@ class CallingDemoViewController: UIViewController {
                 layoutDirection: layoutDirection)
         }
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions
-                                                  /* <TIMER_TITLE_FEATURE>
-                                                  , headerOptions: CallScreenHeaderOptions(
+                                                  /* <TIMER_TITLE_FEATURE> */
+                                                  , headerViewData: CallScreenHeaderViewData(
                                                     title: "This is a custom header",
                                                     subtitle: "This is a custom subtitle")
-                                                 </TIMER_TITLE_FEATURE> */
+                                                 /* </TIMER_TITLE_FEATURE> */
                                                  )
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(
@@ -308,15 +308,15 @@ class CallingDemoViewController: UIViewController {
 
         let callComposite = CallComposite(credential: credential)
 
-        let customButton = CustomButtonOptions(image: UIImage(),
+        let customButton = CustomButtonViewData(image: UIImage(),
                                                title: "Hide composite") {_ in
             // hide call composite and display Troubleshooting tips
             callComposite.isHidden = true
             // ...
         }
 
-        let cameraButton = ButtonOptions(visible: false)
-        let micButton = ButtonOptions(enabled: false)
+        let cameraButton = ButtonViewData(visible: false)
+        let micButton = ButtonViewData(enabled: false)
 
         let callScreenControlBarOptions = CallScreenControlBarOptions(
             cameraButton: cameraButton,
@@ -421,15 +421,15 @@ class CallingDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
-        let cameraButton = ButtonOptions(onClick: { _ in
+        let cameraButton = ButtonViewData(onClick: { _ in
                     print("::::UIKitDemoView::SetupScreen::onCameraButton::onClick")
                 })
 
-        let micButton = ButtonOptions(onClick: { _ in
+        let micButton = ButtonViewData(onClick: { _ in
             print("::::UIKitDemoView::SetupScreen::onMicButton::onClick")
         })
 
-        let audioDeviceButton = ButtonOptions(onClick: { _ in
+        let audioDeviceButton = ButtonViewData(onClick: { _ in
             print("::::UIKitDemoView::SetupScreen::onAudioDeviceButton::onClick")
         })
 
@@ -450,43 +450,43 @@ class CallingDemoViewController: UIViewController {
     }
 
     private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenOptions {
-            let cameraButton = ButtonOptions(visible: true, enabled: true) { _ in
+            let cameraButton = ButtonViewData(visible: true, enabled: true) { _ in
                 print("::::UIKitDemoView::CallScreen::cameraButton::onClick")
             }
 
-            let micButton = ButtonOptions(visible: true, enabled: true) { _ in
+            let micButton = ButtonViewData(visible: true, enabled: true) { _ in
                 print("::::UIKitDemoView::CallScreen::micButton::onClick")
             }
 
-            let audioDeviceButton = ButtonOptions(visible: true, enabled: true) { _ in
+            let audioDeviceButton = ButtonViewData(visible: true, enabled: true) { _ in
                 print("::::UIKitDemoView::CallScreen::audioDeviceButton::onClick")
             }
 
-            let liveCaptionsButton = ButtonOptions(visible: false, enabled: false) { _ in
+            let liveCaptionsButton = ButtonViewData(visible: false, enabled: false) { _ in
                 print("::::UIKitDemoView::CallScreen::liveCaptionsButton::onClick")
             }
 
-            let liveCaptionsToggleButton = ButtonOptions(visible: false, enabled: false) { _ in
+            let liveCaptionsToggleButton = ButtonViewData(visible: false, enabled: false) { _ in
                 print("::::UIKitDemoView::CallScreen::liveCaptionsToggleButton::onClick")
             }
 
-            let spokenLanguageButton = ButtonOptions(visible: false, enabled: false) { _ in
+            let spokenLanguageButton = ButtonViewData(visible: false, enabled: false) { _ in
                 print("::::UIKitDemoView::CallScreen::spokenLanguageButton::onClick")
             }
 
-            let captionsLanguageButton = ButtonOptions(visible: false, enabled: false) { _ in
+            let captionsLanguageButton = ButtonViewData(visible: false, enabled: false) { _ in
                 print("::::UIKitDemoView::CallScreen::captionsLanguageButton::onClick")
             }
 
-            let shareDiagnosticsButton = ButtonOptions(visible: true, enabled: true) { _ in
+            let shareDiagnosticsButton = ButtonViewData(visible: true, enabled: true) { _ in
                 print("::::UIKitDemoView::CallScreen::shareDiagnosticsButton::onClick")
             }
 
-            let reportIssueButton = ButtonOptions(visible: true, enabled: true) { _ in
+            let reportIssueButton = ButtonViewData(visible: true, enabled: true) { _ in
                 print("::::UIKitDemoView::CallScreen::reportIssueButton::onClick")
             }
 
-            let customButton1 = CustomButtonOptions(image: UIImage(named: "ic_fluent_chevron_right_20_regular")!,
+            let customButton1 = CustomButtonViewData(image: UIImage(named: "ic_fluent_chevron_right_20_regular")!,
                                                     title: "Hide composite") {_ in
                 print("::::UIKitDemoView::CallScreen::customButton1::onClick")
                 callComposite?.isHidden = true
@@ -498,12 +498,12 @@ class CallingDemoViewController: UIViewController {
                 cameraButton: cameraButton,
                 microphoneButton: micButton,
                 audioDeviceButton: audioDeviceButton,
-                liveCaptionsButtonOptions: liveCaptionsButton,
-                liveCaptionsToggleButtonOptions: liveCaptionsToggleButton,
-                spokenLanguageButtonOptions: spokenLanguageButton,
-                captionsLanguageButtonOptions: captionsLanguageButton,
-                shareDiagnosticsButtonOptions: shareDiagnosticsButton,
-                reportIssueButtonOptions: reportIssueButton,
+                liveCaptionsButton: liveCaptionsButton,
+                liveCaptionsToggleButton: liveCaptionsToggleButton,
+                spokenLanguageButton: spokenLanguageButton,
+                captionsLanguageButton: captionsLanguageButton,
+                shareDiagnosticsButton: shareDiagnosticsButton,
+                reportIssueButton: reportIssueButton,
                 customButtons: [customButton1]
             )
 
