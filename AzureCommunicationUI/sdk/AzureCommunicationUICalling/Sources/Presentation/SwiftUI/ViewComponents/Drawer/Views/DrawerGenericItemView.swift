@@ -29,7 +29,7 @@ internal struct DrawerGenericItemView: View {
                 if let subtitle = item.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(StyleProvider.color.textSecondary))
                         .padding(.leading, DrawerListConstants.textPaddingLeading)
                 }
             }
