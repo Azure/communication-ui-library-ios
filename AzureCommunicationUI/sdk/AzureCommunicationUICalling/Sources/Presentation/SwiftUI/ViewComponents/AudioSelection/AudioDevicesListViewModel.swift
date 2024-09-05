@@ -83,6 +83,9 @@ internal class AudioDevicesListViewModel: ObservableObject {
             icon: getAudioDeviceIcon(audioDeviceType),
             title: getAudioDeviceTitle(audioDeviceType),
             accessibilityIdentifier: "",
+            accessibilityLabel: isSelected ?
+            localizationProvider.getLocalizedString(.selected, getAudioDeviceTitle(audioDeviceType)) :
+                getAudioDeviceTitle(audioDeviceType),
             isSelected: isSelected,
             action: { [weak self] in self?.dispatch(.localUserAction(action)) })
         return audioDeviceOption

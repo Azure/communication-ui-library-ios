@@ -52,17 +52,20 @@ struct DrawerSelectableItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let isSelected: Bool
     let accessibilityIdentifier: String
+    let accessibilityLabel: String?
     let icon: CompositeIcon?
     let action: () -> Void
 
     init(icon: CompositeIcon?,
          title: String,
          accessibilityIdentifier: String,
+         accessibilityLabel: String,
          isSelected: Bool,
          action: @escaping () -> Void) {
         self.isSelected = isSelected
         self.action = action
         self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityLabel = accessibilityLabel
         self.icon = icon
         self.title = title
     }
