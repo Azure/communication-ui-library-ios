@@ -112,10 +112,10 @@ struct SettingsView: View {
             captionsSettings
             buttonSettins
             multitaskingSettings
-            callScreenHeaderSettings
             Group {
                 localizationSettings
                 skipSetupScreenSettings
+                callScreenHeaderSettings
                 micSettings
                 localParticipantSettings
                 avatarSettings
