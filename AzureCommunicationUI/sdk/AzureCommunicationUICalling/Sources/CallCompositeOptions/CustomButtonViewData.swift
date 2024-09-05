@@ -5,25 +5,26 @@
 
 import Foundation
 import UIKit
+import Combine
 
-/// Represents the configuration options for a custom button.
-public struct CustomButtonOptions {
+/// Represents the view data for a custom button.
+public class CustomButtonViewData: ObservableObject {
     /// The image to be displayed on the button.
-    public let image: UIImage
+    @Published public var image: UIImage
 
     /// The title to be displayed on the button.
-    public let title: String
+    @Published public var title: String
 
     /// A closure that will be executed when the button is clicked.
-    /// The closure receives the `CustomButtonOptions` instance as a parameter.
-    public let onClick: (CustomButtonOptions) -> Void
+    /// The closure receives the `CustomButtonViewData` instance as a parameter.
+    @Published public var onClick: (CustomButtonViewData) -> Void
 
     /// A Boolean value that determines whether the button is enabled.
     /// - `true`: The button is enabled (default).
     /// - `false`: The button is disabled.
-    public let enabled: Bool
+    @Published public var enabled: Bool
 
-    /// Initializes an instance of `CustomButtonOptions`.
+    /// Initializes an instance of `CustomButtonViewData`.
     /// - Parameters:
     ///   - image: The image to be displayed on the button.
     ///   - title: The title to be displayed on the button.
@@ -32,7 +33,7 @@ public struct CustomButtonOptions {
     public init(image: UIImage,
                 title: String,
                 enabled: Bool = true,
-                onClick: @escaping (CustomButtonOptions) -> Void) {
+                onClick: @escaping (CustomButtonViewData) -> Void) {
         self.image = image
         self.title = title
         self.onClick = onClick

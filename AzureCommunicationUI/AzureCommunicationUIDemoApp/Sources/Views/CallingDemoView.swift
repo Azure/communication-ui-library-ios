@@ -422,12 +422,12 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> ,
-                                                   headerOptions:
-                                                     CallScreenHeaderOptions(
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
+                                                   headerViewData:
+                                                    CallScreenHeaderViewData(
                                                         title: "This is a custom InfoHeader",
                                                         subtitle: "This is a custom subtitle")
-                                                   </TIMER_TITLE_FEATURE> */ )
+                                                   /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -580,7 +580,7 @@ extension CallingDemoView {
             print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
             showAlert(for: "\(event.callId) cancelled")
         }
-        /* <TIMER_TITLE_FEATURE>
+        /* <TIMER_TITLE_FEATURE> */
         let onRemoteParticipantLeftHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -588,7 +588,7 @@ extension CallingDemoView {
             self.onRemoteParticipantLeft(to: composite,
                                            identifiers: ids)
         }
-        </TIMER_TITLE_FEATURE> */
+        /* </TIMER_TITLE_FEATURE> */
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
@@ -598,9 +598,9 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
-        /* <TIMER_TITLE_FEATURE>
+        /* <TIMER_TITLE_FEATURE> */
         callComposite.events.onRemoteParticipantLeft = onRemoteParticipantLeftHandler
-        </TIMER_TITLE_FEATURE> */
+        /* </TIMER_TITLE_FEATURE> */
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -644,7 +644,7 @@ extension CallingDemoView {
         }
 
         // Create the custom button with the tinted image
-        let customButton1 = CustomButtonOptions(
+        let customButton1 = CustomButtonViewData(
             image: customButtonImage,
             title: "Hide composite"
         ) { _ in
@@ -652,7 +652,7 @@ extension CallingDemoView {
             callComposite?.isHidden = true
         }
 
-        let customButton2 = CustomButtonOptions(
+        let customButton2 = CustomButtonViewData(
             image: customButtonImage,
             title: "Show Touble Shooting Guide"
         ) { _ in
@@ -672,12 +672,12 @@ extension CallingDemoView {
     func hideAllButtons() -> CallScreenOptions {
         let callScreenControlBarOptions = CallScreenControlBarOptions(
             leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
-            liveCaptionsButtonOptions: ButtonOptions(visible: false),
-            liveCaptionsToggleButtonOptions: ButtonOptions(visible: false),
-            spokenLanguageButtonOptions: ButtonOptions(visible: false),
-            captionsLanguageButtonOptions: ButtonOptions(visible: false),
-            shareDiagnosticsButtonOptions: ButtonOptions(visible: false),
-            reportIssueButtonOptions: ButtonOptions(visible: false)
+            liveCaptionsButton: ButtonViewData(visible: false),
+            liveCaptionsToggleButton: ButtonViewData(visible: false),
+            spokenLanguageButton: ButtonViewData(visible: false),
+            captionsLanguageButton: ButtonViewData(visible: false),
+            shareDiagnosticsButton: ButtonViewData(visible: false),
+            reportIssueButton: ButtonViewData(visible: false)
         )
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
     }
@@ -976,7 +976,7 @@ extension CallingDemoView {
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
-    /* <TIMER_TITLE_FEATURE>
+    /* <TIMER_TITLE_FEATURE> */
     private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
@@ -985,7 +985,7 @@ extension CallingDemoView {
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
-    </TIMER_TITLE_FEATURE> */
+    /* </TIMER_TITLE_FEATURE> */
 }
 
 struct CustomDemoView: View {
