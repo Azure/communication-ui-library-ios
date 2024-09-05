@@ -203,7 +203,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel {
         return audioDevicesListCellViewModel ?? DrawerSelectableItemViewModel(icon: icon,
                                                                                   title: title,
-                                                                                  accessibilityIdentifier: "",
+                                                                              accessibilityIdentifier: "", accessibilityLabel: "",
                                                                                   isSelected: isSelected,
                                                                                   action: onSelectedAction)
     }
@@ -298,11 +298,15 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             action: {})
     }
 
-    func makeCaptionsLangaugeCellViewModel(title: String, isSelected: Bool, onSelectedAction: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerSelectableItemViewModel {
+    func makeCaptionsLangaugeCellViewModel(title: String,
+                                           isSelected: Bool,
+                                           accessibilityLabel: String,
+                                           onSelectedAction: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerSelectableItemViewModel {
         return DrawerSelectableItemViewModel(
             icon: .none,
             title: "",
             accessibilityIdentifier: "",
+            accessibilityLabel: "",
             isSelected: true,
             action: {})
     }

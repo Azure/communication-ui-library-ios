@@ -103,6 +103,7 @@ protocol CompositeViewModelFactoryProtocol {
                                        action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
     func makeCaptionsLangaugeCellViewModel(title: String,
                                            isSelected: Bool,
+                                           accessibilityLabel: String,
                                            onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),

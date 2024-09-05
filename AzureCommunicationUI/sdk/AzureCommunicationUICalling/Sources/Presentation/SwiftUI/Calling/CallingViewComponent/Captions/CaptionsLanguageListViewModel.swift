@@ -67,6 +67,8 @@ class CaptionsLanguageListViewModel: ObservableObject {
         return compositeViewModelFactory.makeCaptionsLangaugeCellViewModel(
             title: languageName,
             isSelected: isSelected,
+            accessibilityLabel: isSelected ?
+            localizationProvider.getLocalizedString(.selected, languageName) : languageName,
             onSelectedAction: { [weak self] in
                 self?.selectLanguage(language.identifier)
             }
