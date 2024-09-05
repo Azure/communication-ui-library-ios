@@ -100,7 +100,8 @@ public class CallComposite {
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
     /* <TIMER_TITLE_FEATURE> */
-    private var callScreenHeaderOptions: CallScreenHeaderOptions?
+    private let callScreenHeaderOptions: CallScreenHeaderOptions?
+    private var subscriptions = Set<AnyCancellable>()
     /* </TIMER_TITLE_FEATURE> */
 
     /// Get debug information for the Call Composite.
@@ -598,8 +599,17 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             store: store,
             callingSDKWrapper: callingSdkWrapper
         )
-        let callScreenInfoHeaderManager = CallScreenInfoHeaderManager(
-            store: store, callScreenHeaderOptions: callScreenHeaderOptions)
+        let callScreenInfoHeaderManager = CallScreenInfoHeaderManager(store: store)
+        callScreenHeaderOptions?.$title
+            .sink { [weak self] newTitle in
+                callScreenInfoHeaderManager.titleDidUpdate(title: newTitle!)
+            }
+            .store(in: &subscriptions)
+        callScreenHeaderOptions?.$subtitle
+            .sink { [weak self] newSubtitle in
+                callScreenInfoHeaderManager.subtitleDidUpdate(subtitle: newSubtitle!)
+            }
+            .store(in: &subscriptions)
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,

@@ -972,6 +972,7 @@ extension CallingDemoView {
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        // headerOptions?.title = "Custom title :: connected"
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
@@ -984,9 +985,6 @@ extension CallingDemoView {
     /* <TIMER_TITLE_FEATURE> */
     private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantViewData else {
-            return
-        }
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
