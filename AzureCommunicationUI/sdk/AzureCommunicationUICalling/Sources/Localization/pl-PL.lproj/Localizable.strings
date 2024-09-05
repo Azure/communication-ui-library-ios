@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Odrzuć baner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Odrzuca to powiadomienie";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Nie można dołączyć do połączenia z powodu błędu.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Być może usunięto Cię ze spotkania lub utracono połączenie. Spróbuj ponownie dołączyć.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Usunięto Cię z połączenia z powodu błędu lub utraty połączenia. Spróbuj ponownie dołączyć do rozmowy.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Usunięto Cię z rozmowy.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Wystąpił błąd.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Nie można wznowić rozmowy";

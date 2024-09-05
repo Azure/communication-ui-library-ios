@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Başlığı Kapat";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Bu bildirimi kapatır";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Bir hata nedeniyle aramaya katılınamıyor.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Toplantıdan çıkarılmış olabilirsiniz veya bağlantınız kesilmiş olabilir. Yeniden katılmayı deneyin.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Bir hata veya bağlantı kesildi nedeniyle aramadan çıkarıldınız. Lütfen çağrıya yeniden katılmayı deneyin.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Aramadan çıkarıldınız.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Bir hata oluştu.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Arama sürdürülemiyor";

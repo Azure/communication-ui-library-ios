@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Descartar banner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Descarta esta notificación";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="No se puede unir a la llamada debido a un error.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Puede que se le haya eliminado de la reunión o que haya perdido la conexión. Intente unirse de nuevo.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Se le ha quitado de la llamada debido a un error o a una conexión perdida. Intente volver a unirse a la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Te han eliminado de la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Se ha producido un error.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="No se puede reanudar la llamada";

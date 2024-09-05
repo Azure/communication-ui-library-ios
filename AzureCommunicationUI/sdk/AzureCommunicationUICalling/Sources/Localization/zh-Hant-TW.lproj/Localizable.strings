@@ -128,7 +128,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="關閉橫幅";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="關閉此通知";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="發生錯誤，因此無法加入通話。";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="您可能已從會議中移除，或中斷您的連線。再次嘗試加入。";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="由於發生錯誤或連線中斷，您已從通話中移除。請嘗試重新加入通話。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="已從通話中移除您。";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="發生錯誤。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="無法繼續通話";
