@@ -66,6 +66,7 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .hideDrawer,
                  .visibilityAction,
                  .toastNotificationAction,
+                 .callScreenInfoHeaderAction,
                  .setTotalParticipantCount:
                 break
             }

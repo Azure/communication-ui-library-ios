@@ -57,7 +57,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
 
         XCTAssertEqual(sut.title, "Waiting for others to join")
         wait(for: [expectation], timeout: 1)
@@ -89,7 +90,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
         XCTAssertEqual(sut.title, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -135,7 +137,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
         XCTAssertEqual(sut.title, "Call with 2 people")
 
         wait(for: [expectation], timeout: 1)
@@ -193,7 +196,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
         XCTAssertEqual(sut.title, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -293,7 +297,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
         let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.title, expectedInfoHeaderlabel0ParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
@@ -344,7 +349,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   visibilityState: VisibilityState(currentStatus: .visible))
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
         XCTAssertEqual(sut.title, expectedInfoHeaderlabelNParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
 
@@ -365,10 +371,8 @@ extension InfoHeaderViewModelTests {
                                    enableMultitasking: true,
                                    enableSystemPipWhenMultitasking: true
                                    /* <TIMER_TITLE_FEATURE> */
-                                   /* <TIMER_TITLE_FEATURE> */
                                    ,
-                                   callScreenHeaderOptions:
-                                     CallScreenInfoHeaderManager()
+                                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
                                    /* </TIMER_TITLE_FEATURE> */ )
     }
 
