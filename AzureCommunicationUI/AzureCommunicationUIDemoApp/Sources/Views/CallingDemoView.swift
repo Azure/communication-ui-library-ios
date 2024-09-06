@@ -656,7 +656,7 @@ extension CallingDemoView {
         let customButton2 = CustomButtonViewData(
             id: UUID().uuidString,
             image: customButtonImage,
-            title: "Show Touble Shooting Guide"
+            title: "Troubleshooting tips"
         ) { _ in
             print("::::SwiftUIDemoView::CallScreen::customButton2::onClick")
             callComposite?.isHidden = true
