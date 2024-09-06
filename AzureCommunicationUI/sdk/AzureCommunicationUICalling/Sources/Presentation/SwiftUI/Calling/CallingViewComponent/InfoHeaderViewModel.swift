@@ -156,10 +156,12 @@ class InfoHeaderViewModel: ObservableObject {
         if callScreenInfoHeaderState.title != nil
             && callScreenInfoHeaderState.title != self.title {
             self.title = (callScreenInfoHeaderState.title)!
+            self.accessibilityLabelTitle = self.title
         }
         if callScreenInfoHeaderState.subtitle != nil
             && callScreenInfoHeaderState.subtitle != self.subtitle {
             self.subtitle = callScreenInfoHeaderState.subtitle
+            self.accessibilityLabelSubtitle = self.subtitle ?? ""
         }
         /* </TIMER_TITLE_FEATURE> */
     }
