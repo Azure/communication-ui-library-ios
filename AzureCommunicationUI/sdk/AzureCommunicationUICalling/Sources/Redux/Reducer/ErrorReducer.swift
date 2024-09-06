@@ -66,7 +66,11 @@ extension Reducer where State == ErrorState,
                 .showParticipantActions,
                 .hideDrawer,
                 .visibilityAction,
-                .toastNotificationAction,
+                .toastNotificationAction
+                /* <TIMER_TITLE_FEATURE> */
+                ,
+                .callScreenInfoHeaderAction,
+                /* </TIMER_TITLE_FEATURE> */
                 .setTotalParticipantCount:
             return state
         }

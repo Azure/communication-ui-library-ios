@@ -64,6 +64,30 @@ struct SettingsView: View {
                 .accessibilityIdentifier(AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue)
         }
     }
+    /* <TIMER_TITLE_FEATURE> */
+    var callScreenHeaderSettings: some View {
+        Section(header: Text("Call Screen Title and Subtitle API")) {
+            TextField("Call Screen Custom title", text: $envConfigSubject.callInformationTitle)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                            .textFieldStyle(.roundedBorder)
+            TextField("Apply Custom title on X number of remote participant join",
+                      value: $envConfigSubject.customTitleApplyOnRemoteJoin, formatter: NumberFormatter())
+                .keyboardType(.decimalPad)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("Call Screen Custom subtitle", text: $envConfigSubject.callInformationSubtitle)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
+            TextField("Apply Custom subtitle on X number of remote participant join",
+                      value: $envConfigSubject.customSubtitleApplyOnRemoteJoin, formatter: NumberFormatter())
+                .keyboardType(.decimalPad)
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+        }
+    }
+    /* </TIMER_TITLE_FEATURE> */
 
     var setupScreenSettings: some View {
         Section(header: Text("Setup screen settings")) {
@@ -84,10 +108,15 @@ struct SettingsView: View {
 
     var settingsForm: some View {
         List {
-            orientationOptions
-            captionsSettings
-            buttonSettins
-            multitaskingSettings
+            Group {
+                orientationOptions
+                captionsSettings
+                buttonSettins
+                multitaskingSettings
+                /* <TIMER_TITLE_FEATURE> */
+                callScreenHeaderSettings
+                /* </TIMER_TITLE_FEATURE> */
+            }
             Group {
                 localizationSettings
                 skipSetupScreenSettings

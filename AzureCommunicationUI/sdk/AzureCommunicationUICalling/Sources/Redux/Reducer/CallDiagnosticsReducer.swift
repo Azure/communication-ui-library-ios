@@ -52,7 +52,11 @@ extension Reducer where State == CallDiagnosticsState,
              .showParticipantActions,
              .hideDrawer,
              .visibilityAction,
-             .toastNotificationAction,
+             .toastNotificationAction
+            /* <TIMER_TITLE_FEATURE> */
+            ,
+            .callScreenInfoHeaderAction,
+            /* </TIMER_TITLE_FEATURE> */
              .setTotalParticipantCount:
             return state
         }

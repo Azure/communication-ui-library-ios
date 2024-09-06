@@ -99,8 +99,9 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
-    /* <TIMER_TITLE_FEATURE> */
-    private var callScreenHeaderViewData: CallScreenHeaderViewData?
+    /* <TIMER_TITLE_FEATURE> */ 
+    private let callScreenHeaderViewData: CallScreenHeaderViewData?
+    private var updatableCallScreenOptionsManager: UpdatableCallScreenOptionsManager?
     /* </TIMER_TITLE_FEATURE> */
 
     /// Get debug information for the Call Composite.
@@ -589,6 +590,10 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
         self.videoViewManager = videoViewManager
+        /* <TIMER_TITLE_FEATURE> */
+        self.updatableCallScreenOptionsManager = UpdatableCallScreenOptionsManager(store: store,
+                                                             callScreenHeaderViewData: callScreenHeaderViewData)
+        /* </TIMER_TITLE_FEATURE> */
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
@@ -621,9 +626,6 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager,
-                /* <TIMER_TITLE_FEATURE> */
-                callScreenHeaderViewData: callScreenHeaderViewData,
-                /* </TIMER_TITLE_FEATURE> */
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
@@ -653,6 +655,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
+        self.updatableCallScreenOptionsManager = nil
     }
 
     private func disposeSDKWrappers() {

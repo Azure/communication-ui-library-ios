@@ -75,7 +75,11 @@ extension Reducer where State == NavigationState,
                 .permissionAction,
                 .visibilityAction,
                 .callDiagnosticAction,
-                .toastNotificationAction,
+                .toastNotificationAction
+                /* <TIMER_TITLE_FEATURE> */
+                ,
+                .callScreenInfoHeaderAction,
+                /* </TIMER_TITLE_FEATURE> */
                 .setTotalParticipantCount:
             return state
         }
