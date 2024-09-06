@@ -25,7 +25,6 @@ struct ParticipantGridView: View {
             .onReceive(viewModel.$displayedParticipantInfoModelArr) {
                 updateVideoViewManager(displayedRemoteInfoModelArr: $0)
             }
-            .accessibilityElement(children: .contain)
     }
 
     func updateVideoViewManager(displayedRemoteInfoModelArr: [ParticipantInfoModel]) {
