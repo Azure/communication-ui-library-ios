@@ -28,6 +28,9 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
+    /* <TIMER_TITLE_FEATURE> */
+    @State var headerViewData: CallScreenHeaderViewData?
+    /* </TIMER_TITLE_FEATURE> */
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -422,11 +425,17 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        /* </TIMER_TITLE_FEATURE> */
         var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
-                                                   headerViewData:
-                                                    CallScreenHeaderViewData(
-                                                        title: "This is a custom InfoHeader",
-                                                        subtitle: "This is a custom subtitle")
+                                                   headerViewData: headerViewData
                                                    /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
@@ -967,8 +976,19 @@ extension CallingDemoView {
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
     }
 
-    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite,
+                                           identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        /* <TIMER_TITLE_FEATURE> */
+        if envConfigSubject.customTitleApplyOnRemoteJoin != 0 &&
+            identifiers.count >= envConfigSubject.customTitleApplyOnRemoteJoin {
+            headerViewData?.title = "Custom title: change applied"
+        }
+        if envConfigSubject.customSubtitleApplyOnRemoteJoin != 0 &&
+            identifiers.count >= envConfigSubject.customSubtitleApplyOnRemoteJoin {
+            headerViewData?.subtitle = "Custom subtitle: change applied"
+        }
+        /* </TIMER_TITLE_FEATURE> */
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
@@ -981,9 +1001,6 @@ extension CallingDemoView {
     /* <TIMER_TITLE_FEATURE> */
     private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantViewData else {
-            return
-        }
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }

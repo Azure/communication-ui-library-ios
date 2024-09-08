@@ -80,7 +80,11 @@ extension Reducer where State == CallingState,
                 .showParticipants,
                 .showParticipantActions,
                 .hideDrawer,
-                .toastNotificationAction,
+                .toastNotificationAction
+                /* <TIMER_TITLE_FEATURE> */
+                ,
+                .callScreenInfoHeaderAction,
+                /* </TIMER_TITLE_FEATURE> */
                 .setTotalParticipantCount:
             return callingState
         }

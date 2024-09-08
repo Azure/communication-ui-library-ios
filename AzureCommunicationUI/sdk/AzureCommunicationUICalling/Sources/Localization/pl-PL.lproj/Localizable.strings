@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Zestaw słuchawkowy";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Konfiguruj";
@@ -128,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Odrzuć baner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Odrzuca to powiadomienie";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Nie można dołączyć do połączenia z powodu błędu.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Usunięto Cię z rozmowy z powodu błędu.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Usunięto Cię z połączenia z powodu błędu lub utraty połączenia. Spróbuj ponownie dołączyć do rozmowy.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Usunięto Cię z rozmowy.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Wystąpił błąd.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Nie można wznowić rozmowy";

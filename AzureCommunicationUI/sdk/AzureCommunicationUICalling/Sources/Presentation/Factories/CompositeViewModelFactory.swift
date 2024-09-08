@@ -23,9 +23,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let enableSystemPipWhenMultitasking: Bool
     private let capabilitiesManager: CapabilitiesManager
     private let avatarManager: AvatarViewManagerProtocol
-    /* <TIMER_TITLE_FEATURE> */
-    private let callScreenHeaderViewData: CallScreenHeaderViewData?
-    /* </TIMER_TITLE_FEATURE> */
     private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -51,9 +48,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
-         /* <TIMER_TITLE_FEATURE> */
-         callScreenHeaderViewData: CallScreenHeaderViewData?,
-         /* </TIMER_TITLE_FEATURE> */
          retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
@@ -74,9 +68,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.avatarManager = avatarManager
-        /* <TIMER_TITLE_FEATURE> */
-        self.callScreenHeaderViewData = callScreenHeaderViewData
-        /* </TIMER_TITLE_FEATURE> */
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -248,10 +239,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     func makeCaptionsLangaugeCellViewModel(title: String,
                                            isSelected: Bool,
+                                           accessibilityLabel: String,
                                            onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel {
         return DrawerSelectableItemViewModel(icon: nil,
                                       title: title,
                                       accessibilityIdentifier: "",
+                                             accessibilityLabel: accessibilityLabel,
                                       isSelected: isSelected,
                                       action: onSelectedAction)
     }
@@ -309,7 +302,9 @@ extension CompositeViewModelFactory {
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
+                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
+                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
@@ -319,7 +314,7 @@ extension CompositeViewModelFactory {
                             enableMultitasking: enableMultitasking,
                             enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking
                             /* <TIMER_TITLE_FEATURE> */ ,
-                            callScreenHeaderViewData: callScreenHeaderViewData ?? CallScreenHeaderViewData()
+                            callScreenInfoHeaderState: callScreenInfoHeaderState
                             /* </TIMER_TITLE_FEATURE> */
                             )
     }

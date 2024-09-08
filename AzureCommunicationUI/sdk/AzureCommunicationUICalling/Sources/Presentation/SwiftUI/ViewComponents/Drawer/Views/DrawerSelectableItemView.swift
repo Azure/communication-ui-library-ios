@@ -32,6 +32,8 @@ internal struct DrawerSelectableItemView: View {
         .onTapGesture {
             item.action()
         }
+        .accessibilityElement(children: .combine)
         .accessibilityIdentifier(item.accessibilityIdentifier)
+        .accessibilityLabel(item.accessibilityLabel ?? item.title)
     }
 }

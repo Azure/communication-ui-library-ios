@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Casque audio";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Configuration";
@@ -128,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Masquer la bannière";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Masque cette notification.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Impossible de rejoindre l’appel en raison d’une erreur.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Vous avez été supprimé de l’appel en raison d’une erreur.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Vous avez été supprimé de l’appel en raison d’une erreur ou d’une perte de connexion. Essayez de rejoindre l’appel.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Vous avez été déconnecté de l’appel.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Nous avons rencontré une erreur.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Nous ne pouvons pas effectuer d’appel";

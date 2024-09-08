@@ -203,7 +203,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel {
         return audioDevicesListCellViewModel ?? DrawerSelectableItemViewModel(icon: icon,
                                                                                   title: title,
-                                                                                  accessibilityIdentifier: "",
+                                                                              accessibilityIdentifier: "", accessibilityLabel: "",
                                                                                   isSelected: isSelected,
                                                                                   action: onSelectedAction)
     }
@@ -247,7 +247,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
-                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
+                                 localUserState: LocalUserState /* </TIMER_TITLE_FEATURE> */ ,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
+                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
@@ -256,10 +258,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
                                                           enableSystemPipWhenMultitasking: true
-                                                          /* <TIMER_TITLE_FEATURE> */
-                                                          ,
-                                                          callScreenHeaderViewData:
-                                                            CallScreenHeaderViewData()
+                                                          /* </TIMER_TITLE_FEATURE> */ ,
+                                                          callScreenInfoHeaderState: callScreenInfoHeaderState
                                                           /* </TIMER_TITLE_FEATURE> */ )
     }
 
@@ -298,11 +298,15 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             action: {})
     }
 
-    func makeCaptionsLangaugeCellViewModel(title: String, isSelected: Bool, onSelectedAction: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerSelectableItemViewModel {
+    func makeCaptionsLangaugeCellViewModel(title: String,
+                                           isSelected: Bool,
+                                           accessibilityLabel: String,
+                                           onSelectedAction: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerSelectableItemViewModel {
         return DrawerSelectableItemViewModel(
             icon: .none,
             title: "",
             accessibilityIdentifier: "",
+            accessibilityLabel: "",
             isSelected: true,
             action: {})
     }

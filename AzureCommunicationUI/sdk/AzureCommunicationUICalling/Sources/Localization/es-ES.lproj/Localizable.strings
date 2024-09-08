@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Auriculares";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Configurar";
@@ -128,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Descartar banner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Descarta esta notificación";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="No se puede unir a la llamada debido a un error.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Se le ha quitado de la llamada debido a un error.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Se le ha quitado de la llamada debido a un error o a una conexión perdida. Intente volver a unirse a la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Te han eliminado de la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Se ha producido un error.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="No se puede reanudar la llamada";
