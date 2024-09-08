@@ -1025,18 +1025,18 @@
 			children = (
 				1F94DAE72676885700691D1E /* AppStateReducer.swift */,
 				1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */,
+				B238378A2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift */,
 				1F83813E26803ADF0096A454 /* CallingReducer.swift */,
+				C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */,
+				114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */,
 				88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */,
 				A874EDC9266167E5003C7D92 /* LifeCycleReducer.swift */,
 				1FBCB6D82655825200F57EEA /* LocalUserReducer.swift */,
 				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
 				1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */,
-				28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */,
 				05F80DED2A2E6F6700B20C87 /* PipReducer.swift */,
-				B238378A2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift */,
-				114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */,
+				28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */,
 				051F73952C0E1164006E097F /* ToastNotificationReducer.swift */,
-				C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";

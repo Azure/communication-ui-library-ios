@@ -15,28 +15,15 @@ class UpdatableCallScreenOptionsManager {
 
         callScreenHeaderViewData?.$title
             .sink { [weak self] newTitle in
-                if newTitle != nil {
-                    self?.titleDidUpdate(title: newTitle!)
-                }
+                self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateTitle(title: newTitle)))
             }
             .store(in: &subscriptions)
 
         callScreenHeaderViewData?.$subtitle
             .sink { [weak self] newSubtitle in
-                if newSubtitle != nil {
-                    self?.subtitleDidUpdate(subtitle: newSubtitle!)
-                }
+                self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateSubtitle(subtitle: newSubtitle)))
             }
             .store(in: &subscriptions)
-
-    }
-
-    func titleDidUpdate(title: String) {
-        store.dispatch(action: .callScreenInfoHeaderAction(.updateTitle(title: title)))
-    }
-
-    func subtitleDidUpdate(subtitle: String) {
-        store.dispatch(action: .callScreenInfoHeaderAction(.updateSubtitle(subtitle: subtitle)))
     }
 }
 /* </TIMER_TITLE_FEATURE> */
