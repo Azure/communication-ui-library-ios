@@ -99,10 +99,7 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
-    /* <TIMER_TITLE_FEATURE> */ 
-    private let callScreenHeaderViewData: CallScreenHeaderViewData?
     private var updatableCallScreenOptionsManager: UpdatableCallScreenOptionsManager?
-    /* </TIMER_TITLE_FEATURE> */
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -130,9 +127,6 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
-        /* <TIMER_TITLE_FEATURE> */
-        callScreenHeaderViewData = options?.callScreenOptions?.headerViewData
-        /* </TIMER_TITLE_FEATURE> */
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
@@ -159,9 +153,6 @@ public class CallComposite {
         enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
-        /* <TIMER_TITLE_FEATURE> */
-        callScreenHeaderViewData = options?.callScreenOptions?.headerViewData
-        /* </TIMER_TITLE_FEATURE> */
         orientationProvider = OrientationProvider()
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
@@ -591,8 +582,11 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
         self.videoViewManager = videoViewManager
         /* <TIMER_TITLE_FEATURE> */
-        self.updatableCallScreenOptionsManager = UpdatableCallScreenOptionsManager(store: store,
-                                                             callScreenHeaderViewData: callScreenHeaderViewData)
+        self.updatableCallScreenOptionsManager = UpdatableCallScreenOptionsManager(
+            store: store,
+            setupScreenOptions: setupScreenOptions,
+            callScreenOptions: callScreenOptions
+        )
         /* </TIMER_TITLE_FEATURE> */
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)

@@ -10,16 +10,20 @@ import Combine
 class UpdatableCallScreenOptionsManager {
     private let store: Store<AppState, Action>
     private var subscriptions = Set<AnyCancellable>()
-    init(store: Store<AppState, Action>, callScreenHeaderViewData: CallScreenHeaderViewData?) {
+
+    init(store: Store<AppState, Action>,
+         setupScreenOptions: SetupScreenOptions?,
+         callScreenOptions: CallScreenOptions?
+    ) {
         self.store = store
 
-        callScreenHeaderViewData?.$title
+        callScreenOptions?.headerViewData?.$title
             .sink { [weak self] newTitle in
                 self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateTitle(title: newTitle)))
             }
             .store(in: &subscriptions)
 
-        callScreenHeaderViewData?.$subtitle
+        callScreenOptions?.headerViewData?.$subtitle
             .sink { [weak self] newSubtitle in
                 self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateSubtitle(subtitle: newSubtitle)))
             }

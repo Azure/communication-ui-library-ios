@@ -625,7 +625,10 @@ extension CallingDemoView {
         let controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                                 envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
-        var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions)
+        var callScreenOptions = CallScreenOptions(
+            controlBarOptions: controlBarOptions,
+            headerViewData: headerViewData
+        )
         if envConfigSubject.addCustomButton {
             callScreenOptions = createCallScreenOptions(callComposite: callComposite)
         }
@@ -633,12 +636,13 @@ extension CallingDemoView {
             callScreenOptions = hideAllButtons()
         }
         return LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData,
-                                        cameraOn: envConfigSubject.cameraOn,
-                                        microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                            captionsOptions: captionsOptions, callScreenOptions: callScreenOptions
+                            setupScreenViewData: setupScreenViewData,
+                            cameraOn: envConfigSubject.cameraOn,
+                            microphoneOn: envConfigSubject.microphoneOn,
+                            skipSetupScreen: envConfigSubject.skipSetupScreen,
+                            audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                            captionsOptions: captionsOptions,
+                            callScreenOptions: callScreenOptions
         )
     }
 
