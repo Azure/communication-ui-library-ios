@@ -186,9 +186,9 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     }
 
     private func postParticipantStatusAccessibilityAnnouncements(isHold: Bool, participantModel: ParticipantInfoModel) {
-        let holdResumeAccessibilityLabel = isHold ?
+        let holdResumeAccessibilityAnnouncement = isHold ?
             localizationProvider.getLocalizedString(.onHoldAccessibilityLabel, participantModel.displayName) :
             localizationProvider.getLocalizedString(.participantResumeAccessibilityLabel, participantModel.displayName)
-        accessibilityProvider.postQueuedAnnouncement(holdResumeAccessibilityLabel)
+        accessibilityProvider.postQueuedAnnouncement(holdResumeAccessibilityAnnouncement)
     }
 }
