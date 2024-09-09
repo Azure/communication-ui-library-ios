@@ -34,6 +34,9 @@
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
 		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
+		05CE90FB2C8E95A6001ACA79 /* ButtonViewDataState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CE90FA2C8E95A6001ACA79 /* ButtonViewDataState.swift */; };
+		05CE90FD2C8E9985001ACA79 /* ButtonViewDataAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CE90FC2C8E9985001ACA79 /* ButtonViewDataAction.swift */; };
+		05CE90FF2C8E9DCB001ACA79 /* ButtonViewDataReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CE90FE2C8E9DCB001ACA79 /* ButtonViewDataReducer.swift */; };
 		05E28FF62AD60E5900FF7020 /* ParticipantRoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E28FF52AD60E5900FF7020 /* ParticipantRoleEnum.swift */; };
 		05F80DEE2A2E6F6700B20C87 /* PipReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DED2A2E6F6700B20C87 /* PipReducer.swift */; };
 		05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */; };
@@ -411,6 +414,9 @@
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
 		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
+		05CE90FA2C8E95A6001ACA79 /* ButtonViewDataState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewDataState.swift; sourceTree = "<group>"; };
+		05CE90FC2C8E9985001ACA79 /* ButtonViewDataAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewDataAction.swift; sourceTree = "<group>"; };
+		05CE90FE2C8E9DCB001ACA79 /* ButtonViewDataReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewDataReducer.swift; sourceTree = "<group>"; };
 		05E28FF52AD60E5900FF7020 /* ParticipantRoleEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRoleEnum.swift; sourceTree = "<group>"; };
 		05F80DED2A2E6F6700B20C87 /* PipReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipReducer.swift; sourceTree = "<group>"; };
 		05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityAction.swift; sourceTree = "<group>"; };
@@ -1025,6 +1031,7 @@
 			children = (
 				1F94DAE72676885700691D1E /* AppStateReducer.swift */,
 				1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */,
+				05CE90FE2C8E9DCB001ACA79 /* ButtonViewDataReducer.swift */,
 				B238378A2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift */,
 				1F83813E26803ADF0096A454 /* CallingReducer.swift */,
 				C8E10DDA2C7F91F500511482 /* CallScreenInfoHeaderReducer.swift */,
@@ -1047,18 +1054,19 @@
 				A874EDC526616728003C7D92 /* AppLifeCycleState.swift */,
 				1F94DAE526740D4400691D1E /* AppState.swift */,
 				1F3F0C66283E858600C66054 /* AudioSessionState.swift */,
+				05CE90FA2C8E95A6001ACA79 /* ButtonViewDataState.swift */,
+				B2E5B17F2AA14CC600D54A3A /* CallDiagnosticsState.swift */,
 				1F2BEDBF26328F2700D98266 /* CallingState.swift */,
+				C8E10DD62C7F8FA800511482 /* CallScreenInfoHeaderState.swift */,
+				114879C92BEB362E00B7D7FF /* CaptionsState.swift */,
+				113738FE29D638BB00D48EAB /* DefaultUserState.swift */,
 				88F6EE1B2735F8E8001AD3E9 /* ErrorState.swift */,
 				1FBCB6D62654765D00F57EEA /* LocalUserState.swift */,
 				1F13D36D26AA82D400E31666 /* NavigationState.swift */,
 				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
 				1F13D36B26A8B83300E31666 /* RemoteParticipantsState.swift */,
-				113738FE29D638BB00D48EAB /* DefaultUserState.swift */,
-				05325C772A2A66CB00267629 /* VisibilityState.swift */,
-				B2E5B17F2AA14CC600D54A3A /* CallDiagnosticsState.swift */,
-				114879C92BEB362E00B7D7FF /* CaptionsState.swift */,
 				051F73912C0E0F3C006E097F /* ToastNotificationState.swift */,
-				C8E10DD62C7F8FA800511482 /* CallScreenInfoHeaderState.swift */,
+				05325C772A2A66CB00267629 /* VisibilityState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -1067,17 +1075,18 @@
 			isa = PBXGroup;
 			children = (
 				752B953B2863A40E001C52E8 /* Action.swift */,
-				1F2BEDCC26329E5600D98266 /* PermissionAction.swift */,
-				1F2BEDD026329E7C00D98266 /* CallingAction.swift */,
-				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
 				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
-				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
-				28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */,
-				05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */,
-				B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */,
-				110DBE402C0998070080DBE1 /* CaptionsAction.swift */,
-				051F73932C0E10BB006E097F /* ToastNotificationAction.swift */,
+				05CE90FC2C8E9985001ACA79 /* ButtonViewDataAction.swift */,
+				1F2BEDD026329E7C00D98266 /* CallingAction.swift */,
 				C8E10DD82C7F900B00511482 /* CallScreenInfoHeaderAction.swift */,
+				110DBE402C0998070080DBE1 /* CaptionsAction.swift */,
+				B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */,
+				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
+				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
+				1F2BEDCC26329E5600D98266 /* PermissionAction.swift */,
+				28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */,
+				051F73932C0E10BB006E097F /* ToastNotificationAction.swift */,
+				05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -2148,6 +2157,7 @@
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
 				1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */,
 				1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */,
+				05CE90FF2C8E9DCB001ACA79 /* ButtonViewDataReducer.swift in Sources */,
 				1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */,
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,
 				982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */,
@@ -2224,6 +2234,7 @@
 				534A5DD82C40AE0B002EB508 /* DrawerBodyTextView.swift in Sources */,
 				051F73962C0E1164006E097F /* ToastNotificationReducer.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
+				05CE90FB2C8E95A6001ACA79 /* ButtonViewDataState.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				C8E50E9F2C00085100AB507E /* ParticipantCapability.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
@@ -2293,6 +2304,7 @@
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
 				116BC0C42C24D10D00F8CF6F /* CaptionsInfoCellView.swift in Sources */,
+				05CE90FD2C8E9985001ACA79 /* ButtonViewDataAction.swift in Sources */,
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,
 				051F73942C0E10BB006E097F /* ToastNotificationAction.swift in Sources */,
 				05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */,

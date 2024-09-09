@@ -71,7 +71,8 @@ extension Reducer where State == ErrorState,
                 ,
                 .callScreenInfoHeaderAction,
                 /* </TIMER_TITLE_FEATURE> */
-                .setTotalParticipantCount:
+                .setTotalParticipantCount,
+                .buttonViewDataAction:
             return state
         }
 

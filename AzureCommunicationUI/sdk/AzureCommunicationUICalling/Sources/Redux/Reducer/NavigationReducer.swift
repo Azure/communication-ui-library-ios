@@ -80,7 +80,8 @@ extension Reducer where State == NavigationState,
                 ,
                 .callScreenInfoHeaderAction,
                 /* </TIMER_TITLE_FEATURE> */
-                .setTotalParticipantCount:
+                .setTotalParticipantCount,
+                .buttonViewDataAction:
             return state
         }
         return NavigationState(status: navigationStatus,

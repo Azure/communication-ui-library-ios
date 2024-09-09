@@ -658,7 +658,7 @@ class ControlBarViewModelTests: XCTestCase {
     }
 
     func test_isMoreButtonVisible_whenCustomButtonsPresent_thenReturnsTrue() {
-        let customButton = CustomButtonViewData(id: UUID(), image: UIImage(), title: "Test") { _ in }
+        let customButton = CustomButtonViewData(id: UUID().uuidString, image: UIImage(), title: "Test") { _ in }
         let options = CallScreenControlBarOptions(customButtons: [customButton])
         let sut = makeSUT(controlBarOptions: options)
         XCTAssertTrue(sut.isMoreButtonVisible())

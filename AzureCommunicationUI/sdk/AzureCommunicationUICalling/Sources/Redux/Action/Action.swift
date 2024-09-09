@@ -39,5 +39,5 @@ enum Action: Equatable {
     /* <TIMER_TITLE_FEATURE> */
     case callScreenInfoHeaderAction(CallScreenInfoHeaderAction)
     /* </TIMER_TITLE_FEATURE> */
-
+    case buttonViewDataAction(ButtonViewDataAction)
 }
