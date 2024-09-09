@@ -425,18 +425,7 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        /* <TIMER_TITLE_FEATURE> */
-        headerViewData = CallScreenHeaderViewData()
-        if !envConfigSubject.callInformationTitle.isEmpty {
-            headerViewData?.title = envConfigSubject.callInformationTitle
-        }
-        if !envConfigSubject.callInformationSubtitle.isEmpty {
-            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
-        }
-        /* </TIMER_TITLE_FEATURE> */
-        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
-                                                   headerViewData: headerViewData
-                                                   /* </TIMER_TITLE_FEATURE> */ )
+
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -461,7 +450,6 @@ extension CallingDemoView {
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
-            callScreenOptions: callScreenOptions,
             callKitOptions: callKitOptions,
             setupScreenOptions: setupScreenOptions) :
         CallCompositeOptions(
@@ -473,7 +461,6 @@ extension CallingDemoView {
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: envConfigSubject.enableMultitasking,
             enableSystemPictureInPictureWhenMultitasking: envConfigSubject.enablePipWhenMultitasking,
-            callScreenOptions: callScreenOptions,
             callKitOptions: callKitOptions,
             displayName: envConfigSubject.displayName,
             disableInternalPushForIncomingCall: envConfigSubject.disableInternalPushForIncomingCall,
@@ -622,16 +609,31 @@ extension CallingDemoView {
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
 
-        let controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+        var controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                                 envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
-        var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions)
+
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        /* </TIMER_TITLE_FEATURE> */
+
         if envConfigSubject.addCustomButton {
-            callScreenOptions = createCallScreenOptions(callComposite: callComposite)
+            controlBarOptions = createCallScreenOptions(callComposite: callComposite)
         }
         if envConfigSubject.hideAllButtons {
-            callScreenOptions = hideAllButtons()
+            controlBarOptions = hideAllButtons()
         }
+
+        var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions /* <TIMER_TITLE_FEATURE> */ ,
+                                                   headerViewData: headerViewData
+                                                   /* </TIMER_TITLE_FEATURE> */ )
+
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
@@ -642,7 +644,7 @@ extension CallingDemoView {
         )
     }
 
-    private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenOptions {
+    private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenControlBarOptions  {
         // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
         let customButtonImage: UIImage
         if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
@@ -663,7 +665,7 @@ extension CallingDemoView {
 
         let customButton2 = CustomButtonViewData(
             image: customButtonImage,
-            title: "Show Touble Shooting Guide"
+            title: "Show Trouble Shooting Guide"
         ) { _ in
             print("::::SwiftUIDemoView::CallScreen::customButton2::onClick")
             callComposite?.isHidden = true
@@ -675,11 +677,11 @@ extension CallingDemoView {
             customButtons: [customButton1, customButton2]
         )
 
-        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+        return  callScreenControlBarOptions
     }
 
-    func hideAllButtons() -> CallScreenOptions {
-        let callScreenControlBarOptions = CallScreenControlBarOptions(
+    func hideAllButtons() -> CallScreenControlBarOptions  {
+        return CallScreenControlBarOptions(
             leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
             liveCaptionsButton: ButtonViewData(visible: false),
             liveCaptionsToggleButton: ButtonViewData(visible: false),
@@ -688,7 +690,6 @@ extension CallingDemoView {
             shareDiagnosticsButton: ButtonViewData(visible: false),
             reportIssueButton: ButtonViewData(visible: false)
         )
-        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
     }
 
     func startCallWithDeprecatedLaunch() async {
@@ -1013,7 +1014,9 @@ struct CustomDemoView: View {
             Text("This is a new view presented modally.")
                 .font(.largeTitle)
                 .padding()
-
+            Text("This is demo view, no accessibility tests needed")
+                .font(.caption)
+                .padding()
             Button("Dismiss") {
                 presentationMode.wrappedValue.dismiss()
             }
