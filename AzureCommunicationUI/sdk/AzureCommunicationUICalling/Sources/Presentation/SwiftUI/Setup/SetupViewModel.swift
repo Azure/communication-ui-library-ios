@@ -104,7 +104,8 @@ class SetupViewModel: ObservableObject {
 
         setupControlBarViewModel = compositeViewModelFactory
             .makeSetupControlBarViewModel(dispatchAction: store.dispatch,
-                                          localUserState: store.state.localUserState)
+                                          localUserState: store.state.localUserState,
+                                          buttonViewDataState: store.state.buttonViewDataState)
 
         store.$state
             .receive(on: DispatchQueue.main)
@@ -175,7 +176,8 @@ class SetupViewModel: ObservableObject {
                                     visibilityState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
-                                        callingState: callingState)
+                                        callingState: callingState,
+                                        buttonViewDataState: state.buttonViewDataState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)

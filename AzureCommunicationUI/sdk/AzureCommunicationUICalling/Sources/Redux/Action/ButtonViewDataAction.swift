@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum ButtonViewDataAction: Equatable {
 
@@ -35,6 +36,9 @@ enum ButtonViewDataAction: Equatable {
 
     case callScreenCustomButtonIsEnabledUpdated(id: String, enabled: Bool)
     case callScreenCustomButtonIsVisibleUpdated(id: String, visible: Bool)
+    case callScreenCustomButtonTitleUpdated(id: String, title: String)
+    case callScreenCustomButtonIconUpdated(id: String, image: UIImage)
+
     case setupScreenCameraButtonIsEnabledUpdated(enabled: Bool)
     case setupScreenCameraButtonIsVisibleUpdated(visible: Bool)
     case setupScreenMicButtonIsEnabledUpdated(enabled: Bool)
@@ -42,6 +46,4 @@ enum ButtonViewDataAction: Equatable {
     case setupScreenAudioDeviceButtonIsEnabledUpdated(enabled: Bool)
     case setupScreenAudioDeviceButtonIsVisibleUpdated(visible: Bool)
 
-    case updateTitle(title: String?)
-    case updateSubtitle(subtitle: String?)
 }

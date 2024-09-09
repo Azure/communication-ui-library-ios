@@ -47,6 +47,7 @@ struct SetupControlBarView: View {
     var micButton: some View {
         IconWithLabelButton(viewModel: viewModel.micButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.toggleMicAccessibilityID.rawValue)
+            .hidden(!viewModel.isMicButtonVisible)
     }
 
     var audioDeviceButton: some View {

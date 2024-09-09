@@ -6,9 +6,17 @@
 import Foundation
 import Combine
 
-class UpdatableCallScreenOptionsManager {
+protocol UpdatableOptionsManagerProtocol {
+    var setupScreenOptions: SetupScreenOptions? { get }
+    var callScreenOptions: CallScreenOptions? { get }
+}
+
+class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
     private let store: Store<AppState, Action>
     private var subscriptions = Set<AnyCancellable>()
+
+    let setupScreenOptions: SetupScreenOptions?
+    let callScreenOptions: CallScreenOptions?
 
     // swiftlint:disable function_body_length
     init(store: Store<AppState, Action>,
@@ -16,6 +24,8 @@ class UpdatableCallScreenOptionsManager {
          callScreenOptions: CallScreenOptions?
     ) {
         self.store = store
+        self.callScreenOptions = callScreenOptions
+        self.setupScreenOptions = setupScreenOptions
 
         /* <TIMER_TITLE_FEATURE> */
         callScreenOptions?.headerViewData?.$title
@@ -183,6 +193,15 @@ class UpdatableCallScreenOptionsManager {
                     .callScreenCaptionsLanguageButtonIsEnabledUpdated(enabled: enabled)))
             }
             .store(in: &subscriptions)
+
+        callScreenOptions?.controlBarOptions?.customButtons.forEach { button in
+            button.$enabled
+                .sink { [weak self] enabled in
+                    self?.store.dispatch(action: .buttonViewDataAction(
+                        .callScreenCaptionsLanguageButtonIsEnabledUpdated(enabled: enabled)))
+                }
+                .store(in: &subscriptions)
+        }
     }
     // swiftlint:enable function_body_length
 }

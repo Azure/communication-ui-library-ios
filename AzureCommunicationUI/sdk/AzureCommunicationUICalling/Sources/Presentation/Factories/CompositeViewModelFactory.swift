@@ -29,6 +29,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let setupScreenOptions: SetupScreenOptions?
     private let callScreenOptions: CallScreenOptions?
     private let callType: CompositeCallType
+    private let updatableOptionsManager: UpdatableOptionsManagerProtocol
 
     init(logger: Logger,
          store: Store<AppState, Action>,
@@ -48,6 +49,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
+         updatableOptionsManager: UpdatableOptionsManagerProtocol,
          retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
@@ -68,6 +70,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.avatarManager = avatarManager
+        self.updatableOptionsManager = updatableOptionsManager
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -478,16 +481,19 @@ extension CompositeViewModelFactory {
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> SetupControlBarViewModel {
+                                      localUserState: LocalUserState,
+                                      buttonViewDataState: ButtonViewDataState) -> SetupControlBarViewModel {
         let audioVideoMode = localOptions?.audioVideoMode ?? CallCompositeAudioVideoMode.audioAndVideo
 
         return SetupControlBarViewModel(compositeViewModelFactory: self,
-                                 logger: logger,
-                                 dispatchAction: dispatchAction,
-                                 localUserState: localUserState,
-                                 localizationProvider: localizationProvider,
-                                 audioVideoMode: audioVideoMode,
-                                 setupScreenOptions: setupScreenOptions)
+                                        logger: logger,
+                                        dispatchAction: dispatchAction,
+                                        updatableOptionsManager: updatableOptionsManager,
+                                        localUserState: localUserState,
+                                        localizationProvider: localizationProvider,
+                                        audioVideoMode: audioVideoMode,
+                                        setupScreenOptions: setupScreenOptions,
+                                        buttonViewDataState: buttonViewDataState)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {

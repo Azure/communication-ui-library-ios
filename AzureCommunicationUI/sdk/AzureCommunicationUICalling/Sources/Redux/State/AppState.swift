@@ -22,7 +22,7 @@ struct AppState {
     /* <TIMER_TITLE_FEATURE> */
     let callScreenInfoHeaderState: CallScreenInfoHeaderState
     /* </TIMER_TITLE_FEATURE> */
-    let buttonViewdataState: ButtonViewDataState
+    let buttonViewDataState: ButtonViewDataState
 
     init(callingState: CallingState = .init(),
          permissionState: PermissionState = .init(),
@@ -42,7 +42,7 @@ struct AppState {
          callScreenInfoHeaderState: CallScreenInfoHeaderState = .init()
          /* </TIMER_TITLE_FEATURE> */
          ,
-         buttonViewdataState: ButtonViewDataState = .init()) {
+         buttonViewDataState: ButtonViewDataState = .init()) {
         self.callingState = callingState
         self.permissionState = permissionState
         self.localUserState = localUserState
@@ -59,6 +59,6 @@ struct AppState {
         /* <TIMER_TITLE_FEATURE> */
         self.callScreenInfoHeaderState = callScreenInfoHeaderState
         /* </TIMER_TITLE_FEATURE> */
-        self.buttonViewdataState = buttonViewdataState
+        self.buttonViewDataState = buttonViewDataState
     }
 }

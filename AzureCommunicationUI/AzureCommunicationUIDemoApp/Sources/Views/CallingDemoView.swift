@@ -423,8 +423,11 @@ extension CallingDemoView {
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
         let setupScreenOptions = SetupScreenOptions(
-            cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
-            microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
+            cameraButton: ButtonViewData(visible: false, enabled: false),
+            microphoneButton: ButtonViewData(enabled: false),
+            audioDeviceButton: ButtonViewData(enabled: false)
+        )
+
         /* <TIMER_TITLE_FEATURE> */
         headerViewData = CallScreenHeaderViewData()
         if !envConfigSubject.callInformationTitle.isEmpty {
@@ -619,6 +622,11 @@ extension CallingDemoView {
                                                       displayName: renderDisplayName)
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
+        let setupScreenOptions = SetupScreenOptions(
+            cameraButton: ButtonViewData(visible: false, enabled: false),
+            microphoneButton: ButtonViewData(visible: false, enabled: false),
+            audioDeviceButton: ButtonViewData(visible: false, enabled: false)
+        )
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
 
@@ -642,6 +650,7 @@ extension CallingDemoView {
                             skipSetupScreen: envConfigSubject.skipSetupScreen,
                             audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
                             captionsOptions: captionsOptions,
+                            setupScreenOptions: setupScreenOptions,
                             callScreenOptions: callScreenOptions
         )
     }

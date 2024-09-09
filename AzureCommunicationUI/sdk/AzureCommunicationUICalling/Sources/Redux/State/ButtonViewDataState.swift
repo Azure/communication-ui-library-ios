@@ -43,12 +43,12 @@ struct ButtonViewDataState: Equatable {
          callScreenCameraButtonState: DefaultButtonState? = nil,
          callScreenMicButtonState: DefaultButtonState? = nil,
          callScreenAudioDeviceButtonState: DefaultButtonState? = nil,
+         shareDiagnosticsButton: DefaultButtonState? = nil,
+         reportIssueButton: DefaultButtonState? = nil,
          liveCaptionsButton: DefaultButtonState? = nil,
          liveCaptionsToggleButton: DefaultButtonState? = nil,
          spokenLanguageButton: DefaultButtonState? = nil,
          captionsLanguageButton: DefaultButtonState? = nil,
-         shareDiagnosticsButton: DefaultButtonState? = nil,
-         reportIssueButton: DefaultButtonState? = nil,
          callScreenCustomButtonsState: [CustomButtonState] = []
     ) {
         self.setupScreenCameraButtonState = setupScreenCameraButtonState
@@ -67,5 +67,58 @@ struct ButtonViewDataState: Equatable {
         self.reportIssueButton = reportIssueButton
 
         self.callScreenCustomButtonsState = callScreenCustomButtonsState
+    }
+
+    static func constructInitial(setupScreenOptions: SetupScreenOptions?,
+                                 callScreenOptions: CallScreenOptions?) -> ButtonViewDataState {
+        return ButtonViewDataState(
+            setupScreenCameraButtonState: DefaultButtonState(
+                enabled: setupScreenOptions?.cameraButton?.enabled ?? true,
+                visible: setupScreenOptions?.cameraButton?.visible ?? true),
+            setupScreenMicButtonState: DefaultButtonState(
+                enabled: setupScreenOptions?.microphoneButton?.enabled ?? true,
+                visible: setupScreenOptions?.microphoneButton?.visible ?? true),
+            setupScreenAudioDeviceButtonState: DefaultButtonState(
+                enabled: setupScreenOptions?.audioDeviceButton?.enabled ?? true,
+                visible: setupScreenOptions?.audioDeviceButton?.visible ?? true),
+
+            callScreenCameraButtonState: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.cameraButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.cameraButton?.visible ?? true),
+            callScreenMicButtonState: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.microphoneButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.microphoneButton?.visible ?? true),
+            callScreenAudioDeviceButtonState: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.audioDeviceButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.audioDeviceButton?.visible ?? true),
+
+            shareDiagnosticsButton: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.shareDiagnosticsButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.shareDiagnosticsButton?.visible ?? true),
+            reportIssueButton: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.reportIssueButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.reportIssueButton?.visible ?? true),
+
+            liveCaptionsButton: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.liveCaptionsButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.liveCaptionsButton?.visible ?? true),
+            liveCaptionsToggleButton: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.liveCaptionsToggleButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.liveCaptionsToggleButton?.visible ?? true),
+            spokenLanguageButton: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.spokenLanguageButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.spokenLanguageButton?.visible ?? true),
+            captionsLanguageButton: DefaultButtonState(
+                enabled: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.enabled ?? true,
+                visible: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.visible ?? true),
+
+            callScreenCustomButtonsState: callScreenOptions?.controlBarOptions?.customButtons.map { customButton in
+                return CustomButtonState(id: customButton.id,
+                                  enabled: customButton.enabled,
+                                  visible: customButton.visible,
+                                  image: customButton.image,
+                                  title: customButton.title)
+            } ?? []
+        )
     }
 }

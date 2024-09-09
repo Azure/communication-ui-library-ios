@@ -118,7 +118,8 @@ protocol CompositeViewModelFactoryProtocol {
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> SetupControlBarViewModel
+                                      localUserState: LocalUserState,
+                                      buttonViewDataState: ButtonViewDataState) -> SetupControlBarViewModel
     func makeJoiningCallActivityViewModel(title: String) -> JoiningCallActivityViewModel
 }
 

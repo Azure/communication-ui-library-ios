@@ -75,6 +75,7 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var pipManager: PipManagerProtocol?
+    private var updatableOptionsManager: UpdatableOptionsManagerProtocol?
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
@@ -99,7 +100,6 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
-    private var updatableCallScreenOptionsManager: UpdatableCallScreenOptionsManager?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -551,7 +551,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             startWithCameraOn: localOptions?.cameraOn,
             startWithMicrophoneOn: localOptions?.microphoneOn,
             skipSetupScreen: localOptions?.skipSetupScreen,
-            callType: callConfiguration.compositeCallType
+            callType: callConfiguration.compositeCallType,
+            setupScreenOptions: localOptions?.setupScreenOptions,
+            callScreenOptions: localOptions?.callScreenOptions
         )
         self.store = store
 
@@ -582,11 +584,12 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
         self.videoViewManager = videoViewManager
         /* <TIMER_TITLE_FEATURE> */
-        self.updatableCallScreenOptionsManager = UpdatableCallScreenOptionsManager(
+        let updatableOptionsManager = UpdatableOptionsManager(
             store: store,
             setupScreenOptions: setupScreenOptions,
             callScreenOptions: callScreenOptions
         )
+        self.updatableOptionsManager = updatableOptionsManager
         /* </TIMER_TITLE_FEATURE> */
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
@@ -620,6 +623,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager,
+                updatableOptionsManager: updatableOptionsManager,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
@@ -649,7 +653,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
-        self.updatableCallScreenOptionsManager = nil
+        self.updatableOptionsManager = nil
     }
 
     private func disposeSDKWrappers() {
