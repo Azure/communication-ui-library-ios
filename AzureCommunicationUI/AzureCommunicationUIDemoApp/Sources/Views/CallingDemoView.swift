@@ -644,7 +644,7 @@ extension CallingDemoView {
         )
     }
 
-    private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenControlBarOptions  {
+    private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenControlBarOptions {
         // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
         let customButtonImage: UIImage
         if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
@@ -680,7 +680,7 @@ extension CallingDemoView {
         return  callScreenControlBarOptions
     }
 
-    func hideAllButtons() -> CallScreenControlBarOptions  {
+    func hideAllButtons() -> CallScreenControlBarOptions {
         return CallScreenControlBarOptions(
             leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
             liveCaptionsButton: ButtonViewData(visible: false),
