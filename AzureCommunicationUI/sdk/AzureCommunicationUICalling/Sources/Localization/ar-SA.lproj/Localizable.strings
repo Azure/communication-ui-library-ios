@@ -129,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="تجاهل رسالة الإعلام";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="تجاهل هذا الإعلام";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="يتعذر الانضمام إلى المكالمة بسبب حدوث خطأ.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="تمت إزالتك من المكالمة بسبب حدوث خطأ.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="تمت إزالتك من المكالمة بسبب خطأ أو فقد الاتصال. الرجاء محاولة إعادة الانضمام إلى المكالمة.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="تمت إزالتك من المكالمة.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="حدث خطأ.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="يتعذر استئناف المكالمة";

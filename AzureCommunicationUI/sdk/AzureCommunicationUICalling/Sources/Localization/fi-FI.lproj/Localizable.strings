@@ -129,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Hylkää banneri";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Hylkää tämän ilmoituksen";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Puheluun liittyminen ei onnistu virheen vuoksi.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Sinut poistettiin puhelusta virheen vuoksi.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Sinut poistettiin puhelusta virheen tai katkennut yhteyden vuoksi. Yritä liittyä puheluun uudelleen.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Sinut poistettiin puhelusta.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Tapahtui virhe.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Puhelua ei voi jatkaa";

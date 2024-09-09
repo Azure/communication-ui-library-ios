@@ -108,16 +108,18 @@ struct SettingsView: View {
 
     var settingsForm: some View {
         List {
-            orientationOptions
-            captionsSettings
-            buttonSettins
-            multitaskingSettings
             Group {
-                localizationSettings
-                skipSetupScreenSettings
+                orientationOptions
+                captionsSettings
+                buttonSettins
+                multitaskingSettings
                 /* <TIMER_TITLE_FEATURE> */
                 callScreenHeaderSettings
                 /* </TIMER_TITLE_FEATURE> */
+            }
+            Group {
+                localizationSettings
+                skipSetupScreenSettings
                 micSettings
                 localParticipantSettings
                 avatarSettings
