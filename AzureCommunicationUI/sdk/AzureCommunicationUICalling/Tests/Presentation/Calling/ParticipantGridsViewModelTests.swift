@@ -688,7 +688,8 @@ extension ParticipantGridViewModelTests {
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
                                                                 localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                                localParticipantViewData: nil))
+                                                                localParticipantViewData: nil),
+                                                              updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
         factoryMocking.createMockParticipantGridCellViewModel = { infoModel in
             if let completion = participantGridCellViewUpdateCompletion {
                 return ParticipantGridCellViewModelMocking(participantModel: infoModel,
@@ -713,7 +714,8 @@ extension ParticipantGridViewModelTests {
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
                                                                 localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                                localParticipantViewData: nil))
+                                                                localParticipantViewData: nil),
+                                                              updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
                                         localizationProvider: localizationProvider,
                                         accessibilityProvider: accessibilityProvider,
