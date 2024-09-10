@@ -20,6 +20,8 @@ public struct SetupScreenOptions {
     public init(cameraButtonEnabled: Bool = true, microphoneButtonEnabled: Bool = true) {
         self.cameraButtonEnabled = cameraButtonEnabled
         self.microphoneButtonEnabled = microphoneButtonEnabled
+        cameraButton = ButtonViewData(enabled: cameraButtonEnabled)
+        microphoneButton = ButtonViewData(enabled: microphoneButtonEnabled)
     }
     /// Creates an instance of SetupScreenOptions with related options.
     /// - Parameter cameraButton: camera button options.

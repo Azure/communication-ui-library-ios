@@ -55,36 +55,44 @@ class CaptionsListViewModel: ObservableObject {
 
     private func setupItems(state: AppState) {
         items.removeAll()
+        let buttonViewDataState = state.buttonViewDataState
 
-        let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
-            title: localizationProvider.getLocalizedString(.captionsListTitile),
-            isToggleOn: Binding(get: { self.isToggleEnabled }, set: toggleCaptions),
-            showToggle: true,
-            accessibilityIdentifier: "",
-            startIcon: .closeCaptions,
-            action: {})
+        if buttonViewDataState.liveCaptionsToggleButton?.visible ?? true {
+            let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
+                title: localizationProvider.getLocalizedString(.captionsListTitile),
+                isToggleOn: Binding(get: { self.isToggleEnabled }, set: toggleCaptions),
+                showToggle: true,
+                accessibilityIdentifier: "",
+                startIcon: .closeCaptions,
+                isEnabled: buttonViewDataState.liveCaptionsToggleButton?.enabled ?? true,
+                action: {}
+            )
+            items.append(enableCaptionsInfoModel)
+        }
 
-        let spokenLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
-            title: localizationProvider.getLocalizedString(.captionsSpokenLanguage),
-            subtitle: languageDisplayName(for: state.captionsState.spokenLanguage ?? "en-US"),
-            accessibilityIdentifier: "",
-            startIcon: .personVoice,
-            endIcon: .rightChevron,
-            isEnabled: self.isToggleEnabled,
-            action: self.isToggleEnabled ? showSpokenLanguage : {})
+        if buttonViewDataState.spokenLanguageButton?.visible ?? true {
+            let spokenLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
+                title: localizationProvider.getLocalizedString(.captionsSpokenLanguage),
+                subtitle: languageDisplayName(for: state.captionsState.spokenLanguage ?? "en-US"),
+                accessibilityIdentifier: "",
+                startIcon: .personVoice,
+                endIcon: .rightChevron,
+                isEnabled: self.isToggleEnabled && buttonViewDataState.spokenLanguageButton?.enabled ?? true,
+                action: self.isToggleEnabled ? showSpokenLanguage : {})
+            items.append(spokenLanguageInfoModel)
+        }
 
-        let captionsLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
-            title: localizationProvider.getLocalizedString(.captionsCaptionLanguage),
-            subtitle: languageDisplayName(for: state.captionsState.captionLanguage ?? "en"),
-            accessibilityIdentifier: "",
-            startIcon: .localLanguage,
-            endIcon: .rightChevron,
-            isEnabled: self.isToggleEnabled,
-            action: self.isToggleEnabled ? showCaptionsLanguage : {})
-        if state.captionsState.activeType == .teams {
-            items = [enableCaptionsInfoModel, spokenLanguageInfoModel, captionsLanguageInfoModel]
-        } else {
-            items = [enableCaptionsInfoModel, spokenLanguageInfoModel]
+        if state.captionsState.activeType == .teams && buttonViewDataState.captionsLanguageButton?.visible ?? true {
+            let captionsLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
+                title: localizationProvider.getLocalizedString(.captionsCaptionLanguage),
+                subtitle: languageDisplayName(for: state.captionsState.captionLanguage ?? "en"),
+                accessibilityIdentifier: "",
+                startIcon: .localLanguage,
+                endIcon: .rightChevron,
+                isEnabled: self.isToggleEnabled && buttonViewDataState.captionsLanguageButton?.enabled ?? true,
+                action: self.isToggleEnabled ? showCaptionsLanguage : {})
+
+            items.append(captionsLanguageInfoModel)
         }
 
     }

@@ -69,7 +69,8 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  /* <TIMER_TITLE_FEATURE> */ ,
                  .callScreenInfoHeaderAction,
                  /* </TIMER_TITLE_FEATURE> */
-                 .setTotalParticipantCount:
+                 .setTotalParticipantCount,
+                 .buttonViewDataAction:
                 break
             }
         }

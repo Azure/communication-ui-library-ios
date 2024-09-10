@@ -27,7 +27,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                                           store: storeFactory.store,
                                                           avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
                                                                                                   localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                                                                  localParticipantViewData: nil))
+                                                                                                  localParticipantViewData: nil),
+                                                          updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
     }
 
     override func tearDown() {
@@ -49,7 +50,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                                         permissionState: storeFactory.store.state.permissionState,
-                                        callingState: CallingState())
+                                        callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
 
         storeFactory.store.$state
             .dropFirst()
@@ -75,7 +77,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
 
         storeFactory.store.$state
             .dropFirst()
@@ -100,7 +103,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(audioState: audioState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState.init())
+                   callingState: CallingState.init(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
 
         storeFactory.store.$state
             .dropFirst()
@@ -125,7 +129,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(audioState: audioState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
 
         storeFactory.store.$state
             .dropFirst()
@@ -151,7 +156,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
 
         XCTAssertTrue(sut.isControlBarHidden())
     }
@@ -166,7 +172,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
 
         XCTAssertFalse(sut.isMicButtonDisabled())
         XCTAssertTrue(sut.isCameraDisabled())
@@ -216,7 +223,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: LocalUserState(),
                    permissionState: PermissionState(audioPermission: .denied,
                                                     cameraPermission: .denied),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: ButtonViewDataState())
         sut.update(isJoinRequested: false)
 
         XCTAssertTrue(sut.isCameraDisabled())
@@ -228,7 +236,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: LocalUserState(),
                    permissionState: PermissionState(audioPermission: .granted,
                                                     cameraPermission: .granted),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         sut.update(isJoinRequested: false)
 
         XCTAssertFalse(sut.isCameraDisabled())
@@ -241,7 +250,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState())
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
 
         XCTAssertEqual(sut.micStatus, .off)
     }
@@ -270,7 +280,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -295,7 +306,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),
                    permissionState: permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -322,7 +334,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -348,7 +361,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -386,7 +400,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUTLocalizationMocking()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         wait(for: [expectation], timeout: timeout)
     }
 }
@@ -397,10 +412,12 @@ extension SetupControlBarViewModelTests {
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,
+                                        updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil),
                                         localUserState: LocalUserState(),
                                         localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                         audioVideoMode: audioVideoMode,
-                                        setupScreenOptions: nil)
+                                        setupScreenOptions: nil,
+                                        buttonViewDataState: storeFactory.store.state.buttonViewDataState)
     }
 
     func makeSUTLocalizationMocking() -> SetupControlBarViewModel {

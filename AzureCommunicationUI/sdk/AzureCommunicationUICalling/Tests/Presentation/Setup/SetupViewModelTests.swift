@@ -24,7 +24,8 @@ class SetupViewModelTests: XCTestCase {
                                                           store: storeFactory.store,
                                                           avatarManager: AvatarViewManagerMocking(store: storeFactory.store,
                                                                                                   localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                                                                  localParticipantViewData: nil))
+                                                                                                  localParticipantViewData: nil),
+                                                          updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
     }
 
     override func tearDown() {
@@ -118,16 +119,19 @@ class SetupViewModelTests: XCTestCase {
                                 permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
         let expectation = XCTestExpectation(description: "SetupControlBarViewModel is updated")
-        let updateSetupControlBarViewModel: ((LocalUserState, PermissionState, CallingState) -> Void) = { userState, permissionsState, callingState in
+        let updateSetupControlBarViewModel: ((LocalUserState, PermissionState, CallingState, ButtonViewDataState) -> Void) = { userState, permissionsState, callingState, buttonViewDataState in
             XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
             XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
             XCTAssertEqual(callingState, appState.callingState)
+            XCTAssertEqual(buttonViewDataState, appState.buttonViewDataState)
             expectation.fulfill()
         }
         factoryMocking.setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                                   logger: logger,
                                                                                   dispatchAction: storeFactory.store.dispatch,
+                                                                                  updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil),
                                                                                   localUserState: LocalUserState(),
+                                                                                  buttonViewDataState: ButtonViewDataState(),
                                                                                   updateState: updateSetupControlBarViewModel)
         let sut = makeSUT()
         sut.receive(appState)
@@ -140,7 +144,9 @@ class SetupViewModelTests: XCTestCase {
         let setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                        logger: logger,
                                                                        dispatchAction: storeFactory.store.dispatch,
-                                                                       localUserState: LocalUserState())
+                                                                       updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil),
+                                                                       localUserState: LocalUserState(),
+                                                                       buttonViewDataState: ButtonViewDataState())
         factoryMocking.setupControlBarViewModel = setupControlBarViewModel
         let sut = makeSUT()
         let updateIsJoinRequested: ((Bool) -> Void) = { isJoinRequested in
