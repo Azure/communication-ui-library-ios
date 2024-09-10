@@ -643,10 +643,18 @@ extension CallingDemoView {
         let controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                                 envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
-        var callScreenOptions = CallScreenOptions(
-            controlBarOptions: controlBarOptions,
-            headerViewData: headerViewData
-        )
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        /* </TIMER_TITLE_FEATURE> */
+        var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions,
+                                                   headerViewData: headerViewData)
+
         if envConfigSubject.addCustomButton {
             callScreenOptions = createCallScreenOptions(callComposite: callComposite)
         }
@@ -763,8 +771,20 @@ extension CallingDemoView {
             reportIssueButton: reportIssueButton,
             customButtons: [hideButtonsCustomButton, disableButtonsCustomButton, customButton1, customButton2]
         )
-
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions /* <TIMER_TITLE_FEATURE> */ ,
+                                                   headerViewData: headerViewData
+                                                   /* </TIMER_TITLE_FEATURE> */ )
+        /* <|TIMER_TITLE_FEATURE>
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+         </TIMER_TITLE_FEATURE> */
     }
 
     func hideAllButtons() -> CallScreenOptions {
@@ -780,7 +800,20 @@ extension CallingDemoView {
             shareDiagnosticsButton: ButtonViewData(visible: false),
             reportIssueButton: ButtonViewData(visible: false)
         )
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions /* <TIMER_TITLE_FEATURE> */ ,
+                                                   headerViewData: headerViewData
+                                                   /* </TIMER_TITLE_FEATURE> */ )
+        /* <|TIMER_TITLE_FEATURE>
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+         </TIMER_TITLE_FEATURE> */
     }
 
     func startCallWithDeprecatedLaunch() async {
