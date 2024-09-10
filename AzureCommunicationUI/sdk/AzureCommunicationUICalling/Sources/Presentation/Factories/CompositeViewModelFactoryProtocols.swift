@@ -95,6 +95,7 @@ protocol CompositeViewModelFactoryProtocol {
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
                                      startIcon: CompositeIcon,
+                                     isEnabled: Bool,
                                      action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
 
     func makeLanguageListItemViewModel(title: String,

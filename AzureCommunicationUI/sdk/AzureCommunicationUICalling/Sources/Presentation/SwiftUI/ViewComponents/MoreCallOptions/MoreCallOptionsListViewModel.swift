@@ -57,7 +57,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
     private func generateItems(_ buttonViewDataState: ButtonViewDataState) {
         var items: [DrawerGenericItemViewModel] = []
 
-        if isCaptionsAvailable && buttonViewDataState.spokenLanguageButton?.visible ?? true {
+        if isCaptionsAvailable && buttonViewDataState.liveCaptionsButton?.visible ?? true {
             let captionsInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.captionsListTitile),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
@@ -65,7 +65,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
                 action: showCaptionsViewAction,
                 startCompositeIcon: .closeCaptions,
                 endIcon: .rightChevron,
-                isEnabled: buttonViewDataState.spokenLanguageButton?.enabled ?? true
+                isEnabled: buttonViewDataState.liveCaptionsButton?.enabled ?? true
             )
             items.append(captionsInfoModel)
         }

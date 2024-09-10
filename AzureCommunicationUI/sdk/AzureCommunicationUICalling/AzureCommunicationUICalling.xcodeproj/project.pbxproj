@@ -853,15 +853,15 @@
 		11A8FC272C0FC53A00BF1FFA /* Captions */ = {
 			isa = PBXGroup;
 			children = (
-				11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */,
+				111FBD372C3C6976008178BF /* CaptionsErrorView.swift */,
+				11293D002C3B6D1E0006539D /* CaptionsErrorViewModel.swift */,
+				116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */,
+				116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */,
+				116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */,
 				11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */,
 				11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */,
 				11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */,
-				116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */,
-				116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */,
-				116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */,
-				11293D002C3B6D1E0006539D /* CaptionsErrorViewModel.swift */,
-				111FBD372C3C6976008178BF /* CaptionsErrorView.swift */,
+				11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */,
 			);
 			path = Captions;
 			sourceTree = "<group>";

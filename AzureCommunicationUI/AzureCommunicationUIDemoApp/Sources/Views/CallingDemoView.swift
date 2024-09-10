@@ -423,10 +423,8 @@ extension CallingDemoView {
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
         let setupScreenOptions = SetupScreenOptions(
-            cameraButton: ButtonViewData(visible: false, enabled: false),
-            microphoneButton: ButtonViewData(enabled: false),
-            audioDeviceButton: ButtonViewData(enabled: false)
-        )
+            cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
+            microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
 
         /* <TIMER_TITLE_FEATURE> */
         headerViewData = CallScreenHeaderViewData()
@@ -623,17 +621,22 @@ extension CallingDemoView {
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
 
-        let micButton = ButtonViewData()
+        var setupScreenOptions: SetupScreenOptions?
+        if envConfigSubject.addCustomButton {
+            let micButton = ButtonViewData()
+            let audioDeviceButton = ButtonViewData()
 
-        let cameraButton = ButtonViewData(onClick: { _ in
-            micButton.visible = !micButton.visible
-        })
+            let cameraButton = ButtonViewData(onClick: { _ in
+                micButton.visible = !micButton.visible
+                audioDeviceButton.enabled = !audioDeviceButton.enabled
+            })
 
-        let setupScreenOptions = SetupScreenOptions(
-            cameraButton: cameraButton,
-            microphoneButton: micButton,
-            audioDeviceButton: ButtonViewData(visible: false, enabled: false)
-        )
+            setupScreenOptions = SetupScreenOptions(
+                cameraButton: cameraButton,
+                microphoneButton: micButton,
+                audioDeviceButton: audioDeviceButton
+            )
+        }
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
 

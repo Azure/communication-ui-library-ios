@@ -442,13 +442,15 @@ extension CompositeViewModelFactory {
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
                                      startIcon: CompositeIcon,
+                                     isEnabled: Bool,
                                      action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
         DrawerGenericItemViewModel(title: title,
                                    accessibilityIdentifier: accessibilityIdentifier,
                                    action: action,
                                    startCompositeIcon: startIcon,
                                    showToggle: showToggle,
-                                   isToggleOn: isToggleOn)
+                                   isToggleOn: isToggleOn,
+                                   isEnabled: isEnabled)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
