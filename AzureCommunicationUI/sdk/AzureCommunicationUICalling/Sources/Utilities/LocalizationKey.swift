@@ -217,4 +217,8 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"
     case callingViewToastFeaturesLost = "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"
     case callingViewToastFeaturesGained = "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"
+
+    /* Bottom Drawer */
+    case toggleOnAccessibilityValue = "AzureCommunicationUICalling.BottomDrawer.Button.ToggleOn.AccessibilityValue"
+    case toggleOffAccessibilityValue = "AzureCommunicationUICalling.BottomDrawer.Button.ToggleOff.AccessibilityValue"
 }

@@ -166,6 +166,7 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Send";
 
+/* Captions*/
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live Captions";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
@@ -181,4 +182,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Remove participant from call menu.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Call settings updated. Some features may not be available to you.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Call settings updated. Some additional actions may now be available to you.";
+
+/* Bottom Drawer */
+"AzureCommunicationUICalling.BottomDrawer.Button.ToggleOn.AccessibilityValue"="On";
+"AzureCommunicationUICalling.BottomDrawer.Button.ToggleOff.AccessibilityValue"="Off";
 

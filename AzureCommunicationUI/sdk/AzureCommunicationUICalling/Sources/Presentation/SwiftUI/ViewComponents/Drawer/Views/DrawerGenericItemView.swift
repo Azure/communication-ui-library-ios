@@ -38,7 +38,7 @@ internal struct DrawerGenericItemView: View {
                 Toggle("", isOn: isToggleOn)
                     .labelsHidden()
                     .toggleStyle(SwitchToggleStyle(tint: .blue))
-                    .accessibilityLabel(Text(item.title))
+                    .accessibilityValue(isToggleOn.wrappedValue ? "on" : "off")
             } else if let accessoryView = item.endIcon,
                       accessoryView != .none {
                 Icon(name: item.endIcon ?? .rightChevron, size: DrawerListConstants.trailingIconSize)
