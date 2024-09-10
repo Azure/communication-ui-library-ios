@@ -198,7 +198,28 @@ class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
             button.$enabled
                 .sink { [weak self] enabled in
                     self?.store.dispatch(action: .buttonViewDataAction(
-                        .callScreenCaptionsLanguageButtonIsEnabledUpdated(enabled: enabled)))
+                        .callScreenCustomButtonIsEnabledUpdated(id: button.id, enabled: enabled)))
+                }
+                .store(in: &subscriptions)
+
+            button.$visible
+                .sink { [weak self] visible in
+                    self?.store.dispatch(action: .buttonViewDataAction(
+                        .callScreenCustomButtonIsVisibleUpdated(id: button.id, visible: visible)))
+                }
+                .store(in: &subscriptions)
+
+            button.$image
+                .sink { [weak self] image in
+                    self?.store.dispatch(action: .buttonViewDataAction(
+                        .callScreenCustomButtonIconUpdated(id: button.id, image: image)))
+                }
+                .store(in: &subscriptions)
+
+            button.$title
+                .sink { [weak self] title in
+                    self?.store.dispatch(action: .buttonViewDataAction(
+                        .callScreenCustomButtonTitleUpdated(id: button.id, title: title)))
                 }
                 .store(in: &subscriptions)
         }
