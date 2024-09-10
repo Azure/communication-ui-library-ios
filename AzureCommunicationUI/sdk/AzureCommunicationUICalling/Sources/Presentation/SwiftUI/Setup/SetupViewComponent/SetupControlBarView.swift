@@ -24,10 +24,14 @@ struct SetupControlBarView: View {
                         Spacer()
                         cameraButton
                     }
-                    Spacer()
-                    micButton
-                    Spacer()
-                    audioDeviceButton
+                    if viewModel.isMicButtonVisible {
+                        Spacer()
+                        micButton
+                    }
+                    if viewModel.isAudioDeviceButtonVisible {
+                        Spacer()
+                        audioDeviceButton
+                    }
                     Spacer()
                 }
                 .frame(width: getWidth(from: geometry), height: controlHeight)
