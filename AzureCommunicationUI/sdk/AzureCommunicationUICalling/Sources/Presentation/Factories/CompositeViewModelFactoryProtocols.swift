@@ -75,12 +75,12 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeMoreCallOptionsListViewModel(
-        isDisplayed: Bool,
         isCaptionsAvailable: Bool,
         controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void,
+        buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel
     func makeCaptionsListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,

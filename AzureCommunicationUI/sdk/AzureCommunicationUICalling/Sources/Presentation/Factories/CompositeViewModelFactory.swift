@@ -399,25 +399,25 @@ extension CompositeViewModelFactory {
     }
 
     func makeMoreCallOptionsListViewModel(
-        isDisplayed: Bool,
         isCaptionsAvailable: Bool,
         controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void,
+        buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
-                                     localizationProvider: localizationProvider,
-                                     showSharingViewAction: showSharingViewAction,
-                                     showSupportFormAction: showSupportFormAction,
-                                     showCaptionsViewAction: showCaptionsViewAction,
+                                            localizationProvider: localizationProvider,
+                                            showSharingViewAction: showSharingViewAction,
+                                            showSupportFormAction: showSupportFormAction,
+                                            showCaptionsViewAction: showCaptionsViewAction,
                                             controlBarOptions: controlBarOptions,
-                                     isCaptionsAvailable: isCaptionsAvailable,
-                                     isSupportFormAvailable: events.onUserReportedIssue != nil,
-                                     isDisplayed: isDisplayed,
-                                     dispatchAction: dispatchAction)
+                                            isCaptionsAvailable: isCaptionsAvailable,
+                                            isSupportFormAvailable: events.onUserReportedIssue != nil,
+                                            buttonViewDataState: buttonViewDataState,
+                                            dispatchAction: dispatchAction)
     }
 
     func makeLanguageListItemViewModel(title: String,

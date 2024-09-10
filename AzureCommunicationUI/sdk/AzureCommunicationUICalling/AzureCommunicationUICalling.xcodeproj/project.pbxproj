@@ -1356,8 +1356,8 @@
 		53535A112C0E4DAC000BF96B /* MoreCallOptions */ = {
 			isa = PBXGroup;
 			children = (
-				FAACEE3C28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift */,
 				53535A122C0E667F000BF96B /* MoreCallOptionsListView.swift */,
+				FAACEE3C28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift */,
 			);
 			path = MoreCallOptions;
 			sourceTree = "<group>";

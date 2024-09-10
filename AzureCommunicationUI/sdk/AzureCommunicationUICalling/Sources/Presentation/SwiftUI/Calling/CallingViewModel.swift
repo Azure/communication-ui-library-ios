@@ -179,7 +179,6 @@ internal class CallingViewModel: ObservableObject {
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
-            isDisplayed: store.state.navigationState.moreOptionsVisible,
             isCaptionsAvailable: true,
             controlBarOptions: callScreenOptions.controlBarOptions,
             showSharingViewAction: {
@@ -191,6 +190,7 @@ internal class CallingViewModel: ObservableObject {
             showCaptionsViewAction: {
                 store.dispatch(action: .showCaptionsListView)
             },
+            buttonViewDataState: store.state.buttonViewDataState,
             dispatchAction: store.dispatch
         )
 
@@ -276,7 +276,8 @@ internal class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         moreCallOptionsListViewModel.update(navigationState: state.navigationState,
-                                            visibilityState: state.visibilityState)
+                                            visibilityState: state.visibilityState,
+                                            buttonViewDataState: state.buttonViewDataState)
         let newIsCallConnected = state.callingState.status == .connected
         let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
                                                                               callingStatus: state.callingState.status)

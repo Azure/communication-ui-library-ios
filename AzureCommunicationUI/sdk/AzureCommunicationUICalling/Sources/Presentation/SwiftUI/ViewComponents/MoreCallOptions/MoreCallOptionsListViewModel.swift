@@ -11,7 +11,14 @@ class MoreCallOptionsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatchAction: ActionDispatch
-    let items: [DrawerGenericItemViewModel]
+    private let showSharingViewAction: () -> Void
+    private let showSupportFormAction: () -> Void
+    private let showCaptionsViewAction: () -> Void
+    private let controlBarOptions: CallScreenControlBarOptions?
+    private let isCaptionsAvailable: Bool
+    private let isSupportFormAvailable: Bool
+
+    @Published var items: [DrawerGenericItemViewModel]
     var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -22,67 +29,93 @@ class MoreCallOptionsListViewModel: ObservableObject {
          controlBarOptions: CallScreenControlBarOptions?,
          isCaptionsAvailable: Bool,
          isSupportFormAvailable: Bool,
-         isDisplayed: Bool,
+         buttonViewDataState: ButtonViewDataState,
          dispatchAction: @escaping ActionDispatch
     ) {
         self.dispatchAction = dispatchAction
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
-        self.isDisplayed = isDisplayed
+        self.isDisplayed = false
+        self.showSharingViewAction = showSharingViewAction
+        self.showSupportFormAction = showSupportFormAction
+        self.showCaptionsViewAction = showCaptionsViewAction
+        self.controlBarOptions = controlBarOptions
+        self.isCaptionsAvailable = isCaptionsAvailable
+        self.isSupportFormAvailable = isSupportFormAvailable
+        self.items = []
+
+        self.generateItems(buttonViewDataState)
+    }
+
+    func update(navigationState: NavigationState,
+                visibilityState: VisibilityState,
+                buttonViewDataState: ButtonViewDataState) {
+        isDisplayed = visibilityState.currentStatus == .visible && navigationState.moreOptionsVisible
+
+        self.generateItems(buttonViewDataState)
+    }
+    private func generateItems(_ buttonViewDataState: ButtonViewDataState) {
         var items: [DrawerGenericItemViewModel] = []
 
-        if isCaptionsAvailable && controlBarOptions?.spokenLanguageButton?.visible ?? true {
+        if isCaptionsAvailable && buttonViewDataState.spokenLanguageButton?.visible ?? true {
             let captionsInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.captionsListTitile),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                 accessibilityTraits: [.isButton],
                 action: showCaptionsViewAction,
                 startCompositeIcon: .closeCaptions,
-                endIcon: .rightChevron)
-            items = [captionsInfoModel]
+                endIcon: .rightChevron,
+                isEnabled: buttonViewDataState.spokenLanguageButton?.enabled ?? true
+            )
+            items.append(captionsInfoModel)
         }
-        if controlBarOptions?.shareDiagnosticsButton?.visible ?? true {
+        if buttonViewDataState.shareDiagnosticsButton?.visible ?? true {
             let shareDebugInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                 accessibilityTraits: [.isButton],
                 action: showSharingViewAction,
-                startCompositeIcon: .share
+                startCompositeIcon: .share,
+                isEnabled: buttonViewDataState.shareDiagnosticsButton?.enabled ?? true
             )
 
             items.append(shareDebugInfoModel)
         }
 
-        if isSupportFormAvailable && controlBarOptions?.reportIssueButton?.visible ?? true {
+        if isSupportFormAvailable && buttonViewDataState.reportIssueButton?.visible ?? true {
             let reportErrorInfoModel = DrawerGenericItemViewModel(
                 title: localizationProvider.getLocalizedString(.supportFormReportIssueTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.reportIssueAccessibilityID.rawValue,
                 accessibilityTraits: [.isButton],
                 action: showSupportFormAction,
-                startCompositeIcon: .personFeedback)
+                startCompositeIcon: .personFeedback,
+                isEnabled: buttonViewDataState.reportIssueButton?.enabled ?? true
+            )
 
             items.append(reportErrorInfoModel)
         }
 
-        controlBarOptions?.customButtons.forEach({ customButton in
-            let customButtonModel = DrawerGenericItemViewModel(
-                title: customButton.title,
-                accessibilityIdentifier: "",
-                accessibilityTraits: [.isButton],
-                action: {
-                    customButton.onClick(customButton)
-                    dispatchAction(.hideDrawer)
-                },
-                startIcon: customButton.image,
-                isEnabled: customButton.enabled
-
-            )
-            items.append(customButtonModel)
+        buttonViewDataState.callScreenCustomButtonsState.forEach({ customButton in
+            if customButton.visible {
+                let customButtonModel = DrawerGenericItemViewModel(
+                    title: customButton.title,
+                    accessibilityIdentifier: "",
+                    accessibilityTraits: [.isButton],
+                    action: {
+                        guard let optionsButton = self.controlBarOptions?.customButtons.first(where: { optionsButton in
+                            optionsButton.id == customButton.id
+                        }) else {
+                            return
+                        }
+                        optionsButton.onClick(optionsButton)
+                        self.dispatchAction(.hideDrawer)
+                    },
+                    startIcon: customButton.image,
+                    isEnabled: customButton.enabled
+                )
+                items.append(customButtonModel)
+            }
         })
         self.items = items
-    }
-
-    func update(navigationState: NavigationState, visibilityState: VisibilityState) {
-        isDisplayed = visibilityState.currentStatus == .visible && navigationState.moreOptionsVisible
     }
 }
