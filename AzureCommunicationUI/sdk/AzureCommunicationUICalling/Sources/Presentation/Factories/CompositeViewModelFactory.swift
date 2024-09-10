@@ -291,7 +291,8 @@ extension CompositeViewModelFactory {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 capabilitiesManager: CapabilitiesManager)
+                                 capabilitiesManager: CapabilitiesManager,
+                                 buttonViewDataState: ButtonViewDataState)
     -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -301,7 +302,8 @@ extension CompositeViewModelFactory {
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             capabilitiesManager: capabilitiesManager,
-                            controlBarOptions: callScreenOptions?.controlBarOptions)
+                            controlBarOptions: callScreenOptions?.controlBarOptions,
+                            buttonViewDataState: buttonViewDataState)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,

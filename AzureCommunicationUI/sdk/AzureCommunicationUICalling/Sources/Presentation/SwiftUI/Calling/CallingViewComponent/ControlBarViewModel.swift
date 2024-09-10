@@ -14,6 +14,7 @@ class ControlBarViewModel: ObservableObject {
     private var isDefaultUserStateMapped = false
     private(set) var cameraButtonViewModel: IconButtonViewModel!
     private let controlBarOptions: CallScreenControlBarOptions?
+    private let audioVideoMode: CallCompositeAudioVideoMode
 
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isShareActivityDisplayed = false
@@ -46,11 +47,13 @@ class ControlBarViewModel: ObservableObject {
          localUserState: LocalUserState,
          audioVideoMode: CallCompositeAudioVideoMode,
          capabilitiesManager: CapabilitiesManager,
-         controlBarOptions: CallScreenControlBarOptions?) {
+         controlBarOptions: CallScreenControlBarOptions?,
+         buttonViewDataState: ButtonViewDataState) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.onEndCallTapped = onEndCallTapped
+        self.audioVideoMode = audioVideoMode
 
         self.capabilitiesManager = capabilitiesManager
         self.capabilities = localUserState.capabilities
@@ -58,8 +61,8 @@ class ControlBarViewModel: ObservableObject {
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
-            isDisabled: isCameraDisabled(),
-            isVisible: isCameraVisible(audioVideoMode)) { [weak self] in
+            isDisabled: isCameraDisabled(buttonViewDataState),
+            isVisible: isCameraVisible(buttonViewDataState)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -73,8 +76,8 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .micOff,
             buttonType: .controlButton,
-            isDisabled: isMicDisabled(),
-            isVisible: isMicVisible()) { [weak self] in
+            isDisabled: isMicDisabled(buttonViewDataState),
+            isVisible: isMicVisible(buttonViewDataState)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -89,7 +92,7 @@ class ControlBarViewModel: ObservableObject {
             iconName: .speakerFilled,
             buttonType: .controlButton,
             isDisabled: false,
-            isVisible: isAudioDeviceVisible()) { [weak self] in
+            isVisible: isAudioDeviceVisible(buttonViewDataState)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -119,7 +122,7 @@ class ControlBarViewModel: ObservableObject {
             iconName: .more,
             buttonType: .controlButton,
             isDisabled: false,
-            isVisible: isMoreButtonVisible()) { [weak self] in
+            isVisible: isMoreButtonVisible(buttonViewDataState)) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -143,22 +146,22 @@ class ControlBarViewModel: ObservableObject {
         dispatch(.localUserAction(action))
     }
 
-    func isMoreButtonVisible() -> Bool {
-            controlBarOptions?.customButtons.isEmpty == false ||
-            controlBarOptions?.liveCaptionsButton?.visible ?? true ||
-            controlBarOptions?.liveCaptionsToggleButton?.visible ?? true ||
-            controlBarOptions?.captionsLanguageButton?.visible ?? true ||
-            controlBarOptions?.spokenLanguageButton?.visible ?? true ||
-            controlBarOptions?.shareDiagnosticsButton?.visible ?? true ||
-            controlBarOptions?.reportIssueButton?.visible ?? true
+    private func isMoreButtonVisible(_ buttonViewDataState: ButtonViewDataState) -> Bool {
+        buttonViewDataState.callScreenCustomButtonsState.isEmpty == false ||
+        buttonViewDataState.liveCaptionsButton?.visible ?? true ||
+        buttonViewDataState.liveCaptionsToggleButton?.visible ?? true ||
+        buttonViewDataState.captionsLanguageButton?.visible ?? true ||
+        buttonViewDataState.spokenLanguageButton?.visible ?? true ||
+        buttonViewDataState.shareDiagnosticsButton?.visible ?? true ||
+        buttonViewDataState.reportIssueButton?.visible ?? true
     }
 
-    func isMicVisible() -> Bool {
-        controlBarOptions?.microphoneButton?.visible ?? true
+    private func isMicVisible(_ buttonViewDataState: ButtonViewDataState) -> Bool {
+        buttonViewDataState.callScreenMicButtonState?.visible ?? true
     }
 
-    func isMicDisabled() -> Bool {
-        controlBarOptions?.microphoneButton?.enabled == false ||
+    private func isMicDisabled(_ buttonViewDataState: ButtonViewDataState) -> Bool {
+        buttonViewDataState.callScreenMicButtonState?.enabled == false ||
         audioState.operation == .pending ||
         callingStatus == .localHold ||
         isBypassLoadingOverlay() ||
@@ -171,16 +174,16 @@ class ControlBarViewModel: ObservableObject {
         callingStatus != .inLobby
     }
 
-    func isAudioDeviceVisible() -> Bool {
-        controlBarOptions?.audioDeviceButton?.visible ?? true
+    private func isAudioDeviceVisible(_ buttonViewDataState: ButtonViewDataState) -> Bool {
+        buttonViewDataState.callScreenAudioDeviceButtonState?.visible ?? true
     }
-    func isAudioDeviceDisabled() -> Bool {
-            controlBarOptions?.audioDeviceButton?.enabled == false ||
-            callingStatus == .localHold ||
-            isBypassLoadingOverlay()
+    private func isAudioDeviceDisabled(_ buttonViewDataState: ButtonViewDataState) -> Bool {
+        buttonViewDataState.callScreenAudioDeviceButtonState?.enabled == false ||
+        callingStatus == .localHold ||
+        isBypassLoadingOverlay()
     }
 
-    func microphoneButtonTapped() {
+    private func microphoneButtonTapped() {
         self.callCustomOnClickHandler(controlBarOptions?.microphoneButton)
         let action: LocalUserAction = audioState.operation == .on ?
         .microphoneOffTriggered : .microphoneOnTriggered
@@ -199,13 +202,13 @@ class ControlBarViewModel: ObservableObject {
             isBypassLoadingOverlay()
     }
 
-    func isCameraVisible(_ audioVideoMode: CallCompositeAudioVideoMode) -> Bool {
+    func isCameraVisible(_ buttonViewDataState: ButtonViewDataState) -> Bool {
         return audioVideoMode != .audioOnly &&
-        controlBarOptions?.cameraButton?.visible ?? true
+        buttonViewDataState.callScreenCameraButtonState?.visible ?? true
     }
 
-    func isCameraDisabled() -> Bool {
-        controlBarOptions?.cameraButton?.enabled == false ||
+    func isCameraDisabled(_ buttonViewDataState: ButtonViewDataState) -> Bool {
+        buttonViewDataState.callScreenCameraButtonState?.enabled == false ||
                 cameraPermission == .denied ||
                 cameraState.operation == .pending ||
                 callingStatus == .localHold ||
@@ -219,7 +222,8 @@ class ControlBarViewModel: ObservableObject {
                 permissionState: PermissionState,
                 callingState: CallingState,
                 visibilityState: VisibilityState,
-                navigationState: NavigationState
+                navigationState: NavigationState,
+                buttonViewDataState: ButtonViewDataState
                 ) {
         isShareActivityDisplayed = navigationState.supportShareSheetVisible
         callingStatus = callingState.status
@@ -238,23 +242,27 @@ class ControlBarViewModel: ObservableObject {
         cameraButtonViewModel.update(accessibilityLabel: cameraState.operation == .on
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.videoOffAccessibilityLabel))
-        cameraButtonViewModel.update(isDisabled: isCameraDisabled())
+        cameraButtonViewModel.update(isDisabled: isCameraDisabled(buttonViewDataState))
+        cameraButtonViewModel.update(isVisible: isCameraVisible(buttonViewDataState))
 
         audioState = localUserState.audioState
         micButtonViewModel.update(iconName: audioState.operation == .on ? .micOn : .micOff)
         micButtonViewModel.update(accessibilityLabel: audioState.operation == .on
                                      ? localizationProvider.getLocalizedString(.micOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.micOffAccessibilityLabel))
-        micButtonViewModel.update(isDisabled: isMicDisabled())
-        audioDeviceButtonViewModel.update(isDisabled: isAudioDeviceDisabled())
+        micButtonViewModel.update(isDisabled: isMicDisabled(buttonViewDataState))
+        micButtonViewModel.update(isVisible: isMicVisible(buttonViewDataState))
+        audioDeviceButtonViewModel.update(isDisabled: isAudioDeviceDisabled(buttonViewDataState))
         let audioDeviceState = localUserState.audioState.device
         audioDeviceButtonViewModel.update(
             iconName: audioDeviceState.icon
         )
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceState.getLabel(localizationProvider: localizationProvider))
+        audioDeviceButtonViewModel.update(isVisible: isAudioDeviceVisible(buttonViewDataState))
 
         moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
+        moreButtonViewModel.update(isVisible: isMoreButtonVisible(buttonViewDataState))
 
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
     }

@@ -154,7 +154,8 @@ internal class CallingViewModel: ObservableObject {
                 }
 
             }, localUserState: store.state.localUserState,
-            capabilitiesManager: capabilitiesManager)
+            capabilitiesManager: capabilitiesManager,
+            buttonViewDataState: store.state.buttonViewDataState)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {
@@ -248,7 +249,8 @@ internal class CallingViewModel: ObservableObject {
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
                                    visibilityState: state.visibilityState,
-                                   navigationState: state.navigationState)
+                                   navigationState: state.navigationState,
+                                   buttonViewDataState: state.buttonViewDataState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,

@@ -49,7 +49,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
+                                 capabilitiesManager: CapabilitiesManager,
+                                 buttonViewDataState: ButtonViewDataState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState
