@@ -5,10 +5,12 @@ trigger: none
 
 # Only Run on PRs to these branches
 pr:
-  - main
-  - develop
-  - release/*
-  - feature/*
+    branches:
+    include:
+      - main
+      - develop
+      - release/*
+      - feature/*
 
 resources:
   repositories:
