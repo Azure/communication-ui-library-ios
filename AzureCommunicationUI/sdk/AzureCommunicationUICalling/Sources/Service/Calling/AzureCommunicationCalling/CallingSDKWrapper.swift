@@ -63,6 +63,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             try await outgoingCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
         } else if callConfiguration.compositeCallType == .oneToOneIncoming {
             try await incomingCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
+        } else {
+            logger.error("Unknown calltype access")
+            throw CallCompositeInternalError.callJoinFailed
         }
     }
 
