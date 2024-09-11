@@ -36,6 +36,7 @@ struct CaptionsInfoCellView: View {
                     /// ensuring that all content is visible without ... truncation
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityValue(displayText)
             }
             .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
         }

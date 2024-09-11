@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '14.0'
+platform :ios, '16.0'
 
 workspace 'AzureCommunicationUI'
 
@@ -13,12 +13,12 @@ target 'AzureCommunicationUICalling' do
   use_frameworks!
   pod 'AzureCore', '1.0.0-beta.15'
   pod 'AzureCommunicationCalling', '2.12.0'
-  pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/Button_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.30.0'
   pod 'AzureCore', '1.0.0-beta.15'
   pod 'SwiftLint', '0.53.0'
 
@@ -32,12 +32,12 @@ target 'AzureCommunicationUIChat' do
   project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
   use_frameworks!
   pod 'AzureCommunicationChat', '1.3.3'
-  pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/Button_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.30.0'
   pod 'SwiftLint', '0.53.0'
 
   target 'AzureCommunicationUIChatTests' do
@@ -51,12 +51,12 @@ target 'AzureCommunicationUIDemoApp' do
   use_frameworks!
   pod 'AzureCommunicationCalling', '2.12.0'
   pod 'AzureCommunicationChat', '1.3.3'
-  pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/Button_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.30.0'
+  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.30.0'
   pod 'SwiftLint', '0.53.0'
   pod 'AppCenter/Crashes', '4.4.1'
 
@@ -87,7 +87,7 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     if target.name == 'SwiftLint'
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
       end
     end
 

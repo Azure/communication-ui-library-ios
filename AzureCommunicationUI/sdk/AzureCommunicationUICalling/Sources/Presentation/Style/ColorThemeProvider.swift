@@ -14,6 +14,7 @@ class ColorThemeProvider {
     let primaryColorTint10: UIColor
     let primaryColorTint20: UIColor
     let primaryColorTint30: UIColor
+    let neutralInverted: UIColor
 
     // MARK: Text Label Colours
     let textSecondary: UIColor = Colors.textSecondary
@@ -44,7 +45,7 @@ class ColorThemeProvider {
                             dark: Colors.textDominant)
     }()
     lazy var onSurfaceColor: UIColor = {
-        return dynamicColor(light: Colors.Palette.gray950.color,
+        return dynamicColor(light:.Palette.gray950.color,
                             dark: Colors.textDominant)
     }()
     lazy var onNavigationSecondary: UIColor = {
@@ -93,6 +94,7 @@ class ColorThemeProvider {
         self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
         self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
         self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
+        self.neutralInverted = themeOptions?.primaryColor ?? Colors.Palette.communicationBlue.color
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
@@ -130,6 +132,10 @@ extension ColorThemeProvider: ColorProviding {
     }
 
     func primaryShade30Color(for window: UIWindow) -> UIColor? {
+        return primaryColor
+    }
+
+    func neutralInvertedColor(for window: UIWindow) -> UIColor? {
         return primaryColor
     }
 }

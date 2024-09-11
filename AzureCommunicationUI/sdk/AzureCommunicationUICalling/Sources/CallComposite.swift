@@ -678,7 +678,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         StyleProvider.color = colorProvider
         Task { @MainActor in
             if let window = UIWindow.keyWindow {
-                Colors.setProvider(provider: colorProvider, for: window)
+                window.setColorProvider(colorProvider)
             }
         }
     }

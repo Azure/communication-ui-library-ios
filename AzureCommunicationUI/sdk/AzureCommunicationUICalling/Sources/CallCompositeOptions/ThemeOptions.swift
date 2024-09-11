@@ -29,6 +29,8 @@ public protocol ThemeOptions {
 
     /// Provide a getter to return a custom primary color tint30.
     var primaryColorTint30: UIColor { get }
+
+    var neutralInverted: UIColor { get }
 }
 
 public extension ThemeOptions {
@@ -46,5 +48,9 @@ public extension ThemeOptions {
     }
     var primaryColorTint30: UIColor {
         return Colors.Palette.communicationBlueTint30.color
+    }
+
+    var neutralInverted: UIColor {
+        return Colors.Palette.communicationBlue.color
     }
 }
