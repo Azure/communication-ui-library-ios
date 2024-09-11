@@ -1,10 +1,19 @@
 # Azure Communication UI Calling Release History
 
-## 1.11.0-beta.2 (2024-08-14)
+## 1.11.0-beta.2 (2024-09-11)
 
 ### Features
 - Call screen information header title/subtitle customization
 - Ability to hide or disable buttons and create custom buttons
+
+### Bugfixes
+- Camera button doesn't work on the Setup screen when the internet is off
+- On hold title is not centred in some conditions
+- Some labels not announces correctly via accessibility
+
+# 1.11.0-beta.1 (2024-08-28)
+### Features
+- Call screen control bar custom button support
 
 
 ## 1.10.0 (2024-08-14)
