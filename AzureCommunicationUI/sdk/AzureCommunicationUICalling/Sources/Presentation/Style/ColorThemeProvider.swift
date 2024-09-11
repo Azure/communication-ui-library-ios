@@ -103,6 +103,78 @@ class ColorThemeProvider {
 }
 
 extension ColorThemeProvider: ColorProviding {
+    var brandBackground1: UIColor {
+        <#code#>
+    }
+    
+    var brandBackground1Pressed: UIColor {
+        <#code#>
+    }
+    
+    var brandBackground1Selected: UIColor {
+        <#code#>
+    }
+    
+    var brandBackground2: UIColor {
+        <#code#>
+    }
+    
+    var brandBackground2Pressed: UIColor {
+        <#code#>
+    }
+    
+    var brandBackground2Selected: UIColor {
+        <#code#>
+    }
+    
+    var brandBackground3: UIColor {
+        <#code#>
+    }
+    
+    var brandBackgroundTint: UIColor {
+        <#code#>
+    }
+    
+    var brandBackgroundDisabled: UIColor {
+        <#code#>
+    }
+    
+    var brandForeground1: UIColor {
+        <#code#>
+    }
+    
+    var brandForeground1Pressed: UIColor {
+        <#code#>
+    }
+    
+    var brandForeground1Selected: UIColor {
+        <#code#>
+    }
+    
+    var brandForegroundTint: UIColor {
+        <#code#>
+    }
+    
+    var brandForegroundDisabled1: UIColor {
+        <#code#>
+    }
+    
+    var brandForegroundDisabled2: UIColor {
+        <#code#>
+    }
+    
+    var brandStroke1: UIColor {
+        <#code#>
+    }
+    
+    var brandStroke1Pressed: UIColor {
+        <#code#>
+    }
+    
+    var brandStroke1Selected: UIColor {
+        <#code#>
+    }
+    
     func primaryColor(for window: UIWindow) -> UIColor? {
         return primaryColor
     }
