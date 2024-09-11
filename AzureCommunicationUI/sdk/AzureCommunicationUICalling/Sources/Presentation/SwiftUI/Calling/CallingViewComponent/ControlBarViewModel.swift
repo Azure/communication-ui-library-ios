@@ -6,6 +6,7 @@
 import Combine
 import Foundation
 
+// swiftlint:disable type_body_length
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
@@ -20,6 +21,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var isShareActivityDisplayed = false
     @Published var isDisplayed = false
     @Published var isCameraDisplayed = true
+    @Published var totalButtonCount = 5
 
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
@@ -137,6 +139,7 @@ class ControlBarViewModel: ObservableObject {
             .moreAccessibilityLabel)
 
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
+        updateTotalButtonCount()
     }
 
     func cameraButtonTapped() {
@@ -270,6 +273,7 @@ class ControlBarViewModel: ObservableObject {
         moreButtonViewModel.update(isVisible: isMoreButtonVisible())
 
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
+        updateTotalButtonCount()
     }
 
     func callCustomOnClickHandler(_ button: ButtonViewData?) {
@@ -278,4 +282,25 @@ class ControlBarViewModel: ObservableObject {
         }
         button.onClick?(button)
     }
+
+    private func updateTotalButtonCount() {
+        // we always have a hangUp button
+        var newCount = 1
+        if cameraButtonViewModel.isVisible {
+            newCount += 1
+        }
+        if micButtonViewModel.isVisible {
+            newCount += 1
+        }
+        if audioDeviceButtonViewModel.isVisible {
+            newCount += 1
+        }
+        if moreButtonViewModel.isVisible {
+            newCount += 1
+        }
+        if newCount != totalButtonCount {
+            totalButtonCount = newCount
+        }
+    }
 }
+// swiftlint:enable type_body_length

@@ -20,7 +20,7 @@ struct ControlBarView: View {
     var body: some View {
         if viewModel.isDisplayed {
             Group {
-                if screenSizeClass == .ipadScreenSize {
+                if screenSizeClass == .ipadScreenSize || viewModel.totalButtonCount < 5 {
                     centeredStack
                 } else {
                     nonCenteredStack
@@ -34,7 +34,6 @@ struct ControlBarView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
-            .frame(height: 105)
         }
     }
 
