@@ -36,6 +36,7 @@ struct CaptionsInfoCellView: View {
                     /// ensuring that all content is visible without ... truncation
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
+                    .environment(\.locale, Locale(identifier: language))
             }
             .frame(maxWidth: .infinity, alignment: isRTL ? .trailing : .leading)
         }
@@ -60,6 +61,9 @@ struct CaptionsInfoCellView: View {
         (caption.captionText?.isEmpty ?? true) ? caption.spokenText : caption.captionText ?? ""
     }
 
+    private var language: String {
+        (caption.captionText?.isEmpty ?? true) ? caption.spokenLanguage : caption.captionLanguage ?? ""
+    }
     private func updateAvatar() {
         // Attempt to get the avatar image directly from the avatar storage for the given speaker's ID.
         if let participantViewDataAvatar = avatarViewManager.avatarStorage.value(
