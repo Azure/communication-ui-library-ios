@@ -29,7 +29,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let setupScreenOptions: SetupScreenOptions?
     private let callScreenOptions: CallScreenOptions?
     private let callType: CompositeCallType
-
+    /* <CUSTOM_COLOR_FEATURE> */
+    private let themeOptions: ThemeOptions
+    /* </CUSTOM_COLOR_FEATURE> */
     init(logger: Logger,
          store: Store<AppState, Action>,
          networkManager: NetworkManager,
@@ -48,6 +50,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
+         /* <CUSTOM_COLOR_FEATURE> */
+         themeOptions: ThemeOptions,
+         /* </CUSTOM_COLOR_FEATURE> */
          retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
@@ -67,6 +72,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.callScreenOptions = callScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+        /* <CUSTOM_COLOR_FEATURE> */
+        self.themeOptions = themeOptions
+        /* </CUSTOM_COLOR_FEATURE> */
         self.avatarManager = avatarManager
     }
 
@@ -184,6 +192,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                iconName: iconName,
                                isDisabled: isDisabled,
                                paddings: paddings,
+                               themeOptions: themeOptions,
                                action: action)
     }
 
@@ -263,7 +272,6 @@ extension CompositeViewModelFactory {
                                  accessibilityProvider: accessibilityProvider,
                                  dispatchAction: dispatchAction)
     }
-
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
@@ -274,6 +282,7 @@ extension CompositeViewModelFactory {
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
                                 audioSessionManager: audioSessionManager,
+                                themeOptions: themeOptions,
                                 store: store,
                                 callType: callType)
     }

@@ -92,6 +92,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var tint10: Color = .blue
     @Published var tint20: Color = .blue
     @Published var tint30: Color = .blue
+    @Published var foregroundOnPrimary: Color = .white
     @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
     @Published var enableRemoteHold = true
     @Published var enableCallKit = true

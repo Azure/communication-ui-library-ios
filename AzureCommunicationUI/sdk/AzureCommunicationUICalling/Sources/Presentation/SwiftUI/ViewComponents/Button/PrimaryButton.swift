@@ -14,7 +14,10 @@ struct PrimaryButton: View {
         CompositeButton(buttonStyle: viewModel.buttonStyle,
                         buttonLabel: viewModel.buttonLabel,
                         iconName: viewModel.iconName,
-                        paddings: viewModel.paddings)
+                        paddings: viewModel.paddings,
+                        /* <CUSTOM_COLOR_FEATURE> */
+                        themeOptions: viewModel.themeOptions)
+                        /* </CUSTOM_COLOR_FEATURE> */
             .onTapGesture(perform: viewModel.action)
             .disabled(viewModel.isDisabled)
             .accessibilityElement(children: .combine)

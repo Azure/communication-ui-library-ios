@@ -18,28 +18,47 @@ struct CompositeButton: UIViewRepresentable {
     let buttonLabel: String
     let iconName: CompositeIcon?
     let paddings: Paddings?
-
+    let themeOptions: ThemeOptions
     init(buttonStyle: FluentUI.ButtonStyle,
          buttonLabel: String,
          iconName: CompositeIcon? = nil,
-         paddings: Paddings? = nil) {
+         paddings: Paddings? = nil,
+         themeOptions: ThemeOptions) {
         self.buttonStyle = buttonStyle
         self.buttonLabel = buttonLabel
         self.iconName = iconName
         self.paddings = paddings
+        /* <CUSTOM_COLOR_FEATURE> */
+        self.themeOptions = themeOptions
+        /* </CUSTOM_COLOR_FEATURE> */
     }
 
-    func makeUIView(context: Context) -> FluentUI.Button {
+     func makeUIView(context: Context) -> FluentUI.Button {
         let button = Button(style: buttonStyle)
         button.setTitle(buttonLabel, for: .normal)
-
-        if let paddings = paddings {
-            button.edgeInsets = getEdgeInserts(paddings)
-        }
-
+         /* <CUSTOM_COLOR_FEATURE> */
+                let dynamicColor = (buttonStyle == .borderless ||
+                                   buttonStyle == .primaryOutline)
+                                   ? themeOptions.primaryColor.dynamicColor
+                                   : themeOptions.foregroundOnPrimary.dynamicColor
+                let overrideTokens: [ButtonTokenSet.Tokens: ControlTokenValue] = [
+                    .foregroundColor: ControlTokenValue.dynamicColor({
+                        dynamicColor!
+                    }),
+                    .foregroundPressedColor: ControlTokenValue.dynamicColor({
+                        dynamicColor!
+                    })]
+                button.tokenSet.replaceAllOverrides(with: overrideTokens)
+         /* </CUSTOM_COLOR_FEATURE> */
+                 if let paddings = paddings {
+                    button.edgeInsets = getEdgeInserts(paddings)
+                }
         if let iconName = iconName {
-            let icon = StyleProvider.icon.getUIImage(for: iconName)
-            button.image = icon
+            /* <CUSTOM_COLOR_FEATURE> */
+            let icon = StyleProvider.icon.getUIImage(for: iconName)?.withRenderingMode(.alwaysTemplate)
+            button.setImage(icon, for: .normal)
+            button.tintColor = themeOptions.foregroundOnPrimary
+            /* </CUSTOM_COLOR_FEATURE> */
         }
 
         return button

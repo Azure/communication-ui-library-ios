@@ -626,6 +626,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager,
+                themeOptions: themeOptions!,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )

@@ -401,6 +401,7 @@ struct SettingsView: View {
         Section(header: Text("Theme")) {
             Toggle("Use Custom Theme Colors", isOn: $envConfigSubject.useCustomColors)
             ColorPicker("Primary Color", selection: $envConfigSubject.primaryColor)
+            ColorPicker("OnPrimary Color", selection: $envConfigSubject.foregroundOnPrimary)
             ColorPicker("Tint 10 Color", selection: $envConfigSubject.tint10)
             ColorPicker("Tint 20 Color", selection: $envConfigSubject.tint20)
             ColorPicker("Tint 30 Color", selection: $envConfigSubject.tint30)

@@ -14,7 +14,9 @@ class ColorThemeProvider {
     let primaryColorTint10: UIColor
     let primaryColorTint20: UIColor
     let primaryColorTint30: UIColor
-
+    /* <CUSTOM_COLOR_FEATURE> */
+    let foregroundOnPrimary: UIColor
+    /* </CUSTOM_COLOR_FEATURE> */
     // MARK: Text Label Colours
     let textSecondary: UIColor = Colors.textSecondary
 
@@ -93,6 +95,9 @@ class ColorThemeProvider {
         self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
         self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
         self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
+        /* <CUSTOM_COLOR_FEATURE> */
+        self.foregroundOnPrimary = themeOptions?.foregroundOnPrimary ?? .orange
+        /* </CUSTOM_COLOR_FEATURE> */
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
@@ -104,7 +109,11 @@ extension ColorThemeProvider: ColorProviding {
     func primaryColor(for window: UIWindow) -> UIColor? {
         return primaryColor
     }
-
+    /* <CUSTOM_COLOR_FEATURE> */
+    func foregroundOnPrimary(for window: UIWindow) -> UIColor? {
+        return foregroundOnPrimary
+    }
+    /* </CUSTOM_COLOR_FEATURE> */
     func primaryTint10Color(for window: UIWindow) -> UIColor? {
         return primaryColorTint10
     }

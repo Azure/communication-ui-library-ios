@@ -56,12 +56,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var participantMenuViewModel: ParticipantMenuViewModel?
 
     let avatarManager: AvatarViewManagerProtocol
-
+    let themeOptions: ThemeOptions
+    
     init(logger: Logger,
          store: Store<AppState, Action>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
          localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking(),
          debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking(),
+         themeOptions: ThemeOptions,
          capabilitiesManager: CapabilitiesManager = CapabilitiesManager(callType: .groupCall),
          avatarManager: AvatarViewManagerProtocol) {
         self.logger = logger
@@ -71,6 +73,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         self.debugInfoManager = debugInfoManager
         self.capabilitiesManager = capabilitiesManager
         self.avatarManager = avatarManager
+        self.themeOptions = themeOptions
     }
 
     func getSetupViewModel() -> SetupViewModel {
@@ -160,6 +163,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                 buttonLabel: buttonLabel,
                                                                 iconName: iconName,
                                                                 isDisabled: isDisabled,
+                                                                themeOptions: themeOptions, 
                                                                 action: action)
     }
 
@@ -227,6 +231,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                   accessibilityProvider: accessibilityProvider,
                                                                   networkManager: NetworkManager(),
                                                                   audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
+                                                                  themeOptions: themeOptions,
                                                                   store: store,
                                                                   callType: .groupCall
         )
