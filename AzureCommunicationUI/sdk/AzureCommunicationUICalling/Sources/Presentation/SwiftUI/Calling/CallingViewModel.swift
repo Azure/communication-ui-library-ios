@@ -154,7 +154,8 @@ internal class CallingViewModel: ObservableObject {
                 }
 
             }, localUserState: store.state.localUserState,
-            capabilitiesManager: capabilitiesManager)
+            capabilitiesManager: capabilitiesManager,
+            buttonViewDataState: store.state.buttonViewDataState)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {
@@ -178,7 +179,6 @@ internal class CallingViewModel: ObservableObject {
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
-            isDisplayed: store.state.navigationState.moreOptionsVisible,
             isCaptionsAvailable: true,
             controlBarOptions: callScreenOptions.controlBarOptions,
             showSharingViewAction: {
@@ -190,6 +190,7 @@ internal class CallingViewModel: ObservableObject {
             showCaptionsViewAction: {
                 store.dispatch(action: .showCaptionsListView)
             },
+            buttonViewDataState: store.state.buttonViewDataState,
             dispatchAction: store.dispatch
         )
 
@@ -248,7 +249,8 @@ internal class CallingViewModel: ObservableObject {
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
                                    visibilityState: state.visibilityState,
-                                   navigationState: state.navigationState)
+                                   navigationState: state.navigationState,
+                                   buttonViewDataState: state.buttonViewDataState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
@@ -274,7 +276,8 @@ internal class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         moreCallOptionsListViewModel.update(navigationState: state.navigationState,
-                                            visibilityState: state.visibilityState)
+                                            visibilityState: state.visibilityState,
+                                            buttonViewDataState: state.buttonViewDataState)
         let newIsCallConnected = state.callingState.status == .connected
         let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
                                                                               callingStatus: state.callingState.status)

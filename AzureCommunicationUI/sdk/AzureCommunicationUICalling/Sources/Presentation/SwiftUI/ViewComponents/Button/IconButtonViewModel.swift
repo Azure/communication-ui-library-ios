@@ -67,4 +67,10 @@ class IconButtonViewModel: ObservableObject {
             self.isDisabled = isDisabled
         }
     }
+
+    func update(isVisible: Bool) {
+        if self.isVisible != isVisible {
+            self.isVisible = isVisible
+        }
+    }
 }

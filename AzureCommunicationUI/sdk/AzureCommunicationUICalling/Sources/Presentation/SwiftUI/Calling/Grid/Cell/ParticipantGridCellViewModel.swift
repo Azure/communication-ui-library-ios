@@ -114,6 +114,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.isHold != isOnHold {
             self.isHold = isOnHold
+            postParticipantStatusAccessibilityAnnouncements(isHold: self.isHold, participantModel: participantModel)
         }
 
         self.isInBackground = lifeCycleState.currentStatus == .background
@@ -182,5 +183,12 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
                                                         participantStatus: ParticipantStatus?) -> Bool {
         return callType == .oneToNOutgoing &&
                (participantStatus == nil || participantStatus == .connecting || participantStatus == .ringing)
+    }
+
+    private func postParticipantStatusAccessibilityAnnouncements(isHold: Bool, participantModel: ParticipantInfoModel) {
+        let holdResumeAccessibilityAnnouncement = isHold ?
+            localizationProvider.getLocalizedString(.onHoldAccessibilityLabel, participantModel.displayName) :
+            localizationProvider.getLocalizedString(.participantResumeAccessibilityLabel, participantModel.displayName)
+        accessibilityProvider.postQueuedAnnouncement(holdResumeAccessibilityAnnouncement)
     }
 }

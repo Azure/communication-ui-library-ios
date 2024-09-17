@@ -35,7 +35,8 @@ class CallingViewModelTests: XCTestCase {
                                                           avatarManager: AvatarViewManagerMocking(
                                                             store: storeFactory.store,
                                                             localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                          localParticipantViewData: nil))
+                                                          localParticipantViewData: nil),
+                                                          updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
     }
 
@@ -130,7 +131,7 @@ class CallingViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "ControlBarViewModel is updated")
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
-        let updateControlBarViewModel: (LocalUserState, PermissionState, VisibilityState) -> Void = { userState, permissionState, _ in
+        let updateControlBarViewModel: (LocalUserState, PermissionState, VisibilityState, ButtonViewDataState) -> Void = { userState, permissionState, _, _ in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             XCTAssertEqual(appState.permissionState.audioPermission, permissionState.audioPermission)
             expectation.fulfill()
@@ -142,7 +143,8 @@ class CallingViewModelTests: XCTestCase {
                                                                         onEndCallTapped: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         updateState: updateControlBarViewModel,
-                                                                        capabilitiesManager: capabilitiesManager)
+                                                                        capabilitiesManager: capabilitiesManager,
+                                                                        buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)

@@ -61,7 +61,8 @@ extension OnHoldOverlayViewModelTests {
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
                                                                 localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                                localParticipantViewData: nil))
+                                                                localParticipantViewData: nil),
+                                                              updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
         let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModel(
                                       localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
@@ -86,7 +87,8 @@ extension OnHoldOverlayViewModelTests {
                                                               avatarManager: AvatarViewManagerMocking(
                                                                 store: storeFactory.store,
                                                                 localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                                localParticipantViewData: nil))
+                                                                localParticipantViewData: nil),
+                                                              updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
         let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProvider(logger: logger),
                                                   compositeViewModelFactory: factoryMocking,

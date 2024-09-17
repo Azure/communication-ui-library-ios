@@ -49,7 +49,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
+                                 capabilitiesManager: CapabilitiesManager,
+                                 buttonViewDataState: ButtonViewDataState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState
@@ -74,12 +75,12 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeMoreCallOptionsListViewModel(
-        isDisplayed: Bool,
         isCaptionsAvailable: Bool,
         controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void,
+        buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel
     func makeCaptionsListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,
@@ -94,6 +95,7 @@ protocol CompositeViewModelFactoryProtocol {
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
                                      startIcon: CompositeIcon,
+                                     isEnabled: Bool,
                                      action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
 
     func makeLanguageListItemViewModel(title: String,
@@ -118,7 +120,8 @@ protocol CompositeViewModelFactoryProtocol {
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> SetupControlBarViewModel
+                                      localUserState: LocalUserState,
+                                      buttonViewDataState: ButtonViewDataState) -> SetupControlBarViewModel
     func makeJoiningCallActivityViewModel(title: String) -> JoiningCallActivityViewModel
 }
 

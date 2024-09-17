@@ -25,6 +25,8 @@ extension Reducer {
         callScreenInfoHeaderReducer: Reducer<CallScreenInfoHeaderState, CallScreenInfoHeaderAction>
             = .callScreenInfoHeaderReducer
         /* </TIMER_TITLE_FEATURE> */
+        ,
+        buttonViewDataReducer: Reducer<ButtonViewDataState, ButtonViewDataAction> = .buttonViewDataReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
@@ -45,6 +47,7 @@ extension Reducer {
             /* <TIMER_TITLE_FEATURE> */
             var callScreenInfoHeaderState = state.callScreenInfoHeaderState
             /* </TIMER_TITLE_FEATURE> */
+            var buttonViewDataState = state.buttonViewDataState
 
             switch action {
             case let .permissionAction(permAction):
@@ -67,6 +70,8 @@ extension Reducer {
             case let .callScreenInfoHeaderAction(action):
                 callScreenInfoHeaderState = callScreenInfoHeaderReducer.reduce(state.callScreenInfoHeaderState, action)
             /* </TIMER_TITLE_FEATURE> */
+            case let .buttonViewDataAction(action):
+                buttonViewDataState = buttonViewDataReducer.reduce(state.buttonViewDataState, action)
             default:
                 break
             }
@@ -96,7 +101,10 @@ extension Reducer {
                             /* <TIMER_TITLE_FEATURE> */
                             ,
                             callScreenInfoHeaderState: callScreenInfoHeaderState
-                            /* </TIMER_TITLE_FEATURE> */ )
+                            /* </TIMER_TITLE_FEATURE> */
+                            ,
+                            buttonViewDataState: buttonViewDataState
+            )
         }
     }
 }

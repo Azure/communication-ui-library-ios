@@ -32,6 +32,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     /* <CUSTOM_COLOR_FEATURE> */
     private let themeOptions: ThemeOptions
     /* </CUSTOM_COLOR_FEATURE> */
+    private let updatableOptionsManager: UpdatableOptionsManagerProtocol
+
     init(logger: Logger,
          store: Store<AppState, Action>,
          networkManager: NetworkManager,
@@ -53,6 +55,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          /* <CUSTOM_COLOR_FEATURE> */
          themeOptions: ThemeOptions,
          /* </CUSTOM_COLOR_FEATURE> */
+         updatableOptionsManager: UpdatableOptionsManagerProtocol,
          retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
@@ -76,6 +79,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.themeOptions = themeOptions
         /* </CUSTOM_COLOR_FEATURE> */
         self.avatarManager = avatarManager
+        self.updatableOptionsManager = updatableOptionsManager
     }
 
     func makeLeaveCallConfirmationViewModel(
@@ -297,7 +301,8 @@ extension CompositeViewModelFactory {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 capabilitiesManager: CapabilitiesManager)
+                                 capabilitiesManager: CapabilitiesManager,
+                                 buttonViewDataState: ButtonViewDataState)
     -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -307,7 +312,8 @@ extension CompositeViewModelFactory {
                             localUserState: localUserState,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             capabilitiesManager: capabilitiesManager,
-                            controlBarOptions: callScreenOptions?.controlBarOptions)
+                            controlBarOptions: callScreenOptions?.controlBarOptions,
+                            buttonViewDataState: buttonViewDataState)
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
@@ -403,25 +409,25 @@ extension CompositeViewModelFactory {
     }
 
     func makeMoreCallOptionsListViewModel(
-        isDisplayed: Bool,
         isCaptionsAvailable: Bool,
         controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
         showCaptionsViewAction: @escaping () -> Void,
+        buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
-                                     localizationProvider: localizationProvider,
-                                     showSharingViewAction: showSharingViewAction,
-                                     showSupportFormAction: showSupportFormAction,
-                                     showCaptionsViewAction: showCaptionsViewAction,
+                                            localizationProvider: localizationProvider,
+                                            showSharingViewAction: showSharingViewAction,
+                                            showSupportFormAction: showSupportFormAction,
+                                            showCaptionsViewAction: showCaptionsViewAction,
                                             controlBarOptions: controlBarOptions,
-                                     isCaptionsAvailable: isCaptionsAvailable,
-                                     isSupportFormAvailable: events.onUserReportedIssue != nil,
-                                     isDisplayed: isDisplayed,
-                                     dispatchAction: dispatchAction)
+                                            isCaptionsAvailable: isCaptionsAvailable,
+                                            isSupportFormAvailable: events.onUserReportedIssue != nil,
+                                            buttonViewDataState: buttonViewDataState,
+                                            dispatchAction: dispatchAction)
     }
 
     func makeLanguageListItemViewModel(title: String,
@@ -446,13 +452,15 @@ extension CompositeViewModelFactory {
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
                                      startIcon: CompositeIcon,
+                                     isEnabled: Bool,
                                      action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
         DrawerGenericItemViewModel(title: title,
                                    accessibilityIdentifier: accessibilityIdentifier,
                                    action: action,
                                    startCompositeIcon: startIcon,
                                    showToggle: showToggle,
-                                   isToggleOn: isToggleOn)
+                                   isToggleOn: isToggleOn,
+                                   isEnabled: isEnabled)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
@@ -487,16 +495,19 @@ extension CompositeViewModelFactory {
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> SetupControlBarViewModel {
+                                      localUserState: LocalUserState,
+                                      buttonViewDataState: ButtonViewDataState) -> SetupControlBarViewModel {
         let audioVideoMode = localOptions?.audioVideoMode ?? CallCompositeAudioVideoMode.audioAndVideo
 
         return SetupControlBarViewModel(compositeViewModelFactory: self,
-                                 logger: logger,
-                                 dispatchAction: dispatchAction,
-                                 localUserState: localUserState,
-                                 localizationProvider: localizationProvider,
-                                 audioVideoMode: audioVideoMode,
-                                 setupScreenOptions: setupScreenOptions)
+                                        logger: logger,
+                                        dispatchAction: dispatchAction,
+                                        updatableOptionsManager: updatableOptionsManager,
+                                        localUserState: localUserState,
+                                        localizationProvider: localizationProvider,
+                                        audioVideoMode: audioVideoMode,
+                                        setupScreenOptions: setupScreenOptions,
+                                        buttonViewDataState: buttonViewDataState)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {

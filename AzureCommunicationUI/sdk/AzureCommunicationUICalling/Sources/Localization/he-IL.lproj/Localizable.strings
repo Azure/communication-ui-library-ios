@@ -129,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="בטל את הכרזה";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="מפסיק את הודעה זו";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="לא ניתן להצטרף לשיחה עקב שגיאה.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="הוסרת מהשיחה עקב שגיאה.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="הוסרת מהשיחה עקב שגיאה או שאיבדת את החיבור. נסה להצטרף מחדש לשיחה.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="הוסרת מהשיחה.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="אירעה שגיאה.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="לא ניתן לחדש את השיחה";

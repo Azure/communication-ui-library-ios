@@ -24,10 +24,14 @@ struct SetupControlBarView: View {
                         Spacer()
                         cameraButton
                     }
-                    Spacer()
-                    micButton
-                    Spacer()
-                    audioDeviceButton
+                    if viewModel.isMicButtonVisible {
+                        Spacer()
+                        micButton
+                    }
+                    if viewModel.isAudioDeviceButtonVisible {
+                        Spacer()
+                        audioDeviceButton
+                    }
                     Spacer()
                 }
                 .frame(width: getWidth(from: geometry), height: controlHeight)
@@ -47,6 +51,7 @@ struct SetupControlBarView: View {
     var micButton: some View {
         IconWithLabelButton(viewModel: viewModel.micButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.toggleMicAccessibilityID.rawValue)
+            .hidden(!viewModel.isMicButtonVisible)
     }
 
     var audioDeviceButton: some View {

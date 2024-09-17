@@ -129,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Stäng webbannons";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Stäng det här meddelandet";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Det gick inte att ansluta till samtalet på grund av ett fel.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Du togs bort från samtalet på grund av ett fel.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Du togs bort från samtalet på grund av ett fel eller att anslutningen bröts. Försök att återansluta till samtalet.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Du togs bort från samtalet.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Ett fel inträffade.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Det går inte att återuppta samtalet";

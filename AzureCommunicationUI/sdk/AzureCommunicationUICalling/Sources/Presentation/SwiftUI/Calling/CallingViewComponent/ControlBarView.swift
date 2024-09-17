@@ -20,7 +20,7 @@ struct ControlBarView: View {
     var body: some View {
         if viewModel.isDisplayed {
             Group {
-                if screenSizeClass == .ipadScreenSize {
+                if screenSizeClass == .ipadScreenSize || viewModel.totalButtonCount < 5 {
                     centeredStack
                 } else {
                     nonCenteredStack
@@ -34,7 +34,6 @@ struct ControlBarView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
-            .frame(height: 105)
         }
     }
 
@@ -47,9 +46,7 @@ struct ControlBarView: View {
                     cameraButton
                     micButton
                     audioDeviceButton
-                    if viewModel.isMoreButtonVisible() {
-                        moreButton
-                    }
+                    moreButton
                     hangUpButton
                     Spacer()
                 }
@@ -57,9 +54,7 @@ struct ControlBarView: View {
                 VStack {
                     Spacer()
                     hangUpButton
-                    if viewModel.isMoreButtonVisible() {
-                        moreButton
-                    }
+                    moreButton
                     audioDeviceButton
                     micButton
                     cameraButton
@@ -107,7 +102,6 @@ struct ControlBarView: View {
 
     var micButton: some View {
         IconButton(viewModel: viewModel.micButtonViewModel)
-            .disabled(viewModel.isMicDisabled())
             .accessibility(identifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
     }
 

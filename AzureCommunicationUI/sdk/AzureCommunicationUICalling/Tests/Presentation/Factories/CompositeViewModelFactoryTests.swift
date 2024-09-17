@@ -61,6 +61,7 @@ extension CompositeViewModelFactoryTests {
                                             store: mockStoreFactory.store,
                                             localParticipantId: createCommunicationIdentifier(fromRawId: ""),
                                             localParticipantViewData: nil),
+                                         updatableOptionsManager: UpdatableOptionsManager(store: mockStoreFactory.store, setupScreenOptions: nil, callScreenOptions: nil),
                                          retrieveLogFiles: { return [] })
     }
 }
