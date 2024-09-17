@@ -31,7 +31,7 @@ public protocol ThemeOptions {
     var primaryColorTint30: UIColor { get }
     /* <CUSTOM_COLOR_FEATURE> */
     /// Provide a getter to return a custom  onPrimaryColor color.
-    var onPrimaryColor: UIColor {get}
+    var foregroundOnPrimaryColor: UIColor {get}
     /* </CUSTOM_COLOR_FEATURE> */
 }
 
@@ -52,7 +52,7 @@ public extension ThemeOptions {
         return Colors.Palette.communicationBlueTint30.color
     }
     /* <CUSTOM_COLOR_FEATURE> */
-    var onPrimaryColor: UIColor {
+    var foregroundOnPrimaryColor: UIColor {
         return .white
     }
     /* </CUSTOM_COLOR_FEATURE> */

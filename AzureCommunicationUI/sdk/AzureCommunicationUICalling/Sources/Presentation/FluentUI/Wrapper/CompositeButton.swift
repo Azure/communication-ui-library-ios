@@ -40,7 +40,7 @@ struct CompositeButton: UIViewRepresentable {
                 let dynamicColor = (buttonStyle == .borderless ||
                                    buttonStyle == .primaryOutline)
                                    ? themeOptions.primaryColor.dynamicColor
-                                   : themeOptions.onPrimaryColor.dynamicColor
+                                   : themeOptions.foregroundOnPrimaryColor.dynamicColor
                 let overrideTokens: [ButtonTokenSet.Tokens: ControlTokenValue] = [
                     .foregroundColor: ControlTokenValue.dynamicColor({
                         dynamicColor!
@@ -57,7 +57,7 @@ struct CompositeButton: UIViewRepresentable {
             /* <CUSTOM_COLOR_FEATURE> */
             let icon = StyleProvider.icon.getUIImage(for: iconName)?.withRenderingMode(.alwaysTemplate)
             button.setImage(icon, for: .normal)
-            button.tintColor = themeOptions.onPrimaryColor
+            button.tintColor = themeOptions.foregroundOnPrimaryColor
             /* </CUSTOM_COLOR_FEATURE> */
         }
 
