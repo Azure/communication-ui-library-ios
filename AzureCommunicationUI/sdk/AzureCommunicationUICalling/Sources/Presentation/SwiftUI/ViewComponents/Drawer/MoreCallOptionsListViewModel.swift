@@ -14,6 +14,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
 
 var eventButtonClick:((_ event:String) -> Void)? = nil
     @Published var recordingTitle: String="Start Recording"
+    @Published var permission: String="permission"
   
 
     @objc private func updateRecording(_ notification: Notification) {
@@ -35,6 +36,33 @@ var eventButtonClick:((_ event:String) -> Void)? = nil
          
         }
     }
+    
+    @objc private func updatePermission(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let value = userInfo["value"] as? String {
+            let id: String
+            self.permission=value
+            switch self.permission {
+            case "RecordButton":
+                id = AccessibilityIdentifier.callingViewRecordID.rawValue
+            case "ChatButton":
+                id = AccessibilityIdentifier.callingViewParticipantChatID.rawValue
+            case "ParticipantButton":
+                id = AccessibilityIdentifier.callingViewParticipantWaitingListID.rawValue
+            case "ShareButon":
+                id = AccessibilityIdentifier.callingViewParticipantShareID.rawValue
+            default:
+                id = ""
+            }
+          
+            if let index = items.firstIndex(where: { $0.accessibilityIdentifier == id }) {
+                items.remove(at: index)
+       
+                }
+            
+         
+        }
+    }
     func recordButtonClickLocal(){
         eventButtonClick?("recordButtonClick")
     }
@@ -51,6 +79,7 @@ var eventButtonClick:((_ event:String) -> Void)? = nil
 
         self.recordingTitle="Start Recording"
         self.eventButtonClick=eventButtonClick;
+        self.eventButtonClick?("CheckPermissions")
         func chatButtonClickLocal(){
             eventButtonClick?("ChatButtonClick")
         }
@@ -74,8 +103,8 @@ let chatItem=compositeViewModelFactory.makeDrawerListItemViewModel(
      
         let waitingList=compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .personFeedback,
-            title: "Waiting List",
-            accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantChatID.rawValue,
+            title: "Lobby",
+            accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantWaitingListID.rawValue,
             action: listButtonClickLocal)
         
 //        if isSupportFormAvailable {
@@ -92,16 +121,30 @@ let chatItem=compositeViewModelFactory.makeDrawerListItemViewModel(
             title: "Start Recording" ,
             accessibilityIdentifier: AccessibilityIdentifier.callingViewRecordID.rawValue,
             action: recordButtonClickLocal)
+        let share=compositeViewModelFactory.makeDrawerListItemViewModel(
+            icon: .personFeedback,
+            title: "Share Screen" ,
+            accessibilityIdentifier: AccessibilityIdentifier.callingViewParticipantShareID.rawValue,
+            action: recordButtonClickLocal)
         items.append(record)
         items.append(waitingList)
+        items.append(share)
        
 
         self.items = items
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateRecording(_: )), name: NSNotification.Name(rawValue: "updateRecording"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updatePermission(_: )), name: NSNotification.Name(rawValue: "updatePermission"), object: nil)
     }
     
     deinit {
            // Remove observer when ViewModel is deallocated
-           NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self,
+                                                        name: NSNotification.Name(rawValue: "updateRecording"),
+                                                        object: nil)
+
+              NotificationCenter.default.removeObserver(self,
+                                                        name: NSNotification.Name(rawValue: "updatePermission"),
+                                                        object: nil)
        }
 }
