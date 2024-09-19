@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="صوته غير مكتوم";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="يتحدث";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="قيد التعليق";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ is On hold";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ resumed the call";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="اضغط للسماح بالدخول أو الرفض";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="الانتظار في ساحة الانتظار (%d)";

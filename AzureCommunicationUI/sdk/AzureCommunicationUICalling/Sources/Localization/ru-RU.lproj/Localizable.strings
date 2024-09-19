@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Звук включен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Говорит";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ is On hold";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ resumed the call";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Коснитесь, чтобы допустить или не допустить участника";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Заждался в \"зале ожидания\" (%d)";

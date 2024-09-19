@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Demping opphevet";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Snakker";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="På vent";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ is On hold";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ resumed the call";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Trykk for å slippe inn eller avslå";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Venter i lobbyen (%d)";

@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="ミュート解除";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="話し中";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留中";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ is On hold";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ resumed the call";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="タップして許可または拒否";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ロビーで待機中 (%d)";

@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="已取消靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="說話";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ is On hold";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ resumed the call";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="點選以准許或拒絕";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="正在大廳等候 (%d)";
