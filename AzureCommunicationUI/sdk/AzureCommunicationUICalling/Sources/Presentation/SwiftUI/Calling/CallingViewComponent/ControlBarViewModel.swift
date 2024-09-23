@@ -154,7 +154,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func isMoreButtonVisible() -> Bool {
-        buttonViewDataState.callScreenCustomButtonsState.isEmpty == false ||
+        buttonViewDataState.callScreenCustomButtonsState.filter({ button in button.visible }).isEmpty == false ||
         buttonViewDataState.liveCaptionsButton?.visible ?? true ||
         buttonViewDataState.liveCaptionsToggleButton?.visible ?? true ||
         buttonViewDataState.captionsLanguageButton?.visible ?? true ||
