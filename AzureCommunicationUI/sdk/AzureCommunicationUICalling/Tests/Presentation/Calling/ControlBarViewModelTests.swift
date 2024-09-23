@@ -692,10 +692,70 @@ class ControlBarViewModelTests: XCTestCase {
             spokenLanguageButton: DefaultButtonState(enabled: true, visible: false),
             captionsLanguageButton: DefaultButtonState(enabled: true, visible: false),
 
-            callScreenCustomButtonsState: []
+            callScreenCustomButtonsState: [CustomButtonState(id: "button1", enabled: true, visible: false, image: UIImage(), title: "button 1")]
         )
         let sut = makeSUT(buttonViewDataState: buttonViewDataState)
         XCTAssertFalse(sut.isMoreButtonVisible())
+    }
+
+    func test_isCameraVisible_whenCameraButtonCustomization_notVisible_thenReturnsFalse() {
+        let sut = makeSUT(audioVideoMode: .audioAndVideo)
+        let buttonState = ButtonViewDataState(callScreenCameraButtonState: DefaultButtonState(enabled: true, visible: false))
+        let audioState = LocalUserState.AudioState(operation: .on,
+                                                   device: .bluetoothSelected)
+        let localUserState = LocalUserState(audioState: audioState)
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState(),
+                   buttonViewDataState: buttonState)
+        XCTAssertFalse(sut.isCameraVisible())
+    }
+
+    func test_isCameraVisible_whenCameraButtonCustomization_notEnabled_thenReturnsFalse() {
+        let sut = makeSUT(audioVideoMode: .audioAndVideo)
+        let buttonState = ButtonViewDataState(callScreenCameraButtonState: DefaultButtonState(enabled: false, visible: true))
+        let audioState = LocalUserState.AudioState(operation: .on,
+                                                   device: .bluetoothSelected)
+        let localUserState = LocalUserState(audioState: audioState)
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState(),
+                   buttonViewDataState: buttonState)
+        XCTAssertTrue(sut.isCameraDisabled())
+    }
+
+    func test_isCameraVisible_whenMicButtonCustomization_notVisible_thenReturnsFalse() {
+        let sut = makeSUT(audioVideoMode: .audioAndVideo)
+        let buttonState = ButtonViewDataState(callScreenMicButtonState: DefaultButtonState(enabled: true, visible: false))
+        let audioState = LocalUserState.AudioState(operation: .on,
+                                                   device: .bluetoothSelected)
+        let localUserState = LocalUserState(audioState: audioState)
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState(),
+                   buttonViewDataState: buttonState)
+        XCTAssertFalse(sut.isMicVisible())
+    }
+
+    func test_isCameraVisible_whenMIcButtonCustomization_notEnabled_thenReturnsFalse() {
+        let sut = makeSUT(audioVideoMode: .audioAndVideo)
+        let buttonState = ButtonViewDataState(callScreenMicButtonState: DefaultButtonState(enabled: false, visible: true))
+        let audioState = LocalUserState.AudioState(operation: .on,
+                                                   device: .bluetoothSelected)
+        let localUserState = LocalUserState(audioState: audioState)
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   navigationState: NavigationState(),
+                   buttonViewDataState: buttonState)
+        XCTAssertTrue(sut.isMicDisabled())
     }
 }
 
