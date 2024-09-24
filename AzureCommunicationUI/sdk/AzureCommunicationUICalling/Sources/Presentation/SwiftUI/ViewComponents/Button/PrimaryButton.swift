@@ -16,15 +16,12 @@ struct PrimaryButton: View {
                         buttonLabel: viewModel.buttonLabel,
                         iconName: viewModel.iconName,
                         paddings: viewModel.paddings,
-                        /* <CUSTOM_COLOR_FEATURE> */
-                        themeOptions: viewModel.themeOptions, update: {_ in 
-            {
-                $0.addTarget(action, action: #selector(Action.perform(sender:)), for: .touchUpInside)
-                action.action = {
-                    viewModel.action()
-                }
-            }})
-                        /* </CUSTOM_COLOR_FEATURE> */
+                        themeOptions: viewModel.themeOptions) {
+            $0.addTarget(action, action: #selector(Action.perform(sender:)), for: .touchUpInside)
+            action.action = {
+                viewModel.action()
+            }
+        }   
             .disabled(viewModel.isDisabled)
             .accessibilityElement(children: .combine)
             .accessibilityLabel(Text(viewModel.accessibilityLabel ?? viewModel.buttonLabel))
