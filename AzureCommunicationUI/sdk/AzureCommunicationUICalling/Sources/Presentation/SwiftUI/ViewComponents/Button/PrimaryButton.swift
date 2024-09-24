@@ -9,6 +9,7 @@ struct PrimaryButton: View {
     @ObservedObject var viewModel: PrimaryButtonViewModel
 
     var body: some View {
+        var action = Action()
         // accessibilityElement(children: .combine) is required because
         // the CompositeButton is represented as a superview with subviews
         CompositeButton(buttonStyle: viewModel.buttonStyle,
@@ -16,12 +17,24 @@ struct PrimaryButton: View {
                         iconName: viewModel.iconName,
                         paddings: viewModel.paddings,
                         /* <CUSTOM_COLOR_FEATURE> */
-                        themeOptions: viewModel.themeOptions)
+                        themeOptions: viewModel.themeOptions, update: {_ in 
+            {
+                $0.addTarget(action, action: #selector(Action.perform(sender:)), for: .touchUpInside)
+                action.action = {
+                    viewModel.action()
+                }
+            }})
                         /* </CUSTOM_COLOR_FEATURE> */
-            .onTapGesture(perform: viewModel.action)
             .disabled(viewModel.isDisabled)
             .accessibilityElement(children: .combine)
             .accessibilityLabel(Text(viewModel.accessibilityLabel ?? viewModel.buttonLabel))
             .accessibilityAddTraits(.isButton)
+    }
+
+    class Action: NSObject {
+        var action: (() -> Void)?
+        @objc func perform(sender: Any?) {
+            action?()
+        }
     }
 }
