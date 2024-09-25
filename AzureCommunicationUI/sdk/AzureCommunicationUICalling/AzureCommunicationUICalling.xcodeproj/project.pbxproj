@@ -287,6 +287,8 @@
 		A4F5FA002C18BFAD00A74513 /* CallingSDKInitializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */; };
 		A4F5FA022C18CF6500A74513 /* PushNotificationEventTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */; };
 		A4F5FA042C18E98800A74513 /* CallScreenOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */; };
+		A788CB802CA45AE100244481 /* CompositeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788CB7F2CA45AE100244481 /* CompositeButtonTests.swift */; };
+		A788CB822CA45C1C00244481 /* MockThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788CB812CA45C1C00244481 /* MockThemeOptions.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
