@@ -57,14 +57,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var participantMenuViewModel: ParticipantMenuViewModel?
 
     let avatarManager: AvatarViewManagerProtocol
-    let themeOptions: ThemeOptions
-    
     init(logger: Logger,
          store: Store<AppState, Action>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
          localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking(),
          debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking(),
-         themeOptions: ThemeOptions,
          capabilitiesManager: CapabilitiesManager = CapabilitiesManager(callType: .groupCall),
          avatarManager: AvatarViewManagerProtocol,
          updatableOptionsManager: UpdatableOptionsManager) {
@@ -75,7 +72,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         self.debugInfoManager = debugInfoManager
         self.capabilitiesManager = capabilitiesManager
         self.avatarManager = avatarManager
-        self.themeOptions = themeOptions
         self.updatableOptionsManager = updatableOptionsManager
     }
 
@@ -166,7 +162,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                 buttonLabel: buttonLabel,
                                                                 iconName: iconName,
                                                                 isDisabled: isDisabled,
-                                                                themeOptions: themeOptions, 
+                                                                themeOptions: MockThemeOptions(),
                                                                 action: action)
     }
 
@@ -233,8 +229,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return loadingOverlayViewModel ?? LoadingOverlayViewModel(localizationProvider: localizationProvider,
                                                                   accessibilityProvider: accessibilityProvider,
                                                                   networkManager: NetworkManager(),
-                                                                  audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
-                                                                  themeOptions: themeOptions,
+                                                                  audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false), themeOptions: MockThemeOptions(),
                                                                   store: store,
                                                                   callType: .groupCall
         )

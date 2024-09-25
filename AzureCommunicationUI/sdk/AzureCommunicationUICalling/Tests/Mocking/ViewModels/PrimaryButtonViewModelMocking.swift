@@ -24,6 +24,7 @@ class PrimaryButtonViewModelMocking: PrimaryButtonViewModel {
                    buttonLabel: buttonLabel,
                    iconName: iconName,
                    isDisabled: isDisabled,
+                   themeOptions: MockThemeOptions(),
                    action: action)
     }
 

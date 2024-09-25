@@ -37,6 +37,19 @@ struct CompositeButton: UIViewRepresentable {
     }
 
      func makeUIView(context: Context) -> FluentUI.Button {
+         return createButton(style: buttonStyle,
+                             label: buttonLabel,
+                             paddings: paddings,
+                             themeOptions: themeOptions,
+                             iconName: iconName)
+     }
+    func createButton(
+            style: FluentUI.ButtonStyle,
+            label: String,
+            paddings: Paddings?,
+            themeOptions: ThemeOptions,
+            iconName: CompositeIcon? = nil
+        ) -> FluentUI.Button {
         let button = Button(style: buttonStyle)
         button.setTitle(buttonLabel, for: .normal)
          /* <CUSTOM_COLOR_FEATURE> */
@@ -65,13 +78,14 @@ struct CompositeButton: UIViewRepresentable {
         }
 
         return button
+
     }
 
     func updateUIView(_ button: FluentUI.Button, context: Context) {
         update(button, context)
     }
 
-    private func getEdgeInserts(_ paddings: Paddings) -> NSDirectionalEdgeInsets {
+     func getEdgeInserts(_ paddings: Paddings) -> NSDirectionalEdgeInsets {
         return NSDirectionalEdgeInsets(top: paddings.vertical,
                                        leading: paddings.horizontal,
                                        bottom: paddings.vertical,
