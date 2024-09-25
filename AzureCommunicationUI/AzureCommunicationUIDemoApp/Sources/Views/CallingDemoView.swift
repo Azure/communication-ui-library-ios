@@ -997,13 +997,24 @@ extension CallingDemoView {
 
     public func configureAudioSession() -> Error? {
         let audioSession = AVAudioSession.sharedInstance()
-        let options: AVAudioSession.CategoryOptions = .allowBluetooth
         var configError: Error?
-        do {
-            try audioSession.setCategory(.playAndRecord, options: options)
-        } catch {
-            configError = error
+
+        // Check the current audio output route
+        let currentRoute = audioSession.currentRoute
+        let isUsingSpeaker = currentRoute.outputs.contains { $0.portType == .builtInSpeaker }
+        let isUsingReceiver = currentRoute.outputs.contains { $0.portType == .builtInReceiver }
+
+        // Only configure the session if necessary (e.g., when not on speaker/receiver)
+        if !isUsingSpeaker && !isUsingReceiver {
+            do {
+                // Keeping default .playAndRecord without forcing speaker
+                try audioSession.setCategory(.playAndRecord, options: [.allowBluetooth])
+                try audioSession.setActive(true)
+            } catch {
+                configError = error
+            }
         }
+
         return configError
     }
 
