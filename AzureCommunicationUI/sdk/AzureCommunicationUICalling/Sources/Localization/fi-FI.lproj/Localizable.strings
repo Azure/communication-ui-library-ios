@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Ei mykistetty";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Puhuu";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Pidossa";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ on pidossa";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ jatkoi puhelua";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Hyväksy tai hylkää napauttamalla";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Odottaa odotustilassa (%d)";

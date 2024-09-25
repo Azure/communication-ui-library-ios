@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Wyłączono wyciszenie";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Mówi";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Zawieszony";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="Użytkownik %@ jest zawieszony";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="Użytkownik %@ wznowił rozmowę";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Naciśnij, aby wpuścić lub odrzucić";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Oczekujący w poczekalni (%d)";

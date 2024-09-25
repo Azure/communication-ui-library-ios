@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="לא מושתק";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="מדבר";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="בהמתנה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ בהמתנה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ חידש/ה את השיחה";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="הקש כדי להכניס או לדחות";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ממתין בחדר הכניסה (%d)";
