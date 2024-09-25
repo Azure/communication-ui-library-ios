@@ -21,6 +21,7 @@ struct PrimaryButton: View {
                 viewModel.action()
             }
         }
+            .onTapGesture(perform: viewModel.action)
             .disabled(viewModel.isDisabled)
             .accessibilityElement(children: .combine)
             .accessibilityLabel(Text(viewModel.accessibilityLabel ?? viewModel.buttonLabel))
