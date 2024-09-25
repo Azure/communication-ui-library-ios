@@ -25,7 +25,7 @@ struct CompositeButton: UIViewRepresentable {
          iconName: CompositeIcon? = nil,
          paddings: Paddings? = nil,
          themeOptions: ThemeOptions,
-         update: @escaping (FluentUI.Button) -> Void) {
+         updater update: @escaping (FluentUI.Button) -> Void) {
         self.buttonStyle = buttonStyle
         self.buttonLabel = buttonLabel
         self.iconName = iconName
@@ -85,7 +85,7 @@ struct CompositeButton: UIViewRepresentable {
         update(button, context)
     }
 
-     func getEdgeInserts(_ paddings: Paddings) -> NSDirectionalEdgeInsets {
+    private func getEdgeInserts(_ paddings: Paddings) -> NSDirectionalEdgeInsets {
         return NSDirectionalEdgeInsets(top: paddings.vertical,
                                        leading: paddings.horizontal,
                                        bottom: paddings.vertical,
