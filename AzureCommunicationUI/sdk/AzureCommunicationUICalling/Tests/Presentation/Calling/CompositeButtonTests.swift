@@ -33,7 +33,7 @@ class CompositeButtonTests: XCTestCase {
             iconName: icon,
             paddings: padding,
             themeOptions: themeOptions,
-            update: { _ in }
+            updater: { _ in }
         )
         XCTAssertEqual(compositeButton.buttonStyle, style)
         XCTAssertEqual(compositeButton.buttonLabel, label)
@@ -53,7 +53,7 @@ class CompositeButtonTests: XCTestCase {
             iconName: icon,
             paddings: padding,
             themeOptions: themeOptions,
-            update: { _ in }
+            updater: { _ in }
         )
         let button = compositeButton.createButton(style: style, label: label, paddings: nil, themeOptions: themeOptions)
         XCTAssertEqual(button.title(for: .normal), label)
@@ -70,18 +70,17 @@ class CompositeButtonTests: XCTestCase {
                iconName: nil,
                paddings: nil,
                themeOptions: themeOptions,
-               update: { _ in }
+               updater: { _ in }
            )
            let button = compositeButton.createButton(style: FluentUI.ButtonStyle.primaryOutline, label: label, paddings: nil, themeOptions: themeOptions)
 
            // Simulate button pressed state to check title color
            button.sendActions(for: .touchUpInside) // or whatever method is used to simulate the press
                // Get the button's title color for the normal and pressed states
-               let currentTitleColorNormal = button.titleColor(for: .normal)
+           let currentTitleColorNormal = button.titleColor(for: .normal)
            // Use a color comparison function
            XCTAssertTrue(colorsEqual(currentTitleColorNormal, button.currentTitleColor), "The normal title color should match the expected foreground color.")
        }
- 
     // Test 4: Icon Application
     func testIconApplication() {
         let style = FluentUI.ButtonStyle.primaryFilled
@@ -94,7 +93,7 @@ class CompositeButtonTests: XCTestCase {
             iconName: iconName,
             paddings: nil,
             themeOptions: themeOptions,
-            update: { _ in }
+            updater: { _ in }
         )
         let button = compositeButton.createButton(style: style, label: label, paddings: nil, themeOptions: themeOptions)
         XCTAssertEqual(button.image(for: .normal), button.currentImage)

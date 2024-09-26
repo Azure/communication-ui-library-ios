@@ -9,7 +9,7 @@ struct PrimaryButton: View {
     @ObservedObject var viewModel: PrimaryButtonViewModel
 
     var body: some View {
-        var action = Action()
+        let action = Action()
         // accessibilityElement(children: .combine) is required because
         // the CompositeButton is represented as a superview with subviews
         CompositeButton(buttonStyle: viewModel.buttonStyle,

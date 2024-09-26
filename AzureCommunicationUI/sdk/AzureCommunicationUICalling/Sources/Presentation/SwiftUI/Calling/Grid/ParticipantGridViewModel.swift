@@ -66,7 +66,7 @@ class ParticipantGridViewModel: ObservableObject {
                 participanInfoModel.status != .inLobby && participanInfoModel.status != .disconnected
             }
         let dominantSpeakers = remoteParticipantsState.dominantSpeakers
-        var newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers, visibilityState)
+        let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers, visibilityState)
         let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
         let addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
         let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
