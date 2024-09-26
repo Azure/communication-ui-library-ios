@@ -18,6 +18,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
          updateState: ((LocalUserState, PermissionState, VisibilityState, ButtonViewDataState) -> Void)? = nil,
          leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
          capabilitiesManager: CapabilitiesManager,
+         accessibilityProvider: AccessibilityProviderProtocol,
          buttonViewDataState: ButtonViewDataState) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
@@ -26,6 +27,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    dispatchAction: dispatchAction,
                    onEndCallTapped: onEndCallTapped,
                    localUserState: localUserState,
+                   accessibilityProvider: accessibilityProvider,
                    audioVideoMode: .audioAndVideo,
                    capabilitiesManager: capabilitiesManager,
                    controlBarOptions: nil,
