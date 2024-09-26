@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import FluentUI
 
-struct CustomColor: ThemeOptions {
+struct ThemeColor: ThemeOptions {
     init() {
     }
     var colorSchemeOverride: UIUserInterfaceStyle {
