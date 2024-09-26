@@ -167,11 +167,7 @@ extension PipManager: AVPictureInPictureControllerDelegate {
                                            completionHandler: @escaping (Bool) -> Void) {
 
         logger.debug("testpip: pip restoreUserInterfac")
-//        guard let onAVKitPipTapped = onAVKitPipTapped else {
-            completionHandler(true)
-//            return
-//        }
-//        onAVKitPipTapped(completionHandler)
+        completionHandler(true)
     }
 
     public func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController,

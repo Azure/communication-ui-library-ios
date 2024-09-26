@@ -143,7 +143,7 @@ struct CallingView: View {
                             videoGridView
                                 .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
                             if viewModel.isParticipantGridDisplayed &&
-                                !viewModel.isInPip &&
+//                                !viewModel.isInPip &&
                                 viewModel.allowLocalCameraPreview {
                                 Group {
                                     DraggableLocalVideoView(containerBounds:
