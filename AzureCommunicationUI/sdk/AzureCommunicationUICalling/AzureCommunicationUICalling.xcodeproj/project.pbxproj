@@ -289,6 +289,7 @@
 		A4F5FA042C18E98800A74513 /* CallScreenOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */; };
 		A788CB802CA45AE100244481 /* CompositeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788CB7F2CA45AE100244481 /* CompositeButtonTests.swift */; };
 		A788CB822CA45C1C00244481 /* MockThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788CB812CA45C1C00244481 /* MockThemeOptions.swift */; };
+		A7BB54C32CA5E9640066DE05 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BB54C22CA5E9640066DE05 /* ThemeColor.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -711,6 +712,7 @@
 		A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenOptionsTests.swift; sourceTree = "<group>"; };
 		A788CB7F2CA45AE100244481 /* CompositeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeButtonTests.swift; sourceTree = "<group>"; };
 		A788CB812CA45C1C00244481 /* MockThemeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockThemeOptions.swift; sourceTree = "<group>"; };
+		A7BB54C22CA5E9640066DE05 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -1138,6 +1140,7 @@
 				1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */,
 				1FC30845266949E8007EC537 /* ColorExtension.swift */,
 				50B390D227D834FE0010A2ED /* LocalizationKey.swift */,
+				A7BB54C22CA5E9640066DE05 /* ThemeColor.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2350,6 +2353,7 @@
 				1F11D2BD2640BD9800D33838 /* CallingMiddleware.swift in Sources */,
 				503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */,
 				982C2833267D0C4500427246 /* CompositeButton.swift in Sources */,
+				A7BB54C32CA5E9640066DE05 /* ThemeColor.swift in Sources */,
 				A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */,
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
 				756F59782966020800BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */,
