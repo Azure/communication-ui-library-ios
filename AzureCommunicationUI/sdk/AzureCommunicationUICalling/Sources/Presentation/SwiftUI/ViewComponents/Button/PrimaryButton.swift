@@ -22,11 +22,10 @@ struct PrimaryButton: View {
                 viewModel.action()
             }
         }
-         .disabled(viewModel.isDisabled)
-         .onTapGesture(perform: viewModel.action)
-         .accessibilityElement(children: .combine)
-         .accessibilityLabel(Text(viewModel.accessibilityLabel ?? viewModel.buttonLabel))
-         .accessibilityAddTraits(.isButton)
+           .disabled(viewModel.isDisabled)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Text(viewModel.accessibilityLabel ?? viewModel.buttonLabel))
+            .accessibilityAddTraits(.isButton)
     }
 
     class Action: NSObject {
