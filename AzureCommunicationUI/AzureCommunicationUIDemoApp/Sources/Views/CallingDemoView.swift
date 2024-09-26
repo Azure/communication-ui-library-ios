@@ -24,12 +24,16 @@ struct CallingDemoView: View {
     @State var callState: String = ""
     @State var issue: CallCompositeUserReportedIssue?
     @State var issueUrl: String = ""
+    @State private var isNewViewPresented = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
-
+    /* <TIMER_TITLE_FEATURE> */
+    @State var headerViewData: CallScreenHeaderViewData?
+    /* </TIMER_TITLE_FEATURE> */
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    var callComposite = CallComposite()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -43,12 +47,12 @@ struct CallingDemoView: View {
                 Button("AudioOnly") {
                     envConfigSubject.audioOnly = !envConfigSubject.audioOnly
                 }
-                .frame(width: 0, height: 0)
+                .frame(width: 1, height: 1)
                 .accessibilityIdentifier(AccessibilityId.toggleAudioOnlyModeAccessibilityID.rawValue)
                 Button("MockSdk") {
                     envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
                 }
-                .frame(width: 0, height: 0)
+                .frame(width: 1, height: 1)
                 .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
             }
 #endif
@@ -98,6 +102,9 @@ struct CallingDemoView: View {
         }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
+        }
+        .fullScreenCover(isPresented: $isNewViewPresented) {
+            CustomDemoView()
         }
         #if DEBUG
         .onAppear(perform: {
@@ -418,7 +425,19 @@ extension CallingDemoView {
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
-        let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
+
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        /* </TIMER_TITLE_FEATURE> */
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
+                                                   headerViewData: headerViewData
+                                                   /* </TIMER_TITLE_FEATURE> */ )
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -571,7 +590,15 @@ extension CallingDemoView {
             print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
             showAlert(for: "\(event.callId) cancelled")
         }
-
+        /* <TIMER_TITLE_FEATURE> */
+        let onRemoteParticipantLeftHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+            guard let composite = callComposite else {
+                return
+            }
+            self.onRemoteParticipantLeft(to: composite,
+                                           identifiers: ids)
+        }
+        /* </TIMER_TITLE_FEATURE> */
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
@@ -581,32 +608,219 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
+        /* <TIMER_TITLE_FEATURE> */
+        callComposite.events.onRemoteParticipantLeft = onRemoteParticipantLeftHandler
+        /* </TIMER_TITLE_FEATURE> */
     }
 
-    func getLocalOptions() -> LocalOptions {
+    func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
+
+        var setupScreenOptions: SetupScreenOptions?
+        if envConfigSubject.addCustomButton {
+            let micButton = ButtonViewData()
+            let audioDeviceButton = ButtonViewData()
+
+            let cameraButton = ButtonViewData(onClick: { _ in
+                micButton.visible = !micButton.visible
+                audioDeviceButton.enabled = !audioDeviceButton.enabled
+            })
+
+            setupScreenOptions = SetupScreenOptions(
+                cameraButton: cameraButton,
+                microphoneButton: micButton,
+                audioDeviceButton: audioDeviceButton
+            )
+        }
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
+
+        let controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
+                                                                envConfigSubject.displayLeaveCallConfirmation ?
+            .alwaysEnabled : .alwaysDisabled)
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        /* </TIMER_TITLE_FEATURE> */
+        var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions,
+                                                   headerViewData: headerViewData)
+
+        if envConfigSubject.addCustomButton {
+            callScreenOptions = createCallScreenOptions(callComposite: callComposite)
+        }
+        if envConfigSubject.hideAllButtons {
+            callScreenOptions = hideAllButtons()
+        }
         return LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData,
-                                        cameraOn: envConfigSubject.cameraOn,
-                                        microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
-                            captionsOptions: captionsOptions
+                            setupScreenViewData: setupScreenViewData,
+                            cameraOn: envConfigSubject.cameraOn,
+                            microphoneOn: envConfigSubject.microphoneOn,
+                            skipSetupScreen: envConfigSubject.skipSetupScreen,
+                            audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                            captionsOptions: captionsOptions,
+                            setupScreenOptions: setupScreenOptions,
+                            callScreenOptions: callScreenOptions
         )
+    }
+
+    private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenOptions {
+        // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
+        let customButtonImage: UIImage
+        if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
+            customButtonImage = image.withRenderingMode(.alwaysOriginal)
+        } else {
+            customButtonImage = UIImage().withTintColor(.black) // Fallback to a plain image with black tint
+            print("Error: Image 'ic_fluent_chevron_right_20_regular' not found")
+        }
+
+        let cameraButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::cameraButton::onClick") })
+        let micButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::micButton::onClick") })
+        let audioDeviceButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::audioDeviceButton::onClick") })
+        let liveCaptionsButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::liveCaptionsButton::onClick") })
+        let liveCaptionsToggleButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::liveCaptionsToggleButton::onClick") })
+        let spokenLanguageButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::spokenLanguageButton::onClick") })
+        let captionsLanguageButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::captionsLanguageButton::onClick") })
+        let shareDiagnostisButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::shareDiagnostisButton::onClick") })
+        let reportIssueButton = ButtonViewData(onClick: { _ in
+            print("::::SwiftUIDemoView::CallScreen::reportIssueButton::onClick") })
+
+        // Create the custom button with the tinted image
+        let customButton1 = CustomButtonViewData(
+            id: UUID().uuidString,
+            image: customButtonImage,
+            title: "Hide composite"
+        ) { _ in
+            print("::::SwiftUIDemoView::CallScreen::customButton1::onClick")
+            callComposite?.isHidden = true
+        }
+        let hideButtonsCustomButton = CustomButtonViewData(
+            id: UUID().uuidString,
+            image: customButtonImage,
+            title: "Hide/show buttons"
+        ) { _ in
+            print("::::SwiftUIDemoView::CallScreen::hideButtonsCustomButton::onClick")
+            cameraButton.visible = !cameraButton.visible
+            micButton.visible = !micButton.visible
+            audioDeviceButton.visible = !audioDeviceButton.visible
+            liveCaptionsButton.visible = !liveCaptionsButton.visible
+            liveCaptionsToggleButton.visible = !liveCaptionsToggleButton.visible
+            spokenLanguageButton.visible = !spokenLanguageButton.visible
+            captionsLanguageButton.visible = !captionsLanguageButton.visible
+            shareDiagnostisButton.visible = !shareDiagnostisButton.visible
+            reportIssueButton.visible = !reportIssueButton.visible
+
+            customButton1.visible = !customButton1.visible
+        }
+        let disableButtonsCustomButton = CustomButtonViewData(
+            id: UUID().uuidString,
+            image: customButtonImage,
+            title: "Disable/enable buttons"
+        ) { _ in
+            print("::::SwiftUIDemoView::CallScreen::hideButtonsCustomButton::onClick")
+            cameraButton.enabled = !cameraButton.enabled
+            micButton.enabled = !micButton.enabled
+            audioDeviceButton.enabled = !audioDeviceButton.enabled
+            liveCaptionsButton.enabled = !liveCaptionsButton.enabled
+            liveCaptionsToggleButton.enabled = !liveCaptionsToggleButton.enabled
+            spokenLanguageButton.enabled = !spokenLanguageButton.enabled
+            captionsLanguageButton.enabled = !captionsLanguageButton.enabled
+            shareDiagnostisButton.enabled = !shareDiagnostisButton.enabled
+            reportIssueButton.enabled = !reportIssueButton.enabled
+
+            customButton1.enabled = !customButton1.enabled
+        }
+
+        let customButton2 = CustomButtonViewData(
+            id: UUID().uuidString,
+            image: customButtonImage,
+            title: "Troubleshooting tips"
+        ) { _ in
+            print("::::SwiftUIDemoView::CallScreen::customButton2::onClick")
+            callComposite?.isHidden = true
+            $isNewViewPresented.wrappedValue = true
+        }
+        // Create and return the CallScreenControlBarOptions
+        let callScreenControlBarOptions = CallScreenControlBarOptions(
+            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
+            cameraButton: cameraButton,
+            microphoneButton: micButton,
+            audioDeviceButton: audioDeviceButton,
+            liveCaptionsButton: liveCaptionsButton,
+            liveCaptionsToggleButton: liveCaptionsToggleButton,
+            spokenLanguageButton: spokenLanguageButton,
+            captionsLanguageButton: captionsLanguageButton,
+            shareDiagnosticsButton: shareDiagnostisButton,
+            reportIssueButton: reportIssueButton,
+            customButtons: [hideButtonsCustomButton, disableButtonsCustomButton, customButton1, customButton2]
+        )
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions /* <TIMER_TITLE_FEATURE> */ ,
+                                                   headerViewData: headerViewData
+                                                   /* </TIMER_TITLE_FEATURE> */ )
+        /* <|TIMER_TITLE_FEATURE>
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+         </TIMER_TITLE_FEATURE> */
+    }
+
+    func hideAllButtons() -> CallScreenOptions {
+        let callScreenControlBarOptions = CallScreenControlBarOptions(
+            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
+            cameraButton: ButtonViewData(visible: false),
+            microphoneButton: ButtonViewData(visible: false),
+            audioDeviceButton: ButtonViewData(visible: false),
+            liveCaptionsButton: ButtonViewData(visible: false),
+            liveCaptionsToggleButton: ButtonViewData(visible: false),
+            spokenLanguageButton: ButtonViewData(visible: false),
+            captionsLanguageButton: ButtonViewData(visible: false),
+            shareDiagnosticsButton: ButtonViewData(visible: false),
+            reportIssueButton: ButtonViewData(visible: false)
+        )
+        /* <TIMER_TITLE_FEATURE> */
+        headerViewData = CallScreenHeaderViewData()
+        if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData?.title = envConfigSubject.callInformationTitle
+        }
+        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
+        }
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions /* <TIMER_TITLE_FEATURE> */ ,
+                                                   headerViewData: headerViewData
+                                                   /* </TIMER_TITLE_FEATURE> */ )
+        /* <|TIMER_TITLE_FEATURE>
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+         </TIMER_TITLE_FEATURE> */
     }
 
     func startCallWithDeprecatedLaunch() async {
         if let credential = try? await getTokenCredential(),
            let callComposite = try? await createCallComposite() {
             let link = getMeetingLink()
-            var localOptions = getLocalOptions()
+            var localOptions = getLocalOptions(callComposite: callComposite)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = try? parseUUID(from: link)
@@ -698,7 +912,7 @@ extension CallingDemoView {
     func startCallComposite() async {
         let link = getMeetingLink()
         if let callComposite = try? await createCallComposite() {
-            var localOptions = getLocalOptions()
+            var localOptions = getLocalOptions(callComposite: callComposite)
             var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
             if remoteInfoDisplayName.isEmpty {
                 remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
@@ -783,13 +997,24 @@ extension CallingDemoView {
 
     public func configureAudioSession() -> Error? {
         let audioSession = AVAudioSession.sharedInstance()
-        let options: AVAudioSession.CategoryOptions = .allowBluetooth
         var configError: Error?
-        do {
-            try audioSession.setCategory(.playAndRecord, options: options)
-        } catch {
-            configError = error
+
+        // Check the current audio output route
+        let currentRoute = audioSession.currentRoute
+        let isUsingSpeaker = currentRoute.outputs.contains { $0.portType == .builtInSpeaker }
+        let isUsingReceiver = currentRoute.outputs.contains { $0.portType == .builtInReceiver }
+
+        // Only configure the session if necessary (e.g., when not on speaker/receiver)
+        if !isUsingSpeaker && !isUsingReceiver {
+            do {
+                // Keeping default .playAndRecord without forcing speaker
+                try audioSession.setCategory(.playAndRecord, options: [.allowBluetooth])
+                try audioSession.setActive(true)
+            } catch {
+                configError = error
+            }
         }
+
         return configError
     }
 
@@ -885,13 +1110,52 @@ extension CallingDemoView {
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
     }
 
-    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite,
+                                           identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        /* <TIMER_TITLE_FEATURE> */
+        if envConfigSubject.customTitleApplyOnRemoteJoin != 0 &&
+            identifiers.count >= envConfigSubject.customTitleApplyOnRemoteJoin {
+            headerViewData?.title = "Custom title: change applied"
+        }
+        if envConfigSubject.customSubtitleApplyOnRemoteJoin != 0 &&
+            identifiers.count >= envConfigSubject.customSubtitleApplyOnRemoteJoin {
+            headerViewData?.subtitle = "Custom subtitle: change applied"
+        }
+        /* </TIMER_TITLE_FEATURE> */
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
+
+        // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
+    }
+    /* <TIMER_TITLE_FEATURE> */
+    private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+        print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
+
+        // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
+    }
+    /* </TIMER_TITLE_FEATURE> */
+}
+
+struct CustomDemoView: View {
+    @Environment(\.presentationMode) var presentationMode
+
+    var body: some View {
+        VStack {
+            Text("This is a new view presented modally.")
+                .font(.largeTitle)
+                .padding()
+
+            Button("Dismiss") {
+                presentationMode.wrappedValue.dismiss()
+            }
+            .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blue.opacity(0.1))
     }
 }

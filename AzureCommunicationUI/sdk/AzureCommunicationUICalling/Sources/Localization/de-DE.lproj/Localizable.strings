@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Kopfhörer";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Einrichten";
@@ -128,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Banner schließen";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Schließt diese Benachrichtigung.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Teilnahme am Anruf aufgrund eines Fehlers nicht möglich.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Sie wurden aufgrund eines Fehlers aus dem Anruf entfernt.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Sie wurden aufgrund eines Fehlers oder einer unterbrochenen Verbindung aus dem Anruf entfernt. Versuchen Sie, erneut am Anruf teilzunehmen.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Sie wurden aus dem Anruf entfernt.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Ein Fehler ist aufgetreten.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Anruf kann nicht fortgesetzt werden";

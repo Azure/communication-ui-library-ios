@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class ControlBarViewModelMocking: ControlBarViewModel {
-    private let updateState: ((LocalUserState, PermissionState, VisibilityState) -> Void)?
+    private let updateState: ((LocalUserState, PermissionState, VisibilityState, ButtonViewDataState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -15,9 +15,10 @@ class ControlBarViewModelMocking: ControlBarViewModel {
          dispatchAction: @escaping ActionDispatch,
          onEndCallTapped: @escaping (() -> Void),
          localUserState: LocalUserState,
-         updateState: ((LocalUserState, PermissionState, VisibilityState) -> Void)? = nil,
+         updateState: ((LocalUserState, PermissionState, VisibilityState, ButtonViewDataState) -> Void)? = nil,
          leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled,
-         capabilitiesManager: CapabilitiesManager) {
+         capabilitiesManager: CapabilitiesManager,
+         buttonViewDataState: ButtonViewDataState) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
@@ -26,15 +27,18 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    onEndCallTapped: onEndCallTapped,
                    localUserState: localUserState,
                    audioVideoMode: .audioAndVideo,
-                   leaveCallConfirmationMode: leaveCallConfirmationMode,
-                   capabilitiesManager: capabilitiesManager)
+                   capabilitiesManager: capabilitiesManager,
+                   controlBarOptions: nil,
+                   buttonViewDataState: buttonViewDataState
+        )
     }
 
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
                          callingState: CallingState,
                          visibilityState: VisibilityState,
-                         navigationState: NavigationState) {
-        updateState?(localUserState, permissionState, visibilityState)
+                         navigationState: NavigationState,
+                         buttonViewDataState: ButtonViewDataState) {
+        updateState?(localUserState, permissionState, visibilityState, buttonViewDataState)
     }
 }

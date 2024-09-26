@@ -117,4 +117,5 @@ protocol CallingSDKEventsHandling {
     var captionsTypeChanged: CurrentValueSubject<CallCompositeCaptionsType, Never> { get }
 
     var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
+
 }

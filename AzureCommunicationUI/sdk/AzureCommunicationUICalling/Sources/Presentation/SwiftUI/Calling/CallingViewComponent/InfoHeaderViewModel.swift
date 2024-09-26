@@ -5,12 +5,15 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class InfoHeaderViewModel: ObservableObject {
-    @Published var accessibilityLabel: String
-    @Published var infoLabel: String
+    @Published var accessibilityLabelTitle: String
     @Published var isInfoHeaderDisplayed = true
     @Published var isVoiceOverEnabled = false
+    @Published var accessibilityLabelSubtitle: String
+    @Published var title = ""
+    @Published var subtitle: String? = ""
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -22,6 +25,7 @@ class InfoHeaderViewModel: ObservableObject {
     let enableMultitasking: Bool
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
+    private var cancellables = Set<AnyCancellable>()
 
     var isPad = false
 
@@ -32,14 +36,24 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPipWhenMultitasking: Bool) {
-        let title = localizationProvider.getLocalizedString(.callWith0Person)
-        self.infoLabel = title
+         enableSystemPipWhenMultitasking: Bool /* <TIMER_TITLE_FEATURE> */ ,
+         callScreenInfoHeaderState: CallScreenInfoHeaderState /* </TIMER_TITLE_FEATURE> */ ) {
+        let infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
+        /* <TIMER_TITLE_FEATURE> */
+        self.title = callScreenInfoHeaderState.title ?? infoLabel
+        self.subtitle = callScreenInfoHeaderState.subtitle ?? ""
+        self.accessibilityLabelTitle = callScreenInfoHeaderState.title ?? infoLabel
+        self.accessibilityLabelSubtitle = callScreenInfoHeaderState.subtitle ?? ""
+         /* <|TIMER_TITLE_FEATURE>
+        self.title = infoLabel
+        self.subtitle = ""
+        self.accessibilityLabelTitle = infoLabel
+        self.accessibilityLabelSubtitle = ""
+        </TIMER_TITLE_FEATURE> */
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
         self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -71,6 +85,22 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
     }
+    func formatTimeInterval(_ interval: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        if interval >= 3600 {
+            // If the interval is 1 hour or more, show hours, minutes, and seconds
+            formatter.allowedUnits = [.hour, .minute, .second]
+        } else if interval >= 60 {
+            // If the interval is 1 minute or more, show minutes and seconds
+            formatter.allowedUnits = [.minute, .second]
+        } else {
+            // If the interval is less than 1 minute, show seconds only
+            formatter.allowedUnits = [.second]
+        }
+        return formatter.string(from: interval) ?? "00:00:00"
+    }
 
     func showParticipantListButtonTapped() {
         logger.debug("Show participant list button tapped")
@@ -98,7 +128,9 @@ class InfoHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
-                visibilityState: VisibilityState) {
+                visibilityState: VisibilityState /* <TIMER_TITLE_FEATURE> */,
+                callScreenInfoHeaderState: CallScreenInfoHeaderState
+                /* </TIMER_TITLE_FEATURE> */ ) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -109,7 +141,10 @@ class InfoHeaderViewModel: ObservableObject {
 
         let updatedRemoteparticipantCount = getParticipantCount(remoteParticipantsState)
 
-        if participantsCount != updatedRemoteparticipantCount {
+        if participantsCount != updatedRemoteparticipantCount
+            /* <TIMER_TITLE_FEATURE> */
+            && callScreenInfoHeaderState.title == nil
+            /* </TIMER_TITLE_FEATURE> */{
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
@@ -117,6 +152,18 @@ class InfoHeaderViewModel: ObservableObject {
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
         }
+        /* <TIMER_TITLE_FEATURE> */
+        if callScreenInfoHeaderState.title != nil
+            && callScreenInfoHeaderState.title != self.title {
+            self.title = (callScreenInfoHeaderState.title)!
+            self.accessibilityLabelTitle = self.title
+        }
+        if callScreenInfoHeaderState.subtitle != nil
+            && callScreenInfoHeaderState.subtitle != self.subtitle {
+            self.subtitle = callScreenInfoHeaderState.subtitle
+            self.accessibilityLabelSubtitle = self.subtitle ?? ""
+        }
+        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
@@ -152,8 +199,13 @@ class InfoHeaderViewModel: ObservableObject {
         default:
             content = localizationProvider.getLocalizedString(.callWithNPerson, participantsCount)
         }
-        infoLabel = content
-        accessibilityLabel = content
+        /* <TIMER_TITLE_FEATURE> */
+        title = content
+        accessibilityLabelTitle = content
+         /* <|TIMER_TITLE_FEATURE>
+        title = content
+        accessibilityLabelTitle = content
+        </TIMER_TITLE_FEATURE> */
     }
 
     private func displayWithTimer() {

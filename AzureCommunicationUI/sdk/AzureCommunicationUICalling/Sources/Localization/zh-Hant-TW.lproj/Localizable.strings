@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="耳機";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="藍牙";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="設定";
@@ -128,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="關閉橫幅";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="關閉此通知";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="發生錯誤，因此無法加入通話。";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="因為發生錯誤，您已從通話中移除。";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="由於發生錯誤或連線中斷，您已從通話中移除。請嘗試重新加入通話。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="已從通話中移除您。";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="發生錯誤。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="無法繼續通話";

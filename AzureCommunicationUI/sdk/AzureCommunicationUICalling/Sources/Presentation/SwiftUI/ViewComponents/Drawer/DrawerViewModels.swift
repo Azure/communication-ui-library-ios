@@ -13,23 +13,28 @@ protocol BaseDrawerItemViewModel {}
 struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let subtitle: String?
-    let startIcon: CompositeIcon?
+    let startCompositeIcon: CompositeIcon?
+    let startIcon: UIImage?
     let endIcon: CompositeIcon?
     let accessibilityIdentifier: String
     let action: (() -> Void)?
     let isEnabled: Bool
     let isToggleOn: Binding<Bool>?
     let showsToggle: Bool
+    let accessibilityTraits: AccessibilityTraits?
 
     init(title: String,
          subtitle: String? = "",
          accessibilityIdentifier: String,
+         accessibilityTraits: AccessibilityTraits? = nil,
          action: (() -> Void)? = nil,
-         startIcon: CompositeIcon? = nil,
+         startCompositeIcon: CompositeIcon? = nil,
+         startIcon: UIImage? = nil,
          endIcon: CompositeIcon? = nil,
          showToggle: Bool = false,
          isToggleOn: Binding<Bool>? = nil,
          isEnabled: Bool = true) {
+        self.startCompositeIcon = startCompositeIcon
         self.startIcon = startIcon
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
@@ -39,6 +44,7 @@ struct DrawerGenericItemViewModel: BaseDrawerItemViewModel {
         self.showsToggle = showToggle
         self.subtitle = subtitle
         self.endIcon = endIcon
+        self.accessibilityTraits = accessibilityTraits
     }
 }
 
@@ -46,17 +52,20 @@ struct DrawerSelectableItemViewModel: BaseDrawerItemViewModel {
     let title: String
     let isSelected: Bool
     let accessibilityIdentifier: String
+    let accessibilityLabel: String?
     let icon: CompositeIcon?
     let action: () -> Void
 
     init(icon: CompositeIcon?,
          title: String,
          accessibilityIdentifier: String,
+         accessibilityLabel: String,
          isSelected: Bool,
          action: @escaping () -> Void) {
         self.isSelected = isSelected
         self.action = action
         self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityLabel = accessibilityLabel
         self.icon = icon
         self.title = title
     }

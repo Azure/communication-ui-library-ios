@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Headphones";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Setup";
@@ -69,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Unmuted";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Speaking";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="On hold";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ is On hold";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ resumed the call";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Waiting in lobby (%d)";
@@ -128,7 +131,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Dismiss Banner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Dismisses this notification";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Unable to join the call due to an error.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="You were removed from the call due to an error.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="You were removed from the call due to an error or lost connection. Please try to rejoin the call.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="You were removed from the call.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="There was an error.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Unable to resume call";

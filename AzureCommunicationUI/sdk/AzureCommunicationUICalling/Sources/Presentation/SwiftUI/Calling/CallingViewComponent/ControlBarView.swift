@@ -20,7 +20,7 @@ struct ControlBarView: View {
     var body: some View {
         if viewModel.isDisplayed {
             Group {
-                if screenSizeClass == .ipadScreenSize {
+                if screenSizeClass == .ipadScreenSize || viewModel.totalButtonCount < 5 {
                     centeredStack
                 } else {
                     nonCenteredStack
@@ -34,7 +34,6 @@ struct ControlBarView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
-            .frame(height: 105)
         }
     }
 
@@ -44,7 +43,7 @@ struct ControlBarView: View {
             if screenSizeClass != .iphoneLandscapeScreenSize {
                 HStack {
                     Spacer()
-                    videoButton
+                    cameraButton
                     micButton
                     audioDeviceButton
                     moreButton
@@ -58,7 +57,7 @@ struct ControlBarView: View {
                     moreButton
                     audioDeviceButton
                     micButton
-                    videoButton
+                    cameraButton
                     Spacer()
                 }
             }
@@ -70,10 +69,8 @@ struct ControlBarView: View {
         Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
                 HStack {
-                    if viewModel.isCameraDisplayed {
-                        videoButton
-                        Spacer(minLength: 0)
-                    }
+                    cameraButton
+                    Spacer(minLength: 0)
                     micButton
                     Spacer(minLength: 0)
                     audioDeviceButton
@@ -91,23 +88,20 @@ struct ControlBarView: View {
                     audioDeviceButton
                     Spacer(minLength: 0)
                     micButton
-                    if viewModel.isCameraDisplayed {
-                        Spacer(minLength: 0)
-                        videoButton
-                    }
+                    Spacer(minLength: 0)
+                    cameraButton
                 }
             }
         }
     }
 
-    var videoButton: some View {
+    var cameraButton: some View {
         IconButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.videoAccessibilityID.rawValue)
     }
 
     var micButton: some View {
         IconButton(viewModel: viewModel.micButtonViewModel)
-            .disabled(viewModel.isMicDisabled())
             .accessibility(identifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
     }
 

@@ -21,11 +21,11 @@ internal class CallingViewModel: ObservableObject {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let callType: CompositeCallType
     private let captionsOptions: CaptionsOptions
+    private let callScreenOptions: CallScreenOptions
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected = false
     private var callClientRequested = false
-    private var leaveCallConfirmationMode: LeaveCallConfirmationMode?
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -62,10 +62,10 @@ internal class CallingViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
          allowLocalCameraPreview: Bool,
-         leaveCallConfirmationMode: LeaveCallConfirmationMode,
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions,
-         capabilitiesManager: CapabilitiesManager
+         capabilitiesManager: CapabilitiesManager,
+         callScreenOptions: CallScreenOptions
     ) {
         self.logger = logger
         self.store = store
@@ -74,10 +74,10 @@ internal class CallingViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
         self.allowLocalCameraPreview = allowLocalCameraPreview
-        self.leaveCallConfirmationMode = leaveCallConfirmationMode
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
         self.captionsOptions = captionsOptions
+        self.callScreenOptions = callScreenOptions
 
         let actionDispatch: ActionDispatch = store.dispatch
 
@@ -103,7 +103,9 @@ internal class CallingViewModel: ObservableObject {
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
-                                     localUserState: store.state.localUserState)
+                                     localUserState: store.state.localUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                     callScreenInfoHeaderState: store.state.callScreenInfoHeaderState
+                                     /* </TIMER_TITLE_FEATURE> */ )
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
@@ -139,20 +141,21 @@ internal class CallingViewModel: ObservableObject {
                 localUserState: store.state.localUserState,
                 isDisplayed: store.state.navigationState.participantActionsVisible,
                 dispatchAction: store.dispatch)
+
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, onEndCallTapped: { [weak self] in
                 guard let self = self else {
                     return
                 }
-                if leaveCallConfirmationMode == .alwaysEnabled {
+                if callScreenOptions.controlBarOptions?.leaveCallConfirmationMode != .alwaysDisabled {
                     store.dispatch(action: .showEndCallConfirmation)
                 } else {
                     self.endCall()
                 }
 
             }, localUserState: store.state.localUserState,
-            leaveCallConfirmationMode: leaveCallConfirmationMode,
-            capabilitiesManager: capabilitiesManager)
+            capabilitiesManager: capabilitiesManager,
+            buttonViewDataState: store.state.buttonViewDataState)
 
         onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
             guard let self = self else {
@@ -176,8 +179,8 @@ internal class CallingViewModel: ObservableObject {
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
-            isDisplayed: store.state.navigationState.moreOptionsVisible,
             isCaptionsAvailable: true,
+            controlBarOptions: callScreenOptions.controlBarOptions,
             showSharingViewAction: {
                 store.dispatch(action: .showSupportShare)
             },
@@ -186,7 +189,9 @@ internal class CallingViewModel: ObservableObject {
             },
             showCaptionsViewAction: {
                 store.dispatch(action: .showCaptionsListView)
-            }
+            },
+            buttonViewDataState: store.state.buttonViewDataState,
+            dispatchAction: store.dispatch
         )
 
         captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
@@ -219,12 +224,10 @@ internal class CallingViewModel: ObservableObject {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
         }
-
         guard state.lifeCycleState.currentStatus == .foreground
                 || state.visibilityState.currentStatus != .visible else {
             return
         }
-
         participantListViewModel.update(localUserState: state.localUserState,
                                         remoteParticipantsState: state.remoteParticipantsState,
                                         isDisplayed: state.navigationState.participantsVisible)
@@ -236,7 +239,6 @@ internal class CallingViewModel: ObservableObject {
             audioDeviceStatus: state.localUserState.audioState.device,
             navigationState: state.navigationState,
             visibilityState: state.visibilityState)
-
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
         captionsListViewModel.update(state: state)
@@ -247,11 +249,14 @@ internal class CallingViewModel: ObservableObject {
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
                                    visibilityState: state.visibilityState,
-                                   navigationState: state.navigationState)
+                                   navigationState: state.navigationState,
+                                   buttonViewDataState: state.buttonViewDataState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
-                                   visibilityState: state.visibilityState)
+                                   visibilityState: state.visibilityState /* </TIMER_TITLE_FEATURE> */ ,
+                                   callScreenInfoHeaderState: state.callScreenInfoHeaderState
+                                   /* </TIMER_TITLE_FEATURE> */ )
         localVideoViewModel.update(localUserState: state.localUserState,
                                    visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
@@ -271,7 +276,8 @@ internal class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         moreCallOptionsListViewModel.update(navigationState: state.navigationState,
-                                            visibilityState: state.visibilityState)
+                                            visibilityState: state.visibilityState,
+                                            buttonViewDataState: state.buttonViewDataState)
         let newIsCallConnected = state.callingState.status == .connected
         let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
                                                                               callingStatus: state.callingState.status)
@@ -291,7 +297,9 @@ internal class CallingViewModel: ObservableObject {
             }
             callHasConnected = newIsCallConnected
         }
-
+        receiveExtension(state)
+    }
+    private func receiveExtension(_ state: AppState) {
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered

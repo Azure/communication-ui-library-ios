@@ -80,8 +80,13 @@ extension Reducer where State == CallingState,
                 .showParticipants,
                 .showParticipantActions,
                 .hideDrawer,
-                .toastNotificationAction,
-                .setTotalParticipantCount:
+                .toastNotificationAction
+                /* <TIMER_TITLE_FEATURE> */
+                ,
+                .callScreenInfoHeaderAction,
+                /* </TIMER_TITLE_FEATURE> */
+                .setTotalParticipantCount,
+                .buttonViewDataAction:
             return callingState
         }
         return CallingState(status: callingStatus,

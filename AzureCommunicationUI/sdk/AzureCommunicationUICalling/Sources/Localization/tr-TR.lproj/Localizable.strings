@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Kulaklık";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Kur";
@@ -128,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Başlığı Kapat";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Bu bildirimi kapatır";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Bir hata nedeniyle aramaya katılınamıyor.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Bir hata nedeniyle aramadan çıkarıldınız.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Bir hata veya bağlantı kesildi nedeniyle aramadan çıkarıldınız. Lütfen çağrıya yeniden katılmayı deneyin.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Aramadan çıkarıldınız.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Bir hata oluştu.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Arama sürdürülemiyor";

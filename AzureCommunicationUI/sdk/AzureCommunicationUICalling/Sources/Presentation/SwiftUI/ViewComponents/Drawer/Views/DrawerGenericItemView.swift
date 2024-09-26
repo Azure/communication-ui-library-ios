@@ -11,9 +11,15 @@ internal struct DrawerGenericItemView: View {
 
     var body: some View {
         HStack {
-            if let icon = item.startIcon {
+            if let icon = item.startCompositeIcon {
                 Icon(name: icon, size: DrawerListConstants.iconSize)
                     .foregroundColor(item.isEnabled ? .primary : .gray)
+                    .accessibilityHidden(true)
+            } else if let icon = item.startIcon {
+                Image(uiImage: icon)
+                    .frame(width: DrawerListConstants.iconSize,
+                           height: DrawerListConstants.iconSize)
+                    .accessibilityHidden(true)
             }
             VStack(alignment: .leading) {
                 Text(item.title)
@@ -23,7 +29,7 @@ internal struct DrawerGenericItemView: View {
                 if let subtitle = item.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(StyleProvider.color.textSecondary))
                         .padding(.leading, DrawerListConstants.textPaddingLeading)
                 }
             }
@@ -32,9 +38,12 @@ internal struct DrawerGenericItemView: View {
                 Toggle("", isOn: isToggleOn)
                     .labelsHidden()
                     .toggleStyle(SwitchToggleStyle(tint: .blue))
+                    .accessibilityLabel(Text(item.title))
             } else if let accessoryView = item.endIcon,
                       accessoryView != .none {
                 Icon(name: item.endIcon ?? .rightChevron, size: DrawerListConstants.trailingIconSize)
+                    .accessibilityHidden(true)
+                    .foregroundColor(item.isEnabled ? .primary : .gray)
             }
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
@@ -50,7 +59,8 @@ internal struct DrawerGenericItemView: View {
             }
         }
         .disabled(!item.isEnabled)
-        .foregroundColor(item.isEnabled ? .primary : .gray)
+        .accessibilityElement(children: .combine)
         .accessibilityIdentifier(item.accessibilityIdentifier)
+        .accessibilityAddTraits(item.accessibilityTraits ?? .isStaticText)
     }
 }

@@ -111,7 +111,6 @@ protocol CallingMiddlewareHandling {
 
 // swiftlint:disable type_body_length
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
-
     private let callingService: CallingServiceProtocol
     private let logger: Logger
     private let cancelBag = CancelBag()

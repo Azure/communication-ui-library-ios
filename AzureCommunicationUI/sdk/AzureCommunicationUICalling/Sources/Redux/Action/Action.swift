@@ -36,5 +36,8 @@ enum Action: Equatable {
 
     case toastNotificationAction(ToastNotificationAction)
     case setTotalParticipantCount(Int)
-
+    /* <TIMER_TITLE_FEATURE> */
+    case callScreenInfoHeaderAction(CallScreenInfoHeaderAction)
+    /* </TIMER_TITLE_FEATURE> */
+    case buttonViewDataAction(ButtonViewDataAction)
 }

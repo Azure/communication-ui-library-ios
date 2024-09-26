@@ -33,7 +33,9 @@ struct InfoHeaderView: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack(
+            alignment: .leading
+        ) {
             if viewModel.isInfoHeaderDisplayed {
                 infoHeader
             } else {
@@ -68,21 +70,34 @@ struct InfoHeaderView: View {
                     .flipsForRightToLeftLayoutDirection(true)
                     .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
             }
-
-            Text(viewModel.infoLabel)
-                .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
-                                    leading: 0,
-                                    bottom: Constants.infoLabelHorizontalPadding,
-                                    trailing: 0))
-                .foregroundColor(Constants.foregroundColor)
-                .lineLimit(1)
-                .font(Fonts.caption1.font)
-                .accessibilityLabel(Text(viewModel.accessibilityLabel))
-                .accessibilitySortPriority(1)
-                .scaledToFit()
-                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
-                                    Constants.accessibilityFontScale :
-                                        Constants.defaultFontScale)
+            VStack(alignment: .leading) {
+                Text(viewModel.title)
+                    .alignmentGuide(.leading) { d in d[.leading] }
+                    .foregroundColor(Constants.foregroundColor)
+                    .lineLimit(1)
+                    .font(Fonts.caption1.font)
+                    .accessibilityLabel(Text(viewModel.accessibilityLabelTitle))
+                    .accessibilitySortPriority(1)
+                    .scaledToFit()
+                    .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
+                                        Constants.accessibilityFontScale :
+                                            Constants.defaultFontScale)
+                /* <TIMER_TITLE_FEATURE> */
+                if !viewModel.subtitle!.isEmpty {
+                    Text(viewModel.subtitle!.trimmingCharacters(in: .whitespacesAndNewlines))
+                        .alignmentGuide(.leading) { d in d[.leading] }
+                        .foregroundColor(Constants.foregroundColor)
+                        .lineLimit(1)
+                        .font(Fonts.caption1.font)
+                        .accessibilityLabel(Text(viewModel.accessibilityLabelSubtitle))
+                        .accessibilitySortPriority(2)
+                        .scaledToFit()
+                        .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
+                                            Constants.accessibilityFontScale :
+                                                Constants.defaultFontScale)
+                }
+                /* </TIMER_TITLE_FEATURE> */
+            }
             Spacer()
             participantListButton
         }

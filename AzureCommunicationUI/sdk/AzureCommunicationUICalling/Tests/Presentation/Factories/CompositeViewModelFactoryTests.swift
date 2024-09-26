@@ -53,14 +53,16 @@ extension CompositeViewModelFactoryTests {
                                          enableSystemPipWhenMultitasking: true,
                                          eventsHandler: CallComposite.Events(),
                                          leaveCallConfirmationMode: LeaveCallConfirmationMode.alwaysEnabled,
-                                         retrieveLogFiles: { return [] },
                                          callType: .groupCall,
                                          setupScreenOptions: nil,
+                                         callScreenOptions: CallScreenOptions(),
                                          capabilitiesManager: CapabilitiesManager(callType: .groupCall),
                                          avatarManager: AvatarViewManagerMocking(
                                             store: mockStoreFactory.store,
                                             localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                            localParticipantViewData: nil))
+                                            localParticipantViewData: nil),
+                                         updatableOptionsManager: UpdatableOptionsManager(store: mockStoreFactory.store, setupScreenOptions: nil, callScreenOptions: nil),
+                                         retrieveLogFiles: { return [] })
     }
 }
 

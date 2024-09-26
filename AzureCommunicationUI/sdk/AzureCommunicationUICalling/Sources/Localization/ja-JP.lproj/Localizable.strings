@@ -10,6 +10,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="ヘッドフォン";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="セットアップ";
@@ -128,7 +129,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="バナーを閉じる";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="この通知を閉じます";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="エラーが発生したため、通話に参加できません。";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="エラーが発生したため、通話から削除されました。";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="エラーが発生したか、接続が失われたため、通話から削除されました。もう一度通話に参加してみてください。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="通話から削除されました。";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="エラーが発生しました。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="通話を再開できません";

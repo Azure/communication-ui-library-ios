@@ -41,6 +41,10 @@ public class CallComposite {
         public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
         /// Closure to incoming call id accepted by CallKit.
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
+        /* <TIMER_TITLE_FEATURE> */
+        /// Closure to execute when participant has left a call inside Call Composite
+        public var onRemoteParticipantLeft: (([CommunicationIdentifier]) -> Void)?
+        /* </TIMER_TITLE_FEATURE> */
     }
 
     /// The events handler for Call Composite
@@ -71,11 +75,13 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var pipManager: PipManagerProtocol?
+    private var updatableOptionsManager: UpdatableOptionsManagerProtocol?
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private var leaveCallConfirmationMode: LeaveCallConfirmationMode = .alwaysEnabled
     private var setupScreenOptions: SetupScreenOptions?
+    private var callScreenOptions: CallScreenOptions?
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
@@ -124,6 +130,7 @@ public class CallComposite {
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
+        callScreenOptions = options?.callScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -150,6 +157,7 @@ public class CallComposite {
         leaveCallConfirmationMode =
                options?.callScreenOptions?.controlBarOptions?.leaveCallConfirmationMode ?? .alwaysEnabled
         setupScreenOptions = options?.setupScreenOptions
+        callScreenOptions = options?.callScreenOptions
         callKitOptions = options?.callKitOptions
         displayName = options?.displayName
         if let disableInternalPushForIncomingCall = options?.disableInternalPushForIncomingCall {
@@ -308,6 +316,8 @@ public class CallComposite {
     private func launch(_ callConfiguration: CallConfiguration,
                         localOptions: LocalOptions?) {
         logger.debug("CallComposite launch composite experience")
+        setupScreenOptions = localOptions?.setupScreenOptions ?? setupScreenOptions
+        callScreenOptions = localOptions?.callScreenOptions ?? callScreenOptions
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
@@ -541,7 +551,9 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             startWithCameraOn: localOptions?.cameraOn,
             startWithMicrophoneOn: localOptions?.microphoneOn,
             skipSetupScreen: localOptions?.skipSetupScreen,
-            callType: callConfiguration.compositeCallType
+            callType: callConfiguration.compositeCallType,
+            setupScreenOptions: localOptions?.setupScreenOptions,
+            callScreenOptions: localOptions?.callScreenOptions
         )
         self.store = store
 
@@ -571,10 +583,17 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
         self.videoViewManager = videoViewManager
+        /* <TIMER_TITLE_FEATURE> */
+        let updatableOptionsManager = UpdatableOptionsManager(
+            store: store,
+            setupScreenOptions: setupScreenOptions,
+            callScreenOptions: callScreenOptions
+        )
+        self.updatableOptionsManager = updatableOptionsManager
+        /* </TIMER_TITLE_FEATURE> */
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
-
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
         let captionsViewManager = CaptionsViewManager(
@@ -599,11 +618,13 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                 eventsHandler: events,
                 leaveCallConfirmationMode: leaveCallConfirmationMode,
-                retrieveLogFiles: callingSdkWrapper.getLogFiles,
                 callType: callConfiguration.compositeCallType,
                 setupScreenOptions: setupScreenOptions,
+                callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
-                avatarManager: avatarViewManager
+                avatarManager: avatarViewManager,
+                updatableOptionsManager: updatableOptionsManager,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }
@@ -632,6 +653,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.exitManager = nil
         self.callingSDKWrapper?.dispose()
         self.callingSDKWrapper = nil
+        self.updatableOptionsManager = nil
     }
 
     private func disposeSDKWrappers() {

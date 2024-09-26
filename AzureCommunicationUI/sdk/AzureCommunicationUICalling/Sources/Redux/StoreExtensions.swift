@@ -9,6 +9,7 @@ import Foundation
 typealias ActionDispatch = CommonActionDispatch<Action>
 
 extension Store where State == AppState, Action == AzureCommunicationUICalling.Action {
+
     static func constructStore(
         logger: Logger,
         callingService: CallingServiceProtocol,
@@ -16,8 +17,11 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         startWithCameraOn: Bool?,
         startWithMicrophoneOn: Bool?,
         skipSetupScreen: Bool?,
-        callType: CompositeCallType
+        callType: CompositeCallType,
+        setupScreenOptions: SetupScreenOptions? = nil,
+        callScreenOptions: CallScreenOptions? = nil
     ) -> Store<AppState, Action> {
+
         let cameraState = startWithCameraOn
         ?? false ? DefaultUserState.CameraState.on : DefaultUserState.CameraState.off
 
@@ -34,6 +38,10 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                 CallingState(operationStatus: .skipSetupRequested) : CallingState()
         let navigationStatus: NavigationStatus = skipSetupScreen ?? false ? .inCall : .setup
         let navigationState = NavigationState(status: navigationStatus)
+
+        let buttonViewDataState: ButtonViewDataState = .constructInitial(setupScreenOptions: setupScreenOptions,
+                                                                         callScreenOptions: callScreenOptions)
+
         return .init(
             reducer: .appStateReducer(),
             middlewares: [
@@ -71,7 +79,8 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
             state: AppState(callingState: callingState,
                             localUserState: localUserState,
                             navigationState: navigationState,
-                            defaultUserState: defaultUserState)
+                            defaultUserState: defaultUserState,
+                            buttonViewDataState: buttonViewDataState)
         )
     }
 }

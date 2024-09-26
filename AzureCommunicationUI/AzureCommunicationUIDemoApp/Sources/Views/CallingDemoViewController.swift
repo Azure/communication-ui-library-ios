@@ -226,7 +226,6 @@ class CallingDemoViewController: UIViewController {
         let barOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                         envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
-        let callScreenOptions = CallScreenOptions(controlBarOptions: barOptions)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -236,6 +235,13 @@ class CallingDemoViewController: UIViewController {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions
+                                                  /* <TIMER_TITLE_FEATURE> */
+                                                  , headerViewData: CallScreenHeaderViewData(
+                                                    title: "This is a custom header",
+                                                    subtitle: "This is a custom subtitle")
+                                                 /* </TIMER_TITLE_FEATURE> */
+                                                 )
         let setupViewOrientation = envConfigSubject.setupViewOrientation
         let setupScreenOptions = SetupScreenOptions(
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
@@ -296,6 +302,35 @@ class CallingDemoViewController: UIViewController {
         return nil
     }
 
+    func apiDemo() {
+
+        let credential = (try? CommunicationTokenCredential(token: acsTokenTextField.text!))!
+
+        let callComposite = CallComposite(credential: credential)
+
+        let customButton = CustomButtonViewData(id: UUID().uuidString,
+                                                image: UIImage(),
+                                                title: "Hide composite") {_ in
+            // hide call composite and display Troubleshooting tips
+            callComposite.isHidden = true
+            // ...
+        }
+
+        let cameraButton = ButtonViewData(visible: false)
+        let micButton = ButtonViewData(enabled: false)
+
+        let callScreenControlBarOptions = CallScreenControlBarOptions(
+            cameraButton: cameraButton,
+            microphoneButton: micButton,
+            customButtons: [customButton]
+        )
+
+        let callScreenOptions = CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+        let localOptions = LocalOptions(callScreenOptions: callScreenOptions)
+
+        callComposite.launch(locator: .roomCall(roomId: "..."), localOptions: localOptions)
+    }
+
     func subscribeToEvents(callComposite: CallComposite) {
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
@@ -350,7 +385,10 @@ class CallingDemoViewController: UIViewController {
         let callKitCallAccepted: (String) -> Void = { [weak callComposite] callId in
             self.acceptCallButton.isHidden = true
             self.declineCallButton.isHidden = true
-            callComposite?.launch(callIdAcceptedFromCallKit: callId, localOptions: self.getLocalOptions())
+            guard let callComposite = callComposite else {
+                return
+            }
+            callComposite.launch(callIdAcceptedFromCallKit: callId, localOptions: self.getLocalOptions(callComposite))
         }
 
         let onIncomingCall: (IncomingCall) -> Void = { [] incomingCall in
@@ -377,27 +415,108 @@ class CallingDemoViewController: UIViewController {
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
     }
 
-    func getLocalOptions() -> LocalOptions {
+    func getLocalOptions(_ callComposite: CallComposite?) -> LocalOptions {
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
+        let cameraButton = ButtonViewData(onClick: { _ in
+                    print("::::UIKitDemoView::SetupScreen::onCameraButton::onClick")
+                })
+
+        let micButton = ButtonViewData(onClick: { _ in
+            print("::::UIKitDemoView::SetupScreen::onMicButton::onClick")
+        })
+
+        let audioDeviceButton = ButtonViewData(onClick: { _ in
+            print("::::UIKitDemoView::SetupScreen::onAudioDeviceButton::onClick")
+        })
+
+        let setupScreenOptions = SetupScreenOptions(cameraButton: cameraButton,
+                                                    microphoneButton: micButton,
+                                                    audioDeviceButton: audioDeviceButton)
+
+        let callScreenOptions = createCallScreenOptions(callComposite: callComposite)
         return LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo
+                                        audioVideoMode: envConfigSubject.audioOnly ? .audioOnly : .audioAndVideo,
+                            setupScreenOptions: setupScreenOptions,
+                            callScreenOptions: callScreenOptions
         )
     }
+
+    private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenOptions {
+            let cameraButton = ButtonViewData(visible: true, enabled: true) { _ in
+                print("::::UIKitDemoView::CallScreen::cameraButton::onClick")
+            }
+
+            let micButton = ButtonViewData(visible: true, enabled: true) { _ in
+                print("::::UIKitDemoView::CallScreen::micButton::onClick")
+            }
+
+            let audioDeviceButton = ButtonViewData(visible: true, enabled: true) { _ in
+                print("::::UIKitDemoView::CallScreen::audioDeviceButton::onClick")
+            }
+
+            let liveCaptionsButton = ButtonViewData(visible: false, enabled: false) { _ in
+                print("::::UIKitDemoView::CallScreen::liveCaptionsButton::onClick")
+            }
+
+            let liveCaptionsToggleButton = ButtonViewData(visible: false, enabled: false) { _ in
+                print("::::UIKitDemoView::CallScreen::liveCaptionsToggleButton::onClick")
+            }
+
+            let spokenLanguageButton = ButtonViewData(visible: false, enabled: false) { _ in
+                print("::::UIKitDemoView::CallScreen::spokenLanguageButton::onClick")
+            }
+
+            let captionsLanguageButton = ButtonViewData(visible: false, enabled: false) { _ in
+                print("::::UIKitDemoView::CallScreen::captionsLanguageButton::onClick")
+            }
+
+            let shareDiagnosticsButton = ButtonViewData(visible: true, enabled: true) { _ in
+                print("::::UIKitDemoView::CallScreen::shareDiagnosticsButton::onClick")
+            }
+
+            let reportIssueButton = ButtonViewData(visible: true, enabled: true) { _ in
+                print("::::UIKitDemoView::CallScreen::reportIssueButton::onClick")
+            }
+
+            let customButton1 = CustomButtonViewData(id: UUID().uuidString,
+                                                     image: UIImage(named: "ic_fluent_chevron_right_20_regular")!,
+                                                     title: "Hide composite") {_ in
+                print("::::UIKitDemoView::CallScreen::customButton1::onClick")
+                callComposite?.isHidden = true
+            }
+
+            let callScreenControlBarOptions = CallScreenControlBarOptions(
+                leaveCallConfirmationMode:
+                    envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
+                cameraButton: cameraButton,
+                microphoneButton: micButton,
+                audioDeviceButton: audioDeviceButton,
+                liveCaptionsButton: liveCaptionsButton,
+                liveCaptionsToggleButton: liveCaptionsToggleButton,
+                spokenLanguageButton: spokenLanguageButton,
+                captionsLanguageButton: captionsLanguageButton,
+                shareDiagnosticsButton: shareDiagnosticsButton,
+                reportIssueButton: reportIssueButton,
+                customButtons: [customButton1]
+            )
+
+            return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
+        }
 
     func startCallWithDeprecatedLaunch() async {
         if let credential = try? await getTokenCredential(),
            let callComposite = try? await createCallComposite() {
             let link = getMeetingLink()
-            var localOptions = getLocalOptions()
+            var localOptions = getLocalOptions(nil)
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
@@ -454,7 +573,7 @@ class CallingDemoViewController: UIViewController {
             if envConfigSubject.useDeprecatedLaunch {
                 await startCallWithDeprecatedLaunch()
             } else {
-                let localOptions = getLocalOptions()
+                let localOptions = getLocalOptions(callComposite)
                 switch selectedMeetingType {
                 case .groupCall:
                     let uuid = UUID(uuidString: link) ?? UUID()
@@ -742,7 +861,7 @@ class CallingDemoViewController: UIViewController {
         self.declineCallButton.isHidden = true
         Task {
             await createCallComposite()?.accept(incomingCallId: incomingCallId,
-                                                localOptions: getLocalOptions())
+                                                localOptions: getLocalOptions(nil))
         }
     }
 

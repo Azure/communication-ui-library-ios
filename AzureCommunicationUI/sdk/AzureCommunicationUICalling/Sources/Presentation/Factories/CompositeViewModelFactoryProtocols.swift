@@ -16,6 +16,11 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
+    func makeIconButtonViewModel(iconName: CompositeIcon,
+                                 buttonType: IconButtonViewModel.ButtonType,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
         selectedButtonState: ButtonStateType,
         localizationProvider: LocalizationProviderProtocol,
@@ -44,10 +49,12 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  onEndCallTapped: @escaping (() -> Void),
                                  localUserState: LocalUserState,
-                                 leaveCallConfirmationMode: LeaveCallConfirmationMode,
-                                 capabilitiesManager: CapabilitiesManager) -> ControlBarViewModel
+                                 capabilitiesManager: CapabilitiesManager,
+                                 buttonViewDataState: ButtonViewDataState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState) -> InfoHeaderViewModel
+                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
+                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
@@ -68,11 +75,13 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerViewModel(dispatchAction: @escaping ActionDispatch) -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeMoreCallOptionsListViewModel(
-        isDisplayed: Bool,
         isCaptionsAvailable: Bool,
+        controlBarOptions: CallScreenControlBarOptions?,
         showSharingViewAction: @escaping () -> Void,
         showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+        showCaptionsViewAction: @escaping () -> Void,
+        buttonViewDataState: ButtonViewDataState,
+        dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel
     func makeCaptionsListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
@@ -86,6 +95,7 @@ protocol CompositeViewModelFactoryProtocol {
                                      showToggle: Bool,
                                      accessibilityIdentifier: String,
                                      startIcon: CompositeIcon,
+                                     isEnabled: Bool,
                                      action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
 
     func makeLanguageListItemViewModel(title: String,
@@ -97,6 +107,7 @@ protocol CompositeViewModelFactoryProtocol {
                                        action: @escaping (() -> Void)) -> DrawerGenericItemViewModel
     func makeCaptionsLangaugeCellViewModel(title: String,
                                            isSelected: Bool,
+                                           accessibilityLabel: String,
                                            onSelectedAction: @escaping (() -> Void)) -> DrawerSelectableItemViewModel
     func makeLeaveCallConfirmationViewModel(
         endCall: @escaping (() -> Void),
@@ -109,7 +120,8 @@ protocol CompositeViewModelFactoryProtocol {
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> SetupControlBarViewModel
+                                      localUserState: LocalUserState,
+                                      buttonViewDataState: ButtonViewDataState) -> SetupControlBarViewModel
     func makeJoiningCallActivityViewModel(title: String) -> JoiningCallActivityViewModel
 }
 

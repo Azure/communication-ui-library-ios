@@ -21,17 +21,21 @@ class IconButtonViewModel: ObservableObject {
     @Published var accessibilityValue: String?
     @Published var accessibilityHint: String?
     @Published var isDisabled: Bool
+    @Published var isVisible: Bool
+
     let buttonType: ButtonType
     var action: (() -> Void)
 
     init(iconName: CompositeIcon,
          buttonType: ButtonType = .controlButton,
          isDisabled: Bool = false,
+         isVisible: Bool = true,
          action: @escaping (() -> Void) = {}) {
         self.iconName = iconName
         self.buttonType = buttonType
         self.isDisabled = isDisabled
         self.action = action
+        self.isVisible = isVisible
     }
 
     func update(iconName: CompositeIcon?) {
@@ -61,6 +65,12 @@ class IconButtonViewModel: ObservableObject {
     func update(isDisabled: Bool) {
         if self.isDisabled != isDisabled {
             self.isDisabled = isDisabled
+        }
+    }
+
+    func update(isVisible: Bool) {
+        if self.isVisible != isVisible {
+            self.isVisible = isVisible
         }
     }
 }

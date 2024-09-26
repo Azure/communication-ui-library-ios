@@ -20,6 +20,13 @@ extension Reducer {
         diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .liveDiagnosticsReducer,
         captionsReducer: Reducer<CaptionsState, CaptionsAction> = .captionsReducer,
         toastNotificationReducer: Reducer<ToastNotificationState, ToastNotificationAction> = .toastNotificationReducer
+        /* <TIMER_TITLE_FEATURE> */
+        ,
+        callScreenInfoHeaderReducer: Reducer<CallScreenInfoHeaderState, CallScreenInfoHeaderAction>
+            = .callScreenInfoHeaderReducer
+        /* </TIMER_TITLE_FEATURE> */
+        ,
+        buttonViewDataReducer: Reducer<ButtonViewDataState, ButtonViewDataAction> = .buttonViewDataReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
@@ -37,6 +44,10 @@ extension Reducer {
             var visibilityState = state.visibilityState
             var captionsState = state.captionsState
             var toastNotificationState = state.toastNotificationState
+            /* <TIMER_TITLE_FEATURE> */
+            var callScreenInfoHeaderState = state.callScreenInfoHeaderState
+            /* </TIMER_TITLE_FEATURE> */
+            var buttonViewDataState = state.buttonViewDataState
 
             switch action {
             case let .permissionAction(permAction):
@@ -55,7 +66,12 @@ extension Reducer {
                 captionsState = captionsReducer.reduce(state.captionsState, captionsAction)
             case let .toastNotificationAction(action):
                 toastNotificationState = toastNotificationReducer.reduce(state.toastNotificationState, action)
-
+            /* <TIMER_TITLE_FEATURE> */
+            case let .callScreenInfoHeaderAction(action):
+                callScreenInfoHeaderState = callScreenInfoHeaderReducer.reduce(state.callScreenInfoHeaderState, action)
+            /* </TIMER_TITLE_FEATURE> */
+            case let .buttonViewDataAction(action):
+                buttonViewDataState = buttonViewDataReducer.reduce(state.buttonViewDataState, action)
             default:
                 break
             }
@@ -81,7 +97,14 @@ extension Reducer {
                             visibilityState: visibilityState,
                             diagnosticsState: diagnosticsState,
                             captionsState: captionsState,
-                            toastNotificationState: toastNotificationState)
+                            toastNotificationState: toastNotificationState
+                            /* <TIMER_TITLE_FEATURE> */
+                            ,
+                            callScreenInfoHeaderState: callScreenInfoHeaderState
+                            /* </TIMER_TITLE_FEATURE> */
+                            ,
+                            buttonViewDataState: buttonViewDataState
+            )
         }
     }
 }

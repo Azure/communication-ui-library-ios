@@ -26,7 +26,8 @@ class ParticipantsListViewModelTests: XCTestCase {
                                                           avatarManager: AvatarViewManagerMocking(
                                                             store: storeFactory.store,
                                                             localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                            localParticipantViewData: nil))
+                                                            localParticipantViewData: nil),
+                                                          updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
     }
 
     func test_update_withLocalUserMicOn_shouldUpdateMeetingParticipants() {

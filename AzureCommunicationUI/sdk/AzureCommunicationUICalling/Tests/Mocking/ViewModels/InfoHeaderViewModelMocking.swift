@@ -23,13 +23,21 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    accessibilityProvider: accessibilityProvider,
                    dispatchAction: dispatchAction,
                    enableMultitasking: true,
-                   enableSystemPipWhenMultitasking: true)
+                   enableSystemPipWhenMultitasking: true
+                   /* <TIMER_TITLE_FEATURE> */
+                   ,
+                   callScreenInfoHeaderState:
+                     CallScreenInfoHeaderState()
+                   /* </TIMER_TITLE_FEATURE> */ )
     }
 
     override func update(localUserState: LocalUserState,
                          remoteParticipantsState: RemoteParticipantsState,
                          callingState: CallingState,
-                         visibilityState: VisibilityState) {
+                         visibilityState: VisibilityState
+                         /* <TIMER_TITLE_FEATURE> */ ,
+                         callScreenInfoHeaderState: CallScreenInfoHeaderState?
+                         /* </TIMER_TITLE_FEATURE> */ ) {
         updateState?(localUserState, remoteParticipantsState, callingState, visibilityState)
     }
 }

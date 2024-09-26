@@ -12,7 +12,7 @@ struct CaptionsErrorView: View {
     private let cornerRadius: CGFloat = 6
     private let foregroundColor: Color = .white
     private let horizontalPadding: CGFloat = 10
-    private let height: CGFloat = 36
+    private let verticalPadding: CGFloat = 5
 
     var body: some View {
         if viewModel.visible {
@@ -30,12 +30,15 @@ struct CaptionsErrorView: View {
                 Text(viewModel.text)
                     .font(Fonts.caption1.font)
                     .padding(
-                        EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: horizontalPadding))
+                        EdgeInsets(top: verticalPadding,
+                                   leading: 0,
+                                   bottom: verticalPadding,
+                                   trailing: horizontalPadding))
                     .multilineTextAlignment(.center)
                     .foregroundColor(foregroundColor)
+                    .lineLimit(3)
                     .accessibilitySortPriority(2)
             }
-            .frame(height: height)
             .background(Color(StyleProvider.color.surfaceDarkColor))
             .cornerRadius(cornerRadius)
             .accessibilityAddTraits(.isStaticText)
