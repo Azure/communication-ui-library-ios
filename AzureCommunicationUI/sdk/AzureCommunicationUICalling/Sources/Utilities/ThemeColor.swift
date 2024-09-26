@@ -7,9 +7,7 @@ import Foundation
 import UIKit
 import FluentUI
 
-struct ThemeColor: ThemeOptions {
-    init() {
-    }
+class ThemeColor: ThemeOptions {
     var colorSchemeOverride: UIUserInterfaceStyle {
         return .unspecified
     }
