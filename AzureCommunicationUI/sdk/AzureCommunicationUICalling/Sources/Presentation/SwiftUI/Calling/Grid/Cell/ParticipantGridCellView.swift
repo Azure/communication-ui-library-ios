@@ -148,6 +148,6 @@ struct ParticipantTitleView: View {
             }
         })
         .padding(.horizontal, isEmpty ? 0 : 4)
-        .animation(.default)
+        .animation(.default, value: true)
     }
 }

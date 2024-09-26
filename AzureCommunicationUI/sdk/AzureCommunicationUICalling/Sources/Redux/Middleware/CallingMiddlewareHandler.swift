@@ -403,7 +403,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             guard state.permissionState.audioPermission == .requesting else {
                 return
             }
-            setupCall(state: state, dispatch: dispatch)
+             _ = setupCall(state: state, dispatch: dispatch)
         }
     }
 
