@@ -143,7 +143,7 @@ class CallingViewModelTests: XCTestCase {
                                                                         onEndCallTapped: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         updateState: updateControlBarViewModel,
-                                                                        capabilitiesManager: capabilitiesManager, 
+                                                                        capabilitiesManager: capabilitiesManager,
                                                                         accessibilityProvider: accessibilityProvider,
                                                                         buttonViewDataState: storeFactory.store.state.buttonViewDataState)
         let sut = makeSUT()
