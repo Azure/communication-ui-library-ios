@@ -63,6 +63,9 @@ struct CompositeButton: UIViewRepresentable {
                     }),
                     .foregroundPressedColor: ControlTokenValue.dynamicColor({
                         dynamicColor!
+                    }),
+                    .foregroundDisabledColor: ControlTokenValue.dynamicColor({
+                        Colors.gray300.dynamicColor!
                     })]
                 button.tokenSet.replaceAllOverrides(with: overrideTokens)
          /* </CUSTOM_COLOR_FEATURE> */
