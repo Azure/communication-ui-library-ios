@@ -68,7 +68,7 @@ class CallingViewModelTests: XCTestCase {
         let sut = makeSUT()
         let originalState = sut.lobbyOverlayViewModel.isDisplayed
         let appState = AppState(callingState: CallingState(status: .inLobby),
-                                lifeCycleState: LifeCycleState(currentStatus: .background))
+                                visibilityState: VisibilityState(currentStatus: .hidden))
         sut.receive(appState)
         XCTAssertEqual(sut.lobbyOverlayViewModel.isDisplayed, originalState)
     }
