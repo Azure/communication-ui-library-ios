@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0570901C299EBAC000D7AE5F /* CallingDemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */; };
+		057A86E82CA752A000F96CD0 /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057A86E42CA7529000F96CD0 /* AzureCommunicationCalling.xcframework */; };
+		057A86E92CA752A000F96CD0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 057A86E42CA7529000F96CD0 /* AzureCommunicationCalling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		058371E42C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */; };
 		058371E52C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		058371E62C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
@@ -202,6 +204,7 @@
 				058371E52C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 				50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 				058371E72C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Embed Frameworks */,
+				057A86E92CA752A000F96CD0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +214,9 @@
 /* Begin PBXFileReference section */
 		026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingDemoViewModel.swift; sourceTree = "<group>"; };
+		057A86E42CA7529000F96CD0 /* AzureCommunicationCalling.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:UBF8T346G9:Microsoft Corporation"; lastKnownFileType = wrapper.xcframework; path = AzureCommunicationCalling.xcframework; sourceTree = "<group>"; };
+		057A86E52CA7529000F96CD0 /* EULA.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = EULA.md; sourceTree = "<group>"; };
+		057A86E62CA7529000F96CD0 /* NOTICES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NOTICES.md; sourceTree = "<group>"; };
 		058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		058D6A282ACE0B33005CF1C8 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = "../../../../orient_workspace/SpoolCallingStack/native/staging.d/release/BETA/sdk/arm64-v8a/AzureCommunicationCalling.framework"; sourceTree = "<group>"; };
 		1AA61EC7BE9A4B43EEC5DBCC /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -315,6 +321,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				057A86E82CA752A000F96CD0 /* AzureCommunicationCalling.xcframework in Frameworks */,
 				50CB82E128C9200300680566 /* AzureCommunicationUIChat.framework in Frameworks */,
 				3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */,
 				058371E62C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Frameworks */,
@@ -325,6 +332,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		057A86E72CA7529000F96CD0 /* AzureCommunicationCalling-2.13.1 */ = {
+			isa = PBXGroup;
+			children = (
+				057A86E42CA7529000F96CD0 /* AzureCommunicationCalling.xcframework */,
+				057A86E52CA7529000F96CD0 /* EULA.md */,
+				057A86E62CA7529000F96CD0 /* NOTICES.md */,
+			);
+			name = "AzureCommunicationCalling-2.13.1";
+			path = "../../../../../Downloads/AzureCommunicationCalling-2.13.1";
+			sourceTree = "<group>";
+		};
 		1B5D6BFB2922F9DF0072C66D /* Mockings */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +545,7 @@
 		F74ACD1C99B1428891E02585 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				057A86E72CA7529000F96CD0 /* AzureCommunicationCalling-2.13.1 */,
 				058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */,
 				A48D181A2BFDB85C00FD994E /* Intents.framework */,
 				058D6A282ACE0B33005CF1C8 /* AzureCommunicationCalling.framework */,

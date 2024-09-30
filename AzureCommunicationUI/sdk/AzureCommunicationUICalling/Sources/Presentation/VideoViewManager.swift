@@ -155,6 +155,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     // MARK: Helper functions
     func disposeViews() {
+        logger.error("testpip: VideoViewManager disposeViews")
         displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { key in
             self.disposeRemoteParticipantVideoRendererView(key)
         }

@@ -224,10 +224,18 @@ internal class CallingViewModel: ObservableObject {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
         }
-        logger.debug("testpip: isDisplayed: " + state.visibilityState.currentStatus.description)
-        guard state.visibilityState.currentStatus != .hidden else {
-            return
-        }
+//        guard state.visibilityState.currentStatus == .visible
+//                || state.visibilityState.currentStatus == .pipModeEntered else {
+//            return
+//        }
+
+//        guard state.lifeCycleState.currentStatus == .foreground
+//                || state.visibilityState.currentStatus != .visible else {
+//            return
+//        }
+
+        logger.debug("testpip: state.visibilityState.currentStatus " + state.visibilityState.currentStatus.description)
+
         participantListViewModel.update(localUserState: state.localUserState,
                                         remoteParticipantsState: state.remoteParticipantsState,
                                         isDisplayed: state.navigationState.participantsVisible)

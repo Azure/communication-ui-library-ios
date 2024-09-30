@@ -22,6 +22,8 @@ class ParticipantGridViewModel: ObservableObject {
     private var appStatus: AppStatus = .foreground
     private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
+    private var logger: Logger
+
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
 
@@ -29,12 +31,14 @@ class ParticipantGridViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
-         callType: CompositeCallType) {
+         callType: CompositeCallType,
+         logger: Logger) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.isIpadInterface = isIpadInterface
         self.callType = callType
+        self.logger = logger
     }
 
     func update(callingState: CallingState,
@@ -45,8 +49,15 @@ class ParticipantGridViewModel: ObservableObject {
         if visibilityState.currentStatus == .pipModeRequested {
             // When enterin system PiP, need to remove video from rendering,
             // so it will be rendered properly after view is placed in PiP
+            visibilityStatus = visibilityState.currentStatus
             updateCellViewModel(for: [], lifeCycleState: lifeCycleState)
             return
+        }
+
+        if visibilityStatus != .pipModeEntered && visibilityState.currentStatus == .pipModeEntered {
+            logger.debug("testpip: ParticipantGridViewModel visibilityStatus == .pipModeRequested" +
+                         "&& visibilityState.currentStatus == .pipModeEntered")
+            updateCellViewModel(for: [], lifeCycleState: lifeCycleState)
         }
 
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
@@ -213,6 +224,10 @@ class ParticipantGridViewModel: ObservableObject {
         }
 
         participantsCellViewModelArr = newCellViewModelArr
+        for (index, infoModel) in displayedRemoteParticipants.enumerated() {
+            let cellViewModel = participantsCellViewModelArr[index]
+            cellViewModel.update(participantModel: infoModel, lifeCycleState: lifeCycleState)
+        }
     }
 
     private func postParticipantsListUpdateAccessibilityAnnouncements(removedModels: [ParticipantInfoModel],

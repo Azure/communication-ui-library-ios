@@ -47,6 +47,7 @@ struct ParticipantGridCellVideoView: View {
 
     var videoRenderView: some View {
         VideoRendererView(rendererView: videoRendererViewInfo.rendererView)
+            .background(.blue)
     }
 
     var zoomableVideoRenderView: some View {

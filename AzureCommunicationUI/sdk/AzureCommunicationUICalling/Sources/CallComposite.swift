@@ -794,6 +794,7 @@ extension CallComposite {
         return PipManager(store: store, logger: logger,
 
                           onRequirePipContentView: {
+            self.logger.debug( "testpip: onRequirePipContentView")
             guard let store = self.store, let viewFactory = self.viewFactory else {
                 return nil
             }

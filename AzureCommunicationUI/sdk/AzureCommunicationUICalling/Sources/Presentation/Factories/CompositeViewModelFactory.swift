@@ -359,7 +359,8 @@ extension CompositeViewModelFactory {
                                  localizationProvider: localizationProvider,
                                  accessibilityProvider: accessibilityProvider,
                                  isIpadInterface: isIpadInterface,
-                                 callType: callType)
+                                 callType: callType,
+                                 logger: logger)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
