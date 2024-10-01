@@ -53,7 +53,7 @@ public extension ThemeOptions {
     }
     /* <CUSTOM_COLOR_FEATURE> */
     var foregroundOnPrimaryColor: UIColor {
-        return .white
+        return Colors.Palette.gray20.color
     }
     /* </CUSTOM_COLOR_FEATURE> */
 }
