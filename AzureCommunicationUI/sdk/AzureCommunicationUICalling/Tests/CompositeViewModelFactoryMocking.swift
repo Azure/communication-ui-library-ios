@@ -246,8 +246,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           dispatchAction: dispatchAction,
                                                           onEndCallTapped: onEndCallTapped,
                                                           localUserState: localUserState,
+                                                          accessibilityProvider: accessibilityProvider,
                                                           audioVideoMode: .audioAndVideo,
-                                                          capabilitiesManager: capabilitiesManager, controlBarOptions: nil,
+                                                          capabilitiesManager: capabilitiesManager,
+                                                          controlBarOptions: nil,
                                                           buttonViewDataState: buttonViewDataState)
     }
 

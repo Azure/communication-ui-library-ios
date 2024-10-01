@@ -310,6 +310,7 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             onEndCallTapped: onEndCallTapped,
                             localUserState: localUserState,
+                            accessibilityProvider: accessibilityProvider,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             capabilitiesManager: capabilitiesManager,
                             controlBarOptions: callScreenOptions?.controlBarOptions,
