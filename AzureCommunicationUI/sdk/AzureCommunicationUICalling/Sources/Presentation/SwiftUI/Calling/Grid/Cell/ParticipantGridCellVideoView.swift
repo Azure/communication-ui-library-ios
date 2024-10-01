@@ -15,7 +15,7 @@ struct ParticipantGridCellVideoView: View {
     @Binding var displayName: String?
     @Binding var isMuted: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
-
+    @State var show = true
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             VStack(alignment: .center, spacing: 0) {
@@ -42,7 +42,7 @@ struct ParticipantGridCellVideoView: View {
         }.overlay(
             isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4)
                 .strokeBorder(Color(StyleProvider.color.primaryColor), lineWidth: 4) : nil
-        ).animation(.default)
+        ).animation(.default, value: show)
     }
 
     var videoRenderView: some View {

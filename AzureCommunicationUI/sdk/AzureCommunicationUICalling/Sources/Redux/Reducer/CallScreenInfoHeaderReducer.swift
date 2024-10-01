@@ -17,8 +17,6 @@ extension Reducer where State == CallScreenInfoHeaderState,
         case .updateSubtitle(let subtitle):
             newState = CallScreenInfoHeaderState(title: currentState.title,
                                                  subtitle: subtitle)
-        default:
-            return newState
         }
         return newState
     }

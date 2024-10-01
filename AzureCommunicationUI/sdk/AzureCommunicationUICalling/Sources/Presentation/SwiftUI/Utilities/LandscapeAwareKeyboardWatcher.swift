@@ -75,7 +75,8 @@ internal class LandscapeAwareKeyboardWatcher: ObservableObject {
     }
 
     private func updateOrientationStatus() {
-        if let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        if let orientation = windowScene?.interfaceOrientation {
             isLandscape = orientation.isLandscape
         } else {
             isLandscape = false

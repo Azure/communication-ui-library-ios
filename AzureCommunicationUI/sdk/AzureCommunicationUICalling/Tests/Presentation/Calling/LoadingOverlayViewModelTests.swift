@@ -62,6 +62,7 @@ extension LoadingOverlayViewModelTests {
                                      accessibilityProvider: AccessibilityProviderMocking(),
                                        networkManager: NetworkManager(),
                                        audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: LoggerMocking(), isCallKitEnabled: false),
+                                       themeOptions: MockThemeOptions(),
                                        store: storeFactory.store,
                                        callType: .groupCall
         )

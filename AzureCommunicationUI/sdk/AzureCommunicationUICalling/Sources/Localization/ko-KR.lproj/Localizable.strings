@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="음소거 해제됨";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="말하기";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="대기 중";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ 님이 대기 중입니다";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ 님이 통화를 다시 시작했습니다";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="탭하여 입장 또는 거절";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="대기실에서 대기 중(%d)";

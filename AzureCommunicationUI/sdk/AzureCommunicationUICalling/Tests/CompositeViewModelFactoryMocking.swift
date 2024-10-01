@@ -57,7 +57,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var participantMenuViewModel: ParticipantMenuViewModel?
 
     let avatarManager: AvatarViewManagerProtocol
-
     init(logger: Logger,
          store: Store<AppState, Action>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
@@ -163,6 +162,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                 buttonLabel: buttonLabel,
                                                                 iconName: iconName,
                                                                 isDisabled: isDisabled,
+                                                                themeOptions: MockThemeOptions(),
                                                                 action: action)
     }
 
@@ -229,7 +229,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return loadingOverlayViewModel ?? LoadingOverlayViewModel(localizationProvider: localizationProvider,
                                                                   accessibilityProvider: accessibilityProvider,
                                                                   networkManager: NetworkManager(),
-                                                                  audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false),
+                                                                  audioSessionManager: AudioSessionManager(store: store, logger: logger, isCallKitEnabled: false), themeOptions: MockThemeOptions(),
                                                                   store: store,
                                                                   callType: .groupCall
         )
