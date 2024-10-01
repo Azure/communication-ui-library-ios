@@ -292,7 +292,6 @@ class ControlBarViewModel: ObservableObject {
 
         moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
         moreButtonViewModel.update(isVisible: isMoreButtonVisible())
-        print("update init called")
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
         isMoreButtonShouldFocused = true
         updateTotalButtonCount()
