@@ -14,7 +14,7 @@ struct ControlBarView: View {
     @State var debugInfoSourceView = UIView()
     @AccessibilityFocusState var focusedOnAudioDeviceButton: Bool
     @AccessibilityFocusState var focusedOnHangUpButton: Bool
-    @AccessibilityFocusState var focusedOnMoreButton: Bool
+    @AccessibilityFocusState(for: .voiceOver) var focusedOnMoreButton: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
@@ -28,15 +28,24 @@ struct ControlBarView: View {
             }
             .padding()
             .background(Color(StyleProvider.color.backgroundColor))
-            .modifier(PopupModalView(
-                isPresented: viewModel.isShareActivityDisplayed) {
-                    shareActivityView
-                        .accessibilityElement(children: .contain)
-                        .accessibilityAddTraits(.isModal)
+            .onAppear {
+                viewModel.onDrawerViewDidDisappearBlock = {
+                    self.focusedOnMoreButton = true
+                }
+            }
+            .onDisappear {
+                NotificationCenter.default.removeObserver(
+                    self,
+                    name: Notification.Name(NotificationCenterName.drawerViewDidDisappear.rawValue),
+                    object: nil)
+            }
+            .modifier(PopupModalView(isPresented: viewModel.isShareActivityDisplayed) {
+                shareActivityView
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
             })
         }
     }
-
     /// A stack view that has items centered aligned horizontally in its stack view
     var centeredStack: some View {
         Group {
@@ -63,7 +72,6 @@ struct ControlBarView: View {
             }
         }
     }
-
     /// A stack view that has items that take the stackview space evenly
     var nonCenteredStack: some View {
         Group {
@@ -94,31 +102,25 @@ struct ControlBarView: View {
             }
         }
     }
-
     var cameraButton: some View {
         IconButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.videoAccessibilityID.rawValue)
     }
-
     var micButton: some View {
         IconButton(viewModel: viewModel.micButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
     }
-
     var audioDeviceButton: some View {
         IconButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
             .accessibility(identifier: AccessibilityIdentifier.audioDeviceAccessibilityID.rawValue)
             .accessibilityFocused($focusedOnAudioDeviceButton, equals: true)
-
     }
-
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
             .accessibilityIdentifier(AccessibilityIdentifier.hangupAccessibilityID.rawValue)
             .accessibilityFocused($focusedOnHangUpButton, equals: true)
     }
-
     var moreButton: some View {
         IconButton(viewModel: viewModel.moreButtonViewModel)
             .background(SourceViewSpace(sourceView: moreListSourceView))
@@ -126,7 +128,6 @@ struct ControlBarView: View {
             .accessibilityIdentifier(AccessibilityIdentifier.moreAccessibilityID.rawValue)
             .accessibilityFocused($focusedOnMoreButton, equals: true)
     }
-
     var shareActivityView: some View {
         return Group {
             SharingActivityView(viewModel: viewModel.debugInfoSharingActivityViewModel,
