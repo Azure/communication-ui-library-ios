@@ -28,9 +28,7 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State var incomingCallId = ""
-    /* <TIMER_TITLE_FEATURE> */
     @State var headerViewData: CallScreenHeaderViewData?
-    /* </TIMER_TITLE_FEATURE> */
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     var callComposite = CallComposite()
@@ -426,7 +424,6 @@ extension CallingDemoView {
             cameraButtonEnabled: envConfigSubject.setupScreenOptionsCameraButtonEnabled,
             microphoneButtonEnabled: envConfigSubject.setupScreenOptionsMicButtonEnabled)
 
-        /* <TIMER_TITLE_FEATURE> */
         headerViewData = CallScreenHeaderViewData()
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData?.title = envConfigSubject.callInformationTitle
@@ -434,10 +431,8 @@ extension CallingDemoView {
         if !envConfigSubject.callInformationSubtitle.isEmpty {
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
-        /* </TIMER_TITLE_FEATURE> */
-        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions /* <TIMER_TITLE_FEATURE> */ ,
-                                                   headerViewData: headerViewData
-                                                   /* </TIMER_TITLE_FEATURE> */ )
+        var callScreenOptions = CallScreenOptions(controlBarOptions: barOptions,
+                                                   headerViewData: headerViewData)
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationOptions(locale: locale,
@@ -590,7 +585,7 @@ extension CallingDemoView {
             print("::::CallingDemoView::onIncomingCallCancelled \(event.callId)")
             showAlert(for: "\(event.callId) cancelled")
         }
-        /* <TIMER_TITLE_FEATURE> */
+
         let onRemoteParticipantLeftHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -598,7 +593,7 @@ extension CallingDemoView {
             self.onRemoteParticipantLeft(to: composite,
                                            identifiers: ids)
         }
-        /* </TIMER_TITLE_FEATURE> */
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
@@ -608,9 +603,7 @@ extension CallingDemoView {
         callComposite.events.onIncomingCallAcceptedFromCallKit = callKitCallAccepted
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
-        /* <TIMER_TITLE_FEATURE> */
         callComposite.events.onRemoteParticipantLeft = onRemoteParticipantLeftHandler
-        /* </TIMER_TITLE_FEATURE> */
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -643,7 +636,6 @@ extension CallingDemoView {
         let controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
                                                                 envConfigSubject.displayLeaveCallConfirmation ?
             .alwaysEnabled : .alwaysDisabled)
-        /* <TIMER_TITLE_FEATURE> */
         headerViewData = CallScreenHeaderViewData()
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData?.title = envConfigSubject.callInformationTitle
@@ -651,7 +643,6 @@ extension CallingDemoView {
         if !envConfigSubject.callInformationSubtitle.isEmpty {
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
-        /* </TIMER_TITLE_FEATURE> */
         var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions,
                                                    headerViewData: headerViewData)
 
@@ -771,7 +762,6 @@ extension CallingDemoView {
             reportIssueButton: reportIssueButton,
             customButtons: [hideButtonsCustomButton, disableButtonsCustomButton, customButton1, customButton2]
         )
-        /* <TIMER_TITLE_FEATURE> */
         headerViewData = CallScreenHeaderViewData()
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData?.title = envConfigSubject.callInformationTitle
@@ -779,12 +769,8 @@ extension CallingDemoView {
         if !envConfigSubject.callInformationSubtitle.isEmpty {
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
-        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions /* <TIMER_TITLE_FEATURE> */ ,
-                                                   headerViewData: headerViewData
-                                                   /* </TIMER_TITLE_FEATURE> */ )
-        /* <|TIMER_TITLE_FEATURE>
-        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
-         </TIMER_TITLE_FEATURE> */
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions,
+                                                   headerViewData: headerViewData)
     }
 
     func hideAllButtons() -> CallScreenOptions {
@@ -800,7 +786,6 @@ extension CallingDemoView {
             shareDiagnosticsButton: ButtonViewData(visible: false),
             reportIssueButton: ButtonViewData(visible: false)
         )
-        /* <TIMER_TITLE_FEATURE> */
         headerViewData = CallScreenHeaderViewData()
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData?.title = envConfigSubject.callInformationTitle
@@ -808,12 +793,8 @@ extension CallingDemoView {
         if !envConfigSubject.callInformationSubtitle.isEmpty {
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
-        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions /* <TIMER_TITLE_FEATURE> */ ,
-                                                   headerViewData: headerViewData
-                                                   /* </TIMER_TITLE_FEATURE> */ )
-        /* <|TIMER_TITLE_FEATURE>
-        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions)
-         </TIMER_TITLE_FEATURE> */
+        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions,
+                                                   headerViewData: headerViewData)
     }
 
     func startCallWithDeprecatedLaunch() async {
@@ -1113,7 +1094,6 @@ extension CallingDemoView {
     private func onRemoteParticipantJoined(to callComposite: CallComposite,
                                            identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
-        /* <TIMER_TITLE_FEATURE> */
         if envConfigSubject.customTitleApplyOnRemoteJoin != 0 &&
             identifiers.count >= envConfigSubject.customTitleApplyOnRemoteJoin {
             headerViewData?.title = "Custom title: change applied"
@@ -1122,7 +1102,6 @@ extension CallingDemoView {
             identifiers.count >= envConfigSubject.customSubtitleApplyOnRemoteJoin {
             headerViewData?.subtitle = "Custom subtitle: change applied"
         }
-        /* </TIMER_TITLE_FEATURE> */
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
@@ -1132,13 +1111,11 @@ extension CallingDemoView {
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
-    /* <TIMER_TITLE_FEATURE> */
     private func onRemoteParticipantLeft(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::CallingDemoView::getEventsHandler::onRemoteParticipantLeft \(identifiers)")
 
         // Check identifiers to use the the stop/start timer API based on a specific participant leaves the meeting.
     }
-    /* </TIMER_TITLE_FEATURE> */
 }
 
 struct CustomDemoView: View {

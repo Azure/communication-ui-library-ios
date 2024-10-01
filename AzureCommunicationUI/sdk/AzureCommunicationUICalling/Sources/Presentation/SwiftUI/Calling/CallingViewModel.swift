@@ -103,9 +103,8 @@ internal class CallingViewModel: ObservableObject {
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
-                                     localUserState: store.state.localUserState /* <TIMER_TITLE_FEATURE> */ ,
-                                     callScreenInfoHeaderState: store.state.callScreenInfoHeaderState
-                                     /* </TIMER_TITLE_FEATURE> */ )
+                                     localUserState: store.state.localUserState,
+                                     callScreenInfoHeaderState: store.state.callScreenInfoHeaderState)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
@@ -254,9 +253,8 @@ internal class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
-                                   visibilityState: state.visibilityState /* </TIMER_TITLE_FEATURE> */ ,
-                                   callScreenInfoHeaderState: state.callScreenInfoHeaderState
-                                   /* </TIMER_TITLE_FEATURE> */ )
+                                   visibilityState: state.visibilityState,
+                                   callScreenInfoHeaderState: state.callScreenInfoHeaderState)
         localVideoViewModel.update(localUserState: state.localUserState,
                                    visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
