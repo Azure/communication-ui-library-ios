@@ -52,9 +52,8 @@ protocol CompositeViewModelFactoryProtocol {
                                  capabilitiesManager: CapabilitiesManager,
                                  buttonViewDataState: ButtonViewDataState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel
+                                 localUserState: LocalUserState,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,

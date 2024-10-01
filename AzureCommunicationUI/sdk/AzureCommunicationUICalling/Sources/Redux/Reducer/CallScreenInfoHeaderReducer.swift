@@ -1,4 +1,3 @@
-/* <TIMER_TITLE_FEATURE> */
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
@@ -21,4 +20,3 @@ extension Reducer where State == CallScreenInfoHeaderState,
         return newState
     }
 }
-/* </TIMER_TITLE_FEATURE> */

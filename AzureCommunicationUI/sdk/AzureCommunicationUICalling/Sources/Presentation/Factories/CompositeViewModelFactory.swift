@@ -318,9 +318,8 @@ extension CompositeViewModelFactory {
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel {
+                                 localUserState: LocalUserState,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
@@ -328,11 +327,8 @@ extension CompositeViewModelFactory {
                             accessibilityProvider: accessibilityProvider,
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking
-                            /* <TIMER_TITLE_FEATURE> */ ,
-                            callScreenInfoHeaderState: callScreenInfoHeaderState
-                            /* </TIMER_TITLE_FEATURE> */
-                            )
+                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
+                            callScreenInfoHeaderState: callScreenInfoHeaderState)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,

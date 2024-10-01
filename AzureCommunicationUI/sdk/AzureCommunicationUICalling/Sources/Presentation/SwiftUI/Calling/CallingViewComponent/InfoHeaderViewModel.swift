@@ -36,20 +36,13 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPipWhenMultitasking: Bool /* <TIMER_TITLE_FEATURE> */ ,
-         callScreenInfoHeaderState: CallScreenInfoHeaderState /* </TIMER_TITLE_FEATURE> */ ) {
+         enableSystemPipWhenMultitasking: Bool,
+         callScreenInfoHeaderState: CallScreenInfoHeaderState) {
         let infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
-        /* <TIMER_TITLE_FEATURE> */
         self.title = callScreenInfoHeaderState.title ?? infoLabel
         self.subtitle = callScreenInfoHeaderState.subtitle ?? ""
         self.accessibilityLabelTitle = callScreenInfoHeaderState.title ?? infoLabel
         self.accessibilityLabelSubtitle = callScreenInfoHeaderState.subtitle ?? ""
-         /* <|TIMER_TITLE_FEATURE>
-        self.title = infoLabel
-        self.subtitle = ""
-        self.accessibilityLabelTitle = infoLabel
-        self.accessibilityLabelSubtitle = ""
-        </TIMER_TITLE_FEATURE> */
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
@@ -128,9 +121,8 @@ class InfoHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
-                visibilityState: VisibilityState /* <TIMER_TITLE_FEATURE> */,
-                callScreenInfoHeaderState: CallScreenInfoHeaderState
-                /* </TIMER_TITLE_FEATURE> */ ) {
+                visibilityState: VisibilityState,
+                callScreenInfoHeaderState: CallScreenInfoHeaderState) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -142,9 +134,7 @@ class InfoHeaderViewModel: ObservableObject {
         let updatedRemoteparticipantCount = getParticipantCount(remoteParticipantsState)
 
         if participantsCount != updatedRemoteparticipantCount
-            /* <TIMER_TITLE_FEATURE> */
-            && callScreenInfoHeaderState.title == nil
-            /* </TIMER_TITLE_FEATURE> */{
+            && callScreenInfoHeaderState.title == nil {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
@@ -152,7 +142,6 @@ class InfoHeaderViewModel: ObservableObject {
         if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
         }
-        /* <TIMER_TITLE_FEATURE> */
         if callScreenInfoHeaderState.title != nil
             && callScreenInfoHeaderState.title != self.title {
             self.title = (callScreenInfoHeaderState.title)!
@@ -163,7 +152,6 @@ class InfoHeaderViewModel: ObservableObject {
             self.subtitle = callScreenInfoHeaderState.subtitle
             self.accessibilityLabelSubtitle = self.subtitle ?? ""
         }
-        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
@@ -199,13 +187,8 @@ class InfoHeaderViewModel: ObservableObject {
         default:
             content = localizationProvider.getLocalizedString(.callWithNPerson, participantsCount)
         }
-        /* <TIMER_TITLE_FEATURE> */
         title = content
         accessibilityLabelTitle = content
-         /* <|TIMER_TITLE_FEATURE>
-        title = content
-        accessibilityLabelTitle = content
-        </TIMER_TITLE_FEATURE> */
     }
 
     private func displayWithTimer() {

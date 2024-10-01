@@ -53,9 +53,7 @@ extension Reducer where State == CallDiagnosticsState,
              .hideDrawer,
              .visibilityAction,
              .toastNotificationAction,
-             /* <TIMER_TITLE_FEATURE> */
              .callScreenInfoHeaderAction,
-             /* </TIMER_TITLE_FEATURE> */
              .setTotalParticipantCount,
              .buttonViewDataAction:
             return state

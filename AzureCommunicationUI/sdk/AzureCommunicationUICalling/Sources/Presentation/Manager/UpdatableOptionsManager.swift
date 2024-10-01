@@ -27,7 +27,6 @@ class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
         self.callScreenOptions = callScreenOptions
         self.setupScreenOptions = setupScreenOptions
 
-        /* <TIMER_TITLE_FEATURE> */
         callScreenOptions?.headerViewData?.$title
             .sink { [weak self] newTitle in
                 self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateTitle(title: newTitle)))
@@ -39,7 +38,6 @@ class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
                 self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateSubtitle(subtitle: newSubtitle)))
             }
             .store(in: &subscriptions)
-        /* </TIMER_TITLE_FEATURE> */
 
         setupScreenOptions?.audioDeviceButton?.$visible
             .sink { [weak self] visible in

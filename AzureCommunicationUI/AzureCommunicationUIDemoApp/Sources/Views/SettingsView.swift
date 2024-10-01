@@ -64,7 +64,6 @@ struct SettingsView: View {
                 .accessibilityIdentifier(AccessibilityId.leaveCallConfirmationDisplayAccessibilityID.rawValue)
         }
     }
-    /* <TIMER_TITLE_FEATURE> */
     var callScreenHeaderSettings: some View {
         Section(header: Text("Call Screen Title and Subtitle API")) {
             TextField("Call Screen Custom title", text: $envConfigSubject.callInformationTitle)
@@ -87,7 +86,6 @@ struct SettingsView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
         }
     }
-    /* </TIMER_TITLE_FEATURE> */
 
     var setupScreenSettings: some View {
         Section(header: Text("Setup screen settings")) {
@@ -113,9 +111,7 @@ struct SettingsView: View {
                 captionsSettings
                 buttonSettins
                 multitaskingSettings
-                /* <TIMER_TITLE_FEATURE> */
                 callScreenHeaderSettings
-                /* </TIMER_TITLE_FEATURE> */
             }
             Group {
                 localizationSettings
