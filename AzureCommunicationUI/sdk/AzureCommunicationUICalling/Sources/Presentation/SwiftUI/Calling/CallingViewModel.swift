@@ -145,8 +145,8 @@ class CallingViewModel: ObservableObject {
             appState = state.lifeCycleState.currentStatus
         }
 
-        guard state.lifeCycleState.currentStatus == .foreground
-                || state.visibilityState.currentStatus != .visible else {
+        logger.debug("testpip: isDisplayed: " + state.visibilityState.currentStatus.description)
+        guard state.visibilityState.currentStatus != .hidden else {
             return
         }
 
