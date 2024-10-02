@@ -287,6 +287,10 @@
 		A4F5FA002C18BFAD00A74513 /* CallingSDKInitializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */; };
 		A4F5FA022C18CF6500A74513 /* PushNotificationEventTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */; };
 		A4F5FA042C18E98800A74513 /* CallScreenOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */; };
+		A788CB802CA45AE100244481 /* CompositeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788CB7F2CA45AE100244481 /* CompositeButtonTests.swift */; };
+		A788CB822CA45C1C00244481 /* MockThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A788CB812CA45C1C00244481 /* MockThemeOptions.swift */; };
+		A7BB54C32CA5E9640066DE05 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BB54C22CA5E9640066DE05 /* ThemeColor.swift */; };
+		A73E65902CA1C6160021633D /* NotificationCenterName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73E658F2CA1C6160021633D /* NotificationCenterName.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -707,6 +711,10 @@
 		A4F5F9FF2C18BFAD00A74513 /* CallingSDKInitializerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitializerTests.swift; sourceTree = "<group>"; };
 		A4F5FA012C18CF6500A74513 /* PushNotificationEventTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationEventTypeTests.swift; sourceTree = "<group>"; };
 		A4F5FA032C18E98800A74513 /* CallScreenOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreenOptionsTests.swift; sourceTree = "<group>"; };
+		A788CB7F2CA45AE100244481 /* CompositeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeButtonTests.swift; sourceTree = "<group>"; };
+		A788CB812CA45C1C00244481 /* MockThemeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockThemeOptions.swift; sourceTree = "<group>"; };
+		A7BB54C22CA5E9640066DE05 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
+		A73E658F2CA1C6160021633D /* NotificationCenterName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterName.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -952,6 +960,7 @@
 				058371FE2C1C2268008D9A20 /* ParticipantMenuViewModelTests.swift */,
 				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
 				5312A5372B75E8ED001C92E1 /* SupportFormViewModelTests.swift */,
+				A788CB7F2CA45AE100244481 /* CompositeButtonTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -1133,6 +1142,8 @@
 				1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */,
 				1FC30845266949E8007EC537 /* ColorExtension.swift */,
 				50B390D227D834FE0010A2ED /* LocalizationKey.swift */,
+				A7BB54C22CA5E9640066DE05 /* ThemeColor.swift */,
+				A73E658F2CA1C6160021633D /* NotificationCenterName.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1665,6 +1676,7 @@
 				1F4B0EFB269BD3D800E87014 /* Redux */,
 				A869A63626546A2E003CC4F2 /* VideoViewManagerMocking.swift */,
 				FA03CC7527C8189900986D4E /* ViewModels */,
+				A788CB812CA45C1C00244481 /* MockThemeOptions.swift */,
 			);
 			name = Mocking;
 			sourceTree = "<group>";
@@ -2051,6 +2063,7 @@
 				058372012C1C3456008D9A20 /* SetupScreenOptionsTests.swift in Sources */,
 				A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */,
 				50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */,
+				A788CB822CA45C1C00244481 /* MockThemeOptions.swift in Sources */,
 				A869A63D26546A2E003CC4F2 /* ReducerMocking.swift in Sources */,
 				1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */,
 				503E361C26CC2D0900158CB4 /* CompositeViewModelFactoryTests.swift in Sources */,
@@ -2097,6 +2110,7 @@
 				1F09A11126BA484000BACED7 /* ControlBarViewModelTests.swift in Sources */,
 				50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */,
 				FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */,
+				A788CB802CA45AE100244481 /* CompositeButtonTests.swift in Sources */,
 				50FA4616268D13E9001844AC /* LocalUserReducerTests.swift in Sources */,
 				1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
@@ -2170,6 +2184,7 @@
 				53D734D62C0AAD4700017EFB /* LeaveCallConfirmationView.swift in Sources */,
 				05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
+				A73E65902CA1C6160021633D /* NotificationCenterName.swift in Sources */,
 				75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */,
 				53535A152C10FE5B000BF96B /* AudioDeviceListView.swift in Sources */,
 				A46B90972BF5939D0096788C /* CallKitRemoteInfo.swift in Sources */,
@@ -2342,6 +2357,7 @@
 				1F11D2BD2640BD9800D33838 /* CallingMiddleware.swift in Sources */,
 				503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */,
 				982C2833267D0C4500427246 /* CompositeButton.swift in Sources */,
+				A7BB54C32CA5E9640066DE05 /* ThemeColor.swift in Sources */,
 				A4DBCEBD2BFB9C5D00332E7B /* PushNotification.swift in Sources */,
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
 				756F59782966020800BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */,

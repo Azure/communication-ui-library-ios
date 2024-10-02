@@ -177,7 +177,7 @@ struct CallingView: View {
 
             }
             .contentShape(Rectangle())
-            .animation(.linear(duration: 0.167))
+            .animation(.linear(duration: 0.167), value: true)
             .onTapGesture(perform: {
                 viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
             })

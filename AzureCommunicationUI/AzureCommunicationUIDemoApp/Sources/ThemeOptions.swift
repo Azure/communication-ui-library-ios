@@ -28,6 +28,9 @@ struct CustomColorTheming: ThemeOptions {
     var primaryColorTint30: UIColor {
         return UIColor(envConfigSubject.tint30)
     }
+    var foregroundOnPrimaryColor: UIColor {
+        return UIColor(envConfigSubject.foregroundOnPrimaryColor)
+    }
 
     var colorSchemeOverride: UIUserInterfaceStyle {
         return envConfigSubject.colorSchemeOverride

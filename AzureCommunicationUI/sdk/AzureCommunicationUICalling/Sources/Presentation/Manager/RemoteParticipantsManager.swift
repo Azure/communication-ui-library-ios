@@ -46,9 +46,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
 
         postRemoteParticipantsJoinedEvent(joinedParticipantsIds)
         postRemoteParticipantsRemovedEvent(removedParticipantsIds)
-        /* <TIMER_TITLE_FEATURE> */
         postRemoteParticipantsLeftEvent(removedParticipantsIds)
-        /* </TIMER_TITLE_FEATURE> */
     }
 
     private func postRemoteParticipantsRemovedEvent(_ removedParticipantsIds: Set<String>) {
@@ -73,7 +71,6 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
             .compactMap { createCommunicationIdentifier(fromRawId: $0) }
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
-    /* <TIMER_TITLE_FEATURE> */
     private func postRemoteParticipantsLeftEvent(_ leftOrRemovedParticipantIds: Set<String>) {
         guard !leftOrRemovedParticipantIds.isEmpty else {
             return
@@ -85,5 +82,4 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
             .compactMap { createCommunicationIdentifier(fromRawId: $0) }
         didRemoteParticipantsLeft(leftParticipantsCommunicationIds)
     }
-    /* </TIMER_TITLE_FEATURE> */
 }

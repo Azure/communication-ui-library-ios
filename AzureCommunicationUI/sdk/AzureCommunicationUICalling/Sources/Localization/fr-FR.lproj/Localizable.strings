@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Micro activé";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Parlant";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="En attente";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ est en attente";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ a repris l’appel";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Appuyez pour autoriser ou refuser";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="En attente dans le hall (%d)";

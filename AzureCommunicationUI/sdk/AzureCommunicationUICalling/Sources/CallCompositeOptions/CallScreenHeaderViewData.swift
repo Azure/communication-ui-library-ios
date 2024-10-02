@@ -1,4 +1,3 @@
-/* <TIMER_TITLE_FEATURE> */
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
@@ -26,4 +25,3 @@ public class CallScreenHeaderViewData: ObservableObject {
         self.subtitle = subtitle
     }
 }
-/* </TIMER_TITLE_FEATURE> */

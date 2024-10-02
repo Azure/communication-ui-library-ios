@@ -40,7 +40,7 @@ internal class LobbyWaitingHeaderViewModel: ObservableObject {
             iconName: nil,
             isDisabled: false,
             paddings: CompositeButton.Paddings(horizontal: 10, vertical: 6)) { [weak self] in
-                guard let self = self else {
+                guard self != nil else {
                     return
                 }
                 dispatchAction(.showParticipants)

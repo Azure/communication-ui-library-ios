@@ -16,7 +16,7 @@ class ControlBarViewModelTests: XCTestCase {
     var logger: LoggerMocking!
     var factoryMocking: CompositeViewModelFactoryMocking!
     var capabilitiesManager: CapabilitiesManager!
-
+    var accessibilityProvider = AccessibilityProviderMocking()
     private let timeout: TimeInterval = 10.0
 
     override func setUp() {
@@ -772,6 +772,7 @@ extension ControlBarViewModelTests {
                                    dispatchAction: storeFactory.store.dispatch,
                                    onEndCallTapped: {},
                                    localUserState: localUserState,
+                                   accessibilityProvider: accessibilityProvider,
                                    audioVideoMode: audioVideoMode,
                                    capabilitiesManager: capabilitiesManager,
                                    controlBarOptions: controlBarOptions,
@@ -784,6 +785,7 @@ extension ControlBarViewModelTests {
                                    dispatchAction: storeFactory.store.dispatch,
                                    onEndCallTapped: {},
                                    localUserState: storeFactory.store.state.localUserState,
+                                   accessibilityProvider: accessibilityProvider,
                                    audioVideoMode: audioVideoMode,
                                    capabilitiesManager: capabilitiesManager,
                                    controlBarOptions: nil,
