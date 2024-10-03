@@ -211,6 +211,10 @@ extension CallingSDKEventsHandler: CallDelegate,
         }
     }
 
+    func call(_ call: Call, didUpdateStartTime args: PropertyChangedEventArgs) {
+        call.startTime
+    }
+
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         onStateChanged(call: call)
     }

@@ -54,6 +54,7 @@ protocol CallingServiceProtocol {
     func setCaptionsCaptionLanguage(_ language: String) async throws
     func removeParticipant(_ participantId: String) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
+    func callStartTime() -> Date?
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -123,6 +124,10 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func endCall() async throws {
        try await callingSDKWrapper.endCall()
+    }
+
+    func callStartTime() -> Date? {
+        return callingSDKWrapper.callStartTime()
     }
 
     func requestCameraPreviewOn() async throws -> String {
