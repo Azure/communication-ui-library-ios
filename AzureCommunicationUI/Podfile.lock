@@ -8,7 +8,7 @@ PODS:
     - AzureCommunicationCommon (~> 1.0)
     - AzureCore (= 1.0.0-beta.15)
     - Trouter (= 0.2.0)
-  - AzureCommunicationCommon (1.1.1)
+  - AzureCommunicationCommon (1.2.0)
   - AzureCore (1.0.0-beta.15)
   - MicrosoftFluentUI/ActivityIndicator_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
@@ -76,12 +76,12 @@ SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
   AzureCommunicationCalling: 0c0de85d3dcf0ad34200038c8e608e8a38019834
   AzureCommunicationChat: 79fb67f0d6160754817d77d307565a015a5eb9b2
-  AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
+  AzureCommunicationCommon: 130a21be2be889f83dc4adbf994af6285f962de8
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
   MicrosoftFluentUI: f6db695718efb93f4ca9bdc366c00b80a1f91dba
   SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   Trouter: 7eab36954ad740e32db3ff9f6025b0dff92193d7
 
-PODFILE CHECKSUM: 5a077b893b9c40c251718e59952f444e28c8c312
+PODFILE CHECKSUM: 8c86692062abd31f6a9bb9f6207b2c675a5cbd9a
 
 COCOAPODS: 1.15.2
