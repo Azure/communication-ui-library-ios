@@ -54,12 +54,6 @@ class ParticipantGridViewModel: ObservableObject {
             return
         }
 
-        if visibilityStatus != .pipModeEntered && visibilityState.currentStatus == .pipModeEntered {
-            logger.debug("testpip: ParticipantGridViewModel visibilityStatus == .pipModeRequested" +
-                         "&& visibilityState.currentStatus == .pipModeEntered")
-            updateCellViewModel(for: [], lifeCycleState: lifeCycleState)
-        }
-
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
                 || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
                 || visibilityStatus != visibilityState.currentStatus
@@ -224,10 +218,6 @@ class ParticipantGridViewModel: ObservableObject {
         }
 
         participantsCellViewModelArr = newCellViewModelArr
-        for (index, infoModel) in displayedRemoteParticipants.enumerated() {
-            let cellViewModel = participantsCellViewModelArr[index]
-            cellViewModel.update(participantModel: infoModel, lifeCycleState: lifeCycleState)
-        }
     }
 
     private func postParticipantsListUpdateAccessibilityAnnouncements(removedModels: [ParticipantInfoModel],

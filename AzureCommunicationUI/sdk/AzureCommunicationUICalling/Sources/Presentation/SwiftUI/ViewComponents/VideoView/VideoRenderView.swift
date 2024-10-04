@@ -15,7 +15,6 @@ struct VideoRendererView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: VideoRendererUIView, context: Context) {
-        uiView.update(rendererView: rendererView)
     }
 }
 
@@ -24,6 +23,8 @@ class VideoRendererUIView: UIView {
 
     init(rendererView: UIView) {
         super.init(frame: .zero)
+        self.rendererView = rendererView
+        addSubview(rendererView)
     }
 
     required init?(coder: NSCoder) {
@@ -33,33 +34,5 @@ class VideoRendererUIView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         rendererView?.frame = bounds
-    }
-
-    func update(rendererView: UIView) {
-        DefaultLogger.debugStatic("testpip: update")
-        guard rendererView !== self.rendererView ||
-              rendererView.superview !== self else {
-            return
-        }
-
-        rendererView.backgroundColor = .red
-
-        DefaultLogger.debugStatic("testpip: removeFromSuperview")
-        rendererView.removeFromSuperview()
-        for view in subviews {
-            view.removeFromSuperview()
-        }
-        DefaultLogger.debugStatic("testpip: addSubview")
-
-        rendererView.frame.size = self.frame.size
-        addSubview(rendererView)
-
-        DefaultLogger.debugStatic("testpip: superview != nil \(rendererView.superview != nil)")
-        DefaultLogger.debugStatic("testpip: window != nil \(rendererView.window != nil)")
-
-        DefaultLogger.debugStatic("testpip: rendererView size \(rendererView.frame.size)")
-        DefaultLogger.debugStatic("testpip: self size \(self.frame.size)")
-
-        self.rendererView = rendererView
     }
 }

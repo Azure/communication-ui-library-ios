@@ -29,7 +29,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     struct VideoStreamCache {
         var renderer: VideoStreamRenderer
-        var rendererView: RendererView
+        var rendererView: UIView
         var mediaStreamType: CompositeMediaStreamType
     }
     private let logger: Logger
@@ -125,6 +125,8 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             let options = CreateViewOptions(scalingMode: videoStream.mediaStreamType == .screenSharing ? .fit : .crop)
             let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: wrappedVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(withOptions: options)
+//            let newRendererView = UIView()
+            newRendererView.backgroundColor = .green
 
             let cache = VideoStreamCache(renderer: newRenderer,
                                          rendererView: newRendererView,
@@ -166,6 +168,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     private func disposeRemoteParticipantVideoRendererView(_ cacheId: String) {
         if let renderer = displayedRemoteParticipantsRendererView.removeValue(forKey: cacheId) {
+            logger.error("testpip: dispose")
             renderer.renderer.dispose()
             renderer.renderer.delegate = nil
         }
@@ -173,9 +176,9 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     private func disposeLocalVideoRendererCache(_ identifier: String) {
         if let renderer = localRendererViews.removeValue(forKey: identifier) {
-            if renderer.rendererView.isRendering() {
+//            if renderer.rendererView.isRendering() {
                 renderer.renderer.dispose()
-            }
+//            }
         }
     }
 
