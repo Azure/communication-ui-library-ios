@@ -351,7 +351,8 @@ extension CompositeViewModelFactory {
                                      participantModel: participantModel,
                                      lifeCycleState: lifeCycleState,
                                      isCameraEnabled: localOptions?.audioVideoMode != .audioOnly,
-                                     callType: callType)
+                                     callType: callType,
+                                     logger: logger)
     }
 
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {

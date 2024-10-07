@@ -28,7 +28,8 @@ struct ParticipantGridCellView: View {
                                                  zoomable: zoomable,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
-                                                 isMuted: $viewModel.isMuted)
+                                                 isMuted: $viewModel.isMuted,
+                                                 logger: $viewModel.logger)
                 } else {
                     avatarView
                         .frame(width: geometry.size.width,

@@ -7,6 +7,7 @@ import Foundation
 import SwiftUI
 
 struct ZoomableVideoRenderView: UIViewRepresentable {
+    let logger: Logger
 
     private enum SmallScreenConstants {
         static let maxScale: CGFloat = 2.0
@@ -32,9 +33,11 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     weak var rendererViewManager: RendererViewManager?
 
     init(videoRendererViewInfo: ParticipantRendererViewInfo,
-         rendererViewManager: RendererViewManager?) {
+         rendererViewManager: RendererViewManager?,
+         logger: Logger) {
         self.videoRendererViewInfo = videoRendererViewInfo
         self.rendererViewManager = rendererViewManager
+        self.logger = logger
     }
 
     func makeUIView(context: Context) -> UIScrollView {
@@ -59,27 +62,29 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
            currentContentView.subviews.first === videoRendererViewInfo.rendererView {
             return
         }
-        // Remove rendererView from superview
-        videoRendererViewInfo.rendererView.removeFromSuperview()
-        // Remove subviews from the scroll view
-        for view in scrollView.subviews {
-            view.removeFromSuperview()
-            for innerView in view.subviews {
-                innerView.removeFromSuperview()
-            }
-        }
-
-        // Setup scrollview and render view
-        setupScrollView(scrollView, context: context)
-
-        // Remove double tap action is already added
-        if let gestures = scrollView.gestureRecognizers,
-           let tapGestureRecognizer = gestures.first(where: { $0.numberOfTouches == GeneralScreenConstants.tapCount }) {
-            scrollView.removeGestureRecognizer(tapGestureRecognizer)
-        }
-
-        // Add double tap action
-        addDoubleTapGestureRecognizer(for: scrollView, coordinator: context.coordinator)
+        logger.error("testpip: ZoomableVideoRenderView updateUIView")
+//        // Remove rendererView from superview
+//        videoRendererViewInfo.rendererView.removeFromSuperview()
+//        // Remove subviews from the scroll view
+//        for view in scrollView.subviews {
+//            view.removeFromSuperview()
+//            for innerView in view.subviews {
+//                innerView.removeFromSuperview()
+//            }
+//        }
+//
+//        // Setup scrollview and render view
+//        setupScrollView(scrollView, context: context)
+//
+//        // Remove double tap action is already added
+//        if let gestures = scrollView.gestureRecognizers,
+//           let tapGestureRecognizer = gestures.first(where:
+//        { $0.numberOfTouches == GeneralScreenConstants.tapCount }) {
+//            scrollView.removeGestureRecognizer(tapGestureRecognizer)
+//        }
+//
+//        // Add double tap action
+//        addDoubleTapGestureRecognizer(for: scrollView, coordinator: context.coordinator)
     }
 
     static func dismantleUIView(_ uiView: UIScrollView, coordinator: Coordinator) {
