@@ -16,6 +16,7 @@ protocol CallingServiceProtocol {
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
     var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
+    var callStartTimeSubject: PassthroughSubject<Date, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
@@ -54,6 +55,7 @@ protocol CallingServiceProtocol {
     func setCaptionsCaptionLanguage(_ language: String) async throws
     func removeParticipant(_ participantId: String) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
+    func callStartTime() -> Date?
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -74,6 +76,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
     var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never>
+    var callStartTimeSubject: PassthroughSubject<Date, Never>
 
     var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never>
     var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never>
@@ -108,6 +111,7 @@ class CallingService: NSObject, CallingServiceProtocol {
         captionsTypeSubject = callingSDKWrapper.callingEventsHandler.captionsTypeChanged
         capabilitiesChangedSubject = callingSDKWrapper.callingEventsHandler.capabilitiesChangedSubject
         totalParticipantCountSubject = callingSDKWrapper.callingEventsHandler.totalParticipantCountSubject
+        callStartTimeSubject = callingSDKWrapper.callingEventsHandler.callStartTimeSubject
     }
 
     func setupCall() async throws {
@@ -123,6 +127,10 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func endCall() async throws {
        try await callingSDKWrapper.endCall()
+    }
+
+    func callStartTime() -> Date? {
+        return callingSDKWrapper.callStartTime()
     }
 
     func requestCameraPreviewOn() async throws -> String {

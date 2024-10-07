@@ -19,6 +19,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
     var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
+    var callStartTimeSubject = PassthroughSubject<Date, Never>()
     var capabilitiesChangedSubject = PassthroughSubject<CapabilitiesChangedEvent, Never>()
 
     var captionsSupportedSpokenLanguages = CurrentValueSubject<[String], Never>([])
@@ -209,6 +210,10 @@ extension CallingSDKEventsHandler: CallDelegate,
         if !args.addedParticipants.isEmpty {
             addRemoteParticipants(args.addedParticipants)
         }
+    }
+
+    func call(_ call: Call, didUpdateStartTime args: PropertyChangedEventArgs) {
+        callStartTimeSubject.send(call.startTime)
     }
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {

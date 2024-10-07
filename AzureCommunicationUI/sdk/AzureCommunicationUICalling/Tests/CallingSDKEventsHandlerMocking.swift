@@ -30,6 +30,7 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never>
     var capabilitiesChangedSubject = PassthroughSubject<AzureCommunicationUICalling.CapabilitiesChangedEvent, Never>()
     var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
+    var callStartTimeSubject = PassthroughSubject<Date, Never>()
 
     override init() {
         captionsSupportedSpokenLanguages = CurrentValueSubject<[String], Never>([])

@@ -594,6 +594,14 @@ extension CallingDemoView {
                                            identifiers: ids)
         }
 
+        let onCallStartTimeUpdated: (Date) -> Void = { [] startTime in
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone.current
+            let systemTimeZoneDateString = dateFormatter.string(from: startTime)
+            print("::::CallingDemoView startTime event call start time \(systemTimeZoneDateString)")
+        }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
@@ -604,6 +612,7 @@ extension CallingDemoView {
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
         callComposite.events.onRemoteParticipantLeft = onRemoteParticipantLeftHandler
+        callComposite.events.onCallStartTimeUpdated = onCallStartTimeUpdated
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -1088,6 +1097,13 @@ extension CallingDemoView {
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        if let date = callComposite.callStartTime() {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone.current
+            let systemTimeZoneDateString = dateFormatter.string(from: date)
+            print("::::CallingDemoView call start time \(systemTimeZoneDateString)")
+        }
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
     }
 
