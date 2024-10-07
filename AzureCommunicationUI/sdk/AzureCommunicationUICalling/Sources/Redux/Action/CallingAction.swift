@@ -27,6 +27,7 @@ enum CallingAction: Equatable {
     case resumeRequested
     case holdRequested
     case requestFailed
+    case callStartTimeUpdated(startTime: Date)
 }
 
 enum ErrorAction: Equatable {

@@ -103,7 +103,7 @@ protocol CallingSDKEventsHandling {
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
     var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
-
+    var callStartTimeSubject: PassthroughSubject<Date, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
 
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }

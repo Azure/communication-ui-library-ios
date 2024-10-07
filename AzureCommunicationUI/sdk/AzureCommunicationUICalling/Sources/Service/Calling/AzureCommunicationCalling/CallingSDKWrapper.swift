@@ -409,6 +409,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             return nil
         }
 
+        if call.state == .connecting {
+            return nil
+        }
+
         return call.startTime
     }
 

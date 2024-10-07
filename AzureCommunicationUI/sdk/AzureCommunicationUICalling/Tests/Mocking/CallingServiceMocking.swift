@@ -39,6 +39,10 @@ class CallingServiceMocking: CallingServiceProtocol {
     var declineLobbyParticipantCalled = false
     var remoteParticipantCalled = false
 
+    func callStartTime() -> Date? {
+        return nil
+    }
+
     private func possibleErrorTask() throws -> Task<Void, Error> {
         Task<Void, Error> {
             if let error = self.error {
@@ -101,6 +105,7 @@ class CallingServiceMocking: CallingServiceProtocol {
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
     var capabilitiesChangedSubject = PassthroughSubject<AzureCommunicationUICalling.CapabilitiesChangedEvent, Never>()
     var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
+    var callStartTimeSubject = PassthroughSubject<Date, Never>()
 
     func setupCall() async throws {
         setupCallCalled = true

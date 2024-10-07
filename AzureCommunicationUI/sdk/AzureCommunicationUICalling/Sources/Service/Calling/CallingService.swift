@@ -16,6 +16,7 @@ protocol CallingServiceProtocol {
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
     var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
+    var callStartTimeSubject: PassthroughSubject<Date, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
@@ -75,6 +76,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
     var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never>
+    var callStartTimeSubject: PassthroughSubject<Date, Never>
 
     var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never>
     var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never>
@@ -109,6 +111,7 @@ class CallingService: NSObject, CallingServiceProtocol {
         captionsTypeSubject = callingSDKWrapper.callingEventsHandler.captionsTypeChanged
         capabilitiesChangedSubject = callingSDKWrapper.callingEventsHandler.capabilitiesChangedSubject
         totalParticipantCountSubject = callingSDKWrapper.callingEventsHandler.totalParticipantCountSubject
+        callStartTimeSubject = callingSDKWrapper.callingEventsHandler.callStartTimeSubject
     }
 
     func setupCall() async throws {

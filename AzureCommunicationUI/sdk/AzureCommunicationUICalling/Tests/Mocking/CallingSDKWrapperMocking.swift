@@ -25,6 +25,10 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     func dispose() {
     }
 
+    func callStartTime() -> Date? {
+        return nil
+    }
+
     func startCallLocalVideoStream() async throws -> String {
         return try await Task<String, Error> {
             ""
