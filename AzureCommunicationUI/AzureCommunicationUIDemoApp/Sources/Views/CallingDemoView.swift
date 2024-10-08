@@ -632,26 +632,7 @@ extension CallingDemoView {
         }
         let captionsOptions = CaptionsOptions(captionsOn: envConfigSubject.captionsOn,
                                               spokenLanguage: envConfigSubject.spokenLanguage)
-
-        let controlBarOptions = CallScreenControlBarOptions(leaveCallConfirmationMode:
-                                                                envConfigSubject.displayLeaveCallConfirmation ?
-            .alwaysEnabled : .alwaysDisabled)
-        headerViewData = CallScreenHeaderViewData()
-        if !envConfigSubject.callInformationTitle.isEmpty {
-            headerViewData?.title = envConfigSubject.callInformationTitle
-        }
-        if !envConfigSubject.callInformationSubtitle.isEmpty {
-            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
-        }
-        var callScreenOptions = CallScreenOptions(controlBarOptions: controlBarOptions,
-                                                   headerViewData: headerViewData)
-
-        if envConfigSubject.addCustomButton {
-            callScreenOptions = createCallScreenOptions(callComposite: callComposite)
-        }
-        if envConfigSubject.hideAllButtons {
-            callScreenOptions = hideAllButtons()
-        }
+        let callScreenOptions = createCallScreenOptions(callComposite: callComposite)
         return LocalOptions(participantViewData: participantViewData,
                             setupScreenViewData: setupScreenViewData,
                             cameraOn: envConfigSubject.cameraOn,
@@ -666,131 +647,139 @@ extension CallingDemoView {
 
     private func createCallScreenOptions(callComposite: CallComposite?) -> CallScreenOptions {
         // Safely unwrap the image and apply the tint color using the color set named "ChevronColor"
-        let customButtonImage: UIImage
-        if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
-            customButtonImage = image.withRenderingMode(.alwaysOriginal)
-        } else {
-            customButtonImage = UIImage().withTintColor(.black) // Fallback to a plain image with black tint
-            print("Error: Image 'ic_fluent_chevron_right_20_regular' not found")
+        var callScreenControlBarOptions: CallScreenControlBarOptions?
+
+        if envConfigSubject.addCustomButton {
+            let customButtonImage: UIImage
+            if let image = UIImage(named: "ic_fluent_chevron_right_20_regular") {
+                customButtonImage = image.withRenderingMode(.alwaysOriginal)
+            } else {
+                customButtonImage = UIImage().withTintColor(.black) // Fallback to a plain image with black tint
+                print("Error: Image 'ic_fluent_chevron_right_20_regular' not found")
+            }
+            let cameraButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::cameraButton::onClick") })
+            let micButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::micButton::onClick") })
+            let audioDeviceButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::audioDeviceButton::onClick") })
+            let liveCaptionsButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::liveCaptionsButton::onClick") })
+            let liveCaptionsToggleButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::liveCaptionsToggleButton::onClick") })
+            let spokenLanguageButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::spokenLanguageButton::onClick") })
+            let captionsLanguageButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::captionsLanguageButton::onClick") })
+            let shareDiagnostisButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::shareDiagnostisButton::onClick") })
+            let reportIssueButton = ButtonViewData(onClick: { _ in
+                print("::::SwiftUIDemoView::CallScreen::reportIssueButton::onClick") })
+
+            // Create the custom button with the tinted image
+            let customButton1 = CustomButtonViewData(
+                id: UUID().uuidString,
+                image: customButtonImage,
+                title: "Hide composite"
+            ) { _ in
+                print("::::SwiftUIDemoView::CallScreen::customButton1::onClick")
+                callComposite?.isHidden = true
+            }
+            let hideButtonsCustomButton = CustomButtonViewData(
+                id: UUID().uuidString,
+                image: customButtonImage,
+                title: "Hide/show buttons"
+            ) { _ in
+                print("::::SwiftUIDemoView::CallScreen::hideButtonsCustomButton::onClick")
+                cameraButton.visible = !cameraButton.visible
+                micButton.visible = !micButton.visible
+                audioDeviceButton.visible = !audioDeviceButton.visible
+                liveCaptionsButton.visible = !liveCaptionsButton.visible
+                liveCaptionsToggleButton.visible = !liveCaptionsToggleButton.visible
+                spokenLanguageButton.visible = !spokenLanguageButton.visible
+                captionsLanguageButton.visible = !captionsLanguageButton.visible
+                shareDiagnostisButton.visible = !shareDiagnostisButton.visible
+                reportIssueButton.visible = !reportIssueButton.visible
+                customButton1.visible = !customButton1.visible
+            }
+            let disableButtonsCustomButton = CustomButtonViewData(
+                id: UUID().uuidString,
+                image: customButtonImage,
+                title: "Disable/enable buttons"
+            ) { _ in
+                print("::::SwiftUIDemoView::CallScreen::hideButtonsCustomButton::onClick")
+                cameraButton.enabled = !cameraButton.enabled
+                micButton.enabled = !micButton.enabled
+                audioDeviceButton.enabled = !audioDeviceButton.enabled
+                liveCaptionsButton.enabled = !liveCaptionsButton.enabled
+                liveCaptionsToggleButton.enabled = !liveCaptionsToggleButton.enabled
+                spokenLanguageButton.enabled = !spokenLanguageButton.enabled
+                captionsLanguageButton.enabled = !captionsLanguageButton.enabled
+                shareDiagnostisButton.enabled = !shareDiagnostisButton.enabled
+                reportIssueButton.enabled = !reportIssueButton.enabled
+                customButton1.enabled = !customButton1.enabled
+            }
+
+            let customButton2 = CustomButtonViewData(
+                id: UUID().uuidString,
+                image: customButtonImage,
+                title: "Troubleshooting tips"
+            ) { _ in
+                print("::::SwiftUIDemoView::CallScreen::customButton2::onClick")
+                callComposite?.isHidden = true
+                $isNewViewPresented.wrappedValue = true
+            }
+
+            callScreenControlBarOptions = CallScreenControlBarOptions(
+                leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ?
+                    .alwaysEnabled : .alwaysDisabled,
+                cameraButton: cameraButton,
+                microphoneButton: micButton,
+                audioDeviceButton: audioDeviceButton,
+                liveCaptionsButton: liveCaptionsButton,
+                liveCaptionsToggleButton: liveCaptionsToggleButton,
+                spokenLanguageButton: spokenLanguageButton,
+                captionsLanguageButton: captionsLanguageButton,
+                shareDiagnosticsButton: shareDiagnostisButton,
+                reportIssueButton: reportIssueButton,
+                customButtons: [hideButtonsCustomButton, disableButtonsCustomButton, customButton1, customButton2]
+            )
         }
 
-        let cameraButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::cameraButton::onClick") })
-        let micButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::micButton::onClick") })
-        let audioDeviceButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::audioDeviceButton::onClick") })
-        let liveCaptionsButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::liveCaptionsButton::onClick") })
-        let liveCaptionsToggleButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::liveCaptionsToggleButton::onClick") })
-        let spokenLanguageButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::spokenLanguageButton::onClick") })
-        let captionsLanguageButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::captionsLanguageButton::onClick") })
-        let shareDiagnostisButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::shareDiagnostisButton::onClick") })
-        let reportIssueButton = ButtonViewData(onClick: { _ in
-            print("::::SwiftUIDemoView::CallScreen::reportIssueButton::onClick") })
+        var headerViewData: CallScreenHeaderViewData?
 
-        // Create the custom button with the tinted image
-        let customButton1 = CustomButtonViewData(
-            id: UUID().uuidString,
-            image: customButtonImage,
-            title: "Hide composite"
-        ) { _ in
-            print("::::SwiftUIDemoView::CallScreen::customButton1::onClick")
-            callComposite?.isHidden = true
-        }
-        let hideButtonsCustomButton = CustomButtonViewData(
-            id: UUID().uuidString,
-            image: customButtonImage,
-            title: "Hide/show buttons"
-        ) { _ in
-            print("::::SwiftUIDemoView::CallScreen::hideButtonsCustomButton::onClick")
-            cameraButton.visible = !cameraButton.visible
-            micButton.visible = !micButton.visible
-            audioDeviceButton.visible = !audioDeviceButton.visible
-            liveCaptionsButton.visible = !liveCaptionsButton.visible
-            liveCaptionsToggleButton.visible = !liveCaptionsToggleButton.visible
-            spokenLanguageButton.visible = !spokenLanguageButton.visible
-            captionsLanguageButton.visible = !captionsLanguageButton.visible
-            shareDiagnostisButton.visible = !shareDiagnostisButton.visible
-            reportIssueButton.visible = !reportIssueButton.visible
+        if envConfigSubject.addCustomButton {
+            let customButtonImage: UIImage
+            if let image = UIImage(named: "ic_fluent_chat_20_regular") {
+                customButtonImage = image
+            } else {
+                customButtonImage = UIImage().withTintColor(.white)
+            }
 
-            customButton1.visible = !customButton1.visible
-        }
-        let disableButtonsCustomButton = CustomButtonViewData(
-            id: UUID().uuidString,
-            image: customButtonImage,
-            title: "Disable/enable buttons"
-        ) { _ in
-            print("::::SwiftUIDemoView::CallScreen::hideButtonsCustomButton::onClick")
-            cameraButton.enabled = !cameraButton.enabled
-            micButton.enabled = !micButton.enabled
-            audioDeviceButton.enabled = !audioDeviceButton.enabled
-            liveCaptionsButton.enabled = !liveCaptionsButton.enabled
-            liveCaptionsToggleButton.enabled = !liveCaptionsToggleButton.enabled
-            spokenLanguageButton.enabled = !spokenLanguageButton.enabled
-            captionsLanguageButton.enabled = !captionsLanguageButton.enabled
-            shareDiagnostisButton.enabled = !shareDiagnostisButton.enabled
-            reportIssueButton.enabled = !reportIssueButton.enabled
-
-            customButton1.enabled = !customButton1.enabled
+            let customButton1 = CustomButtonViewData(
+                id: UUID().uuidString,
+                image: customButtonImage,
+                title: "Header custom button 1"
+            ) { _ in
+                print("::::SwiftUIDemoView::CallScreenHeader::customButton1::onClick")
+            }
+            let customButton2 = CustomButtonViewData(
+                id: UUID().uuidString,
+                image: customButtonImage,
+                title: "Header custom button 2",
+                enabled: false
+            ) { _ in
+                print("::::SwiftUIDemoView::CallScreenHeader::customButton2::onClick")
+            }
+            headerViewData = CallScreenHeaderViewData(customButtons: [customButton1, customButton2])
         }
 
-        let customButton2 = CustomButtonViewData(
-            id: UUID().uuidString,
-            image: customButtonImage,
-            title: "Troubleshooting tips"
-        ) { _ in
-            print("::::SwiftUIDemoView::CallScreen::customButton2::onClick")
-            callComposite?.isHidden = true
-            $isNewViewPresented.wrappedValue = true
-        }
-        // Create and return the CallScreenControlBarOptions
-        let callScreenControlBarOptions = CallScreenControlBarOptions(
-            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
-            cameraButton: cameraButton,
-            microphoneButton: micButton,
-            audioDeviceButton: audioDeviceButton,
-            liveCaptionsButton: liveCaptionsButton,
-            liveCaptionsToggleButton: liveCaptionsToggleButton,
-            spokenLanguageButton: spokenLanguageButton,
-            captionsLanguageButton: captionsLanguageButton,
-            shareDiagnosticsButton: shareDiagnostisButton,
-            reportIssueButton: reportIssueButton,
-            customButtons: [hideButtonsCustomButton, disableButtonsCustomButton, customButton1, customButton2]
-        )
-        headerViewData = CallScreenHeaderViewData()
         if !envConfigSubject.callInformationTitle.isEmpty {
+            headerViewData = headerViewData ?? CallScreenHeaderViewData()
             headerViewData?.title = envConfigSubject.callInformationTitle
         }
         if !envConfigSubject.callInformationSubtitle.isEmpty {
-            headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
-        }
-        return CallScreenOptions(controlBarOptions: callScreenControlBarOptions,
-                                                   headerViewData: headerViewData)
-    }
-
-    func hideAllButtons() -> CallScreenOptions {
-        let callScreenControlBarOptions = CallScreenControlBarOptions(
-            leaveCallConfirmationMode: envConfigSubject.displayLeaveCallConfirmation ? .alwaysEnabled : .alwaysDisabled,
-            cameraButton: ButtonViewData(visible: false),
-            microphoneButton: ButtonViewData(visible: false),
-            audioDeviceButton: ButtonViewData(visible: false),
-            liveCaptionsButton: ButtonViewData(visible: false),
-            liveCaptionsToggleButton: ButtonViewData(visible: false),
-            spokenLanguageButton: ButtonViewData(visible: false),
-            captionsLanguageButton: ButtonViewData(visible: false),
-            shareDiagnosticsButton: ButtonViewData(visible: false),
-            reportIssueButton: ButtonViewData(visible: false)
-        )
-        headerViewData = CallScreenHeaderViewData()
-        if !envConfigSubject.callInformationTitle.isEmpty {
-            headerViewData?.title = envConfigSubject.callInformationTitle
-        }
-        if !envConfigSubject.callInformationSubtitle.isEmpty {
+            headerViewData = headerViewData ?? CallScreenHeaderViewData()
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions,

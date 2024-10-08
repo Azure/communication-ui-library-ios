@@ -104,7 +104,9 @@ internal class CallingViewModel: ObservableObject {
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
                                      localUserState: store.state.localUserState,
-                                     callScreenInfoHeaderState: store.state.callScreenInfoHeaderState)
+                                     callScreenInfoHeaderState: store.state.callScreenInfoHeaderState,
+                                     buttonViewDataState: store.state.buttonViewDataState,
+                                     controlHeaderViewData: callScreenOptions.headerViewData)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
@@ -254,7 +256,8 @@ internal class CallingViewModel: ObservableObject {
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
                                    visibilityState: state.visibilityState,
-                                   callScreenInfoHeaderState: state.callScreenInfoHeaderState)
+                                   callScreenInfoHeaderState: state.callScreenInfoHeaderState,
+                                   buttonViewDataState: state.buttonViewDataState)
         localVideoViewModel.update(localUserState: state.localUserState,
                                    visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,

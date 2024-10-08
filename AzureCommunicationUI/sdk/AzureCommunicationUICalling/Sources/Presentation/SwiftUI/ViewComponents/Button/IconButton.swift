@@ -8,7 +8,10 @@ import SwiftUI
 struct IconButton: View {
     @ObservedObject var viewModel: IconButtonViewModel
 
-    private let buttonDisabledColor = Color(StyleProvider.color.disableColor)
+    private let buttonDisabledUIColor = StyleProvider.color.disableColor
+    private var buttonDisabledColor: Color {
+        return Color(buttonDisabledUIColor)
+    }
     private var iconImageSize: CGFloat {
         switch viewModel.buttonType {
         case .dismissButton:
@@ -59,11 +62,15 @@ struct IconButton: View {
         }
     }
     var buttonForegroundColor: Color {
+        return Color(buttonForegroundUIColor)
+    }
+
+    var buttonForegroundUIColor: UIColor {
         switch viewModel.buttonType {
         case .controlButton:
-            return Color(StyleProvider.color.onSurfaceColor)
+            return StyleProvider.color.onSurfaceColor
         case .dismissButton:
-            return Color(StyleProvider.color.onBackground)
+            return StyleProvider.color.onBackground
         default:
             return .white
         }
@@ -114,11 +121,20 @@ struct IconButton: View {
         if viewModel.isVisible {
             Group {
                 Button(action: viewModel.action) {
-                    Icon(name: viewModel.iconName, size: iconImageSize)
-                        .contentShape(Rectangle())
+                    if let uiImage = viewModel.icon {
+                        UIImageIcon(
+                            icon: uiImage
+                            .withTintColor(viewModel.isDisabled ? buttonDisabledUIColor : buttonForegroundUIColor),
+                                    size: iconImageSize)
+                            .contentShape(Rectangle())
+                    }
+                    if let iconName = viewModel.iconName {
+                        Icon(name: iconName, size: iconImageSize)
+                            .contentShape(Rectangle())
+                    }
                 }
                 .disabled(viewModel.isDisabled)
-                .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
+                .foregroundColor(viewModel.isDisabled ? .black : buttonForegroundColor)
                 .frame(width: width, height: height, alignment: .center)
                 .background(buttonBackgroundColor)
                 .clipShape(RoundedCornersShape(radius: shapeCornerRadius, corners: roundedCorners))

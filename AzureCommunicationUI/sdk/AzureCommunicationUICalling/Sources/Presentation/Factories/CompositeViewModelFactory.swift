@@ -164,6 +164,18 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             action: action)
     }
 
+    func makeIconButtonViewModel(icon: UIImage,
+                                 buttonType: IconButtonViewModel.ButtonType = .controlButton,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel {
+        IconButtonViewModel(icon: icon,
+                            buttonType: buttonType,
+                            isDisabled: isDisabled,
+                            isVisible: isVisible,
+                            action: action)
+    }
+
     func makeIconWithLabelButtonViewModel<T: ButtonState>(
         selectedButtonState: T,
         localizationProvider: LocalizationProviderProtocol,
@@ -319,7 +331,9 @@ extension CompositeViewModelFactory {
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState) -> InfoHeaderViewModel {
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState,
+                                 buttonViewDataState: ButtonViewDataState,
+                                 controlHeaderViewData: CallScreenHeaderViewData?) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
@@ -328,7 +342,9 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
                             enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
-                            callScreenInfoHeaderState: callScreenInfoHeaderState)
+                            callScreenInfoHeaderState: callScreenInfoHeaderState,
+                            buttonViewDataState: buttonViewDataState,
+                            controlHeaderViewData: controlHeaderViewData)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,

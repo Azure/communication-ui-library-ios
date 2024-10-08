@@ -14,11 +14,13 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabelSubtitle: String
     @Published var title = ""
     @Published var subtitle: String? = ""
+    @Published var customButton1ViewModel: IconButtonViewModel?
+    @Published var customButton2ViewModel: IconButtonViewModel?
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
-    private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
     private let enableSystemPipWhenMultitasking: Bool
@@ -26,6 +28,7 @@ class InfoHeaderViewModel: ObservableObject {
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
+    private let controlHeaderViewData: CallScreenHeaderViewData?
 
     var isPad = false
 
@@ -37,7 +40,11 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
-         callScreenInfoHeaderState: CallScreenInfoHeaderState) {
+         callScreenInfoHeaderState: CallScreenInfoHeaderState,
+         buttonViewDataState: ButtonViewDataState,
+         controlHeaderViewData: CallScreenHeaderViewData?) {
+        self.compositeViewModelFactory = compositeViewModelFactory
+        self.controlHeaderViewData = controlHeaderViewData
         let infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
         self.title = callScreenInfoHeaderState.title ?? infoLabel
         self.subtitle = callScreenInfoHeaderState.subtitle ?? ""
@@ -97,9 +104,6 @@ class InfoHeaderViewModel: ObservableObject {
 
     func showParticipantListButtonTapped() {
         logger.debug("Show participant list button tapped")
-        if isPad {
-            self.infoHeaderDismissTimer?.invalidate()
-        }
         self.displayParticipantsList()
     }
 
@@ -122,7 +126,8 @@ class InfoHeaderViewModel: ObservableObject {
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
                 visibilityState: VisibilityState,
-                callScreenInfoHeaderState: CallScreenInfoHeaderState) {
+                callScreenInfoHeaderState: CallScreenInfoHeaderState,
+                buttonViewDataState: ButtonViewDataState) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -152,6 +157,7 @@ class InfoHeaderViewModel: ObservableObject {
             self.subtitle = callScreenInfoHeaderState.subtitle
             self.accessibilityLabelSubtitle = self.subtitle ?? ""
         }
+        updateCustomButtons(buttonViewDataState)
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
@@ -193,26 +199,15 @@ class InfoHeaderViewModel: ObservableObject {
 
     private func displayWithTimer() {
         self.isInfoHeaderDisplayed = true
-        resetTimer()
     }
 
     @objc private func hideInfoHeader() {
         self.isInfoHeaderDisplayed = false
-        self.infoHeaderDismissTimer?.invalidate()
-    }
-
-    private func resetTimer() {
-        self.infoHeaderDismissTimer = Timer.scheduledTimer(withTimeInterval: 3.0,
-                             repeats: false) { [weak self] _ in
-            self?.hideInfoHeader()
-        }
     }
 
     private func updateInfoHeaderAvailability() {
         let shouldDisplayInfoHeader = shouldDisplayInfoHeader(for: callingStatus)
         isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
-        // invalidating timer is required for setting the next timer and when VoiceOver is enabled
-        infoHeaderDismissTimer?.invalidate()
         if self.isVoiceOverEnabled {
             isInfoHeaderDisplayed = shouldDisplayInfoHeader
         } else if shouldDisplayInfoHeader {
@@ -229,6 +224,32 @@ class InfoHeaderViewModel: ObservableObject {
             dispatch(.visibilityAction(.pipModeRequested))
         } else if self.enableMultitasking {
             dispatch(.visibilityAction(.hideRequested))
+        }
+    }
+
+    private func updateCustomButtons(_ buttonViewDataState: ButtonViewDataState) {
+        self.customButton1ViewModel = createCustomButtonViewModel(
+            buttonViewDataState.callScreenHeaderCustomButtonsState.first)
+
+        if buttonViewDataState.callScreenHeaderCustomButtonsState.count >= 2 {
+            self.customButton2ViewModel = createCustomButtonViewModel(
+                buttonViewDataState.callScreenHeaderCustomButtonsState[1])
+        }
+    }
+    private func createCustomButtonViewModel(_ customButton: CustomButtonState?) -> IconButtonViewModel? {
+        guard let customButton else {
+            return nil
+        }
+        return compositeViewModelFactory.makeIconButtonViewModel(icon: customButton.image,
+                                                          buttonType: .infoButton,
+                                                          isDisabled: !customButton.enabled,
+                                                          isVisible: customButton.visible) { [weak self] in
+            guard let optionsButton = self?.controlHeaderViewData?.customButtons.first(where: { optionsButton in
+                optionsButton.id == customButton.id
+            }) else {
+                return
+            }
+            optionsButton.onClick(optionsButton)
         }
     }
 }

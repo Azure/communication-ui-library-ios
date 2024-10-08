@@ -14,14 +14,20 @@ public class CallScreenHeaderViewData: ObservableObject {
     /// Subtitle is the header message in the InfoHeader with a user injected custom subtitle message.
     /// The subtitle message is updatable even after launching the composite.
     @Published public var subtitle: String?
+
+    public let customButtons: [CustomButtonViewData]
+
     /// Creates an instance of CallScreenHeaderViewData with related options.
     /// - Parameter title: A string which replaces the default header message in the
     ///                    InfoHeader with a user injected custom title message.
     /// - Parameter subtitle: A string message the is viewed below the title message in the
     ///                    InfoHeader.
+    /// - Parameter customButtons: An array of custom button options. Default is an empty array.
     public init(title: String? = nil,
-                subtitle: String? = nil) {
+                subtitle: String? = nil,
+                customButtons: [CustomButtonViewData] = []) {
         self.title = title
         self.subtitle = subtitle
+        self.customButtons = customButtons
     }
 }

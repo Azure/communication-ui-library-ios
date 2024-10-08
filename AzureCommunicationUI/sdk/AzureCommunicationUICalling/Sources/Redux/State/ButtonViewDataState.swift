@@ -36,6 +36,7 @@ struct ButtonViewDataState: Equatable {
     let reportIssueButton: DefaultButtonState?
 
     let callScreenCustomButtonsState: [CustomButtonState]
+    let callScreenHeaderCustomButtonsState: [CustomButtonState]
 
     init(setupScreenCameraButtonState: DefaultButtonState? = nil,
          setupScreenMicButtonState: DefaultButtonState? = nil,
@@ -49,7 +50,8 @@ struct ButtonViewDataState: Equatable {
          liveCaptionsToggleButton: DefaultButtonState? = nil,
          spokenLanguageButton: DefaultButtonState? = nil,
          captionsLanguageButton: DefaultButtonState? = nil,
-         callScreenCustomButtonsState: [CustomButtonState] = []
+         callScreenCustomButtonsState: [CustomButtonState] = [],
+         callScreenHeaderCustomButtonsState: [CustomButtonState] = []
     ) {
         self.setupScreenCameraButtonState = setupScreenCameraButtonState
         self.setupScreenMicButtonState = setupScreenMicButtonState
@@ -67,6 +69,7 @@ struct ButtonViewDataState: Equatable {
         self.reportIssueButton = reportIssueButton
 
         self.callScreenCustomButtonsState = callScreenCustomButtonsState
+        self.callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState
     }
 
     static func constructInitial(setupScreenOptions: SetupScreenOptions?,
@@ -113,6 +116,14 @@ struct ButtonViewDataState: Equatable {
                 visible: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.visible ?? true),
 
             callScreenCustomButtonsState: callScreenOptions?.controlBarOptions?.customButtons.map { customButton in
+                return CustomButtonState(id: customButton.id,
+                                  enabled: customButton.enabled,
+                                  visible: customButton.visible,
+                                  image: customButton.image,
+                                  title: customButton.title)
+            } ?? [],
+
+            callScreenHeaderCustomButtonsState: callScreenOptions?.headerViewData?.customButtons.map { customButton in
                 return CustomButtonState(id: customButton.id,
                                   enabled: customButton.enabled,
                                   visible: customButton.visible,

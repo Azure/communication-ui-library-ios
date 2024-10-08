@@ -39,6 +39,11 @@ enum ButtonViewDataAction: Equatable {
     case callScreenCustomButtonTitleUpdated(id: String, title: String)
     case callScreenCustomButtonIconUpdated(id: String, image: UIImage)
 
+    case callScreenHeaderCustomButtonIsEnabledUpdated(id: String, enabled: Bool)
+    case callScreenHeaderCustomButtonIsVisibleUpdated(id: String, visible: Bool)
+    case callScreenHeaderCustomButtonTitleUpdated(id: String, title: String)
+    case callScreenHeaderCustomButtonIconUpdated(id: String, image: UIImage)
+
     case setupScreenCameraButtonIsEnabledUpdated(enabled: Bool)
     case setupScreenCameraButtonIsVisibleUpdated(visible: Bool)
     case setupScreenMicButtonIsEnabledUpdated(enabled: Bool)

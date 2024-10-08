@@ -11,7 +11,11 @@ struct InfoHeaderView: View {
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
     @State var participantMenuSourceView = UIView()
+    @State var customButton1SourceView = UIView()
+    @State var customButton2SourceView = UIView()
     @AccessibilityFocusState var focusedOnParticipantList: Bool
+    @AccessibilityFocusState var focusedOnCustomButton1: Bool
+    @AccessibilityFocusState var focusedOnCustomButton2: Bool
     let avatarViewManager: AvatarViewManagerProtocol
 
     private enum Constants {
@@ -97,6 +101,16 @@ struct InfoHeaderView: View {
                 }
             }
             Spacer()
+            if let customButton1ViewModel = viewModel.customButton1ViewModel {
+                IconButton(viewModel: customButton1ViewModel)
+                    .background(SourceViewSpace(sourceView: customButton1SourceView))
+                    .accessibilityFocused($focusedOnCustomButton1, equals: true)
+            }
+            if let customButton2ViewModel = viewModel.customButton2ViewModel {
+                IconButton(viewModel: customButton2ViewModel)
+                    .background(SourceViewSpace(sourceView: customButton2SourceView))
+                    .accessibilityFocused($focusedOnCustomButton2, equals: true)
+            }
             participantListButton
         }
         .padding(EdgeInsets(top: 0,
