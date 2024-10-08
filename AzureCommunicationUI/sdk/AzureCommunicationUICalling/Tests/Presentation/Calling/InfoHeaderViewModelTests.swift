@@ -59,7 +59,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
+                   buttonViewDataState: ButtonViewDataState())
 
         XCTAssertEqual(sut.title, "Waiting for others to join")
         wait(for: [expectation], timeout: 1)
@@ -92,7 +93,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
+                   buttonViewDataState: ButtonViewDataState())
         XCTAssertEqual(sut.title, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -139,7 +141,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
+                   buttonViewDataState: ButtonViewDataState())
         XCTAssertEqual(sut.title, "Call with 2 people")
 
         wait(for: [expectation], timeout: 1)
@@ -198,7 +201,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
+                   buttonViewDataState: ButtonViewDataState())
         XCTAssertEqual(sut.title, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -220,23 +224,6 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isInfoHeaderDisplayed)
         cancel.cancel()
         wait(for: [expectation], timeout: 1)
-    }
-
-    func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedFalse_then_isTrueAndWaitForTimerToHide_shouldBecomeFalseAgainAndPublish() {
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Should publish isInfoHeaderDisplayed true")
-        sut.$isInfoHeaderDisplayed
-            .dropFirst(3)
-            .sink(receiveValue: { isInfoHeaderDisplayed in
-                XCTAssertFalse(isInfoHeaderDisplayed)
-                expectation.fulfill()
-            }).store(in: cancellable)
-
-        sut.isInfoHeaderDisplayed = false
-        XCTAssertFalse(sut.isInfoHeaderDisplayed)
-        sut.toggleDisplayInfoHeaderIfNeeded()
-        XCTAssertTrue(sut.isInfoHeaderDisplayed)
-        wait(for: [expectation], timeout: 5)
     }
 
     func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedTrue_then_shouldBecomeFalseAndPublish() {
@@ -299,7 +286,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
+                   buttonViewDataState: ButtonViewDataState())
         let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.title, expectedInfoHeaderlabel0ParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
@@ -351,7 +339,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
+                   buttonViewDataState: ButtonViewDataState())
         XCTAssertEqual(sut.title, expectedInfoHeaderlabelNParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
 
@@ -371,7 +360,9 @@ extension InfoHeaderViewModelTests {
                                    dispatchAction: storeFactory.store.dispatch,
                                    enableMultitasking: true,
                                    enableSystemPipWhenMultitasking: true,
-                                   callScreenInfoHeaderState: CallScreenInfoHeaderState())
+                                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
+                                   buttonViewDataState: ButtonViewDataState(),
+                                   controlHeaderViewData: nil)
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {

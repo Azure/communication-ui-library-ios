@@ -99,6 +99,16 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         )
     }
 
+    func makeIconButtonViewModel(icon: UIImage,
+                                 buttonType: IconButtonViewModel.ButtonType,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> AzureCommunicationUICalling.IconButtonViewModel {
+        return IconButtonViewModel(icon: icon,
+                                   buttonType: buttonType,
+                                   isDisabled: isDisabled,
+                                   action: action)
+    }
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
@@ -255,7 +265,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
                                  localUserState: LocalUserState,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState) -> InfoHeaderViewModel {
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState,
+                                 buttonViewDataState: ButtonViewDataState,
+                                 controlHeaderViewData: CallScreenHeaderViewData?) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
@@ -264,7 +276,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
                                                           enableSystemPipWhenMultitasking: true,
-                                                          callScreenInfoHeaderState: callScreenInfoHeaderState)
+                                                          callScreenInfoHeaderState: callScreenInfoHeaderState,
+                                                          buttonViewDataState: buttonViewDataState,
+                                                          controlHeaderViewData: controlHeaderViewData)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {

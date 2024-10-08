@@ -25,14 +25,17 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    enableMultitasking: true,
                    enableSystemPipWhenMultitasking: true,
                    callScreenInfoHeaderState:
-                     CallScreenInfoHeaderState())
+                     CallScreenInfoHeaderState(),
+                   buttonViewDataState: ButtonViewDataState(),
+                   controlHeaderViewData: nil)
     }
 
     override func update(localUserState: LocalUserState,
                          remoteParticipantsState: RemoteParticipantsState,
                          callingState: CallingState,
                          visibilityState: VisibilityState,
-                         callScreenInfoHeaderState: CallScreenInfoHeaderState?) {
+                         callScreenInfoHeaderState: CallScreenInfoHeaderState?,
+                         buttonViewDataState: ButtonViewDataState) {
         updateState?(localUserState, remoteParticipantsState, callingState, visibilityState)
     }
 }
