@@ -98,7 +98,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     callScreenOptions: CallScreenOptions()
         )
     }
-
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     func makeIconButtonViewModel(icon: UIImage,
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
@@ -109,6 +109,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                    isDisabled: isDisabled,
                                    action: action)
     }
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
@@ -265,9 +266,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
                                  localUserState: LocalUserState,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
+                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                                 ,
                                  buttonViewDataState: ButtonViewDataState,
-                                 controlHeaderViewData: CallScreenHeaderViewData?) -> InfoHeaderViewModel {
+                                 controlHeaderViewData: CallScreenHeaderViewData?
+                                 /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
@@ -276,9 +281,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
                                                           enableSystemPipWhenMultitasking: true,
-                                                          callScreenInfoHeaderState: callScreenInfoHeaderState,
+                                                          callScreenInfoHeaderState: callScreenInfoHeaderState
+                                                          /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                                                          ,
                                                           buttonViewDataState: buttonViewDataState,
-                                                          controlHeaderViewData: controlHeaderViewData)
+                                                          controlHeaderViewData: controlHeaderViewData
+                                                          /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+        )
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {

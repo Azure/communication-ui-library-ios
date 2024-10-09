@@ -747,7 +747,7 @@ extension CallingDemoView {
         }
 
         var headerViewData: CallScreenHeaderViewData?
-
+        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         if envConfigSubject.addCustomButton {
             let customButtonImage: UIImage
             if let image = UIImage(named: "ic_fluent_chat_20_regular") {
@@ -766,13 +766,13 @@ extension CallingDemoView {
             let customButton2 = CustomButtonViewData(
                 id: UUID().uuidString,
                 image: customButtonImage,
-                title: "Header custom button 2",
-                enabled: false
+                title: "Header custom button 2"
             ) { _ in
                 print("::::SwiftUIDemoView::CallScreenHeader::customButton2::onClick")
             }
             headerViewData = CallScreenHeaderViewData(customButtons: [customButton1, customButton2])
         }
+        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData = headerViewData ?? CallScreenHeaderViewData()

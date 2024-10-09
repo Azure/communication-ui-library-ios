@@ -134,7 +134,7 @@ struct IconButton: View {
                     }
                 }
                 .disabled(viewModel.isDisabled)
-                .foregroundColor(viewModel.isDisabled ? .black : buttonForegroundColor)
+                .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
                 .frame(width: width, height: height, alignment: .center)
                 .background(buttonBackgroundColor)
                 .clipShape(RoundedCornersShape(radius: shapeCornerRadius, corners: roundedCorners))

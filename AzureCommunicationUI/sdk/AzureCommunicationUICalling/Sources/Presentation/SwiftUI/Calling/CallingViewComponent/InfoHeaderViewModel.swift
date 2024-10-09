@@ -14,9 +14,11 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabelSubtitle: String
     @Published var title = ""
     @Published var subtitle: String? = ""
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     @Published var customButton1ViewModel: IconButtonViewModel?
     @Published var customButton2ViewModel: IconButtonViewModel?
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -28,7 +30,9 @@ class InfoHeaderViewModel: ObservableObject {
     var participantListButtonViewModel: IconButtonViewModel!
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     private let controlHeaderViewData: CallScreenHeaderViewData?
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
     var isPad = false
 
@@ -40,11 +44,17 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
-         callScreenInfoHeaderState: CallScreenInfoHeaderState,
+         callScreenInfoHeaderState: CallScreenInfoHeaderState
+         /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+         ,
          buttonViewDataState: ButtonViewDataState,
-         controlHeaderViewData: CallScreenHeaderViewData?) {
+         controlHeaderViewData: CallScreenHeaderViewData?
+         /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) {
+        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         self.compositeViewModelFactory = compositeViewModelFactory
         self.controlHeaderViewData = controlHeaderViewData
+        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         let infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
         self.title = callScreenInfoHeaderState.title ?? infoLabel
         self.subtitle = callScreenInfoHeaderState.subtitle ?? ""
@@ -84,6 +94,9 @@ class InfoHeaderViewModel: ObservableObject {
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
+        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+        updateCustomButtons(buttonViewDataState)
+        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     }
     func formatTimeInterval(_ interval: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
@@ -126,8 +139,12 @@ class InfoHeaderViewModel: ObservableObject {
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
                 visibilityState: VisibilityState,
-                callScreenInfoHeaderState: CallScreenInfoHeaderState,
-                buttonViewDataState: ButtonViewDataState) {
+                callScreenInfoHeaderState: CallScreenInfoHeaderState
+                /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                ,
+                buttonViewDataState: ButtonViewDataState
+                /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -157,7 +174,9 @@ class InfoHeaderViewModel: ObservableObject {
             self.subtitle = callScreenInfoHeaderState.subtitle
             self.accessibilityLabelSubtitle = self.subtitle ?? ""
         }
+        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         updateCustomButtons(buttonViewDataState)
+        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
@@ -226,7 +245,7 @@ class InfoHeaderViewModel: ObservableObject {
             dispatch(.visibilityAction(.hideRequested))
         }
     }
-
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     private func updateCustomButtons(_ buttonViewDataState: ButtonViewDataState) {
         self.customButton1ViewModel = createCustomButtonViewModel(
             buttonViewDataState.callScreenHeaderCustomButtonsState.first)
@@ -240,7 +259,7 @@ class InfoHeaderViewModel: ObservableObject {
         guard let customButton else {
             return nil
         }
-        return compositeViewModelFactory.makeIconButtonViewModel(icon: customButton.image,
+        var buttonViewModel = compositeViewModelFactory.makeIconButtonViewModel(icon: customButton.image,
                                                           buttonType: .infoButton,
                                                           isDisabled: !customButton.enabled,
                                                           isVisible: customButton.visible) { [weak self] in
@@ -251,7 +270,11 @@ class InfoHeaderViewModel: ObservableObject {
             }
             optionsButton.onClick(optionsButton)
         }
+
+        buttonViewModel.accessibilityLabel = customButton.title
+        return buttonViewModel
     }
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 }
 
 extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {

@@ -163,7 +163,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isVisible: isVisible,
                             action: action)
     }
-
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     func makeIconButtonViewModel(icon: UIImage,
                                  buttonType: IconButtonViewModel.ButtonType = .controlButton,
                                  isDisabled: Bool,
@@ -175,6 +175,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isVisible: isVisible,
                             action: action)
     }
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
     func makeIconWithLabelButtonViewModel<T: ButtonState>(
         selectedButtonState: T,
@@ -331,9 +332,13 @@ extension CompositeViewModelFactory {
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
+                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                                 ,
                                  buttonViewDataState: ButtonViewDataState,
-                                 controlHeaderViewData: CallScreenHeaderViewData?) -> InfoHeaderViewModel {
+                                 controlHeaderViewData: CallScreenHeaderViewData?
+                                 /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
@@ -342,9 +347,13 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
                             enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
-                            callScreenInfoHeaderState: callScreenInfoHeaderState,
+                            callScreenInfoHeaderState: callScreenInfoHeaderState
+                            /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                            ,
                             buttonViewDataState: buttonViewDataState,
-                            controlHeaderViewData: controlHeaderViewData)
+                            controlHeaderViewData: controlHeaderViewData
+                            /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+        )
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
