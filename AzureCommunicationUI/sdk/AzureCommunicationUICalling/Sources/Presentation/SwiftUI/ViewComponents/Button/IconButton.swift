@@ -8,10 +8,7 @@ import SwiftUI
 struct IconButton: View {
     @ObservedObject var viewModel: IconButtonViewModel
 
-    private let buttonDisabledUIColor = StyleProvider.color.disableColor
-    private var buttonDisabledColor: Color {
-        return Color(buttonDisabledUIColor)
-    }
+    private let buttonDisabledColor = Color(StyleProvider.color.disableColor)
     private var iconImageSize: CGFloat {
         switch viewModel.buttonType {
         case .dismissButton:
@@ -61,16 +58,13 @@ struct IconButton: View {
             return Color(StyleProvider.color.surfaceLightColor)
         }
     }
-    var buttonForegroundColor: Color {
-        return Color(buttonForegroundUIColor)
-    }
 
-    var buttonForegroundUIColor: UIColor {
+    var buttonForegroundColor: Color {
         switch viewModel.buttonType {
         case .controlButton:
-            return StyleProvider.color.onSurfaceColor
+            return Color(StyleProvider.color.onSurfaceColor)
         case .dismissButton:
-            return StyleProvider.color.onBackground
+            return Color(StyleProvider.color.onBackground)
         default:
             return .white
         }
@@ -121,17 +115,7 @@ struct IconButton: View {
         if viewModel.isVisible {
             Group {
                 Button(action: viewModel.action) {
-                    if let uiImage = viewModel.icon {
-                        UIImageIcon(
-                            icon: uiImage
-                            .withTintColor(viewModel.isDisabled ? buttonDisabledUIColor : buttonForegroundUIColor),
-                                    size: iconImageSize)
-                            .contentShape(Rectangle())
-                    }
-                    if let iconName = viewModel.iconName {
-                        Icon(name: iconName, size: iconImageSize)
-                            .contentShape(Rectangle())
-                    }
+                    icon
                 }
                 .disabled(viewModel.isDisabled)
                 .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
@@ -155,6 +139,19 @@ struct IconButton: View {
                 viewModel.action()
             }
         }
+    }
+
+    var icon: some View {
+        var icon = Icon(size: iconImageSize)
+        icon.contentShape(Rectangle())
+        if let uiImage = viewModel.icon {
+            icon.uiImage = uiImage
+        }
+        if let iconName = viewModel.iconName {
+            icon.name = iconName
+        }
+
+        return icon
     }
 }
 

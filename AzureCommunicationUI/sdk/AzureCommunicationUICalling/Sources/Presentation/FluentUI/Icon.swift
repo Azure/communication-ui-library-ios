@@ -6,25 +6,20 @@
 import SwiftUI
 
 struct Icon: View {
-    var name: CompositeIcon
+    var name: CompositeIcon?
+    var uiImage: UIImage?
     var size: CGFloat
 
     var body: some View {
-        StyleProvider.icon.getImage(for: name)
-            .resizable()
-            .frame(width: size, height: size, alignment: .center)
+        if let uiImage = uiImage {
+            Image(uiImage: uiImage)
+                .resizable()
+                .frame(width: size, height: size, alignment: .center)
+        }
+        if let name = name {
+            StyleProvider.icon.getImage(for: name)
+                .resizable()
+                .frame(width: size, height: size, alignment: .center)
+        }
     }
-}
-
-struct UIImageIcon: UIViewRepresentable {
-    var icon: UIImage
-    var size: CGFloat
-
-    func makeUIView(context: Context) -> UIView {
-        var imageView = UIImageView(image: icon)
-        return imageView
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
-
 }
