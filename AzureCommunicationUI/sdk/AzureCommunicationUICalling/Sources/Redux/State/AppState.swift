@@ -19,9 +19,7 @@ struct AppState {
     let diagnosticsState: CallDiagnosticsState
     let captionsState: CaptionsState
     let toastNotificationState: ToastNotificationState
-    /* <TIMER_TITLE_FEATURE> */
     let callScreenInfoHeaderState: CallScreenInfoHeaderState
-    /* </TIMER_TITLE_FEATURE> */
     let buttonViewDataState: ButtonViewDataState
 
     init(callingState: CallingState = .init(),
@@ -36,12 +34,8 @@ struct AppState {
          visibilityState: VisibilityState = .init(),
          diagnosticsState: CallDiagnosticsState = .init(),
          captionsState: CaptionsState = .init(),
-         toastNotificationState: ToastNotificationState = .init()
-         /* <TIMER_TITLE_FEATURE> */
-         ,
-         callScreenInfoHeaderState: CallScreenInfoHeaderState = .init()
-         /* </TIMER_TITLE_FEATURE> */
-         ,
+         toastNotificationState: ToastNotificationState = .init(),
+         callScreenInfoHeaderState: CallScreenInfoHeaderState = .init(),
          buttonViewDataState: ButtonViewDataState = .init()) {
         self.callingState = callingState
         self.permissionState = permissionState
@@ -56,9 +50,7 @@ struct AppState {
         self.diagnosticsState = diagnosticsState
         self.captionsState = captionsState
         self.toastNotificationState = toastNotificationState
-        /* <TIMER_TITLE_FEATURE> */
         self.callScreenInfoHeaderState = callScreenInfoHeaderState
-        /* </TIMER_TITLE_FEATURE> */
         self.buttonViewDataState = buttonViewDataState
     }
 }

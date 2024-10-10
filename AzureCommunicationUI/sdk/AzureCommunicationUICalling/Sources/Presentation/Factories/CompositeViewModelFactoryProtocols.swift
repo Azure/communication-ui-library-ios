@@ -21,6 +21,13 @@ protocol CompositeViewModelFactoryProtocol {
                                  isDisabled: Bool,
                                  isVisible: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+    func makeIconButtonViewModel(icon: UIImage,
+                                 buttonType: IconButtonViewModel.ButtonType,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
         selectedButtonState: ButtonStateType,
         localizationProvider: LocalizationProviderProtocol,
@@ -52,9 +59,14 @@ protocol CompositeViewModelFactoryProtocol {
                                  capabilitiesManager: CapabilitiesManager,
                                  buttonViewDataState: ButtonViewDataState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                 localUserState: LocalUserState,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel
+                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                                 ,
+                                 buttonViewDataState: ButtonViewDataState,
+                                 controlHeaderViewData: CallScreenHeaderViewData?
+                                 /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,

@@ -41,10 +41,8 @@ public class CallComposite {
         public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
         /// Closure to incoming call id accepted by CallKit.
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
-        /* <TIMER_TITLE_FEATURE> */
         /// Closure to execute when participant has left a call inside Call Composite
         public var onRemoteParticipantLeft: (([CommunicationIdentifier]) -> Void)?
-        /* </TIMER_TITLE_FEATURE> */
     }
 
     /// The events handler for Call Composite
@@ -583,14 +581,12 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
         self.videoViewManager = videoViewManager
-        /* <TIMER_TITLE_FEATURE> */
         let updatableOptionsManager = UpdatableOptionsManager(
             store: store,
             setupScreenOptions: setupScreenOptions,
             callScreenOptions: callScreenOptions
         )
         self.updatableOptionsManager = updatableOptionsManager
-        /* </TIMER_TITLE_FEATURE> */
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }

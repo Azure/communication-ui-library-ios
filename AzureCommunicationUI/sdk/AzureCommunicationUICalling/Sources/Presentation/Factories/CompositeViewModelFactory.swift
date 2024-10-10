@@ -163,6 +163,19 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isVisible: isVisible,
                             action: action)
     }
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+    func makeIconButtonViewModel(icon: UIImage,
+                                 buttonType: IconButtonViewModel.ButtonType = .controlButton,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel {
+        IconButtonViewModel(icon: icon,
+                            buttonType: buttonType,
+                            isDisabled: isDisabled,
+                            isVisible: isVisible,
+                            action: action)
+    }
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
     func makeIconWithLabelButtonViewModel<T: ButtonState>(
         selectedButtonState: T,
@@ -318,9 +331,14 @@ extension CompositeViewModelFactory {
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                 localUserState: LocalUserState,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel {
+                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                                 ,
+                                 buttonViewDataState: ButtonViewDataState,
+                                 controlHeaderViewData: CallScreenHeaderViewData?
+                                 /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
@@ -328,11 +346,14 @@ extension CompositeViewModelFactory {
                             accessibilityProvider: accessibilityProvider,
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking
-                            /* <TIMER_TITLE_FEATURE> */ ,
+                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                             callScreenInfoHeaderState: callScreenInfoHeaderState
-                            /* </TIMER_TITLE_FEATURE> */
-                            )
+                            /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                            ,
+                            buttonViewDataState: buttonViewDataState,
+                            controlHeaderViewData: controlHeaderViewData
+                            /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+        )
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
