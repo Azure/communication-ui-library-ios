@@ -24,11 +24,10 @@ struct LoadingOverlayView: View {
                         Group {
                             ActivityIndicator(size: .medium)
                                 .isAnimating(true)
-                                .color(viewModel.themeOptions.primaryColor)
+                                .color(Colors.Palette.communicationBlue.color)
                             Text(viewModel.title)
                                 .font(Fonts.title2.font)
                         }
-                        .foregroundColor(Color(viewModel.themeOptions.primaryColor))
                         .padding(.horizontal, horizontalPaddingSize)
                         .accessibilityElement(children: .combine)
                         .accessibility(addTraits: .isHeader)
