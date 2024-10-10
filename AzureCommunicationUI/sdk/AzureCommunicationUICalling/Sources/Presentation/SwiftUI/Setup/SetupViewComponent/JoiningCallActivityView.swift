@@ -15,14 +15,9 @@ struct JoiningCallActivityView: View {
             Spacer()
             ActivityIndicator(size: .small)
                 .isAnimating(true)
-            /* <CUSTOM_COLOR_FEATURE> */
-                .color(UIColor(dynamicColor: StyleProvider.color.primaryColor.dynamicColor!))
-            /* </CUSTOM_COLOR_FEATURE> */
             Text(viewModel.title)
                 .font(Fonts.subhead.font)
-            /* <CUSTOM_COLOR_FEATURE> */
-                .foregroundColor(Color(StyleProvider.color.primaryColor))
-            /* </CUSTOM_COLOR_FEATURE> */
+                .foregroundColor(Color(StyleProvider.color.onSurfaceColor))
             Spacer()
         }.frame(height: containerHeight)
     }
