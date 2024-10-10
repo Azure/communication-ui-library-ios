@@ -24,15 +24,25 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    dispatchAction: dispatchAction,
                    enableMultitasking: true,
                    enableSystemPipWhenMultitasking: true,
-                   callScreenInfoHeaderState:
-                     CallScreenInfoHeaderState())
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                   ,
+                   buttonViewDataState: ButtonViewDataState(),
+                   controlHeaderViewData: nil
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+        )
     }
 
     override func update(localUserState: LocalUserState,
                          remoteParticipantsState: RemoteParticipantsState,
                          callingState: CallingState,
                          visibilityState: VisibilityState,
-                         callScreenInfoHeaderState: CallScreenInfoHeaderState?) {
+                         callScreenInfoHeaderState: CallScreenInfoHeaderState?
+                         /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                         ,
+                         buttonViewDataState: ButtonViewDataState
+                         /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) {
         updateState?(localUserState, remoteParticipantsState, callingState, visibilityState)
     }
 }
