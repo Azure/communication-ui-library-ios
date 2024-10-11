@@ -44,7 +44,7 @@ public class CallComposite {
         /// Closure to execute when participant has left a call inside Call Composite
         public var onRemoteParticipantLeft: (([CommunicationIdentifier]) -> Void)?
         /* <CALL_START_TIME> */
-        /// Closure to Call start time updated.
+        /// Closure to call start time updated.
         public var onCallStartTimeUpdated: ((Date) -> Void)?
         /* </CALL_START_TIME> */
     }
