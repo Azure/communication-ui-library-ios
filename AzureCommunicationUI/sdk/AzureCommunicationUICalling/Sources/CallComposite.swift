@@ -43,8 +43,10 @@ public class CallComposite {
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
         /// Closure to execute when participant has left a call inside Call Composite
         public var onRemoteParticipantLeft: (([CommunicationIdentifier]) -> Void)?
+        /* <CALL_START_TIME> */
         /// Closure to Call start time updated.
         public var onCallStartTimeUpdated: ((Date) -> Void)?
+        /* </CALL_START_TIME> */
     }
 
     /// The events handler for Call Composite
@@ -100,7 +102,9 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
+    /* <CALL_START_TIME> */
     private var callStartTimeInternal: Date?
+    /* </CALL_START_TIME> */
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -304,6 +308,7 @@ public class CallComposite {
          }
      }
 
+    /* <CALL_START_TIME> */
     /// Get call start time
     public func callStartTime() -> Date? {
         guard let callingSDKWrapper = callingSDKWrapper else {
@@ -311,6 +316,7 @@ public class CallComposite {
         }
         return callingSDKWrapper.callStartTime()
     }
+    /* </CALL_START_TIME> */
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
@@ -747,13 +753,14 @@ extension CallComposite {
             store?.dispatch(action: .visibilityAction(.hideEntered))
             hide()
         }
-
+        /* <CALL_START_TIME> */
         if let onCallStartTimeUpdated = events.onCallStartTimeUpdated,
            let newCallStartTime = state.callingState.callStartTime,
            callStartTimeInternal != newCallStartTime {
             self.callStartTimeInternal = newCallStartTime
             onCallStartTimeUpdated(newCallStartTime)
         }
+        /* </CALL_START_TIME> */
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

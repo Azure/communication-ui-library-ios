@@ -404,6 +404,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
+    /* <CALL_START_TIME> */
     func callStartTime() -> Date? {
         guard let call = call else {
             return nil
@@ -415,6 +416,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         return call.startTime
     }
+    /* </CALL_START_TIME> */
 
     func admitAllLobbyParticipants() async throws {
         guard let call = call else {
