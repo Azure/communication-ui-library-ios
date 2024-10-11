@@ -5,6 +5,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class IconButtonViewModel: ObservableObject {
     enum ButtonType {
@@ -16,17 +17,18 @@ class IconButtonViewModel: ObservableObject {
         case cameraSwitchButtonFull
     }
 
-    @Published var iconName: CompositeIcon
+    @Published var iconName: CompositeIcon?
+    @Published var icon: UIImage?
     @Published var accessibilityLabel: String?
     @Published var accessibilityValue: String?
     @Published var accessibilityHint: String?
     @Published var isDisabled: Bool
     @Published var isVisible: Bool
 
-    let buttonType: ButtonType
+    var buttonType: ButtonType
     var action: (() -> Void)
 
-    init(iconName: CompositeIcon,
+    init(iconName: CompositeIcon?,
          buttonType: ButtonType = .controlButton,
          isDisabled: Bool = false,
          isVisible: Bool = true,
@@ -36,6 +38,19 @@ class IconButtonViewModel: ObservableObject {
         self.isDisabled = isDisabled
         self.action = action
         self.isVisible = isVisible
+    }
+
+    convenience init(icon: UIImage,
+                     buttonType: ButtonType = .controlButton,
+                     isDisabled: Bool = false,
+                     isVisible: Bool = true,
+                     action: @escaping (() -> Void) = {}) {
+        self.init(iconName: nil,
+                  buttonType: buttonType,
+                  isDisabled: isDisabled,
+                  isVisible: isVisible,
+                  action: action)
+        self.icon = icon
     }
 
     func update(iconName: CompositeIcon?) {
