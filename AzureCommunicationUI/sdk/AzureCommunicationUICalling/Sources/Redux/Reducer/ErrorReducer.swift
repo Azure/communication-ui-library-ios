@@ -46,6 +46,9 @@ extension Reducer where State == ErrorState,
                 .callingAction(.recordingUpdated),
                 .callingAction(.transcriptionUpdated),
                 .callingAction(.dismissRecordingTranscriptionBannedUpdated),
+                /* <CALL_START_TIME> */
+                .callingAction(.callStartTimeUpdated),
+                /* </CALL_START_TIME> */
                 .lifecycleAction,
                 .localUserAction,
                 .permissionAction,
