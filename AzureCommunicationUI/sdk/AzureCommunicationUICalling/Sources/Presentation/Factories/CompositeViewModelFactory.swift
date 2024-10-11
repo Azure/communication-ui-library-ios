@@ -111,7 +111,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         return viewModel
     }
 
-    func getCallingViewModel() -> CallingViewModel {
+    func getCallingViewModel(rendererViewManager: RendererViewManager) -> CallingViewModel {
         guard let viewModel = self.callingViewModel else {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
@@ -124,7 +124,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                             callType: callType,
                                             captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions(),
                                             capabilitiesManager: self.capabilitiesManager,
-                                             callScreenOptions: callScreenOptions ?? CallScreenOptions())
+                                             callScreenOptions: callScreenOptions ?? CallScreenOptions(),
+                                             rendererViewManager: rendererViewManager)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -355,13 +356,15 @@ extension CompositeViewModelFactory {
                                      logger: logger)
     }
 
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
+    func makeParticipantGridsViewModel(isIpadInterface: Bool,
+                                       rendererViewManager: RendererViewManager) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
                                  accessibilityProvider: accessibilityProvider,
                                  isIpadInterface: isIpadInterface,
                                  callType: callType,
-                                 logger: logger)
+                                 logger: logger,
+                                 rendererViewManager: rendererViewManager)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,

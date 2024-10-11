@@ -65,7 +65,8 @@ internal class CallingViewModel: ObservableObject {
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions,
          capabilitiesManager: CapabilitiesManager,
-         callScreenOptions: CallScreenOptions
+         callScreenOptions: CallScreenOptions,
+         rendererViewManager: RendererViewManager
     ) {
         self.logger = logger
         self.store = store
@@ -96,8 +97,9 @@ internal class CallingViewModel: ObservableObject {
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
-        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
-                                                                                                isIpadInterface)
+        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(
+            isIpadInterface: isIpadInterface,
+            rendererViewManager: rendererViewManager)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel(dispatchAction: store.dispatch)
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()

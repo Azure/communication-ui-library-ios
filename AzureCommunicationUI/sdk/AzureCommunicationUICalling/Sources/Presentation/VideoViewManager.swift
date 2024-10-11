@@ -23,6 +23,7 @@ protocol RendererViewManager: AnyObject {
     func getRemoteParticipantVideoRendererView
     (_ videoViewId: RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     func getRemoteParticipantVideoRendererViewSize() -> CGSize?
+    func updateDisplayedRemoteVideoStream(_ videoViewIdArray: [RemoteParticipantVideoViewId])
 }
 
 class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
@@ -125,7 +126,6 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             let options = CreateViewOptions(scalingMode: videoStream.mediaStreamType == .screenSharing ? .fit : .crop)
             let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: wrappedVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(withOptions: options)
-//            let newRendererView = UIView()
             newRendererView.backgroundColor = .green
 
             let cache = VideoStreamCache(renderer: newRenderer,
