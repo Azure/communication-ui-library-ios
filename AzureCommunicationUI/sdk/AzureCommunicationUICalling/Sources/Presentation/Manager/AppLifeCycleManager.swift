@@ -34,25 +34,15 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
             }.store(in: &cancellables)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willDeactivate),
-                                               name: UIScene.willDeactivateNotification,
+                                               name: UIApplication.willResignActiveNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didActivate),
-                                               name: UIScene.didActivateNotification,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(willTerminate),
                                                name: UIApplication.willTerminateNotification,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(willDeactivate),
-                                               name: UIScene.didEnterBackgroundNotification,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(didActivate),
-                                               name: UIScene.willEnterForegroundNotification,
                                                object: nil)
     }
 
@@ -76,17 +66,17 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
     }
 
     @objc func willDeactivate(_ notification: Notification) {
-        logger.debug("Will Deactivate")
+        logger.debug("LifeCycle: Will Deactivate")
         store.dispatch(action: .lifecycleAction(.backgroundEntered))
     }
 
     @objc func didActivate(_ notification: Notification) {
-        logger.debug("Did Activate")
+        logger.debug("LifeCycle: Did Activate")
         store.dispatch(action: .lifecycleAction(.foregroundEntered))
     }
 
     @objc func willTerminate(_ notification: Notification) {
-        logger.debug("Will Terminate")
+        logger.debug("LifeCycle: Will Terminate")
         store.dispatch(action: .lifecycleAction(.willTerminate))
         if callingStatus == .connected {
             self.runLoop = CFRunLoopGetCurrent()
