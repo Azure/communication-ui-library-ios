@@ -15,20 +15,16 @@ protocol Logger {
 
 struct DefaultLogger: Logger {
 
-    private static let osLogger: OSLog = OSLog(subsystem: "com.azure", category: "AzureCommunicationUICommon")
+    private let osLogger: OSLog
     init(subsystem: String = "com.azure",
          category: String = "AzureCommunicationUICommon") {
-//        osLogger = OSLog(subsystem: subsystem, category: category)
+        osLogger = OSLog(subsystem: subsystem, category: category)
     }
 
     func debug(_ message: @escaping () -> String?) {
         log(message, atLevel: .debug)
     }
     
-    public static func debugStatic(_ message: @autoclosure @escaping () -> String?) {
-        DefaultLogger.log(message, atLevel: .debug)
-    }
-
     func info(_ message: @escaping () -> String?) {
         log(message, atLevel: .info)
     }
@@ -43,17 +39,11 @@ struct DefaultLogger: Logger {
 
     func log(_ message: () -> String?, atLevel messageLevel: LogLevel) {
         if let msg = message() {
-            os_log("%@", log: DefaultLogger.osLogger, type: DefaultLogger.osLogTypeFor(messageLevel), msg)
+            os_log("%@", log: osLogger, type: osLogTypeFor(messageLevel), msg)
         }
     }
     
-    static func log(_ message: () -> String?, atLevel messageLevel: LogLevel) {
-        if let msg = message() {
-            os_log("%@", log: DefaultLogger.osLogger, type: DefaultLogger.osLogTypeFor(messageLevel), msg)
-        }
-    }
-
-    private static func osLogTypeFor(_ level: LogLevel) -> OSLogType {
+    private func osLogTypeFor(_ level: LogLevel) -> OSLogType {
         switch level {
         case .error,
              .warning:

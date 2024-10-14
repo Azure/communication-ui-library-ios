@@ -50,14 +50,6 @@ class ParticipantGridViewModel: ObservableObject {
                 visibilityState: VisibilityState,
                 lifeCycleState: LifeCycleState) {
 
-//        if visibilityState.currentStatus == .pipModeRequested {
-//            // When enterin system PiP, need to remove video from rendering,
-//            // so it will be rendered properly after view is placed in PiP
-//            visibilityStatus = visibilityState.currentStatus
-////            updateCellViewModel(for: [], lifeCycleState: lifeCycleState)
-//            return
-//        }
-
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
                 || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
                 || visibilityStatus != visibilityState.currentStatus

@@ -19,8 +19,7 @@ struct ParticipantGridCellView: View {
     var body: some View {
         Group {
             GeometryReader { geometry in
-                if /*!viewModel.isInBackground,*/
-                   let videoStreamId = displayedVideoStreamId,
+                if let videoStreamId = displayedVideoStreamId,
                    let rendererViewInfo = getRendererViewInfo(for: videoStreamId) {
                     let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
                     ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
@@ -28,8 +27,7 @@ struct ParticipantGridCellView: View {
                                                  zoomable: zoomable,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
-                                                 isMuted: $viewModel.isMuted,
-                                                 logger: $viewModel.logger)
+                                                 isMuted: $viewModel.isMuted)
                 } else {
                     avatarView
                         .frame(width: geometry.size.width,

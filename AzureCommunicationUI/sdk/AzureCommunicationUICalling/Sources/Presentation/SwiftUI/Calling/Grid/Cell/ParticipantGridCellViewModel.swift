@@ -26,7 +26,6 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isHold: Bool
     @Published var participantIdentifier: String
     @Published var isInBackground: Bool
-    @Published var logger: Logger
 
     private var isScreenSharing = false
     private var participantName: String
@@ -40,8 +39,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
          participantModel: ParticipantInfoModel,
          lifeCycleState: LifeCycleState,
          isCameraEnabled: Bool,
-         callType: CompositeCallType,
-         logger: Logger) {
+         callType: CompositeCallType) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.participantStatus = participantModel.status
@@ -63,7 +61,6 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isMuted = participantModel.isMuted && participantModel.status == .connected
         self.isInBackground = lifeCycleState.currentStatus == .background
         self.isCameraEnabled = isCameraEnabled
-        self.logger = logger
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
         self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
     }

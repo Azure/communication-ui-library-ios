@@ -14,7 +14,6 @@ struct ParticipantGridCellVideoView: View {
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
     @Binding var isMuted: Bool
-    @Binding var logger: Logger
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
@@ -48,13 +47,11 @@ struct ParticipantGridCellVideoView: View {
 
     var videoRenderView: some View {
         VideoRendererView(rendererView: videoRendererViewInfo.rendererView)
-            .background(.blue)
     }
 
     var zoomableVideoRenderView: some View {
         ZoomableVideoRenderView(videoRendererViewInfo: videoRendererViewInfo,
-                                rendererViewManager: rendererViewManager,
-                                logger: logger)
+                                rendererViewManager: rendererViewManager)
                                 .gesture(TapGesture(count: 2).onEnded({}))
         // The double tap action does nothing. This is a work around to
         // prevent the single-tap gesture (in CallingView) from being recognized

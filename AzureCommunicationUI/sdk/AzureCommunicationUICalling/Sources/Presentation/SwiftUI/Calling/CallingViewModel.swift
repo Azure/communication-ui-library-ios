@@ -226,10 +226,6 @@ internal class CallingViewModel: ObservableObject {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
         }
-//        guard state.lifeCycleState.currentStatus == .foreground
-//                || state.visibilityState.currentStatus != .visible else {
-//            return
-//        }
 
         participantListViewModel.update(localUserState: state.localUserState,
                                         remoteParticipantsState: state.remoteParticipantsState,
