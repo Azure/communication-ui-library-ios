@@ -25,29 +25,26 @@ class ParticipantGridViewModel: ObservableObject {
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
 
+    let rendererViewManager: RendererViewManager
+
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool,
-         callType: CompositeCallType) {
+         callType: CompositeCallType,
+         rendererViewManager: RendererViewManager) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.isIpadInterface = isIpadInterface
         self.callType = callType
+        self.rendererViewManager = rendererViewManager
     }
 
     func update(callingState: CallingState,
                 remoteParticipantsState: RemoteParticipantsState,
                 visibilityState: VisibilityState,
                 lifeCycleState: LifeCycleState) {
-
-        if visibilityState.currentStatus == .pipModeRequested {
-            // When enterin system PiP, need to remove video from rendering,
-            // so it will be rendered properly after view is placed in PiP
-            updateCellViewModel(for: [], lifeCycleState: lifeCycleState)
-            return
-        }
 
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
                 || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
@@ -83,10 +80,27 @@ class ParticipantGridViewModel: ObservableObject {
             postParticipantsListUpdateAccessibilityAnnouncements(removedModels: removedModels,
                                                                  addedModels: addedModels)
         }
+
+        updateVideoViewManager(displayedRemoteInfoModelArr: displayedParticipantInfoModelArr)
+
         if gridsCount != displayedParticipantInfoModelArr.count {
             gridsCount = displayedParticipantInfoModelArr.count
         }
     }
+
+    private func updateVideoViewManager(displayedRemoteInfoModelArr: [ParticipantInfoModel]) {
+           let videoCacheIds: [RemoteParticipantVideoViewId] = displayedRemoteInfoModelArr.compactMap {
+               let screenShareVideoStreamIdentifier = $0.screenShareVideoStreamModel?.videoStreamIdentifier
+               let cameraVideoStreamIdentifier = $0.cameraVideoStreamModel?.videoStreamIdentifier
+               guard let videoStreamIdentifier = screenShareVideoStreamIdentifier ?? cameraVideoStreamIdentifier else {
+                   return nil
+               }
+               return RemoteParticipantVideoViewId(userIdentifier: $0.userIdentifier,
+                                                   videoStreamIdentifier: videoStreamIdentifier)
+           }
+
+           rendererViewManager.updateDisplayedRemoteVideoStream(videoCacheIds)
+       }
 
     private func getDisplayedInfoViewModels(_ infoModels: [ParticipantInfoModel],
                                             _ dominantSpeakers: [String],
@@ -192,7 +206,7 @@ class ParticipantGridViewModel: ObservableObject {
         }
         for (index, infoModel) in displayedRemoteParticipants.enumerated() {
             let cellViewModel = participantsCellViewModelArr[index]
-            cellViewModel.update(participantModel: infoModel, lifeCycleState: lifeCycleState)
+            cellViewModel.update(participantModel: infoModel)
         }
     }
 
@@ -203,11 +217,11 @@ class ParticipantGridViewModel: ObservableObject {
             if let viewModel = participantsCellViewModelArr.first(where: {
                 $0.participantIdentifier == infoModel.userIdentifier
             }) {
-                viewModel.update(participantModel: infoModel, lifeCycleState: lifeCycleState)
+                viewModel.update(participantModel: infoModel)
                 newCellViewModelArr.append(viewModel)
             } else {
                 let cellViewModel = compositeViewModelFactory
-                    .makeParticipantCellViewModel(participantModel: infoModel, lifeCycleState: lifeCycleState)
+                    .makeParticipantCellViewModel(participantModel: infoModel)
                 newCellViewModelArr.append(cellViewModel)
             }
         }

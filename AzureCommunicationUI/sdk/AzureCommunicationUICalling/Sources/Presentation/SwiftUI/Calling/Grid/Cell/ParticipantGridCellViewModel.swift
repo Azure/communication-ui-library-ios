@@ -25,7 +25,6 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
     @Published var isHold: Bool
     @Published var participantIdentifier: String
-    @Published var isInBackground: Bool
 
     private var isScreenSharing = false
     private var participantName: String
@@ -37,7 +36,6 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel,
-         lifeCycleState: LifeCycleState,
          isCameraEnabled: Bool,
          callType: CompositeCallType) {
         self.localizationProvider = localizationProvider
@@ -59,14 +57,12 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isHold = participantModel.status == .hold
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted && participantModel.status == .connected
-        self.isInBackground = lifeCycleState.currentStatus == .background
         self.isCameraEnabled = isCameraEnabled
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
         self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
     }
 
-    func update(participantModel: ParticipantInfoModel,
-                lifeCycleState: LifeCycleState) {
+    func update(participantModel: ParticipantInfoModel) {
         self.participantIdentifier = participantModel.userIdentifier
         let videoViewModel = getDisplayingVideoStreamModel(participantModel)
         if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
@@ -116,8 +112,6 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
             self.isHold = isOnHold
             postParticipantStatusAccessibilityAnnouncements(isHold: self.isHold, participantModel: participantModel)
         }
-
-        self.isInBackground = lifeCycleState.currentStatus == .background
     }
 
     func updateParticipantNameIfNeeded(with renderDisplayName: String?) {
