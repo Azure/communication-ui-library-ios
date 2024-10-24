@@ -49,6 +49,7 @@ internal struct DrawerBodyWithActionTextView: View {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .accessibilityIdentifier(item.accessibilityIdentifier)
+        .accessibilityAddTraits(.isButton)
         .background(Color(StyleProvider.color.surface))
         .fullScreenCover(isPresented: $isConfirming) {
             CustomAlert(

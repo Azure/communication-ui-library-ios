@@ -30,6 +30,7 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
             DrawerGenericItemViewModel(
                 title: leaveText,
                 accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: {
                     endCall()
                 },
@@ -38,6 +39,7 @@ internal class LeaveCallConfirmationViewModel: ObservableObject {
             DrawerGenericItemViewModel(
                 title: cancelText,
                 accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
+                accessibilityTraits: [.isButton],
                 action: {
                     dismissConfirmation()
                 },
