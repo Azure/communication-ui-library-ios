@@ -10,7 +10,7 @@ import SwiftUI
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
     func getSetupViewModel() -> SetupViewModel
-    func getCallingViewModel() -> CallingViewModel
+    func getCallingViewModel(rendererViewManager: RendererViewManager) -> CallingViewModel
     // MARK: ComponentViewModels
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
@@ -71,10 +71,10 @@ protocol CompositeViewModelFactoryProtocol {
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool,
+                                       rendererViewManager: RendererViewManager) -> ParticipantGridViewModel
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
-                                      lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        isDisplayed: Bool,

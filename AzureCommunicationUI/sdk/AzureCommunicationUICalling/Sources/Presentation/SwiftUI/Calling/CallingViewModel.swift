@@ -15,7 +15,6 @@ internal class CallingViewModel: ObservableObject {
     @Published var captionsStarted = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    private let logger: Logger
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -56,7 +55,6 @@ internal class CallingViewModel: ObservableObject {
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         logger: Logger,
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
@@ -65,9 +63,9 @@ internal class CallingViewModel: ObservableObject {
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions,
          capabilitiesManager: CapabilitiesManager,
-         callScreenOptions: CallScreenOptions
+         callScreenOptions: CallScreenOptions,
+         rendererViewManager: RendererViewManager
     ) {
-        self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
@@ -96,8 +94,9 @@ internal class CallingViewModel: ObservableObject {
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
-        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
-                                                                                                isIpadInterface)
+        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(
+            isIpadInterface: isIpadInterface,
+            rendererViewManager: rendererViewManager)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel(dispatchAction: store.dispatch)
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
@@ -229,7 +228,7 @@ internal class CallingViewModel: ObservableObject {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
         }
-        logger.debug("testpip: isDisplayed: " + state.visibilityState.currentStatus.description)
+
         guard state.visibilityState.currentStatus != .hidden else {
             return
         }
