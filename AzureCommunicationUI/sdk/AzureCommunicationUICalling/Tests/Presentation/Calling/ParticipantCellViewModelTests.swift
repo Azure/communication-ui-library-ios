@@ -95,7 +95,7 @@ class ParticipantCellViewModelTests: XCTestCase {
                                                         videoStreamId: expectedVideoStreamId,
                                                         displayName: expectedDisplayName,
                                                         isSpeaking: expectedIsSpeaking)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         XCTAssertEqual(sut.displayName, expectedDisplayName)
         XCTAssertEqual(sut.videoViewModel?.videoStreamId, expectedVideoStreamId)
@@ -116,7 +116,7 @@ class ParticipantCellViewModelTests: XCTestCase {
                                                         isSpeaking: expectedIsSpeaking,
                                                         isMuted: true,
                                                         status: .ringing)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         XCTAssertEqual(sut.displayName, LocalizationKey.callingCallMessage.rawValue)
         XCTAssertEqual(sut.videoViewModel?.videoStreamId, expectedVideoStreamId)
@@ -140,7 +140,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(videoStreamId: videoStreamId)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -160,7 +160,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(videoStreamId: diffVideoStreamId)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -180,7 +180,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(displayName: sameDisplayName)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -198,7 +198,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(displayName: diffDisplayName)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -218,7 +218,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(isSpeaking: isSpeaking)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -236,7 +236,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(isSpeaking: isSpeaking)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -256,7 +256,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(isMuted: isMuted)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -274,7 +274,7 @@ class ParticipantCellViewModelTests: XCTestCase {
             }.store(in: cancellable)
 
         let infoModel = ParticipantInfoModelBuilder.get(isMuted: isMuted)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -293,7 +293,7 @@ class ParticipantCellViewModelTests: XCTestCase {
 
         let infoModel = ParticipantInfoModelBuilder.get(videoStreamId: nil,
                                                         screenShareStreamId: expectedVideoStream)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -311,7 +311,7 @@ class ParticipantCellViewModelTests: XCTestCase {
 
         let infoModel = ParticipantInfoModelBuilder.get(videoStreamId: "cameraVideoStreamId",
                                                         screenShareStreamId: expectedVideoStream)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -329,7 +329,7 @@ class ParticipantCellViewModelTests: XCTestCase {
 
         let infoModel = ParticipantInfoModelBuilder.get(videoStreamId: expectedVideoStream,
                                                         screenShareStreamId: nil)
-        sut.update(participantModel: infoModel, lifeCycleState: LifeCycleState())
+        sut.update(participantModel: infoModel)
 
         wait(for: [expectation], timeout: 1)
     }
@@ -355,7 +355,6 @@ extension ParticipantCellViewModelTests {
         return ParticipantGridCellViewModel(localizationProvider: LocalizationProviderMocking(),
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel,
-                                            lifeCycleState: LifeCycleState(),
                                             isCameraEnabled: true,
                                             callType: callType)
     }

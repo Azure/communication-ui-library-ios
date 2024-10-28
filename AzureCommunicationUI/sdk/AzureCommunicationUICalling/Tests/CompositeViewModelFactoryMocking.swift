@@ -84,9 +84,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                 localizationProvider: localizationProvider, callType: .groupCall)
     }
 
-    func getCallingViewModel() -> CallingViewModel {
+    func getCallingViewModel(rendererViewManager: any AzureCommunicationUICalling.RendererViewManager) -> CallingViewModel {
         return callingViewModel ?? CallingViewModel(compositeViewModelFactory: self,
-                                                    logger: logger,
                                                     store: store,
                                                     localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
@@ -95,7 +94,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     callType: .groupCall,
                                                     captionsOptions: CaptionsOptions(),
                                                     capabilitiesManager: capabilitiesManager,
-                                                    callScreenOptions: CallScreenOptions()
+                                                    callScreenOptions: CallScreenOptions(),
+                                                    rendererViewManager: rendererViewManager
         )
     }
     /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
@@ -290,12 +290,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         )
     }
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         return createMockParticipantGridCellViewModel?(participantModel) ?? ParticipantGridCellViewModel(
             localizationProvider: localizationProvider,
             accessibilityProvider: accessibilityProvider,
             participantModel: participantModel,
-            lifeCycleState: lifeCycleState,
             isCameraEnabled: true,
             callType: .groupCall)
     }
@@ -339,12 +338,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             action: {})
     }
 
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
+    func makeParticipantGridsViewModel(isIpadInterface: Bool, rendererViewManager: any AzureCommunicationUICalling.RendererViewManager) -> ParticipantGridViewModel {
         return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self,
                                                                     localizationProvider: localizationProvider,
                                                                     accessibilityProvider: accessibilityProvider,
                                                                     isIpadInterface: isIpadInterface,
-                                                                    callType: .groupCall)
+                                                                    callType: .groupCall,
+                                                                    rendererViewManager: rendererViewManager)
     }
 
     func makeParticipantsListViewModel(localUserState: AzureCommunicationUICalling.LocalUserState, isDisplayed: Bool, dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.ParticipantsListViewModel {

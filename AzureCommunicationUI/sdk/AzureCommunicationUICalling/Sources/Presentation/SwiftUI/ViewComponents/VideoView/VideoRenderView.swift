@@ -15,7 +15,6 @@ struct VideoRendererView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: VideoRendererUIView, context: Context) {
-        uiView.update(rendererView: rendererView)
     }
 }
 
@@ -24,6 +23,8 @@ class VideoRendererUIView: UIView {
 
     init(rendererView: UIView) {
         super.init(frame: .zero)
+        self.rendererView = rendererView
+        addSubview(rendererView)
     }
 
     required init?(coder: NSCoder) {
@@ -33,19 +34,5 @@ class VideoRendererUIView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         rendererView?.frame = bounds
-    }
-
-    func update(rendererView: UIView) {
-        guard rendererView !== self.rendererView ||
-              rendererView.superview !== self else {
-            return
-        }
-
-        rendererView.removeFromSuperview()
-        for view in subviews {
-            view.removeFromSuperview()
-        }
-        addSubview(rendererView)
-        self.rendererView = rendererView
     }
 }

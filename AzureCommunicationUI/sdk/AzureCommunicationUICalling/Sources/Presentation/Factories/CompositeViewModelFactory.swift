@@ -120,20 +120,20 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         return viewModel
     }
 
-    func getCallingViewModel() -> CallingViewModel {
+    func getCallingViewModel(rendererViewManager: RendererViewManager) -> CallingViewModel {
         guard let viewModel = self.callingViewModel else {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
-                                             logger: logger,
                                              store: store,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
                                              isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
-                                            != CallCompositeAudioVideoMode.audioOnly,
-                                            callType: callType,
-                                            captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions(),
-                                            capabilitiesManager: self.capabilitiesManager,
-                                             callScreenOptions: callScreenOptions ?? CallScreenOptions())
+                                                != CallCompositeAudioVideoMode.audioOnly,
+                                             callType: callType,
+                                             captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions(),
+                                             capabilitiesManager: self.capabilitiesManager,
+                                             callScreenOptions: callScreenOptions ?? CallScreenOptions(),
+                                             rendererViewManager: rendererViewManager)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -376,22 +376,22 @@ extension CompositeViewModelFactory {
                                   dispatchAction: dispatchAction)
     }
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
-                                      lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(localizationProvider: localizationProvider,
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
-                                     lifeCycleState: lifeCycleState,
                                      isCameraEnabled: localOptions?.audioVideoMode != .audioOnly,
                                      callType: callType)
     }
 
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
+    func makeParticipantGridsViewModel(isIpadInterface: Bool,
+                                       rendererViewManager: RendererViewManager) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
                                  accessibilityProvider: accessibilityProvider,
                                  isIpadInterface: isIpadInterface,
-                                 callType: callType)
+                                 callType: callType,
+                                 rendererViewManager: rendererViewManager)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,

@@ -17,6 +17,7 @@ class CallingViewModelTests: XCTestCase {
     var localizationProvider: LocalizationProviderMocking!
     var accessibilityProvider: AccessibilityProviderMocking!
     var capabilitiesManager: CapabilitiesManager!
+    var rendererViewManager: RendererViewManager!
 
     private let timeout: TimeInterval = 10.0
 
@@ -38,6 +39,7 @@ class CallingViewModelTests: XCTestCase {
                                                           localParticipantViewData: nil),
                                                           updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
         capabilitiesManager = CapabilitiesManager(callType: .groupCall)
+        rendererViewManager = VideoViewManager(callingSDKWrapper: CallingSDKWrapperMocking(), logger: logger)
     }
 
     override func tearDown() {
@@ -48,6 +50,7 @@ class CallingViewModelTests: XCTestCase {
         accessibilityProvider = nil
         logger = nil
         factoryMocking = nil
+        rendererViewManager = nil
     }
 
     func test_callingViewModel_update_when_callStatusIsInLobby_then_isLobbyOverlayDisplayed_shouldBecomeTrue() {
@@ -210,7 +213,8 @@ class CallingViewModelTests: XCTestCase {
                                                                                   compositeViewModelFactory: factoryMocking,
                                                                                   localizationProvider: localizationProvider,
                                                                                   accessibilityProvider: accessibilityProvider,
-                                                                                  updateState: updateParticipantGridViewModel)
+                                                                                  updateState: updateParticipantGridViewModel,
+                                                                                  rendererViewManager: rendererViewManager)
 
         let sut = makeSUT()
         sut.receive(appState)
@@ -300,7 +304,6 @@ class CallingViewModelTests: XCTestCase {
 extension CallingViewModelTests {
     func makeSUT(callType: CompositeCallType = .groupCall) -> CallingViewModel {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
@@ -309,6 +312,7 @@ extension CallingViewModelTests {
                                 callType: callType,
                                 captionsOptions: CaptionsOptions(),
                                 capabilitiesManager: capabilitiesManager,
-                                callScreenOptions: CallScreenOptions())
+                                callScreenOptions: CallScreenOptions(),
+                                rendererViewManager: rendererViewManager)
     }
 }
