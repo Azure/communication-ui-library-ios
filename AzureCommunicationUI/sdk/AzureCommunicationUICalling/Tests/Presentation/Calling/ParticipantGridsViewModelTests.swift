@@ -182,7 +182,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         expectation.assertForOverFulfill = true
         let expectedUpdatedInfoModel = ParticipantInfoModelBuilder.get(participantIdentifier: state.participantInfoList.first!.userIdentifier,
                                                                        isMuted: !state.participantInfoList.first!.isMuted)
-        let sut = makeSUT { infoModel, _ in
+        let sut = makeSUT { infoModel in
             XCTAssertEqual(expectedUpdatedInfoModel, infoModel)
             expectation.fulfill()
         }
@@ -241,7 +241,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let callingState = CallingState()
         let expectation = XCTestExpectation(description: "Participants list updated expectation")
         expectation.assertForOverFulfill = true
-        let sut = makeSUT { _, _ in
+        let sut = makeSUT { _ in
             expectation.fulfill()
         }
         sut.update(callingState: callingState,
@@ -679,7 +679,7 @@ class ParticipantGridViewModelTests: XCTestCase {
 
 extension ParticipantGridViewModelTests {
     func makeSUT(callType: CompositeCallType = .groupCall,
-                 participantGridCellViewUpdateCompletion: ((ParticipantInfoModel, LifeCycleState) -> Void)? = nil) -> ParticipantGridViewModel {
+                 participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let accessibilityProvider = AccessibilityProvider()
         var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
@@ -701,7 +701,8 @@ extension ParticipantGridViewModelTests {
         								localizationProvider: LocalizationProviderMocking(),
                                         accessibilityProvider: accessibilityProvider,
                                         isIpadInterface: false,
-                                        callType: callType)
+                                        callType: callType,
+                                        rendererViewManager: VideoViewManagerMocking())
     }
 
     func makeSUT(callType: CompositeCallType = .groupCall,
@@ -720,7 +721,8 @@ extension ParticipantGridViewModelTests {
                                         localizationProvider: localizationProvider,
                                         accessibilityProvider: accessibilityProvider,
                                         isIpadInterface: false,
-                                        callType: callType)
+                                        callType: callType,
+                                        rendererViewManager: VideoViewManagerMocking())
     }
 
     func makeRemoteParticipantState(count: Int = 1,

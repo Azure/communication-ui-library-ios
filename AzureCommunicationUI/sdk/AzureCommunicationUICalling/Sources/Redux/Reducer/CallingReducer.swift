@@ -60,7 +60,7 @@ extension Reducer where State == CallingState,
             /* <CALL_START_TIME> */
         case .callingAction(.callStartTimeUpdated(let startTime)):
             callStartTime = startTime
-            /* <CALL_START_TIME> */
+            /* </CALL_START_TIME> */
         // Exhaustive un-implemented actions
         case .audioSessionAction,
                 .callingAction(.setupCall),
@@ -103,9 +103,11 @@ extension Reducer where State == CallingState,
                             callEndReasonSubCode: callEndReasonSubCode,
                             recordingStatus: recordingStatus,
                             transcriptionStatus: transcriptionStatus,
-                            isRecorcingTranscriptionBannedDismissed: isRecorcingTranscriptionBannedDismissed,
+                            isRecorcingTranscriptionBannedDismissed: isRecorcingTranscriptionBannedDismissed
                             /* <CALL_START_TIME> */
+                            ,
                             callStartTime: callStartTime
-                            /* </CALL_START_TIME> */)
+                            /* </CALL_START_TIME> */
+        )
     }
 }

@@ -23,6 +23,7 @@ protocol RendererViewManager: AnyObject {
     func getRemoteParticipantVideoRendererView
     (_ videoViewId: RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     func getRemoteParticipantVideoRendererViewSize() -> CGSize?
+    func updateDisplayedRemoteVideoStream(_ videoViewIdArray: [RemoteParticipantVideoViewId])
 }
 
 class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {

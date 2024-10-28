@@ -7,6 +7,18 @@ import Foundation
 
 @testable import AzureCommunicationUICalling
 
-class VideoViewManagerMocking {
+class VideoViewManagerMocking: RendererViewManager {
+    var didRenderFirstFrame: ((CGSize) -> Void)?
+
+    func getRemoteParticipantVideoRendererView(_ videoViewId: AzureCommunicationUICalling.RemoteParticipantVideoViewId) -> AzureCommunicationUICalling.ParticipantRendererViewInfo? {
+        return nil
+    }
+
+    func getRemoteParticipantVideoRendererViewSize() -> CGSize? {
+        return nil
+    }
+
+    func updateDisplayedRemoteVideoStream(_ videoViewIdArray: [AzureCommunicationUICalling.RemoteParticipantVideoViewId]) {
+    }
 
 }
