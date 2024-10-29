@@ -799,13 +799,13 @@ extension CallingMiddlewareHandler {
             .sink { participantCount in
                 dispatch(.remoteParticipantsAction(.setTotalParticipantCount(participantCount: participantCount)))
             }.store(in: subscription)
-        /* <CALL_START_TIME> */
+        /* <CALL_START_TIME>
         callingService.callStartTimeSubject
             .removeDuplicates()
             .sink { startTime in
                 dispatch(.callingAction(.callStartTimeUpdated(startTime: startTime)))
             }.store(in: subscription)
-        /* </CALL_START_TIME> */
+        </CALL_START_TIME> */
         subscribeOnDiagnostics(dispatch: dispatch)
         subscribeCapabilitiesUpdate(dispatch: dispatch)
     }
