@@ -66,7 +66,11 @@ struct CompositeButton: UIViewRepresentable {
                     }),
                     .foregroundDisabledColor: ControlTokenValue.dynamicColor({
                         Colors.gray300.dynamicColor!
-                    })]
+                    }),
+                    .borderColor: ControlTokenValue.dynamicColor({
+                        dynamicColor!
+                    })
+                ]
                 button.tokenSet.replaceAllOverrides(with: overrideTokens)
          /* </CUSTOM_COLOR_FEATURE> */
                  if let paddings = paddings {
