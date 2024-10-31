@@ -42,7 +42,6 @@ struct IconWithLabelButton<T: ButtonState>: View {
                 }
             }
         }
-        .animation(nil)
         .disabled(viewModel.isDisabled)
         .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
         .frame(width: width, height: height, alignment: .top)

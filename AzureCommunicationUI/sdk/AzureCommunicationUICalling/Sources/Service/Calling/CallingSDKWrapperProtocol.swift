@@ -79,7 +79,9 @@ protocol CallingSDKWrapperProtocol {
     func setCaptionsCaptionLanguage(_ language: String) async throws
     func removeParticipant(_ participantId: String) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
-
+    /* <CALL_START_TIME>
+    func callStartTime() -> Date?
+    </CALL_START_TIME> */
     func getLogFiles() -> [URL]
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
@@ -103,7 +105,9 @@ protocol CallingSDKEventsHandling {
     var participantRoleSubject: PassthroughSubject<ParticipantRoleEnum, Never> { get }
     var totalParticipantCountSubject: PassthroughSubject<Int, Never> { get }
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
-
+    /* <CALL_START_TIME>
+    var callStartTimeSubject: PassthroughSubject<Date, Never> { get }
+    </CALL_START_TIME> */
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
 
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }

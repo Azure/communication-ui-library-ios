@@ -15,7 +15,6 @@ internal class CallingViewModel: ObservableObject {
     @Published var captionsStarted = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    private let logger: Logger
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -56,7 +55,6 @@ internal class CallingViewModel: ObservableObject {
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         logger: Logger,
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
@@ -65,9 +63,9 @@ internal class CallingViewModel: ObservableObject {
          callType: CompositeCallType,
          captionsOptions: CaptionsOptions,
          capabilitiesManager: CapabilitiesManager,
-         callScreenOptions: CallScreenOptions
+         callScreenOptions: CallScreenOptions,
+         rendererViewManager: RendererViewManager
     ) {
-        self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
@@ -96,16 +94,22 @@ internal class CallingViewModel: ObservableObject {
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
-        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
-                                                                                                isIpadInterface)
+        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(
+            isIpadInterface: isIpadInterface,
+            rendererViewManager: rendererViewManager)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel(dispatchAction: store.dispatch)
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
-                                     localUserState: store.state.localUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                     localUserState: store.state.localUserState,
                                      callScreenInfoHeaderState: store.state.callScreenInfoHeaderState
-                                     /* </TIMER_TITLE_FEATURE> */ )
+                                     /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                                     ,
+                                     buttonViewDataState: store.state.buttonViewDataState,
+                                     controlHeaderViewData: callScreenOptions.headerViewData
+                                     </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+            )
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
@@ -224,8 +228,8 @@ internal class CallingViewModel: ObservableObject {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
         }
-        guard state.lifeCycleState.currentStatus == .foreground
-                || state.visibilityState.currentStatus != .visible else {
+
+        guard state.visibilityState.currentStatus != .hidden else {
             return
         }
         participantListViewModel.update(localUserState: state.localUserState,
@@ -254,9 +258,13 @@ internal class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
-                                   visibilityState: state.visibilityState /* </TIMER_TITLE_FEATURE> */ ,
+                                   visibilityState: state.visibilityState,
                                    callScreenInfoHeaderState: state.callScreenInfoHeaderState
-                                   /* </TIMER_TITLE_FEATURE> */ )
+                                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                                   ,
+                                   buttonViewDataState: state.buttonViewDataState
+                                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                                   )
         localVideoViewModel.update(localUserState: state.localUserState,
                                    visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
@@ -278,6 +286,10 @@ internal class CallingViewModel: ObservableObject {
         moreCallOptionsListViewModel.update(navigationState: state.navigationState,
                                             visibilityState: state.visibilityState,
                                             buttonViewDataState: state.buttonViewDataState)
+
+        receiveExtension(state)
+    }
+    private func receiveExtension(_ state: AppState) {
         let newIsCallConnected = state.callingState.status == .connected
         let isOutgoingCall = CallingViewModel.isOutgoingCallDialingInProgress(callType: callType,
                                                                               callingStatus: state.callingState.status)
@@ -297,9 +309,6 @@ internal class CallingViewModel: ObservableObject {
             }
             callHasConnected = newIsCallConnected
         }
-        receiveExtension(state)
-    }
-    private func receiveExtension(_ state: AppState) {
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
         isInPip = state.visibilityState.currentStatus == .pipModeEntered

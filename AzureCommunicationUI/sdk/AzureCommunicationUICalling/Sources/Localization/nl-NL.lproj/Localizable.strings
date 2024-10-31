@@ -70,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Niet gedempt";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Spreken";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In de wacht";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ staat in de wachtstand";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ heeft het gesprek hervat";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tik om toe te geven of af te wijzen";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Wachten in lobby (%d)";

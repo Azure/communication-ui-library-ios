@@ -143,7 +143,6 @@ struct CallingView: View {
                             videoGridView
                                 .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
                             if viewModel.isParticipantGridDisplayed &&
-                                !viewModel.isInPip &&
                                 viewModel.allowLocalCameraPreview {
                                 Group {
                                     DraggableLocalVideoView(containerBounds:
@@ -177,7 +176,7 @@ struct CallingView: View {
 
             }
             .contentShape(Rectangle())
-            .animation(.linear(duration: 0.167))
+            .animation(.linear(duration: 0.167), value: true)
             .onTapGesture(perform: {
                 viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
             })
@@ -283,7 +282,6 @@ struct CallingView: View {
     var participantGridsView: some View {
         ParticipantGridView(viewModel: viewModel.participantGridsViewModel,
                             avatarViewManager: avatarManager,
-                            videoViewManager: viewManager,
                             screenSize: getSizeClass())
             .edgesIgnoringSafeArea(safeAreaIgnoreArea)
     }

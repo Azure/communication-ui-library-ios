@@ -30,6 +30,8 @@ extension AzureCommunicationCalling.CallParticipantRole {
             return .organizer
         case .coOrganizer:
             return .coOrganizer
+        @unknown default:
+            fatalError("Fatal Error")
         }
     }
 }

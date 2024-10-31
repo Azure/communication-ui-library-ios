@@ -72,7 +72,7 @@ class CaptionsViewManager: ObservableObject {
 
         if captionData.count > maxCaptionsCount {
             withAnimation {
-                captionData.removeFirst()
+                _ = captionData.removeFirst()
             }
         }
     }

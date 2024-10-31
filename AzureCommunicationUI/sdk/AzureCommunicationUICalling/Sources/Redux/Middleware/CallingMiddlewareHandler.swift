@@ -403,7 +403,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             guard state.permissionState.audioPermission == .requesting else {
                 return
             }
-            setupCall(state: state, dispatch: dispatch)
+             _ = setupCall(state: state, dispatch: dispatch)
         }
     }
 
@@ -524,7 +524,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.captionsAction(.error(errors: .captionsFailedToStart)))
                 dispatch(.captionsAction(.stopped))
                 if let errorCode = error as NSError? {
-                    switch error.localizedDescription {
+                    switch errorCode.localizedDescription {
                     case CallCompositeCaptionsErrorsDescription.captionsStartFailedCallNotConnected.rawValue:
                         dispatch(.errorAction(
                             .fatalErrorUpdated(internalError: .micNotAvailable, error: nil)))
@@ -573,7 +573,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 if let errorCode = error as NSError? {
                     switch error.localizedDescription {
                     case CallCompositeCaptionsErrorsDescription.captionsStartFailedCallNotConnected.rawValue:
-                        handle(error: error, errorType: .captionsStartFailedCallNotConnected, dispatch: dispatch)
+                        handle(error: errorCode, errorType: .captionsStartFailedCallNotConnected, dispatch: dispatch)
                     default:
                         return
                     }
@@ -799,6 +799,13 @@ extension CallingMiddlewareHandler {
             .sink { participantCount in
                 dispatch(.remoteParticipantsAction(.setTotalParticipantCount(participantCount: participantCount)))
             }.store(in: subscription)
+        /* <CALL_START_TIME>
+        callingService.callStartTimeSubject
+            .removeDuplicates()
+            .sink { startTime in
+                dispatch(.callingAction(.callStartTimeUpdated(startTime: startTime)))
+            }.store(in: subscription)
+        </CALL_START_TIME> */
         subscribeOnDiagnostics(dispatch: dispatch)
         subscribeCapabilitiesUpdate(dispatch: dispatch)
     }

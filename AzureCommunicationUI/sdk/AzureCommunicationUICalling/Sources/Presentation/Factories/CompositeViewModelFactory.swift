@@ -29,6 +29,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let setupScreenOptions: SetupScreenOptions?
     private let callScreenOptions: CallScreenOptions?
     private let callType: CompositeCallType
+    /* <CUSTOM_COLOR_FEATURE> */
+    private let themeOptions: ThemeOptions
+    /* </CUSTOM_COLOR_FEATURE> */
     private let updatableOptionsManager: UpdatableOptionsManagerProtocol
 
     init(logger: Logger,
@@ -49,6 +52,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
+         /* <CUSTOM_COLOR_FEATURE> */
+         themeOptions: ThemeOptions,
+         /* </CUSTOM_COLOR_FEATURE> */
          updatableOptionsManager: UpdatableOptionsManagerProtocol,
          retrieveLogFiles: @escaping () -> [URL]
          ) {
@@ -69,6 +75,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.callScreenOptions = callScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
+        /* <CUSTOM_COLOR_FEATURE> */
+        self.themeOptions = themeOptions
+        /* </CUSTOM_COLOR_FEATURE> */
         self.avatarManager = avatarManager
         self.updatableOptionsManager = updatableOptionsManager
     }
@@ -111,20 +120,20 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         return viewModel
     }
 
-    func getCallingViewModel() -> CallingViewModel {
+    func getCallingViewModel(rendererViewManager: RendererViewManager) -> CallingViewModel {
         guard let viewModel = self.callingViewModel else {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
-                                             logger: logger,
                                              store: store,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
                                              isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
                                              allowLocalCameraPreview: localOptions?.audioVideoMode
-                                            != CallCompositeAudioVideoMode.audioOnly,
-                                            callType: callType,
-                                            captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions(),
-                                            capabilitiesManager: self.capabilitiesManager,
-                                             callScreenOptions: callScreenOptions ?? CallScreenOptions())
+                                                != CallCompositeAudioVideoMode.audioOnly,
+                                             callType: callType,
+                                             captionsOptions: localOptions?.captionsOptions ?? CaptionsOptions(),
+                                             capabilitiesManager: self.capabilitiesManager,
+                                             callScreenOptions: callScreenOptions ?? CallScreenOptions(),
+                                             rendererViewManager: rendererViewManager)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -154,6 +163,19 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isVisible: isVisible,
                             action: action)
     }
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+    func makeIconButtonViewModel(icon: UIImage,
+                                 buttonType: IconButtonViewModel.ButtonType = .controlButton,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel {
+        IconButtonViewModel(icon: icon,
+                            buttonType: buttonType,
+                            isDisabled: isDisabled,
+                            isVisible: isVisible,
+                            action: action)
+    }
+    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
     func makeIconWithLabelButtonViewModel<T: ButtonState>(
         selectedButtonState: T,
@@ -187,6 +209,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                iconName: iconName,
                                isDisabled: isDisabled,
                                paddings: paddings,
+                               themeOptions: themeOptions,
                                action: action)
     }
 
@@ -266,7 +289,6 @@ extension CompositeViewModelFactory {
                                  accessibilityProvider: accessibilityProvider,
                                  dispatchAction: dispatchAction)
     }
-
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
@@ -277,6 +299,7 @@ extension CompositeViewModelFactory {
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
                                 audioSessionManager: audioSessionManager,
+                                themeOptions: themeOptions,
                                 store: store,
                                 callType: callType)
     }
@@ -300,6 +323,7 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             onEndCallTapped: onEndCallTapped,
                             localUserState: localUserState,
+                            accessibilityProvider: accessibilityProvider,
                             audioVideoMode: localOptions?.audioVideoMode ?? .audioAndVideo,
                             capabilitiesManager: capabilitiesManager,
                             controlBarOptions: callScreenOptions?.controlBarOptions,
@@ -307,9 +331,14 @@ extension CompositeViewModelFactory {
     }
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                 localUserState: LocalUserState,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel {
+                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                                 ,
+                                 buttonViewDataState: ButtonViewDataState,
+                                 controlHeaderViewData: CallScreenHeaderViewData?
+                                 </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
@@ -317,11 +346,14 @@ extension CompositeViewModelFactory {
                             accessibilityProvider: accessibilityProvider,
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking
-                            /* <TIMER_TITLE_FEATURE> */ ,
+                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                             callScreenInfoHeaderState: callScreenInfoHeaderState
-                            /* </TIMER_TITLE_FEATURE> */
-                            )
+                            /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                            ,
+                            buttonViewDataState: buttonViewDataState,
+                            controlHeaderViewData: controlHeaderViewData
+                            </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+        )
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
@@ -344,22 +376,22 @@ extension CompositeViewModelFactory {
                                   dispatchAction: dispatchAction)
     }
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
-                                      lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(localizationProvider: localizationProvider,
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
-                                     lifeCycleState: lifeCycleState,
                                      isCameraEnabled: localOptions?.audioVideoMode != .audioOnly,
                                      callType: callType)
     }
 
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
+    func makeParticipantGridsViewModel(isIpadInterface: Bool,
+                                       rendererViewManager: RendererViewManager) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
                                  accessibilityProvider: accessibilityProvider,
                                  isIpadInterface: isIpadInterface,
-                                 callType: callType)
+                                 callType: callType,
+                                 rendererViewManager: rendererViewManager)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,

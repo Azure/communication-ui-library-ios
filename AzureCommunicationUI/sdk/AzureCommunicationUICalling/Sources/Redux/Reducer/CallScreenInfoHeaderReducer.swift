@@ -1,4 +1,3 @@
-/* <TIMER_TITLE_FEATURE> */
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
@@ -17,10 +16,7 @@ extension Reducer where State == CallScreenInfoHeaderState,
         case .updateSubtitle(let subtitle):
             newState = CallScreenInfoHeaderState(title: currentState.title,
                                                  subtitle: subtitle)
-        default:
-            return newState
         }
         return newState
     }
 }
-/* </TIMER_TITLE_FEATURE> */

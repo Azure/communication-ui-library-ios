@@ -70,6 +70,10 @@ class CaptionsLanguageListViewModel: ObservableObject {
             accessibilityLabel: isSelected ?
             localizationProvider.getLocalizedString(.selected, languageName) : languageName,
             onSelectedAction: { [weak self] in
+                // post observer for drawerViewDidDisappear(control bar - more button)
+                NotificationCenter.default.post(
+                    name: Notification.Name(NotificationCenterName.drawerViewDidDisappear.rawValue),
+                    object: nil)
                 self?.selectLanguage(language.identifier)
             }
         )

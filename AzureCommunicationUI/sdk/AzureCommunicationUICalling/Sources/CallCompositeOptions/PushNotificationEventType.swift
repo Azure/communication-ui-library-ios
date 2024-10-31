@@ -77,6 +77,8 @@ extension AzureCommunicationCalling.PushNotificationEventType {
             return .incomingPstnCall
         case .stopRinging:
             return .stopRinging
+        @unknown default:
+            fatalError("Error")
         }
     }
 }

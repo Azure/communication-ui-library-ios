@@ -11,13 +11,10 @@ final class CallPipVideoViewController: AVPictureInPictureVideoCallViewControlle
     var onRequirePipContentView: (() -> UIView?)?
     var onRequireContentFailed: (() -> Void)?
 
-//    private let pipPlaceholderView: UIView
-
     /// Indicate if the pip container is ready for adding content.
     private var isPipPlaceholderReady = false
 
     public init(pipPlaceholderView: UIView) {
-//        self.pipPlaceholderView = pipPlaceholderView
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -27,9 +24,6 @@ final class CallPipVideoViewController: AVPictureInPictureVideoCallViewControlle
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-//        view.addSubview(pipPlaceholderView)
-//        pipPlaceholderView.isHidden = false
         isPipPlaceholderReady = true
         addPipContent()
     }

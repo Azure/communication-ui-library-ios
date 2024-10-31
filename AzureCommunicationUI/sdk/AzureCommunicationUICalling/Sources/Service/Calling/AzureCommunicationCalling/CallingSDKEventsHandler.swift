@@ -19,6 +19,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRoleEnum, Never>()
     var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
+    /* <CALL_START_TIME>
+    var callStartTimeSubject = PassthroughSubject<Date, Never>()
+    </CALL_START_TIME> */
     var capabilitiesChangedSubject = PassthroughSubject<CapabilitiesChangedEvent, Never>()
 
     var captionsSupportedSpokenLanguages = CurrentValueSubject<[String], Never>([])
@@ -123,7 +126,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                 return
             }
             let userIdentifier = remoteParticipant.identifier.rawId
-            let updateSpeakingStamp = remoteParticipant.isSpeaking
+            _ = remoteParticipant.isSpeaking
             self.updateRemoteParticipant(userIdentifier: userIdentifier)
         }
     }
@@ -211,6 +214,12 @@ extension CallingSDKEventsHandler: CallDelegate,
         }
     }
 
+    /* <CALL_START_TIME>
+    func call(_ call: Call, didUpdateStartTime args: PropertyChangedEventArgs) {
+        callStartTimeSubject.send(call.startTime)
+    }
+    </CALL_START_TIME> */
+
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         onStateChanged(call: call)
     }
@@ -290,7 +299,7 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
-        isLocalUserMutedSubject.send(call.isMuted)
+        isLocalUserMutedSubject.send(call.isOutgoingAudioMuted)
     }
 
     func call(_ call: Call, didChangeRole args: PropertyChangedEventArgs) {

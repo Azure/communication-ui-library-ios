@@ -58,6 +58,7 @@ struct IconButton: View {
             return Color(StyleProvider.color.surfaceLightColor)
         }
     }
+
     var buttonForegroundColor: Color {
         switch viewModel.buttonType {
         case .controlButton:
@@ -114,8 +115,7 @@ struct IconButton: View {
         if viewModel.isVisible {
             Group {
                 Button(action: viewModel.action) {
-                    Icon(name: viewModel.iconName, size: iconImageSize)
-                        .contentShape(Rectangle())
+                    icon
                 }
                 .disabled(viewModel.isDisabled)
                 .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
@@ -139,6 +139,19 @@ struct IconButton: View {
                 viewModel.action()
             }
         }
+    }
+
+    var icon: some View {
+        var icon = Icon(size: iconImageSize)
+        icon.contentShape(Rectangle())
+        if let uiImage = viewModel.icon {
+            icon.uiImage = uiImage
+        }
+        if let iconName = viewModel.iconName {
+            icon.name = iconName
+        }
+
+        return icon
     }
 }
 

@@ -21,7 +21,9 @@ extension Reducer where State == ButtonViewDataState,
         var reportIssueButton = state.reportIssueButton
 
         var callScreenCustomButtonsState = state.callScreenCustomButtonsState
-
+        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+        var callScreenHeaderCustomButtonsState = state.callScreenHeaderCustomButtonsState
+        </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         switch action {
         case .setupScreenAudioDeviceButtonIsEnabledUpdated(let enabled):
             guard let fromState = setupScreenAudioDeviceButtonState else {
@@ -192,6 +194,56 @@ extension Reducer where State == ButtonViewDataState,
                     return customButton
                 }
             }
+            /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+        case .callScreenHeaderCustomButtonIsEnabledUpdated(let id, let enabled):
+            callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState.map { (customButton) in
+                if customButton.id == id {
+                    return CustomButtonState(id: id,
+                                             enabled: enabled,
+                                             visible: customButton.visible,
+                                             image: customButton.image,
+                                             title: customButton.title)
+                } else {
+                    return customButton
+                }
+            }
+        case .callScreenHeaderCustomButtonIsVisibleUpdated(let id, let visible):
+            callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState.map { (customButton) in
+                if customButton.id == id {
+                    return CustomButtonState(id: id,
+                                             enabled: customButton.enabled,
+                                             visible: visible,
+                                             image: customButton.image,
+                                             title: customButton.title)
+                } else {
+                    return customButton
+                }
+            }
+        case .callScreenHeaderCustomButtonTitleUpdated(let id, let title):
+            callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState.map { (customButton) in
+                if customButton.id == id {
+                    return CustomButtonState(id: id,
+                                             enabled: customButton.enabled,
+                                             visible: customButton.visible,
+                                             image: customButton.image,
+                                             title: title)
+                } else {
+                    return customButton
+                }
+            }
+        case .callScreenHeaderCustomButtonIconUpdated(let id, let image):
+            callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState.map { (customButton) in
+                if customButton.id == id {
+                    return CustomButtonState(id: id,
+                                             enabled: customButton.enabled,
+                                             visible: customButton.visible,
+                                             image: image,
+                                             title: customButton.title)
+                } else {
+                    return customButton
+                }
+            }
+            </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         }
         return ButtonViewDataState(setupScreenCameraButtonState: setupScreenCameraButtonState,
                                    setupScreenMicButtonState: setupScreenMicButtonState,
@@ -205,6 +257,11 @@ extension Reducer where State == ButtonViewDataState,
                                    liveCaptionsToggleButton: liveCaptionsToggleButton,
                                    spokenLanguageButton: spokenLanguageButton,
                                    captionsLanguageButton: captionsLanguageButton,
-                                   callScreenCustomButtonsState: callScreenCustomButtonsState)
+                                   callScreenCustomButtonsState: callScreenCustomButtonsState
+                                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                                   ,
+                                   callScreenHeaderCustomButtonsState: callScreenHeaderCustomButtonsState
+                                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+        )
     }
 }

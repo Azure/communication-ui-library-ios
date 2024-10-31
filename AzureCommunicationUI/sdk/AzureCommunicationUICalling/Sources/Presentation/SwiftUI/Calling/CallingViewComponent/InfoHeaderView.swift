@@ -11,7 +11,15 @@ struct InfoHeaderView: View {
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
     @State var participantMenuSourceView = UIView()
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+    @State var customButton1SourceView = UIView()
+    @State var customButton2SourceView = UIView()
+    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     @AccessibilityFocusState var focusedOnParticipantList: Bool
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+    @AccessibilityFocusState var focusedOnCustomButton1: Bool
+    @AccessibilityFocusState var focusedOnCustomButton2: Bool
+    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     let avatarViewManager: AvatarViewManagerProtocol
 
     private enum Constants {
@@ -82,7 +90,6 @@ struct InfoHeaderView: View {
                     .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
-                /* <TIMER_TITLE_FEATURE> */
                 if !viewModel.subtitle!.isEmpty {
                     Text(viewModel.subtitle!.trimmingCharacters(in: .whitespacesAndNewlines))
                         .alignmentGuide(.leading) { d in d[.leading] }
@@ -96,9 +103,20 @@ struct InfoHeaderView: View {
                                             Constants.accessibilityFontScale :
                                                 Constants.defaultFontScale)
                 }
-                /* </TIMER_TITLE_FEATURE> */
             }
             Spacer()
+            /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+            if let customButton1ViewModel = viewModel.customButton1ViewModel {
+                IconButton(viewModel: customButton1ViewModel)
+                    .background(SourceViewSpace(sourceView: customButton1SourceView))
+                    .accessibilityFocused($focusedOnCustomButton1, equals: true)
+            }
+            if let customButton2ViewModel = viewModel.customButton2ViewModel {
+                IconButton(viewModel: customButton2ViewModel)
+                    .background(SourceViewSpace(sourceView: customButton2SourceView))
+                    .accessibilityFocused($focusedOnCustomButton2, equals: true)
+            }
+            </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
             participantListButton
         }
         .padding(EdgeInsets(top: 0,

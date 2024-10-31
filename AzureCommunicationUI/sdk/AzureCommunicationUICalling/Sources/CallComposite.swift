@@ -41,10 +41,12 @@ public class CallComposite {
         public var onIncomingCallCancelled: ((IncomingCallCancelled) -> Void)?
         /// Closure to incoming call id accepted by CallKit.
         public var onIncomingCallAcceptedFromCallKit: ((_ callId: String) -> Void)?
-        /* <TIMER_TITLE_FEATURE> */
         /// Closure to execute when participant has left a call inside Call Composite
         public var onRemoteParticipantLeft: (([CommunicationIdentifier]) -> Void)?
-        /* </TIMER_TITLE_FEATURE> */
+        /* <CALL_START_TIME>
+        /// Closure to call start time updated.
+        public var onCallStartTimeUpdated: ((Date) -> Void)?
+        </CALL_START_TIME> */
     }
 
     /// The events handler for Call Composite
@@ -100,6 +102,9 @@ public class CallComposite {
     private var videoViewManager: VideoViewManager?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
+    /* <CALL_START_TIME>
+    private var callStartTimeInternal: Date?
+    </CALL_START_TIME> */
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -302,6 +307,16 @@ public class CallComposite {
              }
          }
      }
+
+    /* <CALL_START_TIME>
+    /// Get call start time
+    public func callStartTime() -> Date? {
+        guard let callingSDKWrapper = callingSDKWrapper else {
+           return nil
+        }
+        return callingSDKWrapper.callStartTime()
+    }
+    </CALL_START_TIME> */
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
@@ -583,14 +598,12 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
         self.videoViewManager = videoViewManager
-        /* <TIMER_TITLE_FEATURE> */
         let updatableOptionsManager = UpdatableOptionsManager(
             store: store,
             setupScreenOptions: setupScreenOptions,
             callScreenOptions: callScreenOptions
         )
         self.updatableOptionsManager = updatableOptionsManager
-        /* </TIMER_TITLE_FEATURE> */
         if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
@@ -623,6 +636,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 callScreenOptions: callScreenOptions,
                 capabilitiesManager: CapabilitiesManager(callType: callConfiguration.compositeCallType),
                 avatarManager: avatarViewManager,
+                themeOptions: themeOptions ?? ThemeColor(),
                 updatableOptionsManager: updatableOptionsManager,
                 retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
@@ -739,6 +753,14 @@ extension CallComposite {
             store?.dispatch(action: .visibilityAction(.hideEntered))
             hide()
         }
+        /* <CALL_START_TIME>
+        if let onCallStartTimeUpdated = events.onCallStartTimeUpdated,
+           let newCallStartTime = state.callingState.callStartTime,
+           callStartTimeInternal != newCallStartTime {
+            self.callStartTimeInternal = newCallStartTime
+            onCallStartTimeUpdated(newCallStartTime)
+        }
+        </CALL_START_TIME> */
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

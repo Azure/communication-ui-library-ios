@@ -25,7 +25,8 @@ class OnHoldOverlayViewModelMocking: OnHoldOverlayViewModel {
         self.actionButtonViewModelMocking = PrimaryButtonViewModel(buttonStyle: .primaryFilled,
                                                             buttonLabel: localizationProvider.getLocalizedString(.resume),
                                                             iconName: nil,
-                                                            isDisabled: false) {
+                                                            isDisabled: false,
+                                                            themeOptions: MockThemeOptions()) {
             resumeAction()
         }
         super.init(localizationProvider: localizationProvider,

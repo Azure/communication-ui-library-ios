@@ -5,6 +5,8 @@
 
 import Combine
 import Foundation
+import UIKit
+import SwiftUI
 
 // swiftlint:disable type_body_length
 class ControlBarViewModel: ObservableObject {
@@ -16,13 +18,14 @@ class ControlBarViewModel: ObservableObject {
     private(set) var cameraButtonViewModel: IconButtonViewModel!
     private let controlBarOptions: CallScreenControlBarOptions?
     private let audioVideoMode: CallCompositeAudioVideoMode
-
+    var onDrawerViewDidDisappearBlock: (() -> Void)?
+    private let accessibilityProvider: AccessibilityProviderProtocol
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isShareActivityDisplayed = false
     @Published var isDisplayed = false
     @Published var isCameraDisplayed = true
     @Published var totalButtonCount = 5
-
+    @Published var isMoreButtonShouldFocused = false
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
@@ -49,6 +52,7 @@ class ControlBarViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          onEndCallTapped: @escaping (() -> Void),
          localUserState: LocalUserState,
+         accessibilityProvider: AccessibilityProviderProtocol,
          audioVideoMode: CallCompositeAudioVideoMode,
          capabilitiesManager: CapabilitiesManager,
          controlBarOptions: CallScreenControlBarOptions?,
@@ -58,13 +62,25 @@ class ControlBarViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.onEndCallTapped = onEndCallTapped
         self.audioVideoMode = audioVideoMode
-
+        self.accessibilityProvider = accessibilityProvider
         self.capabilitiesManager = capabilitiesManager
         self.capabilities = localUserState.capabilities
         self.controlBarOptions = controlBarOptions
         self.buttonViewDataState = buttonViewDataState
+        setupCameraButtonViewModel(factory: compositeViewModelFactory)
+        setupMicButtonViewModel(factory: compositeViewModelFactory)
+        setupAudioDeviceButtonViewModel(factory: compositeViewModelFactory)
+        setupHangUpButtonViewModel(factory: compositeViewModelFactory)
+        setupMoreButtonViewModel(factory: compositeViewModelFactory)
 
-        cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+        debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
+        updateTotalButtonCount()
+        accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
+        accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
+    }
+
+    private func setupCameraButtonViewModel(factory: CompositeViewModelFactoryProtocol) {
+        cameraButtonViewModel = factory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
             isDisabled: isCameraDisabled(),
@@ -75,11 +91,11 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle camera button tapped")
                 self.cameraButtonTapped()
         }
+        cameraButtonViewModel.accessibilityLabel = localizationProvider.getLocalizedString(.videoOffAccessibilityLabel)
+    }
 
-        cameraButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
-            .videoOffAccessibilityLabel)
-
-        micButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+    private func setupMicButtonViewModel(factory: CompositeViewModelFactoryProtocol) {
+        micButtonViewModel = factory.makeIconButtonViewModel(
             iconName: .micOff,
             buttonType: .controlButton,
             isDisabled: isMicDisabled(),
@@ -90,11 +106,11 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle microphone button tapped")
                 self.microphoneButtonTapped()
         }
+        micButtonViewModel.accessibilityLabel = localizationProvider.getLocalizedString(.micOffAccessibilityLabel)
+    }
 
-        micButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
-            .micOffAccessibilityLabel)
-
-        audioDeviceButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+    private func setupAudioDeviceButtonViewModel(factory: CompositeViewModelFactoryProtocol) {
+        audioDeviceButtonViewModel = factory.makeIconButtonViewModel(
             iconName: .speakerFilled,
             buttonType: .controlButton,
             isDisabled: false,
@@ -105,11 +121,13 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Select audio device button tapped")
                 self.selectAudioDeviceButtonTapped()
         }
+        audioDeviceButtonViewModel.accessibilityLabel = localizationProvider.getLocalizedString(
+            .deviceAccesibiiltyLabel
+        )
+    }
 
-        audioDeviceButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
-            .deviceAccesibiiltyLabel)
-
-        hangUpButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+    private func setupHangUpButtonViewModel(factory: CompositeViewModelFactoryProtocol) {
+        hangUpButtonViewModel = factory.makeIconButtonViewModel(
             iconName: .endCall,
             buttonType: .roundedRectButton,
             isDisabled: false,
@@ -120,11 +138,11 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Hangup button tapped")
                 self.onEndCallTapped()
         }
+        hangUpButtonViewModel.accessibilityLabel = localizationProvider.getLocalizedString(.leaveCall)
+    }
 
-        hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
-            .leaveCall)
-
-        moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+    private func setupMoreButtonViewModel(factory: CompositeViewModelFactoryProtocol) {
+        moreButtonViewModel = factory.makeIconButtonViewModel(
             iconName: .more,
             buttonType: .controlButton,
             isDisabled: false,
@@ -134,14 +152,12 @@ class ControlBarViewModel: ObservableObject {
                 }
                 self.moreButtonTapped()
         }
-
-        moreButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
-            .moreAccessibilityLabel)
-
-        debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
-        updateTotalButtonCount()
+        moreButtonViewModel.accessibilityLabel = localizationProvider.getLocalizedString(.moreAccessibilityLabel)
     }
 
+    func setAccessibilityFocus(_ focusType: any View) {
+            UIAccessibility.post(notification: .layoutChanged, argument: focusType)
+    }
     func cameraButtonTapped() {
         guard !isCameraStateUpdating else {
             return
@@ -203,6 +219,11 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func moreButtonTapped() {
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name(NotificationCenterName.drawerViewDidDisappear.rawValue),
+            object: nil, queue: .main) { _ in
+            self.onDrawerViewDidDisappearBlock?()
+        }
         dispatch(.showMoreOptions)
     }
     func isMoreButtonDisabled() -> Bool {
@@ -271,8 +292,8 @@ class ControlBarViewModel: ObservableObject {
 
         moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
         moreButtonViewModel.update(isVisible: isMoreButtonVisible())
-
         isDisplayed = visibilityState.currentStatus != .pipModeEntered
+        isMoreButtonShouldFocused = true
         updateTotalButtonCount()
     }
 
@@ -304,3 +325,14 @@ class ControlBarViewModel: ObservableObject {
     }
 }
 // swiftlint:enable type_body_length
+
+extension ControlBarViewModel: AccessibilityProviderNotificationsObserver {
+    func didChangeVoiceOverStatus(_ notification: NSNotification) {
+        // Call the closure to handle the drawer view disappearance
+        onDrawerViewDidDisappearBlock?()
+    }
+    func didUIFocusUpdateNotification(_ notification: NSNotification) {
+        // Call the closure to handle the drawer view disappearance
+        onDrawerViewDidDisappearBlock?()
+    }
+}

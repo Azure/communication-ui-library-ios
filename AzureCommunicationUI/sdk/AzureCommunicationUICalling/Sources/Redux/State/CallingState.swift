@@ -43,6 +43,9 @@ struct CallingState: Equatable {
     let callStartDate: Date?
     let callEndReasonCode: Int?
     let callEndReasonSubCode: Int?
+    /* <CALL_START_TIME>
+    let callStartTime: Date?
+    </CALL_START_TIME> */
 
     init(status: CallingStatus = .none,
          operationStatus: OperationStatus = .none,
@@ -54,7 +57,10 @@ struct CallingState: Equatable {
          callEndReasonSubCode: Int? = nil,
          recordingStatus: RecordingStatus = RecordingStatus.off,
          transcriptionStatus: RecordingStatus = RecordingStatus.off,
-         isRecorcingTranscriptionBannedDismissed: Bool = false) {
+         isRecorcingTranscriptionBannedDismissed: Bool = false,
+         /* <CALL_START_TIME> */
+         callStartTime: Date? = nil
+         /* </CALL_START_TIME> */) {
         self.status = status
         self.operationStatus = operationStatus
         self.callId = callId
@@ -66,6 +72,9 @@ struct CallingState: Equatable {
         self.recordingStatus = recordingStatus
         self.transcriptionStatus = transcriptionStatus
         self.isRecorcingTranscriptionBannedDismissed = isRecorcingTranscriptionBannedDismissed
+        /* <CALL_START_TIME>
+        self.callStartTime = callStartTime
+        </CALL_START_TIME> */
     }
 
     static func == (lhs: CallingState, rhs: CallingState) -> Bool {

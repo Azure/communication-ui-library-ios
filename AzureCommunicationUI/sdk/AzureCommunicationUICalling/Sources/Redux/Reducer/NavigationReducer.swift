@@ -68,6 +68,9 @@ extension Reducer where State == NavigationState,
                 .callingAction(.recordingUpdated),
                 .callingAction(.transcriptionUpdated),
                 .callingAction(.dismissRecordingTranscriptionBannedUpdated),
+            /* <CALL_START_TIME>
+                .callingAction(.callStartTimeUpdated),
+            </CALL_START_TIME> */
                 .captionsAction,
                 .lifecycleAction,
                 .localUserAction,
@@ -75,11 +78,8 @@ extension Reducer where State == NavigationState,
                 .permissionAction,
                 .visibilityAction,
                 .callDiagnosticAction,
-                .toastNotificationAction
-                /* <TIMER_TITLE_FEATURE> */
-                ,
+                .toastNotificationAction,
                 .callScreenInfoHeaderAction,
-                /* </TIMER_TITLE_FEATURE> */
                 .setTotalParticipantCount,
                 .buttonViewDataAction:
             return state

@@ -1,4 +1,3 @@
-/* <TIMER_TITLE_FEATURE> */
 //
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
@@ -14,4 +13,3 @@ struct CallScreenInfoHeaderState {
         self.subtitle = subtitle
     }
 }
-/* </TIMER_TITLE_FEATURE> */

@@ -10,7 +10,7 @@ import SwiftUI
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
     func getSetupViewModel() -> SetupViewModel
-    func getCallingViewModel() -> CallingViewModel
+    func getCallingViewModel(rendererViewManager: RendererViewManager) -> CallingViewModel
     // MARK: ComponentViewModels
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
@@ -21,6 +21,13 @@ protocol CompositeViewModelFactoryProtocol {
                                  isDisabled: Bool,
                                  isVisible: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+    func makeIconButtonViewModel(icon: UIImage,
+                                 buttonType: IconButtonViewModel.ButtonType,
+                                 isDisabled: Bool,
+                                 isVisible: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel
+    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
         selectedButtonState: ButtonStateType,
         localizationProvider: LocalizationProviderProtocol,
@@ -52,17 +59,22 @@ protocol CompositeViewModelFactoryProtocol {
                                  capabilitiesManager: CapabilitiesManager,
                                  buttonViewDataState: ButtonViewDataState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState /* <TIMER_TITLE_FEATURE> */ ,
+                                 localUserState: LocalUserState,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* </TIMER_TITLE_FEATURE> */ ) -> InfoHeaderViewModel
+                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                                 ,
+                                 buttonViewDataState: ButtonViewDataState,
+                                 controlHeaderViewData: CallScreenHeaderViewData?
+                                 </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    ) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
-    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool,
+                                       rendererViewManager: RendererViewManager) -> ParticipantGridViewModel
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
-                                      lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
 
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        isDisplayed: Bool,
@@ -128,7 +140,7 @@ protocol CompositeViewModelFactoryProtocol {
 extension CompositeViewModelFactoryProtocol {
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
-                                    iconName: CompositeIcon? = .none,
+                                    iconName: CompositeIcon? = CompositeIcon.none,
                                     isDisabled: Bool = false,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         return makePrimaryButtonViewModel(buttonStyle: buttonStyle,

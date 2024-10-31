@@ -10,13 +10,6 @@ import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
-    func removeParticipant(_ participantId: String) async throws {
-        return
-    }
-
-    func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
-        throw CallCompositeInternalError.callJoinFailed
-    }
 
     var callComposite: CallComposite?
     let callingEventsHandler: CallingSDKEventsHandling
@@ -65,6 +58,19 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func setupCall() async throws {
         try await setupCallClientAndDeviceManager()
+    }
+    /* <CALL_START_TIME>
+    func callStartTime() -> Date? {
+        return nil
+    }
+    </CALL_START_TIME> */
+
+    func removeParticipant(_ participantId: String) async throws {
+        return
+    }
+
+    func getCapabilities() async throws -> Set<AzureCommunicationUICalling.ParticipantCapabilityType> {
+        throw CallCompositeInternalError.callJoinFailed
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
