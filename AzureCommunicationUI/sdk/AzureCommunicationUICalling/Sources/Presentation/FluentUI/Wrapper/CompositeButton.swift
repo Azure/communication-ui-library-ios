@@ -57,7 +57,7 @@ struct CompositeButton: UIViewRepresentable {
                                    buttonStyle == .primaryOutline)
                                    ? themeOptions.primaryColor.dynamicColor
                                    : themeOptions.foregroundOnPrimaryColor.dynamicColor
-                let overrideTokens: [ButtonTokenSet.Tokens: ControlTokenValue] = [
+                var overrideTokens: [ButtonTokenSet.Tokens: ControlTokenValue] = [
                     .foregroundColor: ControlTokenValue.dynamicColor({
                         dynamicColor!
                     }),
@@ -69,11 +69,13 @@ struct CompositeButton: UIViewRepresentable {
                     }),
                     .borderColor: ControlTokenValue.dynamicColor({
                         themeOptions.primaryColor.dynamicColor!
-                    }),
-                    .backgroundColor: ControlTokenValue.dynamicColor({
-                        themeOptions.primaryColor.dynamicColor!
                     })
                 ]
+                if buttonStyle == .primaryFilled {
+                    overrideTokens[.backgroundColor] = .dynamicColor {
+                        themeOptions.primaryColor.dynamicColor!
+                    }
+                }
                 button.tokenSet.replaceAllOverrides(with: overrideTokens)
          /* </CUSTOM_COLOR_FEATURE> */
                  if let paddings = paddings {
