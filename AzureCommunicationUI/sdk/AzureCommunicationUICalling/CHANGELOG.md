@@ -3,8 +3,9 @@
 ## 1.12.0 (2024-10-31)
 
 ### Features
-- Color theming support
-- Update min support version to iOS 16
+- Color theming support for button font color.
+- Update min support version to iOS 16.
+- Video displays in the Picture-in-Picture when application is in background mode.
 
 ## 1.12.0-beta.1 (2024-10-10)
 
