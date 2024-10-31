@@ -5,6 +5,7 @@
 ### Features
 - Color theming support
 - Update min support version to iOS 16
+- Video displays in the Picite-in-Picture when application is in background mode.
 
 ## 1.12.0-beta.1 (2024-10-10)
 
