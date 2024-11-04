@@ -800,7 +800,6 @@ extension CallingMiddlewareHandler {
                 dispatch(.remoteParticipantsAction(.setTotalParticipantCount(participantCount: participantCount)))
             }.store(in: subscription)
         /* <CALL_START_TIME> */
-
         callingService.callStartTimeSubject
             .removeDuplicates()
             .sink { startTime in

@@ -370,7 +370,7 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         wait(for: [expectation], timeout: 1)
     }
-    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+
     func test_infoHeaderViewModel_display_infoHeader_customButtonsDisplayed() {
         let sut = makeSUTLocalizationMocking()
         let expectation = XCTestExpectation(description: "Should display custom button")
@@ -394,15 +394,14 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: buttonState
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
 
         wait(for: [expectation], timeout: 1)
     }
-    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 }
 
 extension InfoHeaderViewModelTests {
