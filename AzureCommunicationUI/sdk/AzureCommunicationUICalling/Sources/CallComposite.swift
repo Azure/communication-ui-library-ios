@@ -753,6 +753,7 @@ extension CallComposite {
             store?.dispatch(action: .visibilityAction(.hideEntered))
             hide()
         }
+
         /* <CALL_START_TIME> */
         if let onCallStartTimeUpdated = events.onCallStartTimeUpdated,
            let newCallStartTime = state.callingState.callStartTime,
