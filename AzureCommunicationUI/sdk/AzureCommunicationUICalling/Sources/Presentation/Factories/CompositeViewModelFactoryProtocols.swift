@@ -21,13 +21,13 @@ protocol CompositeViewModelFactoryProtocol {
                                  isDisabled: Bool,
                                  isVisible: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     func makeIconButtonViewModel(icon: UIImage,
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  isVisible: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
         selectedButtonState: ButtonStateType,
         localizationProvider: LocalizationProviderProtocol,
@@ -61,11 +61,11 @@ protocol CompositeViewModelFactoryProtocol {
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                                  ,
                                  buttonViewDataState: ButtonViewDataState,
                                  controlHeaderViewData: CallScreenHeaderViewData?
-                                 </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                                 /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     ) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
