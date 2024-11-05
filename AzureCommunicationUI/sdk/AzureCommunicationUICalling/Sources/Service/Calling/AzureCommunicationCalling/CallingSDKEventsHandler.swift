@@ -240,7 +240,7 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
-        isLocalUserMutedSubject.send(call.isMuted)
+        isLocalUserMutedSubject.send(call.isOutgoingAudioMuted)
     }
 
     func call(_ call: Call, didChangeRole args: PropertyChangedEventArgs) {
