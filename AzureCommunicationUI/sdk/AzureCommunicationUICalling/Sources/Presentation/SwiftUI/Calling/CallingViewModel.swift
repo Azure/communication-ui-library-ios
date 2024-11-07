@@ -263,7 +263,7 @@ internal class CallingViewModel: ObservableObject {
                                    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                                    ,
                                    buttonViewDataState: state.buttonViewDataState
-                                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
+                                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
                                    )
         localVideoViewModel.update(localUserState: state.localUserState,
                                    visibilityState: state.visibilityState)
