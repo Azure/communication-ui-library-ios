@@ -69,7 +69,8 @@ internal struct BottomDrawer<Content: View>: View {
     @State private var scrollViewContentSize: CGFloat = 0
     @State private var drawerHeight: CGFloat = DrawerConstants.collapsedHeight
     @State private var isExpanded = false
-
+    @State private var isFullyExpanded = false
+    @State private var keyboardHeight: CGFloat = 0
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
@@ -96,6 +97,10 @@ internal struct BottomDrawer<Content: View>: View {
                     .accessibilityAddTraits(.isModal)
                     .onAppear {
                         UIAccessibility.post(notification: .screenChanged, argument: nil)
+                        addKeyboardObservers()
+                    }
+                    .onDisappear {
+                        removeKeyboardObservers()
                     }
                     .gesture(
                         DragGesture()
@@ -122,6 +127,7 @@ internal struct BottomDrawer<Content: View>: View {
                                         (DrawerConstants.collapsedHeight + DrawerConstants.expandedHeight) / 2
                                         drawerHeight = isExpanded ?
                                         DrawerConstants.expandedHeight : DrawerConstants.collapsedHeight
+                                        isFullyExpanded = drawerHeight == DrawerConstants.expandedHeight
                                     }
                                 }
                                 dragOffset = 0
@@ -147,7 +153,8 @@ internal struct BottomDrawer<Content: View>: View {
     }
 
     private var overlayView: some View {
-        Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
+        Color.black.opacity(isExpandable ? 0 :
+                                (drawerState == .visible ? DrawerConstants.overlayOpacity : 0))
             .ignoresSafeArea()
             .onTapGesture {
                 hideDrawer()
@@ -170,6 +177,13 @@ internal struct BottomDrawer<Content: View>: View {
 
                 content
                 Spacer()
+                if isFullyExpanded {
+                    TextField("Enter text", text: .constant(""))
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                        .padding(.bottom, keyboardHeight)
+                        .animation(.easeInOut, value: keyboardHeight)
+                }
             }
             .frame(maxWidth: .infinity)
             .background(Color(StyleProvider.color.surface))
@@ -179,6 +193,28 @@ internal struct BottomDrawer<Content: View>: View {
             .modifier(ConditionalFrameModifier(isExpanded: $isExpanded,
                                                drawerHeight: $drawerHeight, isExpandable: isExpandable))
         }
+    }
+    private func addKeyboardObservers() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
+                                               object: nil, queue: .main) { notification in
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                keyboardHeight = keyboardFrame.height
+            }
+        }
+
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
+                                               object: nil, queue: .main) { _ in
+            keyboardHeight = 0
+        }
+    }
+
+    private func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
     }
 }
 
