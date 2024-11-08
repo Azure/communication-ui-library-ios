@@ -12,6 +12,11 @@ internal enum DrawerState {
     case visible
 }
 
+enum DrawerType {
+    case fixed
+    case expandable
+}
+
 internal enum DrawerConstants {
     // How round is the drawer handle
     static let drawerHandleCornerRadius: CGFloat = 4
@@ -27,6 +32,9 @@ internal enum DrawerConstants {
 
     // Opacity of faded items (like background overlay)
     static let overlayOpacity: CGFloat = 0.4
+
+    // How much drag you need on the drawer to dismiss in that way
+    static let dragThreshold: CGFloat = 100
 
     // After hiding, the delay before making it "gone", accounts for animation
     static let delayUntilGone: CGFloat = 0.3
@@ -54,50 +62,32 @@ internal enum DrawerConstants {
 ///
 internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone
+    @State private var isExpandable = true
+    @State private var dragOffset: CGFloat = 0
+    private let defaultHeight: CGFloat = 200 // Default height for content
+    private let maxHeight: CGFloat = UIScreen.main.bounds.height * 0.8
+
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
     var drawerWorkItem: DispatchWorkItem?
 
-    init(isPresented: Bool, hideDrawer: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+    init(isPresented: Bool,
+         hideDrawer: @escaping () -> Void,
+         @ViewBuilder content: () -> Content,
+         isExpandable: Bool = false) {
         self.isPresented = isPresented
         self.content = content()
         self.hideDrawer = hideDrawer
+        self.isExpandable = isExpandable
     }
 
     var body: some View {
         ZStack(alignment: .bottom) {
             if drawerState != .gone {
                 Group {
-                    Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            hideDrawer()
-                        }
-                        .accessibilityHidden(true)
-
-                    VStack {
-                        Spacer()
-                        VStack {
-                            Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
-                                .accessibilityHidden(drawerState != .visible)
-                                .accessibilityLabel(Text("Close Drawer"))
-                                .accessibilityAction {
-                                    hideDrawer()
-                                }
-                                .accessibility(hidden: drawerState != .visible)
-                                .allowsHitTesting(drawerState == .visible)
-
-                            content
-
-                            Spacer().frame(height: DrawerConstants.bottomFillY)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .background(Color(StyleProvider.color.surface))
-                        .cornerRadius(DrawerConstants.drawerCornerRadius)
-                        .shadow(radius: DrawerConstants.drawerShadowRadius)
-                        .padding(.bottom, -DrawerConstants.bottomFillY)
-                    }
+                    overlayView
+                    contentView
                     .transition(.move(edge: .bottom))
                     .animation(.easeInOut, value: drawerState == .visible)
                     .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : 0)
@@ -105,9 +95,34 @@ internal struct BottomDrawer<Content: View>: View {
                     .onAppear {
                         UIAccessibility.post(notification: .screenChanged, argument: nil)
                     }
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                if isExpandable {
+                                    let newOffset = value.translation.height
+                                    if newOffset >= 0 {
+                                        dragOffset = newOffset
+                                    } else if newOffset >= -(maxHeight - defaultHeight) {
+                                        dragOffset = newOffset
+                                    }
+                                }
+                            }
+                            .onEnded { value in
+                                if isExpandable {
+                                    if value.translation.height > DrawerConstants.dragThreshold {
+                                        withAnimation {
+                                            drawerState = .hidden
+                                        }
+                                    } else if -value.translation.height > (maxHeight - defaultHeight) / 2 {
+                                        dragOffset = -(maxHeight - defaultHeight)
+                                    } else {
+                                        dragOffset = 0
+                                    }
+                                }
+                            }
+                    )
                 }
             }
-
         }
 
         .onChange(of: isPresented) { newValue in
@@ -125,5 +140,39 @@ internal struct BottomDrawer<Content: View>: View {
                 }
             }
         }
+    }
+
+    var contentView: some View {
+        VStack {
+            Spacer()
+            VStack {
+                Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
+                    .accessibilityHidden(drawerState != .visible)
+                    .accessibilityLabel(Text("Close Drawer"))
+                    .accessibilityAction {
+                        hideDrawer()
+                    }
+                    .accessibility(hidden: drawerState != .visible)
+                    .allowsHitTesting(drawerState == .visible)
+
+                content
+
+                Spacer().frame(height: DrawerConstants.bottomFillY)
+            }
+            .frame(maxWidth: .infinity, maxHeight: isExpandable ? UIScreen.main.bounds.height * 0.8 : nil)
+            .background(Color(StyleProvider.color.surface))
+            .cornerRadius(DrawerConstants.drawerCornerRadius)
+            .shadow(radius: DrawerConstants.drawerShadowRadius)
+            .padding(.bottom, -DrawerConstants.bottomFillY)
+        }
+    }
+
+    var overlayView: some View {
+       Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
+            .ignoresSafeArea()
+            .onTapGesture {
+                hideDrawer()
+            }
+            .accessibilityHidden(true)
     }
 }
