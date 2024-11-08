@@ -94,7 +94,6 @@ class CaptionsListViewModel: ObservableObject {
 
             items.append(captionsLanguageInfoModel)
         }
-
     }
     func update(state: AppState) {
         isDisplayed = state.navigationState.captionsViewVisible

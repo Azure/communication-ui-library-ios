@@ -73,6 +73,10 @@ struct DrawerSelectableItemViewModel: BaseDrawerItemViewModel {
 
 struct TitleDrawerListItemViewModel: BaseDrawerItemViewModel {
     let title: String
+    let endIcon: CompositeIcon? = nil
+    let endIconAction: (() -> Void)? = nil
+    let expandIcon: CompositeIcon? = nil
+    let expandIconAction: (() -> Void)? = nil
     let accessibilityIdentifier: String
 }
 
@@ -90,4 +94,13 @@ struct BodyTextWithActionDrawerListItemViewModel: BaseDrawerItemViewModel {
     let confirmDeny: String
     let accept: (() -> Void)
     let deny: (() -> Void)
+}
+
+struct RttDrawerListItemViewModel: BaseDrawerItemViewModel {
+    let title: String
+    let subtitle: String?
+    let accessibilityIdentifier: String
+    let isTyping: Bool
+    let rttText: String
+    let isTypingAccessibilityValue: String
 }

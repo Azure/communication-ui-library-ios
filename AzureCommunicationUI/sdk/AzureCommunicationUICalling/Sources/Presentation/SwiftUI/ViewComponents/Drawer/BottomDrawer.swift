@@ -122,7 +122,6 @@ internal struct BottomDrawer<Content: View>: View {
                                     withAnimation {
                                         drawerHeightState = value.translation.height <
                                             -DrawerConstants.dragThreshold ? .expanded : .collapsed
-                                        let threshold = UIScreen.main.bounds.height * 0.5
                                         isExpanded = drawerHeight >
                                         (DrawerConstants.collapsedHeight + DrawerConstants.expandedHeight) / 2
                                         drawerHeight = isExpanded ?
@@ -174,9 +173,16 @@ internal struct BottomDrawer<Content: View>: View {
                     }
                     .accessibility(hidden: drawerState != .visible)
                     .allowsHitTesting(drawerState == .visible)
-
+                if isExpandable {
+                    handleView
+                }
                 content
-                Spacer()
+                if isExpandable {
+                    Spacer()
+                } else {
+                    Spacer().frame(height: DrawerConstants.bottomFillY)
+                }
+
                 if isFullyExpanded {
                     TextField("Enter text", text: .constant(""))
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -190,9 +196,15 @@ internal struct BottomDrawer<Content: View>: View {
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)
             .padding(.bottom, -DrawerConstants.bottomFillY)
-            .modifier(ConditionalFrameModifier(isExpanded: $isExpanded,
-                                               drawerHeight: $drawerHeight, isExpandable: isExpandable))
+            .modifier(ConditionalFrameModifier(
+                drawerHeight: $drawerHeight, isExpandable: isExpandable))
         }
+    }
+
+    private var handleView: some View {
+        RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
+            .frame(width: 36, height: 5)
+            .foregroundColor(Color.gray.opacity(0.6))
     }
     private func addKeyboardObservers() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
@@ -219,7 +231,6 @@ internal struct BottomDrawer<Content: View>: View {
 }
 
 struct ConditionalFrameModifier: ViewModifier {
-    @Binding var isExpanded: Bool
     @Binding var drawerHeight: CGFloat
     let isExpandable: Bool
 

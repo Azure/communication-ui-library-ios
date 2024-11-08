@@ -16,6 +16,26 @@ internal struct DrawerTitleView: View {
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.headline)
                 .accessibilityAddTraits(.isHeader)
+            if let icon = item.endIcon {
+                Icon(name: icon, size: DrawerListConstants.iconSize)
+                    .foregroundColor( .primary)
+                    .accessibilityHidden(true)
+                    .onTapGesture {
+                        if let action = item.endIconAction {
+                            action()
+                        }
+                    }
+            }
+            if let icon = item.expandIcon {
+                Icon(name: icon, size: DrawerListConstants.iconSize)
+                    .foregroundColor( .primary)
+                    .accessibilityHidden(true)
+                    .onTapGesture {
+                        if let action = item.expandIconAction {
+                            action()
+                        }
+                    }
+            }
             Spacer()
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
