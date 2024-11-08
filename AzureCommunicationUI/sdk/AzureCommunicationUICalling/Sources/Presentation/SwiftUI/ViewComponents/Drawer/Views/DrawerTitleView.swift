@@ -23,6 +23,6 @@ internal struct DrawerTitleView: View {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .accessibilityIdentifier(item.accessibilityIdentifier)
-        .background(Color(StyleProvider.color.surface))
+        .background(Color(StyleProvider.color.drawerColor))
     }
 }
