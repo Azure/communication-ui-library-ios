@@ -192,7 +192,7 @@ internal struct BottomDrawer<Content: View>: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .background(Color(StyleProvider.color.surface))
+            .background(Color(StyleProvider.color.drawerColor))
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)
             .padding(.bottom, -DrawerConstants.bottomFillY)
