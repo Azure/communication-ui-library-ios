@@ -39,7 +39,7 @@ internal enum DrawerConstants {
     // After hiding, the delay before making it "gone", accounts for animation
     static let delayUntilGone: CGFloat = 0.3
     static let collapsedHeight: CGFloat = 200
-    static let expandedHeight: CGFloat = UIScreen.main.bounds.height * 0.8
+    static let expandedHeight: CGFloat = UIScreen.main.bounds.height * 0.6
 }
 
 /// Bottom Drawer w/Swift UI Support
@@ -187,11 +187,13 @@ internal struct BottomDrawer<Content: View>: View {
                     TextField("Enter text", text: .constant(""))
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                        .padding(.bottom, keyboardHeight)
+                        .offset(y: -keyboardHeight)
                         .animation(.easeInOut, value: keyboardHeight)
+                    Spacer().frame(height: 25)
                 }
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, alignment: .bottom)
+            .ignoresSafeArea(.keyboard)
             .background(Color(StyleProvider.color.drawerColor))
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)

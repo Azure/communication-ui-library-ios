@@ -61,6 +61,7 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+        .ignoresSafeArea(.keyboard)
         .onRotate { newOrientation in
             updateChildViewIfNeededWith(newOrientation: newOrientation)
         }.onAppear {
@@ -169,6 +170,10 @@ struct CallingView: View {
                         !viewModel.isInPip {
                         captionsInfoView
                     }
+                    if viewModel.rttInfoViewModel.isDisplayed &&
+                        !viewModel.isInPip {
+                        rttInfoViewPlaceholder
+                    }
                 }
                 topAlertAreaView
                     .accessibilityElement(children: .contain)
@@ -200,7 +205,6 @@ struct CallingView: View {
                     .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
             })
             .accessibilityElement(children: .contain)
-            .background(.red)
         }
     }
 
@@ -323,9 +327,15 @@ struct CallingView: View {
                      isExpandable: true) {
             CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
                                     avatarViewManager: avatarManager)
-            .zIndex(1)
         }
     }
+
+    var rttInfoViewPlaceholder: some View {
+        Spacer()
+            .frame(maxWidth: .infinity, maxHeight: DrawerConstants.collapsedHeight, alignment: .bottom)
+            .zIndex(1)
+    }
+
     var errorInfoView: some View {
         return VStack {
             Spacer()
