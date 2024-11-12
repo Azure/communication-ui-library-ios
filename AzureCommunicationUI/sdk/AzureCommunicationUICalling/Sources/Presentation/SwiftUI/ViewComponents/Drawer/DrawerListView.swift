@@ -84,6 +84,8 @@ internal struct DrawerListView: View {
             return AnyView(DrawerGenericItemView(item: drawerItem))
         } else if let drawerItem = item as? BodyTextWithActionDrawerListItemViewModel {
             return AnyView(DrawerBodyWithActionTextView(item: drawerItem))
+        } else if let drawerItem = item as? IconTextActionListItemViewModel {
+            return AnyView(DrawerIconTextActionListItemView(item: drawerItem))
         }
         return AnyView(EmptyView())
     }

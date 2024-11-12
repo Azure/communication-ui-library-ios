@@ -181,10 +181,7 @@ internal class CallingViewModel: ObservableObject {
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
         bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
-
-        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
-            isCaptionsAvailable: true,
-            controlBarOptions: callScreenOptions.controlBarOptions,
+        let buttonActions = ButtonActions(
             showSharingViewAction: {
                 store.dispatch(action: .showSupportShare)
             },
@@ -194,6 +191,15 @@ internal class CallingViewModel: ObservableObject {
             showCaptionsViewAction: {
                 store.dispatch(action: .showCaptionsListView)
             },
+            showRttViewAction: {
+                store.dispatch(action: .showRtt)
+            }
+        )
+        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
+            isCaptionsAvailable: true,
+            isRttAvailable: true,
+            buttonActions: buttonActions,
+            controlBarOptions: callScreenOptions.controlBarOptions,
             buttonViewDataState: store.state.buttonViewDataState,
             dispatchAction: store.dispatch
         )

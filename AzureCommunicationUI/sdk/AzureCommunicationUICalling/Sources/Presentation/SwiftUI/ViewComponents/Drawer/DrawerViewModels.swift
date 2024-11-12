@@ -96,11 +96,14 @@ struct BodyTextWithActionDrawerListItemViewModel: BaseDrawerItemViewModel {
     let deny: (() -> Void)
 }
 
-struct RttDrawerListItemViewModel: BaseDrawerItemViewModel {
+struct IconTextActionListItemViewModel: BaseDrawerItemViewModel {
     let title: String
-    let subtitle: String?
+    let startCompositeIcon: CompositeIcon
     let accessibilityIdentifier: String
-    let isTyping: Bool
-    let rttText: String
-    let isTypingAccessibilityValue: String
+    let confirmTitle: String
+    let confirmMessage: String
+    let confirmAccept: String
+    let confirmDeny: String
+    let accept: (() -> Void)
+    let deny: (() -> Void)
 }

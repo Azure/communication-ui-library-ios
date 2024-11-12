@@ -478,22 +478,20 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeMoreCallOptionsListViewModel(isCaptionsAvailable: Bool,
+                                          isRttAvailable: Bool,
+                                          buttonActions: ButtonActions,
                                           controlBarOptions: AzureCommunicationUICalling.CallScreenControlBarOptions?,
-                                          showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void,
-                                          showCaptionsViewAction: @escaping () -> Void,
                                           buttonViewDataState: ButtonViewDataState,
                                           dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch
     ) -> AzureCommunicationUICalling.MoreCallOptionsListViewModel {
         return MoreCallOptionsListViewModel(
             compositeViewModelFactory: self,
             localizationProvider: localizationProvider,
-            showSharingViewAction: showSharingViewAction,
-            showSupportFormAction: showSupportFormAction,
-            showCaptionsViewAction: showCaptionsViewAction,
+            buttonActions: buttonActions,
             controlBarOptions: controlBarOptions,
             isCaptionsAvailable: true,
             isSupportFormAvailable: true,
+            isRttAvailable: true,
             buttonViewDataState: buttonViewDataState,
             dispatchAction: dispatchAction)
     }

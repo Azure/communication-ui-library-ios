@@ -57,6 +57,7 @@
 		11A8FC2F2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */; };
 		11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */; };
 		11A8FC332C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */; };
+		11AB753D2CE2F54A00AAC3BE /* RttAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AB753C2CE2F54100AAC3BE /* RttAction.swift */; };
 		11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */; };
 		11C50D382BD1A79900CB3615 /* CaptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C50D372BD1A79900CB3615 /* CaptionOptions.swift */; };
 		11D470762C62CEFE00A54BD7 /* ButtonViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D470752C62CEFE00A54BD7 /* ButtonViewData.swift */; };
@@ -441,6 +442,7 @@
 		11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListViewModel.swift; sourceTree = "<group>"; };
 		11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListView.swift; sourceTree = "<group>"; };
 		11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListViewModel.swift; sourceTree = "<group>"; };
+		11AB753C2CE2F54100AAC3BE /* RttAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RttAction.swift; sourceTree = "<group>"; };
 		11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfigurationTests.swift; sourceTree = "<group>"; };
 		11C50D372BD1A79900CB3615 /* CaptionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionOptions.swift; sourceTree = "<group>"; };
 		11D470752C62CEFE00A54BD7 /* ButtonViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewData.swift; sourceTree = "<group>"; };
@@ -1083,6 +1085,7 @@
 		1F2BEDCB26329E4600D98266 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				11AB753C2CE2F54100AAC3BE /* RttAction.swift */,
 				752B953B2863A40E001C52E8 /* Action.swift */,
 				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				05CE90FC2C8E9985001ACA79 /* ButtonViewDataAction.swift */,
@@ -2378,6 +2381,7 @@
 				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
+				11AB753D2CE2F54A00AAC3BE /* RttAction.swift in Sources */,
 				759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */,
 				A4DBCEBF2BFB9DA800332E7B /* CallingSDKInitializer.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,

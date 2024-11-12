@@ -19,6 +19,13 @@ struct CustomButtonState: Equatable {
     let title: String
 }
 
+struct ButtonActions {
+    let showSharingViewAction: () -> Void
+    let showSupportFormAction: () -> Void
+    let showCaptionsViewAction: () -> Void
+    let showRttViewAction: () -> Void
+}
+
 struct ButtonViewDataState: Equatable {
     let setupScreenCameraButtonState: DefaultButtonState?
     let setupScreenMicButtonState: DefaultButtonState?

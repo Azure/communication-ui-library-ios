@@ -24,6 +24,7 @@ struct NavigationState: Equatable {
     let supportShareSheetVisible: Bool
     let participantsVisible: Bool
     let participantActionsVisible: Bool
+    let rttViewVisible: Bool
 
     // When showing Participant Menu, this provides
     // context on who we are shoing it for
@@ -39,6 +40,7 @@ struct NavigationState: Equatable {
          supportShareSheetVisible: Bool = false,
          participantsVisible: Bool = false,
          participantActionsVisible: Bool = false,
+         rttViewVisible: Bool = false,
          selectedParticipant: ParticipantInfoModel? = nil
     ) {
         self.status = status
@@ -52,6 +54,7 @@ struct NavigationState: Equatable {
         self.supportShareSheetVisible = supportShareSheetVisible
         self.participantsVisible = participantsVisible
         self.participantActionsVisible = participantActionsVisible
+        self.rttViewVisible = rttViewVisible
         self.selectedParticipant = selectedParticipant
     }
 

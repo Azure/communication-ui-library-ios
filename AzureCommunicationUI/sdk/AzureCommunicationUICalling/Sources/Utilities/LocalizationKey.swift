@@ -212,6 +212,15 @@ enum LocalizationKey: String {
     case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"
     case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
 
+    /* RTT */
+    case rttListTitile = "AzureCommunicationUICalling.RTT.Title.RTT"
+    case rttTurnOn = "AzureCommunicationUICalling.RTT.TurnOn.Text"
+    case rttAlertTitle = "AzureCommunicationUICalling.RTT.Alert.Title"
+    case rttAlertMessage = "AzureCommunicationUICalling.RTT.Alert.Message"
+    case rttAlertTurnOn = "AzureCommunicationUICalling.RTT.Alert.TurnOn"
+    case rttAlertDismiss = "AzureCommunicationUICalling.RTT.Alert.Dismiss"
+    case rttWarningMessage = "AzureCommunicationUICalling.RTT.WarningMessage.Text"
+
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"
     case callingViewParticipantMenuMuteAccessibilityLabel =

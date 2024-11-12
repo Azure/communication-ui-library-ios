@@ -432,22 +432,20 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         isCaptionsAvailable: Bool,
+        isRttAvailable: Bool,
+        buttonActions: ButtonActions,
         controlBarOptions: CallScreenControlBarOptions?,
-        showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void,
         buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                             localizationProvider: localizationProvider,
-                                            showSharingViewAction: showSharingViewAction,
-                                            showSupportFormAction: showSupportFormAction,
-                                            showCaptionsViewAction: showCaptionsViewAction,
+                                            buttonActions: buttonActions,
                                             controlBarOptions: controlBarOptions,
                                             isCaptionsAvailable: isCaptionsAvailable,
                                             isSupportFormAvailable: events.onUserReportedIssue != nil,
+                                            isRttAvailable: isRttAvailable,
                                             buttonViewDataState: buttonViewDataState,
                                             dispatchAction: dispatchAction)
     }
