@@ -71,5 +71,6 @@ struct NavigationState: Equatable {
             && lhs.participantsVisible == rhs.participantsVisible
             && lhs.participantActionsVisible == rhs.participantActionsVisible
             && lhs.selectedParticipant == rhs.selectedParticipant
+        && lhs.rttViewVisible == rhs.rttViewVisible
     }
 }

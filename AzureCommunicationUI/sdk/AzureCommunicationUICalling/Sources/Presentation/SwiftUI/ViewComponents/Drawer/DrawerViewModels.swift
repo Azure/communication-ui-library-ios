@@ -98,6 +98,7 @@ struct BodyTextWithActionDrawerListItemViewModel: BaseDrawerItemViewModel {
 
 struct IconTextActionListItemViewModel: BaseDrawerItemViewModel {
     let title: String
+    let isEnabled: Bool
     let startCompositeIcon: CompositeIcon
     let accessibilityIdentifier: String
     let confirmTitle: String

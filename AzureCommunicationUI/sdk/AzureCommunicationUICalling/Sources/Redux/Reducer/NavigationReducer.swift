@@ -74,7 +74,6 @@ extension Reducer where State == NavigationState,
                 .callingAction(.callStartTimeUpdated),
             /* <CALL_START_TIME> */
                 .captionsAction,
-                .showRtt,
                 .lifecycleAction,
                 .localUserAction,
                 .remoteParticipantsAction,

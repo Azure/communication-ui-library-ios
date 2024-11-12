@@ -122,7 +122,10 @@ struct CallingView: View {
 
     var portraitCallingView: some View {
         VStack(alignment: .center, spacing: 0) {
-            containerView
+            ZStack {
+                containerView
+                rttInfoView
+            }
             ControlBarView(viewModel: viewModel.controlBarViewModel)
         }
     }
@@ -197,7 +200,7 @@ struct CallingView: View {
                     .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
             })
             .accessibilityElement(children: .contain)
-            .background(Color(StyleProvider.color.drawerColor))
+            .background(.red)
         }
     }
 
@@ -314,6 +317,15 @@ struct CallingView: View {
             .zIndex(1)
     }
 
+    var rttInfoView: some View {
+        BottomDrawer(isPresented: viewModel.rttInfoViewModel.isDisplayed,
+                     hideDrawer: viewModel.dismissDrawer,
+                     isExpandable: true) {
+            CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
+                                    avatarViewManager: avatarManager)
+            .zIndex(1)
+        }
+    }
     var errorInfoView: some View {
         return VStack {
             Spacer()

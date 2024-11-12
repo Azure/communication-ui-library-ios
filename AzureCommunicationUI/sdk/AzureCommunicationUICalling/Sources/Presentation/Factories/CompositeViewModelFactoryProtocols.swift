@@ -99,6 +99,7 @@ protocol CompositeViewModelFactoryProtocol {
                                    showSpokenLanguage: @escaping () -> Void,
                                    showCaptionsLanguage: @escaping () -> Void,
                                    isDisplayed: Bool) -> CaptionsListViewModel
+    func makeRttInfoViewModel(state: AppState) -> RttInfoViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
 
     func makeToggleListItemViewModel(title: String,

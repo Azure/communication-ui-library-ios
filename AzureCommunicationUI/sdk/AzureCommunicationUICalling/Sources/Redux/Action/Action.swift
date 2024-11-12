@@ -28,7 +28,6 @@ enum Action: Equatable {
     case rttAction(RttAction)
     case showEndCallConfirmation
     case showAudioSelection
-    case showRtt
     case showMoreOptions
     case showSupportShare
     case showParticipants

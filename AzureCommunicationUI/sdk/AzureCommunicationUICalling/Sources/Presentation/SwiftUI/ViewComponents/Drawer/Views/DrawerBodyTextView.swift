@@ -97,6 +97,8 @@ internal struct DrawerIconTextActionListItemView: View {
         .accessibilityIdentifier(item.accessibilityIdentifier)
         .accessibilityAddTraits(.isButton)
         .background(Color(StyleProvider.color.drawerColor))
+        .opacity(item.isEnabled ? 1.0 : DrawerListConstants.disabledOpacity)
+        .disabled(!item.isEnabled)
         .fullScreenCover(isPresented: $isConfirming) {
             CustomAlert(
                 title: item.confirmTitle,
@@ -113,7 +115,6 @@ internal struct DrawerIconTextActionListItemView: View {
         }
         .transaction { transaction in
             transaction.disablesAnimations = true
-            // transaction.animation = .linear(duration: 1)
         }
     }
 }

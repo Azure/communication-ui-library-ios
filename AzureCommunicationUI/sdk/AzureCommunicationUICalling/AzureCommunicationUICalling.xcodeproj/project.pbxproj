@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -58,6 +58,8 @@
 		11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */; };
 		11A8FC332C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */; };
 		11AB753D2CE2F54A00AAC3BE /* RttAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AB753C2CE2F54100AAC3BE /* RttAction.swift */; };
+		11AB753F2CE3DE0A00AAC3BE /* RttState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AB753E2CE3DE0600AAC3BE /* RttState.swift */; };
+		11AB75412CE3E2AB00AAC3BE /* RttReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AB75402CE3E21D00AAC3BE /* RttReducer.swift */; };
 		11BECC852C1A1DA4001F6383 /* CallConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */; };
 		11C50D382BD1A79900CB3615 /* CaptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C50D372BD1A79900CB3615 /* CaptionOptions.swift */; };
 		11D470762C62CEFE00A54BD7 /* ButtonViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D470752C62CEFE00A54BD7 /* ButtonViewData.swift */; };
@@ -443,6 +445,8 @@
 		11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListView.swift; sourceTree = "<group>"; };
 		11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListViewModel.swift; sourceTree = "<group>"; };
 		11AB753C2CE2F54100AAC3BE /* RttAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RttAction.swift; sourceTree = "<group>"; };
+		11AB753E2CE3DE0600AAC3BE /* RttState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RttState.swift; sourceTree = "<group>"; };
+		11AB75402CE3E21D00AAC3BE /* RttReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RttReducer.swift; sourceTree = "<group>"; };
 		11BECC842C1A1DA4001F6383 /* CallConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfigurationTests.swift; sourceTree = "<group>"; };
 		11C50D372BD1A79900CB3615 /* CaptionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionOptions.swift; sourceTree = "<group>"; };
 		11D470752C62CEFE00A54BD7 /* ButtonViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewData.swift; sourceTree = "<group>"; };
@@ -813,6 +817,10 @@
 		FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvatarViewManagerMocking.swift; path = Mocking/AvatarViewManagerMocking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		11AB75432CE3E6A700AAC3BE /* Rtt */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Rtt; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		1FBCB6972645285100F57EEA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -1040,6 +1048,7 @@
 		1F2BEDB526328E9D00D98266 /* Reducer */ = {
 			isa = PBXGroup;
 			children = (
+				11AB75402CE3E21D00AAC3BE /* RttReducer.swift */,
 				1F94DAE72676885700691D1E /* AppStateReducer.swift */,
 				1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */,
 				05CE90FE2C8E9DCB001ACA79 /* ButtonViewDataReducer.swift */,
@@ -1062,6 +1071,7 @@
 		1F2BEDBE26328EFA00D98266 /* State */ = {
 			isa = PBXGroup;
 			children = (
+				11AB753E2CE3DE0600AAC3BE /* RttState.swift */,
 				A874EDC526616728003C7D92 /* AppLifeCycleState.swift */,
 				1F94DAE526740D4400691D1E /* AppState.swift */,
 				1F3F0C66283E858600C66054 /* AudioSessionState.swift */,
@@ -1290,6 +1300,7 @@
 		50FA45F6267D45FD001844AC /* CallingViewComponent */ = {
 			isa = PBXGroup;
 			children = (
+				11AB75432CE3E6A700AAC3BE /* Rtt */,
 				11A8FC272C0FC53A00BF1FFA /* Captions */,
 				BD3CC697283D95040052DE4A /* Overlay */,
 				50C6DECD270E49270085D04B /* Banner */,
@@ -1849,6 +1860,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				11AB75432CE3E6A700AAC3BE /* Rtt */,
+			);
 			name = AzureCommunicationUICalling;
 			packageProductDependencies = (
 			);
@@ -2380,11 +2394,13 @@
 				28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */,
 				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
+				11AB75412CE3E2AB00AAC3BE /* RttReducer.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
 				11AB753D2CE2F54A00AAC3BE /* RttAction.swift in Sources */,
 				759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */,
 				A4DBCEBF2BFB9DA800332E7B /* CallingSDKInitializer.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
+				11AB753F2CE3DE0A00AAC3BE /* RttState.swift in Sources */,
 				53F9FB872C387F8E009941FA /* ParticipantMenuView.swift in Sources */,
 				5A1F4BCD2BD9756D00EA7B2D /* LeaveCallConfirmationMode.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,

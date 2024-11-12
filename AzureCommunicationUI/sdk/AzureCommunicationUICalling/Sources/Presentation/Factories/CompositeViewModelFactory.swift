@@ -254,6 +254,13 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      localizationProvider: localizationProvider)
     }
 
+    func makeRttInfoViewModel(state: AppState) -> RttInfoViewModel {
+        return RttInfoViewModel(state: state,
+                                captionsManager: captionsViewManager,
+                                localizationProvider: localizationProvider
+        )
+    }
+
     func makeCaptionsErrorViewModel(dispatchAction: @escaping ActionDispatch)
     -> CaptionsErrorViewModel {
         return CaptionsErrorViewModel(compositeViewModelFactory: self,

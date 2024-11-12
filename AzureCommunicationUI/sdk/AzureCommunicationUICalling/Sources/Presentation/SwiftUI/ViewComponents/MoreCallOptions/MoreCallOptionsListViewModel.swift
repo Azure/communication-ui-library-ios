@@ -19,7 +19,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
     private let isCaptionsAvailable: Bool
     private let isSupportFormAvailable: Bool
     private let isRttAvailable: Bool
-
+    private var isRttEnabled: Bool
     @Published var items: [BaseDrawerItemViewModel]
     var isDisplayed: Bool
 
@@ -37,6 +37,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isDisplayed = false
+        self.isRttEnabled = false
         self.showSharingViewAction = buttonActions.showSharingViewAction
         self.showSupportFormAction = buttonActions.showSupportFormAction
         self.showCaptionsViewAction = buttonActions.showCaptionsViewAction
@@ -51,9 +52,11 @@ class MoreCallOptionsListViewModel: ObservableObject {
     }
 
     func update(navigationState: NavigationState,
+                rttState: RttState,
                 visibilityState: VisibilityState,
                 buttonViewDataState: ButtonViewDataState) {
         isDisplayed = visibilityState.currentStatus == .visible && navigationState.moreOptionsVisible
+        isRttEnabled = rttState.isRttOn
 
         self.generateItems(buttonViewDataState)
     }
@@ -101,6 +104,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
         if isRttAvailable && buttonViewDataState.rttButton?.visible ?? true {
             let rttInfoModel = IconTextActionListItemViewModel(
                 title: localizationProvider.getLocalizedString(.rttTurnOn),
+                isEnabled: !isRttEnabled,
                 startCompositeIcon: CompositeIcon.rtt,
                 accessibilityIdentifier: "",
                 confirmTitle: localizationProvider.getLocalizedString(.rttAlertTitle),

@@ -52,6 +52,7 @@ internal class CallingViewModel: ObservableObject {
     var captionsInfoViewModel: CaptionsInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
     var captionsErrorViewModel: CaptionsErrorViewModel!
+    var rttInfoViewModel: RttInfoViewModel!
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -90,6 +91,7 @@ internal class CallingViewModel: ObservableObject {
 
         captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
             state: store.state)
+        rttInfoViewModel = compositeViewModelFactory.makeRttInfoViewModel(state: store.state)
         captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
@@ -192,7 +194,7 @@ internal class CallingViewModel: ObservableObject {
                 store.dispatch(action: .showCaptionsListView)
             },
             showRttViewAction: {
-                store.dispatch(action: .showRtt)
+                store.dispatch(action: .rttAction(.turnOnRtt))
             }
         )
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
@@ -254,6 +256,7 @@ internal class CallingViewModel: ObservableObject {
         captionsListViewModel.update(state: state)
         captionsInfoViewModel.update(state: state)
         captionsLanguageListViewModel.update(state: state)
+        rttInfoViewModel.update(state: state)
         captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
@@ -290,6 +293,7 @@ internal class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         moreCallOptionsListViewModel.update(navigationState: state.navigationState,
+                                            rttState: state.rttState,
                                             visibilityState: state.visibilityState,
                                             buttonViewDataState: state.buttonViewDataState)
 
