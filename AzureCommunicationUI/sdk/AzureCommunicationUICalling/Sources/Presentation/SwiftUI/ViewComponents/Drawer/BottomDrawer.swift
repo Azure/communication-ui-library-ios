@@ -114,7 +114,7 @@ internal struct BottomDrawer<Content: View>: View {
                                 }
                             }
                             .onEnded { value in
-                                if value.translation.height > DrawerConstants.dragThreshold {
+                                if value.translation.height > DrawerConstants.dragThreshold && !isExpandable {
                                     withAnimation {
                                         hideDrawer()
                                     }
