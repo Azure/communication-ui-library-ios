@@ -170,7 +170,7 @@ struct CallingView: View {
                         !viewModel.isInPip {
                         captionsInfoView
                     }
-                    if viewModel.rttInfoViewModel.isDisplayed &&
+                    if viewModel.captionsInfoViewModel.isRttDisplayed &&
                         !viewModel.isInPip {
                         rttInfoViewPlaceholder
                     }
@@ -322,7 +322,7 @@ struct CallingView: View {
     }
 
     var rttInfoView: some View {
-        BottomDrawer(isPresented: viewModel.rttInfoViewModel.isDisplayed,
+        BottomDrawer(isPresented: viewModel.captionsInfoViewModel.isRttDisplayed,
                      hideDrawer: viewModel.dismissDrawer,
                      isExpandable: true) {
             CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,

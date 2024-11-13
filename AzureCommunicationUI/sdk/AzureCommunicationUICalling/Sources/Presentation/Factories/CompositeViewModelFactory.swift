@@ -251,14 +251,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
         return CaptionsInfoViewModel(state: state,
                                      captionsManager: captionsViewManager,
+                                     dispatch: store.dispatch,
                                      localizationProvider: localizationProvider)
-    }
-
-    func makeRttInfoViewModel(state: AppState) -> RttInfoViewModel {
-        return RttInfoViewModel(state: state,
-                                captionsManager: captionsViewManager,
-                                localizationProvider: localizationProvider
-        )
     }
 
     func makeCaptionsErrorViewModel(dispatchAction: @escaping ActionDispatch)
@@ -289,7 +283,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                            subtitle: subtitle)
     }
 }
-
 extension CompositeViewModelFactory {
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
         CallDiagnosticsViewModel(localizationProvider: localizationProvider,

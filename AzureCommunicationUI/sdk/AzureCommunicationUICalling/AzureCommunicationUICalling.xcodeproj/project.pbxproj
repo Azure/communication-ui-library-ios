@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -817,10 +817,6 @@
 		FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvatarViewManagerMocking.swift; path = Mocking/AvatarViewManagerMocking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		11AB75432CE3E6A700AAC3BE /* Rtt */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Rtt; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		1FBCB6972645285100F57EEA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -1300,7 +1296,6 @@
 		50FA45F6267D45FD001844AC /* CallingViewComponent */ = {
 			isa = PBXGroup;
 			children = (
-				11AB75432CE3E6A700AAC3BE /* Rtt */,
 				11A8FC272C0FC53A00BF1FFA /* Captions */,
 				BD3CC697283D95040052DE4A /* Overlay */,
 				50C6DECD270E49270085D04B /* Banner */,
@@ -1859,9 +1854,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				11AB75432CE3E6A700AAC3BE /* Rtt */,
 			);
 			name = AzureCommunicationUICalling;
 			packageProductDependencies = (

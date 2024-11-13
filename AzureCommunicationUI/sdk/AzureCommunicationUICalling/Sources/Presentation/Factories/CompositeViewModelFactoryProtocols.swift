@@ -98,7 +98,6 @@ protocol CompositeViewModelFactoryProtocol {
                                    buttonActions: ButtonActions,
                                    isRttAvailable: Bool,
                                    isDisplayed: Bool) -> CaptionsListViewModel
-    func makeRttInfoViewModel(state: AppState) -> RttInfoViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
 
     func makeToggleListItemViewModel(title: String,

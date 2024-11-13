@@ -52,7 +52,6 @@ internal class CallingViewModel: ObservableObject {
     var captionsInfoViewModel: CaptionsInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
     var captionsErrorViewModel: CaptionsErrorViewModel!
-    var rttInfoViewModel: RttInfoViewModel!
 
     // swiftlint:disable function_body_length
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -91,7 +90,6 @@ internal class CallingViewModel: ObservableObject {
 
         captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
             state: store.state)
-        rttInfoViewModel = compositeViewModelFactory.makeRttInfoViewModel(state: store.state)
         captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
@@ -258,7 +256,6 @@ internal class CallingViewModel: ObservableObject {
         captionsListViewModel.update(state: state)
         captionsInfoViewModel.update(state: state)
         captionsLanguageListViewModel.update(state: state)
-        rttInfoViewModel.update(state: state)
         captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,

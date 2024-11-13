@@ -13,6 +13,8 @@ struct CaptionsInfoView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var body: some View {
+        DrawerListView(sections: [DrawerListSection(header: nil, items: viewModel.items)],
+                       avatarManager: avatarViewManager)
         if viewModel.isLoading {
             loadingView
         } else {
