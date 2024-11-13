@@ -53,6 +53,17 @@ internal struct CustomAlert: View {
                         }
                         HStack {
                             Button(action: {
+                                denyAction()
+                                dismiss()
+                            }, label: {
+                                Text(denyText)
+                                    .frame(width: CustomAlertConstants.confirmationButtonWidth,
+                                           height: CustomAlertConstants.confirmationButtonHeight,
+                                           alignment: .center)
+                                    .foregroundColor(Color(StyleProvider.color.primaryColor))
+                            })
+                            Divider().frame(maxHeight: CustomAlertConstants.confirmationButtonHeight)
+                            Button(action: {
                                 agreeAction()
                                 dismiss()
                             }, label: {
@@ -61,17 +72,6 @@ internal struct CustomAlert: View {
                                            height: CustomAlertConstants.confirmationButtonHeight,
                                            alignment: .center
                                     )
-                                    .foregroundColor(Color(StyleProvider.color.primaryColor))
-                            })
-                            Divider().frame(maxHeight: CustomAlertConstants.confirmationButtonHeight)
-                            Button(action: {
-                                denyAction()
-                                dismiss()
-                            }, label: {
-                                Text(denyText)
-                                    .frame(width: CustomAlertConstants.confirmationButtonWidth,
-                                           height: CustomAlertConstants.confirmationButtonHeight,
-                                           alignment: .center)
                                     .foregroundColor(Color(StyleProvider.color.primaryColor))
                             })
                         }

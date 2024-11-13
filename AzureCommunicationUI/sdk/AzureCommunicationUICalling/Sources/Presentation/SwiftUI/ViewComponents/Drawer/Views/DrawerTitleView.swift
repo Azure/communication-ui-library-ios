@@ -13,18 +13,18 @@ internal struct DrawerTitleView: View {
             if let icon = item.startCompositeIcon {
                 Icon(name: icon, size: DrawerListConstants.iconSize)
                     .accessibilityHidden(true)
+                    .foregroundColor(Color(StyleProvider.color.drawerIconDark))
                     .onTapGesture {
-                        item.startCompositeIconAction
+                        if let action = item.startCompositeIconAction {
+                            action()
+                        }
                     }
             }
-            Text(item.title)
-                .foregroundColor(.primary)
-                .padding(.leading, DrawerListConstants.textPaddingLeading)
-                .font(.headline)
-                .accessibilityAddTraits(.isHeader)
+            Spacer()
+
             if let icon = item.endIcon {
                 Icon(name: icon, size: DrawerListConstants.iconSize)
-                    .foregroundColor( .primary)
+                    .foregroundColor(Color(StyleProvider.color.drawerIconDark))
                     .accessibilityHidden(true)
                     .onTapGesture {
                         if let action = item.endIconAction {
@@ -34,7 +34,7 @@ internal struct DrawerTitleView: View {
             }
             if let icon = item.expandIcon {
                 Icon(name: icon, size: DrawerListConstants.iconSize)
-                    .foregroundColor( .primary)
+                    .foregroundColor(Color(StyleProvider.color.drawerIconDark))
                     .accessibilityHidden(true)
                     .onTapGesture {
                         if let action = item.expandIconAction {
@@ -42,8 +42,15 @@ internal struct DrawerTitleView: View {
                         }
                     }
             }
-            Spacer()
         }
+        .overlay(
+            // Centered title overlay
+            Text(item.title)
+                .foregroundColor(.primary)
+                .padding(.leading, DrawerListConstants.textPaddingLeading)
+                .font(.headline)
+                .accessibilityAddTraits(.isHeader)
+        )
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)
         .frame(maxWidth: .infinity)

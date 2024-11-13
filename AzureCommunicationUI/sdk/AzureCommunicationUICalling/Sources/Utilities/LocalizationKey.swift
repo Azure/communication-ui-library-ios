@@ -213,6 +213,7 @@ enum LocalizationKey: String {
     case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
 
     /* RTT */
+    case rttCaptionsListTitle = "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"
     case rttListTitile = "AzureCommunicationUICalling.RTT.Title.RTT"
     case rttTurnOn = "AzureCommunicationUICalling.RTT.TurnOn.Text"
     case rttAlertTitle = "AzureCommunicationUICalling.RTT.Alert.Title"

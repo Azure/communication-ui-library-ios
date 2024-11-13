@@ -33,9 +33,9 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isDisplayed = false
-        self.showSharingViewAction = buttonActions.showSharingViewAction
-        self.showSupportFormAction = buttonActions.showSupportFormAction
-        self.showCaptionsViewAction = buttonActions.showCaptionsViewAction
+        self.showSharingViewAction = buttonActions.showSharingViewAction ?? {}
+        self.showSupportFormAction = buttonActions.showSupportFormAction ?? {}
+        self.showCaptionsViewAction = buttonActions.showCaptionsViewAction ?? {}
         self.controlBarOptions = controlBarOptions
         self.isCaptionsAvailable = isCaptionsAvailable
         self.isSupportFormAvailable = isSupportFormAvailable

@@ -35,14 +35,14 @@ class CaptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
-        self.showSpokenLanguage = buttonActions.showSpokenLanguage
-        self.showCaptionsLanguage = buttonActions.showCaptionsLanguage
+        self.showSpokenLanguage = buttonActions.showSpokenLanguage ?? { }
+        self.showCaptionsLanguage = buttonActions.showCaptionsLanguage ?? { }
         self.isDisplayed = isDisplayed
         self.isToggleEnabled = state.captionsState.isStarted
         self.captionsOptions = captionsOptions
         self.isRttAvailable = isRttAvailable
         self.isRttEnabled = false
-        self.showRttViewAction = buttonActions.showRttView
+        self.showRttViewAction = buttonActions.showRttView ?? { }
 
         setupItems(state: state)
         updateCaptionsOptions(state: state)
@@ -63,7 +63,7 @@ class CaptionsListViewModel: ObservableObject {
         items.removeAll()
         let buttonViewDataState = state.buttonViewDataState
         let titleInfoModel = TitleDrawerListItemViewModel(
-            title: localizationProvider.getLocalizedString(.captionsListTitile),
+            title: localizationProvider.getLocalizedString(.rttCaptionsListTitle),
             startCompositeIcon: CompositeIcon.leftArrow,
             startCompositeIconAction: {
                 self.dispatch(.showMoreOptions)

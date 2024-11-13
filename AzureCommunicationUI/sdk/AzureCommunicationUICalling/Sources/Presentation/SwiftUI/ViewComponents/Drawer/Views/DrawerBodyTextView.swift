@@ -81,8 +81,9 @@ internal struct DrawerIconTextActionListItemView: View {
         HStack {
             Icon(name: item.startCompositeIcon, size: DrawerListConstants.iconSize)
                 .accessibilityHidden(true)
+                .foregroundColor(item.isEnabled ? .primary : .gray)
             Text(item.title)
-                .foregroundColor(.primary)
+                .foregroundColor(item.isEnabled ? .primary : .gray)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)
                 .font(.body)
                 .onTapGesture {

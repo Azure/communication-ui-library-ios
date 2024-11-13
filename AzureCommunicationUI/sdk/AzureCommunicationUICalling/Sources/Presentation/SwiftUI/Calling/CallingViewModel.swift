@@ -192,24 +192,16 @@ internal class CallingViewModel: ObservableObject {
             },
             showCaptionsViewAction: {
                 store.dispatch(action: .showCaptionsListView)
-            },
-            showRttViewAction: {
-                store.dispatch(action: .rttAction(.turnOnRtt))
             }
         )
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             isCaptionsAvailable: true,
-            isRttAvailable: true,
             buttonActions: buttonActions,
             controlBarOptions: callScreenOptions.controlBarOptions,
             buttonViewDataState: store.state.buttonViewDataState,
             dispatchAction: store.dispatch
         )
-
-        captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
-            state: store.state,
-            captionsOptions: captionsOptions,
-            dispatchAction: store.dispatch,
+        let captionsButtonActions = ButtonActions(
             showSpokenLanguage: {
                 store.dispatch(action: .showSpokenLanguageView)
             },
@@ -218,7 +210,13 @@ internal class CallingViewModel: ObservableObject {
             },
             showRttView: {
                 store.dispatch(action: .rttAction(.turnOnRtt))
-            },
+            }
+        )
+        captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
+            state: store.state,
+            captionsOptions: captionsOptions,
+            dispatchAction: store.dispatch,
+            buttonActions: captionsButtonActions,
             isRttAvailable: true,
             isDisplayed: store.state.navigationState.captionsViewVisible)
     }
