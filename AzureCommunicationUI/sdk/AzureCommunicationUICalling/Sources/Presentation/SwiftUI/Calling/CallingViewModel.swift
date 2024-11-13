@@ -216,6 +216,10 @@ internal class CallingViewModel: ObservableObject {
             showCaptionsLanguage: {
                 store.dispatch(action: .showCaptionsLanguageView)
             },
+            showRttView: {
+                store.dispatch(action: .rttAction(.turnOnRtt))
+            },
+            isRttAvailable: true,
             isDisplayed: store.state.navigationState.captionsViewVisible)
     }
     // swiftlint:enable function_body_length

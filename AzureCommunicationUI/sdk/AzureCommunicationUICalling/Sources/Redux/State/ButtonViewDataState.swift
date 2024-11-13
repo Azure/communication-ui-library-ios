@@ -23,7 +23,9 @@ struct ButtonActions {
     let showSharingViewAction: () -> Void
     let showSupportFormAction: () -> Void
     let showCaptionsViewAction: () -> Void
-    let showRttViewAction: () -> Void
+    let showSpokenLanguage: () -> Void
+    let showCaptionsLanguage: () -> Void
+    let showRttView: () -> Void
 }
 
 struct ButtonViewDataState: Equatable {

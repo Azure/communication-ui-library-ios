@@ -14,12 +14,9 @@ class MoreCallOptionsListViewModel: ObservableObject {
     private let showSharingViewAction: () -> Void
     private let showSupportFormAction: () -> Void
     private let showCaptionsViewAction: () -> Void
-    private let showRttViewAction: () -> Void
     private let controlBarOptions: CallScreenControlBarOptions?
     private let isCaptionsAvailable: Bool
     private let isSupportFormAvailable: Bool
-    private let isRttAvailable: Bool
-    private var isRttEnabled: Bool
     @Published var items: [BaseDrawerItemViewModel]
     var isDisplayed: Bool
 
@@ -29,7 +26,6 @@ class MoreCallOptionsListViewModel: ObservableObject {
          controlBarOptions: CallScreenControlBarOptions?,
          isCaptionsAvailable: Bool,
          isSupportFormAvailable: Bool,
-         isRttAvailable: Bool,
          buttonViewDataState: ButtonViewDataState,
          dispatchAction: @escaping ActionDispatch
     ) {
@@ -37,15 +33,12 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isDisplayed = false
-        self.isRttEnabled = false
         self.showSharingViewAction = buttonActions.showSharingViewAction
         self.showSupportFormAction = buttonActions.showSupportFormAction
         self.showCaptionsViewAction = buttonActions.showCaptionsViewAction
-        self.showRttViewAction = buttonActions.showRttViewAction
         self.controlBarOptions = controlBarOptions
         self.isCaptionsAvailable = isCaptionsAvailable
         self.isSupportFormAvailable = isSupportFormAvailable
-        self.isRttAvailable = isRttAvailable
         self.items = []
 
         self.generateItems(buttonViewDataState)
@@ -56,7 +49,6 @@ class MoreCallOptionsListViewModel: ObservableObject {
                 visibilityState: VisibilityState,
                 buttonViewDataState: ButtonViewDataState) {
         isDisplayed = visibilityState.currentStatus == .visible && navigationState.moreOptionsVisible
-        isRttEnabled = rttState.isRttOn
 
         self.generateItems(buttonViewDataState)
     }
@@ -99,23 +91,6 @@ class MoreCallOptionsListViewModel: ObservableObject {
             )
 
             items.append(reportErrorInfoModel)
-        }
-
-        if isRttAvailable && buttonViewDataState.rttButton?.visible ?? true {
-            let rttInfoModel = IconTextActionListItemViewModel(
-                title: localizationProvider.getLocalizedString(.rttTurnOn),
-                isEnabled: !isRttEnabled,
-                startCompositeIcon: CompositeIcon.rtt,
-                accessibilityIdentifier: "",
-                confirmTitle: localizationProvider.getLocalizedString(.rttAlertTitle),
-                confirmMessage: localizationProvider.getLocalizedString(.rttAlertMessage),
-                confirmAccept: localizationProvider.getLocalizedString(.rttAlertTurnOn),
-                confirmDeny: localizationProvider.getLocalizedString(.rttAlertDismiss),
-                accept: showRttViewAction,
-                deny: { self.dispatchAction(.hideDrawer) }
-
-            )
-            items.append(rttInfoModel)
         }
 
         buttonViewDataState.callScreenCustomButtonsState.forEach({ customButton in

@@ -233,8 +233,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeCaptionsListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   showCaptionsLanguage: @escaping () -> Void,
+                                   buttonActions: ButtonActions,
+                                   isRttAvailable: Bool,
                                    isDisplayed: Bool) -> CaptionsListViewModel {
 
         return CaptionsListViewModel(compositeViewModelFactory: self,
@@ -242,8 +242,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      captionsOptions: captionsOptions,
                                      state: state,
                                      dispatchAction: dispatchAction,
-                                     showSpokenLanguage: showSpokenLanguage,
-                                     showCaptionsLanguage: showCaptionsLanguage,
+                                     buttonActions: buttonActions,
+                                     isRttAvailable: isRttAvailable,
                                      isDisplayed: store.state.navigationState.captionsViewVisible
                                      && store.state.visibilityState.currentStatus == .visible)
     }
@@ -439,7 +439,6 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         isCaptionsAvailable: Bool,
-        isRttAvailable: Bool,
         buttonActions: ButtonActions,
         controlBarOptions: CallScreenControlBarOptions?,
         buttonViewDataState: ButtonViewDataState,
@@ -452,7 +451,6 @@ extension CompositeViewModelFactory {
                                             controlBarOptions: controlBarOptions,
                                             isCaptionsAvailable: isCaptionsAvailable,
                                             isSupportFormAvailable: events.onUserReportedIssue != nil,
-                                            isRttAvailable: isRttAvailable,
                                             buttonViewDataState: buttonViewDataState,
                                             dispatchAction: dispatchAction)
     }

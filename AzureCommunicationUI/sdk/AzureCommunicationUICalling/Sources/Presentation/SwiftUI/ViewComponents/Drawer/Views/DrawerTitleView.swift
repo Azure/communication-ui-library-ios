@@ -10,7 +10,13 @@ internal struct DrawerTitleView: View {
 
     var body: some View {
         HStack {
-            Spacer()
+            if let icon = item.startCompositeIcon {
+                Icon(name: icon, size: DrawerListConstants.iconSize)
+                    .accessibilityHidden(true)
+                    .onTapGesture {
+                        item.startCompositeIconAction
+                    }
+            }
             Text(item.title)
                 .foregroundColor(.primary)
                 .padding(.leading, DrawerListConstants.textPaddingLeading)

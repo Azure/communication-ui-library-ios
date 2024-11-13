@@ -10,33 +10,39 @@ import SwiftUI
 
 class CaptionsListViewModel: ObservableObject {
     @Published private var isToggleEnabled = false
-    @Published var items: [DrawerGenericItemViewModel] = []
+    @Published var items: [BaseDrawerItemViewModel] = []
 
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let showCaptionsLanguage: () -> Void
     private let showSpokenLanguage: () -> Void
+    private let showRttViewAction: () -> Void
     private let dispatch: ActionDispatch
     private let captionsOptions: CaptionsOptions
     var isDisplayed: Bool
+    private let isRttAvailable: Bool
+    private var isRttEnabled: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          captionsOptions: CaptionsOptions,
          state: AppState,
          dispatchAction: @escaping ActionDispatch,
-         showSpokenLanguage: @escaping () -> Void,
-         showCaptionsLanguage: @escaping () -> Void,
+         buttonActions: ButtonActions,
+         isRttAvailable: Bool,
          isDisplayed: Bool
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
-        self.showSpokenLanguage = showSpokenLanguage
-        self.showCaptionsLanguage = showCaptionsLanguage
+        self.showSpokenLanguage = buttonActions.showSpokenLanguage
+        self.showCaptionsLanguage = buttonActions.showCaptionsLanguage
         self.isDisplayed = isDisplayed
         self.isToggleEnabled = state.captionsState.isStarted
         self.captionsOptions = captionsOptions
+        self.isRttAvailable = isRttAvailable
+        self.isRttEnabled = false
+        self.showRttViewAction = buttonActions.showRttView
 
         setupItems(state: state)
         updateCaptionsOptions(state: state)
@@ -56,6 +62,15 @@ class CaptionsListViewModel: ObservableObject {
     private func setupItems(state: AppState) {
         items.removeAll()
         let buttonViewDataState = state.buttonViewDataState
+        let titleInfoModel = TitleDrawerListItemViewModel(
+            title: localizationProvider.getLocalizedString(.captionsListTitile),
+            startCompositeIcon: CompositeIcon.leftArrow,
+            startCompositeIconAction: {
+                self.dispatch(.showMoreOptions)
+            },
+            accessibilityIdentifier: ""
+        )
+        items.append(titleInfoModel)
 
         if buttonViewDataState.liveCaptionsToggleButton?.visible ?? true {
             let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
@@ -94,10 +109,28 @@ class CaptionsListViewModel: ObservableObject {
 
             items.append(captionsLanguageInfoModel)
         }
+
+        if isRttAvailable && buttonViewDataState.rttButton?.visible ?? true {
+            let rttInfoModel = IconTextActionListItemViewModel(
+                title: localizationProvider.getLocalizedString(.rttTurnOn),
+                isEnabled: !isRttEnabled,
+                startCompositeIcon: CompositeIcon.rtt,
+                accessibilityIdentifier: "",
+                confirmTitle: localizationProvider.getLocalizedString(.rttAlertTitle),
+                confirmMessage: localizationProvider.getLocalizedString(.rttAlertMessage),
+                confirmAccept: localizationProvider.getLocalizedString(.rttAlertTurnOn),
+                confirmDeny: localizationProvider.getLocalizedString(.rttAlertDismiss),
+                accept: showRttViewAction,
+                deny: { self.dispatch(.hideDrawer) }
+
+            )
+            items.append(rttInfoModel)
+        }
     }
     func update(state: AppState) {
         isDisplayed = state.navigationState.captionsViewVisible
         isToggleEnabled = state.captionsState.isStarted
+        isRttEnabled = state.rttState.isRttOn
         setupItems(state: state)
     }
 
