@@ -20,6 +20,7 @@ internal enum BottomDrawerHeightStatus {
 internal enum DrawerConstants {
     // How round is the drawer handle
     static let drawerHandleCornerRadius: CGFloat = 4
+    static let placeHolderPadding: CGFloat = 8
 
     // How round is the drawer itself
     static let drawerCornerRadius: CGFloat = 16
@@ -40,6 +41,7 @@ internal enum DrawerConstants {
     static let delayUntilGone: CGFloat = 0.3
     static let collapsedHeight: CGFloat = 200
     static let expandedHeight: CGFloat = UIScreen.main.bounds.height * 0.7
+    static let textBoxHeight: CGFloat = 40
 }
 // swiftlint:disable type_body_length
 /// Bottom Drawer w/Swift UI Support
@@ -71,6 +73,8 @@ internal struct BottomDrawer<Content: View>: View {
     @State private var isExpanded = false
     @State private var isFullyExpanded = false
     @State private var keyboardHeight: CGFloat = 0
+    @FocusState private var isTextFieldFocused: Bool
+    @State private var text: String = ""
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
@@ -83,6 +87,7 @@ internal struct BottomDrawer<Content: View>: View {
     let textBoxHint: String?
     let startIcon: CompositeIcon?
     let startIconAction: (() -> Void)?
+    let commitAction: (() -> Void)?
 
     init(isPresented: Bool,
          hideDrawer: @escaping () -> Void,
@@ -94,6 +99,7 @@ internal struct BottomDrawer<Content: View>: View {
          showTextBox: Bool = false,
          textBoxHint: String? = nil,
          isExpandable: Bool = false,
+         commitAction: (() -> Void)? = nil,
          @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
         self.content = content()
@@ -106,6 +112,7 @@ internal struct BottomDrawer<Content: View>: View {
         self.textBoxHint = textBoxHint
         self.startIcon = startIcon
         self.startIconAction = startIconAction
+        self.commitAction = commitAction
     }
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -173,13 +180,31 @@ internal struct BottomDrawer<Content: View>: View {
     }
 
     private var overlayView: some View {
-        Color.black.opacity(isExpandable ? 0 :
+        Color.black.opacity(isExpandable ? 0.01 :
                                 (drawerState == .visible ? DrawerConstants.overlayOpacity : 0))
             .ignoresSafeArea()
             .onTapGesture {
-                hideDrawer()
+                if isFullyExpanded {
+                    setDrawerHeight(to: .collapsed)
+                } else {
+                    hideDrawer()
+                }
             }
             .accessibilityHidden(true)
+    }
+
+    private var textEditor: some View {
+        return VStack {
+            TextEditor(text: $text)
+                .frame(height: DrawerConstants.textBoxHeight)
+                .submitLabel(.send)
+                .font(.system(.body))
+                .onSubmit {
+                    commitAction?()
+                }
+                .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
+                    .stroke(Color(Colors.dividerOnPrimary)))
+        }
     }
 
     private var drawerView: some View {
@@ -203,15 +228,6 @@ internal struct BottomDrawer<Content: View>: View {
                 } else {
                     Spacer().frame(height: DrawerConstants.bottomFillY)
                 }
-
-                if isFullyExpanded, showTextBox, let hint = textBoxHint {
-                    TextField(hint, text: .constant(""))
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(10)
-                        .offset(y: -keyboardHeight)
-                        .animation(.easeInOut, value: keyboardHeight)
-                    Spacer().frame(height: 40)
-                }
             }
             .frame(maxWidth: .infinity, alignment: .bottom)
             .ignoresSafeArea(.keyboard)
@@ -221,14 +237,26 @@ internal struct BottomDrawer<Content: View>: View {
             .padding(.bottom, -DrawerConstants.bottomFillY)
             .modifier(ConditionalFrameModifier(
                 drawerHeight: $drawerHeight, isExpandable: isExpandable))
-        }
+        }.overlay(
+            Group {
+                if isFullyExpanded, showTextBox {
+                    ZStack(alignment: .leading) {
+                        textEditor
+                        placeHolder
+                    }
+                }
+            }.padding([.leading, .trailing], 10)
+                .padding([.top], 10)
+                .offset(y: -keyboardHeight)
+                .animation(.easeInOut, value: keyboardHeight)
+            , alignment: .bottom)
     }
 
     private var titleView: some View {
         VStack {
             // Handle at the top center
             if isExpandable {
-                RoundedRectangle(cornerRadius: 2)
+                RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
                     .fill(Color.gray.opacity(0.6))
                     .frame(width: 36, height: 4)
                     .padding(.top, 5)
@@ -286,6 +314,18 @@ internal struct BottomDrawer<Content: View>: View {
             alignment: .center
         )
     }
+
+    private var placeHolder: some View {
+        Group {
+            if text.isEmpty, let hint = textBoxHint {
+                Text(hint)
+                    .foregroundColor(Color(Colors.textDisabled))
+                    .padding(DrawerConstants.placeHolderPadding)
+                    .allowsHitTesting(false)
+            }
+        }
+    }
+
     private func addKeyboardObservers() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
                                                object: nil, queue: .main) { notification in
