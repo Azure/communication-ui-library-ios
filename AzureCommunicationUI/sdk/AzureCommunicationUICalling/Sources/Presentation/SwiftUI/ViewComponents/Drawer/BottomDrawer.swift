@@ -73,7 +73,7 @@ internal struct BottomDrawer<Content: View>: View {
     @State private var isExpanded = false
     @State private var isFullyExpanded = false
     @State private var keyboardHeight: CGFloat = 0
-    @FocusState private var isTextFieldFocused: Bool
+    @State private var textEditorYPosition: CGFloat = 0
     @State private var text: String = ""
     let isPresented: Bool
     let hideDrawer: () -> Void
@@ -179,34 +179,6 @@ internal struct BottomDrawer<Content: View>: View {
         }
     }
 
-    private var overlayView: some View {
-        Color.black.opacity(isExpandable ? 0.01 :
-                                (drawerState == .visible ? DrawerConstants.overlayOpacity : 0))
-            .ignoresSafeArea()
-            .onTapGesture {
-                if isFullyExpanded {
-                    setDrawerHeight(to: .collapsed)
-                } else {
-                    hideDrawer()
-                }
-            }
-            .accessibilityHidden(true)
-    }
-
-    private var textEditor: some View {
-        return VStack {
-            TextEditor(text: $text)
-                .frame(height: DrawerConstants.textBoxHeight)
-                .submitLabel(.send)
-                .font(.system(.body))
-                .onSubmit {
-                    commitAction?()
-                }
-                .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
-                    .stroke(Color(Colors.dividerOnPrimary)))
-        }
-    }
-
     private var drawerView: some View {
         VStack {
             Spacer()
@@ -230,7 +202,6 @@ internal struct BottomDrawer<Content: View>: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .bottom)
-            .ignoresSafeArea(.keyboard)
             .background(Color(StyleProvider.color.drawerColor))
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)
@@ -315,6 +286,34 @@ internal struct BottomDrawer<Content: View>: View {
         )
     }
 
+    private var overlayView: some View {
+        Color.black.opacity(isExpandable ? 0.01 :
+                                (drawerState == .visible ? DrawerConstants.overlayOpacity : 0))
+            .ignoresSafeArea()
+            .onTapGesture {
+                if isFullyExpanded {
+                    setDrawerHeight(to: .collapsed)
+                } else {
+                    hideDrawer()
+                }
+            }
+            .accessibilityHidden(true)
+    }
+
+    private var textEditor: some View {
+        return VStack {
+            TextEditor(text: $text)
+                .frame(height: DrawerConstants.textBoxHeight)
+                .submitLabel(.send)
+                .font(.system(.body))
+                .onSubmit {
+                    commitAction?()
+                }
+                .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
+                    .stroke(Color(Colors.dividerOnPrimary)))
+        }
+    }
+
     private var placeHolder: some View {
         Group {
             if text.isEmpty, let hint = textBoxHint {
@@ -331,6 +330,9 @@ internal struct BottomDrawer<Content: View>: View {
                                                object: nil, queue: .main) { notification in
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                 keyboardHeight = keyboardFrame.height
+                if keyboardHeight > 0 {
+                    keyboardHeight -= 100
+                }
             }
         }
 

@@ -61,7 +61,6 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
-        .ignoresSafeArea(.keyboard)
         .onRotate { newOrientation in
             updateChildViewIfNeededWith(newOrientation: newOrientation)
         }.onAppear {
@@ -131,7 +130,7 @@ struct CallingView: View {
                 captionsAndRttInfoView
             }
             ControlBarView(viewModel: viewModel.controlBarViewModel)
-        }
+        }.ignoresSafeArea(.keyboard)
     }
 
     var landscapeCallingView: some View {
