@@ -99,9 +99,9 @@ internal struct DrawerListSection {
 internal class DrawerListConstants {
     static let iconSize: CGFloat = 24
     static let textPaddingLeading: CGFloat = 8
-    static let optionPaddingVertical: CGFloat = 12
+    static let optionPaddingVertical: CGFloat = 10
     static let participantOptionPaddingVertical: CGFloat = 4
-    static let optionPaddingHorizontal: CGFloat = 12
+    static let optionPaddingHorizontal: CGFloat = 16
     static let listVerticalPadding: CGFloat = 12
     static let micIconOpacity: CGFloat = 0.5
     static let disabledOpacity: CGFloat = 0.5

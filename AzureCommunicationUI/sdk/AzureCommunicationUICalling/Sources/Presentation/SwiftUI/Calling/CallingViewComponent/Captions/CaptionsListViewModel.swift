@@ -22,6 +22,8 @@ class CaptionsListViewModel: ObservableObject {
     var isDisplayed: Bool
     private let isRttAvailable: Bool
     private var isRttEnabled: Bool
+    let title: String?
+    let backButtonAction: () -> Void
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
@@ -43,6 +45,10 @@ class CaptionsListViewModel: ObservableObject {
         self.isRttAvailable = isRttAvailable
         self.isRttEnabled = false
         self.showRttViewAction = buttonActions.showRttView ?? { }
+        self.title = localizationProvider.getLocalizedString(.rttCaptionsListTitle)
+        self.backButtonAction = {
+            dispatchAction(.showMoreOptions)
+        }
 
         setupItems(state: state)
         updateCaptionsOptions(state: state)
@@ -62,15 +68,6 @@ class CaptionsListViewModel: ObservableObject {
     private func setupItems(state: AppState) {
         items.removeAll()
         let buttonViewDataState = state.buttonViewDataState
-        let titleInfoModel = TitleDrawerListItemViewModel(
-            title: localizationProvider.getLocalizedString(.rttCaptionsListTitle),
-            startCompositeIcon: CompositeIcon.leftArrow,
-            startCompositeIconAction: {
-                self.dispatch(.showMoreOptions)
-            },
-            accessibilityIdentifier: ""
-        )
-        items.append(titleInfoModel)
 
         if buttonViewDataState.liveCaptionsToggleButton?.visible ?? true {
             let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(

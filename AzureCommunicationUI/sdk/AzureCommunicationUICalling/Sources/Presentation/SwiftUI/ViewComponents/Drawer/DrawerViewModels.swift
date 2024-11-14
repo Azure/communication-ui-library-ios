@@ -73,30 +73,7 @@ struct DrawerSelectableItemViewModel: BaseDrawerItemViewModel {
 
 struct TitleDrawerListItemViewModel: BaseDrawerItemViewModel {
     let title: String
-    let startCompositeIcon: CompositeIcon?
-    let startCompositeIconAction: (() -> Void)?
-    let endIcon: CompositeIcon?
-    let endIconAction: (() -> Void)?
-    let expandIcon: CompositeIcon?
-    let expandIconAction: (() -> Void)?
     let accessibilityIdentifier: String
-    init(title: String,
-         startCompositeIcon: CompositeIcon? = nil,
-         startCompositeIconAction: (() -> Void)? = nil,
-         endIcon: CompositeIcon? = nil,
-         endIconAction: (() -> Void)? = nil,
-         expandIcon: CompositeIcon? = nil,
-         expandIconAction: (() -> Void)? = nil,
-         accessibilityIdentifier: String) {
-        self.title = title
-        self.accessibilityIdentifier = accessibilityIdentifier
-        self.startCompositeIcon = startCompositeIcon
-        self.startCompositeIconAction = startCompositeIconAction
-        self.endIcon = endIcon
-        self.endIconAction = endIconAction
-        self.expandIcon = expandIcon
-        self.expandIconAction = expandIconAction
-    }
 }
 
 struct BodyTextDrawerListItemViewModel: BaseDrawerItemViewModel {

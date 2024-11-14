@@ -50,9 +50,9 @@
 		114187682C35C2E50089C05B /* CaptionsViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */; };
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
 		114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */; };
-		116BC0C22C24D06500F8CF6F /* CaptionsInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */; };
+		116BC0C22C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C12C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift */; };
 		116BC0C42C24D10D00F8CF6F /* CaptionsInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */; };
-		116BC0C62C24D15800F8CF6F /* CaptionsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */; };
+		116BC0C62C24D15800F8CF6F /* CaptionsRttInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */; };
 		11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */; };
 		11A8FC2F2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */; };
 		11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */; };
@@ -437,9 +437,9 @@
 		114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsViewManagerTests.swift; sourceTree = "<group>"; };
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
 		114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsReducer.swift; sourceTree = "<group>"; };
-		116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoViewModel.swift; sourceTree = "<group>"; };
+		116BC0C12C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttInfoViewModel.swift; sourceTree = "<group>"; };
 		116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoCellView.swift; sourceTree = "<group>"; };
-		116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsInfoView.swift; sourceTree = "<group>"; };
+		116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttInfoView.swift; sourceTree = "<group>"; };
 		11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListView.swift; sourceTree = "<group>"; };
 		11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListViewModel.swift; sourceTree = "<group>"; };
 		11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListView.swift; sourceTree = "<group>"; };
@@ -870,8 +870,8 @@
 				111FBD372C3C6976008178BF /* CaptionsErrorView.swift */,
 				11293D002C3B6D1E0006539D /* CaptionsErrorViewModel.swift */,
 				116BC0C32C24D10D00F8CF6F /* CaptionsInfoCellView.swift */,
-				116BC0C52C24D15800F8CF6F /* CaptionsInfoView.swift */,
-				116BC0C12C24D06500F8CF6F /* CaptionsInfoViewModel.swift */,
+				116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */,
+				116BC0C12C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift */,
 				11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */,
 				11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */,
 				11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */,
@@ -2253,7 +2253,7 @@
 				114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */,
 				A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
-				116BC0C22C24D06500F8CF6F /* CaptionsInfoViewModel.swift in Sources */,
+				116BC0C22C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				534A5DD82C40AE0B002EB508 /* DrawerBodyTextView.swift in Sources */,
 				051F73962C0E1164006E097F /* ToastNotificationReducer.swift in Sources */,
@@ -2293,7 +2293,7 @@
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
 				A3EEF32A2C1931ED008B81B3 /* CaptionsViewManager.swift in Sources */,
 				1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */,
-				116BC0C62C24D15800F8CF6F /* CaptionsInfoView.swift in Sources */,
+				116BC0C62C24D15800F8CF6F /* CaptionsRttInfoView.swift in Sources */,
 				1FBCB6D92655825200F57EEA /* LocalUserReducer.swift in Sources */,
 				A874EDC826616792003C7D92 /* LifecycleAction.swift in Sources */,
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,

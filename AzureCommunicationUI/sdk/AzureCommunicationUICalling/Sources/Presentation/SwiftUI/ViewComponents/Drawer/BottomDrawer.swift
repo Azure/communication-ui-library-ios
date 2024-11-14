@@ -12,7 +12,7 @@ internal enum DrawerState {
     case visible
 }
 
-internal enum DrawerHeightState {
+internal enum BottomDrawerHeightStatus {
     case collapsed
     case expanded
 }
@@ -39,9 +39,9 @@ internal enum DrawerConstants {
     // After hiding, the delay before making it "gone", accounts for animation
     static let delayUntilGone: CGFloat = 0.3
     static let collapsedHeight: CGFloat = 200
-    static let expandedHeight: CGFloat = UIScreen.main.bounds.height * 0.6
+    static let expandedHeight: CGFloat = UIScreen.main.bounds.height * 0.7
 }
-
+// swiftlint:disable type_body_length
 /// Bottom Drawer w/Swift UI Support
 ///
 /// How it works:
@@ -64,7 +64,7 @@ internal enum DrawerConstants {
 ///
 internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone
-    @State private var drawerHeightState: DrawerHeightState = .collapsed
+    @State private var drawerHeightState: BottomDrawerHeightStatus = .collapsed
     @State private var dragOffset: CGFloat = 0
     @State private var scrollViewContentSize: CGFloat = 0
     @State private var drawerHeight: CGFloat = DrawerConstants.collapsedHeight
@@ -75,16 +75,37 @@ internal struct BottomDrawer<Content: View>: View {
     let hideDrawer: () -> Void
     let content: Content
     let isExpandable: Bool
+    let showTextBox: Bool
     var drawerWorkItem: DispatchWorkItem?
+    let title: String?
+    let endIcon: CompositeIcon?
+    let endIconAction: (() -> Void)?
+    let textBoxHint: String?
+    let startIcon: CompositeIcon?
+    let startIconAction: (() -> Void)?
 
     init(isPresented: Bool,
          hideDrawer: @escaping () -> Void,
-         @ViewBuilder content: () -> Content,
-         isExpandable: Bool = false) {
+         title: String? = nil,
+         startIcon: CompositeIcon? = nil,
+         startIconAction: (() -> Void)? = nil,
+         endIcon: CompositeIcon? = nil,
+         endIconAction: (() -> Void)? = nil,
+         showTextBox: Bool = false,
+         textBoxHint: String? = nil,
+         isExpandable: Bool = false,
+         @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
         self.content = content()
         self.hideDrawer = hideDrawer
         self.isExpandable = isExpandable
+        self.showTextBox = showTextBox
+        self.title = title
+        self.endIcon = endIcon
+        self.endIconAction = endIconAction
+        self.textBoxHint = textBoxHint
+        self.startIcon = startIcon
+        self.startIconAction = startIconAction
     }
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -173,8 +194,8 @@ internal struct BottomDrawer<Content: View>: View {
                     }
                     .accessibility(hidden: drawerState != .visible)
                     .allowsHitTesting(drawerState == .visible)
-                if isExpandable {
-                    handleView
+                if title != nil {
+                    titleView
                 }
                 content
                 if isExpandable {
@@ -183,13 +204,13 @@ internal struct BottomDrawer<Content: View>: View {
                     Spacer().frame(height: DrawerConstants.bottomFillY)
                 }
 
-                if isFullyExpanded {
-                    TextField("Enter text", text: .constant(""))
+                if isFullyExpanded, showTextBox, let hint = textBoxHint {
+                    TextField(hint, text: .constant(""))
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
+                        .padding(10)
                         .offset(y: -keyboardHeight)
                         .animation(.easeInOut, value: keyboardHeight)
-                    Spacer().frame(height: 25)
+                    Spacer().frame(height: 40)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .bottom)
@@ -203,10 +224,67 @@ internal struct BottomDrawer<Content: View>: View {
         }
     }
 
-    private var handleView: some View {
-        RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
-            .frame(width: 36, height: 5)
-            .foregroundColor(Color.gray.opacity(0.6))
+    private var titleView: some View {
+        VStack {
+            // Handle at the top center
+            if isExpandable {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color.gray.opacity(0.6))
+                    .frame(width: 36, height: 4)
+                    .padding(.top, 5)
+            }
+
+            HStack(spacing: 8) {
+                if let icon = startIcon {
+                    Icon(name: icon, size: DrawerListConstants.iconSize)
+                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                        .accessibilityHidden(true)
+                        .padding(.leading, 15)
+                        .padding(.top, 15)
+                        .onTapGesture {
+                            startIconAction?()
+                        }
+                }
+                Spacer()
+                if let icon = endIcon {
+                    Icon(name: icon, size: DrawerListConstants.iconSize)
+                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                        .accessibilityHidden(true)
+                        .onTapGesture {
+                            endIconAction?()
+                        }
+                }
+                if isExpandable && !isFullyExpanded {
+                    Icon(name: CompositeIcon.maximize, size: DrawerListConstants.iconSize)
+                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                        .accessibilityHidden(true)
+                        .onTapGesture {
+                            setDrawerHeight(to: .expanded)
+                        }
+                }
+
+                if isExpandable && isFullyExpanded {
+                    Icon(name: CompositeIcon.minimize, size: DrawerListConstants.iconSize)
+                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                        .accessibilityHidden(true)
+                        .onTapGesture {
+                            setDrawerHeight(to: .collapsed)
+                        }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.trailing, 10)
+            .padding(.top, 5)
+        }
+        .overlay(
+            // Centered title overlay
+            Text(title ?? "")
+                .font(.headline)
+                .foregroundColor(.primary)
+                .accessibilityAddTraits(.isHeader)
+                .padding(.top, 20),
+            alignment: .center
+        )
     }
     private func addKeyboardObservers() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
@@ -219,6 +297,26 @@ internal struct BottomDrawer<Content: View>: View {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
                                                object: nil, queue: .main) { _ in
             keyboardHeight = 0
+        }
+    }
+
+    func setDrawerHeight(to heightState: BottomDrawerHeightStatus) {
+        guard isExpandable else {
+            return
+        }
+
+        withAnimation {
+            drawerHeightState = heightState
+            switch heightState {
+            case .collapsed:
+                drawerHeight = DrawerConstants.collapsedHeight
+                isExpanded = false
+                isFullyExpanded = false
+            case .expanded:
+                drawerHeight = DrawerConstants.expandedHeight
+                isExpanded = true
+                isFullyExpanded = true
+            }
         }
     }
 
@@ -246,3 +344,4 @@ struct ConditionalFrameModifier: ViewModifier {
         }
     }
 }
+// swiftlint:enable type_body_length

@@ -248,9 +248,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      && store.state.visibilityState.currentStatus == .visible)
     }
 
-    func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
-        return CaptionsInfoViewModel(state: state,
+    func makeCaptionsRttInfoViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions) -> CaptionsRttInfoViewModel {
+        return CaptionsRttInfoViewModel(state: state,
                                      captionsManager: captionsViewManager,
+                                     captionsOptions: captionsOptions,
                                      dispatch: store.dispatch,
                                      localizationProvider: localizationProvider)
     }

@@ -6,15 +6,13 @@
 import SwiftUI
 import FluentUI
 
-struct CaptionsInfoView: View {
-    @ObservedObject var viewModel: CaptionsInfoViewModel
+struct CaptionsRttInfoView: View {
+    @ObservedObject var viewModel: CaptionsRttInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
     @State private var isLastItemVisible = true
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var body: some View {
-        DrawerListView(sections: [DrawerListSection(header: nil, items: viewModel.items)],
-                       avatarManager: avatarViewManager)
         if viewModel.isLoading {
             loadingView
         } else {

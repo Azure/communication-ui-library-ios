@@ -49,7 +49,7 @@ internal class CallingViewModel: ObservableObject {
     var captionsListViewModel: CaptionsListViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var audioDeviceListViewModel: AudioDevicesListViewModel!
-    var captionsInfoViewModel: CaptionsInfoViewModel!
+    var captionsInfoViewModel: CaptionsRttInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
     var captionsErrorViewModel: CaptionsErrorViewModel!
 
@@ -88,8 +88,8 @@ internal class CallingViewModel: ObservableObject {
             state: store.state
         )
 
-        captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
-            state: store.state)
+        captionsInfoViewModel = compositeViewModelFactory.makeCaptionsRttInfoViewModel(
+            state: store.state, captionsOptions: captionsOptions)
         captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 

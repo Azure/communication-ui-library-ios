@@ -108,7 +108,10 @@ struct CallingView: View {
                                          avatarManager: avatarManager)
             }
             BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
-                         hideDrawer: viewModel.dismissDrawer) {
+                         hideDrawer: viewModel.dismissDrawer,
+                         title: viewModel.captionsListViewModel.title,
+                         startIcon: CompositeIcon.leftArrow,
+                         startIconAction: viewModel.captionsListViewModel.backButtonAction) {
                 CaptionsListView(viewModel: viewModel.captionsListViewModel,
                                  avatarManager: avatarManager)
             }
@@ -125,7 +128,7 @@ struct CallingView: View {
         VStack(alignment: .center, spacing: 0) {
             ZStack {
                 containerView
-                rttInfoView
+                captionsAndRttInfoView
             }
             ControlBarView(viewModel: viewModel.controlBarViewModel)
         }
@@ -165,10 +168,6 @@ struct CallingView: View {
                                 .accessibilityElement(children: .contain)
                             captionsErrorView.accessibilityElement(children: .contain)
                         }.zIndex(2)
-                    }
-                    if viewModel.captionsInfoViewModel.isDisplayed &&
-                        !viewModel.isInPip {
-                        captionsInfoView
                     }
                     if viewModel.captionsInfoViewModel.isRttDisplayed &&
                         !viewModel.isInPip {
@@ -314,19 +313,31 @@ struct CallingView: View {
         }
     }
 
-    var captionsInfoView: some View {
-        return CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
-                                avatarViewManager: avatarManager)
-            .frame(maxWidth: .infinity, maxHeight: CaptionsInfoConstants.maxHeight, alignment: .bottom)
-            .zIndex(1)
-    }
+    var captionsAndRttInfoView: some View {
+        let isPresented = viewModel.captionsInfoViewModel?.isRttDisplayed == true
+            ? viewModel.captionsInfoViewModel?.isRttDisplayed
+            : viewModel.captionsInfoViewModel?.isCaptionsDisplayed
 
-    var rttInfoView: some View {
-        BottomDrawer(isPresented: viewModel.captionsInfoViewModel.isRttDisplayed,
-                     hideDrawer: viewModel.dismissDrawer,
-                     isExpandable: true) {
-            CaptionsInfoView(viewModel: viewModel.captionsInfoViewModel,
-                                    avatarViewManager: avatarManager)
+        let title = viewModel.captionsInfoViewModel?.title
+        let endIcon = viewModel.captionsInfoViewModel?.endIcon
+        let endIconAction = viewModel.captionsInfoViewModel?.endIconAction
+        let textBoxHint = viewModel.captionsInfoViewModel?.textBoxHint
+        let isRttAvailable = viewModel.captionsInfoViewModel?.isRttAvailable ?? false
+
+        return BottomDrawer(
+            isPresented: isPresented ?? false,
+            hideDrawer: viewModel.dismissDrawer,
+            title: title,
+            endIcon: endIcon,
+            endIconAction: endIconAction,
+            showTextBox: isRttAvailable,
+            textBoxHint: textBoxHint,
+            isExpandable: true
+        ) {
+            CaptionsRttInfoView(
+                viewModel: viewModel.captionsInfoViewModel,
+                avatarViewManager: avatarManager
+            )
         }
     }
 
