@@ -43,6 +43,7 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
     let timestamp: Date
     let captionLanguage: String?
     let captionText: String?
+    let displayText: String?
 
     static func == (lhs: CallCompositeCaptionsData, rhs: CallCompositeCaptionsData) -> Bool {
         // Define what makes two instances of CallCompositeCaptionsData equal
@@ -53,6 +54,14 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
                lhs.spokenText == rhs.spokenText &&
                lhs.captionLanguage == rhs.captionLanguage &&
                lhs.captionText == rhs.captionText
+    }
+
+    func toDisplayData() -> CallCompositeRttCaptionsDisplayData {
+        CallCompositeRttCaptionsDisplayData(
+            senderRawId: speakerRawId,
+            senderName: speakerName,
+            text: displayText ?? ""
+        )
     }
 }
 
@@ -66,7 +75,8 @@ extension AzureCommunicationCalling.TeamsCaptionsReceivedEventArgs {
             spokenText: spokenText,
             timestamp: timestamp,
             captionLanguage: captionLanguage,
-            captionText: captionText
+            captionText: captionText,
+            displayText: ""
         )
     }
 }
@@ -81,7 +91,8 @@ extension AzureCommunicationCalling.TeamsCaptionsReceivedEventArgs {
             spokenText: spokenText,
             timestamp: timestamp,
             captionLanguage: nil,
-            captionText: nil
+            captionText: nil,
+            displayText: nil
         )
     }
  }

@@ -484,6 +484,24 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
+    func sendRttMessage(_ message: String, isFinal: Bool = false) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let rttFeature = call.feature(Features.realtimeText)
+        rttFeature.send(with: message, finalized: isFinal)
+    }
+
+    func sendRttMessage(_ message: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let rttFeature = call.feature(Features.realtimeText)
+        rttFeature.send(text: message)
+    }
+
     func removeParticipant(_ participantId: String) async throws {
         guard let participantToRemove = call?.remoteParticipants
             .first(where: {$0.identifier.rawId == participantId}) else {
@@ -626,6 +644,7 @@ extension CallingSDKWrapper {
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
         let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
         let captionsFeature = call.feature(Features.captions)
+        let realTimeTextCallFeature = call.feature(Features.realtimeText)
         let capabilitiesFeature = call.feature(Features.capabilities)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
@@ -634,6 +653,7 @@ extension CallingSDKWrapper {
             callingEventsHandler.assign(localUserDiagnosticsFeature)
             callingEventsHandler.assign(captionsFeature)
             callingEventsHandler.assign(capabilitiesFeature)
+            callingEventsHandler.assign(realTimeTextCallFeature)
             if callConfiguration.compositeCallType == .oneToOneIncoming && call.state == .connected {
                 // If call is accepted from CallKit
                 // call state can already be accepted, thus call state change will be missed

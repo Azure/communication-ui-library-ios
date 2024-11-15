@@ -50,10 +50,10 @@ class CaptionsViewManagerTests: XCTestCase {
         )
 
         // Simulate initial caption
-        captionsManager.handleNewData(initialCaption)
+        captionsManager.handleNewCaptionsData(initialCaption)
 
         // When
-        captionsManager.handleNewData(newCaption)
+        captionsManager.handleNewCaptionsData(newCaption)
 
         // Then
         XCTAssertEqual(captionsManager.captionData.count, 2)
@@ -74,7 +74,7 @@ class CaptionsViewManagerTests: XCTestCase {
 
         // When
         captionsManager.isTranslationEnabled = true
-        captionsManager.handleNewData(caption)
+        captionsManager.handleNewCaptionsData(caption)
 
         // Then
         XCTAssertTrue(captionsManager.captionData.isEmpty)
