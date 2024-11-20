@@ -46,17 +46,20 @@ struct CallingView: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                if getSizeClass() != .iphoneLandscapeScreenSize {
-                    portraitCallingView
-                } else {
-                    landscapeCallingView
-                }
-                errorInfoView
-                bottomDrawer
-            }.frame(width: geometry.size.width,
-                    height: geometry.size.height)
+        ZStack {
+            GeometryReader { geometry in
+                ZStack {
+                    if getSizeClass() != .iphoneLandscapeScreenSize {
+                        portraitCallingView
+                    } else {
+                        landscapeCallingView
+                    }
+
+                }.frame(width: geometry.size.width,
+                        height: geometry.size.height)
+            }.ignoresSafeArea(.keyboard)
+            errorInfoView
+            bottomDrawer
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)

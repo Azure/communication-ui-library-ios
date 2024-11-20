@@ -32,6 +32,7 @@ struct CallCompositeRttData: Identifiable, Equatable {
         lhs.resultType == rhs.resultType &&
         lhs.sequenceId == rhs.sequenceId &&
         lhs.senderRawId == rhs.senderRawId &&
+        lhs.senderName == rhs.senderName &&
         lhs.text == rhs.text
     }
 
@@ -68,18 +69,27 @@ extension AzureCommunicationCalling.RealTimeTextResultType {
         }
     }
 }
+struct CallerInfo: Equatable {
+    let rawId: String
+    let displayName: String
 
-extension AzureCommunicationCalling.RealTimeTextInfoChangedEventArgs {
+    static func == (lhs: CallerInfo, rhs: CallerInfo) -> Bool {
+        return lhs.displayName == rhs.displayName &&
+        lhs.rawId == rhs.rawId
+    }
+}
+
+extension AzureCommunicationCalling.RealTimeTextInfo {
    func toCallCompositeRttData() -> CallCompositeRttData {
        return CallCompositeRttData(
-        resultType: entry.resultType.toRttResultType(),
-        senderRawId: entry.sender.identifier.rawId,
-        senderName: entry.sender.displayName,
-        sequenceId: entry.sequenceId,
-        text: "",
-        localCreatedTime: entry.localCreatedTime,
-        localUpdatedTime: entry.localUpdatedTime,
-        isLocal: entry.isLocal
+        resultType: resultType.toRttResultType(),
+        senderRawId: sender.identifier.rawId,
+        senderName: "",
+        sequenceId: sequenceId,
+        text: text,
+        localCreatedTime: localCreatedTime,
+        localUpdatedTime: localUpdatedTime,
+        isLocal: isLocal
        )
    }
 }

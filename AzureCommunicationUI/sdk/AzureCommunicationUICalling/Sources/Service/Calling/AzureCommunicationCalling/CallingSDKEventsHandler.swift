@@ -298,7 +298,7 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func onEntryUpdated(_ realTextCallFeature: RealTimeTextCallFeature,
                         args: RealTimeTextInfoChangedEventArgs) {
-        rttReceived.send(args.toCallCompositeRttData())
+        rttReceived.send(args.entry.toCallCompositeRttData())
     }
 
     func dominantSpeakersCallFeature(_ dominantSpeakersCallFeature: DominantSpeakersCallFeature,
