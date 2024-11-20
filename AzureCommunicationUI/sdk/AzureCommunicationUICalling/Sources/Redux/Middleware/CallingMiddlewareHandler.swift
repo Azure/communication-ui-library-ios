@@ -550,6 +550,16 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
+    func sendRttMessage(message: String, resultType: RttResultType) -> Task<Void, Never> {
+        Task {
+            do {
+                try await callingService.sendRttMessage(message)
+            } catch {
+                self.logger.error("Send Rtt message Failed with error : \(error)")
+            }
+        }
+    }
+
     func stopCaptions(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {

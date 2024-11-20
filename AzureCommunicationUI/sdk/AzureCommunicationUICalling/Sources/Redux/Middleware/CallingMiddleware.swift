@@ -31,6 +31,8 @@ extension Middleware {
                             handleRemoteParticipantAction(action, actionHandler, getState, dispatch)
                         case .captionsAction(let action):
                             handleCaptionsAction(action, actionHandler, getState, dispatch)
+                        case .rttAction(let action):
+                            handleRttActions(action, actionHandler, getState, dispatch)
                         case .errorAction,
                                 .compositeExitAction,
                                 .callingViewLaunched:
@@ -231,6 +233,18 @@ private func handleCaptionsAction(_ action: CaptionsAction,
         actionHandler.setCaptionsSpokenLanguage(state: getState(), dispatch: dispatch, language: language)
     case .setCaptionLanguageRequested(language: let language):
         actionHandler.setCaptionsLanguage(state: getState(), dispatch: dispatch, language: language)
+    default:
+        break
+    }
+}
+
+private func handleRttActions(_ action: RttAction,
+                              _ actionHandler: CallingMiddlewareHandling,
+                              _ getState: () -> AppState,
+                              _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .sendRtt(message: let message, resultType: let resultType):
+        actionHandler.sendRttMessage(message: message)
     default:
         break
     }

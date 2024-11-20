@@ -67,8 +67,11 @@ class CaptionsRttInfoViewModel: ObservableObject {
                 self.dispatch(.rttAction(.turnOnRtt))
             }
         }
-
         textBoxHint = localizationProvider.getLocalizedString(.rttTextBoxHint)
+    }
+
+    func commitText(_ message: String) {
+        dispatch(.rttAction(.sendRtt(message: message, resultType: .partial)))
     }
 
     func update(state: AppState) {

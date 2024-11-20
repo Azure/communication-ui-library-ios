@@ -7,4 +7,5 @@ import Foundation
 
 enum RttAction: Equatable {
     case turnOnRtt
+    case sendRtt(message: String, resultType: RttResultType)
 }

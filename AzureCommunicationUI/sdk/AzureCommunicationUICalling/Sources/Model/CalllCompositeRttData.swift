@@ -83,7 +83,7 @@ extension AzureCommunicationCalling.RealTimeTextInfo {
    func toCallCompositeRttData() -> CallCompositeRttData {
        return CallCompositeRttData(
         resultType: resultType.toRttResultType(),
-        senderRawId: sender.identifier.rawId,
+        senderRawId: "",
         senderName: "",
         sequenceId: sequenceId,
         text: text,

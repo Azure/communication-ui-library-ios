@@ -334,13 +334,17 @@ struct CallingView: View {
             endIconAction: endIconAction,
             showTextBox: isRttAvailable,
             textBoxHint: textBoxHint,
-            isExpandable: true
-        ) {
-            CaptionsRttInfoView(
-                viewModel: viewModel.captionsInfoViewModel,
-                avatarViewManager: avatarManager
+            isExpandable: true,
+            commitAction: { message in
+                viewModel.captionsInfoViewModel?.commitText(message)
+            },
+            content: {
+                CaptionsRttInfoView(
+                    viewModel: viewModel.captionsInfoViewModel,
+                    avatarViewManager: avatarManager
+                )
+            }
             )
-        }
     }
 
     var rttInfoViewPlaceholder: some View {

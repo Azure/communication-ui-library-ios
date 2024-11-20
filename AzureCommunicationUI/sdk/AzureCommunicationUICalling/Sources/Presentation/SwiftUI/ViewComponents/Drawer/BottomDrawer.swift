@@ -75,6 +75,7 @@ internal struct BottomDrawer<Content: View>: View {
     @State private var keyboardHeight: CGFloat = 0
     @State private var textEditorYPosition: CGFloat = 0
     @State private var text: String = ""
+    @FocusState private var isTextEditorFocused: Bool
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
@@ -87,7 +88,7 @@ internal struct BottomDrawer<Content: View>: View {
     let textBoxHint: String?
     let startIcon: CompositeIcon?
     let startIconAction: (() -> Void)?
-    let commitAction: (() -> Void)?
+    let commitAction: ((_ message: String) -> Void)?
 
     init(isPresented: Bool,
          hideDrawer: @escaping () -> Void,
@@ -99,7 +100,7 @@ internal struct BottomDrawer<Content: View>: View {
          showTextBox: Bool = false,
          textBoxHint: String? = nil,
          isExpandable: Bool = false,
-         commitAction: (() -> Void)? = nil,
+         commitAction: ((_ message: String) -> Void)? = nil,
          @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
         self.content = content()
@@ -301,16 +302,26 @@ internal struct BottomDrawer<Content: View>: View {
     }
 
     private var textEditor: some View {
-        return VStack {
-            TextEditor(text: $text)
-                .frame(height: DrawerConstants.textBoxHeight)
-                .submitLabel(.send)
-                .font(.system(.body))
-                .onSubmit {
-                    commitAction?()
+        VStack {
+            CustomTextEditor(text: $text, onCommit: {
+                let committedText = text
+                commitAction?(committedText)
+                DispatchQueue.main.async {
+                    text = ""
+                    isTextEditorFocused = true // Immediately refocus the TextEditor
                 }
-                .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
-                    .stroke(Color(Colors.dividerOnPrimary)))
+            }, onChange: { newText in
+                commitAction?(newText)
+            })
+            .frame(height: DrawerConstants.textBoxHeight)
+            .background(Color.white)
+            .cornerRadius(DrawerConstants.drawerHandleCornerRadius)
+            .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
+                .stroke(Color(Colors.dividerOnPrimary)))
+            .focused($isTextEditorFocused)
+            .onAppear {
+                isTextEditorFocused = true // Ensure the TextEditor is focused when it appears
+            }
         }
     }
 
