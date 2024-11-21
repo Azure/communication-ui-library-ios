@@ -47,7 +47,7 @@ extension CompositeViewModelFactoryTests {
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
                                          debugInfoManager: DebugInfoManagerMocking(),
-                                         captionsViewManager: CaptionsViewManager(
+                                         captionsViewManager: CaptionsAndRttViewManager(
                                             store: mockStoreFactory.store,
                                             callingSDKWrapper: CallingSDKWrapperMocking()
                                          ),

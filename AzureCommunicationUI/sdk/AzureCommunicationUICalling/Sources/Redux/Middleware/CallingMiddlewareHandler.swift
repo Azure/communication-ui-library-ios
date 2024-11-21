@@ -550,10 +550,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func sendRttMessage(message: String, resultType: RttResultType) -> Task<Void, Never> {
+    func sendRttMessage(message: String, isFinal: Bool) -> Task<Void, Never> {
         Task {
             do {
-                try await callingService.sendRttMessage(message)
+                try await callingService.sendRttMessage(message, isFinal: true)
             } catch {
                 self.logger.error("Send Rtt message Failed with error : \(error)")
             }

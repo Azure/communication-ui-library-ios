@@ -7,22 +7,22 @@ import SwiftUI
 
 struct CaptionsInfoCellView: View {
     var avatarViewManager: AvatarViewManagerProtocol
-    var caption: CallCompositeCaptionsData
+    var caption: CallCompositeRttCaptionsDisplayData
     @State private var avatarImage: UIImage?
     @State private var displayName: String?
     @State private var isRTL = false
 
-    init(caption: CallCompositeCaptionsData, avatarViewManager: AvatarViewManagerProtocol) {
+    init(caption: CallCompositeRttCaptionsDisplayData, avatarViewManager: AvatarViewManagerProtocol) {
         self.caption = caption
         self.avatarViewManager = avatarViewManager
-        self.displayName = caption.speakerName
+        self.displayName = caption.displayName
     }
 
     var body: some View {
         HStack(alignment: .top) {
             avatarView
             VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
-                Text(caption.speakerName)
+                Text(caption.displayName)
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textSecondary))
                     .lineLimit(1)
@@ -58,27 +58,31 @@ struct CaptionsInfoCellView: View {
 
     // Display text based on caption availability
     private var displayText: String {
-        (caption.captionText?.isEmpty ?? true) ? caption.spokenText : caption.captionText ?? ""
+        if caption.captionsRttType == .rtt {
+            return caption.text
+        } else {
+            return (caption.captionsText?.isEmpty ?? true) ? caption.spokenText : caption.captionsText ?? ""
+        }
     }
 
     private var language: String {
-        (caption.captionText?.isEmpty ?? true) ? caption.spokenLanguage : caption.captionLanguage ?? ""
+        (caption.captionsText?.isEmpty ?? true) ? caption.spokenLanguage : caption.captionsLanguage ?? ""
     }
     private func updateAvatar() {
         // Attempt to get the avatar image directly from the avatar storage for the given speaker's ID.
         if let participantViewDataAvatar = avatarViewManager.avatarStorage.value(
-            forKey: caption.speakerRawId)?.avatarImage {
+            forKey: caption.displayRawId)?.avatarImage {
             // If an avatar image exists, set it.
             avatarImage = participantViewDataAvatar
         } else {
             avatarImage = nil
-            displayName = caption.speakerName
+            displayName = caption.displayName
         }
     }
 
     private func determineTextDirection() {
-        let activeLanguageCode = (caption.captionLanguage?.isEmpty ?? true) ?
-        caption.spokenLanguage : caption.captionLanguage ?? caption.spokenLanguage
+        let activeLanguageCode = (caption.captionsLanguage?.isEmpty ?? true) ?
+        caption.spokenLanguage : caption.captionsLanguage ?? caption.spokenLanguage
         isRTL = isRightToLeftLanguage(activeLanguageCode)
     }
 

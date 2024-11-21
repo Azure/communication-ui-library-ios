@@ -58,9 +58,16 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
 
     func toDisplayData() -> CallCompositeRttCaptionsDisplayData {
         CallCompositeRttCaptionsDisplayData(
-            senderRawId: speakerRawId,
-            senderName: speakerName,
-            text: displayText ?? ""
+            displayRawId: speakerRawId,
+            displayName: speakerName,
+            text: displayText ?? "",
+            spokenText: spokenText,
+            captionsText: captionText ?? "",
+            spokenLanguage: spokenLanguage,
+            captionsLanguage: captionLanguage,
+            captionsRttType: .captions,
+            timestamp: timestamp,
+            isFinal: resultType == .final
         )
     }
 }

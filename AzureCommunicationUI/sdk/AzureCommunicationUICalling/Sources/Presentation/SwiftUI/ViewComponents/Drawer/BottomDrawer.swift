@@ -277,7 +277,6 @@ internal struct BottomDrawer<Content: View>: View {
             .padding(.top, 5)
         }
         .overlay(
-            // Centered title overlay
             Text(title ?? "")
                 .font(.headline)
                 .foregroundColor(.primary)

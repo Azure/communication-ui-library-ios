@@ -40,7 +40,7 @@ struct CustomTextEditor: UIViewRepresentable {
         textView.font = UIFont.systemFont(ofSize: 17)
         textView.isScrollEnabled = false
         textView.returnKeyType = .send
-        textView.backgroundColor = UIColor.clear
+        textView.backgroundColor = StyleProvider.color.drawerColor
         return textView
     }
 

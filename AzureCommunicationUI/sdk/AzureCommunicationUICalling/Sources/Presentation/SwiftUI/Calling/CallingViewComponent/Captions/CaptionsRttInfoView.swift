@@ -18,20 +18,20 @@ struct CaptionsRttInfoView: View {
         } else {
             ScrollViewReader { scrollView in
                 List {
-                    ForEach(viewModel.captionsData.indices, id: \.self) { index in
-                        CaptionsInfoCellView(caption: viewModel.captionsData[index],
+                    ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
+                        CaptionsInfoCellView(caption: viewModel.captionsRttData[index],
                                              avatarViewManager: avatarViewManager)
-                        .id(viewModel.captionsData[index].id)
+                        .id(viewModel.captionsRttData[index].id)
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear) // Explicitly setting background color
                         .onAppear {
-                            if index == viewModel.captionsData.indices.last {
+                            if index == viewModel.captionsRttData.indices.last {
                                 isLastItemVisible = true
                             }
                         }
                         .onDisappear {
-                             if index == viewModel.captionsData.indices.last {
+                             if index == viewModel.captionsRttData.indices.last {
                                  isLastItemVisible = false
                              }
                         }
@@ -43,7 +43,7 @@ struct CaptionsRttInfoView: View {
                 .onAppear {
                     scrollToLastItem(scrollView)
                 }
-                .onChange(of: viewModel.captionsData) { newCaptions in
+                .onChange(of: viewModel.captionsRttData) { newCaptions in
                     // Check if the last item has changed
                       _ = newCaptions.last?.id
                       if isLastItemVisible {
@@ -55,11 +55,11 @@ struct CaptionsRttInfoView: View {
     }
 
     private func scrollToLastItem(_ scrollView: ScrollViewProxy) {
-        if let lastID = viewModel.captionsData.last?.id {
-            withAnimation {
-                scrollView.scrollTo(lastID, anchor: .bottom)
-            }
-        }
+//        if let lastID = viewModel.captionsRttData.last?.id {
+//            withAnimation {
+//                scrollView.scrollTo(lastID, anchor: .bottom)
+//            }
+//        }
     }
 
     private var loadingView: some View {

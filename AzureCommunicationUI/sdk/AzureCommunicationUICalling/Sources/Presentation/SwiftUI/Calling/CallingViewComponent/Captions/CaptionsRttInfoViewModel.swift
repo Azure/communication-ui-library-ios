@@ -7,13 +7,13 @@ import Combine
 import Foundation
 
 class CaptionsRttInfoViewModel: ObservableObject {
-    @Published var captionsData = [CallCompositeCaptionsData]()
+    @Published var captionsRttData = [CallCompositeRttCaptionsDisplayData]()
     @Published var isCaptionsDisplayed = false
     @Published var isRttDisplayed = false
     @Published var isRttAvailable = false
     @Published var isLoading = false
     var loadingMessage = ""
-    private var captionsManager: CaptionsViewManager
+    private var captionsManager: CaptionsAndRttViewManager
     private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
     private let captionsOptions: CaptionsOptions
@@ -23,7 +23,7 @@ class CaptionsRttInfoViewModel: ObservableObject {
     var textBoxHint: String?
 
     init(state: AppState,
-         captionsManager: CaptionsViewManager,
+         captionsManager: CaptionsAndRttViewManager,
          captionsOptions: CaptionsOptions,
          dispatch: @escaping ActionDispatch,
          localizationProvider: LocalizationProviderProtocol) {
@@ -41,9 +41,9 @@ class CaptionsRttInfoViewModel: ObservableObject {
     }
 
     private func bindCaptionsUpdates() {
-        captionsManager.$captionData
+        captionsManager.$captionsRttData
             .receive(on: DispatchQueue.main)
-            .assign(to: &$captionsData)
+            .assign(to: &$captionsRttData)
     }
 
     private func setupItems(state: AppState) {
