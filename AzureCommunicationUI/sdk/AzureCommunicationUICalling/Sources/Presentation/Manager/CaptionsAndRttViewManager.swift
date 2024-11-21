@@ -26,14 +26,14 @@ class CaptionsAndRttViewManager: ObservableObject {
         callingSDKWrapper.callingEventsHandler.captionsReceived
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newData in
-                self?.handleNewData(newData.toDisplayData(), isCaption: true)
+                self?.handleNewData(newData.toDisplayData())
             }
             .store(in: &subscriptions)
 
         callingSDKWrapper.callingEventsHandler.rttReceived
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newData in
-                self?.handleNewData(newData.toDisplayData(), isCaption: false)
+                self?.handleNewData(newData.toDisplayData())
             }
             .store(in: &subscriptions)
 
@@ -66,12 +66,12 @@ class CaptionsAndRttViewManager: ObservableObject {
         }
     }
 
-    private func handleNewData(_ newData: CallCompositeRttCaptionsDisplayData, isCaption: Bool) {
-        if isCaption && !shouldAddCaption(newData) {
+    private func handleNewData(_ newData: CallCompositeRttCaptionsDisplayData) {
+        if newData.captionsRttType == .captions && !shouldAddCaption(newData) {
             return
         }
 
-        processData(newData, isCaption: isCaption)
+        processData(newData)
     }
 
     // Decide if a new caption should be added to the list
@@ -84,7 +84,7 @@ class CaptionsAndRttViewManager: ObservableObject {
         return true
     }
 
-    private func processData(_ newData: CallCompositeRttCaptionsDisplayData, isCaption: Bool) {
+    private func processData(_ newData: CallCompositeRttCaptionsDisplayData) {
         if captionsRttData.isEmpty {
             captionsRttData.append(newData)
             return
