@@ -493,15 +493,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         rttFeature.send(with: message, finalized: isFinal)
     }
 
-    func sendRttMessage(_ message: String) async throws {
-        guard let call = call else {
-            return
-        }
-
-        let rttFeature = call.feature(Features.realtimeText)
-        rttFeature.send(text: message)
-    }
-
     func removeParticipant(_ participantId: String) async throws {
         guard let participantToRemove = call?.remoteParticipants
             .first(where: {$0.identifier.rawId == participantId}) else {

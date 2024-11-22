@@ -11,7 +11,7 @@ extension Reducer where State == RttState, Actions == RttAction {
         switch action {
         case .turnOnRtt:
             newState.isRttOn = true
-        case .sendRtt(message: let message, resultType: let resultType):
+        case .sendRtt(message: let message, isFinal: let isFinal):
             newState = currentState
         }
         return newState

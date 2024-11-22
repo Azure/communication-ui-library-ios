@@ -123,12 +123,12 @@ extension AzureCommunicationCalling.RealTimeTextInfo {
    func toCallCompositeRttData() -> CallCompositeRttData {
        return CallCompositeRttData(
         resultType: resultType.toRttResultType(),
-        senderRawId: "",
-        senderName: "",
+        senderRawId: sender.identifier.rawId,
+        senderName: sender.displayName,
         sequenceId: sequenceId,
         text: text,
-        localCreatedTime: localCreatedTime,
-        localUpdatedTime: localUpdatedTime,
+        localCreatedTime: receivedTime,
+        localUpdatedTime: updatedTime,
         isLocal: isLocal
        )
    }

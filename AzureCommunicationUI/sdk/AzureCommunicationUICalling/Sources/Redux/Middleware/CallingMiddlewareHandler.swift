@@ -69,7 +69,7 @@ protocol CallingMiddlewareHandling {
     @discardableResult
     func stopCaptions(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func sendRttMessage(message: String) -> Task<Void, Never>
+    func sendRttMessage(message: String, isFinal: Bool) -> Task<Void, Never>
     @discardableResult
     func setCaptionsSpokenLanguage(state: AppState,
                                    dispatch: @escaping ActionDispatch,
@@ -540,20 +540,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func sendRttMessage(message: String) -> Task<Void, Never> {
-        Task {
-            do {
-                try await callingService.sendRttMessage(message)
-            } catch {
-                self.logger.error("Send Rtt message Failed with error : \(error)")
-            }
-        }
-    }
-
     func sendRttMessage(message: String, isFinal: Bool) -> Task<Void, Never> {
         Task {
             do {
-                try await callingService.sendRttMessage(message, isFinal: true)
+                try await callingService.sendRttMessage(message, isFinal: isFinal)
             } catch {
                 self.logger.error("Send Rtt message Failed with error : \(error)")
             }

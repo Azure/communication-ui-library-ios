@@ -9,23 +9,25 @@ struct CaptionsRttInfoView: View {
     @ObservedObject var viewModel: CaptionsRttInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
     @State private var isLastItemVisible = true
+    @State private var previousDrawerHeight: CGFloat = 0 // Track the previous height
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var body: some View {
         GeometryReader { geometry in
-            let drawerHeight = geometry.size.height
+            var contentHeight = geometry.size.height
+            let parentFrame = geometry
             if viewModel.isLoading {
                 loadingView
             } else {
                 ScrollViewReader { scrollView in
                     ScrollView {
                         VStack(spacing: 0) {
-                            if viewModel.isRttDisplayed {
-                                rttInfoView
-                                    .padding(.horizontal, 10)
-                                    .padding(.bottom, 8)
-                                    .transition(.move(edge: .bottom))
-                            }
+//                            if viewModel.isRttDisplayed {
+//                                rttInfoView
+//                                    .padding(.horizontal, 10)
+//                                    .padding(.bottom, 8)
+//                                    .transition(.move(edge: .bottom))
+//                            }
                             ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
                                 CaptionsInfoCellView(
                                     caption: viewModel.captionsRttData[index],
@@ -37,25 +39,36 @@ struct CaptionsRttInfoView: View {
                                         if index == viewModel.captionsRttData.indices.last {
                                             Color.clear
                                                 .onAppear {
-                                                    checkLastItemVisibility(geometry: geo)
+                                                    contentHeight = geo.size.height
+                                                    checkLastItemVisibility(
+                                                        geometry: geo,
+                                                        parentFrame: parentFrame
+                                                    )
                                                 }
                                                 .onChange(of: viewModel.captionsRttData) { _ in
-                                                    checkLastItemVisibility(geometry: geo)
+                                                    checkLastItemVisibility(
+                                                        geometry: geo,
+                                                        parentFrame: parentFrame
+                                                    )
+                                                    contentHeight = geo.size.height
                                                 }
                                         }
                                     }
                                 )
                             }
                         }
-                        .frame(minHeight: drawerHeight, alignment: .bottom)
+                        .frame(minHeight: geometry.size.height, alignment: .bottom)
                         .frame(maxWidth: .infinity)
                     }
                     .background(Color(StyleProvider.color.drawerColor))
-                    .onAppear {
-                        scrollToBottom(scrollView)
-                    }
                     .onChange(of: viewModel.captionsRttData) { _ in
                         if isLastItemVisible {
+                            scrollToBottom(scrollView)
+                        }
+                    }
+                    .onChange(of: contentHeight) { newHeight in
+                        if newHeight != previousDrawerHeight {
+                            previousDrawerHeight = newHeight
                             scrollToBottom(scrollView)
                         }
                     }
@@ -76,12 +89,13 @@ struct CaptionsRttInfoView: View {
         }
     }
 
-    private func checkLastItemVisibility(geometry: GeometryProxy) {
-        let frame = geometry.frame(in: .global)
-        let screenHeight = UIScreen.main.bounds.height
+    private func checkLastItemVisibility(geometry: GeometryProxy, parentFrame: GeometryProxy) {
+        let itemFrame = geometry.frame(in: .global)
+        let parentBounds = parentFrame.frame(in: .global)
 
-        // Check if the bottom of the last item (adjusted for padding) is visible
-        let isVisible = frame.maxY <= screenHeight
+        // Check if the last item's frame intersects with the parent bounds
+        let isVisible = itemFrame.maxY > parentBounds.minY && itemFrame.minY < parentBounds.maxY
+
         if isLastItemVisible != isVisible {
             isLastItemVisible = isVisible
         }

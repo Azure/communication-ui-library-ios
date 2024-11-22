@@ -335,8 +335,8 @@ struct CallingView: View {
             showTextBox: isRttAvailable,
             textBoxHint: textBoxHint,
             isExpandable: true,
-            commitAction: { message in
-                viewModel.captionsInfoViewModel?.commitText(message)
+            commitAction: { message, isFinal in
+                viewModel.captionsInfoViewModel?.commitText(message, isFinal ?? false)
             },
             content: {
                 CaptionsRttInfoView(

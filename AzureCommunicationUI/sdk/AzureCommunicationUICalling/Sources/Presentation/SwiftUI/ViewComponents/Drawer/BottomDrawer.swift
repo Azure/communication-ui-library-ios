@@ -86,7 +86,7 @@ internal struct BottomDrawer<Content: View>: View {
     let textBoxHint: String?
     let startIcon: CompositeIcon?
     let startIconAction: (() -> Void)?
-    let commitAction: ((_ message: String) -> Void)?
+    let commitAction: ((_ message: String, _ isFinal: Bool? ) -> Void)?
 
     init(isPresented: Bool,
          hideDrawer: @escaping () -> Void,
@@ -98,7 +98,7 @@ internal struct BottomDrawer<Content: View>: View {
          showTextBox: Bool = false,
          textBoxHint: String? = nil,
          isExpandable: Bool = false,
-         commitAction: ((_ message: String) -> Void)? = nil,
+         commitAction: ((_ message: String, _ isFinal: Bool?) -> Void)? = nil,
          @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
         self.content = content()
@@ -301,12 +301,12 @@ internal struct BottomDrawer<Content: View>: View {
         VStack {
             CustomTextEditor(text: $text, onCommit: {
                 let committedText = text
-                commitAction?(committedText)
+                commitAction?(committedText, true)
                 DispatchQueue.main.async {
                     text = ""
                 }
             }, onChange: { newText in
-                commitAction?(newText)
+                commitAction?(newText, false)
             })
             .frame(height: DrawerConstants.textBoxHeight)
             .background(Color.white)

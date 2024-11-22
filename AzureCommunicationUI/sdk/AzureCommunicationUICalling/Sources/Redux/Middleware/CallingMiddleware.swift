@@ -243,8 +243,8 @@ private func handleRttActions(_ action: RttAction,
                               _ getState: () -> AppState,
                               _ dispatch: @escaping ActionDispatch) {
     switch action {
-    case .sendRtt(message: let message, resultType: let resultType):
-        actionHandler.sendRttMessage(message: message)
+    case .sendRtt(message: let message, isFinal: let isFinal):
+        actionHandler.sendRttMessage(message: message, isFinal: isFinal)
     default:
         break
     }
