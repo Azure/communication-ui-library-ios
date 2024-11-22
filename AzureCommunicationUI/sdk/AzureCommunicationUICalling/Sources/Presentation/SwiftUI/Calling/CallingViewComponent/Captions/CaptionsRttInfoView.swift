@@ -40,7 +40,10 @@ struct CaptionsRttInfoView: View {
                                 }
                             )
                         }
-                    }
+                    }.frame(
+                        minHeight: UIScreen.main.bounds.height - DrawerConstants.bottomFillY,
+                        alignment: .bottom
+                    ) // Ensures the content fills the screen height
                     .frame(maxWidth: .infinity) // Ensures full width
                 }
                 .background(Color(StyleProvider.color.drawerColor))
