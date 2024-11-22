@@ -71,7 +71,7 @@ struct CaptionsRttInfoView: View {
             }
         } else if viewModel.isRttDisplayed {
             withAnimation {
-                scrollView.scrollTo("RTTInfoView", anchor: .top)
+                scrollView.scrollTo("RTTInfoView", anchor: .bottom)
             }
         }
     }
@@ -117,6 +117,7 @@ struct CaptionsRttInfoView: View {
         }
         .background(Color(StyleProvider.color.surface))
         .cornerRadius(8)
+        .padding(.horizontal, 10)
         .id("RTTInfoView")
     }
 }

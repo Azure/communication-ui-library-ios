@@ -74,7 +74,6 @@ internal struct BottomDrawer<Content: View>: View {
     @State private var keyboardHeight: CGFloat = 0
     @State private var textEditorYPosition: CGFloat = 0
     @State private var text: String = ""
-    @FocusState private var isTextEditorFocused: Bool
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
@@ -168,9 +167,6 @@ internal struct BottomDrawer<Content: View>: View {
                 withAnimation {
                     drawerState = .visible
                 }
-                if showTextBox {
-                    setDrawerHeight(to: .expanded)
-                }
             } else {
                 withAnimation {
                     drawerState = .hidden
@@ -204,6 +200,7 @@ internal struct BottomDrawer<Content: View>: View {
                         placeHolder
                     }.frame(height: DrawerConstants.textBoxHeight)
                         .padding([.leading, .trailing], 10)
+                        .accessibilityHidden(true)
                 }
                 Spacer().frame(height: DrawerConstants.bottomFillY)
             }
@@ -215,6 +212,12 @@ internal struct BottomDrawer<Content: View>: View {
             .animation(.easeInOut, value: keyboardHeight + DrawerConstants.bottomFillY)
             .modifier(ConditionalFrameModifier(
                 drawerHeight: $drawerHeight, isExpandable: isExpandable))
+        }.onAppear {
+            if showTextBox {
+                DispatchQueue.main.async {
+                    setDrawerHeight(to: .expanded)
+                }
+            }
         }
     }
 
@@ -301,7 +304,6 @@ internal struct BottomDrawer<Content: View>: View {
                 commitAction?(committedText)
                 DispatchQueue.main.async {
                     text = ""
-                    isTextEditorFocused = true // Immediately refocus the TextEditor
                 }
             }, onChange: { newText in
                 commitAction?(newText)
@@ -311,10 +313,6 @@ internal struct BottomDrawer<Content: View>: View {
             .cornerRadius(DrawerConstants.drawerHandleCornerRadius)
             .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
                 .stroke(Color(Colors.dividerOnPrimary)))
-            .focused($isTextEditorFocused)
-            .onAppear {
-                isTextEditorFocused = true // Ensure the TextEditor is focused when it appears
-            }
         }
     }
 

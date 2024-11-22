@@ -7,7 +7,8 @@ import SwiftUI
 struct CustomTextEditor: UIViewRepresentable {
     @Binding var text: String
     var onCommit: (() -> Void)?
-    var onChange: ((String) -> Void)? // Add an onChange closure
+    var onChange: ((String) -> Void)?
+    @State private var hasGainedFocus = false // Tracks if focus has been gained
 
     class Coordinator: NSObject, UITextViewDelegate {
         var parent: CustomTextEditor
@@ -19,6 +20,10 @@ struct CustomTextEditor: UIViewRepresentable {
         func textViewDidChange(_ textView: UITextView) {
             parent.text = textView.text
             parent.onChange?(textView.text)
+        }
+
+        func textViewDidBeginEditing(_ textView: UITextView) {
+            parent.hasGainedFocus = true // Mark as focused
         }
 
         func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -48,9 +53,12 @@ struct CustomTextEditor: UIViewRepresentable {
         if uiView.text != text {
             uiView.text = text
         }
-        // Ensure the text view remains the first responder
-        if !uiView.isFirstResponder {
+
+        // Manage first responder behavior
+        if hasGainedFocus && !uiView.isFirstResponder {
             uiView.becomeFirstResponder()
+        } else if !hasGainedFocus && uiView.isFirstResponder {
+            uiView.resignFirstResponder()
         }
     }
 }

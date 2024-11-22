@@ -83,6 +83,6 @@ class CaptionsRttInfoViewModel: ObservableObject {
         self.isLoading = isCaptionsDisplayed && !state.captionsState.isStarted
         self.isRttDisplayed = state.rttState.isRttOn && !isCaptionsDisplayed
         setupItems(state: state)
-        isRttAvailable = state.rttState.isRttOn
+        self.isRttAvailable = state.rttState.isRttOn
     }
 }
