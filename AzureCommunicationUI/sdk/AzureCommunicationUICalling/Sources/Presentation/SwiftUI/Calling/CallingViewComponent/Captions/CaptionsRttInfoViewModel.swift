@@ -56,7 +56,8 @@ class CaptionsRttInfoViewModel: ObservableObject {
                 captionsRttType: .rtt,
                 timestamp: Date(),
                 isFinal: true,
-                isRttInfo: true
+                isRttInfo: true,
+                isLocal: false
             ), at: 0)
         }
         return data

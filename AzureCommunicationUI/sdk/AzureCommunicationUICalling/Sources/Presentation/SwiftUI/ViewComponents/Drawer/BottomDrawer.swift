@@ -200,7 +200,6 @@ internal struct BottomDrawer<Content: View>: View {
                         placeHolder
                     }.frame(height: DrawerConstants.textBoxHeight)
                         .padding([.leading, .trailing], 10)
-                        .accessibilityHidden(true)
                 }
                 Spacer().frame(height: DrawerConstants.bottomFillY)
             }

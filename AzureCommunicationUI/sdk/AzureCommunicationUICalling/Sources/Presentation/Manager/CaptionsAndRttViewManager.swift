@@ -75,10 +75,10 @@ class CaptionsAndRttViewManager: ObservableObject {
     }
 
     // Decide if a new caption should be added to the list
-    private func shouldAddCaption(_ caption: CallCompositeRttCaptionsDisplayData) -> Bool {
+    private func shouldAddCaption(_ displayData: CallCompositeRttCaptionsDisplayData) -> Bool {
         if isTranslationEnabled {
             // Only add caption if translation is enabled and caption text is not empty
-            return !(caption.captionsText?.isEmpty ?? true)
+            return !(displayData.captionsText?.isEmpty ?? true)
         }
         // Always add caption if translation is not enabled
         return true
@@ -113,6 +113,9 @@ class CaptionsAndRttViewManager: ObservableObject {
             captionsRttData[lastIndex].isFinal = true
         }
 
+        // Sort the data to ensure non-final local messages are always at the bottom
+        captionsRttData.sort(by: sortCaptions)
+
         // Limit the total count of messages to `maxDataCount`
         if captionsRttData.count > maxDataCount {
             withAnimation {
@@ -126,4 +129,29 @@ class CaptionsAndRttViewManager: ObservableObject {
         let duration = newData.timestamp.timeIntervalSince(lastData.timestamp)
         return duration > finalizationDelay
     }
+
+    private func sortCaptions(
+        _ first: CallCompositeRttCaptionsDisplayData,
+        _ second: CallCompositeRttCaptionsDisplayData
+    ) -> Bool {
+        // Rule 1: Local non-final messages always at the bottom
+        if first.isLocal && !first.isFinal {
+            return false // Keep `first` below `second`
+        }
+        if second.isLocal && !second.isFinal {
+            return true // Keep `second` below `first`
+        }
+
+        // Rule 2: Non-final messages should appear below finalized messages
+        if !first.isFinal && second.isFinal {
+            return false // Keep `first` below `second`
+        }
+        if first.isFinal && !second.isFinal {
+            return true // Keep `second` below `first`
+        }
+
+        // Rule 3: For other cases, preserve the insertion order
+        return first.timestamp < second.timestamp
+    }
+
 }

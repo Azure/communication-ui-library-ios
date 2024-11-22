@@ -64,7 +64,8 @@ struct CallCompositeRttData: Identifiable, Equatable {
             captionsRttType: .rtt,
             timestamp: localCreatedTime,
             isFinal: resultType == .final,
-            isRttInfo: false
+            isRttInfo: false,
+            isLocal: isLocal
         )
     }
 }
@@ -83,6 +84,7 @@ struct CallCompositeRttCaptionsDisplayData: Identifiable, Equatable {
     let timestamp: Date
     var isFinal: Bool
     let isRttInfo: Bool?
+    let isLocal: Bool
 
     static func == (lhs: CallCompositeRttCaptionsDisplayData, rhs: CallCompositeRttCaptionsDisplayData) -> Bool {
         return lhs.displayName == rhs.displayName &&
@@ -95,7 +97,8 @@ struct CallCompositeRttCaptionsDisplayData: Identifiable, Equatable {
         lhs.timestamp == rhs.timestamp &&
         lhs.spokenLanguage == rhs.spokenLanguage &&
         lhs.captionsLanguage == rhs.captionsLanguage &&
-        lhs.isRttInfo == rhs.isRttInfo
+        lhs.isRttInfo == rhs.isRttInfo &&
+        lhs.isLocal == rhs.isLocal
     }
 }
 
