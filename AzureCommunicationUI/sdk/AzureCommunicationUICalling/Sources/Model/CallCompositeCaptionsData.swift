@@ -67,7 +67,8 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
             captionsLanguage: captionLanguage,
             captionsRttType: .captions,
             timestamp: timestamp,
-            isFinal: resultType == .final
+            isFinal: resultType == .final,
+            isRttInfo: false
         )
     }
 }

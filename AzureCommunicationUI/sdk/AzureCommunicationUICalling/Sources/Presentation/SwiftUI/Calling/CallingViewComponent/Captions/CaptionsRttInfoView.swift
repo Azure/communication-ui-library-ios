@@ -14,61 +14,19 @@ struct CaptionsRttInfoView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            var contentHeight = geometry.size.height
             let parentFrame = geometry
             if viewModel.isLoading {
                 loadingView
             } else {
                 ScrollViewReader { scrollView in
                     ScrollView {
-                        VStack(spacing: 0) {
-//                            if viewModel.isRttDisplayed {
-//                                rttInfoView
-//                                    .padding(.horizontal, 10)
-//                                    .padding(.bottom, 8)
-//                                    .transition(.move(edge: .bottom))
-//                            }
-                            ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
-                                CaptionsInfoCellView(
-                                    caption: viewModel.captionsRttData[index],
-                                    avatarViewManager: avatarViewManager
-                                )
-                                .id(viewModel.captionsRttData[index].id)
-                                .background(
-                                    GeometryReader { geo in
-                                        if index == viewModel.captionsRttData.indices.last {
-                                            Color.clear
-                                                .onAppear {
-                                                    contentHeight = geo.size.height
-                                                    checkLastItemVisibility(
-                                                        geometry: geo,
-                                                        parentFrame: parentFrame
-                                                    )
-                                                }
-                                                .onChange(of: viewModel.captionsRttData) { _ in
-                                                    checkLastItemVisibility(
-                                                        geometry: geo,
-                                                        parentFrame: parentFrame
-                                                    )
-                                                    contentHeight = geo.size.height
-                                                }
-                                        }
-                                    }
-                                )
-                            }
-                        }
-                        .frame(minHeight: geometry.size.height, alignment: .bottom)
-                        .frame(maxWidth: .infinity)
+                        content(scrollView: scrollView, parentFrame: parentFrame)
+                            .frame(minHeight: geometry.size.height, alignment: .bottom) // fix the height
+                            .frame(maxWidth: .infinity)
+                            .background(Color(StyleProvider.color.drawerColor))
                     }
-                    .background(Color(StyleProvider.color.drawerColor))
                     .onChange(of: viewModel.captionsRttData) { _ in
                         if isLastItemVisible {
-                            scrollToBottom(scrollView)
-                        }
-                    }
-                    .onChange(of: contentHeight) { newHeight in
-                        if newHeight != previousDrawerHeight {
-                            previousDrawerHeight = newHeight
                             scrollToBottom(scrollView)
                         }
                     }
@@ -77,14 +35,45 @@ struct CaptionsRttInfoView: View {
         }
     }
 
+    @ViewBuilder
+    private func content(scrollView: ScrollViewProxy, parentFrame: GeometryProxy) -> some View {
+        VStack(spacing: 0) {
+            ForEach(viewModel.displayedData.indices, id: \.self) { index in
+                if viewModel.displayedData[index].isRttInfo ?? false {
+                    rttInfoCell() // Render RTT Info message
+                        .id(viewModel.displayedData[index].id)
+                } else {
+                    CaptionsInfoCellView(
+                        caption: viewModel.displayedData[index],
+                        avatarViewManager: avatarViewManager
+                    )
+                    .id(viewModel.displayedData[index].id)
+                    .background(lastItemBackground(index: index, parentFrame: parentFrame))
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func lastItemBackground(index: Int, parentFrame: GeometryProxy) -> some View {
+        // check last item is visiable on the screen
+        if index == viewModel.captionsRttData.indices.last {
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear {
+                        checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
+                    }
+                    .onChange(of: viewModel.captionsRttData) { _ in
+                        checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
+                    }
+            }
+        }
+    }
+
     private func scrollToBottom(_ scrollView: ScrollViewProxy) {
-        if let lastID = viewModel.captionsRttData.last?.id {
+        if let lastID = viewModel.displayedData.last?.id {
             withAnimation {
                 scrollView.scrollTo(lastID, anchor: .bottom)
-            }
-        } else if viewModel.isRttDisplayed {
-            withAnimation {
-                scrollView.scrollTo("RTTInfoView", anchor: .bottom)
             }
         }
     }
@@ -93,9 +82,7 @@ struct CaptionsRttInfoView: View {
         let itemFrame = geometry.frame(in: .global)
         let parentBounds = parentFrame.frame(in: .global)
 
-        // Check if the last item's frame intersects with the parent bounds
         let isVisible = itemFrame.maxY > parentBounds.minY && itemFrame.minY < parentBounds.maxY
-
         if isLastItemVisible != isVisible {
             isLastItemVisible = isVisible
         }
@@ -117,8 +104,8 @@ struct CaptionsRttInfoView: View {
         }
     }
 
-    private var rttInfoView: some View {
-        return HStack(alignment: .top, spacing: 12) {
+    private func rttInfoCell() -> some View {
+        HStack(alignment: .top, spacing: 12) {
             Icon(name: CompositeIcon.rtt, size: DrawerListConstants.iconSize)
                 .foregroundColor(Color(StyleProvider.color.drawerIconDark))
                 .accessibilityHidden(true)
@@ -132,6 +119,5 @@ struct CaptionsRttInfoView: View {
         .background(Color(StyleProvider.color.surface))
         .cornerRadius(8)
         .padding(.horizontal, 10)
-        .id("RTTInfoView")
     }
 }

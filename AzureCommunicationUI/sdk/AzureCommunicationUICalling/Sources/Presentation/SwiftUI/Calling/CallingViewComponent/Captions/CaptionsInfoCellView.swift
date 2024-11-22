@@ -42,6 +42,7 @@ struct CaptionsInfoCellView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal)
+        .padding(.top, 2)
         .background(Color(StyleProvider.color.drawerColor))
         .onAppear {
             updateAvatar()

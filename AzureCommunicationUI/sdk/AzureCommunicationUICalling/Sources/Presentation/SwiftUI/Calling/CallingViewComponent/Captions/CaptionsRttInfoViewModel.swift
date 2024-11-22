@@ -42,6 +42,26 @@ class CaptionsRttInfoViewModel: ObservableObject {
         setupItems(state: state)
     }
 
+    var displayedData: [CallCompositeRttCaptionsDisplayData] {
+        var data = captionsRttData
+        if isRttDisplayed {
+            data.insert(CallCompositeRttCaptionsDisplayData(
+                displayRawId: "",
+                displayName: "",
+                text: "",
+                spokenText: "",
+                captionsText: "",
+                spokenLanguage: "",
+                captionsLanguage: "",
+                captionsRttType: .rtt,
+                timestamp: Date(),
+                isFinal: true,
+                isRttInfo: true
+            ), at: 0)
+        }
+        return data
+    }
+
     private func bindCaptionsUpdates() {
         captionsManager.$captionsRttData
             .receive(on: DispatchQueue.main)
