@@ -5,7 +5,6 @@
 
 import SwiftUI
 import FluentUI
-
 internal enum DrawerState {
     case gone
     case hidden
@@ -169,6 +168,9 @@ internal struct BottomDrawer<Content: View>: View {
                 withAnimation {
                     drawerState = .visible
                 }
+                if showTextBox {
+                    setDrawerHeight(to: .expanded)
+                }
             } else {
                 withAnimation {
                     drawerState = .hidden
@@ -196,32 +198,24 @@ internal struct BottomDrawer<Content: View>: View {
                     titleView
                 }
                 content
-                if isExpandable {
-                    Spacer()
-                } else {
-                    Spacer().frame(height: DrawerConstants.bottomFillY)
+                if isFullyExpanded, showTextBox {
+                    ZStack(alignment: .leading) {
+                        textEditor
+                        placeHolder
+                    }.frame(height: DrawerConstants.textBoxHeight)
+                        .padding([.leading, .trailing], 10)
                 }
+                Spacer().frame(height: DrawerConstants.bottomFillY)
             }
             .frame(maxWidth: .infinity, alignment: .bottom)
             .background(Color(StyleProvider.color.drawerColor))
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)
-            .padding(.bottom, -DrawerConstants.bottomFillY)
+            .padding(.bottom, keyboardHeight - DrawerConstants.bottomFillY)
+            .animation(.easeInOut, value: keyboardHeight + DrawerConstants.bottomFillY)
             .modifier(ConditionalFrameModifier(
                 drawerHeight: $drawerHeight, isExpandable: isExpandable))
-        }.overlay(
-            Group {
-                if isFullyExpanded, showTextBox {
-                    ZStack(alignment: .leading) {
-                        textEditor
-                        placeHolder
-                    }
-                }
-            }.padding([.leading, .trailing], 10)
-                .padding([.top], 10)
-                .offset(y: -keyboardHeight)
-                .animation(.easeInOut, value: keyboardHeight)
-            , alignment: .bottom)
+        }
     }
 
     private var titleView: some View {

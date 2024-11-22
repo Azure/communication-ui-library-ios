@@ -85,27 +85,35 @@ class CaptionsAndRttViewManager: ObservableObject {
     }
 
     private func processData(_ newData: CallCompositeRttCaptionsDisplayData) {
+        // Check if there is no data yet
         if captionsRttData.isEmpty {
             captionsRttData.append(newData)
             return
         }
 
-        let lastIndex = captionsRttData.count - 1
-        var lastData = captionsRttData[lastIndex]
-
-        if lastData.isFinal {
-            captionsRttData.append(newData)
-        } else if lastData.displayRawId == newData.displayRawId && lastData.captionsRttType == .captions {
-            // Update the last entry if it's from the same sender and of the same type (caption/RTT)
-            captionsRttData[lastIndex] = newData
+        // Find an existing non-final entry with the same sender ID and type
+        if let existingIndex = captionsRttData.firstIndex(where: {
+            $0.displayRawId == newData.displayRawId &&
+            !$0.isFinal &&
+            $0.captionsRttType == newData.captionsRttType
+        }) {
+            // Update the non-final entry
+            captionsRttData[existingIndex] = newData
         } else {
-            if shouldFinalize(lastData: lastData, newData: newData) {
-                lastData.isFinal = true
-                captionsRttData[lastIndex] = lastData // Commit the finalization change
-                captionsRttData.append(newData)
-            }
+            // If no matching partial entry exists, append the new message
+            captionsRttData.append(newData)
         }
 
+        // Finalize the previous message if needed
+        if let lastIndex = captionsRttData.lastIndex(where: {
+            $0.displayRawId == newData.displayRawId &&
+            $0.captionsRttType == newData.captionsRttType &&
+            !$0.isFinal
+        }), shouldFinalize(lastData: captionsRttData[lastIndex], newData: newData) {
+            captionsRttData[lastIndex].isFinal = true
+        }
+
+        // Limit the total count of messages to `maxDataCount`
         if captionsRttData.count > maxDataCount {
             withAnimation {
                 _ = captionsRttData.removeFirst()

@@ -2,7 +2,6 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
 import SwiftUI
 import FluentUI
 
@@ -17,49 +16,63 @@ struct CaptionsRttInfoView: View {
             loadingView
         } else {
             ScrollViewReader { scrollView in
-                List {
-                    ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
-                        CaptionsInfoCellView(caption: viewModel.captionsRttData[index],
-                                             avatarViewManager: avatarViewManager)
-                        .id(viewModel.captionsRttData[index].id)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear) // Explicitly setting background color
-                        .onAppear {
-                            if index == viewModel.captionsRttData.indices.last {
-                                isLastItemVisible = true
-                            }
-                        }
-                        .onDisappear {
-                             if index == viewModel.captionsRttData.indices.last {
-                                 isLastItemVisible = false
-                             }
+                ScrollView {
+                    VStack(spacing: 0) {
+                        Spacer() // Pushes content to the bottom
+
+                        ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
+                            CaptionsInfoCellView(
+                                caption: viewModel.captionsRttData[index],
+                                avatarViewManager: avatarViewManager
+                            )
+                            .id(viewModel.captionsRttData[index].id)
+                            .background(
+                                GeometryReader { geometry in
+                                    if index == viewModel.captionsRttData.indices.last {
+                                        Color.clear
+                                            .onAppear {
+                                                checkLastItemVisibility(geometry: geometry)
+                                            }
+                                            .onChange(of: viewModel.captionsRttData) { _ in
+                                                checkLastItemVisibility(geometry: geometry)
+                                            }
+                                    }
+                                }
+                            )
                         }
                     }
+                    .frame(maxWidth: .infinity) // Ensures full width
                 }
-                .listStyle(PlainListStyle())
                 .background(Color(StyleProvider.color.drawerColor))
-                .frame(maxWidth: 480)
                 .onAppear {
-                    scrollToLastItem(scrollView)
+                    scrollToBottom(scrollView)
                 }
-                .onChange(of: viewModel.captionsRttData) { newCaptions in
-                    // Check if the last item has changed
-                      _ = newCaptions.last?.id
-                      if isLastItemVisible {
-                        scrollToLastItem(scrollView)
+                .onChange(of: viewModel.captionsRttData) { _ in
+                    if isLastItemVisible {
+                        scrollToBottom(scrollView)
                     }
                 }
             }
         }
     }
 
-    private func scrollToLastItem(_ scrollView: ScrollViewProxy) {
-//        if let lastID = viewModel.captionsRttData.last?.id {
-//            withAnimation {
-//                scrollView.scrollTo(lastID, anchor: .bottom)
-//            }
-//        }
+    private func scrollToBottom(_ scrollView: ScrollViewProxy) {
+        if let lastID = viewModel.captionsRttData.last?.id {
+            withAnimation {
+                scrollView.scrollTo(lastID, anchor: .bottom)
+            }
+        }
+    }
+
+    private func checkLastItemVisibility(geometry: GeometryProxy) {
+        let frame = geometry.frame(in: .global)
+        let screenHeight = UIScreen.main.bounds.height
+
+        // Check if the bottom of the last item (adjusted for padding) is visible
+        let isVisible = frame.maxY <= screenHeight
+        if isLastItemVisible != isVisible {
+            isLastItemVisible = isVisible
+        }
     }
 
     private var loadingView: some View {
