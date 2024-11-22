@@ -12,52 +12,52 @@ struct CaptionsRttInfoView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var body: some View {
-        if viewModel.isLoading {
-            loadingView
-        } else {
-            ScrollViewReader { scrollView in
-                ScrollView {
-                    VStack(spacing: 0) {
-                        Spacer() // Pushes content to the bottom
-                        if viewModel.isRttDisplayed {
-                            rttInfoView
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, 8)
-                                .transition(.move(edge: .bottom))
-                        }
-                        ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
-                            CaptionsInfoCellView(
-                                caption: viewModel.captionsRttData[index],
-                                avatarViewManager: avatarViewManager
-                            )
-                            .id(viewModel.captionsRttData[index].id)
-                            .background(
-                                GeometryReader { geometry in
-                                    if index == viewModel.captionsRttData.indices.last {
-                                        Color.clear
-                                            .onAppear {
-                                                checkLastItemVisibility(geometry: geometry)
-                                            }
-                                            .onChange(of: viewModel.captionsRttData) { _ in
-                                                checkLastItemVisibility(geometry: geometry)
-                                            }
+        GeometryReader { geometry in
+            let drawerHeight = geometry.size.height
+            if viewModel.isLoading {
+                loadingView
+            } else {
+                ScrollViewReader { scrollView in
+                    ScrollView {
+                        VStack(spacing: 0) {
+                            if viewModel.isRttDisplayed {
+                                rttInfoView
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, 8)
+                                    .transition(.move(edge: .bottom))
+                            }
+                            ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
+                                CaptionsInfoCellView(
+                                    caption: viewModel.captionsRttData[index],
+                                    avatarViewManager: avatarViewManager
+                                )
+                                .id(viewModel.captionsRttData[index].id)
+                                .background(
+                                    GeometryReader { geo in
+                                        if index == viewModel.captionsRttData.indices.last {
+                                            Color.clear
+                                                .onAppear {
+                                                    checkLastItemVisibility(geometry: geo)
+                                                }
+                                                .onChange(of: viewModel.captionsRttData) { _ in
+                                                    checkLastItemVisibility(geometry: geo)
+                                                }
+                                        }
                                     }
-                                }
-                            )
+                                )
+                            }
                         }
-                    }.frame(
-                        minHeight: UIScreen.main.bounds.height - DrawerConstants.bottomFillY,
-                        alignment: .bottom
-                    )
-                    .frame(maxWidth: .infinity)
-                }
-                .background(Color(StyleProvider.color.drawerColor))
-                .onAppear {
-                    scrollToBottom(scrollView)
-                }
-                .onChange(of: viewModel.captionsRttData) { _ in
-                    if isLastItemVisible {
+                        .frame(minHeight: drawerHeight, alignment: .bottom)
+                        .frame(maxWidth: .infinity)
+                    }
+                    .background(Color(StyleProvider.color.drawerColor))
+                    .onAppear {
                         scrollToBottom(scrollView)
+                    }
+                    .onChange(of: viewModel.captionsRttData) { _ in
+                        if isLastItemVisible {
+                            scrollToBottom(scrollView)
+                        }
                     }
                 }
             }
