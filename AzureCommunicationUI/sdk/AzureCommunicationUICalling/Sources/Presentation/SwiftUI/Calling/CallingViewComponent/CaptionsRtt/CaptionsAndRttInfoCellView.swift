@@ -68,6 +68,7 @@ struct CaptionsAndRttInfoCellView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal)
+        .fixedSize(horizontal: false, vertical: true) // Limit height to content
         .padding(.vertical, 4) // Add padding for vertical spacing
         .background(Color(StyleProvider.color.drawerColor))
         .onAppear {

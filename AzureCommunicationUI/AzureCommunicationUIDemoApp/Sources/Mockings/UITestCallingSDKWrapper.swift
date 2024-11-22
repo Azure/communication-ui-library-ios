@@ -170,9 +170,6 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
     func sendRttMessage(_ message: String, isFinal: Bool) async throws {
     }
-    func sendRttMessage(_ message: String) async throws {
-
-    }
     func muteLocalMic() async throws {
         guard callMocking != nil else {
             return

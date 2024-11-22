@@ -71,6 +71,10 @@ class CaptionsAndRttViewManager: ObservableObject {
             return
         }
 
+        if newData.captionsRttType == .rtt && !store.state.rttState.isRttOn {
+            store.dispatch(action: .rttAction(.turnOnRtt))
+        }
+
         processData(newData)
     }
 
@@ -85,6 +89,13 @@ class CaptionsAndRttViewManager: ObservableObject {
     }
 
     private func processData(_ newData: CallCompositeRttCaptionsDisplayData) {
+
+        if newData.captionsRttType == .rtt && newData.text.isEmpty {
+            // Remove the entry if it already exists in `captionsRttData`
+            captionsRttData.removeAll { $0.displayRawId == newData.displayRawId && !$0.isFinal }
+            return
+        }
+
         // Check if there is no data yet
         if captionsRttData.isEmpty {
             captionsRttData.append(newData)
