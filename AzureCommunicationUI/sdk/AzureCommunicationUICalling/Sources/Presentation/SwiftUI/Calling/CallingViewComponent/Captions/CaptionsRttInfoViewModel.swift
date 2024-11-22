@@ -13,6 +13,7 @@ class CaptionsRttInfoViewModel: ObservableObject {
     @Published var isRttAvailable = false
     @Published var isLoading = false
     var loadingMessage = ""
+    var rttInfoMessage = ""
     private var captionsManager: CaptionsAndRttViewManager
     private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
@@ -30,6 +31,7 @@ class CaptionsRttInfoViewModel: ObservableObject {
         self.captionsManager = captionsManager
         self.localizationProvider = localizationProvider
         loadingMessage = localizationProvider.getLocalizedString(LocalizationKey.captionsStartingCaptions)
+        rttInfoMessage = localizationProvider.getLocalizedString(LocalizationKey.rttWarningMessage)
         self.dispatch = dispatch
         self.captionsOptions = captionsOptions
         self.endIcon = nil

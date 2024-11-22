@@ -19,7 +19,12 @@ struct CaptionsRttInfoView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         Spacer() // Pushes content to the bottom
-
+                        if viewModel.isRttDisplayed {
+                            rttInfoView
+                                .padding(.horizontal, 10)
+                                .padding(.bottom, 8)
+                                .transition(.move(edge: .bottom))
+                        }
                         ForEach(viewModel.captionsRttData.indices, id: \.self) { index in
                             CaptionsInfoCellView(
                                 caption: viewModel.captionsRttData[index],
@@ -43,8 +48,8 @@ struct CaptionsRttInfoView: View {
                     }.frame(
                         minHeight: UIScreen.main.bounds.height - DrawerConstants.bottomFillY,
                         alignment: .bottom
-                    ) // Ensures the content fills the screen height
-                    .frame(maxWidth: .infinity) // Ensures full width
+                    )
+                    .frame(maxWidth: .infinity)
                 }
                 .background(Color(StyleProvider.color.drawerColor))
                 .onAppear {
@@ -63,6 +68,10 @@ struct CaptionsRttInfoView: View {
         if let lastID = viewModel.captionsRttData.last?.id {
             withAnimation {
                 scrollView.scrollTo(lastID, anchor: .bottom)
+            }
+        } else if viewModel.isRttDisplayed {
+            withAnimation {
+                scrollView.scrollTo("RTTInfoView", anchor: .top)
             }
         }
     }
@@ -92,5 +101,22 @@ struct CaptionsRttInfoView: View {
             }
             Spacer()
         }
+    }
+
+    private var rttInfoView: some View {
+        return HStack(alignment: .top, spacing: 12) {
+            Icon(name: CompositeIcon.rtt, size: DrawerListConstants.iconSize)
+                .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                .accessibilityHidden(true)
+                .padding([.top, .leading], 10)
+            Text(viewModel.rttInfoMessage)
+                .font(.body)
+                .foregroundColor(.primary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding([.top, .trailing, .bottom], 10)
+        }
+        .background(Color(StyleProvider.color.surface))
+        .cornerRadius(8)
+        .id("RTTInfoView")
     }
 }
