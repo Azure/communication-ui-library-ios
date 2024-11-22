@@ -222,6 +222,7 @@ enum LocalizationKey: String {
     case rttAlertDismiss = "AzureCommunicationUICalling.RTT.Alert.Dismiss"
     case rttWarningMessage = "AzureCommunicationUICalling.RTT.WarningMessage.Text"
     case rttTextBoxHint = "AzureCommunicationUICalling.RTT.TextBox.Hint"
+    case rttTyping = "AzureCommunicationUICalling.RTT.Text.RTTTyping"
 
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"

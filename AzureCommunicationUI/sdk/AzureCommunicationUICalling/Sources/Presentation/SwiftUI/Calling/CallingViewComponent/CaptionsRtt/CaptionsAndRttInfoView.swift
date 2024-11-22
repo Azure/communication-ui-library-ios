@@ -5,8 +5,8 @@
 import SwiftUI
 import FluentUI
 
-struct CaptionsRttInfoView: View {
-    @ObservedObject var viewModel: CaptionsRttInfoViewModel
+struct CaptionsAndRttInfoView: View {
+    @ObservedObject var viewModel: CaptionsAndRttInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
     @State private var isLastItemVisible = true
     @State private var previousDrawerHeight: CGFloat = 0 // Track the previous height
@@ -25,7 +25,7 @@ struct CaptionsRttInfoView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color(StyleProvider.color.drawerColor))
                     }
-                    .onChange(of: viewModel.captionsRttData) { _ in
+                    .onChange(of: viewModel.displayedData) { _ in
                         if isLastItemVisible {
                             scrollToBottom(scrollView)
                         }
@@ -43,9 +43,10 @@ struct CaptionsRttInfoView: View {
                     rttInfoCell() // Render RTT Info message
                         .id(viewModel.displayedData[index].id)
                 } else {
-                    CaptionsInfoCellView(
+                    CaptionsAndRttInfoCellView(
                         caption: viewModel.displayedData[index],
-                        avatarViewManager: avatarViewManager
+                        avatarViewManager: avatarViewManager,
+                        localizationProvider: viewModel.localizationProvider
                     )
                     .id(viewModel.displayedData[index].id)
                     .background(lastItemBackground(index: index, parentFrame: parentFrame))

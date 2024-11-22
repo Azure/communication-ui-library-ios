@@ -5,36 +5,62 @@
 
 import SwiftUI
 
-struct CaptionsInfoCellView: View {
+struct CaptionsAndRttInfoCellView: View {
     var avatarViewManager: AvatarViewManagerProtocol
     var caption: CallCompositeRttCaptionsDisplayData
     @State private var avatarImage: UIImage?
     @State private var displayName: String?
     @State private var isRTL = false
+    private let localizationProvider: LocalizationProviderProtocol
 
-    init(caption: CallCompositeRttCaptionsDisplayData, avatarViewManager: AvatarViewManagerProtocol) {
+    init(caption: CallCompositeRttCaptionsDisplayData,
+         avatarViewManager: AvatarViewManagerProtocol,
+         localizationProvider: LocalizationProviderProtocol
+    ) {
         self.caption = caption
         self.avatarViewManager = avatarViewManager
         self.displayName = caption.displayName
+        self.localizationProvider = localizationProvider
     }
 
     var body: some View {
         HStack(alignment: .top) {
-            avatarView
-            VStack(alignment: isRTL ? .trailing : .leading, spacing: 0) {
-                Text(caption.displayName)
-                    .font(.caption)
-                    .foregroundColor(Color(StyleProvider.color.textSecondary))
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            // Left-side blue indicator spanning the whole cell height
+            if !caption.isFinal {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color(StyleProvider.color.primaryColorTint20))
+                    .frame(width: 4)
+            }
 
+            avatarView
+
+            VStack(alignment: isRTL ? .trailing : .leading, spacing: 4) {
+                // Display Name and Typing Logo on the same line
+                HStack(spacing: 8) {
+                    Text(caption.displayName)
+                        .font(.caption)
+                        .foregroundColor(Color(StyleProvider.color.textSecondary))
+                        .lineLimit(1)
+
+                    if !caption.isFinal {
+                        Text(localizationProvider.getLocalizedString(.rttTyping))
+                            .font(.caption2)
+                            .foregroundColor(Color(StyleProvider.color.textSecondary))
+                            .padding(.horizontal, 4)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color(StyleProvider.color.surface))
+                            )
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // Display Text on the next line
                 Text(displayText)
                     .font(.callout)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(isRTL ? .trailing : .leading)
-                    /// wrap to the next line instead of being truncated,
-                    /// ensuring that all content is visible without ... truncation
-                    .lineLimit(nil)
+                    .lineLimit(nil) // Wrap text to multiple lines
                     .fixedSize(horizontal: false, vertical: true)
                     .environment(\.locale, Locale(identifier: language))
             }
@@ -42,7 +68,7 @@ struct CaptionsInfoCellView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal)
-        .padding(.top, 2)
+        .padding(.vertical, 4) // Add padding for vertical spacing
         .background(Color(StyleProvider.color.drawerColor))
         .onAppear {
             updateAvatar()

@@ -49,7 +49,7 @@ internal class CallingViewModel: ObservableObject {
     var captionsListViewModel: CaptionsListViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var audioDeviceListViewModel: AudioDevicesListViewModel!
-    var captionsInfoViewModel: CaptionsRttInfoViewModel!
+    var captionsInfoViewModel: CaptionsAndRttInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
     var captionsErrorViewModel: CaptionsErrorViewModel!
 

@@ -445,8 +445,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                       dispatchAction: dispatchAction)
     }
 
-    func makeCaptionsInfoViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.CaptionsRttInfoViewModel {
-        return CaptionsRttInfoViewModel(state: store.state, captionsManager: CaptionsAndRttViewManager(
+    func makeCaptionsInfoViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.CaptionsAndRttInfoViewModel {
+        return CaptionsAndRttInfoViewModel(state: store.state, captionsManager: CaptionsAndRttViewManager(
             store: store,
             callingSDKWrapper: CallingSDKWrapperMocking()), localizationProvider: localizationProvider)
     }
@@ -473,8 +473,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             localizationProvider: localizationProvider)
     }
 
-    func makeCaptionsInfoViewModel(state: AzureCommunicationUICalling.AppState) -> AzureCommunicationUICalling.CaptionsRttInfoViewModel {
-        return CaptionsRttInfoViewModel(state: state,
+    func makeCaptionsInfoViewModel(state: AzureCommunicationUICalling.AppState) -> AzureCommunicationUICalling.CaptionsAndRttInfoViewModel {
+        return CaptionsAndRttInfoViewModel(state: state,
                                      captionsManager: CaptionsAndRttViewManager(
                                         store: store,
                                         callingSDKWrapper: CallingSDKWrapperMocking()),

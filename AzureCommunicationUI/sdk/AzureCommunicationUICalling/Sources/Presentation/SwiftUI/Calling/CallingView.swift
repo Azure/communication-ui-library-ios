@@ -339,7 +339,7 @@ struct CallingView: View {
                 viewModel.captionsInfoViewModel?.commitText(message, isFinal ?? false)
             },
             content: {
-                CaptionsRttInfoView(
+                CaptionsAndRttInfoView(
                     viewModel: viewModel.captionsInfoViewModel,
                     avatarViewManager: avatarManager
                 )
