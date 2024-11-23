@@ -93,7 +93,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
         textBoxHint = localizationProvider.getLocalizedString(.rttTextBoxHint)
     }
 
-    func commitText(_ message: String, _ isFinal: Bool) {
+    func commitMessage(_ message: String, _ isFinal: Bool) {
         dispatch(.rttAction(.sendRtt(message: message, isFinal: isFinal)))
     }
 

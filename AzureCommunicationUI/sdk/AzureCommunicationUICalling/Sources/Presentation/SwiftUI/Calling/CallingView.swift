@@ -130,7 +130,9 @@ struct CallingView: View {
         VStack(alignment: .center, spacing: 0) {
             ZStack {
                 containerView
-                captionsAndRttInfoView
+                if !viewModel.isInPip {
+                    captionsAndRttInfoView
+                }
             }
             ControlBarView(viewModel: viewModel.controlBarViewModel)
         }.ignoresSafeArea(.keyboard)
@@ -336,7 +338,7 @@ struct CallingView: View {
             textBoxHint: textBoxHint,
             isExpandable: true,
             commitAction: { message, isFinal in
-                viewModel.captionsInfoViewModel?.commitText(message, isFinal ?? false)
+                viewModel.captionsInfoViewModel?.commitMessage(message, isFinal ?? false)
             },
             content: {
                 CaptionsAndRttInfoView(

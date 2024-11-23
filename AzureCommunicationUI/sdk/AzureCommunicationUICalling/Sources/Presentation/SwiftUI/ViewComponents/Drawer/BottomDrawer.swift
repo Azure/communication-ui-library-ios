@@ -234,7 +234,6 @@ internal struct BottomDrawer<Content: View>: View {
                 if let icon = startIcon {
                     Icon(name: icon, size: DrawerListConstants.iconSize)
                         .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                        .accessibilityHidden(true)
                         .padding(.leading, 15)
                         .padding(.top, 15)
                         .onTapGesture {
@@ -245,7 +244,6 @@ internal struct BottomDrawer<Content: View>: View {
                 if let icon = endIcon {
                     Icon(name: icon, size: DrawerListConstants.iconSize)
                         .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                        .accessibilityHidden(true)
                         .onTapGesture {
                             endIconAction?()
                         }
@@ -253,7 +251,6 @@ internal struct BottomDrawer<Content: View>: View {
                 if isExpandable && !isFullyExpanded {
                     Icon(name: CompositeIcon.maximize, size: DrawerListConstants.iconSize)
                         .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                        .accessibilityHidden(true)
                         .onTapGesture {
                             setDrawerHeight(to: .expanded)
                         }
@@ -305,7 +302,9 @@ internal struct BottomDrawer<Content: View>: View {
                     text = ""
                 }
             }, onChange: { newText in
-                commitAction?(newText, false)
+                if !newText.isEmpty {
+                    commitAction?(newText, false)
+                }
             })
             .frame(height: DrawerConstants.textBoxHeight)
             .background(Color.white)
