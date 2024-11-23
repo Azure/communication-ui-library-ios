@@ -44,7 +44,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
 
     var displayedData: [CallCompositeRttCaptionsDisplayData] {
         var data = captionsRttData
-        if isRttDisplayed {
+        if isRttAvailable {
             data.insert(CallCompositeRttCaptionsDisplayData(
                 displayRawId: "",
                 displayName: "",
