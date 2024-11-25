@@ -62,7 +62,8 @@ struct CallCompositeRttData: Identifiable, Equatable {
             spokenLanguage: "",
             captionsLanguage: "",
             captionsRttType: .rtt,
-            timestamp: localCreatedTime,
+            createdTimestamp: localCreatedTime,
+            updatedTimestamp: localUpdatedTime,
             isFinal: resultType == .final,
             isRttInfo: false,
             isLocal: isLocal
@@ -71,7 +72,7 @@ struct CallCompositeRttData: Identifiable, Equatable {
 }
 
 struct CallCompositeRttCaptionsDisplayData: Identifiable, Equatable {
-    var id: Date { timestamp }
+    var id: Date { createdTimestamp }
 
     let displayRawId: String
     let displayName: String
@@ -81,7 +82,8 @@ struct CallCompositeRttCaptionsDisplayData: Identifiable, Equatable {
     let spokenLanguage: String
     let captionsLanguage: String?
     let captionsRttType: CaptionsRttType
-    let timestamp: Date
+    let createdTimestamp: Date
+    let updatedTimestamp: Date
     var isFinal: Bool
     let isRttInfo: Bool?
     let isLocal: Bool
@@ -94,7 +96,8 @@ struct CallCompositeRttCaptionsDisplayData: Identifiable, Equatable {
         lhs.spokenText == rhs.spokenText &&
         lhs.captionsText == rhs.captionsText &&
         lhs.isFinal == rhs.isFinal &&
-        lhs.timestamp == rhs.timestamp &&
+        lhs.createdTimestamp == rhs.createdTimestamp &&
+        lhs.updatedTimestamp == rhs.updatedTimestamp &&
         lhs.spokenLanguage == rhs.spokenLanguage &&
         lhs.captionsLanguage == rhs.captionsLanguage &&
         lhs.isRttInfo == rhs.isRttInfo &&

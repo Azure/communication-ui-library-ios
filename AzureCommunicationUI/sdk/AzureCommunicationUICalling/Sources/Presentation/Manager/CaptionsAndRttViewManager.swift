@@ -142,7 +142,7 @@ class CaptionsAndRttViewManager: ObservableObject {
 
     private func shouldFinalize(lastData: CallCompositeRttCaptionsDisplayData,
                                 newData: CallCompositeRttCaptionsDisplayData) -> Bool {
-        let duration = newData.timestamp.timeIntervalSince(lastData.timestamp)
+        let duration = newData.createdTimestamp.timeIntervalSince(lastData.createdTimestamp)
         return duration > finalizationDelay
     }
 
@@ -151,23 +151,24 @@ class CaptionsAndRttViewManager: ObservableObject {
         _ second: CallCompositeRttCaptionsDisplayData
     ) -> Bool {
         // Rule 1: Local non-final messages always at the bottom
-        if first.isLocal && !first.isFinal {
-            return false // Keep `first` below `second`
-        }
-        if second.isLocal && !second.isFinal {
-            return true // Keep `second` below `first`
-        }
+        if first.captionsRttType == .rtt && second.captionsRttType == .rtt {
+            if first.isLocal && !first.isFinal {
+                return false // Keep `first` below `second`
+            }
+            if second.isLocal && !second.isFinal {
+                return true // Keep `second` below `first`
+            }
 
-        // Rule 2: Non-final messages should appear below finalized messages
-        if !first.isFinal && second.isFinal {
-            return false // Keep `first` below `second`
+            // Rule 2: Non-final messages should appear below finalized messages
+            if !first.isFinal && second.isFinal {
+                return false // Keep `first` below `second`
+            }
+            if first.isFinal && !second.isFinal {
+                return true // Keep `second` below `first`
+            }
         }
-        if first.isFinal && !second.isFinal {
-            return true // Keep `second` below `first`
-        }
-
         // Rule 3: For other cases, preserve the insertion order
-        return first.timestamp < second.timestamp
+        return first.createdTimestamp < second.createdTimestamp
     }
 
     // Insert RTT info message when RTT becomes available
@@ -185,7 +186,8 @@ class CaptionsAndRttViewManager: ObservableObject {
             spokenLanguage: "",
             captionsLanguage: "",
             captionsRttType: .rtt,
-            timestamp: Date(),
+            createdTimestamp: Date(),
+            updatedTimestamp: Date(),
             isFinal: true,
             isRttInfo: true,
             isLocal: false

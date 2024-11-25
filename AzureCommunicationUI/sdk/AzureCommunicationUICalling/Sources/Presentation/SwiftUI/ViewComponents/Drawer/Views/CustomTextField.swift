@@ -30,7 +30,9 @@ struct CustomTextField: UIViewRepresentable {
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             parent.onCommit?()
             // Do NOT resign first responder to keep the keyboard open
-            // Instead, optionally, you can manually manage the responder status if needed
+            DispatchQueue.main.async {
+                textField.becomeFirstResponder()
+            }
             return false // Returning false to prevent default behavior
         }
     }
@@ -59,6 +61,5 @@ struct CustomTextField: UIViewRepresentable {
         if uiView.text != text {
             uiView.text = text
         }
-        uiView.becomeFirstResponder()
     }
 }

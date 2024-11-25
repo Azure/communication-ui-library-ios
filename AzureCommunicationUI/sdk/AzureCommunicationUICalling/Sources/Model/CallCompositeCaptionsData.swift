@@ -66,7 +66,8 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
             spokenLanguage: spokenLanguage,
             captionsLanguage: captionLanguage,
             captionsRttType: .captions,
-            timestamp: timestamp,
+            createdTimestamp: timestamp,
+            updatedTimestamp: timestamp,
             isFinal: resultType == .final,
             isRttInfo: false,
             isLocal: false
