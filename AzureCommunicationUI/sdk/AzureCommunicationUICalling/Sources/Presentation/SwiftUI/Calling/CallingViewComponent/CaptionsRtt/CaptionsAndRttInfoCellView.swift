@@ -12,15 +12,18 @@ struct CaptionsAndRttInfoCellView: View {
     @State private var displayName: String?
     @State private var isRTL = false
     private let localizationProvider: LocalizationProviderProtocol
+    let onFinalizedLocalMessage: () -> Void
 
     init(caption: CallCompositeRttCaptionsDisplayData,
          avatarViewManager: AvatarViewManagerProtocol,
-         localizationProvider: LocalizationProviderProtocol
+         localizationProvider: LocalizationProviderProtocol,
+         onFinalizedLocalMessage: @escaping () -> Void
     ) {
         self.caption = caption
         self.avatarViewManager = avatarViewManager
         self.displayName = caption.displayName
         self.localizationProvider = localizationProvider
+        self.onFinalizedLocalMessage = onFinalizedLocalMessage
     }
 
     var body: some View {
@@ -74,6 +77,16 @@ struct CaptionsAndRttInfoCellView: View {
         .onAppear {
             updateAvatar()
             determineTextDirection()
+        }
+        .onChange(of: caption.isFinal) { newValue in
+            if newValue && caption.isLocal {
+                onFinalizedLocalMessage()
+            }
+        }
+        .onChange(of: caption.isLocal) { newValue in
+            if caption.isFinal && newValue {
+                onFinalizedLocalMessage()
+            }
         }
     }
 

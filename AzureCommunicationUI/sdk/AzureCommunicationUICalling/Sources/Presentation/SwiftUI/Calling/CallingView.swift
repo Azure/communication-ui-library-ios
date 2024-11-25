@@ -40,6 +40,7 @@ struct CallingView: View {
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
+    @State private var isAutoCommitted = false
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? [] : [/* .bottom */]
@@ -337,6 +338,7 @@ struct CallingView: View {
             showTextBox: isRttAvailable,
             textBoxHint: textBoxHint,
             isExpandable: true,
+            isAutoCommitted: $isAutoCommitted,
             commitAction: { message, isFinal in
                 viewModel.captionsInfoViewModel?.commitMessage(message, isFinal ?? false)
             },
@@ -346,7 +348,12 @@ struct CallingView: View {
                     avatarViewManager: avatarManager
                 )
             }
-            )
+        )
+        .onReceive(viewModel.captionsInfoViewModel.$shouldClearTextBox) { shouldClear in
+            if shouldClear {
+                isAutoCommitted = true
+            }
+        }
     }
 
     var rttInfoViewPlaceholder: some View {

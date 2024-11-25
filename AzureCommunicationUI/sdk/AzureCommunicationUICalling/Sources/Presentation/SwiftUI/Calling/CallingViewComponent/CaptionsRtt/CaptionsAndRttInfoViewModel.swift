@@ -8,6 +8,7 @@ import Foundation
 
 class CaptionsAndRttInfoViewModel: ObservableObject {
     @Published var captionsRttData = [CallCompositeRttCaptionsDisplayData]()
+    @Published var shouldClearTextBox = false
     @Published var isCaptionsDisplayed = false
     @Published var isRttDisplayed = false
     @Published var isRttAvailable = false

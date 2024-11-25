@@ -43,6 +43,7 @@ internal enum DrawerConstants {
     static let textBoxHeight: CGFloat = 40
 }
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
 /// Bottom Drawer w/Swift UI Support
 ///
 /// How it works:
@@ -74,6 +75,7 @@ internal struct BottomDrawer<Content: View>: View {
     @State private var keyboardHeight: CGFloat = 0
     @State private var textEditorYPosition: CGFloat = 0
     @State private var text: String = ""
+    @Binding var isAutoCommitted: Bool
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
@@ -98,6 +100,7 @@ internal struct BottomDrawer<Content: View>: View {
          showTextBox: Bool = false,
          textBoxHint: String? = nil,
          isExpandable: Bool = false,
+         isAutoCommitted: Binding<Bool> = .constant(false),
          commitAction: ((_ message: String, _ isFinal: Bool?) -> Void)? = nil,
          @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
@@ -112,6 +115,7 @@ internal struct BottomDrawer<Content: View>: View {
         self.startIcon = startIcon
         self.startIconAction = startIconAction
         self.commitAction = commitAction
+        self._isAutoCommitted = isAutoCommitted
     }
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -173,6 +177,14 @@ internal struct BottomDrawer<Content: View>: View {
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + DrawerConstants.delayUntilGone) {
                     drawerState = .gone
+                }
+            }
+        }
+        .onChange(of: isAutoCommitted) { shouldClear in
+            if shouldClear {
+                DispatchQueue.main.async {
+                    text = ""
+                    isAutoCommitted = false
                 }
             }
         }
@@ -311,6 +323,14 @@ internal struct BottomDrawer<Content: View>: View {
             .cornerRadius(DrawerConstants.drawerHandleCornerRadius)
             .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
                 .stroke(Color(Colors.dividerOnPrimary)))
+            .onChange(of: isAutoCommitted) { shouldClear in
+                print("auto commit changed")
+                if shouldClear {
+                    DispatchQueue.main.async {
+                        text = ""
+                    }
+                }
+            }
         }
     }
 
@@ -387,3 +407,4 @@ struct ConditionalFrameModifier: ViewModifier {
     }
 }
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length
