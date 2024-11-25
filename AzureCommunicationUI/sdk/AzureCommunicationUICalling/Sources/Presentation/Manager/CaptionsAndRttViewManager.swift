@@ -12,9 +12,11 @@ class CaptionsAndRttViewManager: ObservableObject {
     private let callingSDKWrapper: CallingSDKWrapperProtocol
     private let store: Store<AppState, Action>
     @Published var captionsRttData = [CallCompositeRttCaptionsDisplayData]()
+    @Published var isRttAvailable = false
     private var subscriptions = Set<AnyCancellable>()
     private let maxDataCount = 50
     private let finalizationDelay: TimeInterval = 5 // seconds
+    private var hasInsertedRttInfo = false
 
     init(store: Store<AppState, Action>, callingSDKWrapper: CallingSDKWrapperProtocol) {
         self.callingSDKWrapper = callingSDKWrapper
@@ -48,9 +50,12 @@ class CaptionsAndRttViewManager: ObservableObject {
     private func receive(state: AppState) {
         isTranslationEnabled = state.captionsState.captionLanguage?.isEmpty == false
         let captionsEnabled = state.captionsState.isCaptionsOn
-        let rttEnabled = state.rttState.isRttOn
+        isRttAvailable = state.rttState.isRttOn
 
-        switch (captionsEnabled, rttEnabled) {
+        if isRttAvailable && !hasInsertedRttInfo {
+            insertRttInfoMessage()
+        }
+        switch (captionsEnabled, isRttAvailable) {
         case (true, true):
             // Both captions and RTT are enabled, no need to clear data
             break
@@ -165,4 +170,27 @@ class CaptionsAndRttViewManager: ObservableObject {
         return first.timestamp < second.timestamp
     }
 
+    // Insert RTT info message when RTT becomes available
+    private func insertRttInfoMessage() {
+        guard isRttAvailable && !hasInsertedRttInfo else {
+            return
+        }
+
+        let rttInfo = CallCompositeRttCaptionsDisplayData(
+            displayRawId: UUID().uuidString, // Unique ID
+            displayName: "",
+            text: "",
+            spokenText: "",
+            captionsText: "",
+            spokenLanguage: "",
+            captionsLanguage: "",
+            captionsRttType: .rtt,
+            timestamp: Date(),
+            isFinal: true,
+            isRttInfo: true,
+            isLocal: false
+        )
+        captionsRttData.append(rttInfo)
+        hasInsertedRttInfo = true
+    }
 }

@@ -7,21 +7,21 @@ import SwiftUI
 
 struct CaptionsAndRttInfoCellView: View {
     var avatarViewManager: AvatarViewManagerProtocol
-    var caption: CallCompositeRttCaptionsDisplayData
+    var displayData: CallCompositeRttCaptionsDisplayData
     @State private var avatarImage: UIImage?
     @State private var displayName: String?
     @State private var isRTL = false
     private let localizationProvider: LocalizationProviderProtocol
     let onFinalizedLocalMessage: () -> Void
 
-    init(caption: CallCompositeRttCaptionsDisplayData,
+    init(displayData: CallCompositeRttCaptionsDisplayData,
          avatarViewManager: AvatarViewManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          onFinalizedLocalMessage: @escaping () -> Void
     ) {
-        self.caption = caption
+        self.displayData = displayData
         self.avatarViewManager = avatarViewManager
-        self.displayName = caption.displayName
+        self.displayName = displayData.displayName
         self.localizationProvider = localizationProvider
         self.onFinalizedLocalMessage = onFinalizedLocalMessage
     }
@@ -29,7 +29,7 @@ struct CaptionsAndRttInfoCellView: View {
     var body: some View {
         HStack(alignment: .top) {
             // Left-side blue indicator spanning the whole cell height
-            if !caption.isFinal {
+            if !displayData.isFinal, displayData.captionsRttType == .rtt {
                 RoundedRectangle(cornerRadius: 2)
                     .fill(Color(StyleProvider.color.primaryColorTint20))
                     .frame(width: 4)
@@ -40,12 +40,12 @@ struct CaptionsAndRttInfoCellView: View {
             VStack(alignment: isRTL ? .trailing : .leading, spacing: 4) {
                 // Display Name and Typing Logo on the same line
                 HStack(spacing: 8) {
-                    Text(caption.displayName)
+                    Text(displayData.displayName)
                         .font(.caption)
                         .foregroundColor(Color(StyleProvider.color.textSecondary))
                         .lineLimit(1)
 
-                    if !caption.isFinal {
+                    if !displayData.isFinal, displayData.captionsRttType == .rtt {
                         Text(localizationProvider.getLocalizedString(.rttTyping))
                             .font(.caption2)
                             .foregroundColor(Color(StyleProvider.color.textSecondary))
@@ -78,13 +78,13 @@ struct CaptionsAndRttInfoCellView: View {
             updateAvatar()
             determineTextDirection()
         }
-        .onChange(of: caption.isFinal) { newValue in
-            if newValue && caption.isLocal {
+        .onChange(of: displayData.isFinal) { newValue in
+            if newValue && displayData.isLocal && displayData.captionsRttType == .rtt {
                 onFinalizedLocalMessage()
             }
         }
-        .onChange(of: caption.isLocal) { newValue in
-            if caption.isFinal && newValue {
+        .onChange(of: displayData.isLocal) { newValue in
+            if displayData.isFinal && newValue && displayData.captionsRttType == .rtt {
                 onFinalizedLocalMessage()
             }
         }
@@ -99,31 +99,31 @@ struct CaptionsAndRttInfoCellView: View {
 
     // Display text based on caption availability
     private var displayText: String {
-        if caption.captionsRttType == .rtt {
-            return caption.text
+        if displayData.captionsRttType == .rtt {
+            return displayData.text
         } else {
-            return (caption.captionsText?.isEmpty ?? true) ? caption.spokenText : caption.captionsText ?? ""
+            return (displayData.captionsText?.isEmpty ?? true) ? displayData.spokenText : displayData.captionsText ?? ""
         }
     }
 
     private var language: String {
-        (caption.captionsText?.isEmpty ?? true) ? caption.spokenLanguage : caption.captionsLanguage ?? ""
+        (displayData.captionsText?.isEmpty ?? true) ? displayData.spokenLanguage : displayData.captionsLanguage ?? ""
     }
     private func updateAvatar() {
         // Attempt to get the avatar image directly from the avatar storage for the given speaker's ID.
         if let participantViewDataAvatar = avatarViewManager.avatarStorage.value(
-            forKey: caption.displayRawId)?.avatarImage {
+            forKey: displayData.displayRawId)?.avatarImage {
             // If an avatar image exists, set it.
             avatarImage = participantViewDataAvatar
         } else {
             avatarImage = nil
-            displayName = caption.displayName
+            displayName = displayData.displayName
         }
     }
 
     private func determineTextDirection() {
-        let activeLanguageCode = (caption.captionsLanguage?.isEmpty ?? true) ?
-        caption.spokenLanguage : caption.captionsLanguage ?? caption.spokenLanguage
+        let activeLanguageCode = (displayData.captionsLanguage?.isEmpty ?? true) ?
+        displayData.spokenLanguage : displayData.captionsLanguage ?? displayData.spokenLanguage
         isRTL = isRightToLeftLanguage(activeLanguageCode)
     }
 

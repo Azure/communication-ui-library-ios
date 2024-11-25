@@ -57,7 +57,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
 
         if isCaptionsAvailable && buttonViewDataState.liveCaptionsButton?.visible ?? true {
             let captionsInfoModel = DrawerGenericItemViewModel(
-                title: localizationProvider.getLocalizedString(.captionsListTitile),
+                title: localizationProvider.getLocalizedString(.rttCaptionsListTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                 accessibilityTraits: [.isButton],
                 action: showCaptionsViewAction,

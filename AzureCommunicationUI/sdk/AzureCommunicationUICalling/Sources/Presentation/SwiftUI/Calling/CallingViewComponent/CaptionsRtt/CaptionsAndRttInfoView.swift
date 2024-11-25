@@ -25,7 +25,7 @@ struct CaptionsAndRttInfoView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color(StyleProvider.color.drawerColor))
                     }
-                    .onChange(of: viewModel.displayedData) { _ in
+                    .onChange(of: viewModel.displayData) { _ in
                         if isLastItemVisible {
                             scrollToBottom(scrollView)
                         }
@@ -38,20 +38,21 @@ struct CaptionsAndRttInfoView: View {
     @ViewBuilder
     private func content(scrollView: ScrollViewProxy, parentFrame: GeometryProxy) -> some View {
         VStack(spacing: 0) {
-            ForEach(viewModel.displayedData.indices, id: \.self) { index in
-                if viewModel.displayedData[index].isRttInfo ?? false {
-                    rttInfoCell() // Render RTT Info message
-                        .id(viewModel.displayedData[index].id)
+            ForEach(viewModel.displayData.indices, id: \.self) { index in
+                let data = viewModel.displayData[index]
+                if data.isRttInfo ?? false {
+                    rttInfoCell()
+                        .id(data.id)
                 } else {
                     CaptionsAndRttInfoCellView(
-                        caption: viewModel.displayedData[index],
+                        displayData: data,
                         avatarViewManager: avatarViewManager,
                         localizationProvider: viewModel.localizationProvider,
                         onFinalizedLocalMessage: {
                             viewModel.shouldClearTextBox = true
                         }
                     )
-                    .id(viewModel.displayedData[index].id)
+                    .id(viewModel.displayData[index].id)
                     .background(lastItemBackground(index: index, parentFrame: parentFrame))
                 }
             }
@@ -61,13 +62,13 @@ struct CaptionsAndRttInfoView: View {
     @ViewBuilder
     private func lastItemBackground(index: Int, parentFrame: GeometryProxy) -> some View {
         // check last item is visiable on the screen
-        if index == viewModel.captionsRttData.indices.last {
+        if index == viewModel.displayData.indices.last {
             GeometryReader { geo in
                 Color.clear
                     .onAppear {
                         checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
                     }
-                    .onChange(of: viewModel.captionsRttData) { _ in
+                    .onChange(of: viewModel.displayData) { _ in
                         checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
                     }
             }
@@ -75,7 +76,7 @@ struct CaptionsAndRttInfoView: View {
     }
 
     private func scrollToBottom(_ scrollView: ScrollViewProxy) {
-        if let lastID = viewModel.displayedData.last?.id {
+        if let lastID = viewModel.displayData.last?.id {
             withAnimation {
                 scrollView.scrollTo(lastID, anchor: .bottom)
             }

@@ -7,7 +7,7 @@ import Combine
 import Foundation
 
 class CaptionsAndRttInfoViewModel: ObservableObject {
-    @Published var captionsRttData = [CallCompositeRttCaptionsDisplayData]()
+    @Published var displayData = [CallCompositeRttCaptionsDisplayData]()
     @Published var shouldClearTextBox = false
     @Published var isCaptionsDisplayed = false
     @Published var isRttDisplayed = false
@@ -23,6 +23,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
     var endIcon: CompositeIcon?
     var endIconAction: (() -> Void)?
     var textBoxHint: String?
+    private var hasInsertedRttInfo = false
 
     init(state: AppState,
          captionsManager: CaptionsAndRttViewManager,
@@ -43,31 +44,10 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
         setupItems(state: state)
     }
 
-    var displayedData: [CallCompositeRttCaptionsDisplayData] {
-        var data = captionsRttData
-        if isRttAvailable {
-            data.insert(CallCompositeRttCaptionsDisplayData(
-                displayRawId: "",
-                displayName: "",
-                text: "",
-                spokenText: "",
-                captionsText: "",
-                spokenLanguage: "",
-                captionsLanguage: "",
-                captionsRttType: .rtt,
-                timestamp: Date(),
-                isFinal: true,
-                isRttInfo: true,
-                isLocal: false
-            ), at: 0)
-        }
-        return data
-    }
-
     private func bindCaptionsUpdates() {
         captionsManager.$captionsRttData
             .receive(on: DispatchQueue.main)
-            .assign(to: &$captionsRttData)
+            .assign(to: &$displayData)
     }
 
     private func setupItems(state: AppState) {

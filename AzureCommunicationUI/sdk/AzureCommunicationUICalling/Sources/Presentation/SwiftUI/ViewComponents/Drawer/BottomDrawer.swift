@@ -43,7 +43,6 @@ internal enum DrawerConstants {
     static let textBoxHeight: CGFloat = 40
 }
 // swiftlint:disable type_body_length
-// swiftlint:disable file_length
 /// Bottom Drawer w/Swift UI Support
 ///
 /// How it works:
@@ -207,10 +206,8 @@ internal struct BottomDrawer<Content: View>: View {
                 }
                 content
                 if isFullyExpanded, showTextBox {
-                    ZStack(alignment: .leading) {
-                        textEditor
-                        placeHolder
-                    }.frame(height: DrawerConstants.textBoxHeight)
+                    textEditor.frame(height: DrawerConstants.textBoxHeight)
+                        .frame(maxWidth: .infinity)
                         .padding([.leading, .trailing], 10)
                 }
                 Spacer().frame(height: DrawerConstants.bottomFillY)
@@ -307,40 +304,26 @@ internal struct BottomDrawer<Content: View>: View {
 
     private var textEditor: some View {
         VStack {
-            CustomTextEditor(text: $text, onCommit: {
-                let committedText = text
-                commitAction?(committedText, true)
-                DispatchQueue.main.async {
-                    text = ""
-                }
-            }, onChange: { newText in
-                if !newText.isEmpty {
+            CustomTextField(
+                text: $text,
+                placeholder: textBoxHint ?? "",
+                onCommit: {
+                    commitAction?(text, true)
+                    isAutoCommitted = true
+                },
+                onChange: { newText in
                     commitAction?(newText, false)
                 }
-            })
+            )
             .frame(height: DrawerConstants.textBoxHeight)
-            .background(Color.white)
-            .cornerRadius(DrawerConstants.drawerHandleCornerRadius)
-            .overlay(RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
-                .stroke(Color(Colors.dividerOnPrimary)))
+            .frame(maxWidth: .infinity)
+            .padding([.leading, .trailing], 2)
             .onChange(of: isAutoCommitted) { shouldClear in
-                print("auto commit changed")
                 if shouldClear {
                     DispatchQueue.main.async {
                         text = ""
                     }
                 }
-            }
-        }
-    }
-
-    private var placeHolder: some View {
-        Group {
-            if text.isEmpty, let hint = textBoxHint {
-                Text(hint)
-                    .foregroundColor(Color(Colors.textDisabled))
-                    .padding(DrawerConstants.placeHolderPadding)
-                    .allowsHitTesting(false)
             }
         }
     }
@@ -407,4 +390,3 @@ struct ConditionalFrameModifier: ViewModifier {
     }
 }
 // swiftlint:enable type_body_length
-// swiftlint:enable file_length
