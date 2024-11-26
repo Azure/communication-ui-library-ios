@@ -14,6 +14,7 @@ struct ParticipantVideoViewInfoModel {
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let captionsRttDataManager: CaptionsAndRttViewManager
 
     let id = UUID()
 
@@ -25,6 +26,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
     @Published var isHold: Bool
     @Published var participantIdentifier: String
+    @Published var displayData = [CallCompositeRttCaptionsDisplayData]()
 
     private var isScreenSharing = false
     private var participantName: String
@@ -32,20 +34,25 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     private var isCameraEnabled: Bool
     private var participantStatus: ParticipantStatus?
     private var callType: CompositeCallType
+    private var subscriptions = Set<AnyCancellable>()
+    private var participantModel: ParticipantInfoModel?
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel,
          isCameraEnabled: Bool,
+         captionsRttManager: CaptionsAndRttViewManager,
          callType: CompositeCallType) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.participantStatus = participantModel.status
+        self.captionsRttDataManager = captionsRttManager
         self.callType = callType
+        self.participantModel = participantModel
         let isDisplayConnecting = ParticipantGridCellViewModel.isOutgoingCallDialingInProgress(
             callType: callType,
             participantStatus: participantModel.status)
-        if  isDisplayConnecting {
+        if isDisplayConnecting {
             self.participantName = localizationProvider.getLocalizedString(LocalizationKey.callingCallMessage)
             self.displayName = self.participantName
         } else {
@@ -60,6 +67,38 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isCameraEnabled = isCameraEnabled
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
         self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
+        bindCaptionsUpdates()
+    }
+
+    private func bindCaptionsUpdates() {
+        captionsRttDataManager.$captionsRttData
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] data in
+                guard let self = self else {
+                    return
+                }
+                self.displayData = data
+                self.updateIsSpeaking(with: data)
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func updateIsSpeaking(with data: [CallCompositeRttCaptionsDisplayData]) {
+        // Check for any non-final RTT message matching the participant's userIdentifier
+        let hasActiveRtt = data.contains { rttData in
+            rttData.captionsRttType == .rtt &&
+            !rttData.isFinal &&
+            rttData.displayRawId == self.participantIdentifier
+        }
+
+        // Update isSpeaking based on RTT data and participant's own status
+        DispatchQueue.main.async {
+            self.isSpeaking = hasActiveRtt || self.isSpeakingFromParticipantModel
+        }
+    }
+
+    private var isSpeakingFromParticipantModel: Bool {
+        return participantModel?.isSpeaking ?? false
     }
 
     func update(participantModel: ParticipantInfoModel) {

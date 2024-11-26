@@ -16,7 +16,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
-    private let captionsViewManager: CaptionsAndRttViewManager
+    private let captionsRttViewManager: CaptionsAndRttViewManager
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
@@ -65,7 +65,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
-        self.captionsViewManager = captionsViewManager
+        self.captionsRttViewManager = captionsViewManager
         self.events = eventsHandler
         self.localOptions = localOptions
         self.enableMultitasking = enableMultitasking
@@ -251,7 +251,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeCaptionsRttInfoViewModel(state: AppState,
                                       captionsOptions: CaptionsOptions) -> CaptionsAndRttInfoViewModel {
         return CaptionsAndRttInfoViewModel(state: state,
-                                     captionsManager: captionsViewManager,
+                                     captionsManager: captionsRttViewManager,
                                      captionsOptions: captionsOptions,
                                      dispatch: store.dispatch,
                                      localizationProvider: localizationProvider)
@@ -383,6 +383,7 @@ extension CompositeViewModelFactory {
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
                                      isCameraEnabled: localOptions?.audioVideoMode != .audioOnly,
+                                     captionsRttManager: captionsRttViewManager,
                                      callType: callType)
     }
 
