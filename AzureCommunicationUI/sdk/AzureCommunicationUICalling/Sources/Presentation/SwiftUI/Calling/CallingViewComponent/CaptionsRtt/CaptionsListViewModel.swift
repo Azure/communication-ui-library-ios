@@ -107,7 +107,7 @@ class CaptionsListViewModel: ObservableObject {
             items.append(captionsLanguageInfoModel)
         }
 
-        if isRttAvailable && buttonViewDataState.rttButton?.visible ?? true {
+        if isRttAvailable {
             let rttInfoModel = IconTextActionListItemViewModel(
                 title: localizationProvider.getLocalizedString(.rttTurnOn),
                 isEnabled: !isRttEnabled,

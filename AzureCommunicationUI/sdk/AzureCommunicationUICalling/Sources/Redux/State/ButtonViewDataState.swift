@@ -59,7 +59,6 @@ struct ButtonViewDataState: Equatable {
     let captionsLanguageButton: DefaultButtonState?
     let shareDiagnosticsButton: DefaultButtonState?
     let reportIssueButton: DefaultButtonState?
-    let rttButton: DefaultButtonState?
 
     let callScreenCustomButtonsState: [CustomButtonState]
     /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
@@ -78,7 +77,6 @@ struct ButtonViewDataState: Equatable {
          liveCaptionsToggleButton: DefaultButtonState? = nil,
          spokenLanguageButton: DefaultButtonState? = nil,
          captionsLanguageButton: DefaultButtonState? = nil,
-         rttButton: DefaultButtonState? = nil,
          callScreenCustomButtonsState: [CustomButtonState] = []
          /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
          ,
@@ -99,7 +97,6 @@ struct ButtonViewDataState: Equatable {
         self.captionsLanguageButton = captionsLanguageButton
         self.shareDiagnosticsButton = shareDiagnosticsButton
         self.reportIssueButton = reportIssueButton
-        self.rttButton = rttButton
         self.callScreenCustomButtonsState = callScreenCustomButtonsState
         /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         self.callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState
@@ -148,9 +145,6 @@ struct ButtonViewDataState: Equatable {
             captionsLanguageButton: DefaultButtonState(
                 enabled: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.enabled ?? true,
                 visible: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.visible ?? true),
-            rttButton: DefaultButtonState(
-                enabled: callScreenOptions?.controlBarOptions?.rttButton?.enabled ?? true,
-                visible: callScreenOptions?.controlBarOptions?.rttButton?.visible ?? true),
             callScreenCustomButtonsState: callScreenOptions?.controlBarOptions?.customButtons.map { customButton in
                 return CustomButtonState(id: customButton.id,
                                   enabled: customButton.enabled,

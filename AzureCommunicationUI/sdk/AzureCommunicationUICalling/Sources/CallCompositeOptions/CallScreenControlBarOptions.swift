@@ -19,7 +19,6 @@ public struct CallScreenControlBarOptions {
     public let captionsLanguageButton: ButtonViewData?
     public let shareDiagnosticsButton: ButtonViewData?
     public let reportIssueButton: ButtonViewData?
-    public let rttButton: ButtonViewData?
     public let customButtons: [CustomButtonViewData]
 
     /// Initializes an instance of CallScreenControlBarOptions.
@@ -47,7 +46,6 @@ public struct CallScreenControlBarOptions {
                 captionsLanguageButton: ButtonViewData? = nil,
                 shareDiagnosticsButton: ButtonViewData? = nil,
                 reportIssueButton: ButtonViewData? = nil,
-                rttButton: ButtonViewData? = nil,
                 customButtons: [CustomButtonViewData] = []
         ) {
             self.leaveCallConfirmationMode = leaveCallConfirmationMode
@@ -60,7 +58,6 @@ public struct CallScreenControlBarOptions {
             self.captionsLanguageButton = captionsLanguageButton
             self.shareDiagnosticsButton = shareDiagnosticsButton
             self.reportIssueButton = reportIssueButton
-        self.rttButton = rttButton
             self.customButtons = customButtons
         }
 }
