@@ -203,7 +203,7 @@ enum LocalizationKey: String {
     case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
 
     /* Captions */
-    case captionsListTitile = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
+    case captionsListTitle = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
     case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
     case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
     case captionsStartingCaptions = "AzureCommunicationUICalling.Captions.Text.StartingCaptions"
@@ -214,7 +214,7 @@ enum LocalizationKey: String {
 
     /* RTT */
     case rttCaptionsListTitle = "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"
-    case rttListTitile = "AzureCommunicationUICalling.RTT.Title.RTT"
+    case rttListTitle = "AzureCommunicationUICalling.RTT.Title.RTT"
     case rttTurnOn = "AzureCommunicationUICalling.RTT.TurnOn.Text"
     case rttAlertTitle = "AzureCommunicationUICalling.RTT.Alert.Title"
     case rttAlertMessage = "AzureCommunicationUICalling.RTT.Alert.Message"

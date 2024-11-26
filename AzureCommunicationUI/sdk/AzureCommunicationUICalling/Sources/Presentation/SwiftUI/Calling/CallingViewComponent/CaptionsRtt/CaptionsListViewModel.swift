@@ -71,7 +71,7 @@ class CaptionsListViewModel: ObservableObject {
 
         if buttonViewDataState.liveCaptionsToggleButton?.visible ?? true {
             let enableCaptionsInfoModel = compositeViewModelFactory.makeToggleListItemViewModel(
-                title: localizationProvider.getLocalizedString(.captionsListTitile),
+                title: localizationProvider.getLocalizedString(.captionsListTitle),
                 isToggleOn: Binding(get: { self.isToggleEnabled }, set: toggleCaptions),
                 showToggle: true,
                 accessibilityIdentifier: "",

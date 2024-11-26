@@ -50,8 +50,14 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
     }
 
     private func setupItems(state: AppState) {
-        title = isRttDisplayed ? localizationProvider.getLocalizedString(.rttListTitile) :
-        localizationProvider.getLocalizedString(.captionsListTitile)
+        if isRttAvailable && isCaptionsDisplayed {
+            title = localizationProvider.getLocalizedString(.rttCaptionsListTitle)
+        } else if isRttDisplayed {
+            title = localizationProvider.getLocalizedString(.rttListTitle)
+        } else {
+            title = localizationProvider.getLocalizedString(.captionsListTitle)
+        }
+
         let closeCaptionsIcon = state.captionsState.isCaptionsOn ?
         CompositeIcon.closeCaptions : CompositeIcon.closeCaptionsOff
 
