@@ -156,7 +156,8 @@ class CaptionsAndRttViewManager: ObservableObject {
         _ first: CallCompositeRttCaptionsDisplayData,
         _ second: CallCompositeRttCaptionsDisplayData
     ) -> Bool {
-        // Rule 1: Local non-final messages always at the bottom
+        // Local non-final messages always at the bottom
+        // Local non-final messages always at the bottom
         if first.captionsRttType == .rtt && second.captionsRttType == .rtt {
             if first.isLocal && !first.isFinal {
                 return false // Keep `first` below `second`
@@ -164,16 +165,7 @@ class CaptionsAndRttViewManager: ObservableObject {
             if second.isLocal && !second.isFinal {
                 return true // Keep `second` below `first`
             }
-
-            // Rule 2: Non-final messages should appear below finalized messages
-            if !first.isFinal && second.isFinal {
-                return false // Keep `first` below `second`
-            }
-            if first.isFinal && !second.isFinal {
-                return true // Keep `second` below `first`
-            }
         }
-        // Rule 3: For other cases, preserve the insertion order
         return first.createdTimestamp < second.createdTimestamp
     }
 
