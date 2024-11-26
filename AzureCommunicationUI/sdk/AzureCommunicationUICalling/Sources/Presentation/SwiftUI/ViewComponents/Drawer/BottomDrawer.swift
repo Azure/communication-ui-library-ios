@@ -292,8 +292,17 @@ internal struct BottomDrawer<Content: View>: View {
     }
 
     private var overlayView: some View {
-        Color.black.opacity(isExpandable ? 0.01 :
-                                (drawerState == .visible ? DrawerConstants.overlayOpacity : 0))
+        // Determine the appropriate opacity based on the drawer's state
+        let overlayOpacity: Double
+        if isExpandable {
+            // If the drawer is expandable, set opacity only when fully expanded
+            overlayOpacity = isFullyExpanded ? 0.01 : 0
+        } else {
+            // If not expandable, set opacity based on visibility
+            overlayOpacity = (drawerState == .visible) ? DrawerConstants.overlayOpacity : 0
+        }
+
+        return Color.black.opacity(overlayOpacity)
             .ignoresSafeArea()
             .onTapGesture {
                 if isFullyExpanded {
