@@ -309,7 +309,9 @@ internal struct BottomDrawer<Content: View>: View {
                 placeholder: textBoxHint ?? "",
                 onCommit: {
                     commitAction?(text, true)
-                    isAutoCommitted = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        text = ""
+                    }
                 },
                 onChange: { newText in
                     commitAction?(newText, false)
