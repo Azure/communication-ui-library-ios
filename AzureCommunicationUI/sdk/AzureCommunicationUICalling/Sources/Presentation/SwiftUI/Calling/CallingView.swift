@@ -349,7 +349,7 @@ struct CallingView: View {
                 )
             }
         )
-        .onReceive(viewModel.captionsInfoViewModel.$shouldClearTextBox) { shouldClear in
+        .onReceive(viewModel.captionsInfoViewModel.captionsManager.$isAutoCommit) { shouldClear in
             if shouldClear {
                 isAutoCommitted = true
             }

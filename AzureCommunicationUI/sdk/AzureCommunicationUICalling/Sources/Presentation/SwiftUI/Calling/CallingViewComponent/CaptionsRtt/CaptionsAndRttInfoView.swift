@@ -47,10 +47,7 @@ struct CaptionsAndRttInfoView: View {
                     CaptionsAndRttInfoCellView(
                         displayData: data,
                         avatarViewManager: avatarViewManager,
-                        localizationProvider: viewModel.localizationProvider,
-                        onFinalizedLocalMessage: {
-                            viewModel.shouldClearTextBox = true
-                        }
+                        localizationProvider: viewModel.localizationProvider
                     )
                     .id(viewModel.displayData[index].id)
                     .background(lastItemBackground(index: index, parentFrame: parentFrame))

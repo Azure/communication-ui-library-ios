@@ -8,14 +8,13 @@ import Foundation
 
 class CaptionsAndRttInfoViewModel: ObservableObject {
     @Published var displayData = [CallCompositeRttCaptionsDisplayData]()
-    @Published var shouldClearTextBox = false
+    @Published var captionsManager: CaptionsAndRttViewManager
     @Published var isCaptionsDisplayed = false
     @Published var isRttDisplayed = false
     @Published var isRttAvailable = false
     @Published var isLoading = false
     var loadingMessage = ""
     var rttInfoMessage = ""
-    private var captionsManager: CaptionsAndRttViewManager
     let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
     private let captionsOptions: CaptionsOptions

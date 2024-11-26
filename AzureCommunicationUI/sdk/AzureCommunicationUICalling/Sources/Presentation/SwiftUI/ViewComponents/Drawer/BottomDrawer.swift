@@ -320,7 +320,7 @@ internal struct BottomDrawer<Content: View>: View {
             .padding([.leading, .trailing], 2)
             .onChange(of: isAutoCommitted) { shouldClear in
                 if shouldClear {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         text = ""
                     }
                 }

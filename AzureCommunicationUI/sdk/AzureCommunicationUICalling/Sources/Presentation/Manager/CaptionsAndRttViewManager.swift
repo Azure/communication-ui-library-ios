@@ -13,6 +13,7 @@ class CaptionsAndRttViewManager: ObservableObject {
     private let store: Store<AppState, Action>
     @Published var captionsRttData = [CallCompositeRttCaptionsDisplayData]()
     @Published var isRttAvailable = false
+    @Published var isAutoCommit = false
     private var subscriptions = Set<AnyCancellable>()
     private let maxDataCount = 50
     private let finalizationDelay: TimeInterval = 5 // seconds
@@ -75,7 +76,12 @@ class CaptionsAndRttViewManager: ObservableObject {
         if newData.captionsRttType == .captions && !shouldAddCaption(newData) {
             return
         }
-
+        if newData.isLocal && newData.captionsRttType == .rtt && newData.isFinal {
+            isAutoCommit = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.isAutoCommit = false
+            }
+        }
         if newData.captionsRttType == .rtt && !store.state.rttState.isRttOn {
             store.dispatch(action: .rttAction(.turnOnRtt))
         }
