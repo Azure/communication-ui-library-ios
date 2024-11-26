@@ -43,6 +43,8 @@ internal enum DrawerConstants {
     static let textBoxHeight: CGFloat = 40
 }
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
+
 /// Bottom Drawer w/Swift UI Support
 ///
 /// How it works:
@@ -216,7 +218,8 @@ internal struct BottomDrawer<Content: View>: View {
             .background(Color(StyleProvider.color.drawerColor))
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)
-            .padding(.bottom, keyboardHeight - DrawerConstants.bottomFillY)
+            .padding(.bottom, showTextBox ? keyboardHeight -
+                     DrawerConstants.bottomFillY : -DrawerConstants.bottomFillY)
             .animation(.easeInOut, value: keyboardHeight + DrawerConstants.bottomFillY)
             .modifier(ConditionalFrameModifier(
                 drawerHeight: $drawerHeight, isExpandable: isExpandable))
@@ -333,6 +336,9 @@ internal struct BottomDrawer<Content: View>: View {
     private func addKeyboardObservers() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
                                                object: nil, queue: .main) { notification in
+            guard showTextBox else {
+                return
+            } // Adjust only when showTextBox is true
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                 keyboardHeight = keyboardFrame.height
                 if keyboardHeight > 0 {
@@ -343,6 +349,9 @@ internal struct BottomDrawer<Content: View>: View {
 
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
                                                object: nil, queue: .main) { _ in
+            guard showTextBox else {
+                return
+            } // Reset only when showTextBox is true
             keyboardHeight = 0
         }
     }
@@ -392,3 +401,4 @@ struct ConditionalFrameModifier: ViewModifier {
     }
 }
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length
