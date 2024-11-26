@@ -218,7 +218,7 @@ internal struct BottomDrawer<Content: View>: View {
             .background(Color(StyleProvider.color.drawerColor))
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)
-            .padding(.bottom, showTextBox ? keyboardHeight -
+            .padding(.bottom, isExpandable ? keyboardHeight -
                      DrawerConstants.bottomFillY : -DrawerConstants.bottomFillY)
             .animation(.easeInOut, value: keyboardHeight + DrawerConstants.bottomFillY)
             .modifier(ConditionalFrameModifier(
@@ -336,7 +336,7 @@ internal struct BottomDrawer<Content: View>: View {
     private func addKeyboardObservers() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
                                                object: nil, queue: .main) { notification in
-            guard showTextBox else {
+            guard isExpandable else {
                 return
             } // Adjust only when showTextBox is true
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
@@ -349,7 +349,7 @@ internal struct BottomDrawer<Content: View>: View {
 
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
                                                object: nil, queue: .main) { _ in
-            guard showTextBox else {
+            guard isExpandable else {
                 return
             } // Reset only when showTextBox is true
             keyboardHeight = 0

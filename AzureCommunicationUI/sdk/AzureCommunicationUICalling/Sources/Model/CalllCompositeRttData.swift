@@ -72,7 +72,9 @@ struct CallCompositeRttData: Identifiable, Equatable {
 }
 
 struct CallCompositeRttCaptionsDisplayData: Identifiable, Equatable {
-    var id = UUID()
+    var id: Date {
+        return createdTimestamp
+    }
 
     let displayRawId: String
     let displayName: String
