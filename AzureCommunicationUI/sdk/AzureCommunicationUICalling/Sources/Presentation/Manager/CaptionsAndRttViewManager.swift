@@ -106,7 +106,10 @@ class CaptionsAndRttViewManager: ObservableObject {
             captionsRttData.removeAll { $0.displayRawId == newData.displayRawId && !$0.isFinal }
             return
         }
-
+        // first rtt comes, insert the info message
+        if newData.captionsRttType == .rtt && !hasInsertedRttInfo {
+            insertRttInfoMessage()
+        }
         // Check if there is no data yet
         if captionsRttData.isEmpty {
             captionsRttData.append(newData)
@@ -156,8 +159,7 @@ class CaptionsAndRttViewManager: ObservableObject {
         _ first: CallCompositeRttCaptionsDisplayData,
         _ second: CallCompositeRttCaptionsDisplayData
     ) -> Bool {
-        // Local non-final messages always at the bottom
-        // Local non-final messages always at the bottom
+        // Rule 1: Local non-final messages always at the bottom
         if first.captionsRttType == .rtt && second.captionsRttType == .rtt {
             if first.isLocal && !first.isFinal {
                 return false // Keep `first` below `second`
@@ -165,16 +167,19 @@ class CaptionsAndRttViewManager: ObservableObject {
             if second.isLocal && !second.isFinal {
                 return true // Keep `second` below `first`
             }
+            // Rule 2: Non-final messages should appear below finalized messages
+            if !first.isFinal && second.isFinal {
+                return false // Keep `first` below `second`
+            }
+            if first.isFinal && !second.isFinal {
+                return true // Keep `second` below `first`
+            }
         }
-        return first.createdTimestamp < second.createdTimestamp
+        return false
     }
 
     // Insert RTT info message when RTT becomes available
     private func insertRttInfoMessage() {
-        guard isRttAvailable && !hasInsertedRttInfo else {
-            return
-        }
-
         let rttInfo = CallCompositeRttCaptionsDisplayData(
             displayRawId: UUID().uuidString, // Unique ID
             displayName: "",

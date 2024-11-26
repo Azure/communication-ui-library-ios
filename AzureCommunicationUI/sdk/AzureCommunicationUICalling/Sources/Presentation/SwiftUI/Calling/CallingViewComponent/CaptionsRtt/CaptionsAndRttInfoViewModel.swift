@@ -50,7 +50,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
     }
 
     private func setupItems(state: AppState) {
-        if isRttAvailable && isCaptionsDisplayed {
+        if isRttDisplayed && isCaptionsDisplayed {
             title = localizationProvider.getLocalizedString(.rttCaptionsListTitle)
         } else if isRttDisplayed {
             title = localizationProvider.getLocalizedString(.rttListTitle)
