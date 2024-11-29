@@ -33,6 +33,7 @@ struct CallingView: View {
     }
 
     @ObservedObject var viewModel: CallingViewModel
+    @StateObject private var keyboard = KeyboardResponder()
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
 
@@ -46,6 +47,9 @@ struct CallingView: View {
         return getSizeClass() != .iphoneLandscapeScreenSize ? [] : [/* .bottom */]
     }
 
+    var isIpad: Bool {
+        return getSizeClass() == .ipadScreenSize
+    }
     var body: some View {
         ZStack {
             GeometryReader { geometry in
@@ -58,7 +62,8 @@ struct CallingView: View {
 
                 }.frame(width: geometry.size.width,
                         height: geometry.size.height)
-            }.ignoresSafeArea(.keyboard)
+            }
+            .ignoresSafeArea(isIpad ? [] : .keyboard)
             errorInfoView
             bottomDrawer
         }
@@ -105,11 +110,6 @@ struct CallingView: View {
                 CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
                                          avatarManager: avatarManager)
             }
-            BottomDrawer(isPresented: viewModel.captionsLanguageListViewModel.isDisplayed,
-                         hideDrawer: viewModel.dismissDrawer) {
-                CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
-                                         avatarManager: avatarManager)
-            }
             BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
                          hideDrawer: viewModel.dismissDrawer,
                          title: viewModel.captionsListViewModel.title,
@@ -127,22 +127,107 @@ struct CallingView: View {
         }
     }
 
+    var captionsAndRttDrawer: some View {
+        return ExpandableDrawer(
+            isPresented: Binding(
+                get: {
+                    viewModel.captionsInfoViewModel.isDisplayed
+                },
+                set: { newValue in
+                    if !newValue {
+                        viewModel.dismissDrawer()
+                    }
+                }
+            ),
+            hideDrawer: viewModel.dismissDrawer,
+            title: viewModel.captionsInfoViewModel?.title,
+            endIcon: viewModel.captionsInfoViewModel?.endIcon,
+            endIconAction: viewModel.captionsInfoViewModel?.endIconAction,
+            showTextBox: viewModel.captionsInfoViewModel?.isRttAvailable ?? false,
+            textBoxHint: viewModel.captionsInfoViewModel?.textBoxHint,
+            isAutoCommitted: $isAutoCommitted,
+            commitAction: { message, isFinal in
+                viewModel.captionsInfoViewModel?.commitMessage(message, isFinal ?? false)
+            },
+            content: {
+                CaptionsAndRttInfoView(
+                    viewModel: viewModel.captionsInfoViewModel!,
+                    avatarViewManager: avatarManager
+                )
+            }
+        ).onReceive(viewModel.captionsInfoViewModel.captionsManager.$isAutoCommit) { shouldClear in
+            if shouldClear {
+                isAutoCommitted = true
+            }
+        }
+    }
+
+    var captionsAndRttInfoViewPlaceholder: some View {
+        Spacer()
+            .frame(maxWidth: .infinity, maxHeight: DrawerConstants.collapsedHeight, alignment: .bottom)
+            .zIndex(1)
+    }
+
+    var captionsAndRttIpadView: some View {
+        return CaptionsAndRttLandscapeView(
+            title: viewModel.captionsInfoViewModel?.title,
+            endIcon: viewModel.captionsInfoViewModel?.endIcon,
+            endIconAction: viewModel.captionsInfoViewModel?.endIconAction,
+            showTextBox: viewModel.captionsInfoViewModel?.isRttAvailable ?? false,
+            textBoxHint: viewModel.captionsInfoViewModel?.textBoxHint,
+            isAutoCommitted: $isAutoCommitted,
+            commitAction: { message, isFinal in
+                viewModel.captionsInfoViewModel?.commitMessage(message, isFinal ?? false)
+            },
+            content: {
+                CaptionsAndRttInfoView(
+                    viewModel: viewModel.captionsInfoViewModel!,
+                    avatarViewManager: avatarManager
+                )
+            }
+        ).onReceive(viewModel.captionsInfoViewModel.captionsManager.$isAutoCommit) { shouldClear in
+            if shouldClear {
+                isAutoCommitted = true
+            }
+        }
+    }
+
     var portraitCallingView: some View {
         VStack(alignment: .center, spacing: 0) {
-            ZStack {
-                containerView
-                if !viewModel.isInPip {
-                    captionsAndRttInfoView
+            if isIpad {
+                HStack {
+                    containerView
+                    if !viewModel.isInPip && viewModel.captionsInfoViewModel.isDisplayed {
+                        captionsAndRttIpadView
+                    }
                 }
+                if keyboard.keyboardHeight == 0 {
+                    ControlBarView(viewModel: viewModel.controlBarViewModel)
+                }
+            } else {
+                ZStack {
+                    containerView
+                    if !viewModel.isInPip {
+                        captionsAndRttDrawer
+                    }
+                }
+                ControlBarView(viewModel: viewModel.controlBarViewModel)
+
             }
-            ControlBarView(viewModel: viewModel.controlBarViewModel)
-        }.ignoresSafeArea(.keyboard)
+        }
     }
 
     var landscapeCallingView: some View {
-        HStack(alignment: .center, spacing: 0) {
-            containerView
-            ControlBarView(viewModel: viewModel.controlBarViewModel)
+        ZStack {
+            HStack(alignment: .center, spacing: 0) {
+                containerView
+                if !viewModel.isInPip && viewModel.captionsInfoViewModel.isDisplayed {
+                    captionsAndRttIpadView
+                }
+                if keyboard.keyboardHeight == 0 {
+                    ControlBarView(viewModel: viewModel.controlBarViewModel)
+                }
+            }
         }
     }
 
@@ -174,9 +259,10 @@ struct CallingView: View {
                             captionsErrorView.accessibilityElement(children: .contain)
                         }.zIndex(2)
                     }
-                    if viewModel.captionsInfoViewModel.isRttDisplayed &&
-                        !viewModel.isInPip {
-                        rttInfoViewPlaceholder
+                    if (viewModel.captionsInfoViewModel.isRttDisplayed ||
+                        viewModel.captionsInfoViewModel.isCaptionsDisplayed) &&
+                        !viewModel.isInPip && !isIpad && getSizeClass() != .iphoneLandscapeScreenSize {
+                        captionsAndRttInfoViewPlaceholder
                     }
                 }
                 topAlertAreaView
@@ -317,51 +403,6 @@ struct CallingView: View {
             }
         }
     }
-
-    var captionsAndRttInfoView: some View {
-        let isPresented = viewModel.captionsInfoViewModel?.isRttDisplayed == true
-            ? viewModel.captionsInfoViewModel?.isRttDisplayed
-            : viewModel.captionsInfoViewModel?.isCaptionsDisplayed
-
-        let title = viewModel.captionsInfoViewModel?.title
-        let endIcon = viewModel.captionsInfoViewModel?.endIcon
-        let endIconAction = viewModel.captionsInfoViewModel?.endIconAction
-        let textBoxHint = viewModel.captionsInfoViewModel?.textBoxHint
-        let isRttAvailable = viewModel.captionsInfoViewModel?.isRttAvailable ?? false
-
-        return BottomDrawer(
-            isPresented: isPresented ?? false,
-            hideDrawer: viewModel.dismissDrawer,
-            title: title,
-            endIcon: endIcon,
-            endIconAction: endIconAction,
-            showTextBox: isRttAvailable,
-            textBoxHint: textBoxHint,
-            isExpandable: true,
-            isAutoCommitted: $isAutoCommitted,
-            commitAction: { message, isFinal in
-                viewModel.captionsInfoViewModel?.commitMessage(message, isFinal ?? false)
-            },
-            content: {
-                CaptionsAndRttInfoView(
-                    viewModel: viewModel.captionsInfoViewModel,
-                    avatarViewManager: avatarManager
-                )
-            }
-        )
-        .onReceive(viewModel.captionsInfoViewModel.captionsManager.$isAutoCommit) { shouldClear in
-            if shouldClear {
-                isAutoCommitted = true
-            }
-        }
-    }
-
-    var rttInfoViewPlaceholder: some View {
-        Spacer()
-            .frame(maxWidth: .infinity, maxHeight: DrawerConstants.collapsedHeight, alignment: .bottom)
-            .zIndex(1)
-    }
-
     var errorInfoView: some View {
         return VStack {
             Spacer()

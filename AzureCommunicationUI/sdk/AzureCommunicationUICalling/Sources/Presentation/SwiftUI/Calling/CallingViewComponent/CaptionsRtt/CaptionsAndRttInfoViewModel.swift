@@ -13,6 +13,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
     @Published var isRttDisplayed = false
     @Published var isRttAvailable = false
     @Published var isLoading = false
+    @Published var isDisplayed = false
     var loadingMessage = ""
     var rttInfoMessage = ""
     let localizationProvider: LocalizationProviderProtocol
@@ -50,7 +51,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
     }
 
     private func setupItems(state: AppState) {
-        if isRttDisplayed && state.captionsState.isCaptionsOn {
+        if state.rttState.isRttOn && state.captionsState.isCaptionsOn {
             title = localizationProvider.getLocalizedString(.rttCaptionsListTitle)
         } else if isRttDisplayed {
             title = localizationProvider.getLocalizedString(.rttListTitle)
@@ -91,5 +92,6 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
         self.isRttDisplayed = state.rttState.isRttOn && !isCaptionsDisplayed
         setupItems(state: state)
         self.isRttAvailable = state.rttState.isRttOn
+        self.isDisplayed = isCaptionsDisplayed || isRttDisplayed
     }
 }

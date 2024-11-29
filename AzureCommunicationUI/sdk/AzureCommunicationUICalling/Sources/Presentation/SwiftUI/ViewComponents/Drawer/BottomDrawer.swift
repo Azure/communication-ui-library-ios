@@ -41,9 +41,8 @@ internal enum DrawerConstants {
     static let collapsedHeight: CGFloat = 200
     static let expandedHeight: CGFloat = UIScreen.main.bounds.height * 0.7
     static let textBoxHeight: CGFloat = 40
+    static let textBoxPaddingBottom: CGFloat = 10
 }
-// swiftlint:disable type_body_length
-// swiftlint:disable file_length
 
 /// Bottom Drawer w/Swift UI Support
 ///
@@ -71,52 +70,26 @@ internal struct BottomDrawer<Content: View>: View {
     @State private var dragOffset: CGFloat = 0
     @State private var scrollViewContentSize: CGFloat = 0
     @State private var drawerHeight: CGFloat = DrawerConstants.collapsedHeight
-    @State private var isExpanded = false
-    @State private var isFullyExpanded = false
-    @State private var keyboardHeight: CGFloat = 0
-    @State private var textEditorYPosition: CGFloat = 0
-    @State private var text: String = ""
-    @Binding var isAutoCommitted: Bool
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
-    let isExpandable: Bool
-    let showTextBox: Bool
     var drawerWorkItem: DispatchWorkItem?
-    let title: String?
-    let endIcon: CompositeIcon?
-    let endIconAction: (() -> Void)?
-    let textBoxHint: String?
     let startIcon: CompositeIcon?
     let startIconAction: (() -> Void)?
-    let commitAction: ((_ message: String, _ isFinal: Bool? ) -> Void)?
+    let title: String?
 
     init(isPresented: Bool,
          hideDrawer: @escaping () -> Void,
          title: String? = nil,
          startIcon: CompositeIcon? = nil,
          startIconAction: (() -> Void)? = nil,
-         endIcon: CompositeIcon? = nil,
-         endIconAction: (() -> Void)? = nil,
-         showTextBox: Bool = false,
-         textBoxHint: String? = nil,
-         isExpandable: Bool = false,
-         isAutoCommitted: Binding<Bool> = .constant(false),
-         commitAction: ((_ message: String, _ isFinal: Bool?) -> Void)? = nil,
          @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
         self.content = content()
         self.hideDrawer = hideDrawer
-        self.isExpandable = isExpandable
-        self.showTextBox = showTextBox
-        self.title = title
-        self.endIcon = endIcon
-        self.endIconAction = endIconAction
-        self.textBoxHint = textBoxHint
         self.startIcon = startIcon
         self.startIconAction = startIconAction
-        self.commitAction = commitAction
-        self._isAutoCommitted = isAutoCommitted
+        self.title = title
     }
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -127,66 +100,13 @@ internal struct BottomDrawer<Content: View>: View {
                     .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : max(dragOffset, 0))
                     .animation(.easeInOut, value: drawerState == .visible)
                     .accessibilityAddTraits(.isModal)
-                    .onAppear {
-                        UIAccessibility.post(notification: .screenChanged, argument: nil)
-                        addKeyboardObservers()
-                    }
-                    .onDisappear {
-                        removeKeyboardObservers()
-                    }
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                dragOffset = value.translation.height
-                                if isExpandable {
-                                    let newHeight = drawerHeight - value.translation.height
-                                    drawerHeight = min(max(newHeight,
-                                                           DrawerConstants.collapsedHeight),
-                                                       DrawerConstants.expandedHeight)
-                                }
-                            }
-                            .onEnded { value in
-                                if value.translation.height > DrawerConstants.dragThreshold && !isExpandable {
-                                    withAnimation {
-                                        hideDrawer()
-                                    }
-                                } else if isExpandable {
-                                    withAnimation {
-                                        drawerHeightState = value.translation.height <
-                                            -DrawerConstants.dragThreshold ? .expanded : .collapsed
-                                        isExpanded = drawerHeight >
-                                        (DrawerConstants.collapsedHeight + DrawerConstants.expandedHeight) / 2
-                                        drawerHeight = isExpanded ?
-                                        DrawerConstants.expandedHeight : DrawerConstants.collapsedHeight
-                                        isFullyExpanded = drawerHeight == DrawerConstants.expandedHeight
-                                    }
-                                }
-                                dragOffset = 0
-                            }
-                    )
             }
         }
         .onChange(of: isPresented) { newValue in
             if newValue {
-                drawerState = .hidden
-                withAnimation {
-                    drawerState = .visible
-                }
+                showDrawer()
             } else {
-                withAnimation {
-                    drawerState = .hidden
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + DrawerConstants.delayUntilGone) {
-                    drawerState = .gone
-                }
-            }
-        }
-        .onChange(of: isAutoCommitted) { shouldClear in
-            if shouldClear {
-                DispatchQueue.main.async {
-                    text = ""
-                    isAutoCommitted = false
-                }
+                hideDrawerAnimated()
             }
         }
     }
@@ -207,41 +127,18 @@ internal struct BottomDrawer<Content: View>: View {
                     titleView
                 }
                 content
-                if isFullyExpanded, showTextBox {
-                    textEditor.frame(height: DrawerConstants.textBoxHeight)
-                        .frame(maxWidth: .infinity)
-                        .padding([.leading, .trailing], 10)
-                }
                 Spacer().frame(height: DrawerConstants.bottomFillY)
             }
             .frame(maxWidth: .infinity, alignment: .bottom)
             .background(Color(StyleProvider.color.drawerColor))
             .cornerRadius(DrawerConstants.drawerCornerRadius)
             .shadow(radius: DrawerConstants.drawerShadowRadius)
-            .padding(.bottom, isExpandable ? keyboardHeight -
-                     DrawerConstants.bottomFillY : -DrawerConstants.bottomFillY)
-            .animation(.easeInOut, value: keyboardHeight + DrawerConstants.bottomFillY)
-            .modifier(ConditionalFrameModifier(
-                drawerHeight: $drawerHeight, isExpandable: isExpandable))
-        }.onAppear {
-            if showTextBox {
-                DispatchQueue.main.async {
-                    setDrawerHeight(to: .expanded)
-                }
-            }
+            .padding(.bottom, -DrawerConstants.bottomFillY)
         }
     }
 
     private var titleView: some View {
         VStack {
-            // Handle at the top center
-            if isExpandable {
-                RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
-                    .fill(Color.gray.opacity(0.6))
-                    .frame(width: 36, height: 4)
-                    .padding(.top, 5)
-            }
-
             HStack(spacing: 8) {
                 if let icon = startIcon {
                     Icon(name: icon, size: DrawerListConstants.iconSize)
@@ -253,29 +150,6 @@ internal struct BottomDrawer<Content: View>: View {
                         }
                 }
                 Spacer()
-                if let icon = endIcon {
-                    Icon(name: icon, size: DrawerListConstants.iconSize)
-                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                        .onTapGesture {
-                            endIconAction?()
-                        }
-                }
-                if isExpandable && !isFullyExpanded {
-                    Icon(name: CompositeIcon.maximize, size: DrawerListConstants.iconSize)
-                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                        .onTapGesture {
-                            setDrawerHeight(to: .expanded)
-                        }
-                }
-
-                if isExpandable && isFullyExpanded {
-                    Icon(name: CompositeIcon.minimize, size: DrawerListConstants.iconSize)
-                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                        .accessibilityHidden(true)
-                        .onTapGesture {
-                            setDrawerHeight(to: .collapsed)
-                        }
-                }
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.trailing, 10)
@@ -293,121 +167,32 @@ internal struct BottomDrawer<Content: View>: View {
 
     private var overlayView: some View {
         // Determine the appropriate opacity based on the drawer's state
-        let overlayOpacity: Double
-        if isExpandable {
-            // If the drawer is expandable, set opacity only when fully expanded
-            overlayOpacity = isFullyExpanded ? 0.01 : 0
-        } else {
-            // If not expandable, set opacity based on visibility
-            overlayOpacity = (drawerState == .visible) ? DrawerConstants.overlayOpacity : 0
-        }
+        let overlayOpacity = (drawerState == .visible) ? DrawerConstants.overlayOpacity : 0
 
         return Color.black.opacity(overlayOpacity)
             .ignoresSafeArea()
             .onTapGesture {
-                if isFullyExpanded {
-                    setDrawerHeight(to: .collapsed)
-                } else {
-                    hideDrawer()
-                }
+                hideDrawer()
             }
             .accessibilityHidden(true)
     }
 
-    private var textEditor: some View {
-        VStack {
-            CustomTextField(
-                text: $text,
-                placeholder: textBoxHint ?? "",
-                onCommit: {
-                    commitAction?(text, true)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        text = ""
-                    }
-                },
-                onChange: { newText in
-                    commitAction?(newText, false)
-                }
-            )
-            .frame(height: DrawerConstants.textBoxHeight)
-            .frame(maxWidth: .infinity)
-            .padding([.leading, .trailing], 2)
-            .onChange(of: isAutoCommitted) { shouldClear in
-                if shouldClear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        text = ""
-                    }
-                }
+    // MARK: - Helper Functions
+    private func showDrawer() {
+        drawerState = .hidden
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation {
+                drawerState = .visible
             }
         }
     }
 
-    private func addKeyboardObservers() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
-                                               object: nil, queue: .main) { notification in
-            guard isExpandable else {
-                return
-            } // Adjust only when showTextBox is true
-            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                keyboardHeight = keyboardFrame.height
-                if keyboardHeight > 0 {
-                    keyboardHeight -= 100
-                }
-            }
-        }
-
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
-                                               object: nil, queue: .main) { _ in
-            guard isExpandable else {
-                return
-            } // Reset only when showTextBox is true
-            keyboardHeight = 0
-        }
-    }
-
-    func setDrawerHeight(to heightState: BottomDrawerHeightStatus) {
-        guard isExpandable else {
-            return
-        }
-
+    private func hideDrawerAnimated() {
         withAnimation {
-            drawerHeightState = heightState
-            switch heightState {
-            case .collapsed:
-                drawerHeight = DrawerConstants.collapsedHeight
-                isExpanded = false
-                isFullyExpanded = false
-            case .expanded:
-                drawerHeight = DrawerConstants.expandedHeight
-                isExpanded = true
-                isFullyExpanded = true
-            }
+            drawerState = .hidden
         }
-    }
-
-    private func removeKeyboardObservers() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillShowNotification,
-                                                  object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification,
-                                                  object: nil)
-    }
-}
-
-struct ConditionalFrameModifier: ViewModifier {
-    @Binding var drawerHeight: CGFloat
-    let isExpandable: Bool
-
-    func body(content: Content) -> some View {
-        Group {
-            if isExpandable {
-                content.frame(height: drawerHeight)
-            } else {
-                content
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + DrawerConstants.delayUntilGone) {
+            drawerState = .gone
         }
     }
 }
-// swiftlint:enable type_body_length
-// swiftlint:enable file_length
