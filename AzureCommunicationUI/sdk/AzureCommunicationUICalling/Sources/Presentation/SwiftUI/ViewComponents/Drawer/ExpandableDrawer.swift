@@ -168,6 +168,7 @@ internal struct ExpandableDrawer<Content: View>: View {
             .padding(.bottom, keyboardHeight)
             .animation(.easeInOut, value: keyboardHeight)
             .frame(height: drawerHeight)
+            .hideKeyboardOnTap() // Dismiss keyboard when tapping outside
         }
         .onAppear {
             if showTextBox {
@@ -324,7 +325,7 @@ internal struct ExpandableDrawer<Content: View>: View {
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                 keyboardHeight = keyboardFrame.height
                 if keyboardHeight > 0 {
-                    keyboardHeight -= 120
+                    keyboardHeight -= 125
                 }
             }
         }
@@ -348,4 +349,14 @@ extension ExpandableDrawer {
         return geometry.size.width > geometry.size.height
     }
 }
+
+extension View {
+    /// A modifier to dismiss the keyboard when tapping anywhere on the screen.
+    func hideKeyboardOnTap() -> some View {
+        self.onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+    }
+}
+
 // swiftlint:enable type_body_length
