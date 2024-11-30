@@ -56,14 +56,14 @@ struct CallingView: View {
                 ZStack {
                     if getSizeClass() != .iphoneLandscapeScreenSize {
                         portraitCallingView
-                    } else {
-                        landscapeCallingView
                     }
-
                 }.frame(width: geometry.size.width,
                         height: geometry.size.height)
             }
             .ignoresSafeArea(isIpad ? [] : .keyboard)
+            if getSizeClass() == .iphoneLandscapeScreenSize {
+                landscapeCallingView
+            }
             errorInfoView
             bottomDrawer
         }
@@ -258,6 +258,7 @@ struct CallingView: View {
                                 .accessibilityElement(children: .contain)
                             captionsErrorView.accessibilityElement(children: .contain)
                         }.zIndex(2)
+                            .ignoresSafeArea(isIpad ? [] : .keyboard)
                     }
                     if (viewModel.captionsInfoViewModel.isRttDisplayed ||
                         viewModel.captionsInfoViewModel.isCaptionsDisplayed) &&
