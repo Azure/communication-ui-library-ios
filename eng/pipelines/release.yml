@@ -203,6 +203,7 @@ extends:
             exportPath: $(exportPath)
             signingOption: manual
             signingIdentity: $(APPLE_CERTIFICATE_SIGNING_IDENTITY)
+            provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
             provisioningProfileName: Azure communication UI calling Dogfood Dev
             destinationSimulators: iPhone 14 Pro
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
