@@ -1,4 +1,11 @@
 # Azure Communication UI Calling Release History
+## 1.13.0 (2024-11-30)
+
+### Features
+- Call screen header custom button
+
+### Bugfixes
+- iOS18 and Xcode 16 bugfixes 
 
 ## 1.12.0 (2024-10-31)
 
