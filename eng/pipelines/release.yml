@@ -211,7 +211,7 @@ extends:
         - task: DownloadSecureFile@1
           displayName: Download Distribution Profile from Azure secure files storage copy
           inputs:
-            secureFile: 10a60597-d690-408e-b319-1c739568aa3f
+            secureFile: $(APPPROFILEDIST)
             retryCount: 5
         - task: DownloadSecureFile@1
           displayName: Download ExportOptions.plist from Azure secure files storage copy copy
