@@ -60,10 +60,10 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: ButtonViewDataState()
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
                     )
 
         XCTAssertEqual(sut.title, "Waiting for others to join")
@@ -98,10 +98,10 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: ButtonViewDataState()
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, "Call with 1 person")
 
@@ -150,10 +150,10 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: ButtonViewDataState()
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, "Call with 2 people")
 
@@ -214,10 +214,10 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: ButtonViewDataState()
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, "Call with 1 person")
 
@@ -303,10 +303,10 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: ButtonViewDataState()
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.title, expectedInfoHeaderlabel0ParticipantKey)
@@ -360,17 +360,17 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: ButtonViewDataState()
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, expectedInfoHeaderlabelNParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
 
         wait(for: [expectation], timeout: 1)
     }
-    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+
     func test_infoHeaderViewModel_display_infoHeader_customButtonsDisplayed() {
         let sut = makeSUTLocalizationMocking()
         let expectation = XCTestExpectation(description: "Should display custom button")
@@ -394,15 +394,14 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: buttonState
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
 
         wait(for: [expectation], timeout: 1)
     }
-    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 }
 
 extension InfoHeaderViewModelTests {
@@ -418,11 +417,11 @@ extension InfoHeaderViewModelTests {
                                    enableMultitasking: true,
                                    enableSystemPipWhenMultitasking: true,
                                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                                    ,
                                    buttonViewDataState: ButtonViewDataState(),
                                    controlHeaderViewData: nil
-                                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
     }
 

@@ -68,7 +68,7 @@ internal struct CustomAlert: View {
                             })
                         }
                     }.padding()
-                        .background(Color(StyleProvider.color.surface))
+                        .background(Color(StyleProvider.color.drawerColor))
                         .cornerRadius(10)
                         .shadow(radius: 10)
 

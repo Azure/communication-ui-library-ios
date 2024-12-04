@@ -760,7 +760,7 @@ extension CallingDemoView {
         }
 
         var headerViewData: CallScreenHeaderViewData?
-        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         if envConfigSubject.addCustomButton {
             let customButtonImage: UIImage
             if let image = UIImage(named: "ic_fluent_chat_20_regular") {
@@ -785,7 +785,7 @@ extension CallingDemoView {
             }
             headerViewData = CallScreenHeaderViewData(customButtons: [customButton1, customButton2])
         }
-        </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData = headerViewData ?? CallScreenHeaderViewData()

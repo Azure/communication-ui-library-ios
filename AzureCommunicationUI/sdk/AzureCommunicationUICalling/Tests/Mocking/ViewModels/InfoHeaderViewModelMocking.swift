@@ -25,11 +25,11 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    enableMultitasking: true,
                    enableSystemPipWhenMultitasking: true,
                    callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                    ,
                    buttonViewDataState: ButtonViewDataState(),
                    controlHeaderViewData: nil
-                   </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
     }
 
@@ -38,10 +38,10 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                          callingState: CallingState,
                          visibilityState: VisibilityState,
                          callScreenInfoHeaderState: CallScreenInfoHeaderState?
-                         /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+                         /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
                          ,
                          buttonViewDataState: ButtonViewDataState
-                         </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+                         /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     ) {
         updateState?(localUserState, remoteParticipantsState, callingState, visibilityState)
     }

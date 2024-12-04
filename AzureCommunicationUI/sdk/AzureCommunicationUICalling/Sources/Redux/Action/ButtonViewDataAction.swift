@@ -38,12 +38,12 @@ enum ButtonViewDataAction: Equatable {
     case callScreenCustomButtonIsVisibleUpdated(id: String, visible: Bool)
     case callScreenCustomButtonTitleUpdated(id: String, title: String)
     case callScreenCustomButtonIconUpdated(id: String, image: UIImage)
-    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0>
+    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     case callScreenHeaderCustomButtonIsEnabledUpdated(id: String, enabled: Bool)
     case callScreenHeaderCustomButtonIsVisibleUpdated(id: String, visible: Bool)
     case callScreenHeaderCustomButtonTitleUpdated(id: String, title: String)
     case callScreenHeaderCustomButtonIconUpdated(id: String, image: UIImage)
-    </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
+    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     case setupScreenCameraButtonIsEnabledUpdated(enabled: Bool)
     case setupScreenCameraButtonIsVisibleUpdated(visible: Bool)
     case setupScreenMicButtonIsEnabledUpdated(enabled: Bool)

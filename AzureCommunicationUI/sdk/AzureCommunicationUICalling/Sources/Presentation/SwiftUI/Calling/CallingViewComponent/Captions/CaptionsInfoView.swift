@@ -71,7 +71,7 @@ struct CaptionsInfoView: View {
                     .isAnimating(true)
                 Text(viewModel.loadingMessage)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color(StyleProvider.color.textSecondary))
                 Spacer()
             }
             Spacer()
