@@ -283,6 +283,8 @@ internal class CallingViewModel: ObservableObject {
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          callingState: state.callingState)
         participantGridsViewModel.update(callingState: state.callingState,
+                                         captionsState: state.captionsState,
+                                         rttState: state.rttState,
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          visibilityState: state.visibilityState, lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState,

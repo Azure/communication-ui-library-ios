@@ -296,8 +296,8 @@ extension CallingSDKEventsHandler: CallDelegate,
         isTranscriptionActiveSubject.send(newTranscriptionActive)
     }
 
-    func onInfoReceived(_ realTextCallFeature: RealTimeTextCallFeature,
-                        args: RealTimeTextInfoReceivedEventArgs) {
+    func realTimeTextCallFeature(_ realTextCallFeature: RealTimeTextCallFeature,
+                                 didReceiveInfo args: RealTimeTextInfoReceivedEventArgs) {
         rttReceived.send(args.info.toCallCompositeRttData())
     }
 
