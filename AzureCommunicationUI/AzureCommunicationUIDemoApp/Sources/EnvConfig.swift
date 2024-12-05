@@ -93,12 +93,18 @@ class EnvConfigSubject: ObservableObject {
     @Published var foregroundOnPrimaryColor: Color = .white
     @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
     @Published var enableRemoteHold = true
-    @Published var enableCallKit = true
     @Published var enableRemoteInfo = true
     @Published var callkitRemoteInfo = ""
     @Published var deviceToken: Data?
     @Published var setupScreenOptionsCameraButtonEnabled = true
     @Published var setupScreenOptionsMicButtonEnabled = true
+    @Published var enableCallKit: Bool = {
+        #if targetEnvironment(simulator)
+        return false
+        #else
+        return true
+        #endif
+    }()
 
     let acstokenKey: String = "ACS_TOKEN"
     let displayNameKey: String = "DISPLAY_NAME"
