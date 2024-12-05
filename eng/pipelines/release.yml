@@ -211,7 +211,7 @@ extends:
         - task: DownloadSecureFile@1
           displayName: Download Distribution Profile from Azure secure files storage copy
           inputs:
-            secureFile: 6fe44d7c-8eb3-4b6b-b348-a80fea81ecc0
+            secureFile: $(APPPROFILEDIST)
             retryCount: 5
         - task: DownloadSecureFile@1
           displayName: Download ExportOptions.plist from Azure secure files storage copy copy
@@ -222,7 +222,7 @@ extends:
           displayName: Copy distribution provisioning profile
           inputs:
             SourceFolder: $(Agent.TempDirectory)
-            Contents: Azure_communication_UI_calling_Dogfood_Dist_exp241129.mobileprovision
+            Contents: $(APPPROFILEDIST)
             TargetFolder: $(archivePath)
             flattenFolders: true
         - task: CopyFiles@2
