@@ -12,6 +12,18 @@ struct CaptionsAndRttInfoView: View {
     @State private var previousDrawerHeight: CGFloat = 0 // Track the previous height
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
+    // Define a PreferenceKey to capture the height
+    struct HeightPreferenceKey: PreferenceKey {
+        static var defaultValue: CGFloat = 0
+
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = max(value, nextValue())
+        }
+    }
+
+    // Debounce related state
+    @State private var scrollWorkItem: DispatchWorkItem?
+
     var body: some View {
         GeometryReader { geometry in
             let parentFrame = geometry
@@ -21,9 +33,36 @@ struct CaptionsAndRttInfoView: View {
                 ScrollViewReader { scrollView in
                     ScrollView {
                         content(scrollView: scrollView, parentFrame: parentFrame)
-                            .frame(minHeight: geometry.size.height, alignment: .bottom) // fix the height
+                            .frame(minHeight: geometry.size.height, alignment: .bottom) // Fix the height
                             .frame(maxWidth: .infinity)
                             .background(Color(StyleProvider.color.drawerColor))
+                            // Hidden GeometryReader to capture the height
+                            .background(
+                                GeometryReader { geo in
+                                    Color.clear
+                                        .preference(key: HeightPreferenceKey.self, value: geo.size.height)
+                                }
+                            )
+                    }
+                    // Listen for changes in displayData and drawer height
+                    .onPreferenceChange(HeightPreferenceKey.self) { newHeight in
+                        if newHeight != previousDrawerHeight {
+                            previousDrawerHeight = newHeight
+
+                            // Cancel any existing scroll action
+                            scrollWorkItem?.cancel()
+
+                            // Create a new work item with debounce delay
+                            let workItem = DispatchWorkItem {
+                                if isLastItemVisible {
+                                    scrollToBottom(scrollView)
+                                }
+                            }
+
+                            // Assign and execute the work item after a delay
+                            scrollWorkItem = workItem
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: workItem)
+                        }
                     }
                     .onChange(of: viewModel.displayData) { _ in
                         if isLastItemVisible {
@@ -58,7 +97,7 @@ struct CaptionsAndRttInfoView: View {
 
     @ViewBuilder
     private func lastItemBackground(index: Int, parentFrame: GeometryProxy) -> some View {
-        // check last item is visiable on the screen
+        // Check if the last item is visible on the screen
         if index == viewModel.displayData.indices.last {
             GeometryReader { geo in
                 Color.clear
