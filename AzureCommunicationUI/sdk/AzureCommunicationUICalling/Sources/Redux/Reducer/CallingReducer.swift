@@ -21,9 +21,9 @@ extension Reducer where State == CallingState,
         var callStartDate = callingState.callStartDate
         var callEndReasonCode: Int?
         var callEndReasonSubCode: Int?
-        /* <CALL_START_TIME>
+        /* <CALL_START_TIME> */
         var callStartTime: Date?
-        </CALL_START_TIME> */
+        /* </CALL_START_TIME> */
 
         switch action {
         case .callingAction(.stateUpdated(let status, let code, let subCode)):
@@ -57,10 +57,10 @@ extension Reducer where State == CallingState,
             transcriptionStatus = status
         case .callingAction(.dismissRecordingTranscriptionBannedUpdated(let isDismissed)):
             isRecorcingTranscriptionBannedDismissed = isDismissed
-            /* <CALL_START_TIME>
+            /* <CALL_START_TIME> */
         case .callingAction(.callStartTimeUpdated(let startTime)):
             callStartTime = startTime
-            </CALL_START_TIME> */
+            /* </CALL_START_TIME> */
         // Exhaustive un-implemented actions
         case .audioSessionAction,
                 .callingAction(.setupCall),
@@ -104,10 +104,10 @@ extension Reducer where State == CallingState,
                             recordingStatus: recordingStatus,
                             transcriptionStatus: transcriptionStatus,
                             isRecorcingTranscriptionBannedDismissed: isRecorcingTranscriptionBannedDismissed
-                            /* <CALL_START_TIME>
+                            /* <CALL_START_TIME> */
                             ,
                             callStartTime: callStartTime
-                            </CALL_START_TIME> */
+                            /* </CALL_START_TIME> */
         )
     }
 }

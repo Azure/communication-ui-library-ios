@@ -36,9 +36,7 @@ struct ButtonViewDataState: Equatable {
     let reportIssueButton: DefaultButtonState?
 
     let callScreenCustomButtonsState: [CustomButtonState]
-    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     let callScreenHeaderCustomButtonsState: [CustomButtonState]
-    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
     init(setupScreenCameraButtonState: DefaultButtonState? = nil,
          setupScreenMicButtonState: DefaultButtonState? = nil,
@@ -52,11 +50,8 @@ struct ButtonViewDataState: Equatable {
          liveCaptionsToggleButton: DefaultButtonState? = nil,
          spokenLanguageButton: DefaultButtonState? = nil,
          captionsLanguageButton: DefaultButtonState? = nil,
-         callScreenCustomButtonsState: [CustomButtonState] = []
-         /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-         ,
+         callScreenCustomButtonsState: [CustomButtonState] = [],
          callScreenHeaderCustomButtonsState: [CustomButtonState] = []
-         /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     ) {
         self.setupScreenCameraButtonState = setupScreenCameraButtonState
         self.setupScreenMicButtonState = setupScreenMicButtonState
@@ -74,9 +69,7 @@ struct ButtonViewDataState: Equatable {
         self.reportIssueButton = reportIssueButton
 
         self.callScreenCustomButtonsState = callScreenCustomButtonsState
-        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         self.callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState
-        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     }
 
     static func constructInitial(setupScreenOptions: SetupScreenOptions?,
@@ -128,9 +121,7 @@ struct ButtonViewDataState: Equatable {
                                   visible: customButton.visible,
                                   image: customButton.image,
                                   title: customButton.title)
-            } ?? []
-            /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-            ,
+            } ?? [],
             callScreenHeaderCustomButtonsState: callScreenOptions?.headerViewData?.customButtons.map { customButton in
                 return CustomButtonState(id: customButton.id,
                                   enabled: customButton.enabled,
@@ -138,7 +129,6 @@ struct ButtonViewDataState: Equatable {
                                   image: customButton.image,
                                   title: customButton.title)
             } ?? []
-            /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
     }
 }

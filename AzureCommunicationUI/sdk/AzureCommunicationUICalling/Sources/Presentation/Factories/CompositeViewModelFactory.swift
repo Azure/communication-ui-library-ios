@@ -163,7 +163,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isVisible: isVisible,
                             action: action)
     }
-    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     func makeIconButtonViewModel(icon: UIImage,
                                  buttonType: IconButtonViewModel.ButtonType = .controlButton,
                                  isDisabled: Bool,
@@ -175,7 +174,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isVisible: isVisible,
                             action: action)
     }
-    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
     func makeIconWithLabelButtonViewModel<T: ButtonState>(
         selectedButtonState: T,
@@ -332,12 +330,9 @@ extension CompositeViewModelFactory {
 
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                                 ,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState,
                                  buttonViewDataState: ButtonViewDataState,
                                  controlHeaderViewData: CallScreenHeaderViewData?
-                                 /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     ) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -347,12 +342,9 @@ extension CompositeViewModelFactory {
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
                             enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
-                            callScreenInfoHeaderState: callScreenInfoHeaderState
-                            /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                            ,
+                            callScreenInfoHeaderState: callScreenInfoHeaderState,
                             buttonViewDataState: buttonViewDataState,
                             controlHeaderViewData: controlHeaderViewData
-                            /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
     }
 
