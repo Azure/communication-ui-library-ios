@@ -72,7 +72,7 @@ extension Reducer where State == NavigationState,
                 .callingAction(.dismissRecordingTranscriptionBannedUpdated),
             /* <CALL_START_TIME> */
                 .callingAction(.callStartTimeUpdated),
-            /* <CALL_START_TIME> */
+            /* </CALL_START_TIME> */
                 .captionsAction,
                 .rttAction,
                 .lifecycleAction,
