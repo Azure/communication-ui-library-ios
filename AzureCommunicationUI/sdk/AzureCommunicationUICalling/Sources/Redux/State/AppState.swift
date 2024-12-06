@@ -21,6 +21,7 @@ struct AppState {
     let toastNotificationState: ToastNotificationState
     let callScreenInfoHeaderState: CallScreenInfoHeaderState
     let buttonViewDataState: ButtonViewDataState
+    let rttState: RttState
 
     init(callingState: CallingState = .init(),
          permissionState: PermissionState = .init(),
@@ -36,7 +37,8 @@ struct AppState {
          captionsState: CaptionsState = .init(),
          toastNotificationState: ToastNotificationState = .init(),
          callScreenInfoHeaderState: CallScreenInfoHeaderState = .init(),
-         buttonViewDataState: ButtonViewDataState = .init()) {
+         buttonViewDataState: ButtonViewDataState = .init(),
+         rttState: RttState = .init()) {
         self.callingState = callingState
         self.permissionState = permissionState
         self.localUserState = localUserState
@@ -52,5 +54,6 @@ struct AppState {
         self.toastNotificationState = toastNotificationState
         self.callScreenInfoHeaderState = callScreenInfoHeaderState
         self.buttonViewDataState = buttonViewDataState
+        self.rttState = rttState
     }
 }

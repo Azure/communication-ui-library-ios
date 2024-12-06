@@ -22,7 +22,8 @@ extension Reducer {
         toastNotificationReducer: Reducer<ToastNotificationState, ToastNotificationAction> = .toastNotificationReducer,
         callScreenInfoHeaderReducer: Reducer<CallScreenInfoHeaderState, CallScreenInfoHeaderAction>
             = .callScreenInfoHeaderReducer,
-        buttonViewDataReducer: Reducer<ButtonViewDataState, ButtonViewDataAction> = .buttonViewDataReducer
+        buttonViewDataReducer: Reducer<ButtonViewDataState, ButtonViewDataAction> = .buttonViewDataReducer,
+        rttReducer: Reducer<RttState, RttAction> = .rttReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
@@ -42,6 +43,7 @@ extension Reducer {
             var toastNotificationState = state.toastNotificationState
             var callScreenInfoHeaderState = state.callScreenInfoHeaderState
             var buttonViewDataState = state.buttonViewDataState
+            var rttState = state.rttState
 
             switch action {
             case let .permissionAction(permAction):
@@ -64,6 +66,8 @@ extension Reducer {
                 callScreenInfoHeaderState = callScreenInfoHeaderReducer.reduce(state.callScreenInfoHeaderState, action)
             case let .buttonViewDataAction(action):
                 buttonViewDataState = buttonViewDataReducer.reduce(state.buttonViewDataState, action)
+            case let .rttAction(action):
+                rttState = rttReducer.reduce(state.rttState, action)
             default:
                 break
             }
@@ -91,7 +95,8 @@ extension Reducer {
                             captionsState: captionsState,
                             toastNotificationState: toastNotificationState,
                             callScreenInfoHeaderState: callScreenInfoHeaderState,
-                            buttonViewDataState: buttonViewDataState
+                            buttonViewDataState: buttonViewDataState,
+                            rttState: rttState
             )
         }
     }
