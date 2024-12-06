@@ -490,7 +490,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
 
         let rttFeature = call.feature(Features.realtimeText)
-        rttFeature.send(with: message, finalized: isFinal)
+        do {
+            try rttFeature.send(with: message, finalized: isFinal)
+            logger.debug("Send message successfully")
+        } catch {
+            logger.error("Error: Send message operation unsuccessful. Please check capabilities.")
+            throw error
+        }
     }
 
     func removeParticipant(_ participantId: String) async throws {
