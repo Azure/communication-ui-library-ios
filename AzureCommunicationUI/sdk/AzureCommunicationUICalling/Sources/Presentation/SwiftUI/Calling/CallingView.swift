@@ -143,7 +143,7 @@ struct CallingView: View {
             title: viewModel.captionsInfoViewModel?.title,
             endIcon: viewModel.captionsInfoViewModel?.endIcon,
             endIconAction: viewModel.captionsInfoViewModel?.endIconAction,
-            showTextBox: viewModel.captionsInfoViewModel?.isRttDisplayed ?? false,
+            showTextBox: viewModel.captionsInfoViewModel?.isRttAvailable ?? false,
             textBoxHint: viewModel.captionsInfoViewModel?.textBoxHint,
             isAutoCommitted: $isAutoCommitted,
             commitAction: { message, isFinal in
