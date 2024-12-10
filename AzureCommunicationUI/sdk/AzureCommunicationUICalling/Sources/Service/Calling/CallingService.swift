@@ -26,7 +26,6 @@ protocol CallingServiceProtocol {
     var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never> { get }
     var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never> { get }
     var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never> { get }
-    var captionsDataSubject: PassthroughSubject<CallCompositeCaptionsData, Never> { get }
     var activeSpokenLanguageSubject: CurrentValueSubject<String, Never> { get }
     var activeCaptionLanguageSubject: CurrentValueSubject<String, Never> { get }
     var captionsEnabledChanged: CurrentValueSubject<Bool, Never> { get }
@@ -88,7 +87,6 @@ class CallingService: NSObject, CallingServiceProtocol {
     var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never>
     var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never>
     var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never>
-    var captionsDataSubject: PassthroughSubject<CallCompositeCaptionsData, Never>
     var activeSpokenLanguageSubject: CurrentValueSubject<String, Never>
     var activeCaptionLanguageSubject: CurrentValueSubject<String, Never>
     var captionsEnabledChanged: CurrentValueSubject<Bool, Never>
@@ -111,7 +109,6 @@ class CallingService: NSObject, CallingServiceProtocol {
         supportedSpokenLanguagesSubject = callingSDKWrapper.callingEventsHandler.captionsSupportedSpokenLanguages
         supportedCaptionLanguagesSubject = callingSDKWrapper.callingEventsHandler.captionsSupportedCaptionLanguages
         isCaptionsTranslationSupported = callingSDKWrapper.callingEventsHandler.isCaptionsTranslationSupported
-        captionsDataSubject = callingSDKWrapper.callingEventsHandler.captionsReceived
         activeSpokenLanguageSubject = callingSDKWrapper.callingEventsHandler.activeSpokenLanguageChanged
         activeCaptionLanguageSubject = callingSDKWrapper.callingEventsHandler.activeCaptionLanguageChanged
         captionsEnabledChanged = callingSDKWrapper.callingEventsHandler.captionsEnabledChanged
