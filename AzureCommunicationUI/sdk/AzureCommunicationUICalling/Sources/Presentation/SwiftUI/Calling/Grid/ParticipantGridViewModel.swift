@@ -7,6 +7,7 @@ import Foundation
 import Combine
 
 class ParticipantGridViewModel: ObservableObject {
+    @Published var shouldUseVerticalStyleGrid = true
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -42,6 +43,8 @@ class ParticipantGridViewModel: ObservableObject {
     }
 
     func update(callingState: CallingState,
+                captionsState: CaptionsState,
+                rttState: RttState,
                 remoteParticipantsState: RemoteParticipantsState,
                 visibilityState: VisibilityState,
                 lifeCycleState: LifeCycleState) {
@@ -86,6 +89,11 @@ class ParticipantGridViewModel: ObservableObject {
         if gridsCount != displayedParticipantInfoModelArr.count {
             gridsCount = displayedParticipantInfoModelArr.count
         }
+
+        shouldUseVerticalStyleGrid =
+        ScreenSizeClassKey.defaultValue == .iphonePortraitScreenSize ||
+        captionsState.isCaptionsOn ||
+        rttState.isRttOn
     }
 
     private func updateVideoViewManager(displayedRemoteInfoModelArr: [ParticipantInfoModel]) {

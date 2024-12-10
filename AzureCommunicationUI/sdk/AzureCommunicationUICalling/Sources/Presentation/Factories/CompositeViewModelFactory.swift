@@ -16,7 +16,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
-    private let captionsViewManager: CaptionsViewManager
+    private let captionsRttViewManager: CaptionsAndRttViewManager
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
@@ -41,7 +41,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
-         captionsViewManager: CaptionsViewManager,
+         captionsViewManager: CaptionsAndRttViewManager,
          localOptions: LocalOptions? = nil,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
@@ -65,7 +65,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
-        self.captionsViewManager = captionsViewManager
+        self.captionsRttViewManager = captionsViewManager
         self.events = eventsHandler
         self.localOptions = localOptions
         self.enableMultitasking = enableMultitasking
@@ -231,8 +231,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeCaptionsListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   showCaptionsLanguage: @escaping () -> Void,
+                                   buttonActions: ButtonActions,
+                                   isRttAvailable: Bool,
                                    isDisplayed: Bool) -> CaptionsListViewModel {
 
         return CaptionsListViewModel(compositeViewModelFactory: self,
@@ -240,15 +240,18 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      captionsOptions: captionsOptions,
                                      state: state,
                                      dispatchAction: dispatchAction,
-                                     showSpokenLanguage: showSpokenLanguage,
-                                     showCaptionsLanguage: showCaptionsLanguage,
+                                     buttonActions: buttonActions,
+                                     isRttAvailable: isRttAvailable,
                                      isDisplayed: store.state.navigationState.captionsViewVisible
                                      && store.state.visibilityState.currentStatus == .visible)
     }
 
-    func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
-        return CaptionsInfoViewModel(state: state,
-                                     captionsManager: captionsViewManager,
+    func makeCaptionsRttInfoViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions) -> CaptionsAndRttInfoViewModel {
+        return CaptionsAndRttInfoViewModel(state: state,
+                                     captionsManager: captionsRttViewManager,
+                                     captionsOptions: captionsOptions,
+                                     dispatch: store.dispatch,
                                      localizationProvider: localizationProvider)
     }
 
@@ -280,7 +283,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                            subtitle: subtitle)
     }
 }
-
 extension CompositeViewModelFactory {
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
         CallDiagnosticsViewModel(localizationProvider: localizationProvider,
@@ -373,6 +375,7 @@ extension CompositeViewModelFactory {
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
                                      isCameraEnabled: localOptions?.audioVideoMode != .audioOnly,
+                                     captionsRttManager: captionsRttViewManager,
                                      callType: callType)
     }
 
@@ -424,19 +427,15 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         isCaptionsAvailable: Bool,
+        buttonActions: ButtonActions,
         controlBarOptions: CallScreenControlBarOptions?,
-        showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void,
         buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                             localizationProvider: localizationProvider,
-                                            showSharingViewAction: showSharingViewAction,
-                                            showSupportFormAction: showSupportFormAction,
-                                            showCaptionsViewAction: showCaptionsViewAction,
+                                            buttonActions: buttonActions,
                                             controlBarOptions: controlBarOptions,
                                             isCaptionsAvailable: isCaptionsAvailable,
                                             isSupportFormAvailable: events.onUserReportedIssue != nil,

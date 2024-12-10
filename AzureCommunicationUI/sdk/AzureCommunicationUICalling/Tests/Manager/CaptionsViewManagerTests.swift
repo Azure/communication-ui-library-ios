@@ -7,7 +7,7 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class CaptionsViewManagerTests: XCTestCase {
-    var captionsManager: CaptionsViewManager!
+    var captionsManager: CaptionsAndRttViewManager!
     var mockCallingSDKWrapper: CallingSDKWrapperMocking!
     var mockStore: StoreFactoryMocking!
 
@@ -15,7 +15,7 @@ class CaptionsViewManagerTests: XCTestCase {
         super.setUp()
         mockCallingSDKWrapper = CallingSDKWrapperMocking()
         mockStore = StoreFactoryMocking()
-        captionsManager = CaptionsViewManager(store: mockStore.store, callingSDKWrapper: mockCallingSDKWrapper)
+        captionsManager = CaptionsAndRttViewManager(store: mockStore.store, callingSDKWrapper: mockCallingSDKWrapper)
     }
 
     override func tearDown() {
@@ -50,10 +50,10 @@ class CaptionsViewManagerTests: XCTestCase {
         )
 
         // Simulate initial caption
-        captionsManager.handleNewData(initialCaption)
+        captionsManager.handleNewCaptionsData(initialCaption)
 
         // When
-        captionsManager.handleNewData(newCaption)
+        captionsManager.handleNewCaptionsData(newCaption)
 
         // Then
         XCTAssertEqual(captionsManager.captionData.count, 2)
@@ -74,7 +74,7 @@ class CaptionsViewManagerTests: XCTestCase {
 
         // When
         captionsManager.isTranslationEnabled = true
-        captionsManager.handleNewData(caption)
+        captionsManager.handleNewCaptionsData(caption)
 
         // Then
         XCTAssertTrue(captionsManager.captionData.isEmpty)
