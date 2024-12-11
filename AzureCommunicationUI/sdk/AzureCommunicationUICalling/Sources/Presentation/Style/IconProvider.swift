@@ -38,10 +38,14 @@ enum CompositeIcon: String {
     case personFeedback = "ic_fluent_person_feedback_24_regular"
     case rightChevron = "ic_fluent_chevron_right_20_regular"
     case closeCaptions = "ic_fluent_closed_caption_24_regular"
+    case closeCaptionsOff = "ic_fluent_closed_caption_off_20_regular"
     case localLanguage = "ic_fluent_local_language_24_regular"
     case personVoice = "ic_fluent_person_voice_24_regular"
     case personDelete = "ic_fluent_person_delete_24_regular"
     case captionsError = "ic_fluent_error_circle_16_regular"
+    case rtt = "ic_fluent_slide_text_call_20_regular"
+    case maximize = "ic_fluent_arrow_maximize_20_filled"
+    case minimize = "ic_fluent_arrow_minimize_20_filled"
 }
 
 struct IconProvider {

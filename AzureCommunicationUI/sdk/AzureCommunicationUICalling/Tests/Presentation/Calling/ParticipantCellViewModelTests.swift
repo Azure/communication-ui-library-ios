@@ -356,6 +356,10 @@ extension ParticipantCellViewModelTests {
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel,
                                             isCameraEnabled: true,
+                                            captionsRttManager: CaptionsAndRttViewManager(
+                                                store: StoreFactoryMocking().store,
+                                                callingSDKWrapper: CallingSDKWrapperMocking()
+                                            ),
                                             callType: callType)
     }
 

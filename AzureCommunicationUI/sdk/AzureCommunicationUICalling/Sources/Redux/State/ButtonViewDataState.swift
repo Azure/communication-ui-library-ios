@@ -19,6 +19,31 @@ struct CustomButtonState: Equatable {
     let title: String
 }
 
+struct ButtonActions {
+    let showSharingViewAction: (() -> Void)?
+    let showSupportFormAction: (() -> Void)?
+    let showCaptionsViewAction: (() -> Void)?
+    let showSpokenLanguage: (() -> Void)?
+    let showCaptionsLanguage: (() -> Void)?
+    let showRttView: (() -> Void)?
+
+    init(
+        showSharingViewAction: (() -> Void)? = { },
+        showSupportFormAction: (() -> Void)? = { },
+        showCaptionsViewAction: (() -> Void)? = { },
+        showSpokenLanguage: (() -> Void)? = { },
+        showCaptionsLanguage: (() -> Void)? = { },
+        showRttView: (() -> Void)? = { }
+    ) {
+        self.showSharingViewAction = showSharingViewAction
+        self.showSupportFormAction = showSupportFormAction
+        self.showCaptionsViewAction = showCaptionsViewAction
+        self.showSpokenLanguage = showSpokenLanguage
+        self.showCaptionsLanguage = showCaptionsLanguage
+        self.showRttView = showRttView
+    }
+}
+
 struct ButtonViewDataState: Equatable {
     let setupScreenCameraButtonState: DefaultButtonState?
     let setupScreenMicButtonState: DefaultButtonState?
@@ -67,7 +92,6 @@ struct ButtonViewDataState: Equatable {
         self.captionsLanguageButton = captionsLanguageButton
         self.shareDiagnosticsButton = shareDiagnosticsButton
         self.reportIssueButton = reportIssueButton
-
         self.callScreenCustomButtonsState = callScreenCustomButtonsState
         self.callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState
     }
@@ -114,7 +138,6 @@ struct ButtonViewDataState: Equatable {
             captionsLanguageButton: DefaultButtonState(
                 enabled: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.enabled ?? true,
                 visible: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.visible ?? true),
-
             callScreenCustomButtonsState: callScreenOptions?.controlBarOptions?.customButtons.map { customButton in
                 return CustomButtonState(id: customButton.id,
                                   enabled: customButton.enabled,

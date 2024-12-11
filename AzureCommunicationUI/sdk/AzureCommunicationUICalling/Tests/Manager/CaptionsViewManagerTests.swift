@@ -7,7 +7,7 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class CaptionsViewManagerTests: XCTestCase {
-    var captionsManager: CaptionsViewManager!
+    var captionsManager: CaptionsAndRttViewManager!
     var mockCallingSDKWrapper: CallingSDKWrapperMocking!
     var mockStore: StoreFactoryMocking!
 
@@ -15,7 +15,7 @@ class CaptionsViewManagerTests: XCTestCase {
         super.setUp()
         mockCallingSDKWrapper = CallingSDKWrapperMocking()
         mockStore = StoreFactoryMocking()
-        captionsManager = CaptionsViewManager(store: mockStore.store, callingSDKWrapper: mockCallingSDKWrapper)
+        captionsManager = CaptionsAndRttViewManager(store: mockStore.store, callingSDKWrapper: mockCallingSDKWrapper)
     }
 
     override func tearDown() {
@@ -33,9 +33,10 @@ class CaptionsViewManagerTests: XCTestCase {
             speakerName: "John Doe",
             spokenLanguage: "en-us",
             spokenText: "Hello",
-            timestamp: Date().addingTimeInterval(-10),
+            timestamp: Date(),
             captionLanguage: "",
-            captionText: ""
+            captionText: "",
+            displayText: "Hello"
         )
 
         let newCaption = CallCompositeCaptionsData(
@@ -46,18 +47,19 @@ class CaptionsViewManagerTests: XCTestCase {
             spokenText: "Hello",
             timestamp: Date(),
             captionLanguage: "en-us",
-            captionText: "Hello"
+            captionText: "Hello",
+            displayText: "Hello"
         )
 
         // Simulate initial caption
-        captionsManager.handleNewData(initialCaption)
+        captionsManager.handleNewData(initialCaption.toDisplayData())
 
         // When
-        captionsManager.handleNewData(newCaption)
+        captionsManager.handleNewData(newCaption.toDisplayData())
 
         // Then
-        XCTAssertEqual(captionsManager.captionData.count, 2)
-        XCTAssertEqual(captionsManager.captionData.first?.spokenText, "Hello")
+        XCTAssertEqual(captionsManager.captionsRttData.count, 2)
+        XCTAssertEqual(captionsManager.captionsRttData.first?.spokenText, "Hello")
     }
     func testHandlingTranslationSettings() {
         // Given
@@ -69,14 +71,15 @@ class CaptionsViewManagerTests: XCTestCase {
             spokenText: "Hello",
             timestamp: Date(),
             captionLanguage: "",
-            captionText: ""
+            captionText: "",
+            displayText: "Hello"
         )
 
         // When
         captionsManager.isTranslationEnabled = true
-        captionsManager.handleNewData(caption)
+        captionsManager.handleNewData(caption.toDisplayData())
 
         // Then
-        XCTAssertTrue(captionsManager.captionData.isEmpty)
+        XCTAssertTrue(captionsManager.captionsRttData.isEmpty)
     }
 }

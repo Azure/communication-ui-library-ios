@@ -83,7 +83,7 @@ struct ParticipantGridCellView: View {
         return VStack(alignment: .center, spacing: 5) {
             CompositeAvatar(displayName: $viewModel.avatarDisplayName,
                             avatarImage: $avatarImage,
-                            isSpeaking: viewModel.isSpeaking && !viewModel.isMuted)
+                            isSpeaking: viewModel.isSpeaking)
             .frame(width: avatarSize, height: avatarSize)
             .opacity(viewModel.isHold ? 0.6 : 1)
             Spacer().frame(height: 10)
