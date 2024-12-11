@@ -33,9 +33,10 @@ class CaptionsViewManagerTests: XCTestCase {
             speakerName: "John Doe",
             spokenLanguage: "en-us",
             spokenText: "Hello",
-            timestamp: Date().addingTimeInterval(-10),
+            timestamp: Date(),
             captionLanguage: "",
-            captionText: ""
+            captionText: "",
+            displayText: "Hello"
         )
 
         let newCaption = CallCompositeCaptionsData(
@@ -46,18 +47,19 @@ class CaptionsViewManagerTests: XCTestCase {
             spokenText: "Hello",
             timestamp: Date(),
             captionLanguage: "en-us",
-            captionText: "Hello"
+            captionText: "Hello",
+            displayText: "Hello"
         )
 
         // Simulate initial caption
-        captionsManager.handleNewCaptionsData(initialCaption)
+        captionsManager.handleNewData(initialCaption.toDisplayData())
 
         // When
-        captionsManager.handleNewCaptionsData(newCaption)
+        captionsManager.handleNewData(newCaption.toDisplayData())
 
         // Then
-        XCTAssertEqual(captionsManager.captionData.count, 2)
-        XCTAssertEqual(captionsManager.captionData.first?.spokenText, "Hello")
+        XCTAssertEqual(captionsManager.captionsRttData.count, 2)
+        XCTAssertEqual(captionsManager.captionsRttData.first?.spokenText, "Hello")
     }
     func testHandlingTranslationSettings() {
         // Given
@@ -69,14 +71,15 @@ class CaptionsViewManagerTests: XCTestCase {
             spokenText: "Hello",
             timestamp: Date(),
             captionLanguage: "",
-            captionText: ""
+            captionText: "",
+            displayText: "Hello"
         )
 
         // When
         captionsManager.isTranslationEnabled = true
-        captionsManager.handleNewCaptionsData(caption)
+        captionsManager.handleNewData(caption.toDisplayData())
 
         // Then
-        XCTAssertTrue(captionsManager.captionData.isEmpty)
+        XCTAssertTrue(captionsManager.captionsRttData.isEmpty)
     }
 }
