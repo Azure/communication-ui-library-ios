@@ -59,11 +59,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                   ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                    buttonViewDataState: ButtonViewDataState()
-                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
                     )
 
         XCTAssertEqual(sut.title, "Waiting for others to join")
@@ -97,11 +94,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                   ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                    buttonViewDataState: ButtonViewDataState()
-                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, "Call with 1 person")
 
@@ -149,11 +143,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                   ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                    buttonViewDataState: ButtonViewDataState()
-                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, "Call with 2 people")
 
@@ -213,11 +204,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                   ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                    buttonViewDataState: ButtonViewDataState()
-                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, "Call with 1 person")
 
@@ -302,11 +290,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                   ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                    buttonViewDataState: ButtonViewDataState()
-                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.title, expectedInfoHeaderlabel0ParticipantKey)
@@ -359,11 +344,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                   ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                    buttonViewDataState: ButtonViewDataState()
-                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
         XCTAssertEqual(sut.title, expectedInfoHeaderlabelNParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
@@ -393,11 +375,8 @@ class InfoHeaderViewModelTests: XCTestCase {
                    remoteParticipantsState: RemoteParticipantsState(),
                    callingState: CallingState(),
                    visibilityState: VisibilityState(currentStatus: .visible),
-                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                   ,
+                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                    buttonViewDataState: buttonState
-                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
 
         wait(for: [expectation], timeout: 1)
@@ -416,12 +395,9 @@ extension InfoHeaderViewModelTests {
                                    dispatchAction: storeFactory.store.dispatch,
                                    enableMultitasking: true,
                                    enableSystemPipWhenMultitasking: true,
-                                   callScreenInfoHeaderState: CallScreenInfoHeaderState()
-                                   /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                                   ,
+                                   callScreenInfoHeaderState: CallScreenInfoHeaderState(),
                                    buttonViewDataState: ButtonViewDataState(),
                                    controlHeaderViewData: nil
-                                   /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
         )
     }
 
