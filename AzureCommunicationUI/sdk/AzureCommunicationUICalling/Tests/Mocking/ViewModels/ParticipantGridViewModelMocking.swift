@@ -26,6 +26,8 @@ class ParticipantGridViewModelMocking: ParticipantGridViewModel {
     }
 
     override func update(callingState: CallingState,
+                         captionsState: CaptionsState,
+                         rttState: RttState,
                          remoteParticipantsState: RemoteParticipantsState,
                          visibilityState: VisibilityState,
                          lifeCycleState: LifeCycleState) {

@@ -68,6 +68,7 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .toastNotificationAction,
                  .callScreenInfoHeaderAction,
                  .setTotalParticipantCount,
+                 .rttAction,
                  .buttonViewDataAction:
                 break
             }

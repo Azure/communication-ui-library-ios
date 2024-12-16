@@ -10,15 +10,15 @@ struct ParticipantGridLayoutView: View {
     let rendererViewManager: RendererViewManager?
     let avatarViewManager: AvatarViewManagerProtocol
     let screenSize: ScreenSizeClassType
+    let shouldUseVerticalStyleGrid: Bool
     let gridsMargin: CGFloat = 3
     @Orientation var orientation: UIDeviceOrientation
 
     var body: some View {
         Group {
-            switch screenSize {
-            case .iphonePortraitScreenSize:
+            if shouldUseVerticalStyleGrid {
                 vGridLayout
-            default:
+            } else {
                 let cellCount = cellViewModels.count
                 let isPortrait = orientation.isPortrait
                 let isiPadLanscape = orientation.isLandscape && screenSize == .ipadScreenSize
@@ -32,6 +32,7 @@ struct ParticipantGridLayoutView: View {
                 } else {
                     hGridLayout
                 }
+
             }
         }
     }

@@ -177,6 +177,11 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
         }
     }
 
+    func sendRttMessage(message: String, isFinal: Bool) -> Task<Void, Never> {
+        Task {
+            sendRttMessage(message: message, isFinal: isFinal)
+        }
+    }
     func stopCaptions(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
         Task {
             stopCaptions?(true)

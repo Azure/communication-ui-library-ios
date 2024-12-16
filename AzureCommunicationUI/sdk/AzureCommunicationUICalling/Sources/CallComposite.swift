@@ -609,7 +609,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
-        let captionsViewManager = CaptionsViewManager(
+        let captionsViewManager = CaptionsAndRttViewManager(
             store: store,
             callingSDKWrapper: callingSdkWrapper
         )

@@ -16,6 +16,10 @@ class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
                    accessibilityProvider: AccessibilityProviderMocking(),
                    participantModel: participantModel,
                    isCameraEnabled: true,
+                   captionsRttManager: CaptionsAndRttViewManager(
+                    store: StoreFactoryMocking().store,
+                        callingSDKWrapper: CallingSDKWrapperMocking()
+                   ),
                    callType: .groupCall)
     }
 
