@@ -313,7 +313,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             } else {
                 do {
                     let streamId = try await callingService.startLocalVideoStream()
-//                    try await Task.sleep(nanoseconds: NSEC_PER_SEC)
                     dispatch(.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: streamId)))
                 } catch {
                     dispatch(.localUserAction(.cameraOnFailed(error: error)))
