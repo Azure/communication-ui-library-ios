@@ -523,14 +523,16 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
             return store.state.visibilityState.currentStatus != .visible
         }
         set(isHidden) {
-            if isHidden {
-                if self.enableSystemPipWhenMultitasking {
-                    store?.dispatch(action: .visibilityAction(.pipModeRequested))
-                } else if self.enableMultitasking {
-                    store?.dispatch(action: .visibilityAction(.hideRequested))
+            DispatchQueue.main.async { [self] in
+                if isHidden {
+                    if self.enableSystemPipWhenMultitasking {
+                        self.store?.dispatch(action: .visibilityAction(.pipModeRequested))
+                    } else if self.enableMultitasking {
+                        self.store?.dispatch(action: .visibilityAction(.hideRequested))
+                    }
+                } else {
+                    self.displayCallCompositeIfWasHidden()
                 }
-            } else {
-                displayCallCompositeIfWasHidden()
             }
         }
     }

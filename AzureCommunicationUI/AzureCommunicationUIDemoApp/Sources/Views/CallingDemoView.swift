@@ -332,7 +332,9 @@ struct CallingDemoView: View {
 
 extension CallingDemoView {
     func showCallComposite() {
-        callingViewModel.callComposite?.isHidden = false
+        DispatchQueue.global().async {
+            callingViewModel.callComposite?.isHidden = false
+        }
     }
 
     func registerPushNotification() {
