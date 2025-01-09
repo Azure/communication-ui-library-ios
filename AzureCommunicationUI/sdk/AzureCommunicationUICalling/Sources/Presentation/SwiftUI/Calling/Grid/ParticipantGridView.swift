@@ -17,7 +17,7 @@ struct ParticipantGridView: View {
                                       avatarViewManager: avatarViewManager,
                                       screenSize: screenSize,
                                       shouldUseVerticalStyleGrid: viewModel.shouldUseVerticalStyleGrid
-            )
+            ).padding(.top, 6)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .id(gridsCount)
             .onReceive(viewModel.$gridsCount) {

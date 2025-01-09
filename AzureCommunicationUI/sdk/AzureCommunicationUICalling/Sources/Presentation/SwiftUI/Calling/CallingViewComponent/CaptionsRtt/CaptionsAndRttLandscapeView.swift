@@ -79,6 +79,9 @@ internal struct CaptionsAndRttLandscapeView<Content: View>: View {
             }
             .frame(maxWidth: .infinity, alignment: .bottom)
             .background(Color(StyleProvider.color.drawerColor))
+            .clipShape(RoundedCorner(radius: 3, corners: [.topLeft, .bottomLeft]))
+            .padding(.leading, 2)
+            .shadow(radius: 3)
             .hideKeyboardOnTap() // Dismiss keyboard when tapping outside
         }
     }

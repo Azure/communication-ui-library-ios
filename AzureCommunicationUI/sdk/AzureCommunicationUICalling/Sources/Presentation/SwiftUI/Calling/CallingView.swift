@@ -206,7 +206,7 @@ struct CallingView: View {
                 }
             } else {
                 ZStack {
-                    containerView
+                    containerView.padding(2)
                     if !viewModel.isInPip {
                         captionsAndRttDrawer
                     }

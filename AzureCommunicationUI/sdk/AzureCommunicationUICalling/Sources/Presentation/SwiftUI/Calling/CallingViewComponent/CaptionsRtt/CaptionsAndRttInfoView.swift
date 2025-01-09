@@ -38,7 +38,9 @@ struct CaptionsAndRttInfoView: View {
             .onChange(of: containerHeight) { newHeight in
                 if newHeight != previousDrawerHeight {
                     previousDrawerHeight = newHeight
-                    scrollToBottom(scrollView)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        scrollToBottom(scrollView)
+                    }
                 }
             }
             .onChange(of: viewModel.displayData) { _ in
