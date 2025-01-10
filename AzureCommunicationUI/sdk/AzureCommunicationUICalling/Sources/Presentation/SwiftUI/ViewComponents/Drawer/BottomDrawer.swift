@@ -11,11 +11,6 @@ internal enum DrawerState {
     case visible
 }
 
-internal enum BottomDrawerHeightStatus {
-    case collapsed
-    case expanded
-}
-
 internal enum DrawerConstants {
     // How round is the drawer handle
     static let drawerHandleCornerRadius: CGFloat = 4
@@ -66,7 +61,6 @@ internal enum DrawerConstants {
 ///
 internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone
-    @State private var drawerHeightState: BottomDrawerHeightStatus = .collapsed
     @State private var dragOffset: CGFloat = 0
     @State private var scrollViewContentSize: CGFloat = 0
     @State private var drawerHeight: CGFloat = DrawerConstants.collapsedHeight

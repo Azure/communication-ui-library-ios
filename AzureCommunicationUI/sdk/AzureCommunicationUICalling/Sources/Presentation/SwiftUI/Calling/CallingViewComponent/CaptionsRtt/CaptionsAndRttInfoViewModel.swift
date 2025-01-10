@@ -14,6 +14,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
     @Published var isRttAvailable = false
     @Published var isLoading = false
     @Published var isDisplayed = false
+    @Published var shouldExpand = false
     var loadingMessage = ""
     var rttInfoMessage = ""
     let localizationProvider: LocalizationProviderProtocol
@@ -84,6 +85,10 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
         dispatch(.rttAction(.sendRtt(message: message, isFinal: isFinal)))
     }
 
+    func updateLayoutHelight(_ shouldMaximize: Bool) {
+        dispatch(.rttAction(.updateMaximized(isMaximized: shouldMaximize)))
+    }
+
     func update(state: AppState) {
         self.isCaptionsDisplayed = state.captionsState.isCaptionsOn
         && state.captionsState.errors != .captionsFailedToStart
@@ -91,7 +96,9 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
         self.isLoading = isCaptionsDisplayed && !state.captionsState.isStarted
         self.isRttDisplayed = state.rttState.isRttOn && !isCaptionsDisplayed
         setupItems(state: state)
+        self.shouldExpand = state.rttState.isMaximized
         self.isRttAvailable = state.rttState.isRttOn
         self.isDisplayed = isCaptionsDisplayed || isRttDisplayed
+        print(shouldExpand.description)
     }
 }

@@ -204,6 +204,7 @@ internal class CallingViewModel: ObservableObject {
                 store.dispatch(action: .showCaptionsLanguageView)
             },
             showRttView: {
+                store.dispatch(action: .rttAction(.updateMaximized(isMaximized: true)))
                 store.dispatch(action: .rttAction(.turnOnRtt))
             }
         )

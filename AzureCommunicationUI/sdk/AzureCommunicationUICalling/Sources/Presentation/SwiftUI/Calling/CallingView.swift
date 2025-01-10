@@ -144,10 +144,14 @@ struct CallingView: View {
             endIcon: viewModel.captionsInfoViewModel?.endIcon,
             endIconAction: viewModel.captionsInfoViewModel?.endIconAction,
             showTextBox: viewModel.captionsInfoViewModel?.isRttAvailable ?? false,
+            shouldExpand: viewModel.captionsInfoViewModel?.shouldExpand ?? false,
             textBoxHint: viewModel.captionsInfoViewModel?.textBoxHint,
             isAutoCommitted: $isAutoCommitted,
             commitAction: { message, isFinal in
                 viewModel.captionsInfoViewModel?.commitMessage(message, isFinal ?? false)
+            },
+            updateHeightAction: { shouldMaximize in
+                viewModel.captionsInfoViewModel.updateLayoutHelight(shouldMaximize)
             },
             content: {
                 CaptionsAndRttInfoView(

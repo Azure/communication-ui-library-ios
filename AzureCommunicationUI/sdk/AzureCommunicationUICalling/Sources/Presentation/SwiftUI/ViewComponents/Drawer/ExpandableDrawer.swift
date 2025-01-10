@@ -6,7 +6,10 @@
 import SwiftUI
 import FluentUI
 // MARK: - RoundedCorner Shape
-
+internal enum BottomDrawerHeightStatus {
+    case collapsed
+    case expanded
+}
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
@@ -42,6 +45,8 @@ internal struct ExpandableDrawer<Content: View>: View {
     let showTextBox: Bool
     let textBoxHint: String?
     let commitAction: ((_ message: String, _ isFinal: Bool?) -> Void)?
+    let updateHeightAction: ((_ shouldExpand: Bool) -> Void)?
+    let shouldExpand: Bool
 
     // Content
     let content: Content
@@ -64,9 +69,11 @@ internal struct ExpandableDrawer<Content: View>: View {
         endIcon: CompositeIcon? = nil,
         endIconAction: (() -> Void)? = nil,
         showTextBox: Bool = false,
+        shouldExpand: Bool = false,
         textBoxHint: String? = nil,
         isAutoCommitted: Binding<Bool> = .constant(false),
         commitAction: ((_ message: String, _ isFinal: Bool?) -> Void)? = nil,
+        updateHeightAction: ((_ shouldExpand: Bool) -> Void)? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self._isPresented = isPresented
@@ -76,8 +83,10 @@ internal struct ExpandableDrawer<Content: View>: View {
         self.endIcon = endIcon
         self.endIconAction = endIconAction
         self.showTextBox = showTextBox
+        self.shouldExpand = shouldExpand
         self.textBoxHint = textBoxHint
         self.commitAction = commitAction
+        self.updateHeightAction = updateHeightAction
         self.content = content()
     }
 
@@ -171,12 +180,13 @@ internal struct ExpandableDrawer<Content: View>: View {
             .hideKeyboardOnTap() // Dismiss keyboard when tapping outside
         }
         .onAppear {
-            if showTextBox {
-                DispatchQueue.main.async {
+            if shouldExpand {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     setDrawerHeight(to: .expanded)
+                    updateHeightAction?(false)
                 }
             } else {
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     setDrawerHeight(to: .collapsed)
                 }
             }

@@ -108,6 +108,7 @@ class CaptionsAndRttViewManager: ObservableObject {
         }
 
         if newData.captionsRttType == .rtt && !store.state.rttState.isRttOn {
+            store.dispatch(action: .rttAction(.updateMaximized(isMaximized: true)))
             store.dispatch(action: .rttAction(.turnOnRtt))
         }
 
