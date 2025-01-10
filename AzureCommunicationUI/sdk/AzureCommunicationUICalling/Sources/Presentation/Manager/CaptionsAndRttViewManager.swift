@@ -187,7 +187,7 @@ class CaptionsAndRttViewManager: ObservableObject {
             !$0.isFinal
         }), shouldFinalize(lastData: captionsRttData[lastIndex], newData: newData) {
             captionsRttData[lastIndex].isFinal = true
-            objectWillChange.send()
+            captionsRttData = captionsRttData // Trigger a refresh by reassigning
         }
     }
 
