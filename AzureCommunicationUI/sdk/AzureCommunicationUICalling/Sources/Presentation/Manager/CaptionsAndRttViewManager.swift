@@ -186,6 +186,7 @@ class CaptionsAndRttViewManager: ObservableObject {
             !$0.isFinal
         }), shouldFinalize(lastData: captionsRttData[lastIndex], newData: newData) {
             captionsRttData[lastIndex].isFinal = true
+            objectWillChange.send()
         }
     }
 
@@ -219,8 +220,13 @@ class CaptionsAndRttViewManager: ObservableObject {
             return true
         }
 
+        // Rule 3: For finalized RTT messages, use updatedTimestamp for sorting.
+        if first.captionsRttType == .rtt && first.isFinal || second.captionsRttType == .rtt && second.isFinal {
+            return first.updatedTimestamp < second.updatedTimestamp
+        }
+
         // Default sorting based on updatedTimestamp.
-        return first.updatedTimestamp < second.updatedTimestamp
+        return first.createdTimestamp < second.createdTimestamp
     }
 
     // MARK: - RTT Info Message

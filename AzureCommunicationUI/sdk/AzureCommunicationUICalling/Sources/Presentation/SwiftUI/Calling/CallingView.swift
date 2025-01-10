@@ -222,7 +222,7 @@ struct CallingView: View {
             HStack(alignment: .center, spacing: 0) {
                 containerView
                 if !viewModel.isInPip && viewModel.captionsInfoViewModel.isDisplayed {
-                    captionsAndRttIpadView
+                    captionsAndRttIpadView.padding(.leading, 2)
                 }
                 if keyboard.keyboardHeight == 0 {
                     ControlBarView(viewModel: viewModel.controlBarViewModel)
