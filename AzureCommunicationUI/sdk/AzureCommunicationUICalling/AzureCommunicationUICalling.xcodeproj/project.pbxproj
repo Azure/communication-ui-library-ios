@@ -55,8 +55,6 @@
 		116BC0C22C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C12C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift */; };
 		116BC0C42C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C32C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift */; };
 		116BC0C62C24D15800F8CF6F /* CaptionsAndRttInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C52C24D15800F8CF6F /* CaptionsAndRttInfoView.swift */; };
-		117250CA2D0A366100995819 /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 117250C92D0A366100995819 /* AzureCommunicationCalling.xcframework */; };
-		117250CB2D0A366100995819 /* AzureCommunicationCalling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 117250C92D0A366100995819 /* AzureCommunicationCalling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11A494C32CFA6D780004B238 /* CaptionsAndRttLandscapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A494C22CFA6D4A0004B238 /* CaptionsAndRttLandscapeView.swift */; };
 		11A494C52CFA83110004B238 /* KeybaordResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A494C42CFA83020004B238 /* KeybaordResponder.swift */; };
 		11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */; };
@@ -70,8 +68,6 @@
 		11C50D382BD1A79900CB3615 /* CaptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C50D372BD1A79900CB3615 /* CaptionOptions.swift */; };
 		11D470762C62CEFE00A54BD7 /* ButtonViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D470752C62CEFE00A54BD7 /* ButtonViewData.swift */; };
 		11D470782C62CF3400A54BD7 /* CustomButtonViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D470772C62CF3400A54BD7 /* CustomButtonViewData.swift */; };
-		11D9C13C2CE7C665002BC0CC /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11D9C13B2CE7C665002BC0CC /* AzureCommunicationCalling.xcframework */; };
-		11D9C13D2CE7C665002BC0CC /* AzureCommunicationCalling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11D9C13B2CE7C665002BC0CC /* AzureCommunicationCalling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11D9C1402CE7C9EB002BC0CC /* CalllCompositeRttData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9C13F2CE7C9B6002BC0CC /* CalllCompositeRttData.swift */; };
 		11E792B12BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E792B02BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift */; };
 		11F2D5C22CF7CC63008C0762 /* ExpandableDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F2D5C12CF7CC45008C0762 /* ExpandableDrawer.swift */; };
@@ -151,6 +147,10 @@
 		1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CallCompositeError.swift */; };
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* FontExtension.swift */; };
+		2831A7942D135E98005252F0 /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 117250C92D0A366100995819 /* AzureCommunicationCalling.xcframework */; };
+		2831A7952D135E98005252F0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 117250C92D0A366100995819 /* AzureCommunicationCalling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2831A7972D135EA6005252F0 /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 117250C92D0A366100995819 /* AzureCommunicationCalling.xcframework */; };
+		2831A7982D135EA6005252F0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 117250C92D0A366100995819 /* AzureCommunicationCalling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28FE266D29E804F5009CC19D /* RemoteParticipantsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */; };
 		28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */; };
 		28FE267729EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */; };
@@ -403,24 +403,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		117250CC2D0A366100995819 /* Embed Frameworks */ = {
+		2831A7962D135E98005252F0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				117250CB2D0A366100995819 /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
+				2831A7952D135E98005252F0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		11D9C13E2CE7C665002BC0CC /* Embed Frameworks */ = {
+		2831A7992D135EA6005252F0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				11D9C13D2CE7C665002BC0CC /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
+				2831A7982D135EA6005252F0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -866,7 +866,7 @@
 				1FBCB69F2645285100F57EEA /* AzureCommunicationUICalling.framework in Frameworks */,
 				88D8EFF6E3700EA13007CA9A /* (null) in Frameworks */,
 				337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */,
-				11D9C13C2CE7C665002BC0CC /* AzureCommunicationCalling.xcframework in Frameworks */,
+				2831A7972D135EA6005252F0 /* AzureCommunicationCalling.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -875,7 +875,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB22A9D340197CA3DC74EEBB /* Pods_AzureCommunicationUICalling.framework in Frameworks */,
-				117250CA2D0A366100995819 /* AzureCommunicationCalling.xcframework in Frameworks */,
+				2831A7942D135E98005252F0 /* AzureCommunicationCalling.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1879,7 +1879,7 @@
 				1FBCB6972645285100F57EEA /* Frameworks */,
 				1FBCB6982645285100F57EEA /* Resources */,
 				2C50E025613BA6060BA2CE42 /* [CP] Embed Pods Frameworks */,
-				11D9C13E2CE7C665002BC0CC /* Embed Frameworks */,
+				2831A7992D135EA6005252F0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1901,7 +1901,7 @@
 				A8659FC12602A22000C807DE /* Sources */,
 				A8659FC22602A22000C807DE /* Frameworks */,
 				A8659FC32602A22000C807DE /* Resources */,
-				117250CC2D0A366100995819 /* Embed Frameworks */,
+				2831A7962D135E98005252F0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2765,7 +2765,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/MicrosoftFluentUI\"",
 					"\"${PODS_ROOT}/AzureCommunicationCalling\"",
 					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AzureCommunicationCalling\"",
-					"/Users/shaunasong/Downloads/AzureCommunicationCalling-2.15.0-beta.1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

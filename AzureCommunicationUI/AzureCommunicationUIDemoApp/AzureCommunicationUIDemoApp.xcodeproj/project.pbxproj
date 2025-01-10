@@ -12,8 +12,6 @@
 		058371E52C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		058371E62C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
 		058371E72C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		11D9C1392CE7C654002BC0CC /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11D9C1382CE7C654002BC0CC /* AzureCommunicationCalling.xcframework */; };
-		11D9C13A2CE7C654002BC0CC /* AzureCommunicationCalling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11D9C1382CE7C654002BC0CC /* AzureCommunicationCalling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
 		1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */; };
@@ -204,7 +202,6 @@
 				058371E52C1A77E9008D9A20 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 				50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 				058371E72C1A781B008D9A20 /* AzureCommunicationUICalling.framework in Embed Frameworks */,
-				11D9C13A2CE7C654002BC0CC /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				11D9C1382CE7C654002BC0CC /* AzureCommunicationCalling.xcframework */,
+				2831A79A2D135EB7005252F0 /* AzureCommunicationCalling.xcframework */,
 				058371E32C1A77E9008D9A20 /* AzureCommunicationUIChat.framework */,
 				A48D181A2BFDB85C00FD994E /* Intents.framework */,
 				058D6A282ACE0B33005CF1C8 /* AzureCommunicationCalling.framework */,
@@ -1364,10 +1362,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UBF8T346G9;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/shaunasong/Downloads/AzureCommunicationCalling-2.12.0-beta.1",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This is required for calling.";
