@@ -67,6 +67,22 @@ struct CallingView: View {
             errorInfoView
             bottomDrawer
         }
+        .modifier(PopupModalView(isPresented: viewModel.lobbyOverlayViewModel.isDisplayed) {
+            OverlayView(viewModel: viewModel.lobbyOverlayViewModel)
+                .accessibilityElement(children: .contain)
+                .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
+        })
+        .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed &&
+                                 !viewModel.lobbyOverlayViewModel.isDisplayed) {
+            LoadingOverlayView(viewModel: viewModel.loadingOverlayViewModel)
+                .accessibilityElement(children: .contain)
+                .accessibilityHidden(!viewModel.loadingOverlayViewModel.isDisplayed)
+        })
+        .modifier(PopupModalView(isPresented: viewModel.onHoldOverlayViewModel.isDisplayed) {
+            OverlayView(viewModel: viewModel.onHoldOverlayViewModel)
+                .accessibilityElement(children: .contain)
+                .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
+        })
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
@@ -282,22 +298,6 @@ struct CallingView: View {
             .animation(.linear(duration: 0.167), value: true)
             .onTapGesture(perform: {
                 viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
-            })
-            .modifier(PopupModalView(isPresented: viewModel.lobbyOverlayViewModel.isDisplayed) {
-                OverlayView(viewModel: viewModel.lobbyOverlayViewModel)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
-            })
-            .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed &&
-                                     !viewModel.lobbyOverlayViewModel.isDisplayed) {
-                LoadingOverlayView(viewModel: viewModel.loadingOverlayViewModel)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityHidden(!viewModel.loadingOverlayViewModel.isDisplayed)
-            })
-            .modifier(PopupModalView(isPresented: viewModel.onHoldOverlayViewModel.isDisplayed) {
-                OverlayView(viewModel: viewModel.onHoldOverlayViewModel)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
             })
             .accessibilityElement(children: .contain)
         }
