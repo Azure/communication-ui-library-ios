@@ -112,7 +112,7 @@ struct CaptionsAndRttInfoView: View {
                 .foregroundColor(Color(StyleProvider.color.drawerIconDark))
                 .accessibilityHidden(true)
                 .padding([.top, .leading], 10)
-            Text(viewModel.rttInfoMessage)
+            warningMessage
                 .font(.body)
                 .foregroundColor(.primary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -122,6 +122,21 @@ struct CaptionsAndRttInfoView: View {
         .cornerRadius(8)
         .padding(.horizontal, 10)
         .id("RTTInfoView")
+    }
+
+    private var warningMessage: some View {
+        Group {
+            Text(viewModel.rttInfoMessage)
+            + Text(" ")
+            + Text(viewModel.localizationProvider.getLocalizedString(.rttLinkLearnMore))
+                .foregroundColor(Color(StyleProvider.color.primaryColor))
+        }.accessibilityElement(children: .ignore)
+            .accessibilityAddTraits(.isLink)
+            .onTapGesture {
+                if let url = URL(string: StringConstants.rttLearnMoreLink) {
+                    UIApplication.shared.open(url)
+                }
+            }
     }
 
     // MARK: - Helper Methods

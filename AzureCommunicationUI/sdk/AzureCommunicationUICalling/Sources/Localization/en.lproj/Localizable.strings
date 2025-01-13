@@ -185,6 +185,7 @@
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
