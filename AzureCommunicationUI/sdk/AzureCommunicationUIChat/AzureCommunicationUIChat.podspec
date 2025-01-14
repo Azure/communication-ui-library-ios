@@ -9,7 +9,7 @@ Pod::Spec.new do |spec|
   spec.module_name          = 'AzureCommunicationUIChat'
   spec.swift_version        = '5.6'
 
-  spec.platform             = :ios, '14.0'
+  spec.platform             = :ios, '16.6'
 
   spec.source_files         = 'AzureCommunicationUI/sdk/AzureCommunicationUIChat/Sources/**/*.swift', 'AzureCommunicationUI/sdk/AzureCommunicationUICommon/Sources/AzureCommunicationUICommon/*.swift', 'AzureCommunicationUI/sdk/common/**/Sources/**/*.swift'
   spec.resources            = 'AzureCommunicationUI/sdk/AzureCommunicationUIChat/Sources/**/*.{xcassets,strings}'
