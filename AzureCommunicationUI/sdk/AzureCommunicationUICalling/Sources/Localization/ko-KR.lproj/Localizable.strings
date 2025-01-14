@@ -169,6 +169,7 @@
 "AzureCommunicationUICalling.SendFeedback.Text"="보내기";
 
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="라이브 캡션";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="음성 언어";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="캡션 언어";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="캡션 시작 중...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="캡션을 중지할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="캡션 언어를 변경할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="음성 언어를 변경할 수 없음";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time text";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Turn on RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Real-time text(RTT) will be turned on for everyone in the call.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Turn on";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="참가자 음소거";

@@ -169,6 +169,7 @@
 "AzureCommunicationUICalling.SendFeedback.Text"="傳送";
 
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="即時輔助字幕";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="口語語言";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="輔助字幕語言";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="正在啟動輔助字幕...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="無法停止輔助字幕";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="無法變更輔助字幕語言";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="無法變更口說語言";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time text";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Turn on RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Real-time text(RTT) will be turned on for everyone in the call.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Turn on";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="將參與者靜音功能表。";
