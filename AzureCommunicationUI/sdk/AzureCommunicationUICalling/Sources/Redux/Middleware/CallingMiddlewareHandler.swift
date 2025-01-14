@@ -263,6 +263,9 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
+            guard state.lifeCycleState.currentStatus == .foreground else {
+                return
+            }
             await requestCameraPause(state: state, dispatch: dispatch).value
         }
     }
@@ -311,7 +314,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             } else {
                 do {
                     let streamId = try await callingService.startLocalVideoStream()
-                    try await Task.sleep(nanoseconds: NSEC_PER_SEC)
                     dispatch(.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: streamId)))
                 } catch {
                     dispatch(.localUserAction(.cameraOnFailed(error: error)))
