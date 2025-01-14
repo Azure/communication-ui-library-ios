@@ -9,6 +9,7 @@ struct CustomTextField: UIViewRepresentable {
     var placeholder: String = ""
     var onCommit: (() -> Void)?
     var onChange: ((String) -> Void)?
+    var textLimit: Int = 1950 // Add a property for the text limit
 
     class Coordinator: NSObject, UITextFieldDelegate {
         var parent: CustomTextField
@@ -22,8 +23,17 @@ struct CustomTextField: UIViewRepresentable {
             guard let newText = textField.text else {
                 return
             }
-            parent.text = newText
-            parent.onChange?(newText)
+            // Enforce the text limit
+            if newText.count > parent.textLimit {
+                let limitedText = String(newText.prefix(parent.textLimit))
+                textField.text = limitedText
+                parent.text = limitedText
+
+            } else {
+                parent.text = newText
+            }
+
+            parent.onChange?(parent.text)
         }
 
         // Called when the return key is pressed

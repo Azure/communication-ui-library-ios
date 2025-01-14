@@ -99,6 +99,5 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
         self.shouldExpand = state.rttState.isMaximized
         self.isRttAvailable = state.rttState.isRttOn
         self.isDisplayed = isCaptionsDisplayed || isRttDisplayed
-        print(shouldExpand.description)
     }
 }
