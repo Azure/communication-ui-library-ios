@@ -84,16 +84,21 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     }
 
     private func updateIsSpeaking(with data: [CallCompositeRttCaptionsDisplayData]) {
-        // Check for any non-final RTT message matching the participant's userIdentifier
-        let hasActiveRtt = data.contains { rttData in
-            rttData.captionsRttType == .rtt &&
-            !rttData.isFinal &&
-            rttData.displayRawId == self.participantIdentifier
-        }
-
-        // Update isSpeaking based on RTT data and participant's own status
         DispatchQueue.main.async {
+            // Check for any non-final RTT message matching the participant's userIdentifier
+            let hasActiveRtt = data.contains { rttData in
+                rttData.captionsRttType == .rtt &&
+                !rttData.isFinal &&
+                rttData.displayRawId == self.participantIdentifier
+            }
+
+            // Update isSpeaking based on RTT data and participant's speaking status
             self.isSpeaking = hasActiveRtt || self.isSpeakingFromParticipantModel
+
+            // If no active RTT and participant is not speaking, reset isSpeaking
+            if !hasActiveRtt && !self.isSpeakingFromParticipantModel {
+                self.isSpeaking = false
+            }
         }
     }
 
