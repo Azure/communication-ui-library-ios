@@ -38,8 +38,11 @@ struct CaptionsAndRttInfoView: View {
             .onChange(of: containerHeight) { newHeight in
                 if newHeight != previousDrawerHeight {
                     previousDrawerHeight = newHeight
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        scrollToBottom(scrollView)
+                    // Only scroll if the last item is visible
+                    if isLastItemVisible {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            scrollToBottom(scrollView)
+                        }
                     }
                 }
             }
@@ -82,6 +85,10 @@ struct CaptionsAndRttInfoView: View {
             GeometryReader { geo in
                 Color.clear
                     .onAppear {
+                        checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
+                    }
+                    .onChange(of: viewModel.displayData) { _ in
+                        // Force re-check visibility when display data changes
                         checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
                     }
             }
