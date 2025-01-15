@@ -206,10 +206,9 @@ extends:
             provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
             provisioningProfileName: Azure communication UI calling Dogfood Dev
             destinationPlatformOption: iOS
-            destinationSimulators: iPhone 15
+            destinationSimulators: iPhone 15 Pro
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             cwd: AzureCommunicationUI
-            destination: "generic/platform=iOS"
 
         - task: DownloadSecureFile@1
           displayName: Download Distribution Profile from Azure secure files storage copy
