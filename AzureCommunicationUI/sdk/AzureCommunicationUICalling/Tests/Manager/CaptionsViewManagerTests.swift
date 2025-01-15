@@ -130,7 +130,7 @@ class CaptionsViewManagerTests: XCTestCase {
         captionsManager.handleNewData(newRtt.toDisplayData())
 
         // Then
-        XCTAssertEqual(captionsManager.captionsRttData.count, 2)
+        XCTAssertEqual(captionsManager.captionsRttData.count, 1)
         XCTAssertEqual(captionsManager.captionsRttData.last?.text, "Helloo")
     }
 
@@ -177,7 +177,7 @@ class CaptionsViewManagerTests: XCTestCase {
         captionsManager.handleNewData(newRtt1.toDisplayData())
 
         // Then
-        XCTAssertEqual(captionsManager.captionsRttData.count, 3)
+        XCTAssertEqual(captionsManager.captionsRttData.count, 2)
         XCTAssertEqual(captionsManager.captionsRttData.last?.text, "Helloo")
     }
 
