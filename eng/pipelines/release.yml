@@ -209,7 +209,6 @@ extends:
             destinationSimulators: iPhone 14 Pro
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             cwd: AzureCommunicationUI
-            args: "-verbose"
         - task: DownloadSecureFile@1
           displayName: Download Distribution Profile from Azure secure files storage copy
           inputs:
