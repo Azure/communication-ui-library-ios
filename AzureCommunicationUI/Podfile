@@ -13,7 +13,6 @@ target 'AzureCommunicationUICalling' do
   use_frameworks!
   pod 'AzureCore', '1.0.0-beta.15'
   pod 'AzureCommunicationCalling', '2.15.0-beta.1'
-  pod 'AzureCommunicationCommon'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
