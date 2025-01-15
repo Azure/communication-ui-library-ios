@@ -188,7 +188,7 @@ extends:
             xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
             scheme: AzureCommunicationUICalling
             destinationPlatformOption: iOS
-            destinationSimulators: iPhone 14
+            destinationSimulators: iPhone 15
         - task: Xcode@5
           displayName: Xcode build
           inputs:
@@ -206,7 +206,7 @@ extends:
             provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
             provisioningProfileName: Azure communication UI calling Dogfood Dev
             destinationPlatformOption: iOS
-            destinationSimulators: iPhone 14 Pro
+            destinationSimulators: iPhone 15
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             cwd: AzureCommunicationUI
         - task: DownloadSecureFile@1
