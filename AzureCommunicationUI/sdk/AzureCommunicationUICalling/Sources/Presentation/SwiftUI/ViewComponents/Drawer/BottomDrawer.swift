@@ -29,7 +29,7 @@ internal enum DrawerConstants {
     static let overlayOpacity: CGFloat = 0.4
 
     // How much drag you need on the drawer to dismiss in that way
-    static let dragThreshold: CGFloat = 100
+    static let dragThreshold: CGFloat = 200
 
     // After hiding, the delay before making it "gone", accounts for animation
     static let delayUntilGone: CGFloat = 0.3
@@ -62,21 +62,22 @@ internal enum DrawerConstants {
 internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone
     @State private var dragOffset: CGFloat = 0
-    @State private var scrollViewContentSize: CGFloat = 0
     @State private var drawerHeight: CGFloat = DrawerConstants.collapsedHeight
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
-    var drawerWorkItem: DispatchWorkItem?
     let startIcon: CompositeIcon?
     let startIconAction: (() -> Void)?
     let title: String?
+
+    var dragThreshold: CGFloat = DrawerConstants.dragThreshold
 
     init(isPresented: Bool,
          hideDrawer: @escaping () -> Void,
          title: String? = nil,
          startIcon: CompositeIcon? = nil,
          startIconAction: (() -> Void)? = nil,
+         dragThreshold: CGFloat = DrawerConstants.dragThreshold,
          @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
         self.content = content()
@@ -84,7 +85,9 @@ internal struct BottomDrawer<Content: View>: View {
         self.startIcon = startIcon
         self.startIconAction = startIconAction
         self.title = title
+        self.dragThreshold = dragThreshold
     }
+
     var body: some View {
         ZStack(alignment: .bottom) {
             if drawerState != .gone {
@@ -93,6 +96,27 @@ internal struct BottomDrawer<Content: View>: View {
                     .transition(.move(edge: .bottom))
                     .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : max(dragOffset, 0))
                     .animation(.easeInOut, value: drawerState == .visible)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                dragOffset = value.translation.height
+                                let newHeight = drawerHeight - value.translation.height
+                                drawerHeight = min(max(newHeight, DrawerConstants.collapsedHeight),
+                                                   DrawerConstants.expandedHeight)
+                            }
+                            .onEnded { value in
+                                withAnimation {
+                                    if value.translation.height > dragThreshold {
+                                        collapseDrawer()
+                                    } else if value.translation.height < -dragThreshold {
+                                        expandDrawer()
+                                    } else {
+                                        resetDrawer()
+                                    }
+                                }
+                                dragOffset = 0
+                            }
+                    )
                     .accessibilityAddTraits(.isModal)
             }
         }
@@ -109,14 +133,7 @@ internal struct BottomDrawer<Content: View>: View {
         VStack {
             Spacer()
             VStack {
-                Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
-                    .accessibilityHidden(drawerState != .visible)
-                    .accessibilityLabel(Text("Close Drawer"))
-                    .accessibilityAction {
-                        hideDrawer()
-                    }
-                    .accessibility(hidden: drawerState != .visible)
-                    .allowsHitTesting(drawerState == .visible)
+                handleView
                 if title != nil {
                     titleView
                 }
@@ -129,6 +146,13 @@ internal struct BottomDrawer<Content: View>: View {
             .shadow(radius: DrawerConstants.drawerShadowRadius)
             .padding(.bottom, -DrawerConstants.bottomFillY)
         }
+    }
+
+    private var handleView: some View {
+        RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
+            .fill(Color.gray.opacity(0.6))
+            .frame(width: 36, height: 4)
+            .padding(.top, 5)
     }
 
     private var titleView: some View {
@@ -160,7 +184,6 @@ internal struct BottomDrawer<Content: View>: View {
     }
 
     private var overlayView: some View {
-        // Determine the appropriate opacity based on the drawer's state
         let overlayOpacity = (drawerState == .visible) ? DrawerConstants.overlayOpacity : 0
 
         return Color.black.opacity(overlayOpacity)
@@ -177,6 +200,7 @@ internal struct BottomDrawer<Content: View>: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             withAnimation {
                 drawerState = .visible
+                drawerHeight = DrawerConstants.collapsedHeight
             }
         }
     }
@@ -187,6 +211,24 @@ internal struct BottomDrawer<Content: View>: View {
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + DrawerConstants.delayUntilGone) {
             drawerState = .gone
+        }
+    }
+
+    private func collapseDrawer() {
+        drawerState = .hidden
+        drawerHeight = DrawerConstants.collapsedHeight
+    }
+
+    private func expandDrawer() {
+        drawerState = .visible
+        drawerHeight = DrawerConstants.expandedHeight
+    }
+
+    private func resetDrawer() {
+        if drawerHeight > (DrawerConstants.collapsedHeight + DrawerConstants.expandedHeight) / 2 {
+            expandDrawer()
+        } else {
+            collapseDrawer()
         }
     }
 }
