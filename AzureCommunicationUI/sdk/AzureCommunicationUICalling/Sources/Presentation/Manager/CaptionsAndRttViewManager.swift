@@ -248,7 +248,9 @@ class CaptionsAndRttViewManager: ObservableObject {
             isRttInfo: true,
             isLocal: false
         )
-        captionsRttData.append(rttInfo)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.captionsRttData.append(rttInfo)
+        }
         hasInsertedRttInfo = true
     }
 
