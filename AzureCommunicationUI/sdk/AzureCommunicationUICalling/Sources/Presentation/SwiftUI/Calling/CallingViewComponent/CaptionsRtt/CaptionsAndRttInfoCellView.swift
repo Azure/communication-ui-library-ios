@@ -19,7 +19,6 @@ struct CaptionsAndRttInfoCellView: View {
     ) {
         self.displayData = displayData
         self.avatarViewManager = avatarViewManager
-        self.displayName = displayData.displayName
         self.localizationProvider = localizationProvider
     }
 
