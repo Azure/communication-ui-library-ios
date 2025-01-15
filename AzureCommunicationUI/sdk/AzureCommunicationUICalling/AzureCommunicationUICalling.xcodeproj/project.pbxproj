@@ -130,7 +130,7 @@
 		1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */; };
 		1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */; };
 		1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB665264519DA00F57EEA /* VideoViewManager.swift */; };
-		1FBCB69F2645285100F57EEA /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8659FC52602A22000C807DE /* AzureCommunicationUICalling.framework */; platformFilter = ios; };
+		1FBCB69F2645285100F57EEA /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8659FC52602A22000C807DE /* AzureCommunicationUICalling.framework */; };
 		1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB6A92645AC2F00F57EEA /* VideoRenderView.swift */; };
 		1FBCB6AC2649993500F57EEA /* CallingSDKWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB6AB2649993500F57EEA /* CallingSDKWrapper.swift */; };
 		1FBCB6AF2649DC7900F57EEA /* ParticipantInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB6AE2649DC7900F57EEA /* ParticipantInfoModel.swift */; };
@@ -402,31 +402,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		2831A7962D135E98005252F0 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2831A7952D135E98005252F0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2831A7992D135EA6005252F0 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2831A7982D135EA6005252F0 /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		051EE2282AB90FC300A94632 /* LobbyWaitingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderView.swift; sourceTree = "<group>"; };
 		051EE22A2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModel.swift; sourceTree = "<group>"; };
@@ -489,7 +464,6 @@
 		11C50D372BD1A79900CB3615 /* CaptionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionOptions.swift; sourceTree = "<group>"; };
 		11D470752C62CEFE00A54BD7 /* ButtonViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewData.swift; sourceTree = "<group>"; };
 		11D470772C62CF3400A54BD7 /* CustomButtonViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonViewData.swift; sourceTree = "<group>"; };
-		11D9C13B2CE7C665002BC0CC /* AzureCommunicationCalling.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:UBF8T346G9:Microsoft Corporation"; lastKnownFileType = wrapper.xcframework; name = AzureCommunicationCalling.xcframework; path = "../../../../../../Downloads/AzureCommunicationCalling-2.12.0-beta.1/AzureCommunicationCalling.xcframework"; sourceTree = "<group>"; };
 		11D9C13F2CE7C9B6002BC0CC /* CalllCompositeRttData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalllCompositeRttData.swift; sourceTree = "<group>"; };
 		11E792B02BD9D4EF008B2BB6 /* CallCompositeCaptionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCaptionsData.swift; sourceTree = "<group>"; };
 		11F2D5C12CF7CC45008C0762 /* ExpandableDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableDrawer.swift; sourceTree = "<group>"; };
