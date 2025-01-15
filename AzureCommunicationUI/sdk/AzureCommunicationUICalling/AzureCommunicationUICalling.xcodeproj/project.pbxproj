@@ -476,7 +476,6 @@
 		116BC0C12C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttInfoViewModel.swift; sourceTree = "<group>"; };
 		116BC0C32C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttInfoCellView.swift; sourceTree = "<group>"; };
 		116BC0C52C24D15800F8CF6F /* CaptionsAndRttInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttInfoView.swift; sourceTree = "<group>"; };
-		117250C92D0A366100995819 /* AzureCommunicationCalling.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:UBF8T346G9:Microsoft Corporation"; lastKnownFileType = wrapper.xcframework; name = AzureCommunicationCalling.xcframework; path = "../../../../../../Downloads/AzureCommunicationCalling-2.15.0-beta.1/AzureCommunicationCalling.xcframework"; sourceTree = "<group>"; };
 		11A494C22CFA6D4A0004B238 /* CaptionsAndRttLandscapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttLandscapeView.swift; sourceTree = "<group>"; };
 		11A494C42CFA83020004B238 /* KeybaordResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeybaordResponder.swift; sourceTree = "<group>"; };
 		11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListView.swift; sourceTree = "<group>"; };
@@ -2567,7 +2566,7 @@
 			baseConfigurationReference = E3504C0C167BEEE155CF30AD /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9KBH5RKYEW;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCommunicationCommon\"",
@@ -2596,7 +2595,7 @@
 			baseConfigurationReference = E7792CEA9A8EE93D3F8391F4 /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9KBH5RKYEW;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
