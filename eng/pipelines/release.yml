@@ -46,7 +46,7 @@ extends:
             targetPath: $(build.artifactstagingdirectory)
         pool:
           os: macos
-          name: vsts-mac-142-xcode-152
+          name: vsts-mac-152-xcode-162
         steps:
         - checkout: self
           clean: true
