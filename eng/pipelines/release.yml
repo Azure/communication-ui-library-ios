@@ -120,7 +120,7 @@ extends:
               export PROJ_FILE_COMPOSITE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj/project.pbxproj
 
 
-              sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "277WSW7QTT.com.microsoft.azure.communication.ui.calling-df"; CODE_SIGNING_REQUIRED = "NO"; CODE_SIGNING_ALLOWED = "NO";/' $PROJ_FILE_COMPOSITE
+              sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "9KBH5RKYEW.com.microsoft.azure.communication.ui.calling-df"; CODE_SIGNING_REQUIRED = "NO"; CODE_SIGNING_ALLOWED = "NO";/' $PROJ_FILE_COMPOSITE
         - task: CmdLine@2
           displayName: Edit project.pbxproj chat
           inputs:
@@ -128,10 +128,10 @@ extends:
               export CHAT_PROJ_FILE_COMPOSITE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj/project.pbxproj
 
 
-              sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "277WSW7QTT.com.microsoft.azure.communication.ui.chat-df"; CODE_SIGNING_REQUIRED = "NO"; CODE_SIGNING_ALLOWED = "NO";/' $CHAT_PROJ_FILE_COMPOSITE
+              sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "9KBH5RKYEW.com.microsoft.azure.communication.ui.chat-df"; CODE_SIGNING_REQUIRED = "NO"; CODE_SIGNING_ALLOWED = "NO";/' $CHAT_PROJ_FILE_COMPOSITE
 
 
-              #sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= #"277WSW7QTT.com.microsoft.azure.communication.ui.calling-df"; CODE_SIGNING_REQUIRED = #"NO"; CODE_SIGNING_ALLOWED = "NO";/' $CHAT_PROJ_FILE_COMPOSITE
+              #sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= #"9KBH5RKYEW.com.microsoft.azure.communication.ui.calling-df"; CODE_SIGNING_REQUIRED = #"NO"; CODE_SIGNING_ALLOWED = "NO";/' $CHAT_PROJ_FILE_COMPOSITE
         - task: CmdLine@2
           displayName: Edit Pod File
           inputs:
@@ -206,6 +206,7 @@ extends:
             provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
             provisioningProfileName: Azure communication UI calling Dogfood Dev
             destinationPlatformOption: iOS
+            destinationSimulators: iPhone 15
             args: '-destination "generic/platform=iOS" DEVELOPMENT_TEAM=9KBH5RKYEW clean archive -verbose'
             cwd: AzureCommunicationUI
         - task: DownloadSecureFile@1
