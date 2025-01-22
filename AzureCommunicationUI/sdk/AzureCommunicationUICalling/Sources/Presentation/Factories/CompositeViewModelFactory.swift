@@ -29,9 +29,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let setupScreenOptions: SetupScreenOptions?
     private let callScreenOptions: CallScreenOptions?
     private let callType: CompositeCallType
-    /* <CUSTOM_COLOR_FEATURE> */
     private let themeOptions: ThemeOptions
-    /* </CUSTOM_COLOR_FEATURE> */
     private let updatableOptionsManager: UpdatableOptionsManagerProtocol
 
     init(logger: Logger,
@@ -52,9 +50,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
-         /* <CUSTOM_COLOR_FEATURE> */
          themeOptions: ThemeOptions,
-         /* </CUSTOM_COLOR_FEATURE> */
          updatableOptionsManager: UpdatableOptionsManagerProtocol,
          retrieveLogFiles: @escaping () -> [URL]
          ) {
@@ -75,9 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.callScreenOptions = callScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
-        /* <CUSTOM_COLOR_FEATURE> */
         self.themeOptions = themeOptions
-        /* </CUSTOM_COLOR_FEATURE> */
         self.avatarManager = avatarManager
         self.updatableOptionsManager = updatableOptionsManager
     }
@@ -375,7 +369,6 @@ extension CompositeViewModelFactory {
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel,
                                      isCameraEnabled: localOptions?.audioVideoMode != .audioOnly,
-                                     captionsRttManager: captionsRttViewManager,
                                      callType: callType)
     }
 

@@ -289,10 +289,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             accessibilityProvider: accessibilityProvider,
             participantModel: participantModel,
             isCameraEnabled: true,
-            captionsRttManager: CaptionsAndRttViewManager(
-                store: store,
-                callingSDKWrapper: CallingSDKWrapperMocking()
-            ),
             callType: .groupCall)
     }
 

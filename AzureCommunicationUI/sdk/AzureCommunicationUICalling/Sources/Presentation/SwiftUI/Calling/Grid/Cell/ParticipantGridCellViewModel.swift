@@ -14,7 +14,6 @@ struct ParticipantVideoViewInfoModel {
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
-    private let captionsRttDataManager: CaptionsAndRttViewManager
 
     let id = UUID()
 
@@ -35,20 +34,16 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     private var participantStatus: ParticipantStatus?
     private var callType: CompositeCallType
     private var subscriptions = Set<AnyCancellable>()
-    private var participantModel: ParticipantInfoModel?
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel,
          isCameraEnabled: Bool,
-         captionsRttManager: CaptionsAndRttViewManager,
          callType: CompositeCallType) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.participantStatus = participantModel.status
-        self.captionsRttDataManager = captionsRttManager
         self.callType = callType
-        self.participantModel = participantModel
         let isDisplayConnecting = ParticipantGridCellViewModel.isOutgoingCallDialingInProgress(
             callType: callType,
             participantStatus: participantModel.status)
@@ -67,43 +62,6 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isCameraEnabled = isCameraEnabled
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
         self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
-        bindCaptionsUpdates()
-    }
-
-    private func bindCaptionsUpdates() {
-        captionsRttDataManager.$captionsRttData
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] data in
-                guard let self = self else {
-                    return
-                }
-                self.displayData = data
-                self.updateIsSpeaking(with: data)
-            }
-            .store(in: &subscriptions)
-    }
-
-    private func updateIsSpeaking(with data: [CallCompositeRttCaptionsDisplayData]) {
-        DispatchQueue.main.async {
-            // Check for any non-final RTT message matching the participant's userIdentifier
-            let hasActiveRtt = data.contains { rttData in
-                rttData.captionsRttType == .rtt &&
-                !rttData.isFinal &&
-                rttData.displayRawId == self.participantIdentifier
-            }
-
-            // Update isSpeaking based on RTT data and participant's speaking status
-            self.isSpeaking = hasActiveRtt || self.isSpeakingFromParticipantModel
-
-            // If no active RTT and participant is not speaking, reset isSpeaking
-            if !hasActiveRtt && !self.isSpeakingFromParticipantModel {
-                self.isSpeaking = false
-            }
-        }
-    }
-
-    private var isSpeakingFromParticipantModel: Bool {
-        return participantModel?.isSpeaking ?? false
     }
 
     func update(participantModel: ParticipantInfoModel) {

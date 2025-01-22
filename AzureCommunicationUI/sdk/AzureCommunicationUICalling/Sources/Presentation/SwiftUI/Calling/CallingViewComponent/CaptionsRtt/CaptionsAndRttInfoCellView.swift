@@ -97,13 +97,18 @@ struct CaptionsAndRttInfoCellView: View {
     }
     private func updateAvatar() {
         // Attempt to get the avatar image directly from the avatar storage for the given speaker's ID.
-        if let participantViewDataAvatar = avatarViewManager.avatarStorage.value(
-            forKey: displayData.displayRawId)?.avatarImage {
-            // If an avatar image exists, set it.
-            avatarImage = participantViewDataAvatar
+        if displayData.isLocal {
+            avatarImage = avatarViewManager.localParticipantViewData?.avatarImage
+            displayName = avatarViewManager.localParticipantViewData?.displayName ?? displayData.displayName
         } else {
-            avatarImage = nil
-            displayName = displayData.displayName
+            if let participantViewDataAvatar = avatarViewManager.avatarStorage.value(
+                forKey: displayData.displayRawId)?.avatarImage {
+                // If an avatar image exists, set it.
+                avatarImage = participantViewDataAvatar
+            } else {
+                avatarImage = nil
+                displayName = displayData.displayName
+            }
         }
     }
 
