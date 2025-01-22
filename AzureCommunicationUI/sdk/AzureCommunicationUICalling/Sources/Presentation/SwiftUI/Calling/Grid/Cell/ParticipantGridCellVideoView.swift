@@ -40,7 +40,7 @@ struct ParticipantGridCellVideoView: View {
                     && UIDevice.current.hasHomeBar ? 16 : 4)
 
         }.overlay(
-            isSpeaking ? RoundedRectangle(cornerRadius: 4)
+            isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4)
                 .strokeBorder(Color(StyleProvider.color.primaryColor), lineWidth: 4) : nil
         ).animation(.default, value: show)
     }
