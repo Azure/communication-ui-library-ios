@@ -12,6 +12,8 @@ import Foundation
 // swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
+    let audioPlayer = AudioPlayer()
+
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger
@@ -144,6 +146,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             print("RA frameLength \(audioBuffer.frameLength)")
             print("RA frameCapacity \(audioBuffer.frameCapacity)")
             print("RA format \(audioBuffer.format)")
+
+            self.audioPlayer.playAudioBuffer(audioBuffer)
         }
 
         self.rawIncomingAudioStream?.events.onStateChanged = { _ in
@@ -718,4 +722,33 @@ extension CallingSDKWrapper: DeviceManagerDelegate {
         localVideoStream = videoStream
         return videoStream
     }
+}
+
+class AudioPlayer {
+    private let audioEngine = AVAudioEngine()
+    private let playerNode = AVAudioPlayerNode()
+
+    init() {
+        audioEngine.attach(playerNode)
+        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: nil)
+    }
+
+    func playAudioBuffer(_ buffer: AVAudioBuffer) {
+        if let pcmBuffer = buffer as? AVAudioPCMBuffer {
+            playPCMBuffer(pcmBuffer)
+        } else {
+            print("Unable to play: Buffer is not compatible")
+        }
+    }
+
+    private func playPCMBuffer(_ buffer: AVAudioPCMBuffer) {
+        playerNode.scheduleBuffer(buffer, at: nil, options: .loops, completionHandler: nil)
+        do {
+            try audioEngine.start()
+            playerNode.play()
+        } catch {
+            print("Error starting audio engine: \(error.localizedDescription)")
+        }
+    }
+
 }
