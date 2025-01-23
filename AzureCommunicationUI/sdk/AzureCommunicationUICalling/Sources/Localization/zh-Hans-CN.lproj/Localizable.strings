@@ -168,8 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="报告问题";
 "AzureCommunicationUICalling.SendFeedback.Text"="发送";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="实时辅助字幕";
-"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="字幕";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="字幕和实时文本";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="口语";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="辅助字幕语言";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="正在启动字幕...";
@@ -178,17 +178,17 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="无法更改标题语言";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="无法更改口语";
 
-"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time text";
-"AzureCommunicationUICalling.RTT.Alert.Title"="Turn on RTT?";
-"AzureCommunicationUICalling.RTT.Alert.Message"="Real-time text(RTT) will be turned on for everyone in the call.";
-"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Turn on";
-"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
-"AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
-"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
-"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
-"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
-"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
-"AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
+"AzureCommunicationUICalling.RTT.Title.RTT"="实时文本";
+"AzureCommunicationUICalling.RTT.Alert.Title"="是否启用实时文本?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="将为通话中的每个人启用实时文本(RTT)。";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="启用";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="关闭";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="为此通话启用 RTT";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="在此会议的整个持续时间内启用了实时文本(RTT)，并且所有参与者都可以看到该文本。";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="了解详细信息";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="实时文本键入";
+"AzureCommunicationUICalling.RTT.RTTLable"="实时文本";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="实时键入消息";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="静音";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="将参与者菜单静音。";

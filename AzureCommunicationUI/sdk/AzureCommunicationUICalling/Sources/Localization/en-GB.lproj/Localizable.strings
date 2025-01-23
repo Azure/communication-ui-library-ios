@@ -168,7 +168,7 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Report a problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Send";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live Captions";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Captions";
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
