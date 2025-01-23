@@ -168,8 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Segnala un problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Invia";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Sottotitoli in tempo reale";
-"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Sottotitoli";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Sottotitoli e scrittura in tempo reale";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Lingua parlata";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Lingua sottotitoli";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Avvio dei sottotitoli in corso...";
@@ -178,17 +178,17 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Non è possibile modificare la lingua dei sottotitoli";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Impossibile cambiare la lingua parlata";
 
-"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time text";
-"AzureCommunicationUICalling.RTT.Alert.Title"="Turn on RTT?";
-"AzureCommunicationUICalling.RTT.Alert.Message"="Real-time text(RTT) will be turned on for everyone in the call.";
-"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Turn on";
-"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
-"AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
-"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
-"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
-"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
-"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
-"AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
+"AzureCommunicationUICalling.RTT.Title.RTT"="Testo in tempo reale";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Abilitare la scrittura in tempo reale?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Il testo (RTT) in tempo reale verrà attivato per tutti gli utenti della chiamata.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Abilita";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Ignora";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Attiva la scrittura in tempo reale per questa chiamata";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Il testo in tempo reale è abilitato per l'intera durata della riunione e viene visualizzato da tutti i partecipanti.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Scopri di più";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="Digitazione scrittura in tempo reale";
+"AzureCommunicationUICalling.RTT.RTTLable"="Scrittura in tempo reale";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Digita messaggio in tempo reale";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Disattiva audio";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Menu Disattiva l'audio del partecipante.";

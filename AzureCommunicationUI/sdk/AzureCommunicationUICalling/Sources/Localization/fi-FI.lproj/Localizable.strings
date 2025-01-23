@@ -168,8 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ilmoita ongelmasta";
 "AzureCommunicationUICalling.SendFeedback.Text"="Lähetä";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live-tekstitykset";
-"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Tekstitykset";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Tekstitykset ja RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Puhuttu kieli";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Tekstityksen kieli";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Aloitetaan tekstitystä...";
@@ -178,17 +178,17 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Tekstityksen kieltä ei voi vaihtaa";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Puhuttua kieltä ei voi vaihtaa";
 
-"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time text";
-"AzureCommunicationUICalling.RTT.Alert.Title"="Turn on RTT?";
-"AzureCommunicationUICalling.RTT.Alert.Message"="Real-time text(RTT) will be turned on for everyone in the call.";
-"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Turn on";
-"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
-"AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
-"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
-"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
-"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
-"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
-"AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
+"AzureCommunicationUICalling.RTT.Title.RTT"="Reaaliaikainen teksti";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Otetaanko RTT käyttöön?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Reaaliaikainen kirjoitus (RTT) otetaan käyttöön kaikille puhelun osallistujille.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Ota käyttöön";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Sulje";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Ota reaaliaikainen kirjoitus käyttöön tässä puhelussa";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Reaaliaikainen teksti (RTT) on käytössä koko kokouksen keston ajan, ja kaikki osallistujat voivat nähdä sen.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Lue lisää";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-kirjoitus";
+"AzureCommunicationUICalling.RTT.RTTLable"="Reaaliaikainen kirjoitus";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Kirjoita viesti reaaliaikaisesti";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mykistä";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mykistä osallistuja -valikko.";

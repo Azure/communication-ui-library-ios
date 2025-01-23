@@ -168,8 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
 "AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Автоматические субтитры";
-"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Субтитры";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Субтитры и ввод в режиме реального времени";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Язык речи";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Язык субтитров";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Запуск субтитров...";
@@ -178,17 +178,17 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Не удалось изменить язык субтитров";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Не удалось изменить язык речи";
 
-"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time text";
-"AzureCommunicationUICalling.RTT.Alert.Title"="Turn on RTT?";
-"AzureCommunicationUICalling.RTT.Alert.Message"="Real-time text(RTT) will be turned on for everyone in the call.";
-"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Turn on";
-"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
-"AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
-"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
-"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
-"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
-"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
-"AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
+"AzureCommunicationUICalling.RTT.Title.RTT"="Текст в режиме реального времени";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Включить ввод в режиме реального времени?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Текст в режиме реального времени (RTT) будет включен для всех участников звонка.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Включить";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Закрыть";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Включить ввод в режиме реального времени для этого звонка";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Текст в режиме реального времени включен на протяжении всего собрания и виден всем участникам.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Подробнее";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="Ввод с клавиатуры в режиме реального времени";
+"AzureCommunicationUICalling.RTT.RTTLable"="Ввод в режиме реального времени";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Введите сообщение в режиме реального времени";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Отключить звук";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Меню отключения звука участника.";

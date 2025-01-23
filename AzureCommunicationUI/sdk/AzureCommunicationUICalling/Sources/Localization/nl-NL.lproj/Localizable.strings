@@ -169,7 +169,7 @@
 "AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";
 
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Ondertitels";
-"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Ondertitels en RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Gesproken taal";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Taal van ondertiteling";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Ondertitels starten...";
@@ -178,17 +178,17 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Kan de taal van de ondertiteling niet wijzigen";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Kan de gesproken talen niet wijzigen";
 
-"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time text";
-"AzureCommunicationUICalling.RTT.Alert.Title"="Turn on RTT?";
-"AzureCommunicationUICalling.RTT.Alert.Message"="Real-time text(RTT) will be turned on for everyone in the call.";
-"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Turn on";
-"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Dismiss";
-"AzureCommunicationUICalling.RTT.TurnOn.Text"="Turn on RTT for this call";
-"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text(RTT) is enabled for the entire duration of this meeting and is seen by all participants.";
-"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Learn more";
-"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
+"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time tekst";
+"AzureCommunicationUICalling.RTT.Alert.Title"="RTT inschakelen?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Tekst in realtime (RTT) wordt ingeschakeld voor iedereen in het gesprek.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Inschakelen";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Sluiten";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="RTT inschakelen voor dit gesprek";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text (RTT) is ingeschakeld voor de hele duur van deze vergadering en wordt gezien door alle deelnemers.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Meer informatie";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typen";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
-"AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Bericht in realtime typen";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Dempen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Deelnemersmenu dempen.";
