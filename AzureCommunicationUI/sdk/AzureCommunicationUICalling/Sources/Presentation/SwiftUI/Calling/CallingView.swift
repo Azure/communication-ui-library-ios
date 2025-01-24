@@ -217,8 +217,13 @@ struct CallingView: View {
             if isIpad {
                 HStack {
                     containerView
-                    if !viewModel.isInPip && viewModel.captionsInfoViewModel.isDisplayed {
-                        captionsAndRttIpadView
+                    ZStack {
+                        if !viewModel.isInPip && viewModel.captionsInfoViewModel.isDisplayed {
+                            captionsAndRttIpadView
+                        }
+                        bottomToastDiagnosticsView
+                            .accessibilityElement(children: .contain)
+                        captionsErrorView.accessibilityElement(children: .contain)
                     }
                 }
                 if keyboard.keyboardHeight == 0 {
@@ -230,6 +235,9 @@ struct CallingView: View {
                     if !viewModel.isInPip {
                         captionsAndRttDrawer
                     }
+                    bottomToastDiagnosticsView
+                        .accessibilityElement(children: .contain)
+                    captionsErrorView.accessibilityElement(children: .contain)
                 }
                 ControlBarView(viewModel: viewModel.controlBarViewModel)
 
@@ -274,9 +282,6 @@ struct CallingView: View {
                                 .accessibilityIdentifier(
                                     AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                             }
-                            bottomToastDiagnosticsView
-                                .accessibilityElement(children: .contain)
-                            captionsErrorView.accessibilityElement(children: .contain)
                         }.zIndex(2)
                             .ignoresSafeArea(isIpad ? [] : .keyboard)
                     }
