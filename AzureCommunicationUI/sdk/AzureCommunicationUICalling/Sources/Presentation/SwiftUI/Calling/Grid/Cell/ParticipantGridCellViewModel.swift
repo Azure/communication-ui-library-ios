@@ -22,6 +22,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var displayName: String?
     @Published var avatarDisplayName: String?
     @Published var isSpeaking: Bool
+    @Published var isTypingRtt: Bool
     @Published var isMuted: Bool
     @Published var isHold: Bool
     @Published var participantIdentifier: String
@@ -56,6 +57,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         }
         self.avatarDisplayName = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
+        self.isTypingRtt = participantModel.isTypingRtt
         self.isHold = participantModel.status == .hold
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted && participantModel.status == .connected

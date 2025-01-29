@@ -298,7 +298,16 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func realTimeTextCallFeature(_ realTextCallFeature: RealTimeTextCallFeature,
                                  didReceiveInfo args: RealTimeTextInfoReceivedEventArgs) {
-        rttReceived.send(args.info.toCallCompositeRttData())
+        let rttMessage = args.info.toCallCompositeRttData()
+
+        if let index = participantsInfoListSubject.value.firstIndex(where: {
+            $0.userIdentifier == rttMessage.senderRawId }) {
+
+            participantsInfoListSubject.value[index].isTypingRtt =
+            rttMessage.resultType != .final && !rttMessage.text.isEmpty
+            updateRemoteParticipant(userIdentifier: rttMessage.senderRawId)
+        }
+        rttReceived.send(rttMessage)
     }
 
     func dominantSpeakersCallFeature(_ dominantSpeakersCallFeature: DominantSpeakersCallFeature,
