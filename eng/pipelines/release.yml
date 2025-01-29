@@ -23,10 +23,10 @@ parameters:
 - name: pools
   type: object
   default:
-  - name: vsts-mac-131-xcode-142 
+  - name: vsts-mac-152-xcode-162 
     os: macos
 extends:
-  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
+  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
       os: windows
@@ -46,7 +46,7 @@ extends:
             targetPath: $(build.artifactstagingdirectory)
         pool:
           os: macos
-          name: vsts-mac-131-xcode-142
+          name: vsts-mac-152-xcode-162
         steps:
         - checkout: self
           clean: true
