@@ -21,11 +21,11 @@ parameters:
 - name: pools
   type: object
   default:
-  - name: vsts-mac-142-xcode-152
+  - name: vsts-mac-152-xcode-162
     os: macos
 extends:
 
-  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
+  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
       os: windows
