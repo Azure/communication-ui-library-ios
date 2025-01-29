@@ -5,7 +5,7 @@ jobs:
   displayName: "Build UI Library (Debug) for CI"
   pool:
     os: macos
-    name: vsts-mac-152-xcode-162
+    name: vsts-mac-146-xcode-160
     demands: xcode
   steps:
     - task: servicetree-link-build-task@1

@@ -4,7 +4,7 @@ jobs:
   - job: CallingAutomatedUITest
     displayName: "Calling Automated UI Tests"
     pool:
-      name: vsts-mac-152-xcode-162
+      name: vsts-mac-146-xcode-160
       demands: xcode
 
     variables:
