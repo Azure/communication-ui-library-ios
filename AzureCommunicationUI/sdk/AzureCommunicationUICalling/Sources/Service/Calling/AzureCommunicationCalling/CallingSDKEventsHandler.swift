@@ -301,11 +301,16 @@ extension CallingSDKEventsHandler: CallDelegate,
         let rttMessage = args.info.toCallCompositeRttData()
 
         if let index = participantsInfoListSubject.value.firstIndex(where: {
-            $0.userIdentifier == rttMessage.senderRawId }) {
+            $0.userIdentifier == rttMessage.senderRawId
+        }) {
+            // Update the participant in place
+            var updatedList = participantsInfoListSubject.value
+            updatedList[index].isTypingRtt = rttMessage.resultType != .final && !rttMessage.text.isEmpty
 
-            participantsInfoListSubject.value[index].isTypingRtt =
-            rttMessage.resultType != .final && !rttMessage.text.isEmpty
-            updateRemoteParticipant(userIdentifier: rttMessage.senderRawId)
+            // Ensure UI updates on main thread
+            DispatchQueue.main.async {
+                self.participantsInfoListSubject.send(updatedList)
+            }
         }
         rttReceived.send(rttMessage)
     }
