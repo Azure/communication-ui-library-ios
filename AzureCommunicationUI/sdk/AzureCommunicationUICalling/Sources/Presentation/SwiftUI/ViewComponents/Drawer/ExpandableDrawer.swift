@@ -203,36 +203,41 @@ internal struct ExpandableDrawer<Content: View>: View {
 
     // MARK: - Title View
     private var titleView: some View {
-        VStack {
-            HStack(spacing: 8) {
-                Spacer()
-                // End Icon (if any)
-                if let icon = endIcon {
-                    Icon(name: icon, size: DrawerListConstants.iconSize)
-                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                        .onTapGesture {
-                            endIconAction?()
-                        }
-                }
+        HStack(spacing: 8) {
+            Spacer()
 
-                Icon(name: isFullyExpanded ? CompositeIcon.minimize :
-                        CompositeIcon.maximize, size: DrawerListConstants.iconSize)
+            HStack(spacing: 8) {
+                Spacer() // Ensures title stays centered
+                Text(title ?? "")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil) // Allow multiple lines
+                    .minimumScaleFactor(0.8) // Shrink if needed
+                    .layoutPriority(1) // Prevent getting squeezed by icons
+                    .accessibilityAddTraits(.isHeader)
+                Spacer() // Ensures text remains centered
+            }
+            .frame(maxWidth: .infinity) // Ensure full width for centering
+            // End Icon (if any)
+            if let icon = endIcon {
+                Icon(name: icon, size: DrawerListConstants.iconSize)
                     .foregroundColor(Color(StyleProvider.color.drawerIconDark))
                     .onTapGesture {
-                        setDrawerHeight(to: isFullyExpanded ? .collapsed : .expanded)
+                        endIconAction?()
                     }
             }
-            .padding([.leading, .trailing], 10)
-            .padding(.top, 15)
-        }.overlay(
-            Text(title ?? "")
-                .font(.headline)
-                .foregroundColor(.primary)
-                .accessibilityAddTraits(.isHeader)
-                .padding(.top, 15),
-            alignment: .center
-        )
 
+            // Expand/Minimize Icon
+            Icon(name: isFullyExpanded ? CompositeIcon.minimize :
+                    CompositeIcon.maximize, size: DrawerListConstants.iconSize)
+                .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                .onTapGesture {
+                    setDrawerHeight(to: isFullyExpanded ? .collapsed : .expanded)
+                }
+        }
+        .padding(.horizontal, 10)
+        .padding(.top, 15)
     }
 
     // MARK: - Overlay View

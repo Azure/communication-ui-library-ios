@@ -70,6 +70,7 @@ struct CaptionsAndRttInfoCellView: View {
         .fixedSize(horizontal: false, vertical: true) // Limit height to content
         .padding(.vertical, 4) // Add padding for vertical spacing
         .background(Color(StyleProvider.color.drawerColor))
+        .accessibilityElement(children: .combine)
         .onAppear {
             updateAvatar()
             determineTextDirection()
