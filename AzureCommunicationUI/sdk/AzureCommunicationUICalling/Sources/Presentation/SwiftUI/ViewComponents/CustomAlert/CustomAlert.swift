@@ -57,9 +57,9 @@ internal struct CustomAlert: View {
                                 dismiss()
                             }, label: {
                                 Text(denyText)
-                                    .frame(width: CustomAlertConstants.confirmationButtonWidth,
-                                           height: CustomAlertConstants.confirmationButtonHeight,
-                                           alignment: .center)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(nil) // Allow multiple lines
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .foregroundColor(Color(StyleProvider.color.primaryColor))
                             })
                             Divider().frame(maxHeight: CustomAlertConstants.confirmationButtonHeight)
@@ -68,10 +68,9 @@ internal struct CustomAlert: View {
                                 dismiss()
                             }, label: {
                                 Text(agreeText)
-                                    .frame(width: CustomAlertConstants.confirmationButtonWidth,
-                                           height: CustomAlertConstants.confirmationButtonHeight,
-                                           alignment: .center
-                                    )
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(nil) // Allow multiple lines
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .foregroundColor(Color(StyleProvider.color.primaryColor))
                             })
                         }
