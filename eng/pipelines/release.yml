@@ -256,6 +256,8 @@ extends:
         - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
           displayName: Dogfood ESRP CodeSigning
           inputs:
+            AppRegistrationClientId: 'a40e733c-485b-405f-b787-dcd0f09184f6'
+            AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
             AuthAKVName: 'esrpintegrationsecrets'
             AuthSignCertName: 'ESRPSkypeADOIntegrationTRS'
             UseMSIAuthentication: true
