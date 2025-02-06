@@ -6,8 +6,11 @@
 import Foundation
 import FluentUI
 import UIKit
+import SwiftUICore
 
 class ColorThemeProvider {
+    @Environment(\.fluentTheme) private var fluentTheme: FluentTheme
+    
     let colorSchemeOverride: UIUserInterfaceStyle
 
     let primaryColor: UIColor
@@ -15,24 +18,34 @@ class ColorThemeProvider {
     let primaryColorTint20: UIColor
     let primaryColorTint30: UIColor
 
-    let textDominant: UIColor = Colors.textDominant
-    let textPrimary: UIColor = Colors.textPrimary
-    let textSecondary: UIColor = Colors.textSecondary
-    let textDisabled: UIColor = Colors.textDisabled
-    let surfaceTertiary: UIColor = Colors.surfaceTertiary
-    let dividerOnPrimary: UIColor = Colors.dividerOnPrimary
-    let iconSecondary: UIColor = Colors.iconSecondary
-    let iconDisabled: UIColor = Colors.iconDisabled
+    let textDominant: UIColor // = Colors.textDominant
+    let textPrimary: UIColor // = Colors.textPrimary
+    let textSecondary: UIColor // = Colors.textSecondary
+    let textDisabled: UIColor // = Colors.textDisabled
+    let surfaceTertiary: UIColor // = Colors.surfaceTertiary
+    let dividerOnPrimary: UIColor // = Colors.dividerOnPrimary
+    let iconSecondary: UIColor // = Colors.iconSecondary
+    let iconDisabled: UIColor // = Colors.iconDisabled
 
-    let dangerPrimary: UIColor = Colors.error
+    let dangerPrimary: UIColor // = Colors.error
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
 
-        self.primaryColor = themeOptions?.primaryColor ?? Colors.Palette.communicationBlue.color
-        self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
-        self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
-        self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
+        
+        self.primaryColor = themeOptions?.primaryColor ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlue.color
+        self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlueTint10.color
+        self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlueTint20.color
+        self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlueTint30.color
+        
+        self.textDominant = fluentTheme.color(.foreground1)
+        self.textPrimary = fluentTheme.color(.foreground1)
+        self.textSecondary = fluentTheme.color(.foreground1)
+        self.textDisabled = fluentTheme.color(.foreground1)
+        self.surfaceTertiary = fluentTheme.color(.foreground1)
+        self.dividerOnPrimary = fluentTheme.color(.foreground1)
+        self.iconDisabled = fluentTheme.color(.foreground1)
+        self.dangerPrimary = fluentTheme.color(.foreground1)
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
