@@ -253,17 +253,23 @@ extends:
           displayName: Use .NET Core sdk 6.0.x
           inputs:
             version: 6.0.x
-        - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@4
+        - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
           displayName: Dogfood ESRP CodeSigning
           inputs:
-            ConnectedServiceName: cb3d1f72-016c-4cee-80b5-33219b645283
-            FolderPath: $(archivePath)
+            AppRegistrationClientId: 'a40e733c-485b-405f-b787-dcd0f09184f6'
+            AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+            AuthAKVName: 'esrpintegrationsecrets'
+            AuthSignCertName: 'ESRPSkypeADOIntegrationTRS'
+            UseMSIAuthentication: true
+            ConnectedServiceName: 'ESRP CodeSign Global ARM Torus'
+            FolderPath: '$(XCFrameworkDirPath)'
             Pattern: '*.zip'
+            UseMinimatch: true
             signConfigType: inlineSignParams
             inlineOperation: >-
               [
                 {
-                  "KeyCode": "CP-464234-Apple",
+                  "KeyCode": "CP-233039-Apple",
                   "OperationCode": "iOSAppSign",
                   "Parameters": {},
                   "ToolName": "sign",
