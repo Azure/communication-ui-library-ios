@@ -256,8 +256,8 @@ extends:
         - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
           displayName: Dogfood ESRP CodeSigning
           inputs:
-            AppRegistrationClientId: 'a40e733c-485b-405f-b787-dcd0f09184f6'
-            AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+            ConnectedServiceName: cb3d1f72-016c-4cee-80b5-33219b645283
+            FolderPath: $(archivePath)
             AuthAKVName: 'esrpintegrationsecrets'
             AuthSignCertName: 'ESRPSkypeADOIntegrationTRS'
             UseMSIAuthentication: true
@@ -269,7 +269,7 @@ extends:
             inlineOperation: >-
               [
                 {
-                  "KeyCode": "CP-233039-Apple",
+                  "KeyCode": "CP-464234-Apple",
                   "OperationCode": "iOSAppSign",
                   "Parameters": {},
                   "ToolName": "sign",
