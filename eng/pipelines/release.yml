@@ -256,13 +256,11 @@ extends:
         - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
           displayName: Dogfood ESRP CodeSigning
           inputs:
-            ConnectedServiceName: cb3d1f72-016c-4cee-80b5-33219b645283
-            FolderPath: $(archivePath)
             AuthAKVName: 'esrpintegrationsecrets'
             AuthSignCertName: 'ESRPSkypeADOIntegrationTRS'
             UseMSIAuthentication: true
             ConnectedServiceName: 'ESRP CodeSign Global ARM Torus'
-            FolderPath: '$(XCFrameworkDirPath)'
+            FolderPath: $(archivePath)
             Pattern: '*.zip'
             UseMinimatch: true
             signConfigType: inlineSignParams
