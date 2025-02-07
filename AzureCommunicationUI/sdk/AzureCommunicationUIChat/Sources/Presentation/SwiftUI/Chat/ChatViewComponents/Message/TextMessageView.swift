@@ -67,7 +67,7 @@ struct TextMessageView: View {
                 Text(messageModel.senderDisplayName!)
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(Color(StyleProvider.color.textPrimary))
+                    .foregroundColor(StyleProvider.color.foreground1)
             }
         }
     }
@@ -77,7 +77,7 @@ struct TextMessageView: View {
             if showTime {
                 Text(messageModel.timestamp)
                     .font(.caption)
-                    .foregroundColor(Color(StyleProvider.color.textSecondary))
+                    .foregroundColor(StyleProvider.color.foreground2)
             }
         }
     }
@@ -87,7 +87,7 @@ struct TextMessageView: View {
             if messageModel.editedOn != nil {
                 Text("Edited")
                     .font(.caption)
-                    .foregroundColor(Color(StyleProvider.color.textDisabled))
+                    .foregroundColor(StyleProvider.color.foregroundDisabled1)
             }
         }
     }
@@ -106,13 +106,13 @@ struct TextMessageView: View {
 
     private func getMessageBubbleBackground(messageModel: ChatMessageInfoModel) -> Color {
         guard messageModel.isLocalUser else {
-            return Color(StyleProvider.color.surfaceTertiary)
+            return Color(StyleProvider.color.brandForeground1) // Needs to be lighter?
         }
 
         if messageModel.sendStatus == .failed {
-            return Color(StyleProvider.color.dangerPrimary).opacity(0.2)
+            return StyleProvider.color.severeBackground1
         } else {
-            return Color(StyleProvider.color.primaryColorTint30)
+            return Color(StyleProvider.color.brandBackground1) // ?
         }
     }
 }

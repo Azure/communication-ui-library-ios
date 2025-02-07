@@ -27,6 +27,13 @@ class ColorThemeProvider {
 //    let iconDisabled: UIColor = Colors.iconDisabled\
 //    let dangerPrimary: UIColor // = Colors.error
 
+    let foreground1: Color
+    let foreground2: Color
+    let foreground3: Color
+    let foregroundDisabled1: Color
+    let stroke2: Color
+    let severeBackground1: Color
+
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
 
@@ -35,14 +42,12 @@ class ColorThemeProvider {
 //        self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
 //        self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
 
-//        self.textDominant = fluentTheme.color(.foreground1)
-//        self.textPrimary = fluentTheme.color(.foreground1)
-//        self.textSecondary = fluentTheme.color(.foreground1)
-//        self.textDisabled = fluentTheme.color(.foreground1)
-//        self.surfaceTertiary = fluentTheme.color(.foreground1)
-//        self.dividerOnPrimary = fluentTheme.color(.foreground1)
-//        self.iconDisabled = fluentTheme.color(.foreground1)
-//        self.dangerPrimary = fluentTheme.color(.foreground1)
+        self.foreground1 = fluentTheme.swiftUIColor(.foreground1) // F1: textDominant
+        self.foreground2 = fluentTheme.swiftUIColor(.foreground2) // F1: textSecondary?
+        self.foreground3 = fluentTheme.swiftUIColor(.foreground3) // F1: iconSecondary?
+        self.foregroundDisabled1 = fluentTheme.swiftUIColor(.foregroundDisabled1) // F1: iconDisabled
+        self.stroke2 = fluentTheme.swiftUIColor(.stroke2) // F1: dividerOnPrimary
+        self.severeBackground1 = fluentTheme.swiftUIColor(.severeBackground1) // F1: dangerPrimary?
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
