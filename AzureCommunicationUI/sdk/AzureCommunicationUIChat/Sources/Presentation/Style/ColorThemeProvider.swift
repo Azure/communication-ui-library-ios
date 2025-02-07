@@ -9,43 +9,40 @@ import UIKit
 import SwiftUICore
 
 class ColorThemeProvider {
-    @Environment(\.fluentTheme) private var fluentTheme: FluentTheme
-    
+    let fluentTheme = FluentTheme()
     let colorSchemeOverride: UIUserInterfaceStyle
 
-    let primaryColor: UIColor
-    let primaryColorTint10: UIColor
-    let primaryColorTint20: UIColor
-    let primaryColorTint30: UIColor
+//    let primaryColor: UIColor
+//    let primaryColorTint10: UIColor
+//    let primaryColorTint20: UIColor
+//    let primaryColorTint30: UIColor
 
-    let textDominant: UIColor // = Colors.textDominant
-    let textPrimary: UIColor // = Colors.textPrimary
-    let textSecondary: UIColor // = Colors.textSecondary
-    let textDisabled: UIColor // = Colors.textDisabled
-    let surfaceTertiary: UIColor // = Colors.surfaceTertiary
-    let dividerOnPrimary: UIColor // = Colors.dividerOnPrimary
-    let iconSecondary: UIColor // = Colors.iconSecondary
-    let iconDisabled: UIColor // = Colors.iconDisabled
-
-    let dangerPrimary: UIColor // = Colors.error
+//    let textDominant: UIColor = Colors.textDominant
+//    let textPrimary: UIColor = Colors.textPrimary
+//    let textSecondary: UIColor = Colors.textSecondary
+//    let textDisabled: UIColor = Colors.textDisabled
+//    let surfaceTertiary: UIColor = Colors.surfaceTertiary
+//    let dividerOnPrimary: UIColor = Colors.dividerOnPrimary
+//    let iconSecondary: UIColor = Colors.iconSecondary
+//    let iconDisabled: UIColor = Colors.iconDisabled\
+//    let dangerPrimary: UIColor // = Colors.error
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
 
-        
-        self.primaryColor = themeOptions?.primaryColor ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlue.color
-        self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlueTint10.color
-        self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlueTint20.color
-        self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? fluentTheme.color(.foreground1) // Colors.Palette.communicationBlueTint30.color
-        
-        self.textDominant = fluentTheme.color(.foreground1)
-        self.textPrimary = fluentTheme.color(.foreground1)
-        self.textSecondary = fluentTheme.color(.foreground1)
-        self.textDisabled = fluentTheme.color(.foreground1)
-        self.surfaceTertiary = fluentTheme.color(.foreground1)
-        self.dividerOnPrimary = fluentTheme.color(.foreground1)
-        self.iconDisabled = fluentTheme.color(.foreground1)
-        self.dangerPrimary = fluentTheme.color(.foreground1)
+//        self.primaryColor = themeOptions?.primaryColor ?? Colors.Palette.communicationBlue.color
+//        self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
+//        self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
+//        self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
+
+//        self.textDominant = fluentTheme.color(.foreground1)
+//        self.textPrimary = fluentTheme.color(.foreground1)
+//        self.textSecondary = fluentTheme.color(.foreground1)
+//        self.textDisabled = fluentTheme.color(.foreground1)
+//        self.surfaceTertiary = fluentTheme.color(.foreground1)
+//        self.dividerOnPrimary = fluentTheme.color(.foreground1)
+//        self.iconDisabled = fluentTheme.color(.foreground1)
+//        self.dangerPrimary = fluentTheme.color(.foreground1)
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
@@ -54,35 +51,89 @@ class ColorThemeProvider {
 }
 
 extension ColorThemeProvider: ColorProviding {
-    func primaryColor(for window: UIWindow) -> UIColor? {
-        return primaryColor
+    var brandBackground1: UIColor {
+        return fluentTheme.color(.brandBackground1)
     }
-
-    func primaryTint10Color(for window: UIWindow) -> UIColor? {
-        return primaryColorTint10
+    var brandBackground1Pressed: UIColor {
+        return fluentTheme.color(.brandBackground1Pressed)
     }
-
-    func primaryTint20Color(for window: UIWindow) -> UIColor? {
-        return primaryColorTint20
+    var brandBackground1Selected: UIColor {
+        return fluentTheme.color(.brandBackground1Selected)
     }
-
-    func primaryTint30Color(for window: UIWindow) -> UIColor? {
-        return primaryColorTint30
+    var brandBackground2: UIColor {
+        return fluentTheme.color(.brandBackground2)
     }
-
-    func primaryTint40Color(for window: UIWindow) -> UIColor? {
-        return primaryColor
+    var brandBackground2Pressed: UIColor {
+        return fluentTheme.color(.brandBackground2Pressed)
     }
-
-    func primaryShade10Color(for window: UIWindow) -> UIColor? {
-        return primaryColor
+    var brandBackground2Selected: UIColor {
+        return fluentTheme.color(.brandBackground2Selected)
     }
-
-    func primaryShade20Color(for window: UIWindow) -> UIColor? {
-        return primaryColor
+    var brandBackground3: UIColor {
+        return fluentTheme.color(.background3)
     }
-
-    func primaryShade30Color(for window: UIWindow) -> UIColor? {
-        return primaryColor
+    var brandBackgroundTint: UIColor {
+        return fluentTheme.color(.brandBackgroundTint)
     }
+    var brandBackgroundDisabled: UIColor {
+        return fluentTheme.color(.brandBackgroundDisabled)
+    }
+    var brandForeground1: UIColor {
+        return fluentTheme.color(.brandForeground1)
+    }
+    var brandForeground1Pressed: UIColor {
+        return fluentTheme.color(.brandForeground1Pressed)
+    }
+    var brandForeground1Selected: UIColor {
+        return fluentTheme.color(.brandForeground1Selected)
+    }
+    var brandForegroundTint: UIColor {
+        return fluentTheme.color(.brandForegroundTint)
+    }
+    var brandForegroundDisabled1: UIColor {
+        return fluentTheme.color(.brandForegroundDisabled1)
+    }
+    var brandForegroundDisabled2: UIColor {
+        return fluentTheme.color(.brandForegroundDisabled2)
+    }
+    var brandStroke1: UIColor {
+        return fluentTheme.color(.brandStroke1)
+    }
+    var brandStroke1Pressed: UIColor {
+        return fluentTheme.color(.brandStroke1Pressed)
+    }
+    var brandStroke1Selected: UIColor {
+        return fluentTheme.color(.brandStroke1Selected)
+    }
+//    func primaryColor(for window: UIWindow) -> UIColor? {
+//        return primaryColor
+//    }
+//
+//    func primaryTint10Color(for window: UIWindow) -> UIColor? {
+//        return primaryColorTint10
+//    }
+//
+//    func primaryTint20Color(for window: UIWindow) -> UIColor? {
+//        return primaryColorTint20
+//    }
+//
+//    func primaryTint30Color(for window: UIWindow) -> UIColor? {
+//        return primaryColorTint30
+//    }
+//
+//    func primaryTint40Color(for window: UIWindow) -> UIColor? {
+//        return primaryColor
+//    }
+//
+//    func primaryShade10Color(for window: UIWindow) -> UIColor? {
+//        return primaryColor
+//    }
+//
+//    func primaryShade20Color(for window: UIWindow) -> UIColor? {
+//        return primaryColor
+//    }
+//
+//    func primaryShade30Color(for window: UIWindow) -> UIColor? {
+//        return primaryColor
+//    }
 }
