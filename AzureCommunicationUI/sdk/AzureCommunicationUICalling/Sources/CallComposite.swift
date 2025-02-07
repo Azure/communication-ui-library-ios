@@ -690,11 +690,11 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     private func setupColorTheming() {
         let colorProvider = ColorThemeProvider(themeOptions: themeOptions)
         StyleProvider.color = colorProvider
-        Task { @MainActor in
-            if let window = UIWindow.keyWindow {
-                Colors.setProvider(provider: colorProvider, for: window)
-            }
-        }
+//        Task { @MainActor in
+//            if let window = UIWindow.keyWindow {
+//                Colors.setProvider(provider: colorProvider, for: window)
+//            }
+//        }
     }
 
     private func setupLocalization(with provider: LocalizationProviderProtocol) {

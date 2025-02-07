@@ -8,5 +8,5 @@ import Foundation
 struct StyleProvider {
     static var color = ColorThemeProvider(themeOptions: nil)
     static var icon = IconProvider()
-    // static var font = FontProvider()
+    static var font = FontProvider(themeOptions: nil)
 }

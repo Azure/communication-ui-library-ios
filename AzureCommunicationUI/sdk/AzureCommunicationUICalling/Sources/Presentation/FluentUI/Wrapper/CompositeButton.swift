@@ -52,32 +52,32 @@ struct CompositeButton: UIViewRepresentable {
         ) -> FluentUI.Button {
         let button = Button(style: buttonStyle)
         button.setTitle(buttonLabel, for: .normal)
-         /* <CUSTOM_COLOR_FEATURE> */
-                let dynamicColor = (buttonStyle == .borderless ||
-                                   buttonStyle == .primaryOutline)
-                                   ? themeOptions.primaryColor.dynamicColor
-                                   : themeOptions.foregroundOnPrimaryColor.dynamicColor
-                var overrideTokens: [ButtonTokenSet.Tokens: ControlTokenValue] = [
-                    .foregroundColor: ControlTokenValue.dynamicColor({
-                        dynamicColor!
-                    }),
-                    .foregroundPressedColor: ControlTokenValue.dynamicColor({
-                        dynamicColor!
-                    }),
-                    .foregroundDisabledColor: ControlTokenValue.dynamicColor({
-                        Colors.gray300.dynamicColor!
-                    }),
-                    .borderColor: ControlTokenValue.dynamicColor({
-                        themeOptions.primaryColor.dynamicColor!
-                    })
-                ]
-                if buttonStyle == .primaryFilled {
-                    overrideTokens[.backgroundColor] = .dynamicColor {
-                        themeOptions.primaryColor.dynamicColor!
-                    }
-                }
-                button.tokenSet.replaceAllOverrides(with: overrideTokens)
-         /* </CUSTOM_COLOR_FEATURE> */
+//         /* <CUSTOM_COLOR_FEATURE> */
+//                let dynamicColor = (buttonStyle == .borderless ||
+//                                   buttonStyle == .primaryOutline)
+//                                   ? themeOptions.primaryColor.dynamicColor
+//                                   : themeOptions.foregroundOnPrimaryColor.dynamicColor
+//                var overrideTokens: [ButtonTokenSet.Tokens: ControlTokenValue] = [
+//                    .foregroundColor: ControlTokenValue.dynamicColor({
+//                        dynamicColor!
+//                    }),
+//                    .foregroundPressedColor: ControlTokenValue.dynamicColor({
+//                        dynamicColor!
+//                    }),
+//                    .foregroundDisabledColor: ControlTokenValue.dynamicColor({
+//                        Colors.gray300.dynamicColor!
+//                    }),
+//                    .borderColor: ControlTokenValue.dynamicColor({
+//                        themeOptions.primaryColor.dynamicColor!
+//                    })
+//                ]
+//                if buttonStyle == .primaryFilled {
+//                    overrideTokens[.backgroundColor] = .dynamicColor {
+//                        themeOptions.primaryColor.dynamicColor!
+//                    }
+//                }
+//                button.tokenSet.replaceAllOverrides(with: overrideTokens)
+//         /* </CUSTOM_COLOR_FEATURE> */
                  if let paddings = paddings {
                     button.edgeInsets = getEdgeInserts(paddings)
                 }
