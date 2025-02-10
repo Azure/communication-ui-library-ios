@@ -90,20 +90,56 @@ class ColorThemeProvider {
 //                            dark: Colors.Palette.gray800.color)
 //    }()
 
-    let foreground3: Color
+    let surfaceDarkColor: UIColor
+    let drawerColor: UIColor
+    let surface: UIColor
+    let onHoldBackground: UIColor
+    let backgroundColor: UIColor
+    let warning: UIColor
+    let onWarning: UIColor
+    let gridLayoutBackground: UIColor
+    let disableColor: UIColor
+    let overlay: UIColor
+    let textSecondary: UIColor
+    let hangup: UIColor
+    let surfaceLightColor: UIColor
+    let onSurface: UIColor
+    let onSurfaceColor: UIColor
+    let onBackground: UIColor
+    let onNavigationSecondary: UIColor
+    let gradientColor: UIColor
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
 
-//        self.primaryColor = themeOptions?.primaryColor ?? Colors.Palette.communicationBlue.color
-//        self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
-//        self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
-//        self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
-//        /* <CUSTOM_COLOR_FEATURE> */
-//        self.foregroundOnPrimaryColor = themeOptions?.foregroundOnPrimaryColor ?? .orange
-//        /* </CUSTOM_COLOR_FEATURE> */
+        // self.primaryColor = themeOptions?.primaryColor ?? Colors.Palette.communicationBlue.color
+        // self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
+        // self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
+        // self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
+        //        /* <CUSTOM_COLOR_FEATURE> */
+        // self.foregroundOnPrimaryColor = themeOptions?.foregroundOnPrimaryColor ?? .orange
+        //        /* </CUSTOM_COLOR_FEATURE> */
 
-        self.foreground3 = fluentTheme.swiftUIColor(.foreground3)
+        // Search and replace to put correct names in code
+
+        self.surfaceDarkColor = UIColor.black.withAlphaComponent(0.6) // Replace with Fluent
+        self.drawerColor = fluentTheme.color(.background1)
+        self.surface = fluentTheme.color(.background4)
+        self.onHoldBackground = UIColor.compositeColor(.onHoldBackground) // Replace with fluent
+        self.backgroundColor = fluentTheme.color(.background1) // Double check dark mode
+        self.warning = fluentTheme.color(.dangerBackground1) // Double check
+        self.onWarning = fluentTheme.color(.dangerForeground1) // Double check
+        self.gridLayoutBackground = fluentTheme.color(.background1) // Duplicate?
+        self.disableColor = fluentTheme.color(.foregroundDisabled1) // Double check
+        self.overlay = UIColor.compositeColor(.overlay) // Replace with Fluent
+        self.textSecondary = fluentTheme.color(.foreground2) // Double check
+        self.hangup = UIColor.compositeColor(.hangup) // Replace with Fluent
+        self.surfaceLightColor = UIColor.black.withAlphaComponent(0.3) // Replace with Fluent
+        self.onSurface = fluentTheme.color(.foreground2) // Double check
+        self.onSurfaceColor = fluentTheme.color(.foreground2) // Duplicate
+        self.onBackground = fluentTheme.color(.foreground2) // Duplicate
+        self.onNavigationSecondary = fluentTheme.color(.foreground2) // Double Check
+        self.gradientColor = UIColor.black.withAlphaComponent(0.7) // Replace with Fluent
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {

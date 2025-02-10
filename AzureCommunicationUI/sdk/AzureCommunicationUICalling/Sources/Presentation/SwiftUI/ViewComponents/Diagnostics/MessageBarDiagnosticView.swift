@@ -28,7 +28,7 @@ struct MessageBarDiagnosticView: View {
                         .accessibilityHidden(true)
                 }
                 Text(viewModel.text)
-                    .font(Fonts.footnote.font)
+                    .font(StyleProvider.font.caption1)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
                     .multilineTextAlignment(.center)
                     .foregroundColor(foregroundColor)

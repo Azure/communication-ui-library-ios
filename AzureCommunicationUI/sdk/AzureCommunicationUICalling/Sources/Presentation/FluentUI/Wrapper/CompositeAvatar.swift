@@ -19,7 +19,7 @@ struct CompositeAvatar: View {
                       size: avatarSize,
                       image: avatarImage,
                       primaryText: displayName)
-            .ringColor(StyleProvider.color.primaryColor)
+            .ringColor(StyleProvider.color.brandForegroundTint)
             .isRingVisible(isSpeaking)
             .accessibilityHidden(true)
     }

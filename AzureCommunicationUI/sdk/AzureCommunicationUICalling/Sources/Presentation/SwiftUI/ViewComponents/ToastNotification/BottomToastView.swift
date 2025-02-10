@@ -28,7 +28,7 @@ struct BottomToastView: View {
                         .accessibilityHidden(true)
                 }
                 Text(viewModel.text)
-                    .font(Fonts.caption1.font)
+                    .font(StyleProvider.font.caption1)
                     .padding(
                         EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: horizontalPadding))
                     .multilineTextAlignment(.center)

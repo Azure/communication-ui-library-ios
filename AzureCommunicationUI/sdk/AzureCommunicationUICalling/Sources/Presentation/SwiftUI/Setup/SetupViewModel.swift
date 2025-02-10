@@ -78,7 +78,7 @@ class SetupViewModel: ObservableObject {
         }
 
         joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
+            buttonStyle: .accent,
             buttonLabel: self.localizationProvider
                 .getLocalizedString(callButtonLocalization),
             iconName: .meetNow,

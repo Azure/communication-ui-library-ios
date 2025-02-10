@@ -24,6 +24,9 @@ class FontProvider {
     let caption1: Font
     let caption2: Font
 
+    let body2StrongAccessibility: Font
+    let caption1StrongAccessiblity: Font
+
     init(themeOptions: ThemeOptions?) {
         self.display = Font(fluentTheme.typography(.display))
         self.largeTitle = Font(fluentTheme.typography(.largeTitle))
@@ -37,5 +40,11 @@ class FontProvider {
         self.caption1Strong = Font(fluentTheme.typography(.caption1Strong))
         self.caption1 = Font(fluentTheme.typography(.caption1))
         self.caption2 = Font(fluentTheme.typography(.caption2))
+
+        // Add accessibility fonts
+        //    static var button1Accessibility: UIFont { return Fonts.button1.withSize(26) }
+        //    static var button2Accessibility: UIFont { return Fonts.button2.withSize(20) }
+        self.body2StrongAccessibility = Font(fluentTheme.typography(.body2Strong))
+        self.caption1StrongAccessiblity = Font(fluentTheme.typography(.caption1Strong))
     }
 }

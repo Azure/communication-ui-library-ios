@@ -28,11 +28,11 @@ struct OverlayView: View {
                                 .padding(.bottom, verticalIconPaddingSize)
 
                             Text(viewModel.title)
-                                .font(Fonts.title2.font)
+                                .font(StyleProvider.font.title2)
                                 .multilineTextAlignment(.center)
                             if let subtitle = viewModel.subtitle {
                                 Text(subtitle)
-                                    .font(Fonts.subhead.font)
+                                    .font(StyleProvider.font.body2)
                                     .multilineTextAlignment(.center)
                                     .padding(.top, verticalSubtitlePaddingSize)
 

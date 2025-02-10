@@ -83,7 +83,7 @@ struct InfoHeaderView: View {
                     .alignmentGuide(.leading) { d in d[.leading] }
                     .foregroundColor(Constants.foregroundColor)
                     .lineLimit(1)
-                    .font(Fonts.caption1.font)
+                    .font(StyleProvider.font.caption1)
                     .accessibilityLabel(Text(viewModel.accessibilityLabelTitle))
                     .accessibilitySortPriority(1)
                     .scaledToFit()
@@ -95,7 +95,7 @@ struct InfoHeaderView: View {
                         .alignmentGuide(.leading) { d in d[.leading] }
                         .foregroundColor(Constants.foregroundColor)
                         .lineLimit(1)
-                        .font(Fonts.caption1.font)
+                        .font(StyleProvider.font.caption1)
                         .accessibilityLabel(Text(viewModel.accessibilityLabelSubtitle))
                         .accessibilitySortPriority(2)
                         .scaledToFit()

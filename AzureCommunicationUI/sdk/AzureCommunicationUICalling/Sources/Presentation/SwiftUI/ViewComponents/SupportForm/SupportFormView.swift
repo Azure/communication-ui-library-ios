@@ -32,11 +32,11 @@ internal struct SupportFormView: View {
                 Button(viewModel.cancelButtonText) {
                     viewModel.hideForm()
                 }
-                .font(Fonts.button2.font)
+                .font(StyleProvider.font.caption1Strong)
                 .foregroundColor(Color(StyleProvider.color.onBackground))
                 Spacer()
                 Text(viewModel.reportAProblemText)
-                    .font(Fonts.subhead.font)
+                    .font(StyleProvider.font.body2)
                 Spacer()
                 Button(viewModel.sendFeedbackText) {
                     viewModel.sendReport()
@@ -44,7 +44,7 @@ internal struct SupportFormView: View {
                 .accessibilityIdentifier(AccessibilityIdentifier.supportFormSubmitAccessibilityId.rawValue)
                 .disabled(viewModel.blockSubmission)
                 .opacity(viewModel.blockSubmission ? Constants.disabledOpacity : Constants.enabledOpacity)
-                .font(Fonts.button2.font)
+                .font(StyleProvider.font.caption1Strong)
                 .foregroundColor(Color(StyleProvider.color.onBackground))
             }
             ZStack(alignment: .topLeading) {
@@ -63,10 +63,10 @@ internal struct SupportFormView: View {
             }
             HStack {
                 Text(viewModel.logsAttachNotice)
-                    .font(Fonts.caption1.font)
+                    .font(StyleProvider.font.caption1)
                 Link(viewModel.privacyPolicyText, destination: URL(string: StringConstants.privacyPolicyLink)!)
-                    .foregroundColor(Color(StyleProvider.color.primaryColor))
-                    .font(Fonts.caption2.font)
+                    .foregroundColor(Color(StyleProvider.color.brandForegroundTint))
+                    .font(StyleProvider.font.caption2)
                 Spacer()
 #if DEBUG
                 // Hidden button for injecting text

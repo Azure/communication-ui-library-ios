@@ -44,7 +44,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
                                                                             subtitle: errorInfoSubtitle)
         self.resumeAction = resumeAction
         self.actionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
+            buttonStyle: .accent,
             buttonLabel: localizationProvider.getLocalizedString(.resume),
             iconName: nil,
             isDisabled: false) { [weak self] in

@@ -90,12 +90,12 @@ struct ParticipantGridCellView: View {
             ParticipantTitleView(displayName: $viewModel.displayName,
                                  isMuted: $viewModel.isMuted,
                                  isHold: $viewModel.isHold,
-                                 titleFont: Fonts.caption1.font,
+                                 titleFont: StyleProvider.font.caption1,
                                  mutedIconSize: 16)
             .opacity(viewModel.isHold ? 0.6 : 1)
             if viewModel.isHold {
                 Text(viewModel.getOnHoldString())
-                    .font(Fonts.caption1.font)
+                    .font(StyleProvider.font.caption1)
                     .lineLimit(1)
                     .foregroundColor(Color(StyleProvider.color.onBackground))
                     .padding(.top, 8)

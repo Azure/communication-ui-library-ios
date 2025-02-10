@@ -34,10 +34,10 @@ struct IconWithLabelButton<T: ButtonState>: View {
                 if let buttonLabel = viewModel.buttonLabel {
                     if sizeCategory >= ContentSizeCategory.accessibilityMedium {
                         Text(buttonLabel)
-                            .font(Fonts.button2Accessibility.font)
+                            .font(StyleProvider.font.caption1StrongAccessiblity)
                     } else {
                         Text(buttonLabel)
-                            .font(Fonts.button2.font)
+                            .font(StyleProvider.font.caption1Strong)
                     }
                 }
             }

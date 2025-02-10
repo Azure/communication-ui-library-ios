@@ -36,9 +36,25 @@ public protocol ThemeOptions {
 }
 
 public extension ThemeOptions {
-//    var colorSchemeOverride: UIUserInterfaceStyle {
-//        return .unspecified
-//    }
+    var colorSchemeOverride: UIUserInterfaceStyle {
+        return .unspecified
+    }
+    var primaryColor: UIColor {
+        return UIColor.blue
+    }
+    var primaryColorTint10: UIColor {
+        return UIColor.blue
+    }
+    var primaryColorTint20: UIColor {
+        return UIColor.blue
+    }
+    var primaryColorTint30: UIColor {
+        return UIColor.blue
+    }
+    /* <CUSTOM_COLOR_FEATURE> */
+    var foregroundOnPrimaryColor: UIColor {
+        return UIColor.white
+    }
 //    var primaryColor: UIColor {
 //        return Colors.Palette.communicationBlue.color
 //    }

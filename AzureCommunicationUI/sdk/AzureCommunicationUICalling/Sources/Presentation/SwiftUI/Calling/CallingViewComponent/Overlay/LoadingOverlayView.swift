@@ -24,9 +24,9 @@ struct LoadingOverlayView: View {
                         Group {
                             ActivityIndicator(size: .medium)
                                 .isAnimating(true)
-                                .color(Colors.Palette.communicationBlue.color)
+                                .color(StyleProvider.color.brandForegroundTint) // Should be forced to be commBlue?
                             Text(viewModel.title)
-                                .font(Fonts.title2.font)
+                                .font(StyleProvider.font.title2)
                         }
                         .padding(.horizontal, horizontalPaddingSize)
                         .accessibilityElement(children: .combine)

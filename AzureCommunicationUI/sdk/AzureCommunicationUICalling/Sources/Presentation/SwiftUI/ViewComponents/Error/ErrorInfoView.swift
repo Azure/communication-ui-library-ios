@@ -16,13 +16,13 @@ struct ErrorInfoView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(viewModel.title)
-                        .font(Fonts.button1.font)
+                        .font(StyleProvider.font.body2Strong)
                         .foregroundColor(Color(StyleProvider.color.onWarning))
                         .accessibilitySortPriority(1)
 
                     if !viewModel.subtitle.isEmpty {
                         Text(viewModel.subtitle)
-                            .font(Fonts.subhead.font)
+                            .font(StyleProvider.font.body2)
                             .foregroundColor(Color(StyleProvider.color.onWarning))
                             .accessibilitySortPriority(2)
                     }
@@ -30,7 +30,7 @@ struct ErrorInfoView: View {
                 Spacer()
                 Button(action: viewModel.dismiss) {
                     Text(viewModel.dismissContent)
-                        .font(Fonts.button1.font)
+                        .font(StyleProvider.font.body2Strong)
                         .foregroundColor(Color(StyleProvider.color.onWarning))
                 }
                 .padding([.top, .bottom, .trailing])
