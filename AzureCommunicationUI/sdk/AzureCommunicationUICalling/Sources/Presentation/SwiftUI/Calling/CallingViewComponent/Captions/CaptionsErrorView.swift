@@ -28,7 +28,7 @@ struct CaptionsErrorView: View {
                         .accessibilityHidden(true)
                 }
                 Text(viewModel.text)
-                    .font(Fonts.caption1.font)
+                    .font(StyleProvider.font.caption1)
                     .padding(
                         EdgeInsets(top: verticalPadding,
                                    leading: 0,

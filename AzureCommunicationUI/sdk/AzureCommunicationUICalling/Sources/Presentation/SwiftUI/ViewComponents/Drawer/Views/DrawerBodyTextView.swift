@@ -42,7 +42,7 @@ internal struct DrawerBodyWithActionTextView: View {
                 .onTapGesture {
                     isConfirming = true
                 }
-                .foregroundColor(Color(StyleProvider.color.primaryColor))
+                .foregroundColor(Color(StyleProvider.color.brandForegroundTint))
         }
         .padding(.horizontal, DrawerListConstants.optionPaddingHorizontal)
         .padding(.vertical, DrawerListConstants.optionPaddingVertical)

@@ -136,7 +136,7 @@ struct MessageListView: View {
                         }
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color(StyleProvider.color.primaryColor))
+                        .background(Color(StyleProvider.color.brandBackground1))
                         .clipShape(Capsule())
                         .shadow(radius: Constants.buttonShadowRadius, y: Constants.buttonShadowOffset)
                         .padding(.bottom, Constants.buttonBottomPadding)
@@ -170,7 +170,7 @@ struct MessageListView: View {
     private func createMessageSendStatus(message: ChatMessageInfoModel) -> some View {
         let shouldShowMessageStatusView = viewModel.shouldShowMessageStatusView(message: message)
         let tintColor = message.sendStatus == .failed
-                        ? StyleProvider.color.dangerPrimary : StyleProvider.color.primaryColor
+        ? StyleProvider.color.severeBackground1 : Color(StyleProvider.color.brandBackground1)
         VStack {
             Spacer()
             if message.isLocalUser,
@@ -180,7 +180,7 @@ struct MessageListView: View {
                 StyleProvider.icon.getImage(for: iconName)
                     .frame(width: Constants.messageSendStatusIconSize,
                            height: Constants.messageSendStatusIconSize)
-                    .foregroundColor(Color(tintColor))
+                    .foregroundColor(StyleProvider.color.foreground3) // ?
                     .padding([.bottom, .trailing], Constants.messageSendStatusViewPadding)
             }
         }

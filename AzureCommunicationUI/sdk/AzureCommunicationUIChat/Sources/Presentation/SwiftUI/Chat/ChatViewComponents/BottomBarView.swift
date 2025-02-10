@@ -38,7 +38,7 @@ struct BottomBarView: View {
 
     var localParticipantRemovedBanner: some View {
         Text("You're no longer a participant")
-            .foregroundColor(Color(StyleProvider.color.textSecondary))
+            .foregroundColor(StyleProvider.color.foreground2)
     }
 }
 
@@ -90,14 +90,14 @@ struct TextEditorView: View {
             .padding([.leading], Constants.leadingPadding)
             .padding([.top], Constants.padding)
             .overlay(RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                .stroke(Color(StyleProvider.color.dividerOnPrimary)))
+                .stroke(StyleProvider.color.stroke2))
     }
 
     var placeHolder: some View {
         Group {
             if text.isEmpty {
                 Text("Type a message") // Localization
-                    .foregroundColor(Color(StyleProvider.color.textDisabled))
+                    .foregroundColor(StyleProvider.color.foregroundDisabled1)
                     .padding(Constants.placeHolderPadding)
                     .allowsHitTesting(false)
             }

@@ -24,7 +24,7 @@ class PreviewAreaViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
 
         goToSettingsButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryOutline,
+            buttonStyle: .outlineAccent,
             buttonLabel: self.localizationProvider
                 .getLocalizedString(.goToSettings)) { [weak self] in
                 guard let self = self else {

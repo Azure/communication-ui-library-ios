@@ -53,7 +53,7 @@ struct PermissionWarningView: View {
                                 .foregroundColor(Color(StyleProvider.color.onSurface))
                             Text(displayText)
                                 .padding(.horizontal, Constants.horizontalSpacing)
-                                .font(Fonts.subhead.font)
+                                .font(StyleProvider.font.body2)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color(StyleProvider.color.onSurface))
                             PrimaryButton(viewModel: goToSettingsButtonViewModel)

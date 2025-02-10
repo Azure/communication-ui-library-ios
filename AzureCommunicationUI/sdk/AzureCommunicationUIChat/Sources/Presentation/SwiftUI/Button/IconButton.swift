@@ -40,9 +40,9 @@ extension IconButtonViewModel.ButtonType {
     var buttonForegroundColor: Color {
         switch self {
         case .controlButton:
-            return Color(StyleProvider.color.textDominant)
+            return StyleProvider.color.foregroundDisabled1
         case .sendButton:
-            return Color(StyleProvider.color.primaryColor)
+            return Color(StyleProvider.color.brandBackground1)
         }
     }
 
@@ -78,7 +78,7 @@ extension IconButtonViewModel.ButtonType {
 struct IconButton: View {
     @ObservedObject var viewModel: IconButtonViewModel
 
-    private let buttonDisabledColor = Color(StyleProvider.color.iconDisabled)
+    private let buttonDisabledColor = StyleProvider.color.foregroundDisabled1
 
     var body: some View {
         let buttonType = viewModel.buttonType

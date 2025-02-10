@@ -12,19 +12,19 @@ class ThemeColor: ThemeOptions {
         return .unspecified
     }
     var primaryColor: UIColor {
-        return Colors.Palette.communicationBlue.color
+        return StyleProvider.color.brandBackground1
     }
     var primaryColorTint10: UIColor {
-        return Colors.Palette.communicationBlueTint10.color
+        return StyleProvider.color.brandBackground1
     }
     var primaryColorTint20: UIColor {
-        return Colors.Palette.communicationBlueTint20.color
+        return StyleProvider.color.brandBackground1
     }
     var primaryColorTint30: UIColor {
-        return Colors.Palette.communicationBlueTint30.color
+        return StyleProvider.color.brandBackground1
     }
     /* <CUSTOM_COLOR_FEATURE> */
     var foregroundOnPrimaryColor: UIColor {
-        return UIColor.init(dynamicColor: Colors.surfacePrimary.dynamicColor!)
+        return StyleProvider.color.brandBackground1
     }
 }

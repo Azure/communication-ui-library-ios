@@ -44,7 +44,7 @@ struct MessageView: View {
             if showDateHeader {
                 Text(messageModel.dateHeaderLabel)
                     .font(.caption)
-                    .foregroundColor(Color(StyleProvider.color.textSecondary))
+                    .foregroundColor(StyleProvider.color.foreground2)
             }
         }
     }

@@ -35,7 +35,7 @@ internal class LobbyWaitingHeaderViewModel: ObservableObject {
         self.accessibilityLabel = title
 
         self.participantListButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
+            buttonStyle: .accent,
             buttonLabel: localizationProvider.getLocalizedString(.lobbyWaitingHeaderViewButton),
             iconName: nil,
             isDisabled: false,

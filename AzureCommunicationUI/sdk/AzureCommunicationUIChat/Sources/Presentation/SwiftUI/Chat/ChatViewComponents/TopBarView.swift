@@ -41,7 +41,7 @@ struct TopBarView: View {
 
     var numberOfParticipants: some View {
         Text(viewModel.numberOfParticipantsLabel)
-            .foregroundColor(Color(StyleProvider.color.textSecondary))
+            .foregroundColor(StyleProvider.color.foreground2)
             .font(.caption)
     }
 }

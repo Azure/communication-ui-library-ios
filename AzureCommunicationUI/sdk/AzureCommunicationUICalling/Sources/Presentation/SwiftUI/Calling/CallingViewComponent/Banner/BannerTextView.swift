@@ -17,7 +17,7 @@ struct BannerTextView: View {
             + Text(" ")
             + Text(viewModel.linkDisplay).underline()
         }
-        .font(Fonts.footnote.font)
+        .font(StyleProvider.font.body1Strong)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(viewModel.accessibilityLabel))
         .accessibilityAddTraits(.isLink)

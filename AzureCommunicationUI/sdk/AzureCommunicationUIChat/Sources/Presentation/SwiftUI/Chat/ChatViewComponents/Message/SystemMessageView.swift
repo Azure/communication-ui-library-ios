@@ -27,14 +27,14 @@ struct SystemMessageView: View {
     var message: some View {
         Text(messageModel.systemLabel)
             .font(.caption2)
-            .foregroundColor(Color(StyleProvider.color.textSecondary))
+            .foregroundColor(StyleProvider.color.foreground2)
     }
 
     var icon: some View {
         Group {
             if let icon = messageModel.systemIcon {
                 Icon(name: icon, size: Constants.iconSize)
-                    .foregroundColor(Color(StyleProvider.color.iconSecondary))
+                    .foregroundColor(StyleProvider.color.foreground3)
             }
         }
     }

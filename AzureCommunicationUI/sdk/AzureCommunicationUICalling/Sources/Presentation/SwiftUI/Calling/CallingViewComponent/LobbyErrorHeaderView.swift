@@ -53,7 +53,7 @@ struct LobbyErrorHeaderView: View {
                                     bottom: Constants.labelHorizontalPadding,
                                     trailing: 0))
                 .foregroundColor(Constants.foregroundColor)
-                .font(Fonts.caption1.font)
+                .font(StyleProvider.font.caption1)
                 .accessibilityLabel(Text(viewModel.accessibilityLabel))
                 .accessibilitySortPriority(1)
             Spacer()

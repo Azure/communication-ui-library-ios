@@ -12,7 +12,7 @@ struct HtmlMessageView: View {
         HStack {
             Text(messageModel.getContentLabel())
                 .font(.caption2)
-                .foregroundColor(Color(StyleProvider.color.textSecondary))
+                .foregroundColor(StyleProvider.color.foreground2)
             Spacer()
         }
     }

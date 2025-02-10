@@ -53,7 +53,7 @@ internal struct CustomAlert: View {
                                            height: CustomAlertConstants.confirmationButtonHeight,
                                            alignment: .center
                                     )
-                                    .foregroundColor(Color(StyleProvider.color.primaryColor))
+                                    .foregroundColor(Color(StyleProvider.color.brandForegroundTint))
                             })
                             Divider().frame(maxHeight: CustomAlertConstants.confirmationButtonHeight)
                             Button(action: {
@@ -64,7 +64,7 @@ internal struct CustomAlert: View {
                                     .frame(width: CustomAlertConstants.confirmationButtonWidth,
                                            height: CustomAlertConstants.confirmationButtonHeight,
                                            alignment: .center)
-                                    .foregroundColor(Color(StyleProvider.color.primaryColor))
+                                    .foregroundColor(Color(StyleProvider.color.brandForegroundTint))
                             })
                         }
                     }.padding()

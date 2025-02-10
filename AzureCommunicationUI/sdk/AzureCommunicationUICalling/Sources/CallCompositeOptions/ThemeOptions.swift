@@ -40,20 +40,36 @@ public extension ThemeOptions {
         return .unspecified
     }
     var primaryColor: UIColor {
-        return Colors.Palette.communicationBlue.color
+        return UIColor.blue
     }
     var primaryColorTint10: UIColor {
-        return Colors.Palette.communicationBlueTint10.color
+        return UIColor.blue
     }
     var primaryColorTint20: UIColor {
-        return Colors.Palette.communicationBlueTint20.color
+        return UIColor.blue
     }
     var primaryColorTint30: UIColor {
-        return Colors.Palette.communicationBlueTint30.color
+        return UIColor.blue
     }
     /* <CUSTOM_COLOR_FEATURE> */
     var foregroundOnPrimaryColor: UIColor {
-        return UIColor.init(dynamicColor: Colors.surfacePrimary.dynamicColor!)
+        return UIColor.white
     }
-    /* </CUSTOM_COLOR_FEATURE> */
+//    var primaryColor: UIColor {
+//        return Colors.Palette.communicationBlue.color
+//    }
+//    var primaryColorTint10: UIColor {
+//        return Colors.Palette.communicationBlueTint10.color
+//    }
+//    var primaryColorTint20: UIColor {
+//        return Colors.Palette.communicationBlueTint20.color
+//    }
+//    var primaryColorTint30: UIColor {
+//        return Colors.Palette.communicationBlueTint30.color
+//    }
+//    /* <CUSTOM_COLOR_FEATURE> */
+//    var foregroundOnPrimaryColor: UIColor {
+//        return UIColor.init(dynamicColor: Colors.surfacePrimary.dynamicColor!)
+//    }
+//    /* </CUSTOM_COLOR_FEATURE> */
 }

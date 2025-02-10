@@ -30,7 +30,7 @@ struct ParticipantGridCellVideoView: View {
             ParticipantTitleView(displayName: $displayName,
                                  isMuted: $isMuted,
                                  isHold: .constant(false),
-                                 titleFont: Fonts.caption1.font,
+                                 titleFont: StyleProvider.font.caption1,
                                  mutedIconSize: 14)
                 .padding(.vertical, 2)
                 .background(Color(StyleProvider.color.overlay))
@@ -41,7 +41,7 @@ struct ParticipantGridCellVideoView: View {
 
         }.overlay(
             isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4)
-                .strokeBorder(Color(StyleProvider.color.primaryColor), lineWidth: 4) : nil
+                .strokeBorder(Color(StyleProvider.color.brandForegroundTint), lineWidth: 4) : nil
         ).animation(.default, value: show)
     }
 
