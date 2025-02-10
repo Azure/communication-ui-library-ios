@@ -208,6 +208,7 @@ extends:
             destinationPlatformOption: iOS
             destinationSimulators: iPhone 15 Pro
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
+            useXcpretty: false
             cwd: AzureCommunicationUI
         - task: DownloadSecureFile@1
           displayName: Download Distribution Profile from Azure secure files storage copy
