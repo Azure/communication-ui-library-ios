@@ -33,6 +33,7 @@ class ColorThemeProvider {
     let foregroundDisabled1: Color
     let stroke2: Color
     let severeBackground1: Color
+    let backgroundCanvas: Color
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
@@ -48,6 +49,7 @@ class ColorThemeProvider {
         self.foregroundDisabled1 = fluentTheme.swiftUIColor(.foregroundDisabled1) // F1: iconDisabled
         self.stroke2 = fluentTheme.swiftUIColor(.stroke2) // F1: dividerOnPrimary
         self.severeBackground1 = fluentTheme.swiftUIColor(.severeBackground1) // F1: dangerPrimary?
+        self.backgroundCanvas = fluentTheme.swiftUIColor(.backgroundCanvas)
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {

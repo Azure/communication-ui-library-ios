@@ -106,7 +106,7 @@ struct TextMessageView: View {
 
     private func getMessageBubbleBackground(messageModel: ChatMessageInfoModel) -> Color {
         guard messageModel.isLocalUser else {
-            return Color(StyleProvider.color.brandBackgroundTint)
+            return StyleProvider.color.backgroundCanvas
         }
 
         if messageModel.sendStatus == .failed {
