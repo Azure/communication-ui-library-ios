@@ -85,14 +85,12 @@ struct ParticipantGridCellView: View {
                             avatarImage: $avatarImage,
                             isSpeaking: viewModel.isSpeaking && !viewModel.isMuted)
             .frame(width: avatarSize, height: avatarSize)
-            .opacity(viewModel.isHold ? 0.6 : 1)
             Spacer().frame(height: 10)
             ParticipantTitleView(displayName: $viewModel.displayName,
                                  isMuted: $viewModel.isMuted,
                                  isHold: $viewModel.isHold,
                                  titleFont: Fonts.caption1.font,
                                  mutedIconSize: 16)
-            .opacity(viewModel.isHold ? 0.6 : 1)
             if viewModel.isHold {
                 Text(viewModel.getOnHoldString())
                     .font(Fonts.caption1.font)
@@ -110,6 +108,7 @@ struct ParticipantTitleView: View {
     @Binding var isMuted: Bool
     @Binding var isHold: Bool
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+    @AccessibilityFocusState private var isFocused: Bool // Add focus state
     let titleFont: Font
     let mutedIconSize: CGFloat
     private var isEmpty: Bool {
@@ -148,5 +147,11 @@ struct ParticipantTitleView: View {
         })
         .padding(.horizontal, isEmpty ? 0 : 4)
         .animation(.default, value: true)
+        .accessibilityFocused($isFocused) // Apply accessibility focus
+        .onChange(of: isHold) { newValue in
+            if newValue {
+                isFocused = true // Request focus when put on hold
+            }
+        }
     }
 }
