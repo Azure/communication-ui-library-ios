@@ -16,8 +16,6 @@ enum RttResultType {
             return .final
         case .partial:
             return .partial
-        default:
-            return .final
         }
     }
 }

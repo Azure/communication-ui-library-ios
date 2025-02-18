@@ -11,7 +11,6 @@ class CaptionsRttDataManager: ObservableObject {
     // MARK: - Properties
 
     @Published var captionsRttData = [CaptionsRttRecord]()
-    @Published var isRttAvailable = false
     @Published var isAutoCommit = false
 
     var isTranslationEnabled = false
@@ -74,29 +73,18 @@ class CaptionsRttDataManager: ObservableObject {
     private func updateState(from state: AppState) {
         isTranslationEnabled = !(state.captionsState.captionLanguage?.isEmpty ?? true)
         let captionsEnabled = state.captionsState.isCaptionsOn
-        isRttAvailable = state.rttState.isRttOn
 
-        if isRttAvailable && !hasInsertedRttInfo {
+        if state.rttState.isRttOn && !hasInsertedRttInfo {
             insertRttInfoMessage()
         }
 
-        filterCaptionsRttData(captionsEnabled: captionsEnabled, rttAvailable: isRttAvailable)
+        filterCaptionsRttData(captionsEnabled: captionsEnabled)
     }
 
-    private func filterCaptionsRttData(captionsEnabled: Bool, rttAvailable: Bool) {
-        switch (captionsEnabled, rttAvailable) {
-        case (true, true):
-            // Both captions and RTT are enabled; no filtering needed.
-            break
-        case (true, false):
-            // Only captions are enabled; remove RTT data.
-            captionsRttData = captionsRttData.filter { $0.captionsRttType == .captions }
-        case (false, true):
-            // Only RTT is enabled; remove captions data.
+    private func filterCaptionsRttData(captionsEnabled: Bool) {
+        if !captionsEnabled {
+            // If captions are disabled, keep only RTT data
             captionsRttData = captionsRttData.filter { $0.captionsRttType == .rtt }
-        case (false, false):
-            // Neither captions nor RTT are enabled; clear all data.
-            captionsRttData.removeAll()
         }
     }
 
