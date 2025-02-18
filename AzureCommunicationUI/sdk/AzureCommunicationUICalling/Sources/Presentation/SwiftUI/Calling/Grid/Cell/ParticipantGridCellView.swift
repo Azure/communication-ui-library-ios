@@ -109,6 +109,7 @@ struct ParticipantTitleView: View {
     @Binding var isMuted: Bool
     @Binding var isHold: Bool
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+    @AccessibilityFocusState private var isFocused: Bool // Add focus state
     let titleFont: Font
     let mutedIconSize: CGFloat
     private var isEmpty: Bool {
@@ -147,5 +148,11 @@ struct ParticipantTitleView: View {
         })
         .padding(.horizontal, isEmpty ? 0 : 4)
         .animation(.default, value: true)
+        .accessibilityFocused($isFocused) // Apply accessibility focus
+        .onChange(of: isHold) { newValue in
+            if newValue {
+                isFocused = true // Request focus when put on hold
+            }
+        }
     }
 }
