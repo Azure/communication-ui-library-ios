@@ -6,7 +6,7 @@
 import XCTest
 @testable import AzureCommunicationUICalling
 
-class CaptionsViewManagerTests: XCTestCase {
+class CaptionsRttViewManagerTests: XCTestCase {
     var captionsManager: CaptionsRttViewManager!
     var mockCallingSDKWrapper: CallingSDKWrapperMocking!
     var mockStore: StoreFactoryMocking!

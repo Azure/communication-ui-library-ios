@@ -609,7 +609,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
-        let captionsViewManager = CaptionsRttViewManager(
+        let captionsRttViewManager = CaptionsRttViewManager(
             store: store,
             callingSDKWrapper: callingSdkWrapper
         )
@@ -625,7 +625,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
-                captionsViewManager: captionsViewManager,
+                captionsRttViewManager: captionsRttViewManager,
                 localOptions: localOptions,
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
