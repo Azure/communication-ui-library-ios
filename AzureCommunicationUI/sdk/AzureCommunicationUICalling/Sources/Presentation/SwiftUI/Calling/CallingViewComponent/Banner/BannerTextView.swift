@@ -17,7 +17,8 @@ struct BannerTextView: View {
             + Text(" ")
             + Text(viewModel.linkDisplay).underline()
         }
-        .font(Fonts.footnote.font)
+        .font(.system(size: adjustedFontSize(), weight: .regular)) // Apply computed font size
+        .lineLimit(nil)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(viewModel.accessibilityLabel))
         .accessibilityAddTraits(.isLink)
@@ -26,5 +27,15 @@ struct BannerTextView: View {
                 UIApplication.shared.open(url)
             }
         }
+    }
+
+    /// Adjusts the font size based on Dynamic Type but keeps it within limits.
+    private func adjustedFontSize() -> CGFloat {
+        let baseSize: CGFloat = 14  // Default footnote size
+        let maxSize: CGFloat = 26   // Maximum size allowed
+        let minSize: CGFloat = 12   // Minimum size allowed
+
+        let scaledSize = UIFontMetrics.default.scaledValue(for: baseSize)
+        return min(max(scaledSize, minSize), maxSize) // Clamp within bounds
     }
 }
