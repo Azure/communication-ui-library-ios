@@ -16,7 +16,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
-    private let captionsRttViewManager: CaptionsAndRttViewManager
+    private let captionsRttViewManager: CaptionsRttViewManager
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
@@ -39,7 +39,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
-         captionsViewManager: CaptionsAndRttViewManager,
+         captionsViewManager: CaptionsRttViewManager,
          localOptions: LocalOptions? = nil,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,

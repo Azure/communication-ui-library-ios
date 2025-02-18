@@ -56,8 +56,8 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
                lhs.captionText == rhs.captionText
     }
 
-    func toDisplayData() -> CallCompositeRttCaptionsDisplayData {
-        CallCompositeRttCaptionsDisplayData(
+    func toDisplayData() -> CallCompositeCaptionsRttRecord {
+        CallCompositeCaptionsRttRecord(
             displayRawId: speakerRawId,
             displayName: speakerName,
             text: displayText ?? "",

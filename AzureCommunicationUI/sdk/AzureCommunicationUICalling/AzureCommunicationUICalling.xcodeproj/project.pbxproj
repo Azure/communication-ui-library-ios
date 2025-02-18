@@ -40,7 +40,6 @@
 		05E28FF62AD60E5900FF7020 /* ParticipantRoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E28FF52AD60E5900FF7020 /* ParticipantRoleEnum.swift */; };
 		05F80DEE2A2E6F6700B20C87 /* PipReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DED2A2E6F6700B20C87 /* PipReducer.swift */; };
 		05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */; };
-		1103161B2CEFF5C3007E7553 /* CaptionsAndRttViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103161A2CEFF5C3007E7553 /* CaptionsAndRttViewManager.swift */; };
 		1103161D2CEFF63A007E7553 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103161C2CEFF63A007E7553 /* CustomTextField.swift */; };
 		1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */; };
 		110DBE412C0998070080DBE1 /* CaptionsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110DBE402C0998070080DBE1 /* CaptionsAction.swift */; };
@@ -149,6 +148,7 @@
 		1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* FontExtension.swift */; };
 		2831A7942D135E98005252F0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		2831A7972D135EA6005252F0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		283F69E22D650CF500D7DE67 /* CaptionsRttViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283F69E12D650CF500D7DE67 /* CaptionsRttViewManager.swift */; };
 		28FE266D29E804F5009CC19D /* RemoteParticipantsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */; };
 		28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */; };
 		28FE267729EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */; };
@@ -434,7 +434,6 @@
 		05E28FF52AD60E5900FF7020 /* ParticipantRoleEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRoleEnum.swift; sourceTree = "<group>"; };
 		05F80DED2A2E6F6700B20C87 /* PipReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipReducer.swift; sourceTree = "<group>"; };
 		05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityAction.swift; sourceTree = "<group>"; };
-		1103161A2CEFF5C3007E7553 /* CaptionsAndRttViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttViewManager.swift; sourceTree = "<group>"; };
 		1103161C2CEFF63A007E7553 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		110DBE402C0998070080DBE1 /* CaptionsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAction.swift; sourceTree = "<group>"; };
@@ -542,6 +541,7 @@
 		1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeInternalError.swift; sourceTree = "<group>"; };
 		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+		283F69E12D650CF500D7DE67 /* CaptionsRttViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttViewManager.swift; sourceTree = "<group>"; };
 		28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsAction.swift; sourceTree = "<group>"; };
 		28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsReducer.swift; sourceTree = "<group>"; };
 		28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsReducerTests.swift; sourceTree = "<group>"; };
@@ -1189,7 +1189,7 @@
 		1F94DAE22673F72000691D1E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				1103161A2CEFF5C3007E7553 /* CaptionsAndRttViewManager.swift */,
+				283F69E12D650CF500D7DE67 /* CaptionsRttViewManager.swift */,
 				A874EDC3266152AA003C7D92 /* AppLifeCycleManager.swift */,
 				98546EB926DEF24D0069B246 /* AudioDeviceType.swift */,
 				98546EB526D9B9990069B246 /* AudioSessionManager.swift */,
@@ -2292,6 +2292,7 @@
 				A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */,
 				A88CDFB9274FF9C10004E2F5 /* ErrorInfoView.swift in Sources */,
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
+				283F69E22D650CF500D7DE67 /* CaptionsRttViewManager.swift in Sources */,
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
 				11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */,
 				C8E10DD92C7F900B00511482 /* CallScreenInfoHeaderAction.swift in Sources */,
@@ -2323,7 +2324,6 @@
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				FAD20A8C292834500063D8A9 /* Logger.swift in Sources */,
 				533D7AFC2B1965BC0021767F /* SupportFormView.swift in Sources */,
-				1103161B2CEFF5C3007E7553 /* CaptionsAndRttViewManager.swift in Sources */,
 				FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */,

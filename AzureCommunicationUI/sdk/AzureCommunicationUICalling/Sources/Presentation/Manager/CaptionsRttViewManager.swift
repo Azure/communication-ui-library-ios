@@ -7,10 +7,10 @@ import UIKit
 import Combine
 import SwiftUI
 
-class CaptionsAndRttViewManager: ObservableObject {
+class CaptionsRttViewManager: ObservableObject {
     // MARK: - Properties
 
-    @Published var captionsRttData = [CallCompositeRttCaptionsDisplayData]()
+    @Published var captionsRttData = [CallCompositeCaptionsRttRecord]()
     @Published var isRttAvailable = false
     @Published var isAutoCommit = false
 
@@ -102,11 +102,10 @@ class CaptionsAndRttViewManager: ObservableObject {
 
     // MARK: - Data Handling
 
-    func handleNewData(_ newData: CallCompositeRttCaptionsDisplayData) {
+    func handleNewData(_ newData: CallCompositeCaptionsRttRecord) {
         guard shouldAddData(newData) else {
             return
         }
-
         if newData.captionsRttType == .rtt && !store.state.rttState.isRttOn {
             store.dispatch(action: .rttAction(.turnOnRtt))
         }
@@ -115,14 +114,14 @@ class CaptionsAndRttViewManager: ObservableObject {
         processAndStore(newData)
     }
 
-    private func shouldAddData(_ data: CallCompositeRttCaptionsDisplayData) -> Bool {
+    private func shouldAddData(_ data: CallCompositeCaptionsRttRecord) -> Bool {
         if data.captionsRttType == .captions {
             return shouldAddCaption(data)
         }
         return true // Always add RTT data
     }
 
-    private func shouldAddCaption(_ data: CallCompositeRttCaptionsDisplayData) -> Bool {
+    private func shouldAddCaption(_ data: CallCompositeCaptionsRttRecord) -> Bool {
         if isTranslationEnabled {
             // Add only if translation is enabled and caption text is not empty.
             return !(data.captionsText?.isEmpty ?? true)
@@ -131,7 +130,7 @@ class CaptionsAndRttViewManager: ObservableObject {
         return true
     }
 
-    private func manageAutoCommit(for data: CallCompositeRttCaptionsDisplayData) {
+    private func manageAutoCommit(for data: CallCompositeCaptionsRttRecord) {
         if data.isLocal && data.captionsRttType == .rtt && data.isFinal {
             isAutoCommit = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
@@ -140,7 +139,7 @@ class CaptionsAndRttViewManager: ObservableObject {
         }
     }
 
-    private func processAndStore(_ newData: CallCompositeRttCaptionsDisplayData) {
+    private func processAndStore(_ newData: CallCompositeCaptionsRttRecord) {
         if newData.captionsRttType == .rtt && newData.text.isEmpty {
             // Remove non-final RTT entries with the same displayRawId.
             captionsRttData.removeAll {
@@ -179,7 +178,7 @@ class CaptionsAndRttViewManager: ObservableObject {
         enforceMaxDataCount()
     }
 
-    private func finalizePreviousMessageIfNeeded(with newData: CallCompositeRttCaptionsDisplayData) {
+    private func finalizePreviousMessageIfNeeded(with newData: CallCompositeCaptionsRttRecord) {
         if let lastIndex = captionsRttData.lastIndex(where: {
             $0.displayRawId == newData.displayRawId &&
             $0.captionsRttType == newData.captionsRttType &&
@@ -190,14 +189,14 @@ class CaptionsAndRttViewManager: ObservableObject {
         }
     }
 
-    private func shouldFinalize(lastData: CallCompositeRttCaptionsDisplayData,
-                                newData: CallCompositeRttCaptionsDisplayData) -> Bool {
+    private func shouldFinalize(lastData: CallCompositeCaptionsRttRecord,
+                                newData: CallCompositeCaptionsRttRecord) -> Bool {
         let duration = newData.createdTimestamp.timeIntervalSince(lastData.createdTimestamp)
         return duration > finalizationDelay
     }
 
-    private func sortCaptions(_ first: CallCompositeRttCaptionsDisplayData,
-                              _ second: CallCompositeRttCaptionsDisplayData) -> Bool {
+    private func sortCaptions(_ first: CallCompositeCaptionsRttRecord,
+                              _ second: CallCompositeCaptionsRttRecord) -> Bool {
         // Rule 1: Local non-final messages always at the bottom.
         if first.isLocal && !first.isFinal {
             return false // `first` stays below `second`.
@@ -232,7 +231,7 @@ class CaptionsAndRttViewManager: ObservableObject {
     // MARK: - RTT Info Message
 
     private func insertRttInfoMessage() {
-        let rttInfo = CallCompositeRttCaptionsDisplayData(
+        let rttInfo = CallCompositeCaptionsRttRecord(
             displayRawId: UUID().uuidString, // Unique ID
             displayName: "",
             text: "",

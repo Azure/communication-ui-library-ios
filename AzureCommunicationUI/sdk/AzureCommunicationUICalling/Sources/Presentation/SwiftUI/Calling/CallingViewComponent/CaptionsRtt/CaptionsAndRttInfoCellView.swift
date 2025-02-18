@@ -7,13 +7,13 @@ import SwiftUI
 
 struct CaptionsAndRttInfoCellView: View {
     var avatarViewManager: AvatarViewManagerProtocol
-    var displayData: CallCompositeRttCaptionsDisplayData
+    var displayData: CallCompositeCaptionsRttRecord
     @State private var avatarImage: UIImage?
     @State private var displayName: String?
     @State private var isRTL = false
     private let localizationProvider: LocalizationProviderProtocol
 
-    init(displayData: CallCompositeRttCaptionsDisplayData,
+    init(displayData: CallCompositeCaptionsRttRecord,
          avatarViewManager: AvatarViewManagerProtocol,
          localizationProvider: LocalizationProviderProtocol
     ) {
