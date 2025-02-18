@@ -176,8 +176,6 @@ public class CallComposite {
         exitManager?.dismiss()
         if !compositeUILaunched {
             disposeSDKWrappers()
-            callingSDKInitializer?.dispose()
-            callingSDKInitializer = nil
             logger.debug( "CallComposite callingSDKInitializer dispose")
             let exitManagerCache = exitManager
             cleanUpManagers()
@@ -673,6 +671,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     private func disposeSDKWrappers() {
         self.callingSDKEventsHandler = nil
         self.callingSDKWrapper = nil
+        self.callingSDKInitializer?.dispose()
+        self.callingSDKInitializer = nil
     }
 
     private func present(_ viewController: UIViewController) {
