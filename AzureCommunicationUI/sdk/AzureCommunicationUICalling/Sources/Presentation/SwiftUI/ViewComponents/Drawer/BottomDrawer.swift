@@ -232,3 +232,28 @@ internal struct BottomDrawer<Content: View>: View {
         }
     }
 }
+
+struct ButtonActions {
+    let showSharingViewAction: (() -> Void)?
+    let showSupportFormAction: (() -> Void)?
+    let showCaptionsViewAction: (() -> Void)?
+    let showSpokenLanguage: (() -> Void)?
+    let showCaptionsLanguage: (() -> Void)?
+    let showRttView: (() -> Void)?
+
+    init(
+        showSharingViewAction: (() -> Void)? = { },
+        showSupportFormAction: (() -> Void)? = { },
+        showCaptionsViewAction: (() -> Void)? = { },
+        showSpokenLanguage: (() -> Void)? = { },
+        showCaptionsLanguage: (() -> Void)? = { },
+        showRttView: (() -> Void)? = { }
+    ) {
+        self.showSharingViewAction = showSharingViewAction
+        self.showSupportFormAction = showSupportFormAction
+        self.showCaptionsViewAction = showCaptionsViewAction
+        self.showSpokenLanguage = showSpokenLanguage
+        self.showCaptionsLanguage = showCaptionsLanguage
+        self.showRttView = showRttView
+    }
+}

@@ -7,10 +7,10 @@ import UIKit
 import Combine
 import SwiftUI
 
-class CaptionsRttViewManager: ObservableObject {
+class CaptionsRttDataManager: ObservableObject {
     // MARK: - Properties
 
-    @Published var captionsRttData = [CallCompositeCaptionsRttRecord]()
+    @Published var captionsRttData = [CaptionsRttRecord]()
     @Published var isRttAvailable = false
     @Published var isAutoCommit = false
 
@@ -102,7 +102,7 @@ class CaptionsRttViewManager: ObservableObject {
 
     // MARK: - Data Handling
 
-    func handleNewData(_ newData: CallCompositeCaptionsRttRecord) {
+    func handleNewData(_ newData: CaptionsRttRecord) {
         guard shouldAddData(newData) else {
             return
         }
@@ -114,14 +114,14 @@ class CaptionsRttViewManager: ObservableObject {
         processAndStore(newData)
     }
 
-    private func shouldAddData(_ data: CallCompositeCaptionsRttRecord) -> Bool {
+    private func shouldAddData(_ data: CaptionsRttRecord) -> Bool {
         if data.captionsRttType == .captions {
             return shouldAddCaption(data)
         }
         return true // Always add RTT data
     }
 
-    private func shouldAddCaption(_ data: CallCompositeCaptionsRttRecord) -> Bool {
+    private func shouldAddCaption(_ data: CaptionsRttRecord) -> Bool {
         if isTranslationEnabled {
             // Add only if translation is enabled and caption text is not empty.
             return !(data.captionsText?.isEmpty ?? true)
@@ -130,7 +130,7 @@ class CaptionsRttViewManager: ObservableObject {
         return true
     }
 
-    private func manageAutoCommit(for data: CallCompositeCaptionsRttRecord) {
+    private func manageAutoCommit(for data: CaptionsRttRecord) {
         if data.isLocal && data.captionsRttType == .rtt && data.isFinal {
             isAutoCommit = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
@@ -139,7 +139,7 @@ class CaptionsRttViewManager: ObservableObject {
         }
     }
 
-    private func processAndStore(_ newData: CallCompositeCaptionsRttRecord) {
+    private func processAndStore(_ newData: CaptionsRttRecord) {
         if newData.captionsRttType == .rtt && newData.text.isEmpty {
             // Remove non-final RTT entries with the same displayRawId.
             captionsRttData.removeAll {
@@ -178,7 +178,7 @@ class CaptionsRttViewManager: ObservableObject {
         enforceMaxDataCount()
     }
 
-    private func finalizePreviousMessageIfNeeded(with newData: CallCompositeCaptionsRttRecord) {
+    private func finalizePreviousMessageIfNeeded(with newData: CaptionsRttRecord) {
         if let lastIndex = captionsRttData.lastIndex(where: {
             $0.displayRawId == newData.displayRawId &&
             $0.captionsRttType == newData.captionsRttType &&
@@ -189,14 +189,14 @@ class CaptionsRttViewManager: ObservableObject {
         }
     }
 
-    private func shouldFinalize(lastData: CallCompositeCaptionsRttRecord,
-                                newData: CallCompositeCaptionsRttRecord) -> Bool {
+    private func shouldFinalize(lastData: CaptionsRttRecord,
+                                newData: CaptionsRttRecord) -> Bool {
         let duration = newData.createdTimestamp.timeIntervalSince(lastData.createdTimestamp)
         return duration > finalizationDelay
     }
 
-    private func sortCaptions(_ first: CallCompositeCaptionsRttRecord,
-                              _ second: CallCompositeCaptionsRttRecord) -> Bool {
+    private func sortCaptions(_ first: CaptionsRttRecord,
+                              _ second: CaptionsRttRecord) -> Bool {
         // Rule 1: Local non-final messages always at the bottom.
         if first.isLocal && !first.isFinal {
             return false // `first` stays below `second`.
@@ -231,7 +231,7 @@ class CaptionsRttViewManager: ObservableObject {
     // MARK: - RTT Info Message
 
     private func insertRttInfoMessage() {
-        let rttInfo = CallCompositeCaptionsRttRecord(
+        let rttInfo = CaptionsRttRecord(
             displayRawId: UUID().uuidString, // Unique ID
             displayName: "",
             text: "",

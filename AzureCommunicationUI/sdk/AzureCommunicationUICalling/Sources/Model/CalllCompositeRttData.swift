@@ -52,8 +52,8 @@ struct CallCompositeRttData: Identifiable, Equatable {
         lhs.text == rhs.text
     }
 
-    func toDisplayData() -> CallCompositeCaptionsRttRecord {
-        CallCompositeCaptionsRttRecord(
+    func toDisplayData() -> CaptionsRttRecord {
+        CaptionsRttRecord(
             displayRawId: senderRawId,
             displayName: senderName,
             text: text,
@@ -71,7 +71,7 @@ struct CallCompositeRttData: Identifiable, Equatable {
     }
 }
 
-struct CallCompositeCaptionsRttRecord: Identifiable, Equatable {
+struct CaptionsRttRecord: Identifiable, Equatable {
     var id: Date {
         return createdTimestamp
     }
@@ -90,7 +90,7 @@ struct CallCompositeCaptionsRttRecord: Identifiable, Equatable {
     let isRttInfo: Bool?
     let isLocal: Bool
 
-    static func == (lhs: CallCompositeCaptionsRttRecord, rhs: CallCompositeCaptionsRttRecord) -> Bool {
+    static func == (lhs: CaptionsRttRecord, rhs: CaptionsRttRecord) -> Bool {
         return lhs.displayName == rhs.displayName &&
         lhs.displayRawId == rhs.displayRawId &&
         lhs.text == rhs.text &&

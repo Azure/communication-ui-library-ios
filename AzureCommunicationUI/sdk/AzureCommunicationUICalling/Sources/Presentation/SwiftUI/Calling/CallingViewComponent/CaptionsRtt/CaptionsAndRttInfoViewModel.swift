@@ -7,8 +7,8 @@ import Combine
 import Foundation
 
 class CaptionsAndRttInfoViewModel: ObservableObject {
-    @Published var displayData = [CallCompositeCaptionsRttRecord]()
-    @Published var captionsManager: CaptionsRttViewManager
+    @Published var displayData = [CaptionsRttRecord]()
+    @Published var captionsManager: CaptionsRttDataManager
     @Published var isCaptionsDisplayed = false
     @Published var isRttDisplayed = false
     @Published var isRttAvailable = false
@@ -27,7 +27,7 @@ class CaptionsAndRttInfoViewModel: ObservableObject {
     private var hasInsertedRttInfo = false
 
     init(state: AppState,
-         captionsManager: CaptionsRttViewManager,
+         captionsManager: CaptionsRttDataManager,
          captionsOptions: CaptionsOptions,
          dispatch: @escaping ActionDispatch,
          localizationProvider: LocalizationProviderProtocol) {

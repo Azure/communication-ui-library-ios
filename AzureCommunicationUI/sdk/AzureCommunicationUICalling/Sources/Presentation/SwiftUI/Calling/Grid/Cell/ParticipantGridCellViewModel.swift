@@ -26,7 +26,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
     @Published var isHold: Bool
     @Published var participantIdentifier: String
-    @Published var displayData = [CallCompositeCaptionsRttRecord]()
+    @Published var displayData = [CaptionsRttRecord]()
 
     private var isScreenSharing = false
     private var participantName: String

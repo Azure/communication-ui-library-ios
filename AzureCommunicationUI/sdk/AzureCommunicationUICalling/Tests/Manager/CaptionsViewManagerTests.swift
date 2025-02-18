@@ -7,7 +7,7 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class CaptionsRttViewManagerTests: XCTestCase {
-    var captionsManager: CaptionsRttViewManager!
+    var captionsManager: CaptionsRttDataManager!
     var mockCallingSDKWrapper: CallingSDKWrapperMocking!
     var mockStore: StoreFactoryMocking!
 
@@ -15,7 +15,7 @@ class CaptionsRttViewManagerTests: XCTestCase {
         super.setUp()
         mockCallingSDKWrapper = CallingSDKWrapperMocking()
         mockStore = StoreFactoryMocking()
-        captionsManager = CaptionsRttViewManager(store: mockStore.store, callingSDKWrapper: mockCallingSDKWrapper)
+        captionsManager = CaptionsRttDataManager(store: mockStore.store, callingSDKWrapper: mockCallingSDKWrapper)
     }
 
     override func tearDown() {
