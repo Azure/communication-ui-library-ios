@@ -23,6 +23,7 @@ enum RttResultType {
 enum CaptionsRttType {
     case captions
     case rtt
+    case rttInfo
 }
 
 struct CallCompositeRttData: Identifiable, Equatable {
@@ -63,7 +64,6 @@ struct CallCompositeRttData: Identifiable, Equatable {
             createdTimestamp: localCreatedTime,
             updatedTimestamp: localUpdatedTime,
             isFinal: resultType == .final,
-            isRttInfo: false,
             isLocal: isLocal
         )
     }
@@ -85,7 +85,6 @@ struct CaptionsRttRecord: Identifiable, Equatable {
     let createdTimestamp: Date
     let updatedTimestamp: Date
     var isFinal: Bool
-    let isRttInfo: Bool?
     let isLocal: Bool
 
     static func == (lhs: CaptionsRttRecord, rhs: CaptionsRttRecord) -> Bool {
@@ -100,7 +99,6 @@ struct CaptionsRttRecord: Identifiable, Equatable {
         lhs.updatedTimestamp == rhs.updatedTimestamp &&
         lhs.spokenLanguage == rhs.spokenLanguage &&
         lhs.captionsLanguage == rhs.captionsLanguage &&
-        lhs.isRttInfo == rhs.isRttInfo &&
         lhs.isLocal == rhs.isLocal
     }
 }

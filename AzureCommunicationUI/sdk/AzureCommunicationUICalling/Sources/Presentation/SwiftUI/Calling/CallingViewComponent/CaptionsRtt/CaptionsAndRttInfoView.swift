@@ -59,7 +59,7 @@ struct CaptionsAndRttInfoView: View {
         VStack(spacing: 0) {
             ForEach(viewModel.displayData.indices, id: \.self) { index in
                 let data = viewModel.displayData[index]
-                if data.isRttInfo ?? false {
+                if data.captionsRttType == .rttInfo {
                     rttInfoCell()
                         .id(data.id)
                 } else {

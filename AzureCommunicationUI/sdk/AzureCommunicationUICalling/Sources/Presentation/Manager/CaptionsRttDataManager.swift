@@ -83,8 +83,10 @@ class CaptionsRttDataManager: ObservableObject {
 
     private func filterCaptionsRttData(captionsEnabled: Bool) {
         if !captionsEnabled {
-            // If captions are disabled, keep only RTT data
-            captionsRttData = captionsRttData.filter { $0.captionsRttType == .rtt }
+            // If captions are disabled, keep RTT and RTT info messages
+            captionsRttData = captionsRttData.filter {
+                $0.captionsRttType == .rtt || $0.captionsRttType == .rttInfo
+            }
         }
     }
 
@@ -227,11 +229,10 @@ class CaptionsRttDataManager: ObservableObject {
             captionsText: "",
             spokenLanguage: "",
             captionsLanguage: "",
-            captionsRttType: .rtt,
+            captionsRttType: .rttInfo,
             createdTimestamp: Date(),
             updatedTimestamp: Date(),
             isFinal: true,
-            isRttInfo: true,
             isLocal: false
         )
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

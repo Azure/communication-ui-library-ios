@@ -69,7 +69,6 @@ struct CallCompositeCaptionsData: Identifiable, Equatable {
             createdTimestamp: timestamp,
             updatedTimestamp: timestamp,
             isFinal: resultType == .final,
-            isRttInfo: false,
             isLocal: false
         )
     }
