@@ -187,6 +187,13 @@ class CaptionsRttDataManager: ObservableObject {
 
     private func sortCaptions(_ first: CaptionsRttRecord,
                               _ second: CaptionsRttRecord) -> Bool {
+        // Rule 0: RTT Info messages should always be before RTT messages
+        if first.captionsRttType == .rttInfo {
+            return true  // Always keep RTT Info at the top
+        }
+        if second.captionsRttType == .rttInfo {
+            return false // Ensure RTT Info is above RTT messages
+        }
         // Rule 1: Local non-final messages always at the bottom.
         if first.isLocal && !first.isFinal {
             return false // `first` stays below `second`.
@@ -235,8 +242,13 @@ class CaptionsRttDataManager: ObservableObject {
             isFinal: true,
             isLocal: false
         )
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.captionsRttData.append(rttInfo)
+        DispatchQueue.main.async {
+            // Find the first RTT message index
+            if let firstRttIndex = self.captionsRttData.firstIndex(where: { $0.captionsRttType == .rtt }) {
+                self.captionsRttData.insert(rttInfo, at: firstRttIndex) // Insert before the first RTT
+            } else {
+                self.captionsRttData.append(rttInfo) // If no RTT, append at the end
+            }
         }
         hasInsertedRttInfo = true
     }
