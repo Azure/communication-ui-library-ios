@@ -51,9 +51,9 @@
 		114187682C35C2E50089C05B /* CaptionsViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */; };
 		114879CA2BEB362E00B7D7FF /* CaptionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879C92BEB362E00B7D7FF /* CaptionsState.swift */; };
 		114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */; };
-		116BC0C22C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C12C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift */; };
-		116BC0C42C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C32C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift */; };
-		116BC0C62C24D15800F8CF6F /* CaptionsAndRttInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C52C24D15800F8CF6F /* CaptionsAndRttInfoView.swift */; };
+		116BC0C22C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C12C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift */; };
+		116BC0C42C24D10D00F8CF6F /* CaptionsRttInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C32C24D10D00F8CF6F /* CaptionsRttInfoCellView.swift */; };
+		116BC0C62C24D15800F8CF6F /* CaptionsRttInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */; };
 		11A494C32CFA6D780004B238 /* CaptionsAndRttLandscapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A494C22CFA6D4A0004B238 /* CaptionsAndRttLandscapeView.swift */; };
 		11A494C52CFA83110004B238 /* KeybaordResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A494C42CFA83020004B238 /* KeybaordResponder.swift */; };
 		11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */; };
@@ -445,9 +445,9 @@
 		114187672C35C2E50089C05B /* CaptionsViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsViewManagerTests.swift; sourceTree = "<group>"; };
 		114879C92BEB362E00B7D7FF /* CaptionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsState.swift; sourceTree = "<group>"; };
 		114879CF2BEC086300B7D7FF /* CaptionsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsReducer.swift; sourceTree = "<group>"; };
-		116BC0C12C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttInfoViewModel.swift; sourceTree = "<group>"; };
-		116BC0C32C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttInfoCellView.swift; sourceTree = "<group>"; };
-		116BC0C52C24D15800F8CF6F /* CaptionsAndRttInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttInfoView.swift; sourceTree = "<group>"; };
+		116BC0C12C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttInfoViewModel.swift; sourceTree = "<group>"; };
+		116BC0C32C24D10D00F8CF6F /* CaptionsRttInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttInfoCellView.swift; sourceTree = "<group>"; };
+		116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttInfoView.swift; sourceTree = "<group>"; };
 		11A494C22CFA6D4A0004B238 /* CaptionsAndRttLandscapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttLandscapeView.swift; sourceTree = "<group>"; };
 		11A494C42CFA83020004B238 /* KeybaordResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeybaordResponder.swift; sourceTree = "<group>"; };
 		11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListView.swift; sourceTree = "<group>"; };
@@ -884,9 +884,9 @@
 				11A494C22CFA6D4A0004B238 /* CaptionsAndRttLandscapeView.swift */,
 				111FBD372C3C6976008178BF /* CaptionsErrorView.swift */,
 				11293D002C3B6D1E0006539D /* CaptionsErrorViewModel.swift */,
-				116BC0C32C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift */,
-				116BC0C52C24D15800F8CF6F /* CaptionsAndRttInfoView.swift */,
-				116BC0C12C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift */,
+				116BC0C32C24D10D00F8CF6F /* CaptionsRttInfoCellView.swift */,
+				116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */,
+				116BC0C12C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift */,
 				11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */,
 				11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */,
 				11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */,
@@ -2272,7 +2272,7 @@
 				114879D02BEC086300B7D7FF /* CaptionsReducer.swift in Sources */,
 				A48D18022BFD84D600FD994E /* IncomingCallError.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
-				116BC0C22C24D06500F8CF6F /* CaptionsAndRttInfoViewModel.swift in Sources */,
+				116BC0C22C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				534A5DD82C40AE0B002EB508 /* DrawerBodyTextView.swift in Sources */,
 				051F73962C0E1164006E097F /* ToastNotificationReducer.swift in Sources */,
@@ -2312,7 +2312,7 @@
 				11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */,
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
 				1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */,
-				116BC0C62C24D15800F8CF6F /* CaptionsAndRttInfoView.swift in Sources */,
+				116BC0C62C24D15800F8CF6F /* CaptionsRttInfoView.swift in Sources */,
 				1FBCB6D92655825200F57EEA /* LocalUserReducer.swift in Sources */,
 				A874EDC826616792003C7D92 /* LifecycleAction.swift in Sources */,
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,
@@ -2346,7 +2346,7 @@
 				50FA45F5267D3BD3001844AC /* ControlBarView.swift in Sources */,
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
-				116BC0C42C24D10D00F8CF6F /* CaptionsAndRttInfoCellView.swift in Sources */,
+				116BC0C42C24D10D00F8CF6F /* CaptionsRttInfoCellView.swift in Sources */,
 				05CE90FD2C8E9985001ACA79 /* ButtonViewDataAction.swift in Sources */,
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,
 				051F73942C0E10BB006E097F /* ToastNotificationAction.swift in Sources */,

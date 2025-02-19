@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct CaptionsAndRttInfoCellView: View {
+struct CaptionsRttInfoCellView: View {
     var avatarViewManager: AvatarViewManagerProtocol
     var displayData: CaptionsRttRecord
     @State private var avatarImage: UIImage?

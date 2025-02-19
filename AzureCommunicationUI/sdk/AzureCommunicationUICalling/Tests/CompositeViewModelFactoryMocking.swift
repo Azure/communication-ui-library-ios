@@ -318,8 +318,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             action: {})
     }
 
-    func makeCaptionsRttInfoViewModel(state: AzureCommunicationUICalling.AppState, captionsOptions: AzureCommunicationUICalling.CaptionsOptions) -> AzureCommunicationUICalling.CaptionsAndRttInfoViewModel {
-        return CaptionsAndRttInfoViewModel(
+    func makeCaptionsRttInfoViewModel(state: AzureCommunicationUICalling.AppState, captionsOptions: AzureCommunicationUICalling.CaptionsOptions) -> AzureCommunicationUICalling.CaptionsRttInfoViewModel {
+        return CaptionsRttInfoViewModel(
             state: state,
             captionsManager: CaptionsRttDataManager(
                 store: store,

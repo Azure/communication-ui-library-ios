@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 
-class CaptionsAndRttInfoViewModel: ObservableObject {
+class CaptionsRttInfoViewModel: ObservableObject {
     @Published var displayData = [CaptionsRttRecord]()
     @Published var captionsManager: CaptionsRttDataManager
     @Published var isCaptionsDisplayed = false

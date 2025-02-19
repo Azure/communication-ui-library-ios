@@ -5,8 +5,8 @@
 import SwiftUI
 import FluentUI
 
-struct CaptionsAndRttInfoView: View {
-    @ObservedObject var viewModel: CaptionsAndRttInfoViewModel
+struct CaptionsRttInfoView: View {
+    @ObservedObject var viewModel: CaptionsRttInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
     @State private var isLastItemVisible = true
     @State private var previousDrawerHeight: CGFloat = 0
@@ -63,7 +63,7 @@ struct CaptionsAndRttInfoView: View {
                     rttInfoCell()
                         .id(data.id)
                 } else {
-                    CaptionsAndRttInfoCellView(
+                    CaptionsRttInfoCellView(
                         displayData: data,
                         avatarViewManager: avatarViewManager,
                         localizationProvider: viewModel.localizationProvider

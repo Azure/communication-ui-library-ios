@@ -170,7 +170,7 @@ struct CallingView: View {
                 viewModel.captionsInfoViewModel.updateLayoutHelight(shouldMaximize)
             },
             content: {
-                CaptionsAndRttInfoView(
+                CaptionsRttInfoView(
                     viewModel: viewModel.captionsInfoViewModel!,
                     avatarViewManager: avatarManager
                 )
@@ -200,7 +200,7 @@ struct CallingView: View {
                 viewModel.captionsInfoViewModel?.commitMessage(message, isFinal ?? false)
             },
             content: {
-                CaptionsAndRttInfoView(
+                CaptionsRttInfoView(
                     viewModel: viewModel.captionsInfoViewModel!,
                     avatarViewManager: avatarManager
                 )

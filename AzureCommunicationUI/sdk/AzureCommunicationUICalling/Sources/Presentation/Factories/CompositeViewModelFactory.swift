@@ -241,8 +241,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsRttInfoViewModel(state: AppState,
-                                      captionsOptions: CaptionsOptions) -> CaptionsAndRttInfoViewModel {
-        return CaptionsAndRttInfoViewModel(state: state,
+                                      captionsOptions: CaptionsOptions) -> CaptionsRttInfoViewModel {
+        return CaptionsRttInfoViewModel(state: state,
                                      captionsManager: captionsRttViewManager,
                                      captionsOptions: captionsOptions,
                                      dispatch: store.dispatch,

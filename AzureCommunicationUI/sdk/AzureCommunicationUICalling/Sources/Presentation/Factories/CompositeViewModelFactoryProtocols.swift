@@ -44,7 +44,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
                                             state: AppState) -> CaptionsLanguageListViewModel
     func makeCaptionsRttInfoViewModel (state: AppState,
-                                       captionsOptions: CaptionsOptions) -> CaptionsAndRttInfoViewModel
+                                       captionsOptions: CaptionsOptions) -> CaptionsRttInfoViewModel
     func makeCaptionsErrorViewModel (dispatchAction: @escaping ActionDispatch) -> CaptionsErrorViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
