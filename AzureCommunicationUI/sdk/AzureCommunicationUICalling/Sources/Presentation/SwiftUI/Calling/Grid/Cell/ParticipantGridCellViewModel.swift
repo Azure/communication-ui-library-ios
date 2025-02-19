@@ -106,6 +106,10 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
             self.isSpeaking = participantModel.isSpeaking
         }
 
+        if self.isTypingRtt != participantModel.isTypingRtt {
+            self.isTypingRtt = participantModel.isTypingRtt
+        }
+
         if self.isMuted != participantModel.isMuted {
             self.isMuted = participantModel.isMuted && participantModel.status == .connected
         }

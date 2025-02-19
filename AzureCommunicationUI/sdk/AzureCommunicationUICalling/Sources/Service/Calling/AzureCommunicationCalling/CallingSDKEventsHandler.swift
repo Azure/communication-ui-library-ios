@@ -308,9 +308,7 @@ extension CallingSDKEventsHandler: CallDelegate,
             updatedList[index].isTypingRtt = rttMessage.resultType != .final && !rttMessage.text.isEmpty
 
             // Ensure UI updates on main thread
-            DispatchQueue.main.async {
-                self.participantsInfoListSubject.send(updatedList)
-            }
+            self.participantsInfoListSubject.send(updatedList)
         }
         rttReceived.send(rttMessage)
     }
