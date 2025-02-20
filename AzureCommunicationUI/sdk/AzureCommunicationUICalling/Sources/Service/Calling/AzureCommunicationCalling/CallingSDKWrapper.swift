@@ -489,9 +489,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             return
         }
 
-        let rttFeature = call.feature(Features.realtimeText)
+        let rttFeature = call.feature(Features.realTimeText)
         do {
-            try rttFeature.send(with: message, finalized: isFinal)
+            try rttFeature.send(text: message, finalized: isFinal)
             logger.debug("Send message successfully")
         } catch {
             logger.error("Error: Send message operation unsuccessful. Please check capabilities.")
@@ -641,7 +641,7 @@ extension CallingSDKWrapper {
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
         let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
         let captionsFeature = call.feature(Features.captions)
-        let realTimeTextCallFeature = call.feature(Features.realtimeText)
+        let realTimeTextCallFeature = call.feature(Features.realTimeText)
         let capabilitiesFeature = call.feature(Features.capabilities)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
