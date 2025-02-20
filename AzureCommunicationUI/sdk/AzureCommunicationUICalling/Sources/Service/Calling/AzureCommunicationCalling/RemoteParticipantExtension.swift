@@ -19,6 +19,7 @@ extension AzureCommunicationCalling.RemoteParticipant {
 
         return ParticipantInfoModel(displayName: displayName,
                                     isSpeaking: isSpeaking,
+                                    isTypingRtt: false,
                                     isMuted: isMuted,
                                     isRemoteUser: true,
                                     userIdentifier: identifier.rawId,

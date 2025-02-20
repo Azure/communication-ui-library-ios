@@ -28,6 +28,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var captionsSupportedCaptionLanguages = CurrentValueSubject<[String], Never>([])
     var isCaptionsTranslationSupported = CurrentValueSubject<Bool, Never>(false)
     var captionsReceived = PassthroughSubject<CallCompositeCaptionsData, Never>()
+    var rttReceived = PassthroughSubject<CallCompositeRttData, Never>()
     var activeSpokenLanguageChanged = CurrentValueSubject<String, Never>("")
     var activeCaptionLanguageChanged = CurrentValueSubject<String, Never>("")
     var captionsEnabledChanged = CurrentValueSubject<Bool, Never>(false)
@@ -49,6 +50,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var teamsCaptions: TeamsCaptions?
     private var communicationCaptions: CommunicationCaptions?
     private var capabilitiesCallFeature: CapabilitiesCallFeature?
+    private var realTimeTextCallFeature: RealTimeTextCallFeature?
 
     private var previousCallingStatus: CallingStatus = .none
     private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
@@ -95,6 +97,11 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         self.capabilitiesCallFeature?.delegate = self
     }
 
+    func assign(_ realTimeTextCallFeature: RealTimeTextCallFeature) {
+        self.realTimeTextCallFeature = realTimeTextCallFeature
+        realTimeTextCallFeature.delegate = self
+    }
+
     func setupProperties() {
         participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
@@ -102,6 +109,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         dominantSpeakersCallFeature = nil
         localUserDiagnosticsFeature = nil
         captionsFeature = nil
+        realTimeTextCallFeature = nil
         remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
         previousCallingStatus = .none
         capabilitiesCallFeature = nil
@@ -200,6 +208,7 @@ extension CallingSDKEventsHandler: CallDelegate,
     MediaDiagnosticsDelegate,
     NetworkDiagnosticsDelegate,
     CaptionsCallFeatureDelegate,
+    RealTimeTextCallFeatureDelegate,
     CapabilitiesCallFeatureDelegate {
     func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
@@ -285,6 +294,23 @@ extension CallingSDKEventsHandler: CallDelegate,
                                   didChangeTranscriptionState args: PropertyChangedEventArgs) {
         let newTranscriptionActive = transcriptionCallFeature.isTranscriptionActive
         isTranscriptionActiveSubject.send(newTranscriptionActive)
+    }
+
+    func realTimeTextCallFeature(_ realTextCallFeature: RealTimeTextCallFeature,
+                                 didReceiveInfo args: RealTimeTextInfoReceivedEventArgs) {
+        let rttMessage = args.info.toCallCompositeRttData()
+
+        if let index = participantsInfoListSubject.value.firstIndex(where: {
+            $0.userIdentifier == rttMessage.senderRawId
+        }) {
+            // Update the participant in place
+            var updatedList = participantsInfoListSubject.value
+            updatedList[index].isTypingRtt = rttMessage.resultType != .final && !rttMessage.text.isEmpty
+
+            // Ensure UI updates on main thread
+            self.participantsInfoListSubject.send(updatedList)
+        }
+        rttReceived.send(rttMessage)
     }
 
     func dominantSpeakersCallFeature(_ dominantSpeakersCallFeature: DominantSpeakersCallFeature,

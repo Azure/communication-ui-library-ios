@@ -14,6 +14,7 @@ struct ParticipantGridCellVideoView: View {
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
     @Binding var isMuted: Bool
+    @Binding var isTypingRtt: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
     @State var show = true
     var body: some View {
@@ -40,7 +41,7 @@ struct ParticipantGridCellVideoView: View {
                     && UIDevice.current.hasHomeBar ? 16 : 4)
 
         }.overlay(
-            isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4)
+            (isSpeaking && !isMuted) || isTypingRtt ? RoundedRectangle(cornerRadius: 4)
                 .strokeBorder(Color(StyleProvider.color.primaryColor), lineWidth: 4) : nil
         ).animation(.default, value: show)
     }

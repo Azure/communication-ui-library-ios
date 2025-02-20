@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="問題の報告";
 "AzureCommunicationUICalling.SendFeedback.Text"="送信";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="ライブ キャプション";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="キャプション";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="キャプションと RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="音声言語";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="キャプション言語";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="キャプションを開始しています...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="キャプションを停止できません";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="キャプションの言語を変更できません";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="話し言葉を変更できません";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="リアルタイム テキスト";
+"AzureCommunicationUICalling.RTT.Alert.Title"="RTT を有効にしますか?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="リアルタイム テキスト (RTT) は、通話のすべてのユーザーに対してオンになります。";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="有効にする";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="閉じる";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="この呼び出しの RTT を有効にする";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="リアルタイム テキスト (RTT) は、この会議の全期間で有効になっており、すべての参加者に表示されます。";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="詳細情報";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT 入力";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="リアルタイムにメッセージを入力";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="ミュート";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="参加者メニューをミュートにします。";

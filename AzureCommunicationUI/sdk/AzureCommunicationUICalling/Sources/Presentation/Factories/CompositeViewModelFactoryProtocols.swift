@@ -43,7 +43,8 @@ protocol CompositeViewModelFactoryProtocol {
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
                                             state: AppState) -> CaptionsLanguageListViewModel
-    func makeCaptionsInfoViewModel (state: AppState) -> CaptionsInfoViewModel
+    func makeCaptionsRttInfoViewModel (state: AppState,
+                                       captionsOptions: CaptionsOptions) -> CaptionsRttInfoViewModel
     func makeCaptionsErrorViewModel (dispatchAction: @escaping ActionDispatch) -> CaptionsErrorViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
@@ -83,17 +84,15 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeMoreCallOptionsListViewModel(
         isCaptionsAvailable: Bool,
+        buttonActions: ButtonActions,
         controlBarOptions: CallScreenControlBarOptions?,
-        showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void,
         buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel
     func makeCaptionsListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   showCaptionsLanguage: @escaping () -> Void,
+                                   buttonActions: ButtonActions,
+                                   isRttAvailable: Bool,
                                    isDisplayed: Bool) -> CaptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
 

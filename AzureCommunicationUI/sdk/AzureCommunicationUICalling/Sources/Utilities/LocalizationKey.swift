@@ -203,7 +203,7 @@ enum LocalizationKey: String {
     case supportFormSendFeedbackText = "AzureCommunicationUICalling.SendFeedback.Text"
 
     /* Captions */
-    case captionsListTitile = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
+    case captionsListTitle = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
     case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
     case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
     case captionsStartingCaptions = "AzureCommunicationUICalling.Captions.Text.StartingCaptions"
@@ -211,6 +211,20 @@ enum LocalizationKey: String {
     case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
     case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"
     case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
+
+    /* RTT */
+    case rttCaptionsListTitle = "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"
+    case rttListTitle = "AzureCommunicationUICalling.RTT.Title.RTT"
+    case rttTurnOn = "AzureCommunicationUICalling.RTT.TurnOn.Text"
+    case rttAlertTitle = "AzureCommunicationUICalling.RTT.Alert.Title"
+    case rttAlertMessage = "AzureCommunicationUICalling.RTT.Alert.Message"
+    case rttAlertTurnOn = "AzureCommunicationUICalling.RTT.Alert.TurnOn"
+    case rttAlertDismiss = "AzureCommunicationUICalling.RTT.Alert.Dismiss"
+    case rttWarningMessage = "AzureCommunicationUICalling.RTT.WarningMessage.Text"
+    case rttTextBoxHint = "AzureCommunicationUICalling.RTT.TextBox.Hint"
+    case rttTyping = "AzureCommunicationUICalling.RTT.Text.RTTTyping"
+    case rttLabel = "AzureCommunicationUICalling.RTT.RTTLable"
+    case rttLinkLearnMore = "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"
 
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"

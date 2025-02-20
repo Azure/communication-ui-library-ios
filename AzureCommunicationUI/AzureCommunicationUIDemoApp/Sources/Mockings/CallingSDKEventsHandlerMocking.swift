@@ -108,6 +108,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             let participantNameIdentifier = "RM-\(self.remoteParticipantsMocking.count + 1)"
             let newParticipant = ParticipantInfoModel(displayName: participantNameIdentifier,
                                                       isSpeaking: false,
+                                                      isTypingRtt: false,
                                                       isMuted: true,
                                                       isRemoteUser: true,
                                                       userIdentifier: participantNameIdentifier,
@@ -139,6 +140,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             let last = self.remoteParticipantsMocking.removeLast()
             let lastUnmuted = ParticipantInfoModel(displayName: last.displayName,
                                                    isSpeaking: last.isSpeaking,
+                                                   isTypingRtt: last.isTypingRtt,
                                                    isMuted: !last.isMuted,
                                                    isRemoteUser: last.isRemoteUser,
                                                    userIdentifier: last.userIdentifier,
@@ -159,6 +161,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             let last = self.remoteParticipantsMocking.removeLast()
             let lastUnmuted = ParticipantInfoModel(displayName: last.displayName,
                                                    isSpeaking: last.isSpeaking,
+                                                   isTypingRtt: last.isTypingRtt,
                                                    isMuted: !last.isMuted,
                                                    isRemoteUser: last.isRemoteUser,
                                                    userIdentifier: last.userIdentifier,
@@ -188,6 +191,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             let connectedParticipants = inLobbyParticipants.map { participantInfoModel in
                 ParticipantInfoModel(displayName: participantInfoModel.displayName,
                                      isSpeaking: participantInfoModel.isSpeaking,
+                                     isTypingRtt: participantInfoModel.isTypingRtt,
                                      isMuted: participantInfoModel.isMuted,
                                      isRemoteUser: participantInfoModel.isRemoteUser,
                                      userIdentifier: participantInfoModel.userIdentifier,
@@ -223,6 +227,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             let connectedParticipant =
                 ParticipantInfoModel(displayName: participantInfoModel.displayName,
                                      isSpeaking: participantInfoModel.isSpeaking,
+                                     isTypingRtt: participantInfoModel.isTypingRtt,
                                      isMuted: participantInfoModel.isMuted,
                                      isRemoteUser: participantInfoModel.isRemoteUser,
                                      userIdentifier: participantInfoModel.userIdentifier,

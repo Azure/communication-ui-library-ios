@@ -67,7 +67,6 @@ struct ButtonViewDataState: Equatable {
         self.captionsLanguageButton = captionsLanguageButton
         self.shareDiagnosticsButton = shareDiagnosticsButton
         self.reportIssueButton = reportIssueButton
-
         self.callScreenCustomButtonsState = callScreenCustomButtonsState
         self.callScreenHeaderCustomButtonsState = callScreenHeaderCustomButtonsState
     }
@@ -114,7 +113,6 @@ struct ButtonViewDataState: Equatable {
             captionsLanguageButton: DefaultButtonState(
                 enabled: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.enabled ?? true,
                 visible: callScreenOptions?.controlBarOptions?.captionsLanguageButton?.visible ?? true),
-
             callScreenCustomButtonsState: callScreenOptions?.controlBarOptions?.customButtons.map { customButton in
                 return CustomButtonState(id: customButton.id,
                                   enabled: customButton.enabled,

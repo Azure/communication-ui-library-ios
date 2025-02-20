@@ -23,12 +23,15 @@ class InfoHeaderViewModelTests: XCTestCase {
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
-                                                          avatarManager: AvatarViewManagerMocking(
-                                                            store: storeFactory.store,
-                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                            localParticipantViewData: nil),
-                                                          updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
+        factoryMocking = CompositeViewModelFactoryMocking(
+            logger: logger, store: storeFactory.store,
+            localizationProvider: localizationProvider,
+            avatarManager: AvatarViewManagerMocking(
+                store: storeFactory.store,
+                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                localParticipantViewData: nil),
+            updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil)
+        )
     }
 
     override func tearDown() {

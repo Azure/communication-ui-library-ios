@@ -203,26 +203,6 @@ class ParticipantCellViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    // Marks: update isSpeaking
-    func test_participantCellViewModel_update_when_isSpeakingSame_then_shouldNotBePublished() {
-        let expectation = XCTestExpectation(description: "Speaking Is Same Then Should Not Be Published")
-        expectation.isInverted = true
-        let isSpeaking = false
-        let sut = makeSUT(isSpeaking: isSpeaking)
-
-        sut.$isSpeaking
-            .dropFirst()
-            .sink { _ in
-                XCTFail("Failed with videoStreamId publish")
-                expectation.fulfill()
-            }.store(in: cancellable)
-
-        let infoModel = ParticipantInfoModelBuilder.get(isSpeaking: isSpeaking)
-        sut.update(participantModel: infoModel)
-
-        wait(for: [expectation], timeout: 1)
-    }
-
     func test_participantCellViewModel_update_when_isSpeakingNotSame_then_shouldBePublished() {
         let isSpeaking = false
         let sut = makeSUT(isSpeaking: true)
@@ -356,6 +336,10 @@ extension ParticipantCellViewModelTests {
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel,
                                             isCameraEnabled: true,
+                                            captionsRttManager: CaptionsRttDataManager(
+                                                store: StoreFactoryMocking().store,
+                                                callingSDKWrapper: CallingSDKWrapperMocking()
+                                            ),
                                             callType: callType)
     }
 

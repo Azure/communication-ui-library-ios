@@ -5,7 +5,6 @@
 
 import SwiftUI
 import FluentUI
-
 internal enum DrawerState {
     case gone
     case hidden
@@ -15,6 +14,7 @@ internal enum DrawerState {
 internal enum DrawerConstants {
     // How round is the drawer handle
     static let drawerHandleCornerRadius: CGFloat = 4
+    static let placeHolderPadding: CGFloat = 8
 
     // How round is the drawer itself
     static let drawerCornerRadius: CGFloat = 16
@@ -28,8 +28,15 @@ internal enum DrawerConstants {
     // Opacity of faded items (like background overlay)
     static let overlayOpacity: CGFloat = 0.4
 
+    // How much drag you need on the drawer to dismiss in that way
+    static let dragThreshold: CGFloat = 200
+
     // After hiding, the delay before making it "gone", accounts for animation
     static let delayUntilGone: CGFloat = 0.3
+    static let collapsedHeight: CGFloat = 200
+    static let expandedHeight: CGFloat = UIScreen.main.bounds.height * 0.7
+    static let textBoxHeight: CGFloat = 40
+    static let textBoxPaddingBottom: CGFloat = 10
 }
 
 /// Bottom Drawer w/Swift UI Support
@@ -54,76 +61,199 @@ internal enum DrawerConstants {
 ///
 internal struct BottomDrawer<Content: View>: View {
     @State private var drawerState: DrawerState = .gone
+    @State private var dragOffset: CGFloat = 0
+    @State private var drawerHeight: CGFloat = DrawerConstants.collapsedHeight
     let isPresented: Bool
     let hideDrawer: () -> Void
     let content: Content
-    var drawerWorkItem: DispatchWorkItem?
+    let startIcon: CompositeIcon?
+    let startIconAction: (() -> Void)?
+    let title: String?
 
-    init(isPresented: Bool, hideDrawer: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+    var dragThreshold: CGFloat = DrawerConstants.dragThreshold
+
+    init(isPresented: Bool,
+         hideDrawer: @escaping () -> Void,
+         title: String? = nil,
+         startIcon: CompositeIcon? = nil,
+         startIconAction: (() -> Void)? = nil,
+         dragThreshold: CGFloat = DrawerConstants.dragThreshold,
+         @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
         self.content = content()
         self.hideDrawer = hideDrawer
+        self.startIcon = startIcon
+        self.startIconAction = startIconAction
+        self.title = title
+        self.dragThreshold = dragThreshold
     }
 
     var body: some View {
         ZStack(alignment: .bottom) {
             if drawerState != .gone {
-                Group {
-                    Color.black.opacity(drawerState == .visible ? DrawerConstants.overlayOpacity : 0)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            hideDrawer()
-                        }
-                        .accessibilityHidden(true)
-
-                    VStack {
-                        Spacer()
-                        VStack {
-                            Color.clear.frame(maxWidth: .infinity, maxHeight: 1)
-                                .accessibilityHidden(drawerState != .visible)
-                                .accessibilityLabel(Text("Close Drawer"))
-                                .accessibilityAction {
-                                    hideDrawer()
-                                }
-                                .accessibility(hidden: drawerState != .visible)
-                                .allowsHitTesting(drawerState == .visible)
-
-                            content
-
-                            Spacer().frame(height: DrawerConstants.bottomFillY)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .background(Color(StyleProvider.color.drawerColor))
-                        .cornerRadius(DrawerConstants.drawerCornerRadius)
-                        .shadow(radius: DrawerConstants.drawerShadowRadius)
-                        .padding(.bottom, -DrawerConstants.bottomFillY)
-                    }
+                overlayView
+                drawerView
                     .transition(.move(edge: .bottom))
+                    .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : max(dragOffset, 0))
                     .animation(.easeInOut, value: drawerState == .visible)
-                    .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : 0)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                dragOffset = value.translation.height
+                                let newHeight = drawerHeight - value.translation.height
+                                drawerHeight = min(max(newHeight, DrawerConstants.collapsedHeight),
+                                                   DrawerConstants.expandedHeight)
+                            }
+                            .onEnded { value in
+                                withAnimation {
+                                    if value.translation.height > dragThreshold {
+                                        collapseDrawer()
+                                    } else if value.translation.height < -dragThreshold {
+                                        expandDrawer()
+                                    } else {
+                                        resetDrawer()
+                                    }
+                                }
+                                dragOffset = 0
+                            }
+                    )
                     .accessibilityAddTraits(.isModal)
-                    .onAppear {
-                        UIAccessibility.post(notification: .screenChanged, argument: nil)
-                    }
-                }
             }
-
         }
-
         .onChange(of: isPresented) { newValue in
             if newValue {
-                drawerState = .hidden
-                withAnimation {
-                    drawerState = .visible
-                }
+                showDrawer()
             } else {
-                withAnimation {
-                    drawerState = .hidden
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + DrawerConstants.delayUntilGone) {
-                    drawerState = .gone
-                }
+                hideDrawerAnimated()
             }
         }
+    }
+
+    private var drawerView: some View {
+        VStack {
+            Spacer()
+            VStack {
+                handleView
+                if title != nil {
+                    titleView
+                }
+                content
+                Spacer().frame(height: DrawerConstants.bottomFillY)
+            }
+            .frame(maxWidth: .infinity, alignment: .bottom)
+            .background(Color(StyleProvider.color.drawerColor))
+            .cornerRadius(DrawerConstants.drawerCornerRadius)
+            .shadow(radius: DrawerConstants.drawerShadowRadius)
+            .padding(.bottom, -DrawerConstants.bottomFillY)
+        }
+    }
+
+    private var handleView: some View {
+        RoundedRectangle(cornerRadius: DrawerConstants.drawerHandleCornerRadius)
+            .fill(Color.gray.opacity(0.6))
+            .frame(width: 36, height: 4)
+            .padding(.top, 5)
+    }
+
+    private var titleView: some View {
+        VStack {
+            HStack(spacing: 8) {
+                if let icon = startIcon {
+                    Icon(name: icon, size: DrawerListConstants.iconSize)
+                        .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                        .padding(.leading, 15)
+                        .padding(.top, 15)
+                        .onTapGesture {
+                            startIconAction?()
+                        }
+                }
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.trailing, 10)
+            .padding(.top, 5)
+        }
+        .overlay(
+            Text(title ?? "")
+                .font(.headline)
+                .foregroundColor(.primary)
+                .accessibilityAddTraits(.isHeader)
+                .padding(.top, 20),
+            alignment: .center
+        )
+    }
+
+    private var overlayView: some View {
+        let overlayOpacity = (drawerState == .visible) ? DrawerConstants.overlayOpacity : 0
+
+        return Color.black.opacity(overlayOpacity)
+            .ignoresSafeArea()
+            .onTapGesture {
+                hideDrawer()
+            }
+            .accessibilityHidden(true)
+    }
+
+    // MARK: - Helper Functions
+    private func showDrawer() {
+        drawerState = .hidden
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation {
+                drawerState = .visible
+                drawerHeight = DrawerConstants.collapsedHeight
+            }
+        }
+    }
+
+    private func hideDrawerAnimated() {
+        withAnimation {
+            drawerState = .hidden
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + DrawerConstants.delayUntilGone) {
+            drawerState = .gone
+        }
+    }
+
+    private func collapseDrawer() {
+        drawerState = .hidden
+        drawerHeight = DrawerConstants.collapsedHeight
+    }
+
+    private func expandDrawer() {
+        drawerState = .visible
+        drawerHeight = DrawerConstants.expandedHeight
+    }
+
+    private func resetDrawer() {
+        if drawerHeight > (DrawerConstants.collapsedHeight + DrawerConstants.expandedHeight) / 2 {
+            expandDrawer()
+        } else {
+            collapseDrawer()
+        }
+    }
+}
+
+struct ButtonActions {
+    let showSharingViewAction: (() -> Void)?
+    let showSupportFormAction: (() -> Void)?
+    let showCaptionsViewAction: (() -> Void)?
+    let showSpokenLanguage: (() -> Void)?
+    let showCaptionsLanguage: (() -> Void)?
+    let showRttView: (() -> Void)?
+
+    init(
+        showSharingViewAction: (() -> Void)? = { },
+        showSupportFormAction: (() -> Void)? = { },
+        showCaptionsViewAction: (() -> Void)? = { },
+        showSpokenLanguage: (() -> Void)? = { },
+        showCaptionsLanguage: (() -> Void)? = { },
+        showRttView: (() -> Void)? = { }
+    ) {
+        self.showSharingViewAction = showSharingViewAction
+        self.showSupportFormAction = showSupportFormAction
+        self.showCaptionsViewAction = showCaptionsViewAction
+        self.showSpokenLanguage = showSpokenLanguage
+        self.showCaptionsLanguage = showCaptionsLanguage
+        self.showRttView = showRttView
     }
 }
