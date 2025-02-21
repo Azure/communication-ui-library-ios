@@ -20,8 +20,7 @@ class CaptionsListViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private let captionsOptions: CaptionsOptions
     var isDisplayed: Bool
-    private let isRttAvailable: Bool
-    private var isRttEnabled: Bool
+    private var isRttOn: Bool
     let title: String?
     let backButtonAction: () -> Void
 
@@ -31,7 +30,6 @@ class CaptionsListViewModel: ObservableObject {
          state: AppState,
          dispatchAction: @escaping ActionDispatch,
          buttonActions: ButtonActions,
-         isRttAvailable: Bool,
          isDisplayed: Bool
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
@@ -42,8 +40,7 @@ class CaptionsListViewModel: ObservableObject {
         self.isDisplayed = isDisplayed
         self.isToggleEnabled = state.captionsState.isStarted
         self.captionsOptions = captionsOptions
-        self.isRttAvailable = isRttAvailable
-        self.isRttEnabled = false
+        self.isRttOn = false
         self.showRttViewAction = buttonActions.showRttView ?? { }
         self.title = localizationProvider.getLocalizedString(.rttCaptionsListTitle)
         self.backButtonAction = {
@@ -107,27 +104,25 @@ class CaptionsListViewModel: ObservableObject {
             items.append(captionsLanguageInfoModel)
         }
 
-        if isRttAvailable {
-            let rttInfoModel = IconTextActionListItemViewModel(
-                title: localizationProvider.getLocalizedString(.rttTurnOn),
-                isEnabled: !isRttEnabled,
-                startCompositeIcon: CompositeIcon.rtt,
-                accessibilityIdentifier: "",
-                confirmTitle: localizationProvider.getLocalizedString(.rttAlertTitle),
-                confirmMessage: localizationProvider.getLocalizedString(.rttAlertMessage),
-                confirmAccept: localizationProvider.getLocalizedString(.rttAlertTurnOn),
-                confirmDeny: localizationProvider.getLocalizedString(.rttAlertDismiss),
-                accept: showRttViewAction,
-                deny: { self.dispatch(.hideDrawer) }
+        let rttInfoModel = IconTextActionListItemViewModel(
+            title: localizationProvider.getLocalizedString(.rttTurnOn),
+            isEnabled: !isRttOn,
+            startCompositeIcon: CompositeIcon.rtt,
+            accessibilityIdentifier: "",
+            confirmTitle: localizationProvider.getLocalizedString(.rttAlertTitle),
+            confirmMessage: localizationProvider.getLocalizedString(.rttAlertMessage),
+            confirmAccept: localizationProvider.getLocalizedString(.rttAlertTurnOn),
+            confirmDeny: localizationProvider.getLocalizedString(.rttAlertDismiss),
+            accept: showRttViewAction,
+            deny: { self.dispatch(.hideDrawer) }
 
-            )
-            items.append(rttInfoModel)
-        }
+        )
+        items.append(rttInfoModel)
     }
     func update(state: AppState) {
         isDisplayed = state.navigationState.captionsViewVisible
         isToggleEnabled = state.captionsState.isStarted
-        isRttEnabled = state.rttState.isRttOn
+        isRttOn = state.rttState.isRttOn
         setupItems(state: state)
     }
 

@@ -213,7 +213,6 @@ internal class CallingViewModel: ObservableObject {
             captionsOptions: captionsOptions,
             dispatchAction: store.dispatch,
             buttonActions: captionsButtonActions,
-            isRttAvailable: true,
             isDisplayed: store.state.navigationState.captionsViewVisible)
     }
     // swiftlint:enable function_body_length

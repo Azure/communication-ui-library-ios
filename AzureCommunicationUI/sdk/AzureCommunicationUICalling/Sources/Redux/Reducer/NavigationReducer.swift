@@ -53,8 +53,8 @@ extension Reducer where State == NavigationState,
         case .captionsAction(.setSpokenLanguageRequested(language: let language)),
                 .captionsAction(.setCaptionLanguageRequested(language: let language)):
             drawerVisibility = .hidden
-        case .rttAction(.turnOnRtt):
-            drawerVisibility = .rttViewVisible
+        case .rttAction(.turnOnRtt), .captionsAction(.turnOnCaptions):
+            drawerVisibility = .captionsRttViewVisible
         case .audioSessionAction,
                 .callingAction(.callIdUpdated),
                 .callingAction(.callStartRequested),
@@ -112,7 +112,7 @@ extension Reducer where State == NavigationState,
         case captionsViewVisible
         case captionsLangaugeViewVisible
         case spokenLanguageViewVisible
-        case rttViewVisible
+        case captionsRttViewVisible
 
         var isSupportFormVisible: Bool { self == .supportFormVisible }
         var isSupportShareSheetVisible: Bool { self == .supportShareSheetVisible }
@@ -124,7 +124,7 @@ extension Reducer where State == NavigationState,
         var isCaptionsViewVisible: Bool { self == .captionsViewVisible }
         var isCaptionsLangauageViewVisible: Bool { self == .captionsLangaugeViewVisible }
         var isSpokenLanguageViewVisible: Bool { self == .spokenLanguageViewVisible}
-        var isRttViewVisible: Bool { self == .rttViewVisible }
+        var isRttViewVisible: Bool { self == .captionsRttViewVisible }
     }
 
     static func getDrawerVisibility(state: NavigationState) -> DrawerVisibility {
@@ -137,7 +137,7 @@ extension Reducer where State == NavigationState,
         state.captionsViewVisible ? .captionsViewVisible :
         state.captionsLanguageViewVisible ? .captionsLangaugeViewVisible :
         state.spokenLanguageViewVisible ? .spokenLanguageViewVisible :
-        state.rttViewVisible ? .rttViewVisible :
+        state.rttViewVisible ? .captionsRttViewVisible :
         state.moreOptionsVisible ? .moreOptionsVisible : .hidden
     }
 
