@@ -59,23 +59,15 @@ class CaptionsRttInfoViewModel: ObservableObject {
         } else {
             title = localizationProvider.getLocalizedString(.captionsListTitle)
         }
-
-        let closeCaptionsIcon = state.captionsState.isCaptionsOn ?
+        endIcon = state.captionsState.isCaptionsOn ?
         CompositeIcon.closeCaptions : CompositeIcon.closeCaptionsOff
 
-        let rttIcon = CompositeIcon.rtt
-        endIcon = isRttDisplayed ? closeCaptionsIcon : rttIcon
-        let buttonViewDataState = state.buttonViewDataState
         let language = captionsOptions.spokenLanguage?.lowercased() ?? ""
         endIconAction = {
-            if self.isRttDisplayed {
-                if state.captionsState.isCaptionsOn {
-                    self.dispatch(.captionsAction(.turnOffCaptions))
-                } else {
-                    self.dispatch(.captionsAction(.turnOnCaptions(language: language)))
-                }
+            if state.captionsState.isCaptionsOn {
+                self.dispatch(.captionsAction(.turnOffCaptions))
             } else {
-                self.dispatch(.rttAction(.turnOnRtt))
+                self.dispatch(.captionsAction(.turnOnCaptions(language: language)))
             }
         }
         textBoxHint = localizationProvider.getLocalizedString(.rttTextBoxHint)
