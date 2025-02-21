@@ -226,7 +226,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
                                    buttonActions: ButtonActions,
-                                   isRttAvailable: Bool,
                                    isDisplayed: Bool) -> CaptionsListViewModel {
 
         return CaptionsListViewModel(compositeViewModelFactory: self,
@@ -235,7 +234,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      state: state,
                                      dispatchAction: dispatchAction,
                                      buttonActions: buttonActions,
-                                     isRttAvailable: isRttAvailable,
                                      isDisplayed: store.state.navigationState.captionsViewVisible
                                      && store.state.visibilityState.currentStatus == .visible)
     }

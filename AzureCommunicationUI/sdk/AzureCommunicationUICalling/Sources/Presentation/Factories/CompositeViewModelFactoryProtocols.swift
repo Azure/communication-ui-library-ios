@@ -92,7 +92,6 @@ protocol CompositeViewModelFactoryProtocol {
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
                                    buttonActions: ButtonActions,
-                                   isRttAvailable: Bool,
                                    isDisplayed: Bool) -> CaptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
 
