@@ -307,7 +307,6 @@ extension CallingSDKEventsHandler: CallDelegate,
             var updatedList = participantsInfoListSubject.value
             updatedList[index].isTypingRtt = rttMessage.resultType != .final && !rttMessage.text.isEmpty
 
-            // Ensure UI updates on main thread
             self.participantsInfoListSubject.send(updatedList)
         }
         rttReceived.send(rttMessage)
