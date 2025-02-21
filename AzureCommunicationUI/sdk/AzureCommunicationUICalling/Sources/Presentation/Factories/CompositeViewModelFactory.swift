@@ -16,7 +16,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
-    private let captionsRttViewManager: CaptionsRttDataManager
+    private let captionsRttDataManager: CaptionsRttDataManager
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
@@ -39,7 +39,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
-         captionsRttViewManager: CaptionsRttDataManager,
+         captionsRttDataManager: CaptionsRttDataManager,
          localOptions: LocalOptions? = nil,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
@@ -61,7 +61,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
-        self.captionsRttViewManager = captionsRttViewManager
+        self.captionsRttDataManager = captionsRttDataManager
         self.events = eventsHandler
         self.localOptions = localOptions
         self.enableMultitasking = enableMultitasking
@@ -241,7 +241,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeCaptionsRttInfoViewModel(state: AppState,
                                       captionsOptions: CaptionsOptions) -> CaptionsRttInfoViewModel {
         return CaptionsRttInfoViewModel(state: state,
-                                     captionsManager: captionsRttViewManager,
+                                     captionsManager: captionsRttDataManager,
                                      captionsOptions: captionsOptions,
                                      dispatch: store.dispatch,
                                      localizationProvider: localizationProvider)
