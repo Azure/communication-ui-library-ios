@@ -204,37 +204,41 @@ internal struct ExpandableDrawer<Content: View>: View {
     // MARK: - Title View
     private var titleView: some View {
         HStack(spacing: 8) {
+            // Left Spacer (for balancing)
             Spacer()
 
-            HStack(spacing: 8) {
-                Spacer() // Ensures title stays centered
-                Text(title ?? "")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil) // Allow multiple lines
-                    .minimumScaleFactor(0.8) // Shrink if needed
-                    .layoutPriority(1) // Prevent getting squeezed by icons
-                    .accessibilityAddTraits(.isHeader)
-                Spacer() // Ensures text remains centered
-            }
-            .frame(maxWidth: .infinity) // Ensure full width for centering
-            // End Icon (if any)
-            if let icon = endIcon {
-                Icon(name: icon, size: DrawerListConstants.iconSize)
-                    .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                    .onTapGesture {
-                        endIconAction?()
-                    }
-            }
+            // Title centered using overlay
+            Text(title ?? "")
+                .font(.headline)
+                .foregroundColor(.primary)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.8)
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.6) // Prevents excessive width
+                .layoutPriority(1)
+                .accessibilityAddTraits(.isHeader)
+                .frame(maxWidth: .infinity)
+                .overlay(
+                    HStack(spacing: 8) {
+                        if let icon = endIcon {
+                            Icon(name: icon, size: DrawerListConstants.iconSize)
+                                .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                                .onTapGesture {
+                                    endIconAction?()
+                                }
+                        }
+                        Icon(name: isFullyExpanded ? CompositeIcon.minimize : CompositeIcon.maximize,
+                             size: DrawerListConstants.iconSize)
+                            .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                            .onTapGesture {
+                                setDrawerHeight(to: isFullyExpanded ? .collapsed : .expanded)
+                            }
+                    },
+                    alignment: .trailing // Ensures icons don’t push title off-center
+                )
 
-            // Expand/Minimize Icon
-            Icon(name: isFullyExpanded ? CompositeIcon.minimize :
-                    CompositeIcon.maximize, size: DrawerListConstants.iconSize)
-                .foregroundColor(Color(StyleProvider.color.drawerIconDark))
-                .onTapGesture {
-                    setDrawerHeight(to: isFullyExpanded ? .collapsed : .expanded)
-                }
+            // Right Spacer (for balancing)
+            Spacer()
         }
         .padding(.horizontal, 10)
         .padding(.top, 15)
