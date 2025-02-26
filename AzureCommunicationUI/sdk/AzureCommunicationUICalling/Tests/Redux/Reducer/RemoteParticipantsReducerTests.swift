@@ -41,6 +41,7 @@ final class RemoteParticipantsReducerTests: XCTestCase {
         let sut = makeSUT()
         let participant = ParticipantInfoModel(displayName: "displayname",
                                                isSpeaking: false,
+                                               isTypingRtt: false,
                                                isMuted: true,
                                                isRemoteUser: false,
                                                userIdentifier: userId,

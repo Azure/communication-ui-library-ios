@@ -446,8 +446,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                       dispatchAction: dispatchAction)
     }
 
-    func makeCaptionsListViewModel(buttonActions: ButtonActions,
-                                   isRttAvailable: Bool,
+    func makeCaptionsListViewModel(state: AppState,
+                                   captionsOptions: CaptionsOptions,
+                                   dispatchAction: @escaping ActionDispatch,
+                                   buttonActions: ButtonActions,
                                    isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsListViewModel {
         return CaptionsListViewModel(
             compositeViewModelFactory: self,
@@ -456,7 +458,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             state: store.state,
             dispatchAction: store.dispatch(action:),
             buttonActions: buttonActions,
-            isRttAvailable: true,
             isDisplayed: true)
     }
 
@@ -498,7 +499,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             state: state,
             dispatchAction: dispatchAction,
             buttonActions: buttonActions,
-            isRttAvailable: isRttAvailable,
             isDisplayed: true)
     }
     func makeBottomToastViewModel(toastNotificationState: AzureCommunicationUICalling.ToastNotificationState,

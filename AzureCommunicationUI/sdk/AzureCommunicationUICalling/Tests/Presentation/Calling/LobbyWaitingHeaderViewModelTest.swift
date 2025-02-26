@@ -260,6 +260,7 @@ extension LobbyWaitingHeaderViewModelTests {
             ParticipantInfoModel(
                 displayName: "Participant \(index)",
                 isSpeaking: false,
+                isTypingRtt: false,
                 isMuted: false,
                 isRemoteUser: true,
                 userIdentifier: "testUserIdentifier\(index)",
