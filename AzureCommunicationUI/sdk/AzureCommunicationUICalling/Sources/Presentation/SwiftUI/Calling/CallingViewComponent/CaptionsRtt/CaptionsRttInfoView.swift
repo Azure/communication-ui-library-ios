@@ -137,7 +137,7 @@ struct CaptionsRttInfoView: View {
             + Text(" ")
             + Text(viewModel.localizationProvider.getLocalizedString(.rttLinkLearnMore))
                 .foregroundColor(Color(StyleProvider.color.primaryColor))
-        }.accessibilityElement(children: .ignore)
+        }.accessibilityElement(children: .combine)
             .accessibilityAddTraits(.isLink)
             .onTapGesture {
                 if let url = URL(string: StringConstants.rttLearnMoreLink) {

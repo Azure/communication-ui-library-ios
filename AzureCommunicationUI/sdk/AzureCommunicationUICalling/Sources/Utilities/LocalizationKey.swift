@@ -211,6 +211,8 @@ enum LocalizationKey: String {
     case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
     case captionsChangeCaptionsLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"
     case captionsChangeSpokenLanguageError = "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"
+    case captionsTurnOnCaptions = "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions"
+    case captionsTurnOffCaptions = "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions"
 
     /* RTT */
     case rttCaptionsListTitle = "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"
@@ -225,6 +227,8 @@ enum LocalizationKey: String {
     case rttTyping = "AzureCommunicationUICalling.RTT.Text.RTTTyping"
     case rttLabel = "AzureCommunicationUICalling.RTT.RTTLable"
     case rttLinkLearnMore = "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"
+    case maximizeCaptionsRtt = "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"
+    case minimizeCaptionsRtt = "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"
 
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"

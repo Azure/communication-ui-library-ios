@@ -47,6 +47,9 @@ internal struct ExpandableDrawer<Content: View>: View {
     let commitAction: ((_ message: String, _ isFinal: Bool?) -> Void)?
     let updateHeightAction: ((_ shouldExpand: Bool) -> Void)?
     let shouldExpand: Bool
+    let endIconAccessibilityValue: String?
+    let expandAccessibilityValue: String?
+    let collapseAccessibilityValue: String?
 
     // Content
     let content: Content
@@ -68,8 +71,11 @@ internal struct ExpandableDrawer<Content: View>: View {
         title: String? = nil,
         endIcon: CompositeIcon? = nil,
         endIconAction: (() -> Void)? = nil,
+        endIconAccessibilityValue: String? = nil,
         showTextBox: Bool = false,
         shouldExpand: Bool = false,
+        expandIconAccessibilityValue: String? = nil,
+        collapseIconAccessibilityValue: String? = nil,
         textBoxHint: String? = nil,
         isAutoCommitted: Binding<Bool> = .constant(false),
         commitAction: ((_ message: String, _ isFinal: Bool?) -> Void)? = nil,
@@ -88,6 +94,9 @@ internal struct ExpandableDrawer<Content: View>: View {
         self.commitAction = commitAction
         self.updateHeightAction = updateHeightAction
         self.content = content()
+        self.endIconAccessibilityValue = endIconAccessibilityValue
+        self.expandAccessibilityValue = expandIconAccessibilityValue
+        self.collapseAccessibilityValue = collapseIconAccessibilityValue
     }
 
     // MARK: - Body
@@ -177,6 +186,7 @@ internal struct ExpandableDrawer<Content: View>: View {
             .padding(.bottom, keyboardHeight)
             .animation(.easeInOut, value: keyboardHeight)
             .frame(height: drawerHeight)
+            .accessibilityElement(children: .contain)
             .hideKeyboardOnTap() // Dismiss keyboard when tapping outside
         }
         .onAppear {
@@ -226,13 +236,18 @@ internal struct ExpandableDrawer<Content: View>: View {
                                 .onTapGesture {
                                     endIconAction?()
                                 }
+                                .accessibilityLabel(endIconAccessibilityValue ?? "")
+                                .accessibilityAddTraits(.isButton)
                         }
                         Icon(name: isFullyExpanded ? CompositeIcon.minimize : CompositeIcon.maximize,
                              size: DrawerListConstants.iconSize)
                             .foregroundColor(Color(StyleProvider.color.drawerIconDark))
+                            .accessibilityLabel((isFullyExpanded ?
+                                                 collapseAccessibilityValue : expandAccessibilityValue) ?? "")
                             .onTapGesture {
                                 setDrawerHeight(to: isFullyExpanded ? .collapsed : .expanded)
                             }
+                            .accessibilityAddTraits(.isButton)
                     },
                     alignment: .trailing // Ensures icons don’t push title off-center
                 )

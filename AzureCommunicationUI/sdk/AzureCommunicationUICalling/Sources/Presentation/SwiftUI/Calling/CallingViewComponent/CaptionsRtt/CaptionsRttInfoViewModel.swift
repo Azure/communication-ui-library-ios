@@ -24,6 +24,9 @@ class CaptionsRttInfoViewModel: ObservableObject {
     var endIcon: CompositeIcon?
     var endIconAction: (() -> Void)?
     var textBoxHint: String?
+    var endIconAccessibilityValue: String?
+    var expandIconAccessibilityValue: String?
+    var collapseIconAccessibilityValue: String?
     private var hasInsertedRttInfo = false
 
     init(state: AppState,
@@ -39,6 +42,7 @@ class CaptionsRttInfoViewModel: ObservableObject {
         self.captionsOptions = captionsOptions
         self.endIcon = nil
         self.endIconAction = nil
+        self.endIconAccessibilityValue = nil
         self.title = ""
         self.textBoxHint = nil
         bindCaptionsUpdates()
@@ -71,6 +75,15 @@ class CaptionsRttInfoViewModel: ObservableObject {
             }
         }
         textBoxHint = localizationProvider.getLocalizedString(.rttTextBoxHint)
+        endIconAccessibilityValue = {
+            if state.captionsState.isCaptionsOn {
+                localizationProvider.getLocalizedString(.captionsTurnOffCaptions)
+            } else {
+                localizationProvider.getLocalizedString(.captionsTurnOnCaptions)
+            }
+        }()
+        expandIconAccessibilityValue = localizationProvider.getLocalizedString(.maximizeCaptionsRtt)
+        collapseIconAccessibilityValue = localizationProvider.getLocalizedString(.minimizeCaptionsRtt)
     }
 
     func commitMessage(_ message: String, _ isFinal: Bool) {

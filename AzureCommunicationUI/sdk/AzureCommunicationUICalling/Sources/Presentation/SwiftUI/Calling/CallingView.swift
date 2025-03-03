@@ -159,8 +159,11 @@ struct CallingView: View {
             title: viewModel.captionsInfoViewModel?.title,
             endIcon: viewModel.captionsInfoViewModel?.endIcon,
             endIconAction: viewModel.captionsInfoViewModel?.endIconAction,
+            endIconAccessibilityValue: viewModel.captionsInfoViewModel?.endIconAccessibilityValue,
             showTextBox: viewModel.captionsInfoViewModel?.isRttAvailable ?? false,
             shouldExpand: viewModel.captionsInfoViewModel?.shouldExpand ?? false,
+            expandIconAccessibilityValue: viewModel.captionsInfoViewModel?.expandIconAccessibilityValue,
+            collapseIconAccessibilityValue: viewModel.captionsInfoViewModel?.collapseIconAccessibilityValue,
             textBoxHint: viewModel.captionsInfoViewModel?.textBoxHint,
             isAutoCommitted: $isAutoCommitted,
             commitAction: { message, isFinal in
