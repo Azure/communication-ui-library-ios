@@ -75,6 +75,7 @@ struct CaptionsRttInfoCellView: View {
             updateAvatar()
             determineTextDirection()
         }
+        .accessibilityHidden(!displayData.isFinal)
     }
 
     private var avatarView: some View {
