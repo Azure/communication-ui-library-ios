@@ -56,8 +56,8 @@
 		116BC0C62C24D15800F8CF6F /* CaptionsRttInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */; };
 		11A494C32CFA6D780004B238 /* CaptionsAndRttLandscapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A494C22CFA6D4A0004B238 /* CaptionsAndRttLandscapeView.swift */; };
 		11A494C52CFA83110004B238 /* KeybaordResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A494C42CFA83020004B238 /* KeybaordResponder.swift */; };
-		11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */; };
-		11A8FC2F2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */; };
+		11A821CE2C1FA811005A89A5 /* CaptionsRttListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A821CD2C1FA811005A89A5 /* CaptionsRttListView.swift */; };
+		11A8FC2F2C0FC5DE00BF1FFA /* CaptionsRttListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC2E2C0FC5DE00BF1FFA /* CaptionsRttListViewModel.swift */; };
 		11A8FC312C0FC65C00BF1FFA /* CaptionsLanguageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */; };
 		11A8FC332C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */; };
 		11AB753D2CE2F54A00AAC3BE /* RttAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AB753C2CE2F54100AAC3BE /* RttAction.swift */; };
@@ -450,8 +450,8 @@
 		116BC0C52C24D15800F8CF6F /* CaptionsRttInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttInfoView.swift; sourceTree = "<group>"; };
 		11A494C22CFA6D4A0004B238 /* CaptionsAndRttLandscapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsAndRttLandscapeView.swift; sourceTree = "<group>"; };
 		11A494C42CFA83020004B238 /* KeybaordResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeybaordResponder.swift; sourceTree = "<group>"; };
-		11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListView.swift; sourceTree = "<group>"; };
-		11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsListViewModel.swift; sourceTree = "<group>"; };
+		11A821CD2C1FA811005A89A5 /* CaptionsRttListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttListView.swift; sourceTree = "<group>"; };
+		11A8FC2E2C0FC5DE00BF1FFA /* CaptionsRttListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsRttListViewModel.swift; sourceTree = "<group>"; };
 		11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListView.swift; sourceTree = "<group>"; };
 		11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionsLanguageListViewModel.swift; sourceTree = "<group>"; };
 		11AB753C2CE2F54100AAC3BE /* RttAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RttAction.swift; sourceTree = "<group>"; };
@@ -889,8 +889,8 @@
 				116BC0C12C24D06500F8CF6F /* CaptionsRttInfoViewModel.swift */,
 				11A8FC302C0FC65C00BF1FFA /* CaptionsLanguageListView.swift */,
 				11A8FC322C0FC69100BF1FFA /* CaptionsLanguageListViewModel.swift */,
-				11A821CD2C1FA811005A89A5 /* CaptionsListView.swift */,
-				11A8FC2E2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift */,
+				11A821CD2C1FA811005A89A5 /* CaptionsRttListView.swift */,
+				11A8FC2E2C0FC5DE00BF1FFA /* CaptionsRttListViewModel.swift */,
 			);
 			path = CaptionsRtt;
 			sourceTree = "<group>";
@@ -2309,7 +2309,7 @@
 				53D734D82C0AAD9600017EFB /* LeaveCallConfirmationViewModel.swift in Sources */,
 				C8E10DD72C7F8FA800511482 /* CallScreenInfoHeaderState.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
-				11A821CE2C1FA811005A89A5 /* CaptionsListView.swift in Sources */,
+				11A821CE2C1FA811005A89A5 /* CaptionsRttListView.swift in Sources */,
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
 				1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */,
 				116BC0C62C24D15800F8CF6F /* CaptionsRttInfoView.swift in Sources */,
@@ -2372,7 +2372,7 @@
 				533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */,
 				C868F7732C5AEE1800D242B4 /* CallScreenHeaderViewData.swift in Sources */,
 				534B2CF42B575CFB00D52D02 /* CallCompositeAudioVideoMode.swift in Sources */,
-				11A8FC2F2C0FC5DE00BF1FFA /* CaptionsListViewModel.swift in Sources */,
+				11A8FC2F2C0FC5DE00BF1FFA /* CaptionsRttListViewModel.swift in Sources */,
 				C8E50E9B2C0006FE00AB507E /* CapabilityResolutionReason.swift in Sources */,
 				C8E50E992C00056600AB507E /* CapabilitiesChangedReason.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,

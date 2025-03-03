@@ -446,12 +446,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                       dispatchAction: dispatchAction)
     }
 
-    func makeCaptionsListViewModel(state: AppState,
+    func makeCaptionsRttListViewModel(state: AppState,
                                    captionsOptions: CaptionsOptions,
                                    dispatchAction: @escaping ActionDispatch,
                                    buttonActions: ButtonActions,
-                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsListViewModel {
-        return CaptionsListViewModel(
+                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
+        return CaptionsRttListViewModel(
             compositeViewModelFactory: self,
             localizationProvider: localizationProvider,
             captionsOptions: CaptionsOptions(),
@@ -486,13 +486,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                 dispatchAction: dispatchAction)
     }
 
-    func makeCaptionsListViewModel(state: AzureCommunicationUICalling.AppState,
+    func makeCaptionsRttListViewModel(state: AzureCommunicationUICalling.AppState,
                                    captionsOptions: AzureCommunicationUICalling.CaptionsOptions,
                                    dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
                                    buttonActions: AzureCommunicationUICalling.ButtonActions,
                                    isRttAvailable: Bool,
-                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsListViewModel {
-        return CaptionsListViewModel(
+                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
+        return CaptionsRttListViewModel(
             compositeViewModelFactory: self,
             localizationProvider: localizationProvider,
             captionsOptions: CaptionsOptions(),

@@ -88,11 +88,11 @@ protocol CompositeViewModelFactoryProtocol {
         controlBarOptions: CallScreenControlBarOptions?,
         buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel
-    func makeCaptionsListViewModel(state: AppState,
-                                   captionsOptions: CaptionsOptions,
-                                   dispatchAction: @escaping ActionDispatch,
-                                   buttonActions: ButtonActions,
-                                   isDisplayed: Bool) -> CaptionsListViewModel
+    func makeCaptionsRttListViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions,
+                                      dispatchAction: @escaping ActionDispatch,
+                                      buttonActions: ButtonActions,
+                                      isDisplayed: Bool) -> CaptionsRttListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
 
     func makeToggleListItemViewModel(title: String,

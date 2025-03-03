@@ -126,12 +126,12 @@ struct CallingView: View {
                 CaptionsLanguageListView(viewModel: viewModel.captionsLanguageListViewModel,
                                          avatarManager: avatarManager)
             }
-            BottomDrawer(isPresented: viewModel.captionsListViewModel.isDisplayed,
+            BottomDrawer(isPresented: viewModel.captionsRttListViewModel.isDisplayed,
                          hideDrawer: viewModel.dismissDrawer,
-                         title: viewModel.captionsListViewModel.title,
+                         title: viewModel.captionsRttListViewModel.title,
                          startIcon: CompositeIcon.leftArrow,
-                         startIconAction: viewModel.captionsListViewModel.backButtonAction) {
-                CaptionsListView(viewModel: viewModel.captionsListViewModel,
+                         startIconAction: viewModel.captionsRttListViewModel.backButtonAction) {
+                CaptionsRttListView(viewModel: viewModel.captionsRttListViewModel,
                                  avatarManager: avatarManager)
             }
             BottomDrawer(isPresented: viewModel.leaveCallConfirmationViewModel.isDisplayed,

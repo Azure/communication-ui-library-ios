@@ -46,7 +46,7 @@ internal class CallingViewModel: ObservableObject {
     var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
     var captionsLanguageListViewModel: CaptionsLanguageListViewModel!
-    var captionsListViewModel: CaptionsListViewModel!
+    var captionsRttListViewModel: CaptionsRttListViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var audioDeviceListViewModel: AudioDevicesListViewModel!
     var captionsInfoViewModel: CaptionsRttInfoViewModel!
@@ -186,7 +186,7 @@ internal class CallingViewModel: ObservableObject {
                 store.dispatch(action: .showSupportForm)
             },
             showCaptionsViewAction: {
-                store.dispatch(action: .showCaptionsListView)
+                store.dispatch(action: .showCaptionsRttListView)
             }
         )
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
@@ -206,9 +206,10 @@ internal class CallingViewModel: ObservableObject {
             showRttView: {
                 store.dispatch(action: .rttAction(.updateMaximized(isMaximized: true)))
                 store.dispatch(action: .rttAction(.turnOnRtt))
+                store.dispatch(action: .hideDrawer)
             }
         )
-        captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
+        captionsRttListViewModel = compositeViewModelFactory.makeCaptionsRttListViewModel(
             state: store.state,
             captionsOptions: captionsOptions,
             dispatchAction: store.dispatch,
@@ -250,7 +251,7 @@ internal class CallingViewModel: ObservableObject {
             visibilityState: state.visibilityState)
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
-        captionsListViewModel.update(state: state)
+        captionsRttListViewModel.update(state: state)
         captionsInfoViewModel.update(state: state)
         captionsLanguageListViewModel.update(state: state)
         captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)

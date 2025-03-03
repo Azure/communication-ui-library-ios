@@ -222,13 +222,13 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       localizationProvider: localizationProvider)
     }
 
-    func makeCaptionsListViewModel(state: AppState,
-                                   captionsOptions: CaptionsOptions,
-                                   dispatchAction: @escaping ActionDispatch,
-                                   buttonActions: ButtonActions,
-                                   isDisplayed: Bool) -> CaptionsListViewModel {
+    func makeCaptionsRttListViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions,
+                                      dispatchAction: @escaping ActionDispatch,
+                                      buttonActions: ButtonActions,
+                                      isDisplayed: Bool) -> CaptionsRttListViewModel {
 
-        return CaptionsListViewModel(compositeViewModelFactory: self,
+        return CaptionsRttListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      captionsOptions: captionsOptions,
                                      state: state,

@@ -182,7 +182,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_showCaptionsList_then_captionsListVisible() {
         let expectedState = NavigationState(captionsViewVisible: true)
         let state = NavigationState()
-        let action = Action.showCaptionsListView
+        let action = Action.showCaptionsRttListView
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 

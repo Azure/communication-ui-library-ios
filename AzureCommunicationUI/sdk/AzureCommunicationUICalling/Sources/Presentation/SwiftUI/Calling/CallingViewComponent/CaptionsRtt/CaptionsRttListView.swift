@@ -7,11 +7,11 @@ import Foundation
 import SwiftUI
 import FluentUI
 
-internal struct CaptionsListView: View {
-    @ObservedObject var viewModel: CaptionsListViewModel
+internal struct CaptionsRttListView: View {
+    @ObservedObject var viewModel: CaptionsRttListViewModel
     let avatarManager: AvatarViewManagerProtocol
 
-    init(viewModel: CaptionsListViewModel,
+    init(viewModel: CaptionsRttListViewModel,
          avatarManager: AvatarViewManagerProtocol) {
         self.viewModel = viewModel
         self.avatarManager = avatarManager

@@ -8,7 +8,7 @@ import AVFoundation
 import Combine
 import SwiftUI
 
-class CaptionsListViewModel: ObservableObject {
+class CaptionsRttListViewModel: ObservableObject {
     @Published private var isToggleEnabled = false
     @Published var items: [BaseDrawerItemViewModel] = []
 

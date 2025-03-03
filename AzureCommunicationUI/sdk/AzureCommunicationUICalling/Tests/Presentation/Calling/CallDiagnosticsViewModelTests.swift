@@ -53,7 +53,7 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .compositeExitAction,
                  .callingViewLaunched,
                  .showSupportForm,
-                 .showCaptionsListView,
+                 .showCaptionsRttListView,
                  .captionsAction,
                  .showSpokenLanguageView,
                  .showCaptionsLanguageView,
