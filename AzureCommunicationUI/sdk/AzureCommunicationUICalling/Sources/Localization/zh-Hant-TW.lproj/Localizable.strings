@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="口語語言";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="輔助字幕語言";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="正在啟動輔助字幕...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="無法啟動輔助字幕";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="無法停止輔助字幕";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="無法變更輔助字幕語言";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT 輸入";
 "AzureCommunicationUICalling.RTT.RTTLable"="即時輸入";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="即時輸入訊息";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="將參與者靜音功能表。";

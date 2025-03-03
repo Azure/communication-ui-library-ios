@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="اللغة المنطوقة";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="لغة التسمية التوضيحية";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="يتم الآن بدء تشغيل التسميات التوضيحية...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="يتعذّر بدء تشغيل التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="يتعذّر إيقاف التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="يتعذر تغيير لغة التسميات التوضيحية";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="عرض الكتابة في الوقت الحقيقي (RTT) قيد الكتابة";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="اكتب رسالة في الوقت الحقيقي";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="كتم الصوت";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="قائمة كتم صوت المشارك.";

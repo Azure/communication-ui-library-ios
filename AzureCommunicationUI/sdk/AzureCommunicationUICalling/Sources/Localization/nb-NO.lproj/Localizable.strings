@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talespråk";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk for undertekst";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starter teksting ...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Kan ikke starte teksting";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Kan ikke stoppe teksting";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Kan ikke endre språk for teksting";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="Skriving i sanntid";
 "AzureCommunicationUICalling.RTT.RTTLable"="Skriving i sanntid";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv inn melding i sanntid";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Demp";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Meny for demping av lyd for deltaker.";

@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Idioma hablado";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Idioma de subtítulos";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Iniciando subtítulos...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="No se pueden iniciar los subtítulos";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="No se pueden detener los subtítulos";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="No se puede cambiar el idioma de los subtítulos";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="Escritura en tiempo real";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Escribir un mensaje en tiempo real";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Silenciar";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Silenciar el menú de participantes.";

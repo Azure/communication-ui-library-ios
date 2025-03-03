@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="音声言語";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="キャプション言語";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="キャプションを開始しています...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="キャプションを開始できません";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="キャプションを停止できません";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="キャプションの言語を変更できません";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT 入力";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="リアルタイムにメッセージを入力";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="ミュート";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="参加者メニューをミュートにします。";

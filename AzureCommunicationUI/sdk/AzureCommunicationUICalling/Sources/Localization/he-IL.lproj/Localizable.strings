@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="שפה מדוברת";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="שפת כתוביות";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="מאתחל כתוביות...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="לא ניתן להפעיל כתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="לא ניתן להפסיק כתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="לא ניתן לשנות את שפת הכתוביות";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="הקלדת RTT";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="הקלד הודעה בזמן אמת";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="השתק";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="תפריט השתקת משתתף.";

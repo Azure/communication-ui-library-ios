@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Konuşma dili";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Alt yazı dili";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Alt Yazılar Başlatılıyor...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Alt yazılar başlatılamadı";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Alt yazılar durdurulamadı";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Alt yazı dili değiştirilemedi";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT yazma";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="İletiyi gerçek zamanlı yazın";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Bildirimleri kapat";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Katılımcı menüsünü sessize alın.";

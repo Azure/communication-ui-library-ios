@@ -173,6 +173,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Idioma falado";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Idioma da legenda";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Iniciando as Legendas...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Não é possível iniciar as legendas";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Não é possível parar as legendas";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Não é possível alterar o idioma das legendas";
@@ -189,6 +191,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="Digitação RTT";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Digitar mensagem em tempo real";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximize captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimize captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Ativar mudo";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Ative o mudo do menu do participante.";
