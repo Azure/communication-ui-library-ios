@@ -120,7 +120,7 @@ class CaptionsRttListViewModel: ObservableObject {
         items.append(rttInfoModel)
     }
     func update(state: AppState) {
-        isDisplayed = state.navigationState.captionsViewVisible
+        isDisplayed = state.navigationState.captionsRttViewVisible
         isToggleEnabled = state.captionsState.isStarted
         isRttOn = state.rttState.isRttOn
         setupItems(state: state)
@@ -131,6 +131,7 @@ class CaptionsRttListViewModel: ObservableObject {
         let language = captionsOptions.spokenLanguage?.lowercased() ?? ""
         if isToggleEnabled {
             dispatch(.captionsAction(.turnOnCaptions(language: language)))
+            dispatch(.hideDrawer)
         } else {
             dispatch(.captionsAction(.turnOffCaptions))
         }

@@ -130,7 +130,7 @@ extension Reducer where State == NavigationState,
         state.audioSelectionVisible ? .audioSelectionVisible :
         state.participantsVisible ? .participantsVisible :
         state.participantActionsVisible ? .participantActionsVisible :
-        state.captionsViewVisible ? .captionsViewVisible :
+        state.captionsRttViewVisible ? .captionsViewVisible :
         state.captionsLanguageViewVisible ? .captionsLangaugeViewVisible :
         state.spokenLanguageViewVisible ? .spokenLanguageViewVisible :
         state.moreOptionsVisible ? .moreOptionsVisible : .hidden

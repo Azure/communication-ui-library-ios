@@ -234,7 +234,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      state: state,
                                      dispatchAction: dispatchAction,
                                      buttonActions: buttonActions,
-                                     isDisplayed: store.state.navigationState.captionsViewVisible
+                                     isDisplayed: store.state.navigationState.captionsRttViewVisible
                                      && store.state.visibilityState.currentStatus == .visible)
     }
 
