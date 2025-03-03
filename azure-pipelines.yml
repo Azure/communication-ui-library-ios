@@ -28,7 +28,7 @@ parameters:
   - name: vsts-mac-131-xcode-142 
     os: macos
 extends:
-  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
+  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
       name: Azure-Pipelines-1ESPT-ExDShared
