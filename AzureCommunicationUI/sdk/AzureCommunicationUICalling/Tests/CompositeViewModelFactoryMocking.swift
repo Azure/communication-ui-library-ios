@@ -447,10 +447,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsRttListViewModel(state: AppState,
-                                   captionsOptions: CaptionsOptions,
-                                   dispatchAction: @escaping ActionDispatch,
-                                   buttonActions: ButtonActions,
-                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
+                                      captionsOptions: CaptionsOptions,
+                                      dispatchAction: @escaping ActionDispatch,
+                                      buttonActions: ButtonActions,
+                                      isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
         return CaptionsRttListViewModel(
             compositeViewModelFactory: self,
             localizationProvider: localizationProvider,
@@ -487,11 +487,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeCaptionsRttListViewModel(state: AzureCommunicationUICalling.AppState,
-                                   captionsOptions: AzureCommunicationUICalling.CaptionsOptions,
-                                   dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
-                                   buttonActions: AzureCommunicationUICalling.ButtonActions,
-                                   isRttAvailable: Bool,
-                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
+                                      captionsOptions: AzureCommunicationUICalling.CaptionsOptions,
+                                      dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
+                                      buttonActions: AzureCommunicationUICalling.ButtonActions,
+                                      isRttAvailable: Bool,
+                                      isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
         return CaptionsRttListViewModel(
             compositeViewModelFactory: self,
             localizationProvider: localizationProvider,
