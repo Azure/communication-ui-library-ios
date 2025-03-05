@@ -31,7 +31,7 @@ end
 target 'AzureCommunicationUIChat' do
   project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationChat', '1.3.3'
+  pod 'AzureCommunicationChat', '1.3.6'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
@@ -50,7 +50,7 @@ target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
   pod 'AzureCommunicationCalling', '2.14.1'
-  pod 'AzureCommunicationChat', '1.3.3'
+  pod 'AzureCommunicationChat', '1.3.6'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
