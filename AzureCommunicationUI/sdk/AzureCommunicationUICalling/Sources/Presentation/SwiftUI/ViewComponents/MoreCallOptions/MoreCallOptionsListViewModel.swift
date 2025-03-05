@@ -17,15 +17,12 @@ class MoreCallOptionsListViewModel: ObservableObject {
     private let controlBarOptions: CallScreenControlBarOptions?
     private let isCaptionsAvailable: Bool
     private let isSupportFormAvailable: Bool
-
-    @Published var items: [DrawerGenericItemViewModel]
+    @Published var items: [BaseDrawerItemViewModel]
     var isDisplayed: Bool
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
-         showSharingViewAction: @escaping () -> Void,
-         showSupportFormAction: @escaping () -> Void,
-         showCaptionsViewAction: @escaping() -> Void,
+         buttonActions: ButtonActions,
          controlBarOptions: CallScreenControlBarOptions?,
          isCaptionsAvailable: Bool,
          isSupportFormAvailable: Bool,
@@ -36,9 +33,9 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isDisplayed = false
-        self.showSharingViewAction = showSharingViewAction
-        self.showSupportFormAction = showSupportFormAction
-        self.showCaptionsViewAction = showCaptionsViewAction
+        self.showSharingViewAction = buttonActions.showSharingViewAction ?? {}
+        self.showSupportFormAction = buttonActions.showSupportFormAction ?? {}
+        self.showCaptionsViewAction = buttonActions.showCaptionsViewAction ?? {}
         self.controlBarOptions = controlBarOptions
         self.isCaptionsAvailable = isCaptionsAvailable
         self.isSupportFormAvailable = isSupportFormAvailable
@@ -48,6 +45,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
     }
 
     func update(navigationState: NavigationState,
+                rttState: RttState,
                 visibilityState: VisibilityState,
                 buttonViewDataState: ButtonViewDataState) {
         isDisplayed = visibilityState.currentStatus == .visible && navigationState.moreOptionsVisible
@@ -55,11 +53,11 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.generateItems(buttonViewDataState)
     }
     private func generateItems(_ buttonViewDataState: ButtonViewDataState) {
-        var items: [DrawerGenericItemViewModel] = []
+        var items: [BaseDrawerItemViewModel] = []
 
         if isCaptionsAvailable && buttonViewDataState.liveCaptionsButton?.visible ?? true {
             let captionsInfoModel = DrawerGenericItemViewModel(
-                title: localizationProvider.getLocalizedString(.captionsListTitile),
+                title: localizationProvider.getLocalizedString(.rttCaptionsListTitle),
                 accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                 accessibilityTraits: [.isButton],
                 action: showCaptionsViewAction,

@@ -64,7 +64,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
          debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking(),
          capabilitiesManager: CapabilitiesManager = CapabilitiesManager(callType: .groupCall),
          avatarManager: AvatarViewManagerProtocol,
-         updatableOptionsManager: UpdatableOptionsManager) {
+         updatableOptionsManager: UpdatableOptionsManager
+    ) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
@@ -317,6 +318,18 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             action: {})
     }
 
+    func makeCaptionsRttInfoViewModel(state: AzureCommunicationUICalling.AppState, captionsOptions: AzureCommunicationUICalling.CaptionsOptions) -> AzureCommunicationUICalling.CaptionsRttInfoViewModel {
+        return CaptionsRttInfoViewModel(
+            state: state,
+            captionsManager: CaptionsRttDataManager(
+                store: store,
+                callingSDKWrapper: CallingSDKWrapperMocking()
+            ),
+            captionsOptions: captionsOptions,
+            dispatch: store.dispatch,
+            localizationProvider: localizationProvider)
+    }
+
     func makeCaptionsLangaugeCellViewModel(title: String,
                                            isSelected: Bool,
                                            accessibilityLabel: String,
@@ -433,23 +446,18 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                       dispatchAction: dispatchAction)
     }
 
-    func makeCaptionsInfoViewModel(dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.CaptionsInfoViewModel {
-        return CaptionsInfoViewModel(state: store.state, captionsManager: CaptionsViewManager(
-            store: store,
-            callingSDKWrapper: CallingSDKWrapperMocking()), localizationProvider: localizationProvider)
-    }
-
-    func makeCaptionsListViewModel(showCaptionsLanguage: @escaping () -> Void,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsListViewModel {
-        return CaptionsListViewModel(
+    func makeCaptionsRttListViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions,
+                                      dispatchAction: @escaping ActionDispatch,
+                                      buttonActions: ButtonActions,
+                                      isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
+        return CaptionsRttListViewModel(
             compositeViewModelFactory: self,
             localizationProvider: localizationProvider,
             captionsOptions: CaptionsOptions(),
             state: store.state,
             dispatchAction: store.dispatch(action:),
-            showSpokenLanguage: showSpokenLanguage,
-            showCaptionsLanguage: showSpokenLanguage,
+            buttonActions: buttonActions,
             isDisplayed: true)
     }
 
@@ -461,49 +469,36 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             localizationProvider: localizationProvider)
     }
 
-    func makeCaptionsInfoViewModel(state: AzureCommunicationUICalling.AppState) -> AzureCommunicationUICalling.CaptionsInfoViewModel {
-        return CaptionsInfoViewModel(state: state,
-                                     captionsManager: CaptionsViewManager(
-                                        store: store,
-                                        callingSDKWrapper: CallingSDKWrapperMocking()),
-                                     localizationProvider: localizationProvider)
+    func makeMoreCallOptionsListViewModel(
+        isCaptionsAvailable: Bool,
+        buttonActions: AzureCommunicationUICalling.ButtonActions,
+        controlBarOptions: AzureCommunicationUICalling.CallScreenControlBarOptions?,
+        buttonViewDataState: AzureCommunicationUICalling.ButtonViewDataState,
+        dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> AzureCommunicationUICalling.MoreCallOptionsListViewModel {
+            return MoreCallOptionsListViewModel(
+                compositeViewModelFactory: self,
+                localizationProvider: localizationProvider,
+                buttonActions: buttonActions,
+                controlBarOptions: controlBarOptions,
+                isCaptionsAvailable: true,
+                isSupportFormAvailable: true,
+                buttonViewDataState: buttonViewDataState,
+                dispatchAction: dispatchAction)
     }
 
-    func makeMoreCallOptionsListViewModel(isCaptionsAvailable: Bool,
-                                          controlBarOptions: AzureCommunicationUICalling.CallScreenControlBarOptions?,
-                                          showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void,
-                                          showCaptionsViewAction: @escaping () -> Void,
-                                          buttonViewDataState: ButtonViewDataState,
-                                          dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch
-    ) -> AzureCommunicationUICalling.MoreCallOptionsListViewModel {
-        return MoreCallOptionsListViewModel(
-            compositeViewModelFactory: self,
-            localizationProvider: localizationProvider,
-            showSharingViewAction: showSharingViewAction,
-            showSupportFormAction: showSupportFormAction,
-            showCaptionsViewAction: showCaptionsViewAction,
-            controlBarOptions: controlBarOptions,
-            isCaptionsAvailable: true,
-            isSupportFormAvailable: true,
-            buttonViewDataState: buttonViewDataState,
-            dispatchAction: dispatchAction)
-    }
-
-    func makeCaptionsListViewModel(state: AzureCommunicationUICalling.AppState,
-                                   captionsOptions: AzureCommunicationUICalling.CaptionsOptions,
-                                   dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   showCaptionsLanguage: @escaping () -> Void,
-                                   isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsListViewModel {
-        return CaptionsListViewModel(
+    func makeCaptionsRttListViewModel(state: AzureCommunicationUICalling.AppState,
+                                      captionsOptions: AzureCommunicationUICalling.CaptionsOptions,
+                                      dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch,
+                                      buttonActions: AzureCommunicationUICalling.ButtonActions,
+                                      isRttAvailable: Bool,
+                                      isDisplayed: Bool) -> AzureCommunicationUICalling.CaptionsRttListViewModel {
+        return CaptionsRttListViewModel(
             compositeViewModelFactory: self,
             localizationProvider: localizationProvider,
             captionsOptions: CaptionsOptions(),
             state: state,
             dispatchAction: dispatchAction,
-            showSpokenLanguage: showSpokenLanguage,
-            showCaptionsLanguage: showCaptionsLanguage,
+            buttonActions: buttonActions,
             isDisplayed: true)
     }
     func makeBottomToastViewModel(toastNotificationState: AzureCommunicationUICalling.ToastNotificationState,

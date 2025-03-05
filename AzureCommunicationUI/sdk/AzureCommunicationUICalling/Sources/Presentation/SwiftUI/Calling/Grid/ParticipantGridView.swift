@@ -15,7 +15,9 @@ struct ParticipantGridView: View {
             ParticipantGridLayoutView(cellViewModels: viewModel.participantsCellViewModelArr,
                                       rendererViewManager: viewModel.rendererViewManager,
                                       avatarViewManager: avatarViewManager,
-                                      screenSize: screenSize)
+                                      screenSize: screenSize,
+                                      shouldUseVerticalStyleGrid: viewModel.shouldUseVerticalStyleGrid
+            ).padding(.top, 6)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .id(gridsCount)
             .onReceive(viewModel.$gridsCount) {

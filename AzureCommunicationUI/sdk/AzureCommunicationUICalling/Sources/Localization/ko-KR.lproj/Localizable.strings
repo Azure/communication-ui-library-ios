@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="문제 보고";
 "AzureCommunicationUICalling.SendFeedback.Text"="보내기";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="라이브 캡션";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="캡션";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="캡션 및 실시간 입력";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="음성 언어";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="캡션 언어";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="캡션 시작 중...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="캡션을 중지할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="캡션 언어를 변경할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="음성 언어를 변경할 수 없음";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="실시간 입력";
+"AzureCommunicationUICalling.RTT.Alert.Title"="실시간 입력을 사용하시겠습니까?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="통화 중인 모든 사용자에 대해 RTT(실시간 텍스트)가 켜집니다.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="사용";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="해제";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="이 통화에 대한 RTT 켜기";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="RTT(실시간 텍스트)는 이 모임의 전체 기간에 사용할 수 있으며 모든 참가자가 볼 수 있습니다.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="자세한 정보";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="실시간 입력 입력 중";
+"AzureCommunicationUICalling.RTT.RTTLable"="실시간 입력";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="실시간으로 메시지 입력";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="참가자 음소거";

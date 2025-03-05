@@ -10,6 +10,7 @@ enum StringConstants {
     static let learnMoreLink: String = "https://support.microsoft.com/office/"
     + "record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24"
 
+    static let rttLearnMoreLink: String = "https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/real-time-text"
     static let callIdDebugInfoTitle: String = "Call ID:"
     static let defaultCallIdDebugInfoValue: String = "UNKNOWN"
 }

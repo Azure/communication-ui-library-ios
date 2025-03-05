@@ -30,9 +30,7 @@ struct CompositeButton: UIViewRepresentable {
         self.buttonLabel = buttonLabel
         self.iconName = iconName
         self.paddings = paddings
-        /* <CUSTOM_COLOR_FEATURE> */
         self.themeOptions = themeOptions
-        /* </CUSTOM_COLOR_FEATURE> */
         self.update = { view, _ in update(view) }
     }
 
@@ -52,7 +50,6 @@ struct CompositeButton: UIViewRepresentable {
         ) -> FluentUI.Button {
         let button = Button(style: buttonStyle)
         button.setTitle(buttonLabel, for: .normal)
-         /* <CUSTOM_COLOR_FEATURE> */
                 let dynamicColor = (buttonStyle == .borderless ||
                                    buttonStyle == .primaryOutline)
                                    ? themeOptions.primaryColor.dynamicColor
@@ -77,16 +74,13 @@ struct CompositeButton: UIViewRepresentable {
                     }
                 }
                 button.tokenSet.replaceAllOverrides(with: overrideTokens)
-         /* </CUSTOM_COLOR_FEATURE> */
                  if let paddings = paddings {
                     button.edgeInsets = getEdgeInserts(paddings)
                 }
         if let iconName = iconName {
-            /* <CUSTOM_COLOR_FEATURE> */
             let icon = StyleProvider.icon.getUIImage(for: iconName)?.withRenderingMode(.alwaysTemplate)
             button.setImage(icon, for: .normal)
             button.tintColor = themeOptions.foregroundOnPrimaryColor
-            /* </CUSTOM_COLOR_FEATURE> */
         }
 
         return button

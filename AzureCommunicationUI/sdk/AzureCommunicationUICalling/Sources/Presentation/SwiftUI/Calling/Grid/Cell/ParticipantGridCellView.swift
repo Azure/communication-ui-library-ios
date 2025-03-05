@@ -27,7 +27,8 @@ struct ParticipantGridCellView: View {
                                                  zoomable: zoomable,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
-                                                 isMuted: $viewModel.isMuted)
+                                                 isMuted: $viewModel.isMuted,
+                                                 isTypingRtt: $viewModel.isTypingRtt)
                 } else {
                     avatarView
                         .frame(width: geometry.size.width,
@@ -83,7 +84,7 @@ struct ParticipantGridCellView: View {
         return VStack(alignment: .center, spacing: 5) {
             CompositeAvatar(displayName: $viewModel.avatarDisplayName,
                             avatarImage: $avatarImage,
-                            isSpeaking: viewModel.isSpeaking && !viewModel.isMuted)
+                            isSpeaking: (viewModel.isSpeaking && !viewModel.isMuted) || viewModel.isTypingRtt)
             .frame(width: avatarSize, height: avatarSize)
             Spacer().frame(height: 10)
             ParticipantTitleView(displayName: $viewModel.displayName,

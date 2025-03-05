@@ -46,10 +46,10 @@ internal class CallingViewModel: ObservableObject {
     var bottomToastViewModel: BottomToastViewModel!
     var supportFormViewModel: SupportFormViewModel!
     var captionsLanguageListViewModel: CaptionsLanguageListViewModel!
-    var captionsListViewModel: CaptionsListViewModel!
+    var captionsRttListViewModel: CaptionsRttListViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var audioDeviceListViewModel: AudioDevicesListViewModel!
-    var captionsInfoViewModel: CaptionsInfoViewModel!
+    var captionsInfoViewModel: CaptionsRttInfoViewModel!
     var capabilitiesManager: CapabilitiesManager!
     var captionsErrorViewModel: CaptionsErrorViewModel!
 
@@ -88,8 +88,8 @@ internal class CallingViewModel: ObservableObject {
             state: store.state
         )
 
-        captionsInfoViewModel = compositeViewModelFactory.makeCaptionsInfoViewModel(
-            state: store.state)
+        captionsInfoViewModel = compositeViewModelFactory.makeCaptionsRttInfoViewModel(
+            state: store.state, captionsOptions: captionsOptions)
         captionsErrorViewModel = compositeViewModelFactory.makeCaptionsErrorViewModel(dispatchAction: actionDispatch)
         supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
 
@@ -178,10 +178,7 @@ internal class CallingViewModel: ObservableObject {
             .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
         bottomToastViewModel = compositeViewModelFactory.makeBottomToastViewModel(
             toastNotificationState: store.state.toastNotificationState, dispatchAction: store.dispatch)
-
-        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
-            isCaptionsAvailable: true,
-            controlBarOptions: callScreenOptions.controlBarOptions,
+        let buttonActions = ButtonActions(
             showSharingViewAction: {
                 store.dispatch(action: .showSupportShare)
             },
@@ -189,23 +186,35 @@ internal class CallingViewModel: ObservableObject {
                 store.dispatch(action: .showSupportForm)
             },
             showCaptionsViewAction: {
-                store.dispatch(action: .showCaptionsListView)
-            },
+                store.dispatch(action: .showCaptionsRttListView)
+            }
+        )
+        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
+            isCaptionsAvailable: true,
+            buttonActions: buttonActions,
+            controlBarOptions: callScreenOptions.controlBarOptions,
             buttonViewDataState: store.state.buttonViewDataState,
             dispatchAction: store.dispatch
         )
-
-        captionsListViewModel = compositeViewModelFactory.makeCaptionsListViewModel(
-            state: store.state,
-            captionsOptions: captionsOptions,
-            dispatchAction: store.dispatch,
+        let captionsButtonActions = ButtonActions(
             showSpokenLanguage: {
                 store.dispatch(action: .showSpokenLanguageView)
             },
             showCaptionsLanguage: {
                 store.dispatch(action: .showCaptionsLanguageView)
             },
-            isDisplayed: store.state.navigationState.captionsViewVisible)
+            showRttView: {
+                store.dispatch(action: .rttAction(.updateMaximized(isMaximized: true)))
+                store.dispatch(action: .rttAction(.turnOnRtt))
+                store.dispatch(action: .hideDrawer)
+            }
+        )
+        captionsRttListViewModel = compositeViewModelFactory.makeCaptionsRttListViewModel(
+            state: store.state,
+            captionsOptions: captionsOptions,
+            dispatchAction: store.dispatch,
+            buttonActions: captionsButtonActions,
+            isDisplayed: store.state.navigationState.captionsRttViewVisible)
     }
     // swiftlint:enable function_body_length
 
@@ -242,7 +251,7 @@ internal class CallingViewModel: ObservableObject {
             visibilityState: state.visibilityState)
         leaveCallConfirmationViewModel.update(state: state)
         supportFormViewModel.update(state: state)
-        captionsListViewModel.update(state: state)
+        captionsRttListViewModel.update(state: state)
         captionsInfoViewModel.update(state: state)
         captionsLanguageListViewModel.update(state: state)
         captionsErrorViewModel.update(captionsState: state.captionsState, callingState: state.callingState)
@@ -270,6 +279,8 @@ internal class CallingViewModel: ObservableObject {
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          callingState: state.callingState)
         participantGridsViewModel.update(callingState: state.callingState,
+                                         captionsState: state.captionsState,
+                                         rttState: state.rttState,
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          visibilityState: state.visibilityState, lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState,
@@ -279,6 +290,7 @@ internal class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         moreCallOptionsListViewModel.update(navigationState: state.navigationState,
+                                            rttState: state.rttState,
                                             visibilityState: state.visibilityState,
                                             buttonViewDataState: state.buttonViewDataState)
 

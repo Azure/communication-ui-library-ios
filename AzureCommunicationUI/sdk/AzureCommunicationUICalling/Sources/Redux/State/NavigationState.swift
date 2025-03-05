@@ -15,7 +15,7 @@ struct NavigationState: Equatable {
 
     let status: NavigationStatus
     let supportFormVisible: Bool
-    let captionsViewVisible: Bool
+    let captionsRttViewVisible: Bool
     let captionsLanguageViewVisible: Bool
     let spokenLanguageViewVisible: Bool
     let endCallConfirmationVisible: Bool
@@ -43,7 +43,7 @@ struct NavigationState: Equatable {
     ) {
         self.status = status
         self.supportFormVisible = supportFormVisible
-        self.captionsViewVisible = captionsViewVisible
+        self.captionsRttViewVisible = captionsViewVisible
         self.captionsLanguageViewVisible = captionsLanguageViewVisible
         self.spokenLanguageViewVisible = spokenLanguageViewVisible
         self.endCallConfirmationVisible = endCallConfirmationVisible
@@ -60,7 +60,7 @@ struct NavigationState: Equatable {
             && lhs.supportFormVisible == rhs.supportFormVisible
             && lhs.captionsLanguageViewVisible == rhs.captionsLanguageViewVisible
             && lhs.spokenLanguageViewVisible == rhs.spokenLanguageViewVisible
-            && lhs.captionsViewVisible == rhs.captionsViewVisible
+            && lhs.captionsRttViewVisible == rhs.captionsRttViewVisible
             && lhs.endCallConfirmationVisible == rhs.endCallConfirmationVisible
             && lhs.audioSelectionVisible == rhs.audioSelectionVisible
             && lhs.moreOptionsVisible == rhs.moreOptionsVisible

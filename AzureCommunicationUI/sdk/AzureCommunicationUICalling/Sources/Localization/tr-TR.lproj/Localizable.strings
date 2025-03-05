@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
 "AzureCommunicationUICalling.SendFeedback.Text"="Gönder";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Canlı Alt Yazılar";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Alt yazılar";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Alt yazılar ve RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Konuşma dili";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Alt yazı dili";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Alt Yazılar Başlatılıyor...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Alt yazılar durdurulamadı";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Alt yazı dili değiştirilemedi";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Konuşma dili değiştirilemedi";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Gerçek zamanlı metin";
+"AzureCommunicationUICalling.RTT.Alert.Title"="RTT açılsın mı?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Aramadaki herkes için gerçek zamanlı metin (RTT) açılır.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Aç";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Kapat";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Bu arama için RTT'yi aç";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Gerçek zamanlı metin (RTT) bu toplantı süresi boyunca etkindir ve tüm katılımcılar tarafından görülebilir.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Daha fazla bilgi edinin";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT yazma";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="İletiyi gerçek zamanlı yazın";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Bildirimleri kapat";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Katılımcı menüsünü sessize alın.";

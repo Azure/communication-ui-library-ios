@@ -28,6 +28,7 @@ struct ControlBarView: View {
             }
             .padding()
             .background(Color(StyleProvider.color.backgroundColor))
+            .shadow(radius: 2)
             .onAppear {
                 viewModel.onDrawerViewDidDisappearBlock = {
                     self.focusedOnMoreButton = true
