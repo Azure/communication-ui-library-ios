@@ -16,7 +16,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
-    private let captionsViewManager: CaptionsViewManager
+    private let captionsRttDataManager: CaptionsRttDataManager
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
@@ -29,9 +29,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let setupScreenOptions: SetupScreenOptions?
     private let callScreenOptions: CallScreenOptions?
     private let callType: CompositeCallType
-    /* <CUSTOM_COLOR_FEATURE> */
     private let themeOptions: ThemeOptions
-    /* </CUSTOM_COLOR_FEATURE> */
     private let updatableOptionsManager: UpdatableOptionsManagerProtocol
 
     init(logger: Logger,
@@ -41,7 +39,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
-         captionsViewManager: CaptionsViewManager,
+         captionsRttDataManager: CaptionsRttDataManager,
          localOptions: LocalOptions? = nil,
          enableMultitasking: Bool,
          enableSystemPipWhenMultitasking: Bool,
@@ -52,9 +50,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          callScreenOptions: CallScreenOptions?,
          capabilitiesManager: CapabilitiesManager,
          avatarManager: AvatarViewManagerProtocol,
-         /* <CUSTOM_COLOR_FEATURE> */
          themeOptions: ThemeOptions,
-         /* </CUSTOM_COLOR_FEATURE> */
          updatableOptionsManager: UpdatableOptionsManagerProtocol,
          retrieveLogFiles: @escaping () -> [URL]
          ) {
@@ -65,7 +61,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
-        self.captionsViewManager = captionsViewManager
+        self.captionsRttDataManager = captionsRttDataManager
         self.events = eventsHandler
         self.localOptions = localOptions
         self.enableMultitasking = enableMultitasking
@@ -75,9 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.callScreenOptions = callScreenOptions
         self.capabilitiesManager = capabilitiesManager
         self.callType = callType
-        /* <CUSTOM_COLOR_FEATURE> */
         self.themeOptions = themeOptions
-        /* </CUSTOM_COLOR_FEATURE> */
         self.avatarManager = avatarManager
         self.updatableOptionsManager = updatableOptionsManager
     }
@@ -228,27 +222,28 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       localizationProvider: localizationProvider)
     }
 
-    func makeCaptionsListViewModel(state: AppState,
-                                   captionsOptions: CaptionsOptions,
-                                   dispatchAction: @escaping ActionDispatch,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   showCaptionsLanguage: @escaping () -> Void,
-                                   isDisplayed: Bool) -> CaptionsListViewModel {
+    func makeCaptionsRttListViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions,
+                                      dispatchAction: @escaping ActionDispatch,
+                                      buttonActions: ButtonActions,
+                                      isDisplayed: Bool) -> CaptionsRttListViewModel {
 
-        return CaptionsListViewModel(compositeViewModelFactory: self,
+        return CaptionsRttListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      captionsOptions: captionsOptions,
                                      state: state,
                                      dispatchAction: dispatchAction,
-                                     showSpokenLanguage: showSpokenLanguage,
-                                     showCaptionsLanguage: showCaptionsLanguage,
-                                     isDisplayed: store.state.navigationState.captionsViewVisible
+                                     buttonActions: buttonActions,
+                                     isDisplayed: store.state.navigationState.captionsRttViewVisible
                                      && store.state.visibilityState.currentStatus == .visible)
     }
 
-    func makeCaptionsInfoViewModel(state: AppState) -> CaptionsInfoViewModel {
-        return CaptionsInfoViewModel(state: state,
-                                     captionsManager: captionsViewManager,
+    func makeCaptionsRttInfoViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions) -> CaptionsRttInfoViewModel {
+        return CaptionsRttInfoViewModel(state: state,
+                                     captionsManager: captionsRttDataManager,
+                                     captionsOptions: captionsOptions,
+                                     dispatch: store.dispatch,
                                      localizationProvider: localizationProvider)
     }
 
@@ -280,7 +275,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                            subtitle: subtitle)
     }
 }
-
 extension CompositeViewModelFactory {
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
         CallDiagnosticsViewModel(localizationProvider: localizationProvider,
@@ -424,19 +418,15 @@ extension CompositeViewModelFactory {
 
     func makeMoreCallOptionsListViewModel(
         isCaptionsAvailable: Bool,
+        buttonActions: ButtonActions,
         controlBarOptions: CallScreenControlBarOptions?,
-        showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void,
         buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel {
 
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                             localizationProvider: localizationProvider,
-                                            showSharingViewAction: showSharingViewAction,
-                                            showSupportFormAction: showSupportFormAction,
-                                            showCaptionsViewAction: showCaptionsViewAction,
+                                            buttonActions: buttonActions,
                                             controlBarOptions: controlBarOptions,
                                             isCaptionsAvailable: isCaptionsAvailable,
                                             isSupportFormAvailable: events.onUserReportedIssue != nil,

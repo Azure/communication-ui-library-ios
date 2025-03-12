@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
 "AzureCommunicationUICalling.SendFeedback.Text"="שלח";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="כתוביות חיות";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="כתוביות";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="כתוביות ו- RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="שפה מדוברת";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="שפת כתוביות";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="מאתחל כתוביות...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="לא ניתן להפסיק כתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="לא ניתן לשנות את שפת הכתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="לא ניתן לשנות את השפה המדוברת";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="טקסט בזמן אמת";
+"AzureCommunicationUICalling.RTT.Alert.Title"="להפעיל RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="טקסט בזמן אמת (RTT) יופעל עבור כל האנשים בשיחה.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="הפעל";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="התעלם";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="הפעל RTT עבור שיחה זו";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="טקסט בזמן אמת (RTT) זמין למשך הזמן המלא של פגישה זו והוא נראה על-ידי כל המשתתפים.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="מידע נוסף";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="הקלדת RTT";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="הקלד הודעה בזמן אמת";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="השתק";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="תפריט השתקת משתתף.";

@@ -42,6 +42,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         let participant1 = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -51,6 +52,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         let participant2 = ParticipantInfoModel(
             displayName: "Participant 2",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier2",
@@ -75,6 +77,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         let participantInfoModel = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -92,6 +95,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         let participantInfoModel = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -110,6 +114,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         let participantInfoModel = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -132,6 +137,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         let participantInfoModel = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -157,6 +163,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             participantInfoModels.append(ParticipantInfoModel(
                 displayName: "Participant \(idx)",
                 isSpeaking: false,
+                isTypingRtt: false,
                 isMuted: false,
                 isRemoteUser: true,
                 userIdentifier: "testUserIdentifier\(idx)",

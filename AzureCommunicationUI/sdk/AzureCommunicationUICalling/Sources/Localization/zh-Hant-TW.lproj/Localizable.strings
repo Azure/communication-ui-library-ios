@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="回報問題";
 "AzureCommunicationUICalling.SendFeedback.Text"="傳送";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="即時輔助字幕";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="輔助字幕";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="輔助字幕與 RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="口語語言";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="輔助字幕語言";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="正在啟動輔助字幕...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="無法停止輔助字幕";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="無法變更輔助字幕語言";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="無法變更口說語言";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="即時文字";
+"AzureCommunicationUICalling.RTT.Alert.Title"="開啟 RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="將為通話中的所有人開啟即時文字(RTT)。";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="開啟";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="關閉";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="開啟此通話的即時輸入";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="此會議的整個期間已啟用即時文字(RTT)，所有參與者皆可看到。";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="深入了解";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT 輸入";
+"AzureCommunicationUICalling.RTT.RTTLable"="即時輸入";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="即時輸入訊息";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="將參與者靜音功能表。";

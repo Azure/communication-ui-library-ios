@@ -49,6 +49,7 @@ class ParticipantMenuViewModelTests: XCTestCase {
                    participantInfoModel: ParticipantInfoModel(
                     displayName: participantDisplayName,
                     isSpeaking: false,
+                    isTypingRtt: false,
                     isMuted: false,
                     isRemoteUser: true,
                     userIdentifier: "",

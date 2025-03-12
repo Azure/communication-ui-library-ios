@@ -89,6 +89,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         let remoteParticipant1 = ParticipantInfoModel(
             displayName: "ABC",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: false,
             userIdentifier: "123",
@@ -99,6 +100,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         let remoteParticipant2 = ParticipantInfoModel(
             displayName: "GHI",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: false,
             userIdentifier: "323",
@@ -144,6 +146,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         let remoteParticipant = ParticipantInfoModel(
             displayName: "John Doe",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: false,
             userIdentifier: "123",
@@ -185,6 +188,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         let lobbyParticipant = ParticipantInfoModel(
             displayName: "John Doe",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "123",
@@ -224,6 +228,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         let lobbyParticipant = ParticipantInfoModel(
             displayName: "John Doe",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "123",

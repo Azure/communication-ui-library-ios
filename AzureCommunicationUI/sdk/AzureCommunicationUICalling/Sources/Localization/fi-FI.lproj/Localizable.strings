@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ilmoita ongelmasta";
 "AzureCommunicationUICalling.SendFeedback.Text"="Lähetä";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Live-tekstitykset";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Tekstitykset";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Tekstitykset ja RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Puhuttu kieli";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Tekstityksen kieli";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Aloitetaan tekstitystä...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Tekstitystä ei voi lopettaa";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Tekstityksen kieltä ei voi vaihtaa";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Puhuttua kieltä ei voi vaihtaa";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Reaaliaikainen teksti";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Otetaanko RTT käyttöön?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Reaaliaikainen kirjoitus (RTT) otetaan käyttöön kaikille puhelun osallistujille.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Ota käyttöön";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Sulje";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Ota reaaliaikainen kirjoitus käyttöön tässä puhelussa";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Reaaliaikainen teksti (RTT) on käytössä koko kokouksen keston ajan, ja kaikki osallistujat voivat nähdä sen.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Lue lisää";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-kirjoitus";
+"AzureCommunicationUICalling.RTT.RTTLable"="Reaaliaikainen kirjoitus";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Kirjoita viesti reaaliaikaisesti";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mykistä";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mykistä osallistuja -valikko.";

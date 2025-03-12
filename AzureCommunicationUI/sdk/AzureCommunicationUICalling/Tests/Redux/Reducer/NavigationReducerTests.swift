@@ -182,11 +182,11 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_showCaptionsList_then_captionsListVisible() {
         let expectedState = NavigationState(captionsViewVisible: true)
         let state = NavigationState()
-        let action = Action.showCaptionsListView
+        let action = Action.showCaptionsRttListView
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.captionsViewVisible, expectedState.captionsViewVisible)
+        XCTAssertEqual(resultState.captionsRttViewVisible, expectedState.captionsRttViewVisible)
         XCTAssertFalse(resultState.supportFormVisible)
         XCTAssertFalse(resultState.supportShareSheetVisible)
         XCTAssertFalse(resultState.audioSelectionVisible)
@@ -200,7 +200,7 @@ class NavigationReducerTests: XCTestCase {
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.captionsViewVisible, expectedState.captionsViewVisible)
+        XCTAssertEqual(resultState.captionsRttViewVisible, expectedState.captionsRttViewVisible)
     }
 
     func test_navigationReducer_reduce_when_showCaptionsLanguageList_then_captionsLanguageListVisible() {

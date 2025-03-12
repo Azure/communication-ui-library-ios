@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="الإبلاغ عن مشكلة";
 "AzureCommunicationUICalling.SendFeedback.Text"="إرسال";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="التسميات التوضيحية المباشرة";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="نص الكلام";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="نص الكلام وعرض الكتابة في الوقت الحقيقي";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="اللغة المنطوقة";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="لغة التسمية التوضيحية";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="يتم الآن بدء تشغيل التسميات التوضيحية...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="يتعذّر إيقاف التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="يتعذر تغيير لغة التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="يتعذّر تغيير اللغة المنطوقة";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="عرض الكتابة في الوقت الحقيقي";
+"AzureCommunicationUICalling.RTT.Alert.Title"="هل تريد تشغيل عرض الكتابة في الوقت الحقيقي؟";
+"AzureCommunicationUICalling.RTT.Alert.Message"="سيتم تشغيل النص في الوقت الحقيقي (RTT) لكل شخص في المكالمة.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="تشغيل";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="تجاهل";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="تشغيل RTT لهذه المكالمة";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="تم تمكين النص في الوقت الحقيقي (RTT) طوال مدة هذا الاجتماع ويمكن لجميع المشاركين مشاهدته.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="تعرّف على المزيد";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="عرض الكتابة في الوقت الحقيقي (RTT) قيد الكتابة";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="اكتب رسالة في الوقت الحقيقي";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="كتم الصوت";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="قائمة كتم صوت المشارك.";

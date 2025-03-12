@@ -14,9 +14,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     private var operationStatus: OperationStatus = .skipSetupRequested
     private var audioPermission: AppPermission.Status = .unknown
     private var callType: CompositeCallType
-    /* <CUSTOM_COLOR_FEATURE> */
     let themeOptions: ThemeOptions
-    /* </CUSTOM_COLOR_FEATURE> */
     var cancellables = Set<AnyCancellable>()
     var networkManager: NetworkManager
     var audioSessionManager: AudioSessionManagerProtocol
@@ -24,9 +22,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
          accessibilityProvider: AccessibilityProviderProtocol,
          networkManager: NetworkManager,
          audioSessionManager: AudioSessionManagerProtocol,
-         /* <CUSTOM_COLOR_FEATURE> */
          themeOptions: ThemeOptions,
-         /* </CUSTOM_COLOR_FEATURE> */
          store: Store<AppState, Action>,
          callType: CompositeCallType
     ) {
@@ -38,9 +34,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         self.store = store
         self.audioPermission = store.state.permissionState.audioPermission
         self.callType = callType
-        /* <CUSTOM_COLOR_FEATURE> */
         self.themeOptions = themeOptions
-        /* </CUSTOM_COLOR_FEATURE> */
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in

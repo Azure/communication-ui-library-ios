@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Informar um problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Enviar";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Legendas ao Vivo";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Legendas";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Legendas e RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Idioma falado";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Idioma da legenda";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Iniciando as Legendas...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Não é possível parar as legendas";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Não é possível alterar o idioma das legendas";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Não é possível alterar o idioma falado";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Texto em tempo real";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Ativar a RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="O RTT (texto em tempo real) será ativado para todos na chamada.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Ativar";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Ignorar";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Habilitar a RTT para esta chamada";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="O RTT (texto em tempo real) está habilitado durante toda a reunião e é visto por todos os participantes.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Saiba mais";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="Digitação RTT";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Digitar mensagem em tempo real";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Ativar mudo";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Ative o mudo do menu do participante.";

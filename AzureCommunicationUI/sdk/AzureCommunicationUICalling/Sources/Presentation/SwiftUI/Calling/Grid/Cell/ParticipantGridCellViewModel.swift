@@ -22,9 +22,11 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var displayName: String?
     @Published var avatarDisplayName: String?
     @Published var isSpeaking: Bool
+    @Published var isTypingRtt: Bool
     @Published var isMuted: Bool
     @Published var isHold: Bool
     @Published var participantIdentifier: String
+    @Published var displayData = [CaptionsRttRecord]()
 
     private var isScreenSharing = false
     private var participantName: String
@@ -32,6 +34,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     private var isCameraEnabled: Bool
     private var participantStatus: ParticipantStatus?
     private var callType: CompositeCallType
+    private var subscriptions = Set<AnyCancellable>()
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
@@ -45,7 +48,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         let isDisplayConnecting = ParticipantGridCellViewModel.isOutgoingCallDialingInProgress(
             callType: callType,
             participantStatus: participantModel.status)
-        if  isDisplayConnecting {
+        if isDisplayConnecting {
             self.participantName = localizationProvider.getLocalizedString(LocalizationKey.callingCallMessage)
             self.displayName = self.participantName
         } else {
@@ -54,6 +57,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         }
         self.avatarDisplayName = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
+        self.isTypingRtt = participantModel.isTypingRtt
         self.isHold = participantModel.status == .hold
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted && participantModel.status == .connected
@@ -100,6 +104,10 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.isSpeaking != participantModel.isSpeaking {
             self.isSpeaking = participantModel.isSpeaking
+        }
+
+        if self.isTypingRtt != participantModel.isTypingRtt {
+            self.isTypingRtt = participantModel.isTypingRtt
         }
 
         if self.isMuted != participantModel.isMuted {

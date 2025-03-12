@@ -23,12 +23,15 @@ class InfoHeaderViewModelTests: XCTestCase {
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
         logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store,
-                                                          avatarManager: AvatarViewManagerMocking(
-                                                            store: storeFactory.store,
-                                                            localParticipantId: createCommunicationIdentifier(fromRawId: ""),
-                                                            localParticipantViewData: nil),
-                                                          updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil))
+        factoryMocking = CompositeViewModelFactoryMocking(
+            logger: logger, store: storeFactory.store,
+            localizationProvider: localizationProvider,
+            avatarManager: AvatarViewManagerMocking(
+                store: storeFactory.store,
+                localParticipantId: createCommunicationIdentifier(fromRawId: ""),
+                localParticipantViewData: nil),
+            updatableOptionsManager: UpdatableOptionsManager(store: storeFactory.store, setupScreenOptions: nil, callScreenOptions: nil)
+        )
     }
 
     override func tearDown() {
@@ -80,6 +83,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let participantInfoModel = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -116,6 +120,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let firstParticipantInfoModel = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -127,6 +132,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let secondParticipantInfoModel = ParticipantInfoModel(
             displayName: "Participant 2",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -166,6 +172,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let participant1 = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -177,6 +184,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let participant2 = ParticipantInfoModel(
             displayName: "Participant 2",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier2",
@@ -188,6 +196,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let participant3 = ParticipantInfoModel(
             displayName: "Participant 3",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier3",
@@ -316,6 +325,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let firstParticipantInfoModel = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
@@ -327,6 +337,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         let secondParticipantInfoModel = ParticipantInfoModel(
             displayName: "Participant 2",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",

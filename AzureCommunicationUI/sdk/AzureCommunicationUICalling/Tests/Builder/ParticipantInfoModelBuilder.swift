@@ -28,6 +28,7 @@ struct ParticipantInfoModelBuilder {
 
         return ParticipantInfoModel(displayName: displayName,
                                     isSpeaking: isSpeaking,
+                                    isTypingRtt: true,
                                     isMuted: isMuted,
                                     isRemoteUser: true,
                                     userIdentifier: participantIdentifier,
