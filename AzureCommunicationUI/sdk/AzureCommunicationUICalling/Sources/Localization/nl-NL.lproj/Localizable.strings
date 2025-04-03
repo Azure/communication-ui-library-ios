@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Meer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnostische gegevens delen";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
 
 
 /* ComplianceBanner title */
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Gesproken taal";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Taal van ondertiteling";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Ondertitels starten...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ondertitels inschakelen";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Ondertitels uitschakelen";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Kan ondertitels niet starten";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Kan ondertitels niet stoppen";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Kan de taal van de ondertiteling niet wijzigen";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typen";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Bericht in realtime typen";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Bijschriften en RTT maximaliseren";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Bijschriften en RTT minimaliseren";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Dempen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Deelnemersmenu dempen.";

@@ -102,12 +102,13 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Dela diagnostikinformation";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
 
 
 /* ComplianceBanner title */
-"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Inspelning och avskrift har startats.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Inspelning och transkription har startats.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="Inspelningen har startat.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Avskriften har avslutats.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transkriptionen har avslutats.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="Transkriptionen har startat.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="Transkriptionen sparas.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Inspelningen har stoppats.";
@@ -117,10 +118,10 @@
 /* ComplianceBanner body */
 "AzureCommunicationUICalling.CallingView.BannerBody.Consent"="Genom att ansluta ger du ditt medgivande för att det här mötet ska transkriberas.";
 "AzureCommunicationUICalling.CallingView.BannerBody.Recording"="Du spelar nu bara in det här mötet.";
-"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="Avskriften har avslutats.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="Transkriptionen har avslutats.";
 "AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="Nu transkriberar du bara det här mötet.";
 "AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="Inspelningen har stoppats.";
-"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Inspelning och avskrift har avslutats.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Inspelning och transkription har avslutats.";
 
 /* ComplianceBanner display link */
 "AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="Sekretesspolicy";
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talat språk";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk för undertext";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Startar undertexter...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Aktivera undertexter";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Inaktivera undertexter";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Det går inte att starta undertexter";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Det går inte att stoppa undertexter";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Det går inte att ändra språket för undertexter";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-inmatning";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv meddelande i realtid";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximera undertexter och RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimera undertexter och RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Stäng av ljudet";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Stäng av deltagarmenyn.";

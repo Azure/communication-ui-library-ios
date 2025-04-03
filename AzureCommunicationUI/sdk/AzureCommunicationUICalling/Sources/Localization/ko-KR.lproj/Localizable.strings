@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "기타";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "진단 정보 공유";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
 
 
 /* ComplianceBanner title */
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="음성 언어";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="캡션 언어";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="캡션 시작 중...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="캡션 켜기";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="캡션 끄기";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="캡션을 시작할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="캡션을 중지할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="캡션 언어를 변경할 수 없음";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="실시간 입력 입력 중";
 "AzureCommunicationUICalling.RTT.RTTLable"="실시간 입력";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="실시간으로 메시지 입력";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "캡션 및 RTT 최대화";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "캡션 및 RTT 최소화";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="참가자 음소거";

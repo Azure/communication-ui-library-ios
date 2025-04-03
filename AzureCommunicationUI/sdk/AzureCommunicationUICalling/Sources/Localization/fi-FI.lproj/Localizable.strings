@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Lisää";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Jaa diagnostiikkatiedot";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
 
 
 /* ComplianceBanner title */
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Puhuttu kieli";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Tekstityksen kieli";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Aloitetaan tekstitystä...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ota tekstitykset käyttöön";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Poista tekstitykset käytöstä";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Tekstitystä ei voi aloittaa";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Tekstitystä ei voi lopettaa";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Tekstityksen kieltä ei voi vaihtaa";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-kirjoitus";
 "AzureCommunicationUICalling.RTT.RTTLable"="Reaaliaikainen kirjoitus";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Kirjoita viesti reaaliaikaisesti";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Suurenna tekstitykset ja RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Pienennä tekstitykset ja RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mykistä";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mykistä osallistuja -valikko.";
