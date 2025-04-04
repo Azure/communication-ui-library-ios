@@ -188,6 +188,7 @@ class ControlBarViewModel: ObservableObject {
         audioState.operation == .pending ||
         callingStatus == .localHold ||
         isBypassLoadingOverlay() ||
+        callingStatus == .inLobby ||
         !self.capabilitiesManager.hasCapability(capabilities: self.capabilities,
                                                 capability: ParticipantCapabilityType.unmuteMicrophone)
     }
@@ -203,7 +204,8 @@ class ControlBarViewModel: ObservableObject {
     func isAudioDeviceDisabled() -> Bool {
         buttonViewDataState.callScreenAudioDeviceButtonState?.enabled == false ||
         callingStatus == .localHold ||
-        isBypassLoadingOverlay()
+        isBypassLoadingOverlay() ||
+        callingStatus == .inLobby
     }
 
     func microphoneButtonTapped() {
@@ -227,7 +229,7 @@ class ControlBarViewModel: ObservableObject {
         dispatch(.showMoreOptions)
     }
     func isMoreButtonDisabled() -> Bool {
-            isBypassLoadingOverlay()
+            isBypassLoadingOverlay() || callingStatus == .inLobby
     }
 
     func isCameraVisible() -> Bool {
@@ -240,6 +242,7 @@ class ControlBarViewModel: ObservableObject {
                 cameraPermission == .denied ||
                 cameraState.operation == .pending ||
                 callingStatus == .localHold ||
+        callingStatus == .inLobby ||
                 isCameraStateUpdating ||
                 isBypassLoadingOverlay() ||
         !capabilitiesManager.hasCapability(capabilities: self.capabilities,
