@@ -65,12 +65,12 @@ struct CallingView: View {
                 landscapeCallingView
             }
             errorInfoView
-            bottomDrawer
         }
         .modifier(PopupModalView(isPresented: viewModel.lobbyOverlayViewModel.isDisplayed) {
             OverlayView(viewModel: viewModel.lobbyOverlayViewModel)
                 .accessibilityElement(children: .contain)
                 .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
+                .padding(.bottom, 100)
         })
         .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed &&
                                  !viewModel.lobbyOverlayViewModel.isDisplayed) {
@@ -83,6 +83,7 @@ struct CallingView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
         })
+        .overlay(bottomDrawer)
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
