@@ -188,7 +188,7 @@ extends:
             xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
             scheme: AzureCommunicationUICalling
             destinationPlatformOption: iOS
-            destinationSimulators: iPhone 15
+            destinationSimulators: iPhone 14
         - task: Xcode@5
           displayName: Xcode build
           inputs:
@@ -202,11 +202,10 @@ extends:
             archivePath: $(archivePath)
             exportPath: $(exportPath)
             signingOption: manual
-            signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
-            provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
+            signingIdentity: $(APPLE_CERTIFICATE_SIGNING_IDENTITY)
+            provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
             provisioningProfileName: Azure communication UI calling Dogfood Dev
-            destinationPlatformOption: iOS
-            destinationSimulators: iPhone 15 Pro
+            destinationSimulators: iPhone 14 Pro
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             cwd: AzureCommunicationUI
         - task: DownloadSecureFile@1
@@ -250,12 +249,11 @@ extends:
             rootFolderOrFile: $(archivePath)
             includeRootFolder: false
             archiveFile: $(zipToSign)
-            verbose: true
         - task: UseDotNet@2
-          displayName: Use .NET Core sdk 8.0.x
+          displayName: Use .NET Core sdk 6.0.x
           inputs:
-            version: 8.0.x
-        - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@4
+            version: 6.0.x
+        - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
           displayName: Dogfood ESRP CodeSigning
           inputs:
             AppRegistrationClientId: 'a40e733c-485b-405f-b787-dcd0f09184f6'
@@ -344,4 +342,5 @@ extends:
 
               Build commit: $(Build.Repository.Uri)/commit/$(Build.SourceVersion)
             isSilent: true
+
 
