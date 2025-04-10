@@ -179,6 +179,9 @@ class SetupViewModel: ObservableObject {
                                         callingState: callingState,
                                         buttonViewDataState: state.buttonViewDataState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        // Disable the dismiss button for now to avoid crash
+        /// Todo remove after calling native SDK fix
+        dismissButtonViewModel.update(isDisabled: newCallingStatus == .connecting)
         updateAccessibilityLabel()
         errorInfoViewModel.update(errorState: state.errorState)
         audioDeviceListViewModel.update(
