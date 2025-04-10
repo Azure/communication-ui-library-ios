@@ -1,5 +1,5 @@
 # Azure Communication UI Calling Release History
-## 1.14.0-beta.2 (2025-01-15)
+## 1.14.0-beta.2 (2025-04-10)
 
 ### Bugfixes
 - Accessibility bugfix
