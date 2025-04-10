@@ -102,7 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Meer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnostische gegevens delen";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
-"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Verwijderen";
 
 
 /* ComplianceBanner title */

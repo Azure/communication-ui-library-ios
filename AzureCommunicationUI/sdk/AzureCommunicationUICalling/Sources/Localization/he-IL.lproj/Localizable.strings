@@ -102,7 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "עוד";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
-"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="הסר";
 
 
 /* ComplianceBanner title */

@@ -102,7 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Del diagnoseinformasjon";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
-"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Fjern";
 
 
 /* ComplianceBanner title */
