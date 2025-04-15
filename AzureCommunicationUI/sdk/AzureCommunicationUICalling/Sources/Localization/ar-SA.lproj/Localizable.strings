@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "المزيد";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "مشاركة معلومات التشخيص";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="إزالة";
 
 
 /* ComplianceBanner title */
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="اللغة المنطوقة";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="لغة التسمية التوضيحية";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="يتم الآن بدء تشغيل التسميات التوضيحية...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="تشغيل التسميات التوضيحية";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="إيقاف تشغيل التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="يتعذّر بدء تشغيل التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="يتعذّر إيقاف التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="يتعذر تغيير لغة التسميات التوضيحية";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="عرض الكتابة في الوقت الحقيقي (RTT) قيد الكتابة";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="اكتب رسالة في الوقت الحقيقي";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "تكبير التسميات التوضيحية وRTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "تصغير التسميات التوضيحية وRTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="كتم الصوت";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="قائمة كتم صوت المشارك.";
