@@ -116,8 +116,26 @@ class CaptionsRttDataManager: ObservableObject {
             // Add only if translation is enabled and caption text is not empty.
             return !(data.captionsText?.isEmpty ?? true)
         }
+
+        // Additional check: skip caption if identical RTT already exists
+        if data.isFinal,
+           let lastRtt = captionsRttData.last(where: {
+               $0.captionsRttType == .rtt &&
+               $0.displayRawId == data.displayRawId &&
+               $0.isFinal
+           }),
+           isContentEqual(rtt: lastRtt, caption: data) {
+            return false
+        }
         // Add caption regardless of text if translation is not enabled.
         return true
+    }
+
+    private func isContentEqual(rtt: CaptionsRttRecord, caption: CaptionsRttRecord) -> Bool {
+        return rtt.text == caption.text &&
+               rtt.displayRawId == caption.displayRawId &&
+               rtt.isFinal &&
+               caption.isFinal
     }
 
     private func manageAutoCommit(for data: CaptionsRttRecord) {
