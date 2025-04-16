@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Lisää";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Jaa diagnostiikkatiedot";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="Poista";
 
 
@@ -169,7 +170,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Ilmoita ongelmasta";
 "AzureCommunicationUICalling.SendFeedback.Text"="Lähetä";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Tekstitykset";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Tekstitykset ja RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Puhuttu kieli";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Tekstityksen kieli";
@@ -181,16 +184,23 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Tekstityksen kieltä ei voi vaihtaa";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Puhuttua kieltä ei voi vaihtaa";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Reaaliaikainen teksti";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="Otetaanko RTT käyttöön?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="Reaaliaikainen kirjoitus (RTT) otetaan käyttöön kaikille puhelun osallistujille.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Ota käyttöön";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Sulje";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Ota reaaliaikainen kirjoitus käyttöön tässä puhelussa";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Reaaliaikainen teksti (RTT) on käytössä koko kokouksen keston ajan, ja kaikki osallistujat voivat nähdä sen.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Lue lisää";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-kirjoitus";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="Reaaliaikainen kirjoitus";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Kirjoita viesti reaaliaikaisesti";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Suurenna tekstitykset ja RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Pienennä tekstitykset ja RTT";

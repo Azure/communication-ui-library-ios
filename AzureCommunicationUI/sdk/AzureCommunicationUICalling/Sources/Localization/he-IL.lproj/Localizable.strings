@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "עוד";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="הסר";
 
 
@@ -169,7 +170,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
 "AzureCommunicationUICalling.SendFeedback.Text"="שלח";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="כתוביות";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="כתוביות ו- RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="שפה מדוברת";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="שפת כתוביות";
@@ -181,16 +184,23 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="לא ניתן לשנות את שפת הכתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="לא ניתן לשנות את השפה המדוברת";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="טקסט בזמן אמת";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="להפעיל RTT?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="טקסט בזמן אמת (RTT) יופעל עבור כל האנשים בשיחה.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="הפעל";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="התעלם";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="הפעל RTT עבור שיחה זו";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="טקסט בזמן אמת (RTT) זמין למשך הזמן המלא של פגישה זו והוא נראה על-ידי כל המשתתפים.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="מידע נוסף";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="הקלדת RTT";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="הקלד הודעה בזמן אמת";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "הגדל כתוביות ו- RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "מזער כתוביות ו- RTT";
