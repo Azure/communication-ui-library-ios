@@ -119,9 +119,10 @@ class CaptionsRttDataManager: ObservableObject {
 
         // Additional check: skip caption if identical RTT already exists
         if data.isFinal,
+            store.state.callingState.transcriptionStatus == .on,
            let lastRtt = captionsRttData.last(where: {
                $0.captionsRttType == .rtt &&
-               $0.displayRawId == data.displayRawId &&
+               data.displayRawId.contains($0.displayRawId) &&
                $0.isFinal
            }),
            isContentEqual(rtt: lastRtt, caption: data) {
@@ -132,8 +133,7 @@ class CaptionsRttDataManager: ObservableObject {
     }
 
     private func isContentEqual(rtt: CaptionsRttRecord, caption: CaptionsRttRecord) -> Bool {
-        return rtt.text == caption.text &&
-               rtt.displayRawId == caption.displayRawId &&
+        return rtt.text == caption.captionsText &&
                rtt.isFinal &&
                caption.isFinal
     }
