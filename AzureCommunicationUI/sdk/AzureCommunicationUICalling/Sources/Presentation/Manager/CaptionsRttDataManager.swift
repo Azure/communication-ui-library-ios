@@ -22,6 +22,7 @@ class CaptionsRttDataManager: ObservableObject {
     private let maxDataCount = 50
     private let finalizationDelay: TimeInterval = 5 // seconds
     private var hasInsertedRttInfo = false
+    private var finalizedRttMap: [String: CaptionsRttRecord] = [:]
 
     // MARK: - Initialization
 
@@ -100,6 +101,10 @@ class CaptionsRttDataManager: ObservableObject {
             store.dispatch(action: .rttAction(.turnOnRtt))
         }
 
+        if newData.captionsRttType == .rtt && newData.isFinal {
+            finalizedRttMap[newData.displayRawId] = newData
+        }
+
         manageAutoCommit(for: newData)
         processAndStore(newData)
     }
@@ -119,23 +124,20 @@ class CaptionsRttDataManager: ObservableObject {
 
         // Additional check: skip caption if identical RTT already exists
         if data.isFinal,
-            store.state.callingState.transcriptionStatus == .on,
-           let lastRtt = captionsRttData.last(where: {
-               $0.captionsRttType == .rtt &&
-               data.displayRawId.contains($0.displayRawId) &&
-               $0.isFinal
-           }),
+           store.state.callingState.transcriptionStatus == .on,
+           let lastRtt = finalizedRttMap.first(where: { data.displayRawId.contains($0.key) })?.value,
            isContentEqual(rtt: lastRtt, caption: data) {
             return false
         }
+
         // Add caption regardless of text if translation is not enabled.
         return true
     }
 
     private func isContentEqual(rtt: CaptionsRttRecord, caption: CaptionsRttRecord) -> Bool {
-        return rtt.text == caption.captionsText &&
-               rtt.isFinal &&
-               caption.isFinal
+        return rtt.isFinal &&
+               caption.isFinal &&
+               rtt.text == caption.captionsText
     }
 
     private func manageAutoCommit(for data: CaptionsRttRecord) {
