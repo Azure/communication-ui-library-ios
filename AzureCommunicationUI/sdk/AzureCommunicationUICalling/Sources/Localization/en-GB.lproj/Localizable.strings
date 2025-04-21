@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "More";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Share diagnostics info";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
 
 
 /* ComplianceBanner title */
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starting Captions...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Unable to start captions";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Unable to stop captions";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Unable to change captions language";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typing";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximise captions and RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimise captions and RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";

@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "More";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Share diagnostics info";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remove";
 
 
 /* ComplianceBanner title */

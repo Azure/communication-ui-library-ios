@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "עוד";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="הסר";
 
 
 /* ComplianceBanner title */
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="שפה מדוברת";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="שפת כתוביות";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="מאתחל כתוביות...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="הפעל כתוביות";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="כבה כתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="לא ניתן להפעיל כתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="לא ניתן להפסיק כתוביות";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="לא ניתן לשנות את שפת הכתוביות";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="הקלדת RTT";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="הקלד הודעה בזמן אמת";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "הגדל כתוביות ו- RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "מזער כתוביות ו- RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="השתק";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="תפריט השתקת משתתף.";

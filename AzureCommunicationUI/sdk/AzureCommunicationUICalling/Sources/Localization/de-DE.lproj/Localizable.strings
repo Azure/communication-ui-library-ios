@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mehr";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnoseinformationen freigeben";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Entfernen";
 
 
 /* ComplianceBanner title */
@@ -173,6 +174,8 @@
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Gesprochene Sprache";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Sprache für Untertitel";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Untertitel werden gestartet...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Untertitel aktivieren";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Untertitel deaktivieren";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Untertitel können nicht gestartet werden.";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Untertitel können nicht beendet werden.";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Die Sprache der Untertitel kann nicht geändert werden.";
@@ -189,6 +192,8 @@
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-Eingabe";
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Nachricht in Echtzeit eingeben";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Untertitel und RTT maximieren";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Untertitel und RTT minimieren";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Stummschalten";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Schalten Sie das Teilnehmermenü stumm.";
