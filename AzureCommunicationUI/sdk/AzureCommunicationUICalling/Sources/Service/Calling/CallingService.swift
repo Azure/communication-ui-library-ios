@@ -26,7 +26,6 @@ protocol CallingServiceProtocol {
     var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never> { get }
     var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never> { get }
     var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never> { get }
-    var captionsDataSubject: PassthroughSubject<CallCompositeCaptionsData, Never> { get }
     var activeSpokenLanguageSubject: CurrentValueSubject<String, Never> { get }
     var activeCaptionLanguageSubject: CurrentValueSubject<String, Never> { get }
     var captionsEnabledChanged: CurrentValueSubject<Bool, Never> { get }
@@ -56,6 +55,7 @@ protocol CallingServiceProtocol {
     func setCaptionsSpokenLanguage(_ language: String) async throws
     func setCaptionsCaptionLanguage(_ language: String) async throws
     func removeParticipant(_ participantId: String) async throws
+    func sendRttMessage(_ message: String, isFinal: Bool) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
     /* <CALL_START_TIME>
     func callStartTime() -> Date?
@@ -87,7 +87,6 @@ class CallingService: NSObject, CallingServiceProtocol {
     var supportedSpokenLanguagesSubject: CurrentValueSubject<[String], Never>
     var supportedCaptionLanguagesSubject: CurrentValueSubject<[String], Never>
     var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never>
-    var captionsDataSubject: PassthroughSubject<CallCompositeCaptionsData, Never>
     var activeSpokenLanguageSubject: CurrentValueSubject<String, Never>
     var activeCaptionLanguageSubject: CurrentValueSubject<String, Never>
     var captionsEnabledChanged: CurrentValueSubject<Bool, Never>
@@ -110,7 +109,6 @@ class CallingService: NSObject, CallingServiceProtocol {
         supportedSpokenLanguagesSubject = callingSDKWrapper.callingEventsHandler.captionsSupportedSpokenLanguages
         supportedCaptionLanguagesSubject = callingSDKWrapper.callingEventsHandler.captionsSupportedCaptionLanguages
         isCaptionsTranslationSupported = callingSDKWrapper.callingEventsHandler.isCaptionsTranslationSupported
-        captionsDataSubject = callingSDKWrapper.callingEventsHandler.captionsReceived
         activeSpokenLanguageSubject = callingSDKWrapper.callingEventsHandler.activeSpokenLanguageChanged
         activeCaptionLanguageSubject = callingSDKWrapper.callingEventsHandler.activeCaptionLanguageChanged
         captionsEnabledChanged = callingSDKWrapper.callingEventsHandler.captionsEnabledChanged
@@ -201,6 +199,10 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func setCaptionsCaptionLanguage(_ language: String) async throws {
         try await callingSDKWrapper.setCaptionsCaptionLanguage(language)
+    }
+
+    func sendRttMessage(_ message: String, isFinal: Bool) async throws {
+        try await callingSDKWrapper.sendRttMessage(message, isFinal: isFinal)
     }
 
     func removeParticipant(_ participantId: String) async throws {

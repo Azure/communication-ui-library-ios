@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Informar de un problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Enviar";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Subtítulos en directo";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Subtítulos";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Subtítulos y RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Idioma hablado";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Idioma de subtítulos";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Iniciando subtítulos...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="No se pueden detener los subtítulos";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="No se puede cambiar el idioma de los subtítulos";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="No se puede cambiar el idioma hablado";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Texto en tiempo real";
+"AzureCommunicationUICalling.RTT.Alert.Title"="¿Activar RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="El texto en tiempo real (RTT) se activará para todos los usuarios de la llamada.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Activar";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Descartar";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Activar RTT para esta llamada";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="El texto en tiempo real (RTT) está habilitado para toda la duración de esta reunión y es visto por todos los participantes.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Más información";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="Escritura en tiempo real";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Escribir un mensaje en tiempo real";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Silenciar";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Silenciar el menú de participantes.";

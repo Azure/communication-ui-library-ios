@@ -176,8 +176,6 @@ public class CallComposite {
         exitManager?.dismiss()
         if !compositeUILaunched {
             disposeSDKWrappers()
-            callingSDKInitializer?.dispose()
-            callingSDKInitializer = nil
             logger.debug( "CallComposite callingSDKInitializer dispose")
             let exitManagerCache = exitManager
             cleanUpManagers()
@@ -359,7 +357,8 @@ public class CallComposite {
         self.viewController = viewController
         present(viewController)
         UIApplication.shared.isIdleTimerDisabled = true
-        if store.state.permissionState.audioPermission == .notAsked {
+        if store.state.permissionState.audioPermission == .notAsked ||
+            store.state.permissionState.audioPermission == .unknown {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
         } else {
             store.dispatch(action: .callingAction(.setupCall))
@@ -609,7 +608,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
         }
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
-        let captionsViewManager = CaptionsViewManager(
+        let captionsRttDataManager = CaptionsRttDataManager(
             store: store,
             callingSDKWrapper: callingSdkWrapper
         )
@@ -625,7 +624,7 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
-                captionsViewManager: captionsViewManager,
+                captionsRttDataManager: captionsRttDataManager,
                 localOptions: localOptions,
                 enableMultitasking: enableMultitasking,
                 enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
@@ -673,6 +672,8 @@ and launch(locator: JoinLocator, localOptions: LocalOptions? = nil) instead.
     private func disposeSDKWrappers() {
         self.callingSDKEventsHandler = nil
         self.callingSDKWrapper = nil
+        self.callingSDKInitializer?.dispose()
+        self.callingSDKInitializer = nil
     }
 
     private func present(_ viewController: UIViewController) {

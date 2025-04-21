@@ -14,9 +14,7 @@ class ColorThemeProvider {
     let primaryColorTint10: UIColor
     let primaryColorTint20: UIColor
     let primaryColorTint30: UIColor
-    /* <CUSTOM_COLOR_FEATURE> */
     let foregroundOnPrimaryColor: UIColor
-    /* </CUSTOM_COLOR_FEATURE> */
     // MARK: Text Label Colours
     let textSecondary: UIColor = Colors.textSecondary
 
@@ -57,7 +55,7 @@ class ColorThemeProvider {
     // MARK: - Button Icon Colours
     let hangup = UIColor.compositeColor(.hangup)
     let disableColor: UIColor = Colors.iconDisabled
-    let drawerIconDark: UIColor = Colors.iconSecondary
+    let drawerIconDark: UIColor = Colors.iconPrimary
 
     // MARK: - View Background Colours
     let error: UIColor = Colors.error
@@ -95,9 +93,7 @@ class ColorThemeProvider {
         self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
         self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
         self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
-        /* <CUSTOM_COLOR_FEATURE> */
         self.foregroundOnPrimaryColor = themeOptions?.foregroundOnPrimaryColor ?? .orange
-        /* </CUSTOM_COLOR_FEATURE> */
     }
 
     private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
@@ -109,11 +105,9 @@ extension ColorThemeProvider: ColorProviding {
     func primaryColor(for window: UIWindow) -> UIColor? {
         return primaryColor
     }
-    /* <CUSTOM_COLOR_FEATURE> */
     func foregroundOnPrimaryColor(for window: UIWindow) -> UIColor? {
         return foregroundOnPrimaryColor
     }
-    /* </CUSTOM_COLOR_FEATURE> */
     func primaryTint10Color(for window: UIWindow) -> UIColor? {
         return primaryColorTint10
     }

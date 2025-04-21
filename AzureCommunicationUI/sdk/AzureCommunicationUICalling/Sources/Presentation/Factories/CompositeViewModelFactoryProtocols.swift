@@ -21,13 +21,11 @@ protocol CompositeViewModelFactoryProtocol {
                                  isDisabled: Bool,
                                  isVisible: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
     func makeIconButtonViewModel(icon: UIImage,
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  isVisible: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
         selectedButtonState: ButtonStateType,
         localizationProvider: LocalizationProviderProtocol,
@@ -45,7 +43,8 @@ protocol CompositeViewModelFactoryProtocol {
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeCaptionsLanguageListViewModel (dispatchAction: @escaping ActionDispatch,
                                             state: AppState) -> CaptionsLanguageListViewModel
-    func makeCaptionsInfoViewModel (state: AppState) -> CaptionsInfoViewModel
+    func makeCaptionsRttInfoViewModel (state: AppState,
+                                       captionsOptions: CaptionsOptions) -> CaptionsRttInfoViewModel
     func makeCaptionsErrorViewModel (dispatchAction: @escaping ActionDispatch) -> CaptionsErrorViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
@@ -60,12 +59,9 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonViewDataState: ButtonViewDataState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
                                  localUserState: LocalUserState,
-                                 callScreenInfoHeaderState: CallScreenInfoHeaderState
-                                 /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
-                                 ,
+                                 callScreenInfoHeaderState: CallScreenInfoHeaderState,
                                  buttonViewDataState: ButtonViewDataState,
                                  controlHeaderViewData: CallScreenHeaderViewData?
-                                 /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     ) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
@@ -88,18 +84,15 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeMoreCallOptionsListViewModel(
         isCaptionsAvailable: Bool,
+        buttonActions: ButtonActions,
         controlBarOptions: CallScreenControlBarOptions?,
-        showSharingViewAction: @escaping () -> Void,
-        showSupportFormAction: @escaping () -> Void,
-        showCaptionsViewAction: @escaping () -> Void,
         buttonViewDataState: ButtonViewDataState,
         dispatchAction: @escaping ActionDispatch) -> MoreCallOptionsListViewModel
-    func makeCaptionsListViewModel(state: AppState,
-                                   captionsOptions: CaptionsOptions,
-                                   dispatchAction: @escaping ActionDispatch,
-                                   showSpokenLanguage: @escaping () -> Void,
-                                   showCaptionsLanguage: @escaping () -> Void,
-                                   isDisplayed: Bool) -> CaptionsListViewModel
+    func makeCaptionsRttListViewModel(state: AppState,
+                                      captionsOptions: CaptionsOptions,
+                                      dispatchAction: @escaping ActionDispatch,
+                                      buttonActions: ButtonActions,
+                                      isDisplayed: Bool) -> CaptionsRttListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
 
     func makeToggleListItemViewModel(title: String,

@@ -9,6 +9,7 @@ import SwiftUI
 /// Custom Alert
 internal struct CustomAlert: View {
     let title: String
+    let message: String?
     let dismiss: () -> Void
     let agreeText: String
     let agreeAction: () -> Void
@@ -16,6 +17,7 @@ internal struct CustomAlert: View {
     let denyAction: () -> Void
 
     init(title: String,
+         message: String? = nil,
          agreeText: String,
          denyText: String,
          dismiss: @escaping () -> Void,
@@ -23,6 +25,7 @@ internal struct CustomAlert: View {
          denyAction: @escaping () -> Void
          ) {
         self.title = title
+        self.message = message
         self.dismiss = dismiss
         self.agreeText = agreeText
         self.denyText = denyText
@@ -43,27 +46,31 @@ internal struct CustomAlert: View {
                     Spacer()
                     VStack {
                         Text(title).font(.headline)
+                        if let message = message {
+                            Text(message)
+                                .font(.body)
+                                .multilineTextAlignment(.center)
+                        }
                         HStack {
-                            Button(action: {
-                                agreeAction()
-                                dismiss()
-                            }, label: {
-                                Text(agreeText)
-                                    .frame(width: CustomAlertConstants.confirmationButtonWidth,
-                                           height: CustomAlertConstants.confirmationButtonHeight,
-                                           alignment: .center
-                                    )
-                                    .foregroundColor(Color(StyleProvider.color.primaryColor))
-                            })
-                            Divider().frame(maxHeight: CustomAlertConstants.confirmationButtonHeight)
                             Button(action: {
                                 denyAction()
                                 dismiss()
                             }, label: {
                                 Text(denyText)
-                                    .frame(width: CustomAlertConstants.confirmationButtonWidth,
-                                           height: CustomAlertConstants.confirmationButtonHeight,
-                                           alignment: .center)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(nil) // Allow multiple lines
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .foregroundColor(Color(StyleProvider.color.primaryColor))
+                            })
+                            Divider().frame(maxHeight: CustomAlertConstants.confirmationButtonHeight)
+                            Button(action: {
+                                agreeAction()
+                                dismiss()
+                            }, label: {
+                                Text(agreeText)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(nil) // Allow multiple lines
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .foregroundColor(Color(StyleProvider.color.primaryColor))
                             })
                         }

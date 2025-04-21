@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapportera ett problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Skicka";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Liveundertexter";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Bildtexter";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Undertexter och RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talat språk";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk för undertext";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Startar undertexter...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Det går inte att stoppa undertexter";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Det går inte att ändra språket för undertexter";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Det gör inte att ändra talat språk";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Realtidstext";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Aktivera RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Realtidstext (RTT) aktiveras för alla i samtalet.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Aktivera";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Stäng";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Aktivera RTT för det här samtalet";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Realtidstext (RTT) har aktiverats för hela mötets varaktighet och visas av alla deltagare.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Mer information";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-inmatning";
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv meddelande i realtid";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Stäng av ljudet";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Stäng av deltagarmenyn.";

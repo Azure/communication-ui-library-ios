@@ -1088,7 +1088,7 @@ class CallingDemoViewController: UIViewController {
         teamsMeetingPasscodeTextField.addTarget(
             self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
         participantMRIsTextField = UITextField()
-        participantMRIsTextField.placeholder = "Partiicpant MRIs (, separated)"
+        participantMRIsTextField.placeholder = "Participant MRIs (, separated)"
         participantMRIsTextField.text = envConfigSubject.participantMRIs
         participantMRIsTextField.delegate = self
         participantMRIsTextField.sizeToFit()

@@ -12,14 +12,13 @@ target 'AzureCommunicationUICalling' do
   project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
   use_frameworks!
   pod 'AzureCore', '1.0.0-beta.15'
-  pod 'AzureCommunicationCalling', '2.14.1'
+  pod 'AzureCommunicationCalling', '2.15.0'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
-  pod 'AzureCore', '1.0.0-beta.15'
   pod 'SwiftLint', '0.53.0'
 
   target 'AzureCommunicationUICallingTests' do
@@ -31,7 +30,7 @@ end
 target 'AzureCommunicationUIChat' do
   project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationChat', '1.3.3'
+  pod 'AzureCommunicationChat', '1.3.6'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
@@ -49,8 +48,8 @@ end
 target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.14.1'
-  pod 'AzureCommunicationChat', '1.3.3'
+  pod 'AzureCommunicationCalling', '2.15.0'
+  pod 'AzureCommunicationChat', '1.3.6'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'

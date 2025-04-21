@@ -30,6 +30,7 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never>
     var capabilitiesChangedSubject = PassthroughSubject<AzureCommunicationUICalling.CapabilitiesChangedEvent, Never>()
     var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
+    var rttReceived: PassthroughSubject<AzureCommunicationUICalling.CallCompositeRttData, Never> = PassthroughSubject<AzureCommunicationUICalling.CallCompositeRttData, Never>()
     /* <CALL_START_TIME>
     var callStartTimeSubject = PassthroughSubject<Date, Never>()
     </CALL_START_TIME> */

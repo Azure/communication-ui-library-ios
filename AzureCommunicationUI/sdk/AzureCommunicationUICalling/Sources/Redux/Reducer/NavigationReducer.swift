@@ -42,7 +42,7 @@ extension Reducer where State == NavigationState,
         case .showParticipantActions(let participant):
             drawerVisibility = .participantActionsVisible
             selectedParticipant = participant
-        case .showCaptionsListView:
+        case .showCaptionsRttListView:
             drawerVisibility = .captionsViewVisible
         case .showSpokenLanguageView:
             drawerVisibility = .spokenLanguageViewVisible
@@ -72,6 +72,7 @@ extension Reducer where State == NavigationState,
                 .callingAction(.callStartTimeUpdated),
             </CALL_START_TIME> */
                 .captionsAction,
+                .rttAction,
                 .lifecycleAction,
                 .localUserAction,
                 .remoteParticipantsAction,
@@ -129,7 +130,7 @@ extension Reducer where State == NavigationState,
         state.audioSelectionVisible ? .audioSelectionVisible :
         state.participantsVisible ? .participantsVisible :
         state.participantActionsVisible ? .participantActionsVisible :
-        state.captionsViewVisible ? .captionsViewVisible :
+        state.captionsRttViewVisible ? .captionsViewVisible :
         state.captionsLanguageViewVisible ? .captionsLangaugeViewVisible :
         state.spokenLanguageViewVisible ? .spokenLanguageViewVisible :
         state.moreOptionsVisible ? .moreOptionsVisible : .hidden

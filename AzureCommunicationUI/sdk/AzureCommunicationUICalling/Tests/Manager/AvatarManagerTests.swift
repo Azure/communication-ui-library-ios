@@ -43,6 +43,7 @@ class AvatarManagerTests: XCTestCase {
         let participant = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
+            isTypingRtt: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",

@@ -35,7 +35,6 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.view.semanticContentAttribute = isRightToLeft ?
             .forceRightToLeft : .forceLeftToRight
         subscribeEnvironmentProperties(containerView: rootView)
-        haltSetupViewOrientation(containerView: rootView)
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {
@@ -78,7 +77,6 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                             if UIDevice.current.orientation != .portrait {
                                 UIDevice.current.rotateTo(orientation: .portrait)
                             }
-                            UIDevice.current.endGeneratingDeviceOrientationNotifications()
                         }
                     }
                 default:
@@ -105,14 +103,6 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                 }
                 strongSelf._prefersHomeIndicatorAutoHidden = shouldHide
             }).store(in: cancelBag)
-    }
-
-    private func haltSetupViewOrientation(containerView: ContainerView) {
-        if containerView.router.currentView == .setupView,
-           traitCollection.userInterfaceIdiom == .phone,
-           UIDevice.current.isGeneratingDeviceOrientationNotifications {
-            UIDevice.current.endGeneratingDeviceOrientationNotifications()
-        }
     }
 
     private func resetUIDeviceSetup() {

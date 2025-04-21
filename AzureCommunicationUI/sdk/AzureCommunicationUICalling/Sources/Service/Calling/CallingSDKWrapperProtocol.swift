@@ -77,6 +77,7 @@ protocol CallingSDKWrapperProtocol {
     func stopCaptions() async throws
     func setCaptionsSpokenLanguage(_ language: String) async throws
     func setCaptionsCaptionLanguage(_ language: String) async throws
+    func sendRttMessage(_ message: String, isFinal: Bool) async throws
     func removeParticipant(_ participantId: String) async throws
     func getCapabilities() async throws -> Set<ParticipantCapabilityType>
     /* <CALL_START_TIME>
@@ -115,11 +116,10 @@ protocol CallingSDKEventsHandling {
     var captionsSupportedCaptionLanguages: CurrentValueSubject<[String], Never> { get }
     var isCaptionsTranslationSupported: CurrentValueSubject<Bool, Never> { get }
     var captionsReceived: PassthroughSubject<CallCompositeCaptionsData, Never> { get }
+    var rttReceived: PassthroughSubject<CallCompositeRttData, Never> { get }
     var activeSpokenLanguageChanged: CurrentValueSubject<String, Never> { get }
     var activeCaptionLanguageChanged: CurrentValueSubject<String, Never> { get }
     var captionsEnabledChanged: CurrentValueSubject<Bool, Never> { get }
     var captionsTypeChanged: CurrentValueSubject<CallCompositeCaptionsType, Never> { get }
-
     var capabilitiesChangedSubject: PassthroughSubject<CapabilitiesChangedEvent, Never> { get }
-
 }

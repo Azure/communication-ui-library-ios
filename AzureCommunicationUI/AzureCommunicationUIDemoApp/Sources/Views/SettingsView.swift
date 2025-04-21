@@ -231,7 +231,7 @@ struct SettingsView: View {
     }
 
     var localizationSettings: some View {
-        Section(header: Text("Localilzation")) {
+        Section(header: Text("Localization")) {
             LocalePicker(selection: $envConfigSubject.locale)
             Toggle("Is Right-to-Left", isOn: $envConfigSubject.isRightToLeft)
             TextField(

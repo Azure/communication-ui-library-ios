@@ -38,7 +38,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didActivate),
-                                               name: UIApplication.willEnterForegroundNotification,
+                                               name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(willTerminate),

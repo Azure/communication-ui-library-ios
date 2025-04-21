@@ -168,7 +168,8 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapporter et problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Send";
 
-"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Direkteteksting";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Undertekster";
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Undertekster og RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talespråk";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk for undertekst";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starter teksting ...";
@@ -176,6 +177,18 @@
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Kan ikke stoppe teksting";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Kan ikke endre språk for teksting";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Kan ikke endre talespråk";
+
+"AzureCommunicationUICalling.RTT.Title.RTT"="Tekst i sanntid";
+"AzureCommunicationUICalling.RTT.Alert.Title"="Aktiver skriving i sanntid?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Sanntidstekst (RTT) aktiveres for alle i samtalen.";
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Aktiver";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Lukk";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Aktiver RTT for denne samtalen";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Sanntidstekst (RTT) er aktivert for hele varigheten av dette møtet og vises av alle deltakerne.";
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Mer informasjon";
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="Skriving i sanntid";
+"AzureCommunicationUICalling.RTT.RTTLable"="Skriving i sanntid";
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv inn melding i sanntid";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Demp";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Meny for demping av lyd for deltaker.";

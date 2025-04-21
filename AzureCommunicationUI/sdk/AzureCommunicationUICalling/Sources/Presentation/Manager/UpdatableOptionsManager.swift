@@ -222,7 +222,6 @@ class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
                 .store(in: &subscriptions)
         }
 
-        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         callScreenOptions?.headerViewData?.customButtons.forEach { button in
             button.$enabled
                 .sink { [weak self] enabled in
@@ -252,7 +251,6 @@ class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
                 }
                 .store(in: &subscriptions)
         }
-        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
     }
     // swiftlint:enable function_body_length
 }

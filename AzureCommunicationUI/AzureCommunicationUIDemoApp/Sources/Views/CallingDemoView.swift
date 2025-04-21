@@ -24,6 +24,7 @@ struct CallingDemoView: View {
     @State var callState: String = ""
     @State var issue: CallCompositeUserReportedIssue?
     @State var issueUrl: String = ""
+    @State var isCallActive = false
     @State private var isNewViewPresented = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
@@ -250,13 +251,15 @@ struct CallingDemoView: View {
     var startExperienceButton: some View {
         Button("Start Experience") {
             isStartExperienceLoading = true
+            isCallActive = true // Disable button until dismissed
+
             Task { @MainActor in
                 await startCallComposite()
                 isStartExperienceLoading = false
             }
         }
         .buttonStyle(DemoButtonStyle())
-        .disabled(isStartExperienceDisabled || isStartExperienceLoading)
+        .disabled(isStartExperienceDisabled || isStartExperienceLoading || isCallActive)
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
@@ -556,6 +559,8 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
+            isCallActive = false // Re-enable button when call ends
+
             print("::::CallingDemoView::onDismissedHandler")
         }
 
@@ -760,7 +765,6 @@ extension CallingDemoView {
         }
 
         var headerViewData: CallScreenHeaderViewData?
-        /* <CALL_SCREEN_HEADER_CUSTOM_BUTTONS:0> */
         if envConfigSubject.addCustomButton {
             let customButtonImage: UIImage
             if let image = UIImage(named: "ic_fluent_chat_20_regular") {
@@ -785,7 +789,6 @@ extension CallingDemoView {
             }
             headerViewData = CallScreenHeaderViewData(customButtons: [customButton1, customButton2])
         }
-        /* </CALL_SCREEN_HEADER_CUSTOM_BUTTONS> */
 
         if !envConfigSubject.callInformationTitle.isEmpty {
             headerViewData = headerViewData ?? CallScreenHeaderViewData()
