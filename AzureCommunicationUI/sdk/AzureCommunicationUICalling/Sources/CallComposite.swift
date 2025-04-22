@@ -357,7 +357,8 @@ public class CallComposite {
         self.viewController = viewController
         present(viewController)
         UIApplication.shared.isIdleTimerDisabled = true
-        if store.state.permissionState.audioPermission == .notAsked {
+        if store.state.permissionState.audioPermission == .notAsked ||
+            store.state.permissionState.audioPermission == .unknown {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
         } else {
             store.dispatch(action: .callingAction(.setupCall))

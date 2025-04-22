@@ -216,6 +216,7 @@ internal struct BottomDrawer<Content: View>: View {
 
     private func collapseDrawer() {
         drawerState = .hidden
+        hideDrawer()
         drawerHeight = DrawerConstants.collapsedHeight
     }
 
