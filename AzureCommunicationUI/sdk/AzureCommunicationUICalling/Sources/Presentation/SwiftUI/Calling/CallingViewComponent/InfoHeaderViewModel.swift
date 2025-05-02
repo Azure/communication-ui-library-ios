@@ -16,6 +16,7 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var subtitle: String? = ""
     @Published var customButton1ViewModel: IconButtonViewModel?
     @Published var customButton2ViewModel: IconButtonViewModel?
+    @Published var showCallDuration = false
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let dispatch: ActionDispatch
@@ -51,6 +52,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.subtitle = callScreenInfoHeaderState.subtitle ?? ""
         self.accessibilityLabelTitle = callScreenInfoHeaderState.title ?? infoLabel
         self.accessibilityLabelSubtitle = callScreenInfoHeaderState.subtitle ?? ""
+        self.showCallDuration = callScreenInfoHeaderState.showCallDuration ?? false
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
@@ -134,6 +136,7 @@ class InfoHeaderViewModel: ObservableObject {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
+        self.showCallDuration = callScreenInfoHeaderState.showCallDuration ?? false
         callingStatus = callingState.status
         if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeaderValue {
             updateInfoHeaderAvailability()
