@@ -30,6 +30,7 @@ class InfoHeaderViewModel: ObservableObject {
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
     private let controlHeaderViewData: CallScreenHeaderViewData?
+    private var callDurationTimer: Timer? = nil
 
     var isPad = false
 
@@ -43,7 +44,8 @@ class InfoHeaderViewModel: ObservableObject {
          enableSystemPipWhenMultitasking: Bool,
          callScreenInfoHeaderState: CallScreenInfoHeaderState,
          buttonViewDataState: ButtonViewDataState,
-         controlHeaderViewData: CallScreenHeaderViewData?
+         controlHeaderViewData: CallScreenHeaderViewData?,
+         callStartTime: Date? = nil
     ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.controlHeaderViewData = controlHeaderViewData
@@ -83,6 +85,9 @@ class InfoHeaderViewModel: ObservableObject {
         }
         dismissButtonViewModel.update(
             accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
+        if self.showCallDuration {
+            self.subtitle = "00:00"
+        }
 
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
@@ -131,7 +136,8 @@ class InfoHeaderViewModel: ObservableObject {
                 callingState: CallingState,
                 visibilityState: VisibilityState,
                 callScreenInfoHeaderState: CallScreenInfoHeaderState,
-                buttonViewDataState: ButtonViewDataState
+                buttonViewDataState: ButtonViewDataState,
+                callStartTime: Date? = nil
     ) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
@@ -163,7 +169,43 @@ class InfoHeaderViewModel: ObservableObject {
             self.subtitle = callScreenInfoHeaderState.subtitle
             self.accessibilityLabelSubtitle = self.subtitle ?? ""
         }
+        
+        self.showCallDuration = callScreenInfoHeaderState.showCallDuration ?? false
+        if self.showCallDuration {
+            if callStartTime != nil {
+                startTimer(callStartDate: callStartTime!)
+            }
+        } else {
+            stopTimer()
+            self.subtitle = nil
+        }
         updateCustomButtons(buttonViewDataState)
+    }
+    
+    func startTimer(callStartDate: Date) {
+        if callDurationTimer != nil {
+            return
+        }
+        callDurationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            let currentTime = Date()
+            let elapsedTimeMillis = currentTime.timeIntervalSince(callStartDate)
+            let hours = Int(elapsedTimeMillis / 3600)
+            let minutes = Int((elapsedTimeMillis.truncatingRemainder(dividingBy: 3600)) / 60)
+            let seconds = Int(elapsedTimeMillis.truncatingRemainder(dividingBy: 60))
+            let formattedTime: String
+            if hours > 0 {
+                formattedTime = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+            } else {
+                formattedTime = String(format: "%02d:%02d", minutes, seconds)
+            }
+            self.subtitle = formattedTime
+        }
+    }
+    
+    func stopTimer() {
+        callDurationTimer?.invalidate()
+        callDurationTimer = nil
     }
 
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
