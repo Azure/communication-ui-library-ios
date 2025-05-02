@@ -21,6 +21,7 @@ struct InfoHeaderView: View {
     private enum Constants {
         static let shapeCornerRadius: CGFloat = 5
         static let infoLabelHorizontalPadding: CGFloat = 16.0
+        
         static let hStackHorizontalPadding: CGFloat = 20.0
         static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4

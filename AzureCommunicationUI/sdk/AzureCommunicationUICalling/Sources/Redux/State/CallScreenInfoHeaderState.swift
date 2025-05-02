@@ -8,8 +8,10 @@ import Foundation
 struct CallScreenInfoHeaderState {
     let title: String?
     let subtitle: String?
-    init(title: String? = nil, subtitle: String? = nil) {
+    let showCallDuration: Bool?
+    init(title: String? = nil, subtitle: String? = nil, showCallDuration: Bool? = false) {
         self.title = title
         self.subtitle = subtitle
+        self.showCallDuration = showCallDuration
     }
 }
