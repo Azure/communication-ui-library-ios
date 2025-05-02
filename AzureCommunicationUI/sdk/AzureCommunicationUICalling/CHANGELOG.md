@@ -1,4 +1,9 @@
 # Azure Communication UI Calling Release History
+## 1.14.1 (2025-05-02)
+
+### Bugfixes
+- Xcode 16.3 compiling issue
+
 ## 1.14.0 (2025-04-17)
 
 ### Features
