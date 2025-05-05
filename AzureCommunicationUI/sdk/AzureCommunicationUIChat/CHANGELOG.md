@@ -1,5 +1,10 @@
 # Release History
 
+## 1.0.0-beta.5 (2025-05-05)
+
+### Other Changes
+- Update the dependency `AzureCommunicationChat` to `1.3.7`
+
 ## 1.0.0-beta.4 (2023-12-21)
 
 ### Other Changes
