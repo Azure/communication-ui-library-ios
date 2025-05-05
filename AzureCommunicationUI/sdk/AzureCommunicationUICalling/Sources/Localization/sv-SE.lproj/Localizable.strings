@@ -102,6 +102,7 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Dela diagnostikinformation";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="Ta bort";
 
 
@@ -169,7 +170,9 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapportera ett problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Skicka";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Bildtexter";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Undertexter och RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talat språk";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk för undertext";
@@ -181,16 +184,23 @@
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Det går inte att ändra språket för undertexter";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Det gör inte att ändra talat språk";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Realtidstext";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="Aktivera RTT?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="Realtidstext (RTT) aktiveras för alla i samtalet.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Aktivera";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Stäng";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Aktivera RTT för det här samtalet";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Realtidstext (RTT) har aktiverats för hela mötets varaktighet och visas av alla deltagare.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Mer information";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-inmatning";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv meddelande i realtid";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximera undertexter och RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimera undertexter och RTT";
