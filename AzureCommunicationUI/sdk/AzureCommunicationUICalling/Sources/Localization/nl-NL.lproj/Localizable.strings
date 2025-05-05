@@ -102,8 +102,6 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Meer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnostische gegevens delen";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
-/* Action button label to remove a participant from a call. */
-"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Verwijderen";
 
 
 /* ComplianceBanner title */
@@ -170,40 +168,27 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Een probleem melden";
 "AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";
 
-/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Ondertitels";
-/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Ondertitels en RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Gesproken taal";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Taal van ondertiteling";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Ondertitels starten...";
-"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ondertitels inschakelen";
-"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Ondertitels uitschakelen";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Kan ondertitels niet starten";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Kan ondertitels niet stoppen";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Kan de taal van de ondertiteling niet wijzigen";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Kan de gesproken talen niet wijzigen";
 
-/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Real-time tekst";
-/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="RTT inschakelen?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="Tekst in realtime (RTT) wordt ingeschakeld voor iedereen in het gesprek.";
-/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Inschakelen";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Sluiten";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="RTT inschakelen voor dit gesprek";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text (RTT) is ingeschakeld voor de hele duur van deze vergadering en wordt gezien door alle deelnemers.";
-/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Meer informatie";
-/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typen";
-/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
-/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Bericht in realtime typen";
-"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Bijschriften en RTT maximaliseren";
-"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Bijschriften en RTT minimaliseren";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Dempen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Deelnemersmenu dempen.";
