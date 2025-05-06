@@ -30,8 +30,7 @@ class InfoHeaderViewModel: ObservableObject {
     var dismissButtonViewModel: IconButtonViewModel!
     private var cancellables = Set<AnyCancellable>()
     private let controlHeaderViewData: CallScreenHeaderViewData?
-    private var callDurationTimer: Timer? = nil
-
+    private var callDurationTimer: Timer?
     var isPad = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -70,7 +69,6 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
-
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
 
@@ -110,16 +108,13 @@ class InfoHeaderViewModel: ObservableObject {
         }
         return formatter.string(from: interval) ?? "00:00:00"
     }
-
     func showParticipantListButtonTapped() {
         logger.debug("Show participant list button tapped")
         self.displayParticipantsList()
     }
-
     func displayParticipantsList() {
         dispatch(.showParticipants)
     }
-
     func toggleDisplayInfoHeaderIfNeeded() {
         guard !isVoiceOverEnabled else {
             return
@@ -130,7 +125,6 @@ class InfoHeaderViewModel: ObservableObject {
             displayWithTimer()
         }
     }
-
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
@@ -169,7 +163,7 @@ class InfoHeaderViewModel: ObservableObject {
             self.subtitle = callScreenInfoHeaderState.subtitle
             self.accessibilityLabelSubtitle = self.subtitle ?? ""
         }
-        
+
         self.showCallDuration = callScreenInfoHeaderState.showCallDuration ?? false
         if self.showCallDuration {
             if callStartTime != nil {
@@ -181,33 +175,6 @@ class InfoHeaderViewModel: ObservableObject {
         }
         updateCustomButtons(buttonViewDataState)
     }
-    
-    func startTimer(callStartDate: Date) {
-        if callDurationTimer != nil {
-            return
-        }
-        callDurationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            let currentTime = Date()
-            let elapsedTimeMillis = currentTime.timeIntervalSince(callStartDate)
-            let hours = Int(elapsedTimeMillis / 3600)
-            let minutes = Int((elapsedTimeMillis.truncatingRemainder(dividingBy: 3600)) / 60)
-            let seconds = Int(elapsedTimeMillis.truncatingRemainder(dividingBy: 60))
-            let formattedTime: String
-            if hours > 0 {
-                formattedTime = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-            } else {
-                formattedTime = String(format: "%02d:%02d", minutes, seconds)
-            }
-            self.subtitle = formattedTime
-        }
-    }
-    
-    func stopTimer() {
-        callDurationTimer?.invalidate()
-        callDurationTimer = nil
-    }
-
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
         let remoteParticipantCountForGridView = remoteParticipantsState.participantInfoList
             .filter({ participantInfoModel in
@@ -220,7 +187,6 @@ class InfoHeaderViewModel: ObservableObject {
 
         return remoteParticipantsState.totalParticipantCount - filteredOutRemoteParticipantsCount
     }
-
     private func isHoldingCall(callingState: CallingState) {
         guard callingState.status == .localHold,
               callingStatus != callingState.status else {
@@ -230,7 +196,6 @@ class InfoHeaderViewModel: ObservableObject {
             isInfoHeaderDisplayed = false
         }
     }
-
     private func updateInfoLabel() {
         let content: String
         switch participantsCount {
@@ -244,15 +209,12 @@ class InfoHeaderViewModel: ObservableObject {
         title = content
         accessibilityLabelTitle = content
     }
-
     private func displayWithTimer() {
         self.isInfoHeaderDisplayed = true
     }
-
     @objc private func hideInfoHeader() {
         self.isInfoHeaderDisplayed = false
     }
-
     private func updateInfoHeaderAvailability() {
         let shouldDisplayInfoHeader = shouldDisplayInfoHeader(for: callingStatus)
         isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
@@ -262,11 +224,9 @@ class InfoHeaderViewModel: ObservableObject {
             displayWithTimer()
         }
     }
-
     private func shouldDisplayInfoHeader(for callingStatus: CallingStatus) -> Bool {
         return callingStatus != .inLobby && callingStatus != .localHold
     }
-
     private func dismissButtonTapped() {
         if self.enableSystemPipWhenMultitasking {
             dispatch(.visibilityAction(.pipModeRequested))
@@ -315,5 +275,31 @@ extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
         }
 
         updateInfoHeaderAvailability()
+    }
+    func startTimer(callStartDate: Date) {
+        if callDurationTimer != nil {
+            return
+        }
+        callDurationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else {
+                return
+            }
+            let currentTime = Date()
+            let elapsedTimeMillis = currentTime.timeIntervalSince(callStartDate)
+            let hours = Int(elapsedTimeMillis / 3600)
+            let minutes = Int((elapsedTimeMillis.truncatingRemainder(dividingBy: 3600)) / 60)
+            let seconds = Int(elapsedTimeMillis.truncatingRemainder(dividingBy: 60))
+            let formattedTime: String
+            if hours > 0 {
+                formattedTime = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+            } else {
+                formattedTime = String(format: "%02d:%02d", minutes, seconds)
+            }
+            self.subtitle = formattedTime
+        }
+    }
+    func stopTimer() {
+        callDurationTimer?.invalidate()
+        callDurationTimer = nil
     }
 }

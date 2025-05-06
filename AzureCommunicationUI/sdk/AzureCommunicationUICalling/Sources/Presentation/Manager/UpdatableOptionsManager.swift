@@ -40,7 +40,9 @@ class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
             .store(in: &subscriptions)
         callScreenOptions?.headerViewData?.$showCallDuration
             .sink { [weak self] showCallDuration in
-                self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateShowCallDuration(showCallDuration: showCallDuration)))
+                self?.store.dispatch(action: .callScreenInfoHeaderAction(
+                    .updateShowCallDuration(showCallDuration: showCallDuration))
+                )
             }
 
         setupScreenOptions?.audioDeviceButton?.$visible
