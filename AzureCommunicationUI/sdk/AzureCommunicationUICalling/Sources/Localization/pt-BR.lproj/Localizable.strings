@@ -102,6 +102,8 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mais";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Compartilhar informações de diagnóstico";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Remover";
 
 
 /* ComplianceBanner title */
@@ -168,27 +170,40 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Informar um problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Enviar";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Legendas";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Legendas e RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Idioma falado";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Idioma da legenda";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Iniciando as Legendas...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ativar legendas";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Desativar legendas";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Não é possível iniciar as legendas";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Não é possível parar as legendas";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Não é possível alterar o idioma das legendas";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Não é possível alterar o idioma falado";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Texto em tempo real";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="Ativar a RTT?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="O RTT (texto em tempo real) será ativado para todos na chamada.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Ativar";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Ignorar";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Habilitar a RTT para esta chamada";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="O RTT (texto em tempo real) está habilitado durante toda a reunião e é visto por todos os participantes.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Saiba mais";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="Digitação RTT";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Digitar mensagem em tempo real";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximizar legendas e RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimizar legendas e RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Ativar mudo";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Ative o mudo do menu do participante.";

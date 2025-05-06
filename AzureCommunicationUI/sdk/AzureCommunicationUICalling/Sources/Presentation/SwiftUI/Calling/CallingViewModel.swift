@@ -105,7 +105,8 @@ internal class CallingViewModel: ObservableObject {
                                      localUserState: store.state.localUserState,
                                      callScreenInfoHeaderState: store.state.callScreenInfoHeaderState,
                                      buttonViewDataState: store.state.buttonViewDataState,
-                                     controlHeaderViewData: callScreenOptions.headerViewData
+                                     controlHeaderViewData: callScreenOptions.headerViewData,
+                                     callStartTimer: store.state.callingState.callStartTime
             )
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,

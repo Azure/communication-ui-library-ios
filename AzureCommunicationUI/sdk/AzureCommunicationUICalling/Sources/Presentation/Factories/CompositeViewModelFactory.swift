@@ -326,8 +326,8 @@ extension CompositeViewModelFactory {
                                  localUserState: LocalUserState,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState,
                                  buttonViewDataState: ButtonViewDataState,
-                                 controlHeaderViewData: CallScreenHeaderViewData?
-    ) -> InfoHeaderViewModel {
+                                 controlHeaderViewData: CallScreenHeaderViewData?,
+                                 callStartTimer: Date?) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
@@ -338,7 +338,8 @@ extension CompositeViewModelFactory {
                             enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
                             callScreenInfoHeaderState: callScreenInfoHeaderState,
                             buttonViewDataState: buttonViewDataState,
-                            controlHeaderViewData: controlHeaderViewData
+                            controlHeaderViewData: controlHeaderViewData,
+                            callStartTime: callStartTimer
         )
     }
 

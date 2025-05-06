@@ -58,6 +58,7 @@ enum LocalizationKey: String {
     case participantListAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"
     case callingCallMessage = "AzureCommunicationUICalling.CallingView.GridView.Calling"
+    case participantRemove = "AzureCommunicationUICalling.CallingView.ParticipantRemove"
 
     /* Lobby waiting */
     case lobbyWaitingToJoin = "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"
