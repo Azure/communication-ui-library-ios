@@ -31,6 +31,7 @@ class InfoHeaderViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let controlHeaderViewData: CallScreenHeaderViewData?
     private var callDurationTimer: Timer?
+
     var isPad = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -163,7 +164,6 @@ class InfoHeaderViewModel: ObservableObject {
             self.subtitle = callScreenInfoHeaderState.subtitle
             self.accessibilityLabelSubtitle = self.subtitle ?? ""
         }
-
         self.showCallDuration = callScreenInfoHeaderState.showCallDuration ?? false
         if self.showCallDuration {
             if callStartTime != nil {
@@ -175,6 +175,7 @@ class InfoHeaderViewModel: ObservableObject {
         }
         updateCustomButtons(buttonViewDataState)
     }
+
     private func getParticipantCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
         let remoteParticipantCountForGridView = remoteParticipantsState.participantInfoList
             .filter({ participantInfoModel in
