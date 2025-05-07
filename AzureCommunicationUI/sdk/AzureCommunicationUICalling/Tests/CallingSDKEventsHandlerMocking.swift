@@ -31,9 +31,9 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var capabilitiesChangedSubject = PassthroughSubject<AzureCommunicationUICalling.CapabilitiesChangedEvent, Never>()
     var totalParticipantCountSubject = PassthroughSubject<Int, Never>()
     var rttReceived: PassthroughSubject<AzureCommunicationUICalling.CallCompositeRttData, Never> = PassthroughSubject<AzureCommunicationUICalling.CallCompositeRttData, Never>()
-    /* <CALL_START_TIME>
+    /* <CALL_START_TIME> */
     var callStartTimeSubject = PassthroughSubject<Date, Never>()
-    </CALL_START_TIME> */
+    /* </CALL_START_TIME> */
 
     override init() {
         captionsSupportedSpokenLanguages = CurrentValueSubject<[String], Never>([])

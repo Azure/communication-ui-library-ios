@@ -102,6 +102,8 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Plus";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Partager les informations de diagnostic";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Supprimer";
 
 
 /* ComplianceBanner title */
@@ -168,27 +170,40 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Signaler un problème";
 "AzureCommunicationUICalling.SendFeedback.Text"="Envoyer";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Sous-titres";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Sous-titres et RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Langue parlée";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Langue des sous-titres";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Commencer les sous-titres...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Activer les sous-titres";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Désactiver les sous-titres";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Impossible de démarrer les sous-titres";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Il est impossible d’arrêter les sous-titres";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Il est impossible de modifier la langue des sous-titres";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Il est impossible de modifier la langue parlée";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Saisie en temps réel";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="Activer la RTT ?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="Le texte en temps réel (RTT) sera activé pour tous les participants à l’appel.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Activer";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Ignorer";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Activer RTT pour cet appel";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Le texte en temps réel (RTT) est activé pour toute la durée de cette réunion et est visible par tous les participants.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="En savoir plus";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="Saisie RTT";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Tapez votre message en temps réel";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximiser les sous-titres et la RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimiser les sous-titres et la RTT";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Désactiver le micro / muet";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Désactivez le son du participant.";
