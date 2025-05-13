@@ -14,6 +14,9 @@ public class CallScreenHeaderViewData: ObservableObject {
     /// Subtitle is the header message in the InfoHeader with a user injected custom subtitle message.
     /// The subtitle message is updatable even after launching the composite.
     @Published public var subtitle: String?
+    /// ShowCallDuration is for the InfoHeader with a user injected custom signal for the UI to show call time.
+    /// The call duration show signal is not updatable after launching the composite.
+    @Published public var showCallDuration: Bool?
 
     /// Custom buttons.
     public let customButtons: [CustomButtonViewData]
@@ -26,10 +29,12 @@ public class CallScreenHeaderViewData: ObservableObject {
     /// - Parameter customButtons: An array of custom button options. Default is an empty array.
     public init(title: String? = nil,
                 subtitle: String? = nil,
+                showCallDuration: Bool? = nil,
                 customButtons: [CustomButtonViewData] = []
     ) {
         self.title = title
         self.subtitle = subtitle
+        self.showCallDuration = showCallDuration
         self.customButtons = customButtons
     }
 }

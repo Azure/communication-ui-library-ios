@@ -32,8 +32,8 @@ internal class ParticipantMenuViewModel: ObservableObject {
         self.isDisplayed = false
         self.onRemoveUser = onRemoveUser
 
-        items = [DrawerGenericItemViewModel(title: "Remove",
-                                            accessibilityIdentifier: "Remove",
+        items = [DrawerGenericItemViewModel(title: localizationProvider.getLocalizedString(.participantRemove),
+                                            accessibilityIdentifier: "",
                                             action: rowTapped,
                                             startCompositeIcon: .personDelete,
                                             isEnabled: canRemove)]
@@ -53,8 +53,8 @@ internal class ParticipantMenuViewModel: ObservableObject {
             capability: ParticipantCapabilityType.removeParticipant)
         self.isDisplayed = isDisplayed
 
-        items = [DrawerGenericItemViewModel(title: "Remove",
-                                            accessibilityIdentifier: "Remove",
+        items = [DrawerGenericItemViewModel(title: localizationProvider.getLocalizedString(.participantRemove),
+                                            accessibilityIdentifier: "",
                                             action: rowTapped,
                                             startCompositeIcon: .personDelete,
                                             isEnabled: canRemove)]
