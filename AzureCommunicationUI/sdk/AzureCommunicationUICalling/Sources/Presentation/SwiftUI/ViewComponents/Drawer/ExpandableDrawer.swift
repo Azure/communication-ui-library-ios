@@ -111,7 +111,6 @@ internal struct ExpandableDrawer<Content: View>: View {
                     .transition(.move(edge: .bottom))
                     .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : max(dragOffset, 0))
                     .animation(.easeInOut, value: drawerState == .visible)
-                    .accessibilityAddTraits(.isModal)
             }
         }
         .onChange(of: isPresented) { newValue in
