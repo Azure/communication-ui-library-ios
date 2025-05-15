@@ -54,7 +54,12 @@ struct CustomTextField: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
         textField.delegate = context.coordinator
-        textField.placeholder = placeholder
+        textField.attributedPlaceholder = NSAttributedString(
+            string: placeholder,
+            attributes: [
+                .foregroundColor: UIColor(Color(StyleProvider.color.textSecondary))
+            ]
+        )
         textField.font = UIFont.systemFont(ofSize: 17)
         textField.borderStyle = .roundedRect
         textField.backgroundColor = StyleProvider.color.drawerColor

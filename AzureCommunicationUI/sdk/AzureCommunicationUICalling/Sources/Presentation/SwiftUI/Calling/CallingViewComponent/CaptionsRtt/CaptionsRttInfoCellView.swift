@@ -48,7 +48,7 @@ struct CaptionsRttInfoCellView: View {
                             .padding(.horizontal, 4)
                             .background(
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(Color(StyleProvider.color.surface))
+                                    .fill(Color(StyleProvider.color.surfaceSecondary))
                             )
                     }
                 }
