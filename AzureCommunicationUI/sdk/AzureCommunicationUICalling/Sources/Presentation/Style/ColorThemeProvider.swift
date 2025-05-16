@@ -56,6 +56,7 @@ class ColorThemeProvider {
     let hangup = UIColor.compositeColor(.hangup)
     let disableColor: UIColor = Colors.iconDisabled
     let drawerIconDark: UIColor = Colors.iconPrimary
+    let surfaceSecondary: UIColor = Colors.surfaceSecondary
 
     // MARK: - View Background Colours
     let error: UIColor = Colors.error
