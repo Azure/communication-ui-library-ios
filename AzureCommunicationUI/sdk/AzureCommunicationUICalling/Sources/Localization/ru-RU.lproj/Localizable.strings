@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Субтитры и ввод в режиме реального времени";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Язык речи";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Язык субтитров";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Caption language disabled";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Spoken language disabled";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Запуск субтитров...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Включить субтитры";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Отключить субтитры";

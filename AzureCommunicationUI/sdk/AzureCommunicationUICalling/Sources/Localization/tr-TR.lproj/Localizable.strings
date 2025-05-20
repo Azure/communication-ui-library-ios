@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Alt yazılar ve RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Konuşma dili";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Alt yazı dili";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Caption language disabled";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Spoken language disabled";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Alt Yazılar Başlatılıyor...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Alt yazıları aç";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Alt yazıları kapat";

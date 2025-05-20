@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Tekstitykset ja RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Puhuttu kieli";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Tekstityksen kieli";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Caption language disabled";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Spoken language disabled";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Aloitetaan tekstitystä...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ota tekstitykset käyttöön";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Poista tekstitykset käytöstä";
