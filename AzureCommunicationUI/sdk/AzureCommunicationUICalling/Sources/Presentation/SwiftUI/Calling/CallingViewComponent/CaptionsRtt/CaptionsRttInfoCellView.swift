@@ -11,6 +11,9 @@ struct CaptionsRttInfoCellView: View {
     @State private var avatarImage: UIImage?
     @State private var displayName: String?
     @State private var isRTL = false
+    @AccessibilityFocusState private var isAccessibilityFocused: Bool
+    @State private var wasFinal = false
+
     private let localizationProvider: LocalizationProviderProtocol
 
     init(displayData: CaptionsRttRecord,
@@ -74,8 +77,18 @@ struct CaptionsRttInfoCellView: View {
         .onAppear {
             updateAvatar()
             determineTextDirection()
+            wasFinal = displayData.isFinal
         }
-        .accessibilityHidden(!displayData.isFinal)
+        .onChange(of: displayData.isFinal) { newValue in
+            if newValue && !wasFinal {
+                wasFinal = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    isAccessibilityFocused = true
+                }
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityFocused($isAccessibilityFocused)
     }
 
     private var avatarView: some View {
