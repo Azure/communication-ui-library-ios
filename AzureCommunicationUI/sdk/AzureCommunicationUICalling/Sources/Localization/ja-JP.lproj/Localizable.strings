@@ -176,8 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="キャプションと RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="音声言語";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="キャプション言語";
-"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Caption language disabled";
-"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Spoken language disabled";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="キャプション言語が無効になっています";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="音声言語が無効になっています";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="キャプションを開始しています...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="キャプションを有効にする";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="キャプションを無効にする";

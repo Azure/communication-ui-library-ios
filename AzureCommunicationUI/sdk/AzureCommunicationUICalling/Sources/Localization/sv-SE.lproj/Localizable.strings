@@ -176,8 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Undertexter och RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talat språk";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk för undertext";
-"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Caption language disabled";
-"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Spoken language disabled";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Textningsspråk har inaktiverats";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Talat språk har inaktiverats";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Startar undertexter...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Aktivera undertexter";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Inaktivera undertexter";
