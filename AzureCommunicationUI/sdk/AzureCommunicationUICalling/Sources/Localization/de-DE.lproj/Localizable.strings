@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Untertitel und RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Gesprochene Sprache";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Sprache für Untertitel";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Untertitelsprache deaktiviert";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Gesprochene Sprache deaktiviert";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Untertitel werden gestartet...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Untertitel aktivieren";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Untertitel deaktivieren";

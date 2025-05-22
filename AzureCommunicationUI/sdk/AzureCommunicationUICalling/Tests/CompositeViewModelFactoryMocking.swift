@@ -310,11 +310,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
             isEnabled: isEnabled)
     }
 
-    func makeLanguageListItemViewModel(title: String, subtitle: String?, accessibilityIdentifier: String, startIcon: AzureCommunicationUICalling.CompositeIcon, endIcon: AzureCommunicationUICalling.CompositeIcon?, isEnabled: Bool, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerGenericItemViewModel {
+    func makeLanguageListItemViewModel(title: String, subtitle: String?, accessibilityLabel: String, startIcon: AzureCommunicationUICalling.CompositeIcon, endIcon: AzureCommunicationUICalling.CompositeIcon?, isEnabled: Bool, action: @escaping (() -> Void)) -> AzureCommunicationUICalling.DrawerGenericItemViewModel {
         return DrawerGenericItemViewModel(
             title: "",
             subtitle: "",
             accessibilityIdentifier: "",
+            accessibilityLabel: "",
             action: {})
     }
 

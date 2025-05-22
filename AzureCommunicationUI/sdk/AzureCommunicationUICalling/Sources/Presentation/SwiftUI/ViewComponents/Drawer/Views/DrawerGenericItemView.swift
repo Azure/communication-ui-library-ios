@@ -26,6 +26,7 @@ internal struct DrawerGenericItemView: View {
                     .foregroundColor(item.isEnabled ? .primary : .gray)
                     .padding(.leading, DrawerListConstants.textPaddingLeading)
                     .font(.body)
+                    .accessibilityLabel(item.accessibilityLabel ?? item.title)
                 if let subtitle = item.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
                         .font(.subheadline)

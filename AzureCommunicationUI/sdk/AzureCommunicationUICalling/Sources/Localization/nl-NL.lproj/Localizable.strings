@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Ondertitels en RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Gesproken taal";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Taal van ondertiteling";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Taal van ondertiteling uitgeschakeld";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Gesproken taal uitgeschakeld";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Ondertitels starten...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ondertitels inschakelen";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Ondertitels uitschakelen";

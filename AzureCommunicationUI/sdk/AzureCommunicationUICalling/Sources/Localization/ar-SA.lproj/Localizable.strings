@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="نص الكلام وعرض الكتابة في الوقت الحقيقي";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="اللغة المنطوقة";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="لغة التسمية التوضيحية";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="تم تعطيل لغة التسمية التوضيحية";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="تم تعطيل اللغة المنطوقة";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="يتم الآن بدء تشغيل التسميات التوضيحية...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="تشغيل التسميات التوضيحية";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="إيقاف تشغيل التسميات التوضيحية";

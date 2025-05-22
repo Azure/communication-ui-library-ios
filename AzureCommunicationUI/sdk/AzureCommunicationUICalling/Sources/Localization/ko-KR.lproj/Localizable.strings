@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="캡션 및 실시간 입력";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="음성 언어";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="캡션 언어";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="캡션 언어가 비활성화됨";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="음성 언어가 비활성화됨";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="캡션 시작 중...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="캡션 켜기";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="캡션 끄기";

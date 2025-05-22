@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="字幕和实时文本";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="口语";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="辅助字幕语言";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="已禁用字幕语言";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="已禁用口语";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="正在启动字幕...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="打开辅助字幕";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="关闭辅助字幕";

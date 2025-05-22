@@ -436,15 +436,16 @@ extension CompositeViewModelFactory {
 
     func makeLanguageListItemViewModel(title: String,
                                        subtitle: String?,
-                                       accessibilityIdentifier: String,
+                                       accessibilityLabel: String,
                                        startIcon: CompositeIcon,
                                        endIcon: CompositeIcon?,
                                        isEnabled: Bool,
                                        action: @escaping (() -> Void)) -> DrawerGenericItemViewModel {
         DrawerGenericItemViewModel(title: title,
                                 subtitle: subtitle,
-                                accessibilityIdentifier: accessibilityIdentifier,
+                                accessibilityIdentifier: "",
                                    accessibilityTraits: .isButton,
+                                   accessibilityLabel: accessibilityLabel,
                                    action: action,
                                    startCompositeIcon: startIcon,
                                    endIcon: endIcon,

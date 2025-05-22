@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Napisy i pisanie w czasie rzeczywistym";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Język mówiony";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Język napisów";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Wyłączono język podpisów";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Wyłączono język mówiony";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Trwa uruchamianie napisów...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Włącz napisy";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Wyłącz napisy";

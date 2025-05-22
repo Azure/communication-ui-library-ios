@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Legendas e RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Idioma falado";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Idioma da legenda";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Idioma da legenda desabilitado";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Idioma falado desabilitado";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Iniciando as Legendas...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ativar legendas";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Desativar legendas";
