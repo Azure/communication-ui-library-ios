@@ -22,6 +22,8 @@ class CaptionsRttListViewModel: ObservableObject {
     var isDisplayed: Bool
     private var isRttOn: Bool
     let title: String?
+    var startIconAccessibilityValue: String?
+    var dismissButtonAccessibilityValue: String?
     let backButtonAction: () -> Void
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -119,6 +121,8 @@ class CaptionsRttListViewModel: ObservableObject {
 
         )
         items.append(rttInfoModel)
+        startIconAccessibilityValue = localizationProvider.getLocalizedString(.back)
+        dismissButtonAccessibilityValue = localizationProvider.getLocalizedString(.dismissDrawer)
     }
     func update(state: AppState) {
         isDisplayed = state.navigationState.captionsRttViewVisible
