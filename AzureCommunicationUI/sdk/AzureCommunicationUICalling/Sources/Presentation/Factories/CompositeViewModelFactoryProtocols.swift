@@ -105,7 +105,7 @@ protocol CompositeViewModelFactoryProtocol {
 
     func makeLanguageListItemViewModel(title: String,
                                        subtitle: String?,
-                                       accessibilityIdentifier: String,
+                                       accessibilityLabel: String,
                                        startIcon: CompositeIcon,
                                        endIcon: CompositeIcon?,
                                        isEnabled: Bool,

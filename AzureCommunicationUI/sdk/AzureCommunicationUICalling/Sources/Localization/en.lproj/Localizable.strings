@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Captions & RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Spoken language";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Caption language";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Caption language disabled";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Spoken language disabled";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starting Captions...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Turn captions on";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Turn captions off";
