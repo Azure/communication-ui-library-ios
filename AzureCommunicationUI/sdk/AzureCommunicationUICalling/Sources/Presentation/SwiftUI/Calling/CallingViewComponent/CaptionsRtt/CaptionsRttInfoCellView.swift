@@ -47,7 +47,6 @@ struct CaptionsRttInfoCellView: View {
                     if displayData.captionsRttType == .rtt && !displayData.isFinal {
                         Text(localizationProvider.getLocalizedString(.rttTyping))
                             .font(.caption2)
-                            .foregroundColor(Color(StyleProvider.color.textSecondary))
                             .padding(.horizontal, 4)
                             .background(
                                 RoundedRectangle(cornerRadius: 4)
