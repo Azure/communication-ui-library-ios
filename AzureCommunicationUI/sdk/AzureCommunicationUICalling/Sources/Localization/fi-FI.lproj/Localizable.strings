@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Kirjoita viesti reaaliaikaisesti";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Suurenna tekstitykset ja RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Pienennä tekstitykset ja RTT";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mykistä";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mykistä osallistuja -valikko.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Poista puhelusta";

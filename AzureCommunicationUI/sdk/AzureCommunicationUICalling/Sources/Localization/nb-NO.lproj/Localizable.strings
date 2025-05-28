@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv inn melding i sanntid";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maksimer undertekster og RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimer undertekster og RTT";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Demp";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Meny for demping av lyd for deltaker.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Fjern fra samtalen";

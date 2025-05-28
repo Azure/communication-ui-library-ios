@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="リアルタイムにメッセージを入力";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "キャプションと RTT を最大化する";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "キャプションと RTT を最小化する";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="ミュート";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="参加者メニューをミュートにします。";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="通話から削除";
