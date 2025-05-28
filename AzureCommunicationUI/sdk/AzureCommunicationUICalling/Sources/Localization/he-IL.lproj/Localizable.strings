@@ -176,6 +176,8 @@
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="כתוביות ו- RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="שפה מדוברת";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="שפת כתוביות";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="שפת הכתוביות מושבתת";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="השפה המדוברת מושבתת";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="מאתחל כתוביות...";
 "AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="הפעל כתוביות";
 "AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="כבה כתוביות";
