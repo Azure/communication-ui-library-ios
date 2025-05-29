@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Bericht in realtime typen";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Bijschriften en RTT maximaliseren";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Bijschriften en RTT minimaliseren";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Dempen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Deelnemersmenu dempen.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Uit gesprek verwijderen";

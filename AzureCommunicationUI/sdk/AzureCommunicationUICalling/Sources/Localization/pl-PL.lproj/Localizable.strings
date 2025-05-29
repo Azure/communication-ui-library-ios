@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Pisanie wiadomości w czasie rzeczywistym";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maksymalizowanie napisów i RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimalizowanie napisów i RTT";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Wycisz";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Menu wyciszania uczestnika.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Usuń z rozmowy";

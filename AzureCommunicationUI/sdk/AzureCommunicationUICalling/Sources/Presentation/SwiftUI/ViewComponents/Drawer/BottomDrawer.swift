@@ -68,6 +68,8 @@ internal struct BottomDrawer<Content: View>: View {
     let content: Content
     let startIcon: CompositeIcon?
     let startIconAction: (() -> Void)?
+    let startIconAccessibilityLabel: String?
+    let dismissAccessibilityLabel: String?
     let title: String?
 
     var dragThreshold: CGFloat = DrawerConstants.dragThreshold
@@ -77,6 +79,8 @@ internal struct BottomDrawer<Content: View>: View {
          title: String? = nil,
          startIcon: CompositeIcon? = nil,
          startIconAction: (() -> Void)? = nil,
+         startIconAccessibilityLabel: String? = nil,
+         dismissAccessibilityLabel: String? = nil,
          dragThreshold: CGFloat = DrawerConstants.dragThreshold,
          @ViewBuilder content: () -> Content) {
         self.isPresented = isPresented
@@ -86,38 +90,19 @@ internal struct BottomDrawer<Content: View>: View {
         self.startIconAction = startIconAction
         self.title = title
         self.dragThreshold = dragThreshold
+        self.startIconAccessibilityLabel = startIconAccessibilityLabel
+        self.dismissAccessibilityLabel = dismissAccessibilityLabel
     }
 
     var body: some View {
         ZStack(alignment: .bottom) {
             if drawerState != .gone {
-                overlayView
-                drawerView
-                    .transition(.move(edge: .bottom))
-                    .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : max(dragOffset, 0))
-                    .animation(.easeInOut, value: drawerState == .visible)
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                dragOffset = value.translation.height
-                                let newHeight = drawerHeight - value.translation.height
-                                drawerHeight = min(max(newHeight, DrawerConstants.collapsedHeight),
-                                                   DrawerConstants.expandedHeight)
-                            }
-                            .onEnded { value in
-                                withAnimation {
-                                    if value.translation.height > dragThreshold {
-                                        collapseDrawer()
-                                    } else if value.translation.height < -dragThreshold {
-                                        expandDrawer()
-                                    } else {
-                                        resetDrawer()
-                                    }
-                                }
-                                dragOffset = 0
-                            }
-                    )
-                    .accessibilityAddTraits(.isModal)
+                Group {
+                    overlayView
+                    drawerView
+                }
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
             }
         }
         .onChange(of: isPresented) { newValue in
@@ -146,6 +131,29 @@ internal struct BottomDrawer<Content: View>: View {
             .shadow(radius: DrawerConstants.drawerShadowRadius)
             .padding(.bottom, -DrawerConstants.bottomFillY)
         }
+        .transition(.move(edge: .bottom))
+        .offset(y: drawerState == .hidden ? UIScreen.main.bounds.height : max(dragOffset, 0))
+        .animation(.easeInOut, value: drawerState == .visible)
+        .gesture(
+            DragGesture()
+                .onChanged { value in
+                    let newHeight = drawerHeight - value.translation.height
+                    drawerHeight = min(max(newHeight, DrawerConstants.collapsedHeight),
+                                       DrawerConstants.expandedHeight)
+                }
+                .onEnded { value in
+                    withAnimation {
+                        if value.translation.height > dragThreshold {
+                            collapseDrawer()
+                        } else if value.translation.height < -dragThreshold {
+                            expandDrawer()
+                        } else {
+                            resetDrawer()
+                        }
+                    }
+                    dragOffset = 0
+                }
+        )
     }
 
     private var handleView: some View {
@@ -163,6 +171,9 @@ internal struct BottomDrawer<Content: View>: View {
                         .foregroundColor(Color(StyleProvider.color.drawerIconDark))
                         .padding(.leading, 15)
                         .padding(.top, 15)
+                        .accessibilityAddTraits(.isButton)
+                        .accessibilityRemoveTraits(.isImage)
+                        .accessibilityLabel(startIconAccessibilityLabel ?? "back")
                         .onTapGesture {
                             startIconAction?()
                         }
@@ -191,7 +202,8 @@ internal struct BottomDrawer<Content: View>: View {
             .onTapGesture {
                 hideDrawer()
             }
-            .accessibilityHidden(true)
+            .accessibilityLabel(dismissAccessibilityLabel ?? "Dismiss drawer")
+            .accessibilityAddTraits(.isButton)
     }
 
     // MARK: - Helper Functions

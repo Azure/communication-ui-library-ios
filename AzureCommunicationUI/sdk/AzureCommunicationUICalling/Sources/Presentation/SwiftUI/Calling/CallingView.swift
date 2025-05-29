@@ -126,7 +126,10 @@ struct CallingView: View {
                          hideDrawer: viewModel.dismissDrawer,
                          title: viewModel.captionsRttListViewModel.title,
                          startIcon: CompositeIcon.leftArrow,
-                         startIconAction: viewModel.captionsRttListViewModel.backButtonAction) {
+                         startIconAction: viewModel.captionsRttListViewModel.backButtonAction,
+                         startIconAccessibilityLabel: viewModel.captionsRttListViewModel.startIconAccessibilityValue,
+                         dismissAccessibilityLabel: viewModel.captionsRttListViewModel.dismissButtonAccessibilityValue
+            ) {
                 CaptionsRttListView(viewModel: viewModel.captionsRttListViewModel,
                                  avatarManager: avatarManager)
             }

@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Type message in real-time";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximise captions and RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimise captions and RTT";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Mute";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Mute participant menu.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Remove from call";

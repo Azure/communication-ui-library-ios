@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="실시간으로 메시지 입력";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "캡션 및 RTT 최대화";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "캡션 및 RTT 최소화";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="참가자 음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="통화에서 제거";

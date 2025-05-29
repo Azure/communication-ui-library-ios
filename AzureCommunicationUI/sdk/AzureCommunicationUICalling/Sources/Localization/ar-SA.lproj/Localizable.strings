@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="اكتب رسالة في الوقت الحقيقي";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "تكبير التسميات التوضيحية وRTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "تصغير التسميات التوضيحية وRTT";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="كتم الصوت";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="قائمة كتم صوت المشارك.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="إزالة من المكالمة";
