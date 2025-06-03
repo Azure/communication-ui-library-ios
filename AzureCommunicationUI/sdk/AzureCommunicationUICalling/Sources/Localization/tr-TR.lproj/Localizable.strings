@@ -206,8 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="İletiyi gerçek zamanlı yazın";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Alt yazılar ve RTT ekranını büyüt";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Alt yazıları ve RTT ekranını simge durumuna küçült";
-"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
-"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Çekmeceyi Kapatın";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Geri";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Bildirimleri kapat";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Katılımcı menüsünü sessize alın.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Aramadan kaldır";

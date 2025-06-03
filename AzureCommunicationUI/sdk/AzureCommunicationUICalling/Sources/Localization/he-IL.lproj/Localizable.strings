@@ -206,8 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="הקלד הודעה בזמן אמת";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "הגדל כתוביות ו- RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "מזער כתוביות ו- RTT";
-"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Dismiss Drawer";
-"AzureCommunicationUICalling.BottomDrawer.Back" = "Back";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="בטל את המגירה";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "הקודם";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="השתק";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="תפריט השתקת משתתף.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="הסר משיחה";
