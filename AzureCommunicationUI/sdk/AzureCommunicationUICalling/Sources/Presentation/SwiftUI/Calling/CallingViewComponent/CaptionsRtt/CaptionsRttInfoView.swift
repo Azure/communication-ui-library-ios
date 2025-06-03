@@ -11,6 +11,7 @@ struct CaptionsRttInfoView: View {
     @State private var isLastItemVisible = true
     @State private var previousDrawerHeight: CGFloat = 0
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @AccessibilityFocusState private var isListFocused: Bool
 
     var body: some View {
         GeometryReader { geometry in
@@ -58,24 +59,33 @@ struct CaptionsRttInfoView: View {
     private func contentListView(scrollView: ScrollViewProxy, parentGeometry: GeometryProxy) -> some View {
         VStack(spacing: 0) {
             ForEach(viewModel.displayData.indices, id: \.self) { index in
-                let data = viewModel.displayData[index]
-                if data.captionsRttType == .rttInfo {
-                    rttInfoCell()
-                        .id(data.id)
-                } else {
-                    CaptionsRttInfoCellView(
-                        displayData: data,
-                        avatarViewManager: avatarViewManager,
-                        localizationProvider: viewModel.localizationProvider
-                    )
-                    .id(viewModel.displayData[index].id)
-                    .background(lastItemBackgroundIfNeeded(index: index, parentFrame: parentGeometry))
-                }
-            }.onAppear {
+                renderCell(for: index, parentGeometry: parentGeometry)
+            }
+            .onAppear {
                 if isLastItemVisible {
                     scrollToBottom(scrollView)
                 }
             }
+        }
+        .accessibilityFocused($isListFocused)
+    }
+
+    @ViewBuilder
+    private func renderCell(for index: Int, parentGeometry: GeometryProxy) -> some View {
+        let data = viewModel.displayData[index]
+
+        if data.captionsRttType == .rttInfo {
+            rttInfoCell()
+                .id(data.id)
+        } else {
+            CaptionsRttInfoCellView(
+                displayData: data,
+                avatarViewManager: avatarViewManager,
+                localizationProvider: viewModel.localizationProvider,
+                isListFocused: $isListFocused
+            )
+            .id(data.id)
+            .background(lastItemBackgroundIfNeeded(index: index, parentFrame: parentGeometry))
         }
     }
 
