@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Введите сообщение в режиме реального времени";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Развернуть субтитры и ввод в режиме реального времени";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Свернуть субтитры и ввод в режиме реального времени";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Скрыть панель";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Назад";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Отключить звук";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Меню отключения звука участника.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Удалить из звонка";

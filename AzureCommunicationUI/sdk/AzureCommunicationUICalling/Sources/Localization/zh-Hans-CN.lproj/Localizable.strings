@@ -206,7 +206,8 @@
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="实时键入消息";
 "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "最大化字幕和 RTT";
 "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "最小化字幕和 RTT";
-
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="关闭抽屉";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "返回";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="静音";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="将参与者菜单静音。";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="从通话中移除";
