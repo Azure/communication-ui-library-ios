@@ -21,3 +21,5 @@ pipelines:
           lastModifiedDate: 2024-10-31
         psscriptanalyzer:
           lastModifiedDate: 2025-05-02
+        accessibilityinsights:
+          lastModifiedDate: 2025-06-04
