@@ -77,7 +77,6 @@ struct CaptionsRttInfoCellView: View {
         .fixedSize(horizontal: false, vertical: true) // Limit height to content
         .padding(.vertical, 4) // Add padding for vertical spacing
         .background(Color(StyleProvider.color.drawerColor))
-        .accessibilityElement(children: .combine)
         .onAppear {
             updateAvatar()
             determineTextDirection()
@@ -86,7 +85,7 @@ struct CaptionsRttInfoCellView: View {
         .onChange(of: displayData.isFinal) { newValue in
             if newValue && !wasFinal && isListFocused {
                 wasFinal = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     isAccessibilityFocused = true
                 }
             }
