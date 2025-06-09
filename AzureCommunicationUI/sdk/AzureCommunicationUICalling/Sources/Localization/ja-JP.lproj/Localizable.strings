@@ -102,6 +102,8 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "その他";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "診断情報を共有する";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="削除";
 
 
 /* ComplianceBanner title */
@@ -168,27 +170,40 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="問題の報告";
 "AzureCommunicationUICalling.SendFeedback.Text"="送信";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="キャプション";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="キャプションと RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="音声言語";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="キャプション言語";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="キャプションを開始しています...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="キャプションを有効にする";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="キャプションを無効にする";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="キャプションを開始できません";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="キャプションを停止できません";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="キャプションの言語を変更できません";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="話し言葉を変更できません";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="リアルタイム テキスト";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="RTT を有効にしますか?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="リアルタイム テキスト (RTT) は、通話のすべてのユーザーに対してオンになります。";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="有効にする";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="閉じる";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="この呼び出しの RTT を有効にする";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="リアルタイム テキスト (RTT) は、この会議の全期間で有効になっており、すべての参加者に表示されます。";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="詳細情報";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT 入力";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="リアルタイムにメッセージを入力";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "キャプションと RTT を最大化する";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "キャプションと RTT を最小化する";
 
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="ミュート";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="参加者メニューをミュートにします。";

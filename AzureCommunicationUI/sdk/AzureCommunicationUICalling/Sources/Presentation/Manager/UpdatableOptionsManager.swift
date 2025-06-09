@@ -38,6 +38,12 @@ class UpdatableOptionsManager: UpdatableOptionsManagerProtocol {
                 self?.store.dispatch(action: .callScreenInfoHeaderAction(.updateSubtitle(subtitle: newSubtitle)))
             }
             .store(in: &subscriptions)
+        callScreenOptions?.headerViewData?.$showCallDuration
+            .sink { [weak self] showCallDuration in
+                self?.store.dispatch(action: .callScreenInfoHeaderAction(
+                    .updateShowCallDuration(showCallDuration: showCallDuration))
+                )
+            }
 
         setupScreenOptions?.audioDeviceButton?.$visible
             .sink { [weak self] visible in

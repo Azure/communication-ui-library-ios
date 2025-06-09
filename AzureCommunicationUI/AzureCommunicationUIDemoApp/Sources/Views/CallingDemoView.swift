@@ -599,7 +599,7 @@ extension CallingDemoView {
                                            identifiers: ids)
         }
 
-        /* <CALL_START_TIME>
+        /* <CALL_START_TIME> */
         let onCallStartTimeUpdated: (Date) -> Void = { [] startTime in
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -607,7 +607,7 @@ extension CallingDemoView {
             let systemTimeZoneDateString = dateFormatter.string(from: startTime)
             print("::::CallingDemoView startTime event call start time \(systemTimeZoneDateString)")
         }
-        </CALL_START_TIME> */
+        /* </CALL_START_TIME> */
 
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
@@ -619,9 +619,9 @@ extension CallingDemoView {
         callComposite.events.onIncomingCall = onIncomingCall
         callComposite.events.onIncomingCallCancelled = onIncomingCallCancelled
         callComposite.events.onRemoteParticipantLeft = onRemoteParticipantLeftHandler
-        /* <CALL_START_TIME>
+        /* <CALL_START_TIME> */
         callComposite.events.onCallStartTimeUpdated = onCallStartTimeUpdated
-        </CALL_START_TIME> */
+        /* </CALL_START_TIME> */
     }
 
     func getLocalOptions(callComposite: CallComposite? = nil) -> LocalOptions {
@@ -798,6 +798,7 @@ extension CallingDemoView {
             headerViewData = headerViewData ?? CallScreenHeaderViewData()
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
+        headerViewData?.showCallDuration = true
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions,
                                                    headerViewData: headerViewData)
     }
@@ -1093,7 +1094,7 @@ extension CallingDemoView {
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
-        /* <CALL_START_TIME>
+        /* <CALL_START_TIME> */
         if let date = callComposite.callStartTime() {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -1101,7 +1102,7 @@ extension CallingDemoView {
             let systemTimeZoneDateString = dateFormatter.string(from: date)
             print("::::CallingDemoView call start time \(systemTimeZoneDateString)")
         }
-        </CALL_START_TIME> */
+        /* </CALL_START_TIME> */
         self.callState = "\(callState.requestString) \(callState.callEndReasonCodeInt) \(callState.callId)"
     }
 
