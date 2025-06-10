@@ -102,6 +102,8 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Дополнительно";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Поделиться диагностическими сведениями";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Удалить";
 
 
 /* ComplianceBanner title */
@@ -168,28 +170,44 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
 "AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Субтитры";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Субтитры и ввод в режиме реального времени";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Язык речи";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Язык субтитров";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Язык субтитров отключен";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Язык, на котором говорят, отключен";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Запуск субтитров...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Включить субтитры";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Отключить субтитры";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Не удается запустить субтитры";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Не удалось остановить субтитры";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Не удалось изменить язык субтитров";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Не удалось изменить язык речи";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Текст в режиме реального времени";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="Включить ввод в режиме реального времени?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="Текст в режиме реального времени (RTT) будет включен для всех участников звонка.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Включить";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Закрыть";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Включить ввод в режиме реального времени для этого звонка";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Текст в режиме реального времени включен на протяжении всего собрания и виден всем участникам.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Подробнее";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="Ввод с клавиатуры в режиме реального времени";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="Ввод в режиме реального времени";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Введите сообщение в режиме реального времени";
-
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Развернуть субтитры и ввод в режиме реального времени";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Свернуть субтитры и ввод в режиме реального времени";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Скрыть панель";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Назад";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Отключить звук";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Меню отключения звука участника.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Удалить из звонка";

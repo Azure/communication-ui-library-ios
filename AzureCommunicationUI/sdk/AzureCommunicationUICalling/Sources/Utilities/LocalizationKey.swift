@@ -58,6 +58,7 @@ enum LocalizationKey: String {
     case participantListAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"
     case callingCallMessage = "AzureCommunicationUICalling.CallingView.GridView.Calling"
+    case participantRemove = "AzureCommunicationUICalling.CallingView.ParticipantRemove"
 
     /* Lobby waiting */
     case lobbyWaitingToJoin = "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"
@@ -206,6 +207,8 @@ enum LocalizationKey: String {
     case captionsListTitle = "AzureCommunicationUICalling.Captions.Text.LiveCaptions"
     case captionsSpokenLanguage = "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"
     case captionsCaptionLanguage = "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"
+    case captionLanguageDisabled = "AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"
+    case spokenLanguageDisabled = "AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"
     case captionsStartingCaptions = "AzureCommunicationUICalling.Captions.Text.StartingCaptions"
     case captionsStartCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"
     case captionsStopCaptionsError = "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"
@@ -229,6 +232,8 @@ enum LocalizationKey: String {
     case rttLinkLearnMore = "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"
     case maximizeCaptionsRtt = "AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"
     case minimizeCaptionsRtt = "AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"
+    case dismissDrawer = "AzureCommunicationUICalling.BottomDrawer.Dismiss"
+    case back = "AzureCommunicationUICalling.BottomDrawer.Back"
 
     /* Remote participant menu */
     case callingViewParticipantMenuMute = "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"

@@ -102,6 +102,8 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "기타";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "진단 정보 공유";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="제거";
 
 
 /* ComplianceBanner title */
@@ -168,28 +170,44 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="문제 보고";
 "AzureCommunicationUICalling.SendFeedback.Text"="보내기";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="캡션";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="캡션 및 실시간 입력";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="음성 언어";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="캡션 언어";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="캡션 언어가 비활성화됨";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="음성 언어가 비활성화됨";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="캡션 시작 중...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="캡션 켜기";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="캡션 끄기";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="캡션을 시작할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="캡션을 중지할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="캡션 언어를 변경할 수 없음";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="음성 언어를 변경할 수 없음";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="실시간 입력";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="실시간 입력을 사용하시겠습니까?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="통화 중인 모든 사용자에 대해 RTT(실시간 텍스트)가 켜집니다.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="사용";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="해제";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="이 통화에 대한 RTT 켜기";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="RTT(실시간 텍스트)는 이 모임의 전체 기간에 사용할 수 있으며 모든 참가자가 볼 수 있습니다.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="자세한 정보";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="실시간 입력 입력 중";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="실시간 입력";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="실시간으로 메시지 입력";
-
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "캡션 및 RTT 최대화";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "캡션 및 RTT 최소화";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="서랍 닫기";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "뒤로";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="참가자 음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="통화에서 제거";

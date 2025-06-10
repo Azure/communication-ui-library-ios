@@ -102,6 +102,8 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Del diagnoseinformasjon";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Fjern";
 
 
 /* ComplianceBanner title */
@@ -168,28 +170,44 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapporter et problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Send";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Undertekster";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Undertekster og RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talespråk";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk for undertekst";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Språk for undertekst er deaktivert";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Talespråk er deaktivert";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Starter teksting ...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Aktiver undertekst";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Deaktiver undertekst";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Kan ikke starte teksting";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Kan ikke stoppe teksting";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Kan ikke endre språk for teksting";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Kan ikke endre talespråk";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Tekst i sanntid";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="Aktiver skriving i sanntid?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="Sanntidstekst (RTT) aktiveres for alle i samtalen.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Aktiver";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Lukk";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Aktiver RTT for denne samtalen";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Sanntidstekst (RTT) er aktivert for hele varigheten av dette møtet og vises av alle deltakerne.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Mer informasjon";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="Skriving i sanntid";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="Skriving i sanntid";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv inn melding i sanntid";
-
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maksimer undertekster og RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimer undertekster og RTT";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Lukk skuff";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Tilbake";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Demp";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Meny for demping av lyd for deltaker.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Fjern fra samtalen";

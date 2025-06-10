@@ -102,6 +102,8 @@
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Tümü";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Tanılama bilgilerini paylaş";
 "AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Kaldır";
 
 
 /* ComplianceBanner title */
@@ -168,28 +170,44 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Sorun bildirin";
 "AzureCommunicationUICalling.SendFeedback.Text"="Gönder";
 
+/* Label for a button to enable live captions during a call. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Alt yazılar";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
 "AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Alt yazılar ve RTT";
 "AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Konuşma dili";
 "AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Alt yazı dili";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Alt yazı dili devre dışı bırakıldı";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Konuşulan dil devre dışı bırakıldı";
 "AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Alt Yazılar Başlatılıyor...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Alt yazıları aç";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Alt yazıları kapat";
 "AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Alt yazılar başlatılamadı";
 "AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Alt yazılar durdurulamadı";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Alt yazı dili değiştirilemedi";
 "AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Konuşma dili değiştirilemedi";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
 "AzureCommunicationUICalling.RTT.Title.RTT"="Gerçek zamanlı metin";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
 "AzureCommunicationUICalling.RTT.Alert.Title"="RTT açılsın mı?";
 "AzureCommunicationUICalling.RTT.Alert.Message"="Aramadaki herkes için gerçek zamanlı metin (RTT) açılır.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
 "AzureCommunicationUICalling.RTT.Alert.TurnOn"="Aç";
 "AzureCommunicationUICalling.RTT.Alert.Dismiss"="Kapat";
 "AzureCommunicationUICalling.RTT.TurnOn.Text"="Bu arama için RTT'yi aç";
 "AzureCommunicationUICalling.RTT.WarningMessage.Text"="Gerçek zamanlı metin (RTT) bu toplantı süresi boyunca etkindir ve tüm katılımcılar tarafından görülebilir.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
 "AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Daha fazla bilgi edinin";
+/* Indicator shown while the other user is typing using Real-Time Text. */
 "AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT yazma";
+/* Short label representing Real-Time Text feature. */
 "AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
 "AzureCommunicationUICalling.RTT.TextBox.Hint"="İletiyi gerçek zamanlı yazın";
-
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Alt yazılar ve RTT ekranını büyüt";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Alt yazıları ve RTT ekranını simge durumuna küçült";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Çekmeceyi Kapatın";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Geri";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Bildirimleri kapat";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Katılımcı menüsünü sessize alın.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Aramadan kaldır";

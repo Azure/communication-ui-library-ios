@@ -22,6 +22,8 @@ class CaptionsRttListViewModel: ObservableObject {
     var isDisplayed: Bool
     private var isRttOn: Bool
     let title: String?
+    var startIconAccessibilityValue: String?
+    var dismissButtonAccessibilityValue: String?
     let backButtonAction: () -> Void
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -83,11 +85,12 @@ class CaptionsRttListViewModel: ObservableObject {
             let spokenLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
                 title: localizationProvider.getLocalizedString(.captionsSpokenLanguage),
                 subtitle: languageDisplayName(for: state.captionsState.spokenLanguage ?? "en-US"),
-                accessibilityIdentifier: "",
+                accessibilityLabel: spokenLanguageAccessibilityLabel(buttonViewDataState: buttonViewDataState),
                 startIcon: .personVoice,
                 endIcon: .rightChevron,
-                isEnabled: self.isToggleEnabled && buttonViewDataState.spokenLanguageButton?.enabled ?? true,
-                action: self.isToggleEnabled ? showSpokenLanguage : {})
+                isEnabled: isSpokenLanguageEnabled(buttonViewDataState: buttonViewDataState),
+                action: isSpokenLanguageEnabled(buttonViewDataState: buttonViewDataState) ? showSpokenLanguage : {}
+            )
             items.append(spokenLanguageInfoModel)
         }
 
@@ -95,11 +98,11 @@ class CaptionsRttListViewModel: ObservableObject {
             let captionsLanguageInfoModel = compositeViewModelFactory.makeLanguageListItemViewModel(
                 title: localizationProvider.getLocalizedString(.captionsCaptionLanguage),
                 subtitle: languageDisplayName(for: state.captionsState.captionLanguage ?? "en"),
-                accessibilityIdentifier: "",
+                accessibilityLabel: captionLanguageAccessibilityLabel(buttonViewDataState: buttonViewDataState),
                 startIcon: .localLanguage,
                 endIcon: .rightChevron,
-                isEnabled: self.isToggleEnabled && buttonViewDataState.captionsLanguageButton?.enabled ?? true,
-                action: self.isToggleEnabled ? showCaptionsLanguage : {})
+                isEnabled: isCaptionLanguageEnabled(buttonViewDataState: buttonViewDataState),
+                action: isCaptionLanguageEnabled(buttonViewDataState: buttonViewDataState) ? showCaptionsLanguage : {})
 
             items.append(captionsLanguageInfoModel)
         }
@@ -118,6 +121,8 @@ class CaptionsRttListViewModel: ObservableObject {
 
         )
         items.append(rttInfoModel)
+        startIconAccessibilityValue = localizationProvider.getLocalizedString(.back)
+        dismissButtonAccessibilityValue = localizationProvider.getLocalizedString(.dismissDrawer)
     }
     func update(state: AppState) {
         isDisplayed = state.navigationState.captionsRttViewVisible
@@ -135,6 +140,26 @@ class CaptionsRttListViewModel: ObservableObject {
         } else {
             dispatch(.captionsAction(.turnOffCaptions))
         }
+    }
+
+    private func isCaptionLanguageEnabled(buttonViewDataState: ButtonViewDataState) -> Bool {
+        return self.isToggleEnabled && (buttonViewDataState.captionsLanguageButton?.enabled ?? true)
+    }
+
+    private func isSpokenLanguageEnabled(buttonViewDataState: ButtonViewDataState) -> Bool {
+        return self.isToggleEnabled && (buttonViewDataState.spokenLanguageButton?.enabled ?? true)
+    }
+
+    private func captionLanguageAccessibilityLabel(buttonViewDataState: ButtonViewDataState) -> String {
+        return isCaptionLanguageEnabled(buttonViewDataState: buttonViewDataState)
+            ? localizationProvider.getLocalizedString(.captionsCaptionLanguage)
+            : localizationProvider.getLocalizedString(.captionLanguageDisabled)
+    }
+
+    private func spokenLanguageAccessibilityLabel(buttonViewDataState: ButtonViewDataState) -> String {
+        return isCaptionLanguageEnabled(buttonViewDataState: buttonViewDataState)
+            ? localizationProvider.getLocalizedString(.captionsSpokenLanguage)
+            : localizationProvider.getLocalizedString(.spokenLanguageDisabled)
     }
 
     private func languageDisplayName(for code: String) -> String {
