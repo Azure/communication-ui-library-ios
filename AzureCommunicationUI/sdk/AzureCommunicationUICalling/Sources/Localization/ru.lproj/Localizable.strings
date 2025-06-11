@@ -10,20 +10,25 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Наушники";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Настройка";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Назад";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Присоединиться к звонку";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Присоединение к звонку отключено";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Включить камеру";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Выключить камеру";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Видео включено";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Микрофон выключен";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Включить микрофон";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Микрофон отключен";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Микрофон включен";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Отключить микрофон";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Микрофон включен";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Устройство";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Выберите звуковое устройство";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Перейти к параметрам";
@@ -38,6 +43,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Ваш звонок на удержании";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Возобновить";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Возобновить";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Ожидание присоединения других участников";
@@ -64,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Звук включен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Говорит";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ на удержании";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="Пользователь %@ возобновил звонок";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Коснитесь, чтобы допустить или не допустить участника";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Заждался в \"зале ожидания\" (%d)";
@@ -82,6 +90,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="Количество участников, присоединившихся к собранию: %d";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="Пользователь %@ покинул собрание";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="Количество участников, покинувших собрание: %d";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Вы присоединились к звонку";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Идет демонстрация контента";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Общий доступ к контенту закончился";
@@ -92,6 +101,10 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Дополнительно";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Поделиться диагностическими сведениями";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Удалить";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Начата запись и транскрибирование.";
@@ -120,7 +133,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Закрыть баннер";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Закрывает это уведомление";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Не удалось присоединиться к звонку из-за ошибки.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Вы были удалены из звонка из-за ошибки.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Вы были удалены из звонка из-за ошибки или потери соединения. Попробуйте присоединиться к звонку еще раз.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Вас удалили из звонка.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Произошла ошибка";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Не удалось возобновить звонок";
@@ -148,8 +161,6 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";
 
-/* Feedback Form */
-
 "AzureCommunicationUICalling.ReportIssue.Title"="Сообщить о проблеме";
 "AzureCommunicationUICalling.LogsAttach.Notice"="Журналы будут вложены автоматически.";
 "AzureCommunicationUICalling.PrivacyPolicy.Text"="Политика конфиденциальности";
@@ -159,10 +170,48 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Сообщить о проблеме";
 "AzureCommunicationUICalling.SendFeedback.Text"="Отправить";
 
+/* Label for a button to enable live captions during a call. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Субтитры";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Субтитры и ввод в режиме реального времени";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Язык речи";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Язык субтитров";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Язык субтитров отключен";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Язык, на котором говорят, отключен";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Запуск субтитров...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Включить субтитры";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Отключить субтитры";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Не удается запустить субтитры";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Не удалось остановить субтитры";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Не удалось изменить язык субтитров";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Не удалось изменить язык речи";
 
+/* Full label or title for the RTT (Real-Time Text) feature. */
+"AzureCommunicationUICalling.RTT.Title.RTT"="Текст в режиме реального времени";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
+"AzureCommunicationUICalling.RTT.Alert.Title"="Включить ввод в режиме реального времени?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Текст в режиме реального времени (RTT) будет включен для всех участников звонка.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Включить";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Закрыть";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Включить ввод в режиме реального времени для этого звонка";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Текст в режиме реального времени включен на протяжении всего собрания и виден всем участникам.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Подробнее";
+/* Indicator shown while the other user is typing using Real-Time Text. */
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="Ввод с клавиатуры в режиме реального времени";
+/* Short label representing Real-Time Text feature. */
+"AzureCommunicationUICalling.RTT.RTTLable"="Ввод в режиме реального времени";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Введите сообщение в режиме реального времени";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Развернуть субтитры и ввод в режиме реального времени";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Свернуть субтитры и ввод в режиме реального времени";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Скрыть панель";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Назад";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Отключить звук";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Меню отключения звука участника.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Удалить из звонка";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Меню удаления участника из звонка.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Параметры звонка обновлены. Некоторые функции могут быть недоступны вам.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Параметры звонка обновлены. Некоторые дополнительные действия теперь могут быть доступны вам.";
+

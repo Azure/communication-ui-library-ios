@@ -10,20 +10,25 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Hoofdtelefoon";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Configuratie";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Terug";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Deelnemen aan gesprek uitgeschakeld";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video uit";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Camera inschakelen";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video aan";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Camera uitschakelen";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video aan";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfoon uit";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Dempen opheffen";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Microfoon uit";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfoon aan";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Dempen";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Microfoon aan";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Apparaat";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audioapparaat selecteren";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ga naar Instellingen";
@@ -38,6 +43,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="U staat in de wacht";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Hervatten";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Hervatten";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Wachten tot anderen deelnemen";
@@ -64,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Niet gedempt";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Spreken";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In de wacht";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ staat in de wachtstand";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ heeft het gesprek hervat";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tik om toe te geven of af te wijzen";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Wachten in lobby (%d)";
@@ -73,7 +81,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ toelaten?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Toelaten";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Weigeren";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ nog %@";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ meer";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Overschakelen naar de camera op de achterzijde";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Overschakelen naar de camera op de voorzijde";
@@ -82,6 +90,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d deelnemers nemen nu deel aan de vergadering";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ heeft de vergadering verlaten";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d deelnemers hebben de vergadering verlaten";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="U neemt deel aan het gesprek";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Inhoud wordt gedeeld";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Inhoud delen is beëindigd";
@@ -92,6 +101,10 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Meer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnostische gegevens delen";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Verwijderen";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Opname en transcriptie zijn gestart.";
@@ -120,7 +133,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Banner sluiten";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Sluit deze melding";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Kan niet deelnemen aan de oproep vanwege een fout.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="U bent uit de oproep verwijderd vanwege een fout.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="U bent uit de oproep verwijderd vanwege een fout of een verbroken verbinding. Probeer opnieuw deel te nemen aan het gesprek.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="U bent verwijderd uit het gesprek.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Er is een fout opgetreden.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Kan gesprek niet hervatten";
@@ -148,8 +161,6 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Oproepdiagnose sluiten";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Hiermee wordt deze banner voor gespreksdiagnose gesloten";
 
-/* Feedback Form */
-
 "AzureCommunicationUICalling.ReportIssue.Title"="Probleem melden";
 "AzureCommunicationUICalling.LogsAttach.Notice"="Logboeken worden automatisch bijgevoegd.";
 "AzureCommunicationUICalling.PrivacyPolicy.Text"="Privacybeleid";
@@ -159,9 +170,48 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Een probleem melden";
 "AzureCommunicationUICalling.SendFeedback.Text"="Verzenden";
 
+/* Label for a button to enable live captions during a call. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Ondertitels";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Ondertitels en RTT";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Gesproken taal";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Taal van ondertiteling";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Taal van ondertiteling uitgeschakeld";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Gesproken taal uitgeschakeld";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Ondertitels starten...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Ondertitels inschakelen";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Ondertitels uitschakelen";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Kan ondertitels niet starten";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Kan ondertitels niet stoppen";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Kan de taal van de ondertiteling niet wijzigen";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Kan de gesproken talen niet wijzigen";
+
+/* Full label or title for the RTT (Real-Time Text) feature. */
+"AzureCommunicationUICalling.RTT.Title.RTT"="Real-time tekst";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
+"AzureCommunicationUICalling.RTT.Alert.Title"="RTT inschakelen?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Tekst in realtime (RTT) wordt ingeschakeld voor iedereen in het gesprek.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Inschakelen";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Sluiten";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="RTT inschakelen voor dit gesprek";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Real-time text (RTT) is ingeschakeld voor de hele duur van deze vergadering en wordt gezien door alle deelnemers.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Meer informatie";
+/* Indicator shown while the other user is typing using Real-Time Text. */
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT typen";
+/* Short label representing Real-Time Text feature. */
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Bericht in realtime typen";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Bijschriften en RTT maximaliseren";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Bijschriften en RTT minimaliseren";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Lade verbergen";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Terug";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Dempen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Deelnemersmenu dempen.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Uit gesprek verwijderen";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Verwijder de deelnemer uit het menu Bellen.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Oproepinstellingen bijgewerkt. Sommige functies zijn mogelijk niet beschikbaar voor u.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Oproepinstellingen bijgewerkt. Sommige aanvullende acties zijn mogelijk nu beschikbaar voor u.";
+

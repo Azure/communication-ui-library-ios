@@ -112,7 +112,8 @@ extends:
                     for mapping in "${ARRAY[@]}" ; do
                         KEY=${mapping%%:*}
                         VALUE=${mapping#*:}
-                        cp -R $LOCALIZATION_PATH/$VALUE.lproj/$LOCALIZATION_PATH/$KEY.lproj/
+                        mkdir -p $LOCALIZATION_PATH/$KEY.lproj
+                        cp -R $LOCALIZATION_PATH/$VALUE.lproj/* $LOCALIZATION_PATH/$KEY.lproj/
                     done
 
                     echo "git status"
