@@ -10,20 +10,25 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="אוזניות";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="הגדרה";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="הקודם";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="הצטרף לשיחה";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "הצטרפות לשיחה מושבתת";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="הפעל מצלמה";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="בטל מצלמה";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="וידאו מופעל";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="מיקרופון כבוי";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="בטל השתקה";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="כבה מיקרופון";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="מיקרופון מופעל";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="השתק";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="מיקרופון מופעל";
 "AzureCommunicationUICalling.SetupView.Button.Device"="התקן";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="בחר התקן שמע";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="עבור אל ‘הגדרות‘";
@@ -38,6 +43,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="אתה בהמתנה";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="המשך";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "חדש הפעלה";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="מחכה שאחרים יצטרפו";
@@ -64,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="לא מושתק";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="מדבר";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="בהמתנה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ בהמתנה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ חידש/ה את השיחה";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="הקש כדי להכניס או לדחות";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ממתין בחדר הכניסה (%d)";
@@ -73,7 +81,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="להכניס את %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="הכנס";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="דחה";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="%@ עוד +";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.PlusMore"="+ %@ נוספות";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="עבור למצלמה אחורית";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="עבור למצלמה קדמית";
@@ -82,6 +90,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d משתתפים הצטרפו לפגישה";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ עזב/ה את הפגישה";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d משתתפים עזבו את הפגישה";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="הצטרפת לשיחה";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="התוכן משותף";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="שיתוף התוכן הסתיים";
@@ -92,6 +101,10 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "עוד";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="הסר";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="הקלטה ותמלול התחילו.";
@@ -120,7 +133,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="בטל את הכרזה";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="מפסיק את הודעה זו";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="לא ניתן להצטרף לשיחה עקב שגיאה.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="הוסרת מהשיחה עקב שגיאה.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="הוסרת מהשיחה עקב שגיאה או שאיבדת את החיבור. נסה להצטרף מחדש לשיחה.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="הוסרת מהשיחה.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="אירעה שגיאה.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="לא ניתן לחדש את השיחה";
@@ -148,8 +161,6 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="בטל אבחון שיחה";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="מבטל כרזת אבחון שיחה זו";
 
-/* Feedback Form */
-
 "AzureCommunicationUICalling.ReportIssue.Title"="דווח על בעיה";
 "AzureCommunicationUICalling.LogsAttach.Notice"="אנו נצרף יומני רישום באופן אוטומטי.";
 "AzureCommunicationUICalling.PrivacyPolicy.Text"="מדיניות פרטיות";
@@ -159,9 +170,48 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="דווח על בעיה";
 "AzureCommunicationUICalling.SendFeedback.Text"="שלח";
 
+/* Label for a button to enable live captions during a call. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="כתוביות";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="כתוביות ו- RTT";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="שפה מדוברת";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="שפת כתוביות";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="שפת הכתוביות מושבתת";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="השפה המדוברת מושבתת";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="מאתחל כתוביות...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="הפעל כתוביות";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="כבה כתוביות";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="לא ניתן להפעיל כתוביות";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="לא ניתן להפסיק כתוביות";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="לא ניתן לשנות את שפת הכתוביות";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="לא ניתן לשנות את השפה המדוברת";
+
+/* Full label or title for the RTT (Real-Time Text) feature. */
+"AzureCommunicationUICalling.RTT.Title.RTT"="טקסט בזמן אמת";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
+"AzureCommunicationUICalling.RTT.Alert.Title"="להפעיל RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="טקסט בזמן אמת (RTT) יופעל עבור כל האנשים בשיחה.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="הפעל";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="התעלם";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="הפעל RTT עבור שיחה זו";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="טקסט בזמן אמת (RTT) זמין למשך הזמן המלא של פגישה זו והוא נראה על-ידי כל המשתתפים.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="מידע נוסף";
+/* Indicator shown while the other user is typing using Real-Time Text. */
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="הקלדת RTT";
+/* Short label representing Real-Time Text feature. */
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="הקלד הודעה בזמן אמת";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "הגדל כתוביות ו- RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "מזער כתוביות ו- RTT";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="בטל את המגירה";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "הקודם";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="השתק";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="תפריט השתקת משתתף.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="הסר משיחה";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="הסר משתתף דרך תפריט 'שיחה'.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="הגדרות השיחה עודכנו. ייתכן שתכונות מסוימות לא יהיו זמינות עבורך.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="הגדרות השיחה עודכנו. ייתכן שפעולות נוספות מסוימות יהיו זמינות כעת עבורך.";
+

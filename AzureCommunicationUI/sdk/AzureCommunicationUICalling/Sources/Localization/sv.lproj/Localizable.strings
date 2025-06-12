@@ -10,20 +10,25 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Hörlurar";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Konfigurera";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tillbaka";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Anslut till samtal";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anslut till samtal inaktiverat";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Starta kameran";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Stäng av kameran";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Video på";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon av";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon på";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Mikrofon av";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon på";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon av";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mikrofon på";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Enhet";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Välj ljudenhet";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Gå till Inställningar";
@@ -38,6 +43,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Du är parkerad";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Återuppta";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Återuppta";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Väntar på att andra ska ansluta";
@@ -64,12 +70,14 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Ljudet är påslaget";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Talar";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Parkerat";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ är parkerad";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ återupptog samtalet";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tryck för att godkänna eller avböja";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Väntar i lobbyn (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="I samtalet (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Tillåt alla";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Vill du tillåta alla deltagare?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Ta emot alla deltagare?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Vill du släppa in %@?";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Släpp in";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avböj";
@@ -82,6 +90,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d deltagare har anslutit till mötet";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ har lämnat mötet";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d deltagare lämnade mötet";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Du har anslutit till mötet";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Innehåll delas";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Innehållsdelning har avslutats";
@@ -92,11 +101,15 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Dela diagnostikinformation";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Ta bort";
+
 
 /* ComplianceBanner title */
-"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Inspelning och avskrift har startats.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Inspelning och transkription har startats.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="Inspelningen har startat.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Avskriften har avslutats.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transkriptionen har avslutats.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="Transkriptionen har startat.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="Transkriptionen sparas.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Inspelningen har stoppats.";
@@ -106,10 +119,10 @@
 /* ComplianceBanner body */
 "AzureCommunicationUICalling.CallingView.BannerBody.Consent"="Genom att ansluta ger du ditt medgivande för att det här mötet ska transkriberas.";
 "AzureCommunicationUICalling.CallingView.BannerBody.Recording"="Du spelar nu bara in det här mötet.";
-"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="Avskriften har avslutats.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="Transkriptionen har avslutats.";
 "AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="Nu transkriberar du bara det här mötet.";
 "AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="Inspelningen har stoppats.";
-"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Inspelning och avskrift har avslutats.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Inspelning och transkription har avslutats.";
 
 /* ComplianceBanner display link */
 "AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="Sekretesspolicy";
@@ -120,7 +133,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Stäng webbannons";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Stäng det här meddelandet";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Det gick inte att ansluta till samtalet på grund av ett fel.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Du togs bort från samtalet på grund av ett fel.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Du togs bort från samtalet på grund av ett fel eller att anslutningen bröts. Försök att återansluta till samtalet.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Du togs bort från samtalet.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Ett fel inträffade.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Det går inte att återuppta samtalet";
@@ -148,8 +161,6 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Stäng samtalsdiagnostik";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Stänger den här banderollen för samtalsdiagnostik";
 
-/* Feedback Form */
-
 "AzureCommunicationUICalling.ReportIssue.Title"="Rapportera problem";
 "AzureCommunicationUICalling.LogsAttach.Notice"="Loggar bifogas automatiskt.";
 "AzureCommunicationUICalling.PrivacyPolicy.Text"="Sekretesspolicy";
@@ -159,9 +170,48 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Rapportera ett problem";
 "AzureCommunicationUICalling.SendFeedback.Text"="Skicka";
 
+/* Label for a button to enable live captions during a call. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Bildtexter";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Undertexter och RTT";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Talat språk";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Språk för undertext";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Textningsspråk har inaktiverats";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Talat språk har inaktiverats";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Startar undertexter...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Aktivera undertexter";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Inaktivera undertexter";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="Det går inte att starta undertexter";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="Det går inte att stoppa undertexter";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="Det går inte att ändra språket för undertexter";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="Det gör inte att ändra talat språk";
+
+/* Full label or title for the RTT (Real-Time Text) feature. */
+"AzureCommunicationUICalling.RTT.Title.RTT"="Realtidstext";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
+"AzureCommunicationUICalling.RTT.Alert.Title"="Aktivera RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="Realtidstext (RTT) aktiveras för alla i samtalet.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Aktivera";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Stäng";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Aktivera RTT för det här samtalet";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="Realtidstext (RTT) har aktiverats för hela mötets varaktighet och visas av alla deltagare.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Mer information";
+/* Indicator shown while the other user is typing using Real-Time Text. */
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="RTT-inmatning";
+/* Short label representing Real-Time Text feature. */
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Skriv meddelande i realtid";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximera undertexter och RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimera undertexter och RTT";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Stäng lådan";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Tillbaka";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Stäng av ljudet";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Stäng av deltagarmenyn.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Ta bort från samtal";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Ta bort deltagare från samtalsmenyn.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Samtalsinställningarna har uppdaterats. Vissa funktioner kanske inte är tillgängliga för dig.";
 "AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Samtalsinställningarna har uppdaterats. Några ytterligare åtgärder kan nu vara tillgängliga för dig.";
+

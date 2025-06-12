@@ -10,20 +10,25 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Auriculares";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Configurar";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Volver";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Unirse a la llamada";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Uniéndose a la llamada…";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Unirse a la llamada deshabilitado";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Vídeo desactivado";
-"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Activar cámara";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Vídeo desactivado";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Vídeo activado";
-"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Desactivar cámara";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Vídeo activado";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Micrófono desactivado";
-"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Reactivar";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Micrófono desactivado";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Micrófono activado";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Silenciar";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Micrófono activado";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Seleccionar dispositivo de audio";
 "AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ir a Configuración";
@@ -38,6 +43,7 @@
 /* OnHoldView */
 "AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Está en espera";
 "AzureCommunicationUICalling.OnHoldView.Button.Resume"="Reanudar";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume.AccessibilityLabel" = "Reanudar";
 
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Esperando a que se unan otros usuarios";
@@ -64,6 +70,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Audio reactivado";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Hablando";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="En espera";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold.AccessibilityLabel"="%@ está en espera";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Resume.AccessibilityLabel"="%@ reanudó la llamada";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Pulsa para admitir o rechazar";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Esperando en la sala de espera (%d)";
@@ -82,6 +90,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d participantes se han unido a la reunión";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ abandonó la reunión";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d participantes abandonaron la reunión";
+"AzureCommunicationUICalling.CallingView.ParticipantInformation.AccessibilityLabel" = "%@ %@ %@";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="No se ha unido a la llamada.";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Se está compartiendo contenido";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Ha finalizado el uso compartido de contenido";
@@ -92,6 +101,10 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Más";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Compartir información de diagnóstico";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+/* Action button label to remove a participant from a call. */
+"AzureCommunicationUICalling.CallingView.ParticipantRemove"="Quitar";
+
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Se han iniciado la grabación y la transcripción.";
@@ -120,7 +133,7 @@
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Descartar banner";
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Descarta esta notificación";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="No se puede unir a la llamada debido a un error.";
-"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Se le ha quitado de la llamada debido a un error.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Se le ha quitado de la llamada debido a un error o a una conexión perdida. Intente volver a unirse a la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Te han eliminado de la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Se ha producido un error.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="No se puede reanudar la llamada";
@@ -148,8 +161,6 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Descartar diagnóstico de llamadas";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Descarta este banner de diagnóstico de llamadas";
 
-/* Feedback Form */
-
 "AzureCommunicationUICalling.ReportIssue.Title"="Notificar problema";
 "AzureCommunicationUICalling.LogsAttach.Notice"="Adjuntaremos automáticamente los registros.";
 "AzureCommunicationUICalling.PrivacyPolicy.Text"="Directiva de privacidad";
@@ -159,9 +170,48 @@
 "AzureCommunicationUICalling.ReportAProblem.Text"="Informar de un problema";
 "AzureCommunicationUICalling.SendFeedback.Text"="Enviar";
 
+/* Label for a button to enable live captions during a call. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptions"="Subtítulos";
+/* Title label indicating both Live Captions and Real-Time Text (RTT) features are available. */
+"AzureCommunicationUICalling.Captions.Text.LiveCaptionsAndRTT"="Subtítulos y RTT";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguage"="Idioma hablado";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguage"="Idioma de subtítulos";
+"AzureCommunicationUICalling.Captions.Text.CaptionLanguageDisabled"="Idioma de subtítulos deshabilitado";
+"AzureCommunicationUICalling.Captions.Text.SpokenLanguageDisabled"="Idioma hablado deshabilitado";
+"AzureCommunicationUICalling.Captions.Text.StartingCaptions"="Iniciando subtítulos...";
+"AzureCommunicationUICalling.Captions.Text.TurnOnCaptions" ="Activar los subtítulos";
+"AzureCommunicationUICalling.Captions.Text.TurnOffCaptions" ="Desactivar los subtítulos";
+"AzureCommunicationUICalling.Captions.ActionError.StartCaptions"="No se pueden iniciar los subtítulos";
+"AzureCommunicationUICalling.Captions.ActionError.StopCaptions"="No se pueden detener los subtítulos";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeCaptionsLanguage"="No se puede cambiar el idioma de los subtítulos";
+"AzureCommunicationUICalling.Captions.ActionError.ChangeSpokenLanguage"="No se puede cambiar el idioma hablado";
+
+/* Full label or title for the RTT (Real-Time Text) feature. */
+"AzureCommunicationUICalling.RTT.Title.RTT"="Texto en tiempo real";
+/* Prompt title asking the user to confirm enabling Real-Time Text (RTT) for a call. */
+"AzureCommunicationUICalling.RTT.Alert.Title"="¿Activar RTT?";
+"AzureCommunicationUICalling.RTT.Alert.Message"="El texto en tiempo real (RTT) se activará para todos los usuarios de la llamada.";
+/* Confirmation button label to enable Real-Time Text (RTT) in a dialog. */
+"AzureCommunicationUICalling.RTT.Alert.TurnOn"="Activar";
+"AzureCommunicationUICalling.RTT.Alert.Dismiss"="Descartar";
+"AzureCommunicationUICalling.RTT.TurnOn.Text"="Activar RTT para esta llamada";
+"AzureCommunicationUICalling.RTT.WarningMessage.Text"="El texto en tiempo real (RTT) está habilitado para toda la duración de esta reunión y es visto por todos los participantes.";
+/* Link label directing the user to more information about Real-Time Text (RTT). */
+"AzureCommunicationUICalling.RTT.WarningMessage.LearnMore"="Más información";
+/* Indicator shown while the other user is typing using Real-Time Text. */
+"AzureCommunicationUICalling.RTT.Text.RTTTyping"="Escritura en tiempo real";
+/* Short label representing Real-Time Text feature. */
+"AzureCommunicationUICalling.RTT.RTTLable"="RTT";
+/* Placeholder text shown in the RTT input box to guide the user to type in real-time. */
+"AzureCommunicationUICalling.RTT.TextBox.Hint"="Escribir un mensaje en tiempo real";
+"AzureCommunicationUICalling.RTT.Maximize.CaptionsRTT"= "Maximizar subtítulos y RTT";
+"AzureCommunicationUICalling.RTT.Minimize.CaptionsRTT"= "Minimizar subtítulos y RTT";
+"AzureCommunicationUICalling.BottomDrawer.Dismiss"="Descartar cajón";
+"AzureCommunicationUICalling.BottomDrawer.Back" = "Atrás";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute"="Silenciar";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Menú Silenciar participante.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Mute.AccessibilityLabel"="Silenciar el menú de participantes.";
 "AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove"="Quitar de la llamada";
-"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Eliminar participante del menú de llamada.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Configuración de llamadas actualizada. Es posible que algunas funciones no estén disponibles para usted.";
-"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Configuración de llamadas actualizada. Es posible que ahora tenga a su disposición algunas acciones adicionales.";
+"AzureCommunicationUICalling.CallingView.ParticipantMenu.Remove.AccessibilityLabel"="Quitar participante del menú de llamada.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesLost"="Configuración de llamada actualizada. Es posible que algunas características no estén disponibles para usted.";
+"AzureCommunicationUICalling.CallingView.Toast.FeaturesGained"="Configuración de llamada actualizada. Es posible que algunas acciones adicionales ya estén disponibles.";
+
