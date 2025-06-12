@@ -70,8 +70,8 @@ struct CallCompositeRttData: Identifiable, Equatable {
 }
 
 struct CaptionsRttRecord: Identifiable, Equatable {
-    var id: Date {
-        return createdTimestamp
+    var id: String {
+        return ISO8601DateFormatter().string(from: createdTimestamp)
     }
 
     let displayRawId: String
