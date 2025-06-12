@@ -218,14 +218,14 @@ struct CallingView: View {
         VStack(alignment: .center, spacing: 0) {
             if isIpad {
                 HStack {
-                    containerView
                     ZStack {
-                        if !viewModel.isInPip && viewModel.captionsInfoViewModel.isDisplayed {
-                            captionsAndRttIpadView
-                        }
+                        containerView
                         bottomToastDiagnosticsView
-                            .accessibilityElement(children: .contain)
+                                .accessibilityElement(children: .contain)
                         captionsErrorView.accessibilityElement(children: .contain)
+                    }
+                    if !viewModel.isInPip && viewModel.captionsInfoViewModel.isDisplayed {
+                       captionsAndRttIpadView
                     }
                 }
                 if keyboard.keyboardHeight == 0 {
