@@ -10,17 +10,17 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="אוזניות";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
-"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ נבחרו";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="הגדרה";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="הקודם";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="הצטרף לשיחה";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="התחל שיחה";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "הצטרפות לשיחה מושבתת";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "התחלת שיחה מושבתת";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";
@@ -101,7 +101,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "עוד";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="מתקשר...";
 /* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="הסר";
 
