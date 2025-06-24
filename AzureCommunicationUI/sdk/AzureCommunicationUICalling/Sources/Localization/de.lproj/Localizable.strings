@@ -10,17 +10,17 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Kopfhörer";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
-"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ ausgewählt";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Einrichten";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Zurück";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="An Anruf teilnehmen";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Anruf starten";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Anruf wird beigetreten…";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anruf beitreten deaktiviert";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Anruf starten deaktiviert";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video aus";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video Aus";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video ein";
@@ -101,7 +101,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mehr";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnoseinformationen freigeben";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Anrufen...";
 /* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="Entfernen";
 

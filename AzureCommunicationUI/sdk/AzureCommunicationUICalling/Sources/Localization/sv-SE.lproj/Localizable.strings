@@ -10,17 +10,17 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Hörlurar";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
-"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ har valts";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Konfigurera";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tillbaka";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Anslut till samtal";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Starta samtal";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal…";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Anslut till samtal inaktiverat";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Starta samtal inaktiverat";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
@@ -101,7 +101,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mer";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Dela diagnostikinformation";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Ringer...";
 /* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="Ta bort";
 

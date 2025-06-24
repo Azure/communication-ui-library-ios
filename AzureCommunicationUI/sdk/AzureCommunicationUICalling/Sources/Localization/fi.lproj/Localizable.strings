@@ -10,17 +10,17 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Kuulokkeet";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
-"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ valittu";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Määritä";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Takaisin";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Liity puheluun";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Aloita puhelu";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Liitytään puheluun...";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "Liity puheluun -toiminto on poistettu käytöstä";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Aloita puhelu -toiminto on poistettu käytöstä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Videokuva käytössä";
@@ -101,7 +101,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Lisää";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Jaa diagnostiikkatiedot";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="Soitetaan...";
 /* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="Poista";
 

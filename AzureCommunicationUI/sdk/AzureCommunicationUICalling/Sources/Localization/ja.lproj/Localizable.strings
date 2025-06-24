@@ -10,17 +10,17 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="ヘッドフォン";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
-"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ selected";
+"AzureCommunicationUICalling.AudioDevice.Drawer.Selected.AccessibilityLabel"= "%@ を選択済み";
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="セットアップ";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="戻る";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="通話に参加";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="通話を開始";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="通話に参加しています...";
 "AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call…";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall.DisableState.AccessibilityLabel" = "通話の参加が無効です";
-"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "Start Call Disabled";
+"AzureCommunicationUICalling.SetupView.Button.StartCall.DisableState.AccessibilityLabel" = "通話の開始が無効です";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="ビデオ オフ";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="ビデオ オフ";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="ビデオ オン";
@@ -101,7 +101,7 @@
 
 "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "その他";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "診断情報を共有する";
-"AzureCommunicationUICalling.CallingView.GridView.Calling"="Calling...";
+"AzureCommunicationUICalling.CallingView.GridView.Calling"="呼び出し中...";
 /* Action button label to remove a participant from a call. */
 "AzureCommunicationUICalling.CallingView.ParticipantRemove"="削除";
 
