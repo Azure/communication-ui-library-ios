@@ -8,4 +8,5 @@ import Foundation
 enum CallScreenInfoHeaderAction: Equatable {
     case updateTitle(title: String?)
     case updateSubtitle(subtitle: String?)
+    case updateShowCallDuration(showCallDuration: Bool?)
 }

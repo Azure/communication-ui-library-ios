@@ -798,6 +798,7 @@ extension CallingDemoView {
             headerViewData = headerViewData ?? CallScreenHeaderViewData()
             headerViewData?.subtitle = envConfigSubject.callInformationSubtitle
         }
+        headerViewData?.showCallDuration = true
         return CallScreenOptions(controlBarOptions: callScreenControlBarOptions,
                                                    headerViewData: headerViewData)
     }

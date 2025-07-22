@@ -61,7 +61,8 @@ protocol CompositeViewModelFactoryProtocol {
                                  localUserState: LocalUserState,
                                  callScreenInfoHeaderState: CallScreenInfoHeaderState,
                                  buttonViewDataState: ButtonViewDataState,
-                                 controlHeaderViewData: CallScreenHeaderViewData?
+                                 controlHeaderViewData: CallScreenHeaderViewData?,
+                                 callStartTimer: Date?
     ) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel

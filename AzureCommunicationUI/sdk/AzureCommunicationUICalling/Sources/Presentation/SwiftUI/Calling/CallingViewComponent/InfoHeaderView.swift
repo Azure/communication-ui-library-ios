@@ -21,6 +21,7 @@ struct InfoHeaderView: View {
     private enum Constants {
         static let shapeCornerRadius: CGFloat = 5
         static let infoLabelHorizontalPadding: CGFloat = 16.0
+        
         static let hStackHorizontalPadding: CGFloat = 20.0
         static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
@@ -86,7 +87,7 @@ struct InfoHeaderView: View {
                     .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                         Constants.accessibilityFontScale :
                                             Constants.defaultFontScale)
-                if !viewModel.subtitle!.isEmpty {
+                if viewModel.subtitle != nil && !viewModel.subtitle!.isEmpty {
                     Text(viewModel.subtitle!.trimmingCharacters(in: .whitespacesAndNewlines))
                         .alignmentGuide(.leading) { d in d[.leading] }
                         .foregroundColor(Constants.foregroundColor)
@@ -99,6 +100,7 @@ struct InfoHeaderView: View {
                                             Constants.accessibilityFontScale :
                                                 Constants.defaultFontScale)
                 }
+
             }
             Spacer()
             if let customButton1ViewModel = viewModel.customButton1ViewModel {
