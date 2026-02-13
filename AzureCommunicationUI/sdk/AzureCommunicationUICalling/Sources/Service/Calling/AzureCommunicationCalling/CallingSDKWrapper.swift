@@ -440,8 +440,21 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         let identifier = createCommunicationIdentifier(fromRawId: participantId)
 
         do {
-            try await call.callLobby.admit(identifiers: [identifier])
-            logger.debug("Admit participants successful")
+            let lobbyIds = call.callLobby.participants.map { $0.identifier.rawId }
+            print("Lobby MRIs: \(lobbyIds)")
+            print("Admit target: \(identifier.rawId)")
+
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                call.callLobby.admit(identifiers: [identifier]) { _, error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume()
+                }
+            }
+
+            print("Admit request completed (result may be/may be not nil)")
         } catch {
             logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
             throw error

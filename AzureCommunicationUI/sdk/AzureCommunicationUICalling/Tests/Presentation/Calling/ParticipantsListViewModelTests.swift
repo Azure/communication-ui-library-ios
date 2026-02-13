@@ -306,6 +306,18 @@ class ParticipantsListViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
 
+    func test_admitParticipant_withEmptyId_shouldNotDispatch() {
+        let sut = makeSUT()
+        sut.admitParticipant("   ")
+        XCTAssertTrue(storeFactory.actions.isEmpty)
+    }
+
+    func test_declineParticipant_withEmptyId_shouldNotDispatch() {
+        let sut = makeSUT()
+        sut.declineParticipant("\n\t")
+        XCTAssertTrue(storeFactory.actions.isEmpty)
+    }
+
     // More tests to add eventually
     // 1) If regular participant row clicked, dispatch show participant details
     // 2) If own user tapped, no dispatch to show details/menu
