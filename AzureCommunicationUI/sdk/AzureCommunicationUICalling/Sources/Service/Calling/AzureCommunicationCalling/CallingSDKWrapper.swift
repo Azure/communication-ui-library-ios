@@ -454,7 +454,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 }
             }
 
-            print("Admit request completed (result may be/may be not nil)")
+            print("Admit request completed (result may be/may not be nil)")
         } catch {
             logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
             throw error
