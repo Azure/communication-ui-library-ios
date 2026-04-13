@@ -12,9 +12,9 @@ pr:
 
 resources:
   repositories:
-  - repository: 1esPipelines
+  - repository: m365Pipelines
     type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    name: 1ESPipelineTemplates/M365PipelineTemplates
     ref: refs/tags/release
 
 parameters:
@@ -25,7 +25,7 @@ parameters:
     os: macos
 extends:
 
-  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
+  template: v1/M365.Official.PipelineTemplate.yml@m365Pipelines
   parameters:
     pool:
       os: windows
