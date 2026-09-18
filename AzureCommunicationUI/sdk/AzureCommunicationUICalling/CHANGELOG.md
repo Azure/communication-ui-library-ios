@@ -7,10 +7,12 @@
 
 ## 1.15.0-beta.1 (Unreleased)
 
+### Features
+- Add `CallComposite.callStartTime()` and the `events.onCallStartTimeUpdated` callback.
+
 ### Other Changes
 - Update the Calling SDK dependency to 2.19.0-beta.1.
 - Constrain the temporary Calling SDK podspec to the tested AzureCommunicationCommon 1.2.x baseline.
-- No functional public API changes.
 
 ## 1.14.1 (2025-05-02)
 
