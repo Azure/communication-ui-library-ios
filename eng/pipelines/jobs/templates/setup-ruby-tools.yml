@@ -7,6 +7,8 @@ steps:
       export BUNDLE_GEMFILE="$(Build.SourcesDirectory)/Gemfile"
       export BUNDLE_FORCE_RUBY_PLATFORM=true
       export BUNDLE_FROZEN=true
+      macos_sdk="$(xcrun --sdk macosx --show-sdk-path)"
+      export BUNDLE_BUILD__NOKOGIRI="--use-system-libraries --with-xml2-include=$macos_sdk/usr/include/libxml2 --with-xslt-include=$macos_sdk/usr/include"
       export PATH="$GEM_HOME/bin:$PATH"
 
       gem install bundler --version 2.4.22 --no-document
@@ -21,6 +23,7 @@ steps:
       echo "##vso[task.setvariable variable=BUNDLE_GEMFILE]$BUNDLE_GEMFILE"
       echo "##vso[task.setvariable variable=BUNDLE_FORCE_RUBY_PLATFORM]$BUNDLE_FORCE_RUBY_PLATFORM"
       echo "##vso[task.setvariable variable=BUNDLE_FROZEN]$BUNDLE_FROZEN"
+      echo "##vso[task.setvariable variable=BUNDLE_BUILD__NOKOGIRI]$BUNDLE_BUILD__NOKOGIRI"
       echo "##vso[task.prependpath]$GEM_HOME/bin"
       echo "##vso[task.prependpath]$(Agent.TempDirectory)/ui-ruby-bin"
     workingDirectory: $(Build.SourcesDirectory)
