@@ -39,7 +39,7 @@ extends:
     - stage: Stage
       jobs:
       - job: Job_1
-        displayName: Agent job 1
+        displayName: Build signed test IPA for pipeline artifacts
         templateContext:
           outputs:
           - output: pipelineArtifact
@@ -301,9 +301,6 @@ extends:
               ls $(archivePath)
 
 
-              export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/Info.plist
-
-              cat $INFO_PLIST_FILE
         - task: CopyFiles@2
           displayName: 'Copy dSYMs Files to: $(archivePath)'
           inputs:
@@ -328,18 +325,3 @@ extends:
             SourceFolder: $(signedExtractedPath)
             Contents: '**/*.ipa'
             TargetFolder: $(build.artifactstagingdirectory)
-        - task: AppCenterDistribute@3
-          displayName: Deploy **/*.ipa to Visual Studio App Center
-          inputs:
-            serverEndpoint: ae07945f-5fbf-4973-92c9-d00a5f696121
-            appSlug: Azure-Communication-Services/Azure-Communication-Services-Call-UI-Library-Sample-iOS-Internal
-            app: '**/*.ipa'
-            dsymPath: '**/*.dSYM/**'
-            packParentFolder: false
-            releaseNotesInput: >-
-              CI pipeline release
-
-              Source branch: $(Build.SourceBranch)
-
-              Build commit: $(Build.Repository.Uri)/commit/$(Build.SourceVersion)
-            isSilent: true
