@@ -1,4 +1,22 @@
 # Azure Communication UI Calling Release History
+
+## 2.0.0 (Unreleased)
+
+### Major Version Update
+- Version 2.0.0 establishes the latest supported baseline for the Azure Communication Services SDKs. This release does not introduce functional API changes. The major version increment reflects an update to the SDK support baseline, enables the delivery of future break/fix, reliability, and security updates, and updates the licensing framework in the terms of use.
+
+## 1.15.0-beta.1 (Unreleased)
+
+### Features
+- Add `CallComposite.callStartTime()` and the `events.onCallStartTimeUpdated` callback.
+
+### Bug Fixes
+- Handle the Calling SDK's explicit-consent capability reason without terminating the application.
+
+### Other Changes
+- Update the Calling SDK dependency to 2.19.0-beta.1.
+- Constrain the temporary Calling SDK podspec to the tested AzureCommunicationCommon 1.2.x baseline.
+
 ## 1.14.1 (2025-05-02)
 
 ### Bugfixes

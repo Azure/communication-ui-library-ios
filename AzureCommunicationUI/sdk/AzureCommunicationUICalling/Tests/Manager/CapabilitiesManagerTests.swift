@@ -5,9 +5,22 @@
 
 import Foundation
 import XCTest
+import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class CapabilitiesManagerTests: XCTestCase {
+    func test_capabilityResolutionReason_when_explicitConsentRequired_then_preservesReason() {
+        let reason = AzureCommunicationCalling.CapabilityResolutionReason.explicitConsentRequired
+
+        XCTAssertEqual("explicitConsentRequired", reason.toCapabilityResolutionReason().rawValue)
+    }
+
+    func test_participantCapabilityType_when_muteOthers_then_remainsUnsupported() {
+        let capability = AzureCommunicationCalling.ParticipantCapabilityType.muteOthers
+
+        XCTAssertEqual(.none, capability.toParticipantCapabilityType())
+    }
+
     func test_capabilitiesManager_when_groupCall_then_anyCapabilityTrue() {
         let sut = CapabilitiesManager(callType: .groupCall)
         XCTAssertEqual(true, sut.hasCapability(capabilities: Set(), capability: .addCommunicationUser))
@@ -35,7 +48,7 @@ class CapabilitiesManagerTests: XCTestCase {
         XCTAssertEqual(false, sut.hasCapability(capabilities: Set(), capability: .manageLobby))
         XCTAssertEqual(false, sut.hasCapability(capabilities: Set(), capability: .turnVideoOn))
 
-        let capabilities: Set<ParticipantCapabilityType> = [.unmuteMicrophone, .turnVideoOn]
+        let capabilities: Set<AzureCommunicationUICalling.ParticipantCapabilityType> = [.unmuteMicrophone, .turnVideoOn]
         XCTAssertEqual(false, sut.hasCapability(capabilities: capabilities, capability: .addCommunicationUser))
         XCTAssertEqual(false, sut.hasCapability(capabilities: capabilities, capability: .manageLobby))
 
@@ -49,7 +62,7 @@ class CapabilitiesManagerTests: XCTestCase {
         XCTAssertEqual(false, sut.hasCapability(capabilities: Set(), capability: .manageLobby))
         XCTAssertEqual(false, sut.hasCapability(capabilities: Set(), capability: .turnVideoOn))
 
-        let capabilities: Set<ParticipantCapabilityType> = [.unmuteMicrophone, .turnVideoOn]
+        let capabilities: Set<AzureCommunicationUICalling.ParticipantCapabilityType> = [.unmuteMicrophone, .turnVideoOn]
         XCTAssertEqual(false, sut.hasCapability(capabilities: capabilities, capability: .addCommunicationUser))
         XCTAssertEqual(false, sut.hasCapability(capabilities: capabilities, capability: .manageLobby))
 

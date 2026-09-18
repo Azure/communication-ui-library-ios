@@ -15,6 +15,7 @@ enum CapabilityResolutionReason: String, CaseIterable, Equatable {
     case featureNotSupported
     case notInitialized
     case notCapable
+    case explicitConsentRequired
 }
 
 extension AzureCommunicationCalling.CapabilityResolutionReason {
@@ -36,6 +37,8 @@ extension AzureCommunicationCalling.CapabilityResolutionReason {
             return .notCapable
         case .roleRestricted:
             return .roleRestricted
+        case .explicitConsentRequired:
+            return .explicitConsentRequired
         @unknown default:
             fatalError("Fatal Error")
         }

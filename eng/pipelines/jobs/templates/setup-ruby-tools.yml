@@ -1,0 +1,33 @@
+steps:
+  - script: |
+      set -euo pipefail
+      export GEM_HOME="$(Agent.TempDirectory)/ui-ruby-gems"
+      export GEM_PATH="$GEM_HOME"
+      export BUNDLE_PATH="$(Agent.TempDirectory)/ui-ruby-bundle"
+      export BUNDLE_GEMFILE="$(Build.SourcesDirectory)/Gemfile"
+      export BUNDLE_FORCE_RUBY_PLATFORM=true
+      export BUNDLE_FROZEN=true
+      macos_sdk="$(xcrun --sdk macosx --show-sdk-path)"
+      export BUNDLE_BUILD__NOKOGIRI="--use-system-libraries --with-xml2-include=$macos_sdk/usr/include/libxml2 --with-xslt-include=$macos_sdk/usr/include"
+      export PATH="$GEM_HOME/bin:$PATH"
+
+      gem install bundler --version 2.4.22 --no-document
+      bundle install --jobs 4 --retry 3
+      bundle binstubs xcpretty --path "$(Agent.TempDirectory)/ui-ruby-bin" --force
+      bundle exec ruby -rbundler/setup -rtyphoeus -e 'puts "CocoaPods HTTP transport loaded for #{RUBY_PLATFORM}"'
+      bundle exec pod --version
+
+      # Re-read the checked-out SDK spec instead of a previous branch's cached version.
+      rm -f "AzureCommunicationUI/Pods/Local Podspecs/AzureCommunicationCalling.podspec.json"
+
+      echo "##vso[task.setvariable variable=GEM_HOME]$GEM_HOME"
+      echo "##vso[task.setvariable variable=GEM_PATH]$GEM_PATH"
+      echo "##vso[task.setvariable variable=BUNDLE_PATH]$BUNDLE_PATH"
+      echo "##vso[task.setvariable variable=BUNDLE_GEMFILE]$BUNDLE_GEMFILE"
+      echo "##vso[task.setvariable variable=BUNDLE_FORCE_RUBY_PLATFORM]$BUNDLE_FORCE_RUBY_PLATFORM"
+      echo "##vso[task.setvariable variable=BUNDLE_FROZEN]$BUNDLE_FROZEN"
+      echo "##vso[task.setvariable variable=BUNDLE_BUILD__NOKOGIRI]$BUNDLE_BUILD__NOKOGIRI"
+      echo "##vso[task.prependpath]$GEM_HOME/bin"
+      echo "##vso[task.prependpath]$(Agent.TempDirectory)/ui-ruby-bin"
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: Install isolated CocoaPods and coverage tools
