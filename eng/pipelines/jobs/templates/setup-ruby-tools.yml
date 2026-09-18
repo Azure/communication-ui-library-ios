@@ -17,6 +17,9 @@ steps:
       bundle exec ruby -rbundler/setup -rtyphoeus -e 'puts "CocoaPods HTTP transport loaded for #{RUBY_PLATFORM}"'
       bundle exec pod --version
 
+      # Re-read the checked-out SDK spec instead of a previous branch's cached version.
+      rm -f "AzureCommunicationUI/Pods/Local Podspecs/AzureCommunicationCalling.podspec.json"
+
       echo "##vso[task.setvariable variable=GEM_HOME]$GEM_HOME"
       echo "##vso[task.setvariable variable=GEM_PATH]$GEM_PATH"
       echo "##vso[task.setvariable variable=BUNDLE_PATH]$BUNDLE_PATH"
