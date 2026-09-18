@@ -15,9 +15,9 @@ schedules:
 name: $(date:yyyyMMdd)$(rev:.r) $(Build.BuildId)
 resources:
   repositories:
-  - repository: M365GPT
+  - repository: ic3Pipelines
     type: git
-    name: 1ESPipelineTemplates/M365GPT
+    name: ES/internal_build_ic3pt
     ref: refs/tags/release
 parameters:
 - name: pools
@@ -26,7 +26,7 @@ parameters:
   - name:  vsts-mac-146-xcode-160
     os: macos
 extends:
-  template: v1/M365.Official.PipelineTemplate.yml@M365GPT
+  template: v1/IC3.Official.PipelineTemplate.yml@ic3Pipelines
   parameters:
     pool:
       os: windows
