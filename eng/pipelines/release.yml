@@ -51,6 +51,7 @@ extends:
         - checkout: self
           clean: true
           fetchTags: false
+        - template: jobs/templates/setup-ruby-tools.yml
         - task: skvso.servicetree-build-tasks.servicetree-link-build-task.servicetree-link-build-task@1
           displayName: "ServiceTree: [$(BuildOutputUsage)] "
           condition: always()
@@ -168,18 +169,14 @@ extends:
           displayName: Pod cleanup
           inputs:
             script: >-
-              pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
+              bundle exec pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
 
-              pod deintegrate AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj
+              bundle exec pod deintegrate AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj
 
-              # pod repo remove trunk
             workingDirectory: AzureCommunicationUI
-        - task: CocoaPods@0
-          displayName: pod install
-          inputs:
-            cwd: AzureCommunicationUI
-            forceRepoUpdate: true
-            projectDirectory: AzureCommunicationUI
+        - script: bundle exec pod install
+          displayName: Install CocoaPods dependencies after signing configuration
+          workingDirectory: AzureCommunicationUI
         - task: Xcode@5
           displayName: Xcode Unit Test
           enabled: False

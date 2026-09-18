@@ -12,12 +12,9 @@ parameters:
     default: 'AzureCommunicationUI'
 
 steps:
-  - task: CocoaPods@0
-    displayName: "pod install --repo-update"
-    inputs:
-      workingDirectory: ${{ parameters.workingDirectory }}
-      forceRepoUpdate: true
-      projectDirectory: ${{ parameters.workingDirectory }}
+  - script: bundle exec pod install --deployment
+    displayName: "Install locked CocoaPods dependencies"
+    workingDirectory: ${{ parameters.workingDirectory }}
 
   - script: |
       Pods/SwiftLint/swiftlint version 
@@ -89,7 +86,7 @@ steps:
           ;;
       esac
 
-      slather
+      bundle exec slather
       mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$COBERTURA_TARGET_FILENAME
     
     displayName: "Run slather for ${{ parameters.buildScheme }}"
