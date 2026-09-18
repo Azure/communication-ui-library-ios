@@ -10,6 +10,9 @@
 ### Features
 - Add `CallComposite.callStartTime()` and the `events.onCallStartTimeUpdated` callback.
 
+### Bug Fixes
+- Handle the Calling SDK's explicit-consent capability reason without terminating the application.
+
 ### Other Changes
 - Update the Calling SDK dependency to 2.19.0-beta.1.
 - Constrain the temporary Calling SDK podspec to the tested AzureCommunicationCommon 1.2.x baseline.
