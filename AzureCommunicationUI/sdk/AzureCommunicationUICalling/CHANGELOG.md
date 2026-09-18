@@ -5,6 +5,14 @@
 ### Major Version Update
 - Version 2.0.0 establishes the latest supported baseline for the Azure Communication Services SDKs. This release does not introduce functional API changes. The major version increment reflects an update to the SDK support baseline, enables the delivery of future break/fix, reliability, and security updates, and updates the licensing framework in the terms of use.
 
+## 1.15.0 (Unreleased)
+
+### Other Changes
+- Update the GA Calling SDK dependency to 2.18.4.
+- Preserve the published GA API surface; call start time and its update callback remain preview-only and are disabled in this GA release.
+- Pin the temporary local Calling SDK podspec to the public GA binary and its SHA-256 while retaining the tested AzureCommunicationCommon 1.2.x baseline. Official Calling CocoaPods publication remains a release prerequisite.
+- Retain the beta branch's SDK capability handling and deterministic shared-CI test.
+
 ## 1.15.0-beta.1 (Unreleased)
 
 ### Features
