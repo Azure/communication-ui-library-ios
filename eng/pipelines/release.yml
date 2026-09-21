@@ -40,6 +40,8 @@ extends:
       jobs:
       - job: Job_1
         displayName: Build signed test IPA for pipeline artifacts
+        # Temporarily skip tester distribution until the signing assets are renewed.
+        condition: 'false'
         templateContext:
           outputs:
           - output: pipelineArtifact
