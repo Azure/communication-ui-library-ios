@@ -1,13 +1,13 @@
 Pod::Spec.new do |spec|
   spec.name = 'AzureCommunicationCalling'
-  spec.version = '2.18.4'
+  spec.version = '3.0.0'
   spec.summary = 'Azure Communication Calling Service client library for iOS.'
   spec.homepage = 'https://github.com/Azure/azure-sdk-for-ios'
   spec.author = 'Microsoft'
   spec.license = { :type => 'Commercial', :file => 'EULA.md' }
   spec.source = {
     :http => "https://github.com/Azure/Communication/releases/download/v#{spec.version}/AzureCommunicationCalling-#{spec.version}.zip",
-    :sha256 => '7797f57a4be07fe66bb09cd16891f07f2f3795d5d1147043855c2a1cb77e24c1'
+    :sha256 => '56e84ebe75b9a12e3906a26c99ca0132c77f6ef57aad41d1d00a1b2b71f0c2a7'
   }
   spec.platform = :ios, '12.0'
   spec.swift_version = '5.0'
