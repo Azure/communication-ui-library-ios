@@ -159,7 +159,7 @@ extends:
           displayName: Install an Apple certificate
           inputs:
             certSecureFile: $(appleCertSecureFile)
-            certPwd: $(P12password)
+            certPwd: $(CallCompositeP12Password)
             deleteCert: false
             deleteCustomKeychain: false
             setUpPartitionIdACLForPrivateKey: false
