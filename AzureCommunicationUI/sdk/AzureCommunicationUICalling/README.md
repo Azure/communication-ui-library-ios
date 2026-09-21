@@ -30,6 +30,8 @@ CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting
 pod 'AzureCommunicationUICalling', '2.0.0'
 ```
 
+The upcoming GA release uses Calling SDK `2.15.1` and AzureCommunicationCommon `1.2.x` from the public CocoaPods registry. No local native podspec or SPM dependency is required. The UI version above will be available after the release is published.
+
 ### Manual Installation
 
 If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation](manual-installation.md) guide.

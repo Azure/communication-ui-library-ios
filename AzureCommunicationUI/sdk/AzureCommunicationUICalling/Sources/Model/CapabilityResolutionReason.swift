@@ -37,8 +37,6 @@ extension AzureCommunicationCalling.CapabilityResolutionReason {
             return .notCapable
         case .roleRestricted:
             return .roleRestricted
-        case .explicitConsentRequired:
-            return .explicitConsentRequired
         @unknown default:
             fatalError("Fatal Error")
         }

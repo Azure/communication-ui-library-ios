@@ -9,10 +9,23 @@ import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class CapabilitiesManagerTests: XCTestCase {
-    func test_capabilityResolutionReason_when_explicitConsentRequired_then_preservesReason() {
-        let reason = AzureCommunicationCalling.CapabilityResolutionReason.explicitConsentRequired
+    func test_capabilityResolutionReason_when_supportedByGA_then_preservesReason() {
+        let reasons: [
+            (AzureCommunicationCalling.CapabilityResolutionReason, AzureCommunicationUICalling.CapabilityResolutionReason)
+        ] = [
+            (.capable, .capable),
+            (.callTypeRestricted, .callTypeRestricted),
+            (.userPolicyRestricted, .userPolicyRestricted),
+            (.roleRestricted, .roleRestricted),
+            (.meetingRestricted, .meetingRestricted),
+            (.featureNotSupported, .featureNotSupported),
+            (.notInitialized, .notInitialized),
+            (.notCapable, .notCapable)
+        ]
 
-        XCTAssertEqual("explicitConsentRequired", reason.toCapabilityResolutionReason().rawValue)
+        for (nativeReason, expectedReason) in reasons {
+            XCTAssertEqual(expectedReason, nativeReason.toCapabilityResolutionReason())
+        }
     }
 
     func test_participantCapabilityType_when_muteOthers_then_remainsUnsupported() {

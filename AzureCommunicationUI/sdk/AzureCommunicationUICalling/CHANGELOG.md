@@ -3,13 +3,13 @@
 ## 2.0.0 (Unreleased)
 
 ### Major Version Update
-- Version 2.0.0 establishes the latest supported baseline for the Azure Communication Services SDKs. This release does not introduce functional API changes. The major version increment reflects an update to the SDK support baseline, enables the delivery of future break/fix, reliability, and security updates, and updates the licensing framework in the terms of use.
+- Version 2.0.0 preserves the published GA UI API surface. This release uses the CocoaPods-published Calling SDK 2.15.1; it does not adopt the native Calling 3.0.0 support-baseline and licensing update.
 
 ### Other Changes
-- Update the GA Calling SDK dependency to 3.0.0.
+- Use the publicly registered GA Calling SDK 2.15.1 so CocoaPods can resolve the complete dependency chain without a local podspec override.
 - Preserve the published GA API surface; call start time and its update callback remain preview-only and are disabled in this GA release.
-- Pin the temporary local Calling SDK podspec to the public GA binary and its SHA-256 while retaining the tested AzureCommunicationCommon 1.2.x baseline. Official Calling CocoaPods publication remains a release prerequisite.
-- Retain the beta branch's SDK capability handling and deterministic shared-CI test.
+- Constrain AzureCommunicationCommon to the tested 1.2.x baseline for compatibility with the native binary's Swift interface.
+- Match capability-reason handling to the GA Calling SDK's supported enum cases and retain the deterministic shared-CI test.
 
 ## 1.15.0-beta.1 (Unreleased)
 
@@ -20,8 +20,8 @@
 - Handle the Calling SDK's explicit-consent capability reason without terminating the application.
 
 ### Other Changes
-- Update the Calling SDK dependency to 2.19.0-beta.1.
-- Constrain the temporary Calling SDK podspec to the tested AzureCommunicationCommon 1.2.x baseline.
+- Use the publicly registered Calling SDK 2.18.0-beta.1 so CocoaPods can resolve the complete dependency chain without a local podspec override.
+- Constrain AzureCommunicationCommon to the tested 1.2.x baseline for compatibility with the native binary's Swift interface.
 
 ## 1.14.1 (2025-05-02)
 
