@@ -16,7 +16,9 @@ Pod::Spec.new do |spec|
   spec.pod_target_xcconfig  = { "ENABLE_BITCODE": "NO"}
   spec.info_plist           = {'UILibrarySemVersion' => "#{spec.version}"}
 
-  spec.dependency             'AzureCommunicationCalling', '2.19.0-beta.1'
+  spec.dependency             'AzureCommunicationCalling', '2.18.0-beta.1'
+  # The Calling binary's iOS 12 Swift interface requires Common's iOS 12-compatible baseline.
+  spec.dependency             'AzureCommunicationCommon', '~> 1.2.0'
   spec.dependency             'AzureCore', '1.0.0-beta.16'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
