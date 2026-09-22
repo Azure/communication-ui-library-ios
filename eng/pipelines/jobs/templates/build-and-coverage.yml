@@ -68,10 +68,12 @@ steps:
     inputs:
       actions: test
       configuration: Debug
-      sdk: iphoneos
+      sdk: iphonesimulator
       xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
       scheme: ${{ parameters.buildScheme }}
       xcodeVersion: default
+      signingOption: default
+      args: "CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES"
       destinationPlatformOption: iOS
       destinationSimulators: "iPhone 15"
       publishJUnitResults: true
