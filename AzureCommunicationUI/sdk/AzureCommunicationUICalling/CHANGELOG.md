@@ -1,6 +1,6 @@
 # Azure Communication UI Calling Release History
 
-## 2.0.1 (Unreleased)
+## 2.0.1 (2026-09-23)
 
 ### Bug Fixes
 - Restore the RTT accessibility focus fix from #1064, including focus updates when a message becomes final and the iPad captions/RTT layout correction.
