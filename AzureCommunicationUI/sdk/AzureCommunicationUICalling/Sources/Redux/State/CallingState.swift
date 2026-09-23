@@ -57,10 +57,10 @@ struct CallingState: Equatable {
          callEndReasonSubCode: Int? = nil,
          recordingStatus: RecordingStatus = RecordingStatus.off,
          transcriptionStatus: RecordingStatus = RecordingStatus.off,
-         isRecorcingTranscriptionBannedDismissed: Bool = false,
-         /* <CALL_START_TIME> */
-         callStartTime: Date? = nil
-         /* </CALL_START_TIME> */) {
+         isRecorcingTranscriptionBannedDismissed: Bool = false
+         /* <CALL_START_TIME>
+         , callStartTime: Date? = nil
+         </CALL_START_TIME> */) {
         self.status = status
         self.operationStatus = operationStatus
         self.callId = callId

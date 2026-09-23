@@ -15,6 +15,7 @@ enum CapabilityResolutionReason: String, CaseIterable, Equatable {
     case featureNotSupported
     case notInitialized
     case notCapable
+    case explicitConsentRequired
 }
 
 extension AzureCommunicationCalling.CapabilityResolutionReason {

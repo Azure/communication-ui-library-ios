@@ -19,6 +19,6 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>UILibrarySemVersion</key>
-	<string>1.14.2</string>
+	<string>2.0.1</string>
 </dict>
 </plist>

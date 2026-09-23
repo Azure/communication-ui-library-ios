@@ -58,6 +58,8 @@ extension AzureCommunicationCalling.ParticipantCapabilityType {
             return .startLiveCaptions
         case .raiseHand:
             return .raiseHand
+        case .muteOthers:
+            return .none
         @unknown default:
             return .none
         }
