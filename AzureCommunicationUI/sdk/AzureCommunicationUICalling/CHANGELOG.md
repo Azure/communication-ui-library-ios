@@ -1,6 +1,6 @@
 # Azure Communication UI Calling Release History
 
-## 2.0.0 (Unreleased)
+## 2.0.0 (2026-09-22)
 
 ### Major Version Update
 - Version 2.0.0 preserves the published GA UI API surface. This release uses the CocoaPods-published Calling SDK 2.15.1; it does not adopt the native Calling 3.0.0 support-baseline and licensing update.
