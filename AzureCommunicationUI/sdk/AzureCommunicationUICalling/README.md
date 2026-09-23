@@ -8,7 +8,7 @@
 
 ## Latest Release
 
-- [1.13.0 release](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUICalling_1.13.0) 
+- [Latest release](https://github.com/Azure/communication-ui-library-ios/releases?q=calling&expanded=true)
 
 ## Getting Started
 
@@ -27,10 +27,10 @@ Get started with Azure Communication Services by using the UI Library to integra
 CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'AzureCommunicationUICalling', '2.0.0'
+pod 'AzureCommunicationUICalling', '2.0.1'
 ```
 
-The upcoming GA release uses Calling SDK `2.15.1` and AzureCommunicationCommon `1.2.x` from the public CocoaPods registry. No local native podspec or SPM dependency is required. The UI version above will be available after the release is published.
+The 2.0.1 patch retains Calling SDK `2.15.1` and AzureCommunicationCommon `1.2.x` from the public CocoaPods registry. No local native podspec or SPM dependency is required. The UI version above will be available after the release is published.
 
 ### Manual Installation
 
@@ -38,7 +38,7 @@ If you prefer importing Mobile UI Library as an Embedded Framework to your proje
 
 ## Quick Sample
 
-Replace `<GROUP_CALL_ID>` with your group id for your call, `<DISPLAY_NAME>` with your name, and `<USER_ACCESS_TOKEN>` with your token. For full instructions check out our [quickstart](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) or get the completed [sample](https://github.com/Azure-Samples/communication-services-ios-quickstarts/tree/main/ui-library-quick-start).
+Replace `<GROUP_CALL_ID>` with your group id for your call, `<DISPLAY_NAME>` with your name, and `<USER_ACCESS_TOKEN>` with your token. For full instructions check out our [quickstart](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) or get the completed [sample](https://github.com/Azure-Samples/communication-services-ios-quickstarts/tree/main/ui-calling).
 
 ```swift
 let callCompositeOptions = CallCompositeOptions(displayName: "<DISPLAY_NAME>")

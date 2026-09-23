@@ -8,7 +8,7 @@
 
 ## Latest Release
 
-- Public Preview: [1.0.0-beta.5](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUIChat_1.0.0-beta.5)
+- [Latest release](https://github.com/Azure/communication-ui-library-ios/releases?q=chat&expanded=true)
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'AzureCommunicationUIChat', '1.0.0-beta.5'
+pod 'AzureCommunicationUIChat'
 ```
 
 ## Quick Sample

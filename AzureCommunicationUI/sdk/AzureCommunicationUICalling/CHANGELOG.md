@@ -1,5 +1,11 @@
 # Azure Communication UI Calling Release History
 
+## 2.0.1 (Unreleased)
+
+### Bug Fixes
+- Restore the RTT accessibility focus fix from #1064, including focus updates when a message becomes final and the iPad captions/RTT layout correction.
+- Preserve sub-second message identity in the RTT list and avoid logging message contents.
+
 ## 2.0.0 (2026-09-22)
 
 ### Major Version Update
@@ -22,6 +28,11 @@
 ### Other Changes
 - Use the publicly registered Calling SDK 2.18.0-beta.1 so CocoaPods can resolve the complete dependency chain without a local podspec override.
 - Constrain AzureCommunicationCommon to the tested 1.2.x baseline for compatibility with the native binary's Swift interface.
+
+## 1.14.2 (2025-06-24)
+
+### Bugfixes
+- Accessibility bugfix
 
 ## 1.14.1 (2025-05-02)
 
