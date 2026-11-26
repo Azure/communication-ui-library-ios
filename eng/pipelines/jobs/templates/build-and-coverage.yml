@@ -12,7 +12,11 @@ steps:
       xcodebuild -version
       swift --version
       XCODE_VERSION=$(xcodebuild -version | head -1 | awk '{print $2}')
-      if [ "$(printf '%s\n' 26.4 "$XCODE_VERSION" | sort -V | head -1)" != "26.4" ]; then
+      XCODE_MAJOR=${XCODE_VERSION%%.*}
+      XCODE_MINOR=0
+      case "$XCODE_VERSION" in *.*) XCODE_MINOR=${XCODE_VERSION#*.} ;; esac
+      XCODE_MINOR=${XCODE_MINOR%%.*}
+      if [ "$XCODE_MAJOR" -lt 26 ] || { [ "$XCODE_MAJOR" -eq 26 ] && [ "$XCODE_MINOR" -lt 4 ]; }; then
         echo "##vso[task.logissue type=error]Xcode 26.4 or later is required to build AzureCommunicationUICalling."
         exit 1
       fi
