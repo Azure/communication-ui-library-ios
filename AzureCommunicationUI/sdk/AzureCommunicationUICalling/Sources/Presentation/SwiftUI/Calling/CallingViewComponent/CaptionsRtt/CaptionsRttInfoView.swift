@@ -8,92 +8,71 @@ import FluentUI
 struct CaptionsRttInfoView: View {
     @ObservedObject var viewModel: CaptionsRttInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
-    @State private var isLastItemVisible = true
-    @State private var previousDrawerHeight: CGFloat = 0
-    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @AccessibilityFocusState private var isListFocused: Bool
+    @State private var isUserAtBottom = true
 
     var body: some View {
         GeometryReader { geometry in
             if viewModel.isLoading {
                 loadingView
             } else {
-                contentView(geometry: geometry)
-            }
-        }
-    }
-
-    // MARK: - Subviews
-
-    @ViewBuilder
-    private func contentView(geometry: GeometryProxy) -> some View {
-        let containerHeight: CGFloat = geometry.size.height
-
-        ScrollViewReader { scrollView in
-            ScrollView {
-                contentListView(scrollView: scrollView, parentGeometry: geometry)
-                    .frame(minHeight: containerHeight, alignment: .bottom)
-                    .frame(maxWidth: .infinity)
-            }
-            .background(Color(StyleProvider.color.drawerColor))
-            .onChange(of: containerHeight) { newHeight in
-                if newHeight != previousDrawerHeight {
-                    previousDrawerHeight = newHeight
-                    // Only scroll if the last item is visible
-                    if isLastItemVisible {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            scrollToBottom(scrollView)
+                ScrollViewReader { proxy in
+                    List {
+                        if viewModel.displayData.contains(where: { $0.captionsRttType == .rttInfo }) {
+                            rttInfoCell()
+                                .id("rttInfoCell")
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets())
+                                .background(Color.clear)
+                        }
+                        ForEach(viewModel.displayData.filter { $0.captionsRttType != .rttInfo }) { item in
+                            renderRow(for: item, in: geometry)
+                                .id(item.id)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets())
+                                .background(Color.clear)
                         }
                     }
-                }
-            }
-            .onChange(of: viewModel.displayData) { _ in
-                if isLastItemVisible {
-                    scrollToBottom(scrollView)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func contentListView(scrollView: ScrollViewProxy, parentGeometry: GeometryProxy) -> some View {
-        VStack(spacing: 0) {
-            ForEach(viewModel.displayData.indices, id: \.self) { index in
-                let data = viewModel.displayData[index]
-                if data.captionsRttType == .rttInfo {
-                    rttInfoCell()
-                        .id(data.id)
-                } else {
-                    CaptionsRttInfoCellView(
-                        displayData: data,
-                        avatarViewManager: avatarViewManager,
-                        localizationProvider: viewModel.localizationProvider
-                    )
-                    .id(viewModel.displayData[index].id)
-                    .background(lastItemBackgroundIfNeeded(index: index, parentFrame: parentGeometry))
-                }
-            }.onAppear {
-                if isLastItemVisible {
-                    scrollToBottom(scrollView)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func lastItemBackgroundIfNeeded(index: Int, parentFrame: GeometryProxy) -> some View {
-        if index == viewModel.displayData.indices.last {
-            GeometryReader { geo in
-                Color.clear
-                    .onAppear {
-                        checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
-                    }
+                    .listStyle(.plain)
+                    .padding(.zero)
+                    .background(Color(StyleProvider.color.drawerColor))
+                    .coordinateSpace(name: "scroll")
                     .onChange(of: viewModel.displayData) { _ in
-                        // Force re-check visibility when display data changes
-                        checkLastItemVisibility(geometry: geo, parentFrame: parentFrame)
+                        if isUserAtBottom {
+                            scrollToBottom(proxy)
+                        }
                     }
+                    .accessibilityFocused($isListFocused)
+                    .background(Color(StyleProvider.color.drawerColor))
+                }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func renderRow(for item: CaptionsRttRecord, in geometry: GeometryProxy) -> some View {
+        let isLastItem = item.id == viewModel.displayData.last?.id
+        if item.captionsRttType == .rttInfo {
+            rttInfoCell()
+                .id("rttInfoCell")
         } else {
-            EmptyView()
+            CaptionsRttInfoCellView(
+                displayData: item,
+                avatarViewManager: avatarViewManager,
+                localizationProvider: viewModel.localizationProvider,
+                isListFocused: $isListFocused
+            )
+            .id(item.id)
+            .background(
+                isLastItem ? Color.clear
+                    .onAppear {
+                        isUserAtBottom = true
+                    }
+                    .onDisappear {
+                        isUserAtBottom = false
+                    }
+                    : nil
+            )
         }
     }
 
@@ -128,7 +107,20 @@ struct CaptionsRttInfoView: View {
         .background(Color(StyleProvider.color.surface))
         .cornerRadius(8)
         .padding(.horizontal, 10)
-        .id("RTTInfoView")
+    }
+
+    private func scrollToBottom(_ proxy: ScrollViewProxy) {
+        guard let lastId = viewModel.displayData.last?.id
+        else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            withAnimation {
+                proxy.scrollTo(lastId, anchor: .bottom)
+            }
+            isUserAtBottom = true
+        }
     }
 
     private var warningMessage: some View {
@@ -144,29 +136,5 @@ struct CaptionsRttInfoView: View {
                     UIApplication.shared.open(url)
                 }
             }
-    }
-
-    // MARK: - Helper Methods
-
-    private func scrollToBottom(_ scrollView: ScrollViewProxy) {
-        if let lastID = viewModel.displayData.last?.id {
-            withAnimation {
-                scrollView.scrollTo(lastID, anchor: .bottom)
-            }
-        } else if viewModel.isRttDisplayed {
-            withAnimation {
-                scrollView.scrollTo("RTTInfoView", anchor: .bottom)
-            }
-        }
-    }
-
-    private func checkLastItemVisibility(geometry: GeometryProxy, parentFrame: GeometryProxy) {
-        let itemFrame = geometry.frame(in: .global)
-        let parentBounds = parentFrame.frame(in: .global)
-        let isVisible = itemFrame.maxY > parentBounds.minY && itemFrame.minY < parentBounds.maxY
-
-        if isLastItemVisible != isVisible {
-            isLastItemVisible = isVisible
-        }
     }
 }
