@@ -16,12 +16,10 @@ This ```script``` folder contains a list of scripts that facilitates the release
 #### Details
 
 The ```main-repo-updater.py ``` would perform version update for the following files:
-- Info.plist
-- DiagnosticConfigTests
-- project.pbxproj
-- README.md
+- Calling: `CallCompositeVersion.swift`, DiagnosticConfigTests and the Swift Package Manager snippet in README.md
+- Chat: Info.plist, DiagnosticConfigTests, project.pbxproj and README.md
 
-The script would attempt to find current version from Info.plist by looking for key ```UILibrarySemVersion```. If current versions is identical to the new version, the version update would be skipped.
+The script would attempt to find current version from `CallCompositeVersion.swift` (Calling) or from Info.plist by looking for key ```UILibrarySemVersion``` (Chat). If current versions is identical to the new version, the version update would be skipped.
 
 #### Usage:
 
@@ -39,8 +37,9 @@ The script would attempt to find current version from Info.plist by looking for 
 #### Details
 
 The ```podspec-updater.py ``` would perform version update for the following files:
-- AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.podspec
-- AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUIChat.podspec
+- AzureCommunicationUI/sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.podspec
+
+AzureCommunicationUICalling is distributed with Swift Package Manager, its podspec is frozen at 2.0.1 and is not updated by this script.
 
 In addition, the script would update the following sections in PodSpec:
 - spec.version

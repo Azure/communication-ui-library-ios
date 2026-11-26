@@ -4,8 +4,6 @@
 //
 
 import UIKit
-import AppCenter
-import AppCenterCrashes
 import CallKit
 import AzureCommunicationUICalling
 import PushKit
@@ -23,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        AppCenter.start(withAppSecret: envConfigSubject.appCenterSecret, services: [Crashes.self])
         self.setupNotifications(application: application)
         return true
     }

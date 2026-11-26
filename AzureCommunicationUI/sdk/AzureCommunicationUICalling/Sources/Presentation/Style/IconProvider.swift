@@ -51,11 +51,11 @@ enum CompositeIcon: String {
 struct IconProvider {
     func getUIImage(for iconName: CompositeIcon) -> UIImage? {
         UIImage(named: "Icon/\(iconName.rawValue)",
-                in: Bundle(for: CallComposite.self),
+                in: Bundle.azureCommunicationUICalling,
                 compatibleWith: nil)
     }
     func getImage(for iconName: CompositeIcon) -> Image {
-        Image("Icon/\(iconName.rawValue)", bundle: Bundle(for: CallComposite.self))
+        Image("Icon/\(iconName.rawValue)", bundle: Bundle.azureCommunicationUICalling)
             .resizable()
             .renderingMode(.template)
     }

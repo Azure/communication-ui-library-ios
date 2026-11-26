@@ -1,0 +1,23 @@
+# Installs a pinned, checksum-verified SwiftLint binary and puts it on the PATH.
+
+parameters:
+  - name: version
+    type: string
+    default: '0.53.0'
+  - name: sha256
+    type: string
+    default: '872b2d2b391179088909ed31e73385518aada22adc8150d9139be58ee9b83b4d'
+
+steps:
+  - script: |
+      set -euo pipefail
+      SWIFTLINT_DIR="$(Agent.TempDirectory)/swiftlint-${{ parameters.version }}"
+      mkdir -p "$SWIFTLINT_DIR"
+      curl --fail --silent --show-error --location \
+        --output "$SWIFTLINT_DIR/portable_swiftlint.zip" \
+        "https://github.com/realm/SwiftLint/releases/download/${{ parameters.version }}/portable_swiftlint.zip"
+      echo "${{ parameters.sha256 }}  $SWIFTLINT_DIR/portable_swiftlint.zip" | shasum -a 256 --check
+      unzip -q -o "$SWIFTLINT_DIR/portable_swiftlint.zip" -d "$SWIFTLINT_DIR"
+      "$SWIFTLINT_DIR/swiftlint" version
+      echo "##vso[task.prependpath]$SWIFTLINT_DIR"
+    displayName: "Install SwiftLint ${{ parameters.version }}"

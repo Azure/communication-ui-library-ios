@@ -94,6 +94,9 @@ def main(argv):
 			platform_version = arg
 	if selectedComposite == Composite.UNKNOWN:
 		sys.exit('Error: Composite is Unknown. Supported Composites are \'calling\' and \'chat\'.')
+	if selectedComposite == Composite.CALLING:
+		sys.exit('Error: AzureCommunicationUICalling is distributed with Swift Package Manager. ' +
+			'Its podspec is frozen at 2.0.1, use main-repo-updater.py instead.')
 	if swift_version == '':
 		print('Warning: No swift version given. Swift version update would be skipped.')
 	if platform_version == '':

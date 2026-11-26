@@ -21,10 +21,12 @@ Here are the steps to start and develop inside iOS Mobile UI Library repo.
 ## 1. Setup and Run Samples 
 ### Setup Environment
 
-1. Begin by cloning the [Repo](https://github.com/Azure/azure-communication-ui-library-ios) in your local environment, `cd` to the `AzureCommunicationUI` folder in the root of the project directory.
-2. Run `pod install`, this generates a `.xcworkspace` file.
-3. Open `AzureCommunicationUI.xcworkspace` file generated in the above step.
+1. Begin by cloning the [Repo](https://github.com/Azure/azure-communication-ui-library-ios) in your local environment. Xcode 26.4 or later is required.
+2. Install [SwiftLint](https://github.com/realm/SwiftLint) (CI uses version 0.53.0).
+3. Open `AzureCommunicationUI/AzureCommunicationUI.xcworkspace`. It contains the demo app, which uses the `AzureCommunicationUICalling` Swift package from the repository root (`Package.swift`). Xcode resolves all dependencies with Swift Package Manager.
 4. Hit `⌘+R` to start running.
+
+`AzureCommunicationUIChat` is no longer actively developed and still uses CocoaPods: run `pod install` in the `AzureCommunicationUI` folder and open `AzureCommunicationUIChat.xcworkspace`.
 
 ### Running a Sample
 
@@ -44,12 +46,14 @@ When submitting a pull request, please add relevant tests and ensure your change
 
 #### Running unit tests
 
-1. Open the `AzureCommunicationUI.xcworkspace` with Xcode
-2. Select `AzureCommunicationUICalling` or `AzureCommunicationUIChat` scheme and target at any iOS simulator
+1. Open `Package.swift` in the repository root with Xcode (or run `xcodebuild test -scheme AzureCommunicationUICalling -destination 'platform=iOS Simulator,name=<SIMULATOR>'` from the repository root)
+2. Select the `AzureCommunicationUICalling` scheme and target any iOS simulator
 3. Navigate to `Product` -> `Test` or hit `⌘+U` to start testing
 
+Lint the library before submitting a PR. From `AzureCommunicationUI/sdk/AzureCommunicationUICalling` run `swiftlint lint --strict --config ../../.swiftlint.yml Sources` and `swiftlint lint --strict --config ../../.swiftlint-tests.yml Tests`.
+
 ### Running UI tests
-Please follow [Before running the sample for the first time](https://github.com/Azure/communication-ui-library-ios/tree/main/AzureCommunicationUI/AzureCommunicationUIDemoApp#before-running-the-sample-for-the-first-time) to have the `EnvConfig.xcconfig` in your project directory with necessary values for Calling or Chat.
+Please follow [Before running the sample for the first time](https://github.com/Azure/communication-ui-library-ios/tree/main/AzureCommunicationUI/AzureCommunicationUIDemoApp#before-running-the-sample-for-the-first-time) to have the `EnvConfig.xcconfig` in your project directory with necessary values for Calling.
 
 1. Open the `AzureCommunicationUI.xcworkspace` with Xcode
 2. Select `AzureCommunicationUIDemoApp` scheme and target at any iOS simulator/device

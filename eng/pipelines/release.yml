@@ -23,7 +23,7 @@ parameters:
 - name: pools
   type: object
   default:
-  - name:  vsts-mac-146-xcode-160
+  - name:  vsts-mac-264-xcode-264
     os: macos
 extends:
   template: v1/IC3.Official.PipelineTemplate.yml@ic3Pipelines
@@ -46,12 +46,11 @@ extends:
             targetPath: $(build.artifactstagingdirectory)
         pool:
           os: macos
-          name:  vsts-mac-146-xcode-160
+          name:  vsts-mac-264-xcode-264
         steps:
         - checkout: self
           clean: true
           fetchTags: false
-        - template: jobs/templates/setup-ruby-tools.yml
         - task: skvso.servicetree-build-tasks.servicetree-link-build-task.servicetree-link-build-task@1
           displayName: "ServiceTree: [$(BuildOutputUsage)] "
           condition: always()
@@ -79,14 +78,11 @@ extends:
               export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/Info.plist
 
 
-              plutil -replace appCenterSecret -string $(appCenterSecret) $INFO_PLIST_FILE
-
-
               export PROJECT_PBPROJ_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj/project.pbxproj
 
-              export COMPOSITE_INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Info.plist
+              export COMPOSITE_VERSION_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/CallCompositeOptions/CallCompositeVersion.swift
 
-              export COMPOSITE_VERSION=$(plutil -extract UILibrarySemVersion raw $COMPOSITE_INFO_PLIST_FILE)
+              export COMPOSITE_VERSION=$(sed -n 's/.*static let semVersion = "\(.*\)".*/\1/p' $COMPOSITE_VERSION_FILE)
 
               export COMPOSITE_VERSION=${COMPOSITE_VERSION%%-*}
 
@@ -117,42 +113,6 @@ extends:
 
               /usr/libexec/PlistBuddy -c "set :objects:A8C69FC62728AE1C00143DB7:buildSettings:PRODUCT_BUNDLE_IDENTIFIER com.microsoft.azure.communication.ui.calling-df" $PROJECT_PBPROJ_FILE
 
-
-
-              export PROJ_FILE_COMPOSITE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj/project.pbxproj
-
-
-              sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "277WSW7QTT.com.microsoft.azure.communication.ui.calling-df"; CODE_SIGNING_REQUIRED = "NO"; CODE_SIGNING_ALLOWED = "NO";/' $PROJ_FILE_COMPOSITE
-        - task: CmdLine@2
-          displayName: Edit project.pbxproj chat
-          inputs:
-            script: >-
-              export CHAT_PROJ_FILE_COMPOSITE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj/project.pbxproj
-
-
-              sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "277WSW7QTT.com.microsoft.azure.communication.ui.chat-df"; CODE_SIGNING_REQUIRED = "NO"; CODE_SIGNING_ALLOWED = "NO";/' $CHAT_PROJ_FILE_COMPOSITE
-
-
-              #sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= #"277WSW7QTT.com.microsoft.azure.communication.ui.calling-df"; CODE_SIGNING_REQUIRED = #"NO"; CODE_SIGNING_ALLOWED = "NO";/' $CHAT_PROJ_FILE_COMPOSITE
-        - task: CmdLine@2
-          displayName: Edit Pod File
-          inputs:
-            script: >-
-              export POD_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/Podfile
-
-              sed -i '' '/post_install do |installer|/,$d' $POD_FILE
-
-
-              cat << 'EOF' | tee -a $POD_FILE
-
-              post_install do |installer|
-                installer.pods_project.build_configurations.each do |config|
-                  config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
-                  config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
-                end
-              end
-
-              EOF
         - task: InstallAppleCertificate@2
           displayName: Install an Apple certificate
           inputs:
@@ -165,28 +125,6 @@ extends:
           displayName: Install an Apple provisioning profile
           inputs:
             provProfileSecureFile: $(provProfileSecureFile)
-        - task: CmdLine@2
-          displayName: Pod cleanup
-          inputs:
-            script: >-
-              bundle exec pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
-
-              bundle exec pod deintegrate AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj
-
-            workingDirectory: AzureCommunicationUI
-        - script: bundle exec pod install
-          displayName: Install CocoaPods dependencies after signing configuration
-          workingDirectory: AzureCommunicationUI
-        - task: Xcode@5
-          displayName: Xcode Unit Test
-          enabled: False
-          inputs:
-            actions: test
-            configuration: $(TestConfiguration)
-            xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-            scheme: AzureCommunicationUICalling
-            destinationPlatformOption: iOS
-            destinationSimulators: iPhone 14
         - task: Xcode@5
           displayName: Xcode build
           inputs:
@@ -201,8 +139,8 @@ extends:
             exportPath: $(exportPath)
             signingOption: manual
             signingIdentity: $(APPLE_CERTIFICATE_SIGNING_IDENTITY)
+            # Profile UUID only: a profile name is applied to every target, and Swift package resource bundles reject it.
             provisioningProfileUuid: $(APPLE_PROV_PROFILE_UUID)
-            provisioningProfileName: Azure communication UI calling Dogfood Dev
             destinationSimulators: iPhone 14 Pro
             args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
             cwd: AzureCommunicationUI

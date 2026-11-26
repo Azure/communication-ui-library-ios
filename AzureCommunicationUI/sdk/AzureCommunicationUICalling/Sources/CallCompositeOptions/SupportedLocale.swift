@@ -92,7 +92,7 @@ public struct SupportedLocale {
     /// - Returns: Get supported Locales the AzureCommunicationUICalling
     ///  has predefined translations.
     public static var values: [Locale] {
-        return Bundle(for: CallComposite.self).localizations.sorted()
+        return Bundle.azureCommunicationUICalling.localizations.sorted()
             .map { Locale(identifier: $0) }
     }
 }

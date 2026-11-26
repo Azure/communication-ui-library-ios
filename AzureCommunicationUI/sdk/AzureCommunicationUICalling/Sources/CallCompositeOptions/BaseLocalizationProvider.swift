@@ -24,8 +24,8 @@ class BaseLocalizationProvider: BaseLocalizationProviderProtocol {
     private var bundle: Bundle
     var supportedLocales: [String]
 
-    init(logger: Logger, bundleClass: AnyClass) {
-        self.bundle = Bundle(for: bundleClass)
+    init(logger: Logger, bundle: Bundle) {
+        self.bundle = bundle
         self.supportedLocales = self.bundle.localizations
         self.logger = logger
         self.detectSystemLanguage()
