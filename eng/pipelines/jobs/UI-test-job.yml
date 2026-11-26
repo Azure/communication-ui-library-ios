@@ -22,16 +22,17 @@ jobs:
 
       - template: templates/update-demo-app-plist-for-testing.yml
 
+      - template: templates/select-ios-simulator.yml
+
       - task: Xcode@5
         displayName: 'Xcode Demo UI test'
         inputs:
           actions: test
           configuration: Debug
-          sdk: iphoneos
+          sdk: iphonesimulator
           xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
           scheme: AzureCommunicationUIDemoApp
           xcodeVersion: default
-          destinationPlatformOption: iOS
-          destinationSimulators: 'iPhone 16 Pro'
+          args: '-destination "platform=iOS Simulator,id=$(SimulatorId)"'
           publishJUnitResults: true
 
