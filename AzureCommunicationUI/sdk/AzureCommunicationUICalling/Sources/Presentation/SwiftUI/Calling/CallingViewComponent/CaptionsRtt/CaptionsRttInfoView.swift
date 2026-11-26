@@ -9,7 +9,6 @@ struct CaptionsRttInfoView: View {
     @ObservedObject var viewModel: CaptionsRttInfoViewModel
     var avatarViewManager: AvatarViewManagerProtocol
     @AccessibilityFocusState private var isListFocused: Bool
-    @State private var focusedId: String?
     @State private var isUserAtBottom = true
 
     var body: some View {
@@ -19,38 +18,28 @@ struct CaptionsRttInfoView: View {
             } else {
                 ScrollViewReader { proxy in
                     List {
-                        // Render only the first .rttInfo item if it exists
-                      if let rttInfo = viewModel.displayData.first(where: { $0.captionsRttType == .rttInfo }) {
-                            rttInfoCell()
-                                .id("rttInfoCell") // Stable ID to avoid view reuse issues
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
-                                .background(Color.clear)
-                        }
-                        // Render all other items
-                        ForEach(viewModel.displayData.filter { $0.captionsRttType != .rttInfo }) { item in
-                            renderRow(for: item, in: geometry)
-                                .id(item.id)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
-                                .background(Color.clear)
-                        }
+                        if viewModel.displayData.contains(where: { $0.captionsRttType == .rttInfo }) {
+                            rttInfoCell()
+                                .id("rttInfoCell")
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets())
+                                .background(Color.clear)
+                        }
+                        ForEach(viewModel.displayData.filter { $0.captionsRttType != .rttInfo }) { item in
+                            renderRow(for: item, in: geometry)
+                                .id(item.id)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets())
+                                .background(Color.clear)
+                        }
                     }
                     .listStyle(.plain)
                     .padding(.zero)
                     .background(Color(StyleProvider.color.drawerColor))
                     .coordinateSpace(name: "scroll")
-                    .onChange(of: viewModel.displayData) { newData in
-                        // Always scroll to the last item
-                        print("Updated displayData:")
-                        newData.forEach { print($0) }
-
+                    .onChange(of: viewModel.displayData) { _ in
                         if isUserAtBottom {
                             scrollToBottom(proxy)
-                        }
-                        if isListFocused,
-                           let finalItem = viewModel.displayData.last(where: { $0.isFinal }) {
-                            focusedId = finalItem.id
                         }
                     }
                     .accessibilityFocused($isListFocused)

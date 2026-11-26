@@ -15,9 +15,9 @@ schedules:
 name: $(date:yyyyMMdd)$(rev:.r) $(Build.BuildId)
 resources:
   repositories:
-  - repository: 1esPipelines
+  - repository: ic3Pipelines
     type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    name: ES/internal_build_ic3pt
     ref: refs/tags/release
 parameters:
 - name: pools
@@ -26,7 +26,7 @@ parameters:
   - name:  vsts-mac-146-xcode-160
     os: macos
 extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
+  template: v1/IC3.Official.PipelineTemplate.yml@ic3Pipelines
   parameters:
     pool:
       os: windows
@@ -39,7 +39,7 @@ extends:
     - stage: Stage
       jobs:
       - job: Job_1
-        displayName: Agent job 1
+        displayName: Build signed test IPA for pipeline artifacts
         templateContext:
           outputs:
           - output: pipelineArtifact
@@ -51,6 +51,7 @@ extends:
         - checkout: self
           clean: true
           fetchTags: false
+        - template: jobs/templates/setup-ruby-tools.yml
         - task: skvso.servicetree-build-tasks.servicetree-link-build-task.servicetree-link-build-task@1
           displayName: "ServiceTree: [$(BuildOutputUsage)] "
           condition: always()
@@ -87,6 +88,8 @@ extends:
 
               export COMPOSITE_VERSION=$(plutil -extract UILibrarySemVersion raw $COMPOSITE_INFO_PLIST_FILE)
 
+              export COMPOSITE_VERSION=${COMPOSITE_VERSION%%-*}
+
 
               echo "Adding version $COMPOSITE_VERSION"
 
@@ -103,7 +106,6 @@ extends:
 
 
 
-              cat $INFO_PLIST_FILE
         - task: CmdLine@2
           displayName: Edit project.pbxproj
           inputs:
@@ -167,18 +169,14 @@ extends:
           displayName: Pod cleanup
           inputs:
             script: >-
-              pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
+              bundle exec pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
 
-              pod deintegrate AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj
+              bundle exec pod deintegrate AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj
 
-              # pod repo remove trunk
             workingDirectory: AzureCommunicationUI
-        - task: CocoaPods@0
-          displayName: pod install
-          inputs:
-            cwd: AzureCommunicationUI
-            forceRepoUpdate: true
-            projectDirectory: AzureCommunicationUI
+        - script: bundle exec pod install
+          displayName: Install CocoaPods dependencies after signing configuration
+          workingDirectory: AzureCommunicationUI
         - task: Xcode@5
           displayName: Xcode Unit Test
           enabled: False
@@ -300,9 +298,6 @@ extends:
               ls $(archivePath)
 
 
-              export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/Info.plist
-
-              cat $INFO_PLIST_FILE
         - task: CopyFiles@2
           displayName: 'Copy dSYMs Files to: $(archivePath)'
           inputs:
@@ -327,19 +322,3 @@ extends:
             SourceFolder: $(signedExtractedPath)
             Contents: '**/*.ipa'
             TargetFolder: $(build.artifactstagingdirectory)
-        - task: AppCenterDistribute@3
-          displayName: Deploy **/*.ipa to Visual Studio App Center
-          inputs:
-            serverEndpoint: ae07945f-5fbf-4973-92c9-d00a5f696121
-            appSlug: Azure-Communication-Services/Azure-Communication-Services-Call-UI-Library-Sample-iOS-Internal
-            app: '**/*.ipa'
-            dsymPath: '**/*.dSYM/**'
-            packParentFolder: false
-            releaseNotesInput: >-
-              CI pipeline release
-
-              Source branch: $(Build.SourceBranch)
-
-              Build commit: $(Build.Repository.Uri)/commit/$(Build.SourceVersion)
-            isSilent: true
-

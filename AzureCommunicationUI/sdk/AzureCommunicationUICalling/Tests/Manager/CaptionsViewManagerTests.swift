@@ -181,6 +181,64 @@ class CaptionsRttViewManagerTests: XCTestCase {
         XCTAssertEqual(captionsManager.captionsRttData.last?.text, "Helloo")
     }
 
+    func test_rttDisplayData_when_messagesArriveWithinOneSecond_then_rowIdsAreDistinct() {
+        let timestamp = Date(timeIntervalSince1970: 1_750_000_000.1)
+        let first = CallCompositeRttData(
+            resultType: .final,
+            senderRawId: "sender1",
+            senderName: "Sender",
+            sequenceId: 0,
+            text: "First",
+            localCreatedTime: timestamp,
+            localUpdatedTime: timestamp,
+            isLocal: false
+        )
+        let second = CallCompositeRttData(
+            resultType: .final,
+            senderRawId: "sender1",
+            senderName: "Sender",
+            sequenceId: 1,
+            text: "Second",
+            localCreatedTime: timestamp.addingTimeInterval(0.2),
+            localUpdatedTime: timestamp.addingTimeInterval(0.2),
+            isLocal: false
+        )
+
+        let records = [first.toDisplayData(), second.toDisplayData()]
+        XCTAssertEqual(Set(records.map(\.id)).count, 2)
+    }
+
+    func test_rttDisplayData_when_messageBecomesFinal_then_rowIdentityIsPreserved() {
+        let timestamp = Date(timeIntervalSince1970: 1_750_000_000.1)
+        let partial = CallCompositeRttData(
+            resultType: .partial,
+            senderRawId: "sender1",
+            senderName: "Sender",
+            sequenceId: 0,
+            text: "Hel",
+            localCreatedTime: timestamp,
+            localUpdatedTime: timestamp,
+            isLocal: false
+        )
+        let final = CallCompositeRttData(
+            resultType: .final,
+            senderRawId: "sender1",
+            senderName: "Sender",
+            sequenceId: 0,
+            text: "Hello",
+            localCreatedTime: timestamp,
+            localUpdatedTime: timestamp.addingTimeInterval(1),
+            isLocal: false
+        )
+
+        let partialRecord = partial.toDisplayData()
+        let finalRecord = final.toDisplayData()
+        XCTAssertEqual(partialRecord.id, finalRecord.id)
+        XCTAssertNotEqual(partialRecord, finalRecord)
+        XCTAssertFalse(partialRecord.isFinal)
+        XCTAssertTrue(finalRecord.isFinal)
+    }
+
     func test_translationSettings_when_enabled_then_captionsNotDisplayed() {
         // Given
         let caption = CallCompositeCaptionsData(

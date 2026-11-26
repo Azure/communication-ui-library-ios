@@ -1,5 +1,34 @@
 # Azure Communication UI Calling Release History
 
+## 2.0.1 (2026-09-23)
+
+### Bug Fixes
+- Restore the RTT accessibility focus fix from #1064, including focus updates when a message becomes final and the iPad captions/RTT layout correction.
+- Preserve sub-second message identity in the RTT list and avoid logging message contents.
+
+## 2.0.0 (2026-09-22)
+
+### Major Version Update
+- Version 2.0.0 preserves the published GA UI API surface. This release uses the CocoaPods-published Calling SDK 2.15.1; it does not adopt the native Calling 3.0.0 support-baseline and licensing update.
+
+### Other Changes
+- Use the publicly registered GA Calling SDK 2.15.1 so CocoaPods can resolve the complete dependency chain without a local podspec override.
+- Preserve the published GA API surface; call start time and its update callback remain preview-only and are disabled in this GA release.
+- Constrain AzureCommunicationCommon to the tested 1.2.x baseline for compatibility with the native binary's Swift interface.
+- Match capability-reason handling to the GA Calling SDK's supported enum cases and retain the deterministic shared-CI test.
+
+## 1.15.0-beta.1 (Unreleased)
+
+### Features
+- Add `CallComposite.callStartTime()` and the `events.onCallStartTimeUpdated` callback.
+
+### Bug Fixes
+- Handle the Calling SDK's explicit-consent capability reason without terminating the application.
+
+### Other Changes
+- Use the publicly registered Calling SDK 2.18.0-beta.1 so CocoaPods can resolve the complete dependency chain without a local podspec override.
+- Constrain AzureCommunicationCommon to the tested 1.2.x baseline for compatibility with the native binary's Swift interface.
+
 ## 1.14.2 (2025-06-24)
 
 ### Bugfixes
