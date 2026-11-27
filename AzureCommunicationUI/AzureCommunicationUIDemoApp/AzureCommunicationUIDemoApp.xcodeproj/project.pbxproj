@@ -561,7 +561,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.mint/bin\"\nif command -v swiftlint >/dev/null 2>&1; then\n  swiftlint lint --strict --config ../.swiftlint-tests.yml Tests\nelse\n  echo \"warning: SwiftLint not installed, see docs/contributing-guide.md\"\nfi\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.mint/bin\"\nif ! command -v swiftlint >/dev/null 2>&1; then\n  echo \"warning: SwiftLint not installed, see docs/contributing-guide.md\"\n  exit 0\nfi\nSWIFTLINT_VERSION=$(swiftlint version)\nOLDEST=$(printf '%s\\n%s\\n' 0.53.0 \"$SWIFTLINT_VERSION\" | sort -t . -k1,1n -k2,2n -k3,3n | head -1)\nif [ \"$OLDEST\" != \"0.53.0\" ]; then\n  echo \"warning: SwiftLint $SWIFTLINT_VERSION is older than 0.53.0, skipping lint\"\n  exit 0\nfi\nswiftlint lint --strict --config ../.swiftlint-tests.yml Tests\n";
 		};
 		1FF252D427B5E44E006A113E /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -580,7 +580,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.mint/bin\"\nif command -v swiftlint >/dev/null 2>&1; then\n  swiftlint lint --strict --config Sources/.swiftlint.yml Sources\nelse\n  echo \"warning: SwiftLint not installed, see docs/contributing-guide.md\"\nfi\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.mint/bin\"\nif ! command -v swiftlint >/dev/null 2>&1; then\n  echo \"warning: SwiftLint not installed, see docs/contributing-guide.md\"\n  exit 0\nfi\nSWIFTLINT_VERSION=$(swiftlint version)\nOLDEST=$(printf '%s\\n%s\\n' 0.53.0 \"$SWIFTLINT_VERSION\" | sort -t . -k1,1n -k2,2n -k3,3n | head -1)\nif [ \"$OLDEST\" != \"0.53.0\" ]; then\n  echo \"warning: SwiftLint $SWIFTLINT_VERSION is older than 0.53.0, skipping lint\"\n  exit 0\nfi\nswiftlint lint --strict --config Sources/.swiftlint.yml Sources\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
