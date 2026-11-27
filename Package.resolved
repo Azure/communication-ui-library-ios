@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "fluentui-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/microsoft/fluentui-apple.git",
+      "state" : {
+        "revision" : "dc8f3271a7d748e9fb76ef09af8cfa7e0c7ac72d",
+        "version" : "0.10.0"
+      }
+    },
+    {
+      "identity" : "swiftpm-azurecommunicationcalling",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Azure/SwiftPM-AzureCommunicationCalling.git",
+      "state" : {
+        "revision" : "a02f648d808539e1e4fe2228040c71ea148d6f4b",
+        "version" : "3.0.1"
+      }
+    },
+    {
+      "identity" : "swiftpm-azurecommunicationcommon",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Azure/SwiftPM-AzureCommunicationCommon.git",
+      "state" : {
+        "revision" : "ffb4e4367adb3bc8826f30895b6855ff0b534e17",
+        "version" : "1.3.8"
+      }
+    },
+    {
+      "identity" : "swiftpm-azurecore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Azure/SwiftPM-AzureCore.git",
+      "state" : {
+        "revision" : "331e67288b97c865e08fb4a07e45c586df949a8e",
+        "version" : "1.0.0-beta.16"
+      }
+    }
+  ],
+  "version" : 2
+}

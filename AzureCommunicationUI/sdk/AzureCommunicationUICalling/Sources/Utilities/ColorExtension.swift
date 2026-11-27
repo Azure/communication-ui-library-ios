@@ -19,7 +19,7 @@ extension UIColor {
 
     private static func getAssetsColor(named: String) -> UIColor {
         if let assetsColor = UIColor(named: "Color/" + named,
-                                     in: Bundle(for: CallComposite.self),
+                                     in: Bundle.azureCommunicationUICalling,
                                      compatibleWith: nil) {
             return assetsColor
         } else {

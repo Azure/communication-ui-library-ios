@@ -4,7 +4,7 @@ jobs:
   - job: CallingAutomatedUITest
     displayName: "Calling Automated UI Tests"
     pool:
-      name: vsts-mac-131-xcode-142
+      name: vsts-mac-264-xcode-264
       demands: xcode
 
     variables:
@@ -20,34 +20,19 @@ jobs:
           Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
         condition: always()
 
-      - task: CocoaPods@0
-        displayName: 'pod install'
-        inputs:
-          workingDirectory: AzureCommunicationUI
-          forceRepoUpdate: true
-          projectDirectory: AzureCommunicationUI
-
       - template: templates/update-demo-app-plist-for-testing.yml
 
-      - task: Xcode@5
-        displayName: 'Xcode build'
-        inputs:
-          configuration: Release
-          sdk: iphoneos
-          xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-          scheme: AzureCommunicationUICalling
-          xcodeVersion: default
+      - template: templates/select-ios-simulator.yml
 
       - task: Xcode@5
         displayName: 'Xcode Demo UI test'
         inputs:
           actions: test
           configuration: Debug
-          sdk: iphoneos
+          sdk: iphonesimulator
           xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
           scheme: AzureCommunicationUIDemoApp
           xcodeVersion: default
-          destinationPlatformOption: iOS
-          destinationSimulators: 'iPhone 14 Pro'
+          args: '-destination "platform=iOS Simulator,id=$(SimulatorId)"'
           publishJUnitResults: true
 

@@ -1,5 +1,17 @@
 # Azure Communication UI Calling Release History
 
+## 2.1.0 (Upcoming)
+
+### Features
+- Add Swift Package Manager support. Add `https://github.com/Azure/communication-ui-library-ios` as a package dependency and use the `AzureCommunicationUICalling` product. Release tags are available as plain semantic versions (for example `2.1.0`) in addition to the existing `AzureCommunicationUICalling_<version>` tags.
+
+### Bug Fixes
+- Handle the Calling SDK's explicit-consent capability reason, and unknown future capability reasons, without terminating the application.
+
+### Other Changes
+- Use AzureCommunicationCalling 3.0.1 or later from [SwiftPM-AzureCommunicationCalling](https://github.com/Azure/SwiftPM-AzureCommunicationCalling) and AzureCommunicationCommon 1.3.8 or later.
+- CocoaPods distribution ends with version 2.0.1 because CocoaPods trunk is read-only from December 2, 2026. Xcode 26.4 or later is required.
+
 ## 2.0.1 (2026-09-23)
 
 ### Bug Fixes

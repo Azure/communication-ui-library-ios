@@ -21,7 +21,7 @@ parameters:
 - name: pools
   type: object
   default:
-  - name: vsts-mac-142-xcode-152
+  - name: vsts-mac-264-xcode-264
     os: macos
 extends:
 

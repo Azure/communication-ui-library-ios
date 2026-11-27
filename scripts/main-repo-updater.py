@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys, getopt
+import sys, getopt, re
 import plistlib
 from composite import Composite
 
@@ -11,12 +11,12 @@ selectedComposite = Composite('')
 # gloabl constants
 acs_UI_library_Path = '../'
 
-# Calling
-calling_info_plist_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Info.plist'
+# Calling (Swift Package Manager)
+calling_version_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/CallCompositeOptions/CallCompositeVersion.swift'
 calling_telemetry_Tag_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Tests/CallCompositeOptions/DiagnosticConfigTests.swift'
-calling_pbx_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj/project.pbxproj'
 calling_main_readme = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/README.md'
-calling_pattern_pod = "pod 'AzureCommunicationUICalling', '%s'"
+calling_pattern_version = 'static let semVersion = "%s"'
+calling_pattern_spm = 'from: "%s"'
 calling_pattern_telemetry = 'aci110/%s'
 
 # Chat
@@ -31,13 +31,17 @@ chat_pattern_telemetry = 'aci120/%s'
 pattern_pbx = 'MARKETING_VERSION = %s'
 
 def getCurrentVersion():
-	local_path = calling_info_plist_path if selectedComposite == Composite.CALLING else chat_info_plist_path
 	if new_Version == '':
 		sys.exit('new version is required for this script.' + 
 			' Usage: main-repo-updater.py -v NEW_VERSION')
-	with open(acs_UI_library_Path + local_path, 'rb') as fi_info:
-		pList = plistlib.load(fi_info)
-	oldVersion = pList['UILibrarySemVersion']
+	if selectedComposite == Composite.CALLING:
+		pList = None
+		with open(acs_UI_library_Path + calling_version_path, 'r') as fi_version:
+			oldVersion = re.search(calling_pattern_version % '(.*)', fi_version.read()).group(1)
+	else:
+		with open(acs_UI_library_Path + chat_info_plist_path, 'rb') as fi_info:
+			pList = plistlib.load(fi_info)
+		oldVersion = pList['UILibrarySemVersion']
 	if new_Version == oldVersion:
 		print('update skipped, new version and old version are the same')
 		sys.exit(0)
@@ -81,11 +85,24 @@ def main(argv):
 	update(acs_UI_library_Path + telemetry, 
 		telemetry_pattern % oldVersion, 
 		telemetry_pattern % new_Version)
-	print("telemetry - done, 1 of 4")
+	print("telemetry - done, 1 of %d" % (3 if selectedComposite == Composite.CALLING else 4))
+
+	if selectedComposite == Composite.CALLING:
+		# readme update, only the Swift Package Manager dependency snippet
+		update(acs_UI_library_Path + calling_main_readme,
+			calling_pattern_spm % oldVersion,
+			calling_pattern_spm % new_Version)
+		print("readme - done, 2 of 3")
+
+		# version constant update, supports '-beta.1' syntax
+		update(acs_UI_library_Path + calling_version_path,
+			calling_pattern_version % oldVersion,
+			calling_pattern_version % new_Version)
+		print("CallCompositeVersion.swift - done, 3 of 3")
+		return
 
 	# readme update, supports '-beta.1' syntax
-	main_repo = calling_main_readme if selectedComposite == Composite.CALLING else chat_main_readme
-	update(acs_UI_library_Path + main_repo, 
+	update(acs_UI_library_Path + chat_main_readme, 
 		oldVersion, 
 		new_Version)
 	print("readme - done, 2 of 4")
@@ -95,16 +112,14 @@ def main(argv):
 	release_tag_pattern = '-beta'
 	oldVersion_stripped = oldVersion.split(release_tag_pattern, 1)[0]
 	newVersion_stripped = new_Version.split(release_tag_pattern, 1)[0]
-	pbx_path = calling_pbx_path if selectedComposite == Composite.CALLING else chat_pbx_path
-	update(acs_UI_library_Path + pbx_path, 
+	update(acs_UI_library_Path + chat_pbx_path, 
 		pattern_pbx % oldVersion_stripped, 
 		pattern_pbx % newVersion_stripped)
 	print("pbxproj - done, 3 of 4")
 	
 	# Info.plist update, supports '-beta.1' syntax
-	info_plist_path = calling_info_plist_path if selectedComposite == Composite.CALLING else chat_info_plist_path
 	pList['UILibrarySemVersion'] = new_Version
-	with open(acs_UI_library_Path + info_plist_path, 'wb') as fo_info:
+	with open(acs_UI_library_Path + chat_info_plist_path, 'wb') as fo_info:
 		plistlib.dump(pList, fo_info)
 	print("plist - done, 4 of 4")
 

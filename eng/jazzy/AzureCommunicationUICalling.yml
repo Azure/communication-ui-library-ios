@@ -9,16 +9,14 @@ hide_unlisted_documentation: false
 theme: fullwidth
 output: ../../build/jazzy/AzureCommunicationUICalling
 clean: true
-sdk: iphonesimulator
+# Built from the root Swift package (Package.swift).
+source_directory: ../..
+swift_build_tool: xcodebuild
 xcodebuild_arguments:
-  - "-workspace"
-  - "../../AzureCommunicationUI/AzureCommunicationUI.xcworkspace"
   - "-scheme"
   - "AzureCommunicationUICalling"
-  - "-sdk"
-  - "iphonesimulator"
-  - "-arch"
-  - "x86_64"
+  - "-destination"
+  - "generic/platform=iOS Simulator"
 exclude:
   - "*/Source/ObjectiveCCompatibility/*"
   - "*/Tests/*"

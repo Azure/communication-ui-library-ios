@@ -17,7 +17,7 @@ schedules:
     always: true
 
 pool:
-    name: vsts-mac-131-xcode-142
+    name: vsts-mac-264-xcode-264
     demands: xcode
 
 jobs:
@@ -54,7 +54,7 @@ jobs:
             cd $(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI
             pod repo update
             pod install
-        displayName: "3.1 pod install"
+        displayName: "3.1 pod install (AzureCommunicationUIChat)"
       - template: jobs/templates/jazzy-build-script.yml
         parameters:
           buildScheme: "AzureCommunicationUICalling"

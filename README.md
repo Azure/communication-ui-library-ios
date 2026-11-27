@@ -7,7 +7,7 @@ Azure Communication [UI Mobile Library](https://docs.microsoft.com/en-us/azure/c
 ## Prerequisites
 
 * An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
-* A Mac running [Xcode](https://go.microsoft.com/fwLink/p/?LinkID=266532), along with a valid developer certificate installed into your Keychain. [CocoaPods](https://cocoapods.org/) must also be installed to fetch dependencies.
+* A Mac running [Xcode](https://go.microsoft.com/fwLink/p/?LinkID=266532) 26.4 or later, along with a valid developer certificate installed into your Keychain. The Calling library is installed with Swift Package Manager; the Chat library uses [CocoaPods](https://cocoapods.org/).
 * A deployed Communication Services resource. Create a [Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource).
 * Azure Communication Services Token. [See example](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity).
 
@@ -22,6 +22,8 @@ Azure Communication Service Mobile UI currently offers the following libraries:
 </p>
 
 Calling experience allows users to start or join a call. Inside the experience, users can configure their devices, participate in the call with video, and see other participants, including those ones with video turned on. For Teams interoperability, CallComposite includes lobby functionality so that users can wait to be admitted. 
+
+The Calling library is distributed with Swift Package Manager. Add `https://github.com/Azure/communication-ui-library-ios` as a package dependency and use the `AzureCommunicationUICalling` product. Version 2.0.1 is the last version published to CocoaPods.
 
 For more information about calling composite and how you can integrate it into your application, click [here](/AzureCommunicationUI/sdk/AzureCommunicationUICalling)
 

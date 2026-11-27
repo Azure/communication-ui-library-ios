@@ -1,0 +1,44 @@
+# Selects an available iPhone simulator on the agent and sets the SimulatorId variable.
+# Agents in the same pool have different simulator sets, so tests must not depend on one device name.
+# simulator: a device name to prefer (for example "iPhone 16"), or "auto" for the newest available iPhone.
+
+parameters:
+  - name: simulator
+    type: string
+    default: 'auto'
+
+steps:
+  - script: |
+      set -euo pipefail
+      SELECTED=$(xcrun simctl list devices available -j | python3 -c '
+      import json, re, sys
+
+      requested = sys.argv[1]
+      runtimes = json.load(sys.stdin)["devices"]
+
+      def runtime_version(key):
+          match = re.search(r"\.iOS-(\d+)-(\d+)$", key)
+          return tuple(int(part) for part in match.groups()) if match else None
+
+      iphones = []
+      for key, devices in runtimes.items():
+          version = runtime_version(key)
+          if version is None:
+              continue
+          for device in devices:
+              if device.get("isAvailable", True) and device["name"].startswith("iPhone"):
+                  iphones.append((version, device["name"], device["udid"]))
+      if not iphones:
+          sys.exit("No available iPhone simulator found")
+
+      iphones.sort(key=lambda item: item[0], reverse=True)
+      named = [item for item in iphones if item[1] == requested]
+      version, name, udid = (named or iphones)[0]
+      if requested != "auto" and not named:
+          print("Simulator %r not found, using %r" % (requested, name), file=sys.stderr)
+      print("%s|%s|%d.%d" % (udid, name, version[0], version[1]))
+      ' "${{ parameters.simulator }}")
+      SIMULATOR_ID=${SELECTED%%|*}
+      echo "Using simulator ${SELECTED#*|} ($SIMULATOR_ID)"
+      echo "##vso[task.setvariable variable=SimulatorId]$SIMULATOR_ID"
+    displayName: "Select iOS Simulator"

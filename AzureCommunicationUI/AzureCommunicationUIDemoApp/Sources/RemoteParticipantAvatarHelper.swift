@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 import AzureCommunicationCommon
 import AzureCommunicationUICalling
 

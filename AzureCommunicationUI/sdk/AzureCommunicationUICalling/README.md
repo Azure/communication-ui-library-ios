@@ -2,9 +2,9 @@
 
 # Azure Communication UI Mobile Library for iOS - Calling
 
-![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUICalling)
-![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUICalling)
-![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUICalling)
+![License](https://img.shields.io/github/license/Azure/communication-ui-library-ios)
+![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-brightgreen)
+![Platforms](https://img.shields.io/badge/platforms-iOS_16%2B-lightgrey)
 
 ## Latest Release
 
@@ -19,22 +19,44 @@ Get started with Azure Communication Services by using the UI Library to integra
 ### Requirements
 
 - iOS 16+
-- Xcode 13+
-- Swift 5.0+
+- Xcode 26.4+
+- Swift 5.9+
 
-### Using CocoaPods
+### Using Swift Package Manager
 
-CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To add the UI Library to your Xcode project, choose **File > Add Package Dependencies...**, enter `https://github.com/Azure/communication-ui-library-ios`, and add the `AzureCommunicationUICalling` product to your app target.
+
+To add it to a `Package.swift` manifest:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/Azure/communication-ui-library-ios", from: "2.0.1")
+],
+targets: [
+    .target(
+        name: "MyApp",
+        dependencies: [
+            .product(name: "AzureCommunicationUICalling", package: "communication-ui-library-ios")
+        ]
+    )
+]
+```
+
+The package brings in [AzureCommunicationCalling](https://github.com/Azure/SwiftPM-AzureCommunicationCalling) 3.0.1 or later, [AzureCommunicationCommon](https://github.com/Azure/SwiftPM-AzureCommunicationCommon), [AzureCore](https://github.com/Azure/SwiftPM-AzureCore) and [FluentUI](https://github.com/microsoft/fluentui-apple).
+
+### Using CocoaPods (2.0.1 and earlier)
+
+CocoaPods trunk is read-only from December 2, 2026, so new versions of the library are distributed only with Swift Package Manager. Version 2.0.1 is the last version available on CocoaPods:
 
 ```ruby
 pod 'AzureCommunicationUICalling', '2.0.1'
 ```
 
-The 2.0.1 patch retains Calling SDK `2.15.1` and AzureCommunicationCommon `1.2.x` from the public CocoaPods registry. No local native podspec or SPM dependency is required. The UI version above will be available after the release is published.
+To migrate from CocoaPods, remove `AzureCommunicationUICalling` and `AzureCommunicationCalling` from your `Podfile`, run `pod install`, and add the package as described above.
 
 ### Manual Installation
 
-If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation](manual-installation.md) guide.
+If you prefer to add the library from a local copy of the repository, see the [Manual Installation](manual-installation.md) guide.
 
 ## Quick Sample
 

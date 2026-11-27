@@ -6,7 +6,7 @@
 import Foundation
 #if DEBUG
 @testable import AzureCommunicationUICalling
-@testable import AzureCommunicationCommon
+import AzureCommunicationCommon
 
 class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
     enum Constants {

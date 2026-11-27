@@ -15,6 +15,6 @@ protocol LocalizationProviderProtocol: BaseLocalizationProviderProtocol {
 
 class LocalizationProvider: BaseLocalizationProvider, LocalizationProviderProtocol {
     init(logger: Logger) {
-        super.init(logger: logger, bundleClass: CallComposite.self)
+        super.init(logger: logger, bundle: Bundle.azureCommunicationUICalling)
     }
 }

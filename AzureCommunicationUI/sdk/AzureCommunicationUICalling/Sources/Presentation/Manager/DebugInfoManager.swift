@@ -20,10 +20,8 @@ class DebugInfoManager: DebugInfoManagerProtocol {
 
     /// The history of calls up to 30 days. Ordered ascending by call started date.
     func getDebugInfo() -> DebugInfo {
-        let version = Bundle(for: CallComposite.self).infoDictionary?["UILibrarySemVersion"]
-        let versionStr = version as? String ?? "unknown"
         return DebugInfo(callHistoryRecords: getCallHistory(),
-                         callingUIVersion: versionStr,
+                         callingUIVersion: CallCompositeVersion.semVersion,
                          logFiles: self.getLogFiles())
     }
 

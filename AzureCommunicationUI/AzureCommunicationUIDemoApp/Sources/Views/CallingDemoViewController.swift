@@ -7,7 +7,6 @@ import UIKit
 import Combine
 import SwiftUI
 import AzureCommunicationCommon
-import AppCenterCrashes
 import AVFoundation
 import CallKit
 #if DEBUG

@@ -1,31 +1,44 @@
-# Build Xcode scheme and create test coverage report
+# Build and test the AzureCommunicationUICalling Swift package and create a test coverage report
 
 parameters:
-  - name: buildScheme
+  # A device name to prefer, or 'auto' for the newest available iPhone simulator on the agent.
+  - name: simulator
     type: string
-    default: 'AzureCommunicationUICalling'
-    values:
-      - AzureCommunicationUICalling
-      - AzureCommunicationUIChat
-  - name: workingDirectory
-    type: string
-    default: 'AzureCommunicationUI'
+    default: 'auto'
 
 steps:
-  - script: bundle exec pod install --deployment
-    displayName: "Install locked CocoaPods dependencies"
-    workingDirectory: ${{ parameters.workingDirectory }}
-
+  # AzureCommunicationCalling 3.x binaries are built with Swift 6.3 (Xcode 26.4), older toolchains cannot read them.
   - script: |
-      Pods/SwiftLint/swiftlint version 
-    workingDirectory: AzureCommunicationUI
-    displayName: "SwiftLint Version Check"
+      set -euo pipefail
+      xcodebuild -version
+      swift --version
+      XCODE_VERSION=$(xcodebuild -version | head -1 | awk '{print $2}')
+      XCODE_MAJOR=${XCODE_VERSION%%.*}
+      XCODE_MINOR=0
+      case "$XCODE_VERSION" in *.*) XCODE_MINOR=${XCODE_VERSION#*.} ;; esac
+      XCODE_MINOR=${XCODE_MINOR%%.*}
+      if [ "$XCODE_MAJOR" -lt 26 ] || { [ "$XCODE_MAJOR" -eq 26 ] && [ "$XCODE_MINOR" -lt 4 ]; }; then
+        echo "##vso[task.logissue type=error]Xcode 26.4 or later is required to build AzureCommunicationUICalling."
+        exit 1
+      fi
+    displayName: "Check Xcode version"
 
-  - script: |
-      Pods/SwiftLint/swiftlint 
+  - template: install-swiftlint.yml
+
+  - template: select-ios-simulator.yml
+    parameters:
+      simulator: ${{ parameters.simulator }}
+
+  - script: swiftlint
     workingDirectory: AzureCommunicationUI
     displayName: "SwiftLint Manual Pre-Check"
 
+  - script: |
+      set -euo pipefail
+      swiftlint lint --strict --config ../../.swiftlint.yml Sources
+      swiftlint lint --strict --config ../../.swiftlint-tests.yml Tests
+    workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICalling
+    displayName: "SwiftLint AzureCommunicationUICalling (strict)"
 
   - script: |
       swift build -v \
@@ -33,63 +46,48 @@ steps:
         -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
         -Xswiftc "-target" \
         -Xswiftc "x86_64-apple-ios16.0-simulator"
-      xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 15"
+      xcodebuild test -scheme AzureCommunicationUICommon -destination "platform=iOS Simulator,id=$(SimulatorId)"
     workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICommon
     displayName: "Build and test AzureCommunicationUICommon"
 
   - script: |
-      case "${{ parameters.buildScheme }}" in
-        AzureCommunicationUICalling)
-          SLATHER_SOURCE_FILE=ui-calling-slather.yml
-          ;;
-        AzureCommunicationUIChat)
-          SLATHER_SOURCE_FILE=ui-chat-slather.yml
-          ;;
-      esac
-     
-      SLATHER_FILE=$(system.defaultWorkingDirectory)/${{ parameters.workingDirectory }}/.slather.yml
-      cat ../eng/slather/$SLATHER_SOURCE_FILE > $SLATHER_FILE
-
-    displayName: "Inject .slather.yml file"
-    workingDirectory: ${{ parameters.workingDirectory }}
-
-  - task: Xcode@5
-    displayName: "Xcode build ${{ parameters.buildScheme }} scheme"
-    inputs:
-      configuration: Release
-      sdk: iphoneos
-      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-      scheme: ${{ parameters.buildScheme }}
-      xcodeVersion: default
-      args: "-verbose"
-
-  - task: Xcode@5
-    displayName: "Xcode Unit Test ${{ parameters.buildScheme }}"
-    inputs:
-      actions: test
-      configuration: Debug
-      sdk: iphonesimulator
-      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-      scheme: ${{ parameters.buildScheme }}
-      xcodeVersion: default
-      signingOption: default
-      args: "CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES"
-      destinationPlatformOption: iOS
-      destinationSimulators: "iPhone 15"
-      publishJUnitResults: true
+      set -euo pipefail
+      xcodebuild build \
+        -scheme AzureCommunicationUICalling \
+        -configuration Release \
+        -destination "generic/platform=iOS" \
+        -derivedDataPath "$(Agent.TempDirectory)/DerivedDataRelease"
+    displayName: "Build AzureCommunicationUICalling package (Release, iphoneos)"
 
   - script: |
-      case "${{ parameters.buildScheme }}" in
-        AzureCommunicationUICalling)
-          COBERTURA_TARGET_FILENAME=calling-cobertura.xml
-          ;;
-        AzureCommunicationUIChat)
-          COBERTURA_TARGET_FILENAME=chat-cobertura.xml
-          ;;
-      esac
+      set -euo pipefail
+      xcodebuild test \
+        -scheme AzureCommunicationUICalling \
+        -configuration Debug \
+        -destination "platform=iOS Simulator,id=$(SimulatorId)" \
+        -derivedDataPath "$(Agent.TempDirectory)/DerivedData" \
+        -enableCodeCoverage YES \
+        -resultBundlePath "$(Agent.TempDirectory)/AzureCommunicationUICalling.xcresult"
+    displayName: "Unit test AzureCommunicationUICalling package"
 
-      bundle exec slather
-      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$COBERTURA_TARGET_FILENAME
-    
-    displayName: "Run slather for ${{ parameters.buildScheme }}"
-    workingDirectory: ${{ parameters.workingDirectory }}
+  - script: |
+      set -euo pipefail
+      DERIVED_DATA="$(Agent.TempDirectory)/DerivedData"
+      PROFDATA=$(find "$DERIVED_DATA/Build/ProfileData" -name Coverage.profdata | head -1)
+      TEST_BINARY="$DERIVED_DATA/Build/Products/Debug-iphonesimulator/AzureCommunicationUICallingTests.xctest/AzureCommunicationUICallingTests"
+      # Same exclusions as the former slather configuration.
+      IGNORE='(/Tests/|/SourcePackages/|/checkouts/|/DerivedSources/|(Button|Cell|View|Controller)\.swift$)'
+      xcrun llvm-cov report -instr-profile "$PROFDATA" "$TEST_BINARY" -ignore-filename-regex="$IGNORE" | tail -1
+      xcrun llvm-cov export -format=lcov -instr-profile "$PROFDATA" "$TEST_BINARY" -ignore-filename-regex="$IGNORE" \
+        > "$(System.ArtifactsDirectory)/calling-coverage.lcov"
+    displayName: "Export AzureCommunicationUICalling code coverage"
+
+  - script: |
+      set -euo pipefail
+      xcodebuild build \
+        -workspace AzureCommunicationUI/AzureCommunicationUI.xcworkspace \
+        -scheme AzureCommunicationUIDemoApp \
+        -configuration Debug \
+        -destination "generic/platform=iOS Simulator" \
+        -derivedDataPath "$(Agent.TempDirectory)/DerivedDataDemo"
+    displayName: "Build AzureCommunicationUIDemoApp"

@@ -1,31 +1,12 @@
+# AzureCommunicationUIChat only. AzureCommunicationUICalling is built with Swift Package Manager
+# (see /Package.swift) and is no longer part of this Podfile.
 source 'https://cdn.cocoapods.org/'
 
 platform :ios, '16.0'
 
-workspace 'AzureCommunicationUI'
+workspace 'AzureCommunicationUIChat'
 
-project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
 project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
-project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
-
-target 'AzureCommunicationUICalling' do
-  project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
-  use_frameworks!
-  pod 'AzureCore', '1.0.0-beta.16'
-  pod 'AzureCommunicationCalling', '2.15.1'
-  pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
-  pod 'SwiftLint', '0.53.0'
-
-  target 'AzureCommunicationUICallingTests' do
-    # Pods for testing
-    pod 'SwiftLint', '0.53.0'
-  end
-end
 
 target 'AzureCommunicationUIChat' do
   project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
@@ -40,29 +21,6 @@ target 'AzureCommunicationUIChat' do
   pod 'SwiftLint', '0.53.0'
 
   target 'AzureCommunicationUIChatTests' do
-    # Pods for testing
-    pod 'SwiftLint', '0.53.0'
-  end
-end
-
-target 'AzureCommunicationUIDemoApp' do
-  project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
-  use_frameworks!
-  pod 'AzureCommunicationCalling', '2.15.1'
-  pod 'AzureCommunicationChat', '1.3.7'
-  pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
-  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
-  pod 'SwiftLint', '0.53.0'
-  pod 'AppCenter/Crashes', '4.4.1'
-
-  # Include AlamoFire for use with the User Reported Issue handler
-  # pod 'Alamofire', '5.8'
-
-  target 'AzureCommunicationUIDemoAppUITests' do
     # Pods for testing
     pod 'SwiftLint', '0.53.0'
   end

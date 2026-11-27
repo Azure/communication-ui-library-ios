@@ -14,42 +14,5 @@ schedules:
         - main
     always: true
 
-  - cron: "0 */2 * * *" # Check the AppCenter build schedule every 2 hours
-    displayName: "AppCenter UI Test Run Trigger"
-    branches:
-      include:
-        - develop
-    always: true
-    
-variables:
-  AppCenterDevicesOverride: ''  # This should be in the form 'Azure-Communication-Services/<your_device_set_name>'
-  buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
-
 jobs:
-  # If it's 3am-ish pacific time and it was a scheduled build, then run the UI tests
-  - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDayUtc'], '11')) }}:
-    - template: jobs/UI-test-job.yml
-
-  - job: ConfigureDevices
-    displayName: "Determine AppCenter device set to use"
-    steps:
-      # Sets the AppCenterDevices variable
-      - template: jobs/templates/set-appcenter-devices.yml
-
-  - job: AutomatedUITestWithAppCenter
-    dependsOn: ['ConfigureDevices']
-    displayName: "Run XCUITests on AppCenter with specific devices"
-    condition: ne(dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'], '')
-    pool:
-      name: vsts-mac-131-xcode-142
-      demands: xcode
-    variables:
-      - group: 'SPOOL-Communication-mobileUI'
-      - name: 'acsDisplayName'
-        value: 'iOS UI Automated Tester'
-      - name: AppcenterDeviceSet
-        value: $[dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'] ]
-
-    steps:
-      # This takes the AppcenterDeviceSet VARIABLE to configure the test devices
-      - template: jobs/appcenter-test-job-steps.yml
+  - template: jobs/UI-test-job.yml

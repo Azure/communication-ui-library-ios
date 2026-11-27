@@ -104,24 +104,6 @@ class EntryViewController: UIViewController {
         startUiKitButton.translatesAutoresizingMaskIntoConstraints = false
         startUiKitButton.addTarget(self, action: #selector(onCallingUIKitPressed), for: .touchUpInside)
 
-        let startChatSwiftUIButton = UIButton()
-        startChatSwiftUIButton.backgroundColor = .systemBlue
-        startChatSwiftUIButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
-        startChatSwiftUIButton.layer.cornerRadius = 8
-        startChatSwiftUIButton.setTitle("Chat - Swift UI", for: .normal)
-        startChatSwiftUIButton.sizeToFit()
-        startChatSwiftUIButton.translatesAutoresizingMaskIntoConstraints = false
-        startChatSwiftUIButton.addTarget(self, action: #selector(onChatSwiftUIPressed), for: .touchUpInside)
-
-        let startChatUIKitButton = UIButton()
-        startChatUIKitButton.backgroundColor = .systemBlue
-        startChatUIKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
-        startChatUIKitButton.layer.cornerRadius = 8
-        startChatUIKitButton.setTitle("Chat - UI Kit", for: .normal)
-        startChatUIKitButton.sizeToFit()
-        startChatUIKitButton.translatesAutoresizingMaskIntoConstraints = false
-        startChatUIKitButton.addTarget(self, action: #selector(onChatUIKitPressed), for: .touchUpInside)
-
         let horizontalCallingStackView = UIStackView(arrangedSubviews: [
             startSwiftUIButton,
             startUiKitButton])
@@ -132,19 +114,8 @@ class EntryViewController: UIViewController {
         horizontalCallingStackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(horizontalCallingStackView)
 
-        let horizontalChatStackView = UIStackView(arrangedSubviews: [
-            startChatSwiftUIButton,
-            startChatUIKitButton])
-        horizontalChatStackView.spacing = margin
-        horizontalChatStackView.axis = .horizontal
-        horizontalChatStackView.alignment = .fill
-        horizontalChatStackView.distribution = .fillEqually
-        horizontalChatStackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(horizontalChatStackView)
-
         let verticalStackView = UIStackView(arrangedSubviews: [
-            horizontalCallingStackView,
-            horizontalChatStackView])
+            horizontalCallingStackView])
         verticalStackView.spacing = margin
         verticalStackView.axis = .vertical
         verticalStackView.alignment = .fill
@@ -197,20 +168,6 @@ class EntryViewController: UIViewController {
 #endif
         uiKitDemoViewController?.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController!, animated: true, completion: nil)
-    }
-
-    @objc func onChatSwiftUIPressed() {
-        let chatSwiftUIDemoView = ChatDemoView(
-            envConfigSubject: envConfigSubject)
-        let chatSwiftUIDemoHostingController = UIHostingController(rootView: chatSwiftUIDemoView)
-        chatSwiftUIDemoHostingController.modalPresentationStyle = .fullScreen
-        present(chatSwiftUIDemoHostingController, animated: true, completion: nil)
-    }
-
-    @objc func onChatUIKitPressed() {
-        let chatUIKitDemoViewController = ChatDemoViewController(envConfigSubject: envConfigSubject)
-        chatUIKitDemoViewController.modalPresentationStyle = .fullScreen
-        present(chatUIKitDemoViewController, animated: true, completion: nil)
     }
 
     func getAppVersion() -> String {
